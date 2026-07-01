@@ -406,9 +406,10 @@ def run_benchmark(config: BenchmarkConfig, resume: bool = False, ablation: bool 
         
     else:
         # Standard model benchmarking sweep
+        from src.providers.factory import LLMProviderFactory
         for model in config.models:
-            is_cloud = is_cloud_model(model)
-            if not is_cloud and not check_model_available(model, config.ollama_base_url):
+            provider_type = LLMProviderFactory.detect_provider_name(model)
+            if provider_type == "ollama" and not check_model_available(model, config.ollama_base_url):
                 logger.warning(f"Skipping model {model} because it is not available in Ollama.")
                 continue
                 
@@ -481,7 +482,7 @@ def run_benchmark(config: BenchmarkConfig, resume: bool = False, ablation: bool 
                 )
                 
             # Unload model weights after model completes to protect VRAM before starting next model
-            if not is_cloud:
+            if provider_type == "ollama":
                 logger.info(f"Unloading model weights for {model} to protect VRAM.")
                 manage_model_lifecycle(model, None, config.ollama_base_url)
         

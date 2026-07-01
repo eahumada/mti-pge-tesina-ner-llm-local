@@ -101,14 +101,10 @@ def _try_vertex_ai(model_name: str, messages: list[dict], temperature: float, ma
 
 
 def _try_generativeai(model_name: str, messages: list[dict], temperature: float, max_tokens: int) -> str:
-    """Attempt inference via google-generativeai (AI Studio) SDK."""
-    import google.generativeai as genai
-
+    """Attempt inference via google-generativeai (AI Studio) SDK, falling back to HTTP REST if needed."""
     api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
     if not api_key:
         raise EnvironmentError("Neither GEMINI_API_KEY nor GOOGLE_API_KEY is set")
-
-    genai.configure(api_key=api_key)
 
     system_prompt = ""
     user_text = ""
@@ -118,18 +114,55 @@ def _try_generativeai(model_name: str, messages: list[dict], temperature: float,
         else:
             user_text = msg["content"]
 
-    model = genai.GenerativeModel(
-        model_name=model_name,
-        system_instruction=system_prompt or None,
-    )
-    response = model.generate_content(
-        user_text,
-        generation_config=genai.GenerationConfig(
-            temperature=temperature,
-            max_output_tokens=max_tokens,
-        ),
-    )
-    return response.text or ""
+    # Try SDK first
+    try:
+        import google.generativeai as genai
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel(
+            model_name=model_name,
+            system_instruction=system_prompt or None,
+        )
+        response = model.generate_content(
+            user_text,
+            generation_config=genai.GenerationConfig(
+                temperature=temperature,
+                max_output_tokens=max_tokens,
+            ),
+        )
+        if response.text:
+            return response.text
+    except Exception as sdk_err:
+        logger.warning("GenerativeAI SDK failed: %s. Attempting direct HTTP REST fallback.", sdk_err)
+
+    # Fallback: Direct HTTP REST call to Gemini API
+    import requests
+    # Ensure correct models prefix
+    model_id = model_name
+    if not model_id.startswith("models/"):
+        model_id = f"models/{model_id}"
+    
+    url = f"https://generativelanguage.googleapis.com/v1/{model_id}:generateContent?key={api_key}"
+    headers = {"Content-Type": "application/json"}
+    
+    payload = {
+        "contents": [{"parts": [{"text": user_text}]}],
+        "generationConfig": {
+            "temperature": temperature,
+            "maxOutputTokens": max_tokens
+        }
+    }
+    if system_prompt:
+        payload["systemInstruction"] = {"parts": [{"text": system_prompt}]}
+
+    resp = requests.post(url, headers=headers, json=payload, timeout=30)
+    if resp.status_code == 200:
+        data = resp.json()
+        try:
+            return data["candidates"][0]["content"]["parts"][0]["text"]
+        except (KeyError, IndexError) as parse_err:
+            raise RuntimeError(f"Failed to parse Gemini REST response: {parse_err}. Response was: {data}")
+    else:
+        raise RuntimeError(f"Gemini API REST fallback failed with HTTP {resp.status_code}: {resp.text}")
 
 
 class VertexAIProvider(LLMProvider):

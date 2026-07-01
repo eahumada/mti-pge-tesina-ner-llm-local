@@ -104,18 +104,25 @@ class LLMProviderFactory:
         for predicate, class_path in _ROUTING_TABLE:
             if predicate(name_lower):
                 cls = _import_class(class_path)
-                provider_name = class_path.split(".")[-1].replace("Provider", "").lower()
                 logger.debug(
                     "Factory: routing model '%s' → %s", model_name, cls.__name__
                 )
-                return cls(model_name, config, **kwargs)
+                import inspect
+                sig = inspect.signature(cls.__init__)
+                valid_params = sig.parameters.keys()
+                filtered_kwargs = {k: v for k, v in kwargs.items() if k in valid_params}
+                return cls(model_name, config, **filtered_kwargs)
 
         # Default: Ollama
         cls = _import_class(_OLLAMA_CLASS_PATH)
         logger.debug(
             "Factory: model '%s' → OllamaProvider (default)", model_name
         )
-        return cls(model_name, config, **kwargs)
+        import inspect
+        sig = inspect.signature(cls.__init__)
+        valid_params = sig.parameters.keys()
+        filtered_kwargs = {k: v for k, v in kwargs.items() if k in valid_params}
+        return cls(model_name, config, **filtered_kwargs)
 
     @staticmethod
     def detect_provider_name(model_name: str) -> str:
