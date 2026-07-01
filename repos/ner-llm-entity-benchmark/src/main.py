@@ -284,8 +284,11 @@ def run_benchmark(config: BenchmarkConfig, resume: bool = False, ablation: bool 
         # Standard model benchmarking sweep
         for model_idx, model in enumerate(config.models):
             if not check_model_available(model, config.ollama_base_url):
-                logger.warning(f"Skipping model {model} because it is not available in Ollama.")
-                continue
+                if "mlx" in model.lower():
+                    logger.warning(f"Model {model} not pulled in Ollama. Proceeding with soft fallback support.")
+                else:
+                    logger.warning(f"Skipping model {model} because it is not available in Ollama.")
+                    continue
                 
             for batch_idx in range(total_batches):
                 if is_batch_completed(state, model, batch_idx):
@@ -410,8 +413,11 @@ def run_benchmark(config: BenchmarkConfig, resume: bool = False, ablation: bool 
         for model in config.models:
             provider_type = LLMProviderFactory.detect_provider_name(model)
             if provider_type == "ollama" and not check_model_available(model, config.ollama_base_url):
-                logger.warning(f"Skipping model {model} because it is not available in Ollama.")
-                continue
+                if "mlx" in model.lower():
+                    logger.warning(f"Model {model} not pulled in Ollama. Proceeding with soft fallback support.")
+                else:
+                    logger.warning(f"Skipping model {model} because it is not available in Ollama.")
+                    continue
                 
             # Clear task queue for this specific model
             task_queue = create_task_queue(use_redis=False)

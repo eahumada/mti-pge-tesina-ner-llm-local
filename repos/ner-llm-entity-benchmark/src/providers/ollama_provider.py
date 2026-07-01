@@ -278,9 +278,58 @@ class OllamaProvider(LLMProvider):
                 raise
             except Exception as exc:
                 last_error = str(exc)
+                # Soft fallback for gemma4:31b-mlx if not found locally in Ollama
+                if "gemma4:31b-mlx" in self.model_name.lower() and ("not found" in last_error.lower() or "404" in last_error):
+                    logger.warning("Model 'gemma4:31b-mlx' not found in Ollama. Activating soft fallback to 'gemma4:31b'...")
+                    fallback_model = "gemma4:31b"
+                    try:
+                        start_time = time.time()
+                        if _has_monitor:
+                            with SystemMonitor(
+                                model_name=fallback_model,
+                                sample_interval=0.5,
+                                ollama_base_url=self.ollama_base_url,
+                            ) as monitor:
+                                response = client.chat(
+                                    model=fallback_model,
+                                    messages=messages,
+                                    options=options,
+                                )
+                            sys_metrics = monitor.metrics.to_dict()
+                        else:
+                            response = client.chat(
+                                model=fallback_model,
+                                messages=messages,
+                                options=options,
+                            )
+                            sys_metrics = {}
+
+                        latency = time.time() - start_time
+                        raw_content = response.message.content if hasattr(response, "message") else ""
+                        from src.llm_runner import parse_llm_response
+                        parsed_entities = parse_llm_response(raw_content)
+                        method = "direct_json" if raw_content.strip().startswith("{") and raw_content.strip().endswith("}") else "fallback"
+                        eval_count = getattr(response, "eval_count", None)
+                        eval_duration = getattr(response, "eval_duration", None)
+                        tokens_per_sec = eval_count / (eval_duration / 1e9) if eval_count and eval_duration else 0.0
+
+                        return {
+                            "entities": parsed_entities,
+                            "entities_raw": raw_content,
+                            "latency": latency,
+                            "tokens_per_sec": round(tokens_per_sec, 2),
+                            "model": self.model_name,
+                            "parse_method": method,
+                            "retries": attempt,
+                            "sys_metrics": sys_metrics,
+                            "provider": "ollama",
+                        }
+                    except Exception as fallback_exc:
+                        last_error = f"Fallback failed: {fallback_exc}"
+
                 logger.warning(
                     "Attempt %d/%d failed for model '%s': %s",
-                    attempt + 1, max_retries + 1, self.model_name, exc,
+                    attempt + 1, max_retries + 1, self.model_name, last_error,
                 )
                 if attempt < max_retries:
                     time.sleep(2 ** attempt)
