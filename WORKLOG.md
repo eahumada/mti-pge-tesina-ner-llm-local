@@ -4,6 +4,24 @@ This file records the activity and progress of the Local LLM Financial Complianc
 
 ---
 
+## 2026-07-01
+- **Finalización Completa del Benchmark Real**:
+    - Finalizada la tarea `task-265` de procesamiento en batch del dataset real `kleptotrace.json` sobre la suite de 16 modelos locales e híbridos.
+    - **Resultados de Performance Consolidados**: Liderado por `gemma4:31b` local con un F1-score definitivo del **67.83%** (Recall: 86.78%, Precisión: 57.29%) y una tasa de alucinaciones del **0.15%**. La versión cloud `gemma4:31b-cloud` registró un **66.29% de F1-Score** y **0.0%** de alucinaciones.
+    - El modelo compacto `llama3.2` (3B) demostró ser la alternativa de menor consumo logrando un F1-score de **61.29%** con una latencia promedio de solo 25 segundos.
+- **Control Adaptativo de Workers (AIMD)**:
+    - El sistema estabilizó la concurrencia en caliente escalando hasta **9 workers concurrentes** en hardware Apple M4, previniendo fallos de desbordamiento de memoria (VRAM) y amortiguando errores de rate-limiting (HTTP 429) en endpoints cloud de Vertex AI / Gemini.
+- **Poblado y Markdown del Informe de Avance Nº2 (SIIG-PGE25)**:
+    - Completada y guardada de forma académica la planilla de Word oficial en `/Users/eahumada1/Downloads/Formulario-IA-26.docx` e inyectada con las cifras definitivas reales de la corrida del benchmark.
+    - Respaldada la planilla en `doc/organized/Hito_4_Tarea3_Informe_Avance/Formulario-IA-26-Rellenado.docx`.
+    - Generada la transcripción markdown en `doc/organized/Hito_4_Tarea3_Informe_Avance/Informe-Avance-2.md` y un reporte detallado consolidado de avance en `doc/organized/Hito_4_Tarea3_Informe_Avance/CONSOLIDATED_PROGRESS_REPORT.md` (registrado en `REPORTS_INDEX.md`).
+- **Reorganización Cronológica del Taller de Tesis**:
+    - Reestructurada la carpeta `doc/organized/` en 5 directorios correspondientes a los Hitos de Evaluación del programa PGE-2025/2026 (Hitos 1 a 5), ordenando todos los documentos de tareas previas.
+- **Renombrado del Proyecto y GitHub Push**:
+    - Se renombró la carpeta local del proyecto a `/Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano` preservando de forma íntegra los entornos virtuales de Python.
+    - Creado de forma automática el repositorio remoto privado `pge-2005-tesina-ner-llm-cumplimiento-soberano` en la cuenta de GitHub `eahumada` mediante su token PAT (almacenado localmente de forma segura en `.setenv.sh`).
+    - Vinculado e impulsada la rama `main` de manera exitosa, garantizando la seguridad de credenciales mediante exclusión explícita en `.gitignore`.
+
 ## 2026-06-29 (tarde)
 - **Expansión del Set de Modelos Evaluados**:
     - Confirmado disponible localmente `gemma4:31b` (19 GB), agregado al benchmark.
