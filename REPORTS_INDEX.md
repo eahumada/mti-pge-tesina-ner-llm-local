@@ -186,7 +186,7 @@ VRAM Usage:         < 16GB on Apple M4 ✅
 ## 📂 FILE LOCATIONS
 
 ```
-/Users/eahumada1/Documents/Personal/MTI/taller_de_titulo/
+/Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/
 ├── THESIS_PROJECT_ANALYSIS_REPORT.md    ← Full analysis (55 KB)
 ├── EXECUTIVE_SUMMARY.md                  ← Quick reference (7 KB)
 ├── DEFENSE_CHECKLIST.md                  ← Preparation guide (15 KB)

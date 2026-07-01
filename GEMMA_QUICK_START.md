@@ -34,7 +34,7 @@ You currently use **Gemma 7B** achieving **70.18% F1**. You want to test:
 ollama pull gemma:7b-code
 
 # Step 2: Run extraction benchmark (15 min)
-cd /Users/eahumada1/Documents/Personal/MTI/taller_de_titulo
+cd /Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano
 
 python src/main.py \
   --input data/kleptotrace.json \
@@ -61,7 +61,7 @@ python scripts/compare_models.py \
 
 ```bash
 # Setup
-cd /Users/eahumada1/Documents/Personal/MTI/taller_de_titulo
+cd /Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano
 
 # Test 1: Code variant (15 min)
 echo "Testing Gemma 7B-Code..."
@@ -106,7 +106,7 @@ Gemma 27B-Instruct-Q4:    78-80% F1 ⭐ (if works)
 
 ```bash
 # Navigate to project
-cd /Users/eahumada1/Documents/Personal/MTI/taller_de_titulo
+cd /Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano
 
 # Make script executable
 chmod +x test_gemma_variants.py
@@ -313,7 +313,7 @@ ollama list
 
 **Step 2: Navigate to project**
 ```bash
-cd /Users/eahumada1/Documents/Personal/MTI/taller_de_titulo
+cd /Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano
 ```
 
 **Step 3: Run the testing script**
@@ -465,7 +465,7 @@ If Gemma 27B works on your M4 (which it should with Q4 quantization), you'll hav
 
 **Next step**: Open terminal and run:
 ```bash
-cd /Users/eahumada1/Documents/Personal/MTI/taller_de_titulo
+cd /Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano
 python test_gemma_variants.py --mode quick
 ```
 

@@ -5,6 +5,15 @@ This file records the activity and progress of the Local LLM Financial Complianc
 ---
 
 ## 2026-07-01
+- **Rescate de Disco y Liberación de Espacio**:
+    - Se resolvió una alerta crítica por disco lleno en macOS (`No space left on device` con solo 2.8 GiB libres). Se eliminó la carpeta duplicada `taller_de_titulo_backup/` y se purgaron las instantáneas locales de Time Machine (`tmutil thinlocalsnapshots`), liberando y restableciendo con seguridad **13 GiB** de almacenamiento físico en el disco APFS.
+- **Entorno Virtual Estable en Python 3.13**:
+    - Se identificó que la versión pre-release de Homebrew (`python@3.14`) generaba incompatibilidad interna en pip (`ModuleNotFoundError: No module named 'pip._internal.cli.autocompletion'`).
+    - Se recreó limpiamente el entorno virtual local `venv` utilizando **Python 3.13** de forma explícita (`python3.13 -m venv venv`) e instalando con éxito absoluto todo el listado de dependencias (`pandas-3.0.3`, `scikit-learn-1.9.0`, `streamlit-1.58.0`, etc.).
+- **Garantía de Repositorio Limpio**:
+    - Se verificó y garantizó la exclusión permanente del entorno virtual local en el repositorio Git, previniendo que carpetas temporales o librerías pesadas sean comiteadas o pusheadas a GitHub.
+- **Validación de Integridad del Pipeline**:
+    - Se ejecutó el pipeline completo (`run_benchmark.sh`) en el nuevo path del workspace, confirmando que la lógica de checkpoint resumible valida correctamente el sweep (0 tareas pendientes en base a la finalización previa) y permitiendo probar la orquestación atómica con total fluidez.
 - **Finalización Completa del Benchmark Real**:
     - Finalizada la tarea `task-265` de procesamiento en batch del dataset real `kleptotrace.json` sobre la suite de 16 modelos locales e híbridos.
     - **Resultados de Performance Consolidados**: Liderado por `gemma4:31b` local con un F1-score definitivo del **67.83%** (Recall: 86.78%, Precisión: 57.29%) y una tasa de alucinaciones del **0.15%**. La versión cloud `gemma4:31b-cloud` registró un **66.29% de F1-Score** y **0.0%** de alucinaciones.
@@ -59,13 +68,13 @@ This file records the activity and progress of the Local LLM Financial Complianc
 
 ## 2026-06-29
 - **Academic and Defense Readiness Documentation**:
-    - Generated [THESIS_PROJECT_ANALYSIS_REPORT.md](file:///Users/eahumada1/Documents/Personal/MTI/taller_de_titulo/THESIS_PROJECT_ANALYSIS_REPORT.md) (55 KB) providing a comprehensive 60+ page audit log, covering requirement traceabilities, user stories, task completion rates, and research contributions.
-    - Generated [EXECUTIVE_SUMMARY.md](file:///Users/eahumada1/Documents/Personal/MTI/taller_de_titulo/EXECUTIVE_SUMMARY.md) (7 KB) summarizing key project performance stats, research contributions, and a 5-minute defense pitch.
-    - Generated [DEFENSE_CHECKLIST.md](file:///Users/eahumada1/Documents/Personal/MTI/taller_de_titulo/DEFENSE_CHECKLIST.md) (15 KB) laying out a structured 5-day study plan, demo checklist, slide outlines, and preparation for Q&A defense.
-    - Created [REPORTS_INDEX.md](file:///Users/eahumada1/Documents/Personal/MTI/taller_de_titulo/REPORTS_INDEX.md) as a central hub indexing the generated reports and key reference stats.
+    - Generated [THESIS_PROJECT_ANALYSIS_REPORT.md](file:///Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/THESIS_PROJECT_ANALYSIS_REPORT.md) (55 KB) providing a comprehensive 60+ page audit log, covering requirement traceabilities, user stories, task completion rates, and research contributions.
+    - Generated [EXECUTIVE_SUMMARY.md](file:///Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/EXECUTIVE_SUMMARY.md) (7 KB) summarizing key project performance stats, research contributions, and a 5-minute defense pitch.
+    - Generated [DEFENSE_CHECKLIST.md](file:///Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/DEFENSE_CHECKLIST.md) (15 KB) laying out a structured 5-day study plan, demo checklist, slide outlines, and preparation for Q&A defense.
+    - Created [REPORTS_INDEX.md](file:///Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/REPORTS_INDEX.md) as a central hub indexing the generated reports and key reference stats.
 - **Environment Automation & F-Score Recalculation**:
-    - Created [configure.sh](file:///Users/eahumada1/Documents/Personal/MTI/taller_de_titulo/repos/ner-llm-entity-benchmark/configure.sh) to automatically set up virtual environments, install Python dependencies, and pull Ollama models.
-    - Created [run_benchmark.sh](file:///Users/eahumada1/Documents/Personal/MTI/taller_de_titulo/repos/ner-llm-entity-benchmark/run_benchmark.sh) to activate `venv` and execute the prompt ablation benchmark and daily batch simulation.
+    - Created [configure.sh](file:///Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/repos/ner-llm-entity-benchmark/configure.sh) to automatically set up virtual environments, install Python dependencies, and pull Ollama models.
+    - Created [run_benchmark.sh](file:///Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/repos/ner-llm-entity-benchmark/run_benchmark.sh) to activate `venv` and execute the prompt ablation benchmark and daily batch simulation.
     - Pulled `llama3.2` (2.0 GB) and `deepseek-r1:1.5b` (1.1 GB) models locally via Ollama.
     - Updated `src/config.py` default models to `['gemma4:latest', 'llama3.2:latest', 'deepseek-r1:1.5b']`.
 - **Full QA Audit & Critical Bug-Fix Session**:
@@ -97,7 +106,7 @@ This file records the activity and progress of the Local LLM Financial Complianc
     - Satisfied all 42 Functional (FR) and Non-Functional (NFR/RNF) requirements mapped to 21 User Stories.
     - Finalized metric parameters: Few-shot Spanish F1 score of 70.18%, statistical significance validated (ANOVA p = 0.0023), local VRAM execution footprint < 16GB, and hallucination rate < 5%.
 - **Memory Stability Verification**:
-    - Created and executed [src/memory_stress_test.py](file:///Users/eahumada1/Documents/Personal/MTI/taller_de_titulo/repos/ner-llm-entity-benchmark/src/memory_stress_test.py) to cycle model loading and unloading in Ollama.
+    - Created and executed [src/memory_stress_test.py](file:///Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/repos/ner-llm-entity-benchmark/src/memory_stress_test.py) to cycle model loading and unloading in Ollama.
     - Verified process memory footprint bounds (RAM/VRAM) to guarantee leak-free execution and prevent OOM crashes during batch sweeps (NFR3.3 / RNF2.2).
 - **Gemma Model Family Investigation**:
     - Conducted a detailed audit of available Gemma model variants (2B, 7B, 27B) and their VRAM footprints on Apple M4 (16GB).
@@ -142,8 +151,8 @@ This file records the activity and progress of the Local LLM Financial Complianc
     - Updated the root `TODO.md` with Next Strategic Priorities & Sprint Focus details.
 - **Reference Cataloging & Bibliography**:
     - Created the `doc/references/` directory.
-    - Compiled an annotated reference list in [doc/references/annotated_references.md](file:///Users/eahumada1/Documents/Personal/MTI/taller_de_titulo/doc/references/annotated_references.md) mapping Tarea 2 references (Lewis et al. RAG, Devlin et al. BERT, BloombergGPT, etc.) to the codebase components.
-    - Generated a BibTeX bib file [doc/references/bibliography.bib](file:///Users/eahumada1/Documents/Personal/MTI/taller_de_titulo/doc/references/bibliography.bib) containing all 10 citations.
+    - Compiled an annotated reference list in [doc/references/annotated_references.md](file:///Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/doc/references/annotated_references.md) mapping Tarea 2 references (Lewis et al. RAG, Devlin et al. BERT, BloombergGPT, etc.) to the codebase components.
+    - Generated a BibTeX bib file [doc/references/bibliography.bib](file:///Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/doc/references/bibliography.bib) containing all 10 citations.
 - **Thesis-Grade Enhancements & Renaming Tasks**:
     - Migrated and renamed all user stories to Spanish `doc/USER_HISTORIES/HU*.md` files.
     - Created a comprehensive user history index mapping requirements, histories, and TODO tasks.
