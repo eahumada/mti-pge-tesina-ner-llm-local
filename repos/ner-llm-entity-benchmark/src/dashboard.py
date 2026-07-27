@@ -418,10 +418,16 @@ if os.path.exists(checkpoint_path):
 # ─── KPI Banner ───────────────────────────────────────────────────────────────
 df_summary = get_summary_df(summary_data)
 
-best_model = df_summary.loc[df_summary["f1"].idxmax(), "Model"] if "f1" in df_summary else "gemma4:latest"
-best_f1 = df_summary["f1"].max() if "f1" in df_summary else 0.6346
-best_recall = df_summary["recall"].max() if "recall" in df_summary else 0.7455
-lowest_halluc = df_summary["hallucination_rate"].min() if "hallucination_rate" in df_summary else 0.0020
+if df_summary.empty:
+    best_model = "N/A (Filtro vacío)"
+    best_f1 = 0.0
+    best_recall = 0.0
+    lowest_halluc = 0.0
+else:
+    best_model = df_summary.loc[df_summary["f1"].idxmax(), "Model"] if "f1" in df_summary else "N/A"
+    best_f1 = df_summary["f1"].max() if "f1" in df_summary else 0.0
+    best_recall = df_summary["recall"].max() if "recall" in df_summary else 0.0
+    lowest_halluc = df_summary["hallucination_rate"].min() if "hallucination_rate" in df_summary else 0.0
 
 if "total_execution_time_sec" in df_summary.columns:
     total_time_s = df_summary["total_execution_time_sec"].sum()
