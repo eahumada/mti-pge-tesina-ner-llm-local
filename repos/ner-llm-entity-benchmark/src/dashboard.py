@@ -836,9 +836,25 @@ with tab8:
     if len(rag_data) > 0:
         df_rag = pd.DataFrame(rag_data)
         
-        # Plotting comparison
-        import altair as alt
-        chart_f1 = alt.Chart(df_rag).mark_bar().encode(
+        # Filtro de Modelos para Tab 8
+        all_base_models = sorted(df_rag["Base Model"].unique().tolist())
+        # Default selection: if there are many models, select a few representative ones to avoid chart overflow
+        default_models = [m for m in all_base_models if "gemma4:latest" in m or "llama3.1:8b" in m or "mistral-nemo" in m]
+        if not default_models:
+            default_models = all_base_models[:3]
+            
+        selected_rag_models = st.multiselect(
+            "🎛️ Filtrar Modelos para Comparativa RAG:",
+            options=all_base_models,
+            default=default_models
+        )
+        
+        if selected_rag_models:
+            df_rag_filtered = df_rag[df_rag["Base Model"].isin(selected_rag_models)]
+            
+            # Plotting comparison
+            import altair as alt
+            chart_f1 = alt.Chart(df_rag_filtered).mark_bar().encode(
             x=alt.X('Condition:N', title='Condición'),
             y=alt.Y('F1:Q', title='F1-Score'),
             color='Condition:N',
@@ -848,7 +864,7 @@ with tab8:
         st.altair_chart(chart_f1, use_container_width=False)
         
         st.markdown("#### Delta de Rendimiento (RAG - Baseline)")
-        pivot_df = df_rag.pivot(index='Base Model', columns='Condition', values=['F1', 'Precision', 'Recall', 'Hallucination'])
+        pivot_df = df_rag_filtered.pivot(index='Base Model', columns='Condition', values=['F1', 'Precision', 'Recall', 'Hallucination'])
         
         deltas = []
         for base_model in pivot_df.index:
