@@ -1,0 +1,383 @@
+diff --git a/repos/ner-llm-entity-benchmark/src/config.py b/repos/ner-llm-entity-benchmark/src/config.py
+index 5db4bba..d036640 100644
+--- a/repos/ner-llm-entity-benchmark/src/config.py
++++ b/repos/ner-llm-entity-benchmark/src/config.py
+@@ -1,11 +1,21 @@
+ from __future__ import annotations
+ import os
+ import json
+-from dataclasses import dataclass, asdict
++from dataclasses import dataclass, field, asdict
+ 
+ @dataclass
+ class BenchmarkConfig:
+-    models: list[str] = None
++    models: list[str] = field(default_factory=lambda: [
++        'gemini-3.1-flash-lite', 'gemini-3.5-flash',
++        'gemma4:31b-cloud',
++        'minimax-m3:cloud',
++        'gemma4:31b', 'sonct988/gemma4-26b-a4b-it-q4km-256k:latest',
++        'gpt-oss:20b',
++        'gemma4:latest', 'gemma:latest',
++        'qwen3:8b', 'qwen2.5:14b', 'mistral-nemo:latest', 'nuextract:latest',
++        'llama3.1:8b', 'llama3.2:latest', 'nemotron-mini:4b', 'deepseek-r1:1.5b',
++        'phi3.5:latest', 'gemma4:12b-mlx-q8-64k', 'phi3.5'
++    ])
+     batch_size: int = 5
+     num_workers: int = 2
+     max_retries: int = 2
+@@ -19,19 +29,7 @@ class BenchmarkConfig:
+     temperature: float = 0.1
+     max_tokens: int = 2048
+     seed: int = 42
+-
+-    def __post_init__(self):
+-            self.models = [
+-                'gemini-3.1-flash-lite', 'gemini-3.5-flash',
+-                'gemma4:31b-cloud',
+-                'minimax-m3:cloud',
+-                'gemma4:31b', 'sonct988/gemma4-26b-a4b-it-q4km-256k:latest',
+-                'gpt-oss:20b',
+-                'gemma4:latest', 'gemma:latest',
+-                'qwen3:8b', 'qwen2.5:14b', 'mistral-nemo:latest', 'nuextract:latest',
+-                'llama3.1:8b', 'llama3.2:latest', 'nemotron-mini:4b', 'deepseek-r1:1.5b',
+-                'phi3.5:latest', 'phi3.5'
+-            ]
++    rag_study: bool = False
+ 
+     def to_dict(self) -> dict:
+         return asdict(self)
+diff --git a/repos/ner-llm-entity-benchmark/src/evaluator.py b/repos/ner-llm-entity-benchmark/src/evaluator.py
+index c41ee69..52f7c1d 100644
+--- a/repos/ner-llm-entity-benchmark/src/evaluator.py
++++ b/repos/ner-llm-entity-benchmark/src/evaluator.py
+@@ -1,6 +1,30 @@
+ from __future__ import annotations
+ import re
+ from rapidfuzz import fuzz
++import json
++import os
++
++# Global cache for dictionaries to avoid loading them repeatedly
++_GLOBAL_DICTIONARIES = None
++
++def _get_dictionaries() -> set:
++    global _GLOBAL_DICTIONARIES
++    if _GLOBAL_DICTIONARIES is not None:
++        return _GLOBAL_DICTIONARIES
++        
++    _GLOBAL_DICTIONARIES = set()
++    for file_name in ["persons.json", "organizations.json"]:
++        path = os.path.join("data", "dictionaries", file_name)
++        if os.path.exists(path):
++            try:
++                with open(path, "r", encoding="utf-8") as f:
++                    data = json.load(f)
++                    for item in data:
++                        _GLOBAL_DICTIONARIES.add(item.lower().strip())
++            except:
++                pass
++    return _GLOBAL_DICTIONARIES
++
+ 
+ def calculate_fuzzy_match(extracted_entity: str, ground_truth_entities: list[str], threshold: int = 85) -> bool:
+     """Checks if extracted entity matches ground truth list based on fuzzy ratio."""
+@@ -25,6 +49,11 @@ def evaluate_extraction_by_type(extracted: dict, ground_truth: dict, threshold:
+     overall_fp = 0
+     overall_fn = 0
+     
++    oov_tp = 0
++    oov_gt_total = 0
++    
++    dict_cache = _get_dictionaries()
++    
+     for t in types:
+         ext_list = extracted.get(t, [])
+         gt_list = ground_truth.get(t, [])
+@@ -32,6 +61,7 @@ def evaluate_extraction_by_type(extracted: dict, ground_truth: dict, threshold:
+         tp = 0
+         fp = 0
+         fn = 0
++        matched_gts = set()
+         
+         if not ext_list and not gt_list:
+             # Empty list matches
+@@ -51,7 +81,6 @@ def evaluate_extraction_by_type(extracted: dict, ground_truth: dict, threshold:
+             fp = len(ext_list)
+         else:
+             # Standard TP count using fuzzy match
+-            matched_gts = set()
+             for entity in ext_list:
+                 matched = False
+                 for gt in gt_list:
+@@ -77,6 +106,18 @@ def evaluate_extraction_by_type(extracted: dict, ground_truth: dict, threshold:
+             "fn": fn
+         }
+         
++        # Calculate OOV metrics for this type
++        for gt in gt_list:
++            is_oov = True
++            for d_item in dict_cache:
++                if fuzz.ratio(gt.lower(), d_item) >= threshold:
++                    is_oov = False
++                    break
++            if is_oov:
++                oov_gt_total += 1
++                if gt in matched_gts:
++                    oov_tp += 1
++        
+         overall_tp += tp
+         overall_fp += fp
+         overall_fn += fn
+@@ -98,7 +139,8 @@ def evaluate_extraction_by_type(extracted: dict, ground_truth: dict, threshold:
+         "f1": overall_f1,
+         "tp": overall_tp,
+         "fp": overall_fp,
+-        "fn": overall_fn
++        "fn": overall_fn,
++        "oov_recall": (oov_tp / oov_gt_total) if oov_gt_total > 0 else 1.0
+     }
+     
+     return result
+@@ -316,6 +358,7 @@ def aggregate_model_results(results: list[dict]) -> dict:
+             "precision": float(group["precision"].mean()),
+             "recall": float(group["recall"].mean()),
+             "hallucination_rate": float(group["hallucination_rate"].mean()),
++            "oov_recall": float(group["oov_recall"].mean()) if "oov_recall" in group.columns else 0.0,
+             "latency_sec": float(group["latency_sec"].mean()),
+             "tokens_per_sec": tokens_per_sec,
+             "total_records": int(num_records),
+diff --git a/repos/ner-llm-entity-benchmark/src/llm_runner.py b/repos/ner-llm-entity-benchmark/src/llm_runner.py
+index 07832ed..8f0eeba 100644
+--- a/repos/ner-llm-entity-benchmark/src/llm_runner.py
++++ b/repos/ner-llm-entity-benchmark/src/llm_runner.py
+@@ -191,7 +191,8 @@ def extract_entities_with_ollama(
+     max_tokens: int = 2048,
+     seed: int = 42,
+     max_retries: int = 2,
+-    ollama_base_url: str = "http://localhost:11434"
++    ollama_base_url: str = "http://localhost:11434",
++    rag_context: list[str] | None = None
+ ) -> dict:
+     """
+     Backward-compatible shim.
+@@ -233,6 +234,7 @@ def extract_entities_with_ollama(
+         max_tokens=max_tokens,
+         seed=seed,
+         max_retries=max_retries,
++        rag_context=rag_context
+     )
+ 
+ def manage_model_lifecycle(current_model: str, next_model: str | None, ollama_base_url: str = "http://localhost:11434") -> None:
+diff --git a/repos/ner-llm-entity-benchmark/src/main.py b/repos/ner-llm-entity-benchmark/src/main.py
+index b02ec04..c2df990 100644
+--- a/repos/ner-llm-entity-benchmark/src/main.py
++++ b/repos/ner-llm-entity-benchmark/src/main.py
+@@ -24,6 +24,7 @@ from src.checkpoint import CheckpointState, save_checkpoint, load_checkpoint, is
+ from src.pub_sub import create_task_queue, TaskMessage
+ from src.system_monitor import ThroughputTracker
+ from src.adaptive_workers import AdaptiveWorkerController, is_rate_limit_exception
++from src.rag_manager import RAGManager
+ 
+ logger = logging.getLogger("ner_benchmark")
+ 
+@@ -63,7 +64,7 @@ def validate_environment(config: BenchmarkConfig) -> bool:
+                            "The benchmark will skip or warn when invoking this model.")
+     return True
+ 
+-def process_batch(batch: list[dict], model: str, system_prompt: str, config: BenchmarkConfig, batch_idx: int, condition_name: str | None = None) -> list[dict]:
++def process_batch(batch: list[dict], model: str, system_prompt: str, config: BenchmarkConfig, batch_idx: int, condition_name: str | None = None, rag_manager = None) -> list[dict]:
+     """Processes a batch of articles against a model in parallel and returns structured evaluations (REQ-PAR-03)."""
+     results = []
+     prompt_hash = hashlib.sha256(system_prompt.encode('utf-8')).hexdigest()[:8]
+@@ -80,6 +81,10 @@ def process_batch(batch: list[dict], model: str, system_prompt: str, config: Ben
+         
+         logger.info(f"[Worker {worker_id}] Model '{model}' (Mapped: '{display_model_name}') -> Extracting entities for record '{record_id}'...")
+         
++        rag_context = None
++        if rag_manager:
++            rag_context = rag_manager.query([source_text])
++
+         # Run Ollama NER
+         llm_output = extract_entities_with_ollama(
+             text=source_text,
+@@ -89,7 +94,8 @@ def process_batch(batch: list[dict], model: str, system_prompt: str, config: Ben
+             max_tokens=config.max_tokens,
+             seed=config.seed,
+             max_retries=config.max_retries,
+-            ollama_base_url=config.ollama_base_url
++            ollama_base_url=config.ollama_base_url,
++            rag_context=rag_context
+         )
+         
+         # Evaluate metrics
+@@ -249,7 +255,32 @@ def run_benchmark(config: BenchmarkConfig, resume: bool = False, ablation: bool
+     logger.info("Main thread acting as Producer: Publishing pending tasks to queue...")
+     published_count = 0
+     
+-    if ablation:
++    if config.rag_study:
++        rag_mgr = RAGManager()
++        rag_mgr.load_dictionaries()
++        for model in config.models:
++            if not check_model_available(model, config.ollama_base_url):
++                continue
++            for condition_name in ['baseline', 'rag_enhanced']:
++                condition_key = f"{model}_{condition_name}"
++                for batch_idx in range(total_batches):
++                    if is_batch_completed(state, condition_key, batch_idx):
++                        continue
++                    batch_records = dataset.get_batch(batch_idx)
++                    if not batch_records:
++                        continue
++                    task_msg = TaskMessage(
++                        task_id=f"{condition_key}-b{batch_idx}-{int(time.time())}",
++                        batch_idx=batch_idx,
++                        model_name=model,
++                        records=batch_records,
++                        created_at=datetime.now(timezone.utc).isoformat(),
++                        prompt_file=config.system_prompt_file,
++                        condition_name=condition_key
++                    )
++                    task_queue.publish(task_msg)
++                    published_count += 1
++    elif ablation:
+         # Prompt Ablation Study (REQ41): cycle through prompt configurations
+         model = config.models[0]
+         if not check_model_available(model, config.ollama_base_url):
+@@ -319,7 +350,68 @@ def run_benchmark(config: BenchmarkConfig, resume: bool = False, ablation: bool
+     num_queue_workers = adaptive_ctrl.current_workers
+     config.num_workers = adaptive_ctrl.current_workers
+     
+-    if ablation:
++    if config.rag_study:
++        rag_mgr = RAGManager()
++        for model in config.models:
++            if not check_model_available(model, config.ollama_base_url):
++                continue
++            for condition_name in ['baseline', 'rag_enhanced']:
++                condition_key = f"{model}_{condition_name}"
++                task_queue = create_task_queue(use_redis=False)
++                published_count = 0
++                for batch_idx in range(total_batches):
++                    if is_batch_completed(state, condition_key, batch_idx):
++                        continue
++                    batch_records = dataset.get_batch(batch_idx)
++                    if not batch_records:
++                        continue
++                    task_msg = TaskMessage(
++                        task_id=f"{condition_key}-b{batch_idx}-{int(time.time())}",
++                        batch_idx=batch_idx,
++                        model_name=model,
++                        records=batch_records,
++                        created_at=datetime.now(timezone.utc).isoformat(),
++                        prompt_file=config.system_prompt_file,
++                        condition_name=condition_key
++                    )
++                    task_queue.publish(task_msg)
++                    published_count += 1
++                if published_count > 0:
++                    num_queue_workers = adaptive_ctrl.current_workers
++                    logger.info(f"Running RAG study '{condition_key}' with {num_queue_workers} workers...")
++                    def worker_consumer(worker_id: int):
++                        while True:
++                            claimed_task = task_queue.subscribe()
++                            if not claimed_task: break
++                            task_prompt = load_system_prompt(claimed_task.prompt_file)
++                            active_rag = rag_mgr if 'rag_enhanced' in claimed_task.condition_name else None
++                            try:
++                                batch_results = process_batch(
++                                    batch=claimed_task.records,
++                                    model=claimed_task.model_name,
++                                    system_prompt=task_prompt,
++                                    config=config,
++                                    batch_idx=claimed_task.batch_idx,
++                                    condition_name=claimed_task.condition_name,
++                                    rag_manager=active_rag
++                                )
++                                task_queue.acknowledge(claimed_task.task_id)
++                                with state_lock:
++                                    mark_batch_completed(state, claimed_task.condition_name, claimed_task.batch_idx, batch_results)
++                                    save_checkpoint(state, checkpoint_path)
++                                new_w = adaptive_ctrl.report_success()
++                                config.num_workers = new_w
++                            except Exception as exc:
++                                is_rl = is_rate_limit_exception(exc)
++                                new_w = adaptive_ctrl.report_error(is_rate_limit=is_rl)
++                                config.num_workers = new_w
++                                logger.error(f"[Worker {worker_id}] Error: {exc}")
++                    with ThreadPoolExecutor(max_workers=num_queue_workers) as executor:
++                        futures = [executor.submit(worker_consumer, idx + 1) for idx in range(num_queue_workers)]
++                        for future in futures: future.result()
++            logger.info(f"Unloading model weights for {model} to protect VRAM.")
++            manage_model_lifecycle(model, None, config.ollama_base_url)
++    elif ablation:
+         # Prompt Ablation Study (REQ41)
+         model = config.models[0]
+         if not check_model_available(model, config.ollama_base_url):
+@@ -587,6 +679,7 @@ def main():
+     parser.add_argument("--system-prompt-file", type=str, default="SYSTEM_PROMPT.md", help="Path to system prompt MD file")
+     parser.add_argument("--compare-annotators", nargs=2, metavar=("FILE1", "FILE2"), help="Compute Cohen's Kappa inter-annotator agreement between two ground truth files")
+     parser.add_argument("--ablation", action="store_true", help="Perform prompt ablation study comparing Zero-Shot EN, Zero-Shot ES, and Few-Shot ES prompts (REQ41)")
++    parser.add_argument("--rag-study", action="store_true", help="Perform RAG integration study with and without dictionaries")
+     parser.add_argument("--num-workers", type=int, default=2, help="Number of concurrent worker threads")
+     
+     args = parser.parse_args()
+@@ -609,7 +702,8 @@ def main():
+         temperature=args.temperature,
+         max_tokens=args.max_tokens,
+         seed=args.seed,
+-        system_prompt_file=args.system_prompt_file
++        system_prompt_file=args.system_prompt_file,
++        rag_study=args.rag_study
+     )
+     if args.models:
+         config.models = args.models
+diff --git a/repos/ner-llm-entity-benchmark/src/providers/base.py b/repos/ner-llm-entity-benchmark/src/providers/base.py
+index dbb4e90..2f3a3dc 100644
+--- a/repos/ner-llm-entity-benchmark/src/providers/base.py
++++ b/repos/ner-llm-entity-benchmark/src/providers/base.py
+@@ -96,6 +96,7 @@ class LLMProvider(ABC):
+         max_tokens: int | None = None,
+         seed: int | None = None,
+         max_retries: int | None = None,
++        rag_context: list[str] | None = None,
+     ) -> ExtractionResult:
+         """
+         Run NER inference on *text* and return a standardised result dict.
+diff --git a/repos/ner-llm-entity-benchmark/src/providers/ollama_provider.py b/repos/ner-llm-entity-benchmark/src/providers/ollama_provider.py
+index ddf9f38..fb3bcf3 100644
+--- a/repos/ner-llm-entity-benchmark/src/providers/ollama_provider.py
++++ b/repos/ner-llm-entity-benchmark/src/providers/ollama_provider.py
+@@ -155,6 +155,7 @@ class OllamaProvider(LLMProvider):
+         max_tokens: int | None = None,
+         seed: int | None = None,
+         max_retries: int | None = None,
++        rag_context: list[str] | None = None,
+     ) -> ExtractionResult:
+         """Run NER with the configured Ollama model."""
+         # Lazy import so the package stays importable even without `ollama`
+@@ -182,13 +183,23 @@ class OllamaProvider(LLMProvider):
+         is_qwen3_thinking = any(k in model_key for k in _QWEN3_THINKING_MODELS)
+         is_cloud = _is_cloud_model(self.model_name)
+ 
++        # Inject RAG context if provided
++        rag_injection = ""
++        if rag_context:
++            rag_injection = "\n\n[RAG CONTEXT]\nThe following entities from our AML database MIGHT be present in the text. STRICT INSTRUCTION: DO NOT extract them unless they explicitly appear in the News text. They are provided only as hints for correct spelling and recognition:\n"
++            rag_injection += "\n".join(f"- {ctx}" for ctx in rag_context)
++
+         # Build prompt
+         if is_nuextract:
++            if rag_injection:
++                text = f"{rag_injection}\n\n{text}"
+             messages = _build_nuextract_messages(text)
+             logger.debug("Using NuExtract template format for '%s'.", self.model_name)
+         else:
+             if not system_prompt:
+                 system_prompt = _FALLBACK_SYSTEM_PROMPT
++            if rag_injection:
++                system_prompt += rag_injection
+             messages = _build_messages(system_prompt, text)
+ 
+         client = ollama_lib.Client(host=self.ollama_base_url)

@@ -191,7 +191,8 @@ def extract_entities_with_ollama(
     max_tokens: int = 2048,
     seed: int = 42,
     max_retries: int = 2,
-    ollama_base_url: str = "http://localhost:11434"
+    ollama_base_url: str = "http://localhost:11434",
+    rag_context: list[str] | None = None
 ) -> dict:
     """
     Backward-compatible shim.
@@ -233,6 +234,7 @@ def extract_entities_with_ollama(
         max_tokens=max_tokens,
         seed=seed,
         max_retries=max_retries,
+        rag_context=rag_context
     )
 
 def manage_model_lifecycle(current_model: str, next_model: str | None, ollama_base_url: str = "http://localhost:11434") -> None:

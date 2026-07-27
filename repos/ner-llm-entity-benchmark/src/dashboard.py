@@ -26,7 +26,32 @@ st.subheader("Evaluating Local Open-Source LLMs · Financial Compliance & AML ·
 
 # ─── Sidebar ──────────────────────────────────────────────────────────────────
 st.sidebar.header("⚙️ Configuration")
-results_dir = st.sidebar.text_input("Results Directory", value="results")
+import shutil
+
+base_results_path = "results"
+if not os.path.exists(base_results_path):
+    os.makedirs(base_results_path)
+
+# Scan for result directories
+result_dirs = [d for d in os.listdir(base_results_path) if os.path.isdir(os.path.join(base_results_path, d))]
+result_dirs.sort(reverse=True)
+options = ["Base (Actual / Anterior)"] + result_dirs
+
+selected_run = st.sidebar.selectbox("Seleccionar Ejecución (Dataset - Fecha)", options)
+
+if selected_run == "Base (Actual / Anterior)":
+    results_dir = base_results_path
+else:
+    results_dir = os.path.join(base_results_path, selected_run)
+
+    if st.sidebar.button("🗑️ Eliminar esta ejecución"):
+        try:
+            shutil.rmtree(results_dir)
+            st.sidebar.success(f"Ejecución {selected_run} eliminada.")
+            st.rerun()
+        except Exception as e:
+            st.sidebar.error(f"Error al eliminar: {e}")
+
 st.sidebar.markdown("---")
 st.sidebar.markdown("""
 **Modelos bajo evaluación:**
@@ -321,6 +346,39 @@ if acceptance_data:
             st.success(f"✅ Hallucination Rate segura: **{hr:.2%}** (≤ 5%)")
     st.markdown("---")
 
+# ─── Live Progress Banner ─────────────────────────────────────────────────────
+checkpoint_path = os.path.join(results_dir, ".checkpoint.json")
+if os.path.exists(checkpoint_path):
+    # Check if checkpoint is newer than summary (meaning it's still running)
+    c_time = os.path.getmtime(checkpoint_path)
+    s_time = os.path.getmtime(summary_json_path) if os.path.exists(summary_json_path) else 0
+    if c_time > s_time:
+        chk_data = load_json(checkpoint_path)
+        if chk_data and "results" in chk_data:
+            completed_records = len(chk_data["results"])
+            models_seen = list(set(r.get("model", "") for r in chk_data["results"]))
+            st.info(f"🔄 **Benchmark en curso...** Se han evaluado **{completed_records}** registros hasta el momento. Modelos procesados parcialmente: {', '.join(models_seen)}")
+            st.markdown("---")
+            
+            # Build temporary summary data from checkpoint so charts update live!
+            import pandas as pd
+            live_df = pd.DataFrame(chk_data["results"])
+            if not live_df.empty:
+                df_results = live_df
+                # Aggregate to summary_data
+                summary_data = {}
+                for m in live_df["model"].unique():
+                    m_df = live_df[live_df["model"] == m]
+                    summary_data[m] = {
+                        "f1": m_df["f1"].mean(),
+                        "precision": m_df["precision"].mean(),
+                        "recall": m_df["recall"].mean(),
+                        "hallucination_rate": m_df["hallucination_rate"].mean() if "hallucination_rate" in m_df else 0,
+                        "latency_sec": m_df["latency_sec"].mean() if "latency_sec" in m_df else 0,
+                        "total_execution_time_sec": m_df["latency_sec"].sum() if "latency_sec" in m_df else 0,
+                        "tokens_per_sec": m_df["tokens_per_sec"].mean() if "tokens_per_sec" in m_df else 0
+                    }
+
 # ─── KPI Banner ───────────────────────────────────────────────────────────────
 df_summary = get_summary_df(summary_data)
 
@@ -329,16 +387,23 @@ best_f1 = df_summary["f1"].max() if "f1" in df_summary else 0.6346
 best_recall = df_summary["recall"].max() if "recall" in df_summary else 0.7455
 lowest_halluc = df_summary["hallucination_rate"].min() if "hallucination_rate" in df_summary else 0.0020
 
-k1, k2, k3, k4 = st.columns(4)
+if "total_execution_time_sec" in df_summary.columns:
+    total_time_s = df_summary["total_execution_time_sec"].sum()
+    total_time_str = f"{total_time_s/60:.1f} min" if total_time_s > 120 else f"{total_time_s:.1f} s"
+else:
+    total_time_str = "N/A"
+
+k1, k2, k3, k4, k5 = st.columns(5)
 k1.metric("🏆 Mejor Modelo", best_model)
 k2.metric("🎯 Mejor F1-Score", f"{best_f1:.2%}", delta=f"{best_f1 - 0.85:.2%} vs target 85%")
 k3.metric("📡 Mejor Recall", f"{best_recall:.2%}")
 k4.metric("🛡️ Menor Hallucination", f"{lowest_halluc:.2%}")
+k5.metric("⏳ Tiempo Total Test", total_time_str)
 
 st.markdown("---")
 
 # ─── Tabs ─────────────────────────────────────────────────────────────────────
-tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9 = st.tabs([
     "📊 Comparación de Modelos",
     "🧬 Análisis de Alucinaciones",
     "🏷️ Errores por Entidad",
@@ -346,6 +411,7 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
     "⏱️ Eficiencia de Hardware",
     "🔭 Hipótesis de Modelos Futuros",
     "🚦 Simulación de Producción",
+    "🧠 Impacto RAG vs Baseline",
     "💬 Chat con los Resultados (Gemini AI)",
 ])
 
@@ -701,8 +767,74 @@ with tab7:
             except Exception as e:
                 st.error(f"Error: {e}")
 
-# ── TAB 8: Chat with Gemini ──────────────────────────────────────────────────
+# ── TAB 8: RAG Impact ────────────────────────────────────────────────────────
 with tab8:
+    st.markdown("### 🧠 Estudio de Impacto RAG vs Baseline")
+    st.info("Comparación del rendimiento (Precisión, Recall, F1) cuando se inyecta contexto de diccionarios de censos y sanciones mediante RAG, versus la línea base sin RAG.")
+    
+    rag_data = []
+    for model_name, metrics in summary_data.items():
+        # Parsing model_name, e.g. "llama3.1:8b_rag_enhanced" or "llama3.1:8b_baseline"
+        if "_rag_enhanced" in model_name:
+            base = model_name.replace("_rag_enhanced", "")
+            rag_data.append({"Base Model": base, "Condition": "RAG", "F1": metrics.get("f1", 0), "Precision": metrics.get("precision", 0), "Recall": metrics.get("recall", 0), "Hallucination": metrics.get("hallucination_rate", 0)})
+        elif "_baseline" in model_name:
+            base = model_name.replace("_baseline", "")
+            rag_data.append({"Base Model": base, "Condition": "Baseline", "F1": metrics.get("f1", 0), "Precision": metrics.get("precision", 0), "Recall": metrics.get("recall", 0), "Hallucination": metrics.get("hallucination_rate", 0)})
+    
+    if len(rag_data) > 0:
+        df_rag = pd.DataFrame(rag_data)
+        
+        # Plotting comparison
+        import altair as alt
+        chart_f1 = alt.Chart(df_rag).mark_bar().encode(
+            x=alt.X('Condition:N', title='Condición'),
+            y=alt.Y('F1:Q', title='F1-Score'),
+            color='Condition:N',
+            column='Base Model:N'
+        ).properties(width=150, height=300)
+        
+        st.altair_chart(chart_f1, use_container_width=False)
+        
+        st.markdown("#### Delta de Rendimiento (RAG - Baseline)")
+        pivot_df = df_rag.pivot(index='Base Model', columns='Condition', values=['F1', 'Precision', 'Recall', 'Hallucination'])
+        
+        deltas = []
+        for base_model in pivot_df.index:
+            if 'Baseline' in pivot_df['F1'].columns and 'RAG' in pivot_df['F1'].columns:
+                try:
+                    f1_delta = pivot_df.loc[base_model, ('F1', 'RAG')] - pivot_df.loc[base_model, ('F1', 'Baseline')]
+                    prec_delta = pivot_df.loc[base_model, ('Precision', 'RAG')] - pivot_df.loc[base_model, ('Precision', 'Baseline')]
+                    rec_delta = pivot_df.loc[base_model, ('Recall', 'RAG')] - pivot_df.loc[base_model, ('Recall', 'Baseline')]
+                    hall_delta = pivot_df.loc[base_model, ('Hallucination', 'RAG')] - pivot_df.loc[base_model, ('Hallucination', 'Baseline')]
+                    deltas.append({
+                        "Base Model": base_model,
+                        "Δ F1": f1_delta,
+                        "Δ Precision": prec_delta,
+                        "Δ Recall": rec_delta,
+                        "Δ Hallucination": hall_delta
+                    })
+                except Exception:
+                    pass
+        
+        if deltas:
+            df_delta = pd.DataFrame(deltas)
+            st.dataframe(df_delta.style.format({
+                "Δ F1": "{:+.2%}", "Δ Precision": "{:+.2%}", "Δ Recall": "{:+.2%}", "Δ Hallucination": "{:+.2%}"
+            }).map(lambda v: 'color: red' if v < 0 else 'color: green', subset=["Δ F1", "Δ Precision", "Δ Recall"])
+              .map(lambda v: 'color: red' if v > 0 else 'color: green', subset=["Δ Hallucination"]),
+            hide_index=True, use_container_width=True)
+            
+            st.markdown("""
+            **Interpretación:** 
+            - Una pequeña degradación de F1 (hasta -2%) es tolerable si se debe al aumento del Recall (nuevas entidades descubiertas) a costa de una baja en Precisión (alucinaciones).
+            - Un Δ Hallucination positivo significa que el RAG introdujo más falsos positivos.
+            """)
+    else:
+        st.warning("No hay datos comparativos RAG disponibles. Ejecuta el benchmark con el flag `--rag-study`.")
+
+# ── TAB 9: Chat with Gemini ──────────────────────────────────────────────────
+with tab9:
     st.markdown("### 💬 Chat con tus Resultados (Gemini AI)")
     st.markdown("Haz consultas en lenguaje natural sobre las métricas de F1-Score, tasas de alucinaciones, la ANOVA, Tukey, eficiencia de hardware o el diseño general del proyecto.")
 

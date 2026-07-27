@@ -96,6 +96,7 @@ class LLMProvider(ABC):
         max_tokens: int | None = None,
         seed: int | None = None,
         max_retries: int | None = None,
+        rag_context: list[str] | None = None,
     ) -> ExtractionResult:
         """
         Run NER inference on *text* and return a standardised result dict.

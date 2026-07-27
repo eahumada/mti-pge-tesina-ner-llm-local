@@ -1,6 +1,30 @@
 from __future__ import annotations
 import re
 from rapidfuzz import fuzz
+import json
+import os
+
+# Global cache for dictionaries to avoid loading them repeatedly
+_GLOBAL_DICTIONARIES = None
+
+def _get_dictionaries() -> set:
+    global _GLOBAL_DICTIONARIES
+    if _GLOBAL_DICTIONARIES is not None:
+        return _GLOBAL_DICTIONARIES
+        
+    _GLOBAL_DICTIONARIES = set()
+    for file_name in ["persons.json", "organizations.json"]:
+        path = os.path.join("data", "dictionaries", file_name)
+        if os.path.exists(path):
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    for item in data:
+                        _GLOBAL_DICTIONARIES.add(item.lower().strip())
+            except:
+                pass
+    return _GLOBAL_DICTIONARIES
+
 
 def calculate_fuzzy_match(extracted_entity: str, ground_truth_entities: list[str], threshold: int = 85) -> bool:
     """Checks if extracted entity matches ground truth list based on fuzzy ratio."""
@@ -25,6 +49,11 @@ def evaluate_extraction_by_type(extracted: dict, ground_truth: dict, threshold: 
     overall_fp = 0
     overall_fn = 0
     
+    oov_tp = 0
+    oov_gt_total = 0
+    
+    dict_cache = _get_dictionaries()
+    
     for t in types:
         ext_list = extracted.get(t, [])
         gt_list = ground_truth.get(t, [])
@@ -32,6 +61,7 @@ def evaluate_extraction_by_type(extracted: dict, ground_truth: dict, threshold: 
         tp = 0
         fp = 0
         fn = 0
+        matched_gts = set()
         
         if not ext_list and not gt_list:
             # Empty list matches
@@ -51,7 +81,6 @@ def evaluate_extraction_by_type(extracted: dict, ground_truth: dict, threshold: 
             fp = len(ext_list)
         else:
             # Standard TP count using fuzzy match
-            matched_gts = set()
             for entity in ext_list:
                 matched = False
                 for gt in gt_list:
@@ -77,6 +106,18 @@ def evaluate_extraction_by_type(extracted: dict, ground_truth: dict, threshold: 
             "fn": fn
         }
         
+        # Calculate OOV metrics for this type
+        for gt in gt_list:
+            is_oov = True
+            for d_item in dict_cache:
+                if fuzz.ratio(gt.lower(), d_item) >= threshold:
+                    is_oov = False
+                    break
+            if is_oov:
+                oov_gt_total += 1
+                if gt in matched_gts:
+                    oov_tp += 1
+        
         overall_tp += tp
         overall_fp += fp
         overall_fn += fn
@@ -98,7 +139,8 @@ def evaluate_extraction_by_type(extracted: dict, ground_truth: dict, threshold: 
         "f1": overall_f1,
         "tp": overall_tp,
         "fp": overall_fp,
-        "fn": overall_fn
+        "fn": overall_fn,
+        "oov_recall": (oov_tp / oov_gt_total) if oov_gt_total > 0 else 1.0
     }
     
     return result
@@ -316,6 +358,7 @@ def aggregate_model_results(results: list[dict]) -> dict:
             "precision": float(group["precision"].mean()),
             "recall": float(group["recall"].mean()),
             "hallucination_rate": float(group["hallucination_rate"].mean()),
+            "oov_recall": float(group["oov_recall"].mean()) if "oov_recall" in group.columns else 0.0,
             "latency_sec": float(group["latency_sec"].mean()),
             "tokens_per_sec": tokens_per_sec,
             "total_records": int(num_records),

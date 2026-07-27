@@ -19,8 +19,10 @@ else
 fi
 
 echo "📊 Running full benchmark sweep — 15 models (including MiniMax & gpt-oss) on ALL data..."
-python src/main.py --data-file data/kleptotrace.json \
+./venv/bin/python src/main.py --data-file data/kleptotrace.json \
+  --rag-study \
   --models \
+    gemma4-12b-mlx-q8-64k:latest \
     gemma4:31b-cloud \
     minimax-m3:cloud \
     gemma4:31b-mlx \

@@ -56,8 +56,12 @@ OpenSanctions organiza su base de datos bajo el modelo FollowTheMoney (FtM). A c
 
 ---
 
-## 📈 3. NOTA METODOLÓGICA SOBRE SIGNIFICANCIA ESTADÍSTICA ($N \ge 30$)
+## 📈 3. NOTA METODOLÓGICA SOBRE SIGNIFICANCIA ESTADÍSTICA ($N \ge 30$) Y DATASETS AUMENTADOS
 
-Para la tesis de MTI, la adopción del dataset aumentado `data/kleptotrace_augmented_30.json` con **$N=30$ registros breves** se justifica metodológicamente en:
-1. **Teorema del Límite Central (TLC):** Un tamaño de muestra $N \ge 30$ permite asegurar que la distribución muestral de las medias del F1-Score se aproxime a una distribución normal, validando la aplicación de pruebas paramétricas como el análisis de varianza (ANOVA de una vía) y la prueba de comparaciones múltiples Tukey HSD.
-2. **Eficiencia Computacional en Hardware Soberano:** Al utilizar registros cortos de 1 a 2 párrafos, la latencia promedio del benchmark disminuye drásticamente, permitiendo que modelos locales de gran escala (como `gemma4:31b-mlx` en Apple Silicon M4) se evalúen secuencialmente en menos de 2 minutos sin saturar la VRAM ni el consumo eléctrico.
+Para la tesis de MTI, la adopción de datasets aumentados basados en Kleptotrace responde a la necesidad metodológica de validación estadística y estrés computacional:
+
+1. **Kleptotrace (Original 15 registros):** La fuente original de Kleptotrace es un dataset público de noticias relacionadas con lavado de activos y crímenes financieros. Consiste en reportajes y recortes periodísticos en los que se extraen nombres de PEPs (Personas Expuestas Políticamente) y organizaciones ficticias o reales. Debido a que 15 artículos resultan muy pocos para una prueba estadística robusta, se optó por una estrategia de aumento de datos (*data augmentation*).
+
+2. **Dataset 30 Registros (`kleptotrace_augmented_30.json`):** Fue construido preservando los primeros 15 artículos de Kleptotrace y complementándolos con 15 registros adicionales curados a mano. Estos incluyen casos icónicos del mundo real (ej. Cártel de Sinaloa en HSBC, Danske Bank, multas de la SEC y OFAC). Su principal fin metodológico es alcanzar el **Teorema del Límite Central (TLC)** ($N \ge 30$), permitiendo aplicar pruebas paramétricas como el análisis de varianza (ANOVA de una vía) y la prueba Tukey HSD de manera válida.
+
+3. **Datasets 60 y 120 Registros (`kleptotrace_augmented_60.json` y `kleptotrace_augmented_120.json`):** Estos archivos fueron generados de manera algorítmica utilizando plantillas sintácticas extraídas de los patrones observados en los primeros 30 artículos. Se incorporó una lista representativa de personas y organizaciones operando en marcos regulatorios globales (OFAC, FCA, SEC, Interpol, etc.) y se aseguró el etiquetado del *ground truth* exacto para asegurar una validación determinista de Precisión y Recall. Estos datasets sirven para realizar pruebas de estrés de infraestructura y escalabilidad computacional en la inferencia LLM local.

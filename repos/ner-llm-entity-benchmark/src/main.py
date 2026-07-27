@@ -24,6 +24,7 @@ from src.checkpoint import CheckpointState, save_checkpoint, load_checkpoint, is
 from src.pub_sub import create_task_queue, TaskMessage
 from src.system_monitor import ThroughputTracker
 from src.adaptive_workers import AdaptiveWorkerController, is_rate_limit_exception
+from src.rag_manager import RAGManager
 
 logger = logging.getLogger("ner_benchmark")
 
@@ -63,7 +64,7 @@ def validate_environment(config: BenchmarkConfig) -> bool:
                            "The benchmark will skip or warn when invoking this model.")
     return True
 
-def process_batch(batch: list[dict], model: str, system_prompt: str, config: BenchmarkConfig, batch_idx: int, condition_name: str | None = None) -> list[dict]:
+def process_batch(batch: list[dict], model: str, system_prompt: str, config: BenchmarkConfig, batch_idx: int, condition_name: str | None = None, rag_manager = None) -> list[dict]:
     """Processes a batch of articles against a model in parallel and returns structured evaluations (REQ-PAR-03)."""
     results = []
     prompt_hash = hashlib.sha256(system_prompt.encode('utf-8')).hexdigest()[:8]
@@ -80,6 +81,10 @@ def process_batch(batch: list[dict], model: str, system_prompt: str, config: Ben
         
         logger.info(f"[Worker {worker_id}] Model '{model}' (Mapped: '{display_model_name}') -> Extracting entities for record '{record_id}'...")
         
+        rag_context = None
+        if rag_manager:
+            rag_context = rag_manager.query([source_text])
+
         # Run Ollama NER
         llm_output = extract_entities_with_ollama(
             text=source_text,
@@ -89,7 +94,8 @@ def process_batch(batch: list[dict], model: str, system_prompt: str, config: Ben
             max_tokens=config.max_tokens,
             seed=config.seed,
             max_retries=config.max_retries,
-            ollama_base_url=config.ollama_base_url
+            ollama_base_url=config.ollama_base_url,
+            rag_context=rag_context
         )
         
         # Evaluate metrics
@@ -249,7 +255,32 @@ def run_benchmark(config: BenchmarkConfig, resume: bool = False, ablation: bool 
     logger.info("Main thread acting as Producer: Publishing pending tasks to queue...")
     published_count = 0
     
-    if ablation:
+    if config.rag_study:
+        rag_mgr = RAGManager()
+        rag_mgr.load_dictionaries()
+        for model in config.models:
+            if not check_model_available(model, config.ollama_base_url):
+                continue
+            for condition_name in ['baseline', 'rag_enhanced']:
+                condition_key = f"{model}_{condition_name}"
+                for batch_idx in range(total_batches):
+                    if is_batch_completed(state, condition_key, batch_idx):
+                        continue
+                    batch_records = dataset.get_batch(batch_idx)
+                    if not batch_records:
+                        continue
+                    task_msg = TaskMessage(
+                        task_id=f"{condition_key}-b{batch_idx}-{int(time.time())}",
+                        batch_idx=batch_idx,
+                        model_name=model,
+                        records=batch_records,
+                        created_at=datetime.now(timezone.utc).isoformat(),
+                        prompt_file=config.system_prompt_file,
+                        condition_name=condition_key
+                    )
+                    task_queue.publish(task_msg)
+                    published_count += 1
+    elif ablation:
         # Prompt Ablation Study (REQ41): cycle through prompt configurations
         model = config.models[0]
         if not check_model_available(model, config.ollama_base_url):
@@ -319,7 +350,68 @@ def run_benchmark(config: BenchmarkConfig, resume: bool = False, ablation: bool 
     num_queue_workers = adaptive_ctrl.current_workers
     config.num_workers = adaptive_ctrl.current_workers
     
-    if ablation:
+    if config.rag_study:
+        rag_mgr = RAGManager()
+        for model in config.models:
+            if not check_model_available(model, config.ollama_base_url):
+                continue
+            for condition_name in ['baseline', 'rag_enhanced']:
+                condition_key = f"{model}_{condition_name}"
+                task_queue = create_task_queue(use_redis=False)
+                published_count = 0
+                for batch_idx in range(total_batches):
+                    if is_batch_completed(state, condition_key, batch_idx):
+                        continue
+                    batch_records = dataset.get_batch(batch_idx)
+                    if not batch_records:
+                        continue
+                    task_msg = TaskMessage(
+                        task_id=f"{condition_key}-b{batch_idx}-{int(time.time())}",
+                        batch_idx=batch_idx,
+                        model_name=model,
+                        records=batch_records,
+                        created_at=datetime.now(timezone.utc).isoformat(),
+                        prompt_file=config.system_prompt_file,
+                        condition_name=condition_key
+                    )
+                    task_queue.publish(task_msg)
+                    published_count += 1
+                if published_count > 0:
+                    num_queue_workers = adaptive_ctrl.current_workers
+                    logger.info(f"Running RAG study '{condition_key}' with {num_queue_workers} workers...")
+                    def worker_consumer(worker_id: int):
+                        while True:
+                            claimed_task = task_queue.subscribe()
+                            if not claimed_task: break
+                            task_prompt = load_system_prompt(claimed_task.prompt_file)
+                            active_rag = rag_mgr if 'rag_enhanced' in claimed_task.condition_name else None
+                            try:
+                                batch_results = process_batch(
+                                    batch=claimed_task.records,
+                                    model=claimed_task.model_name,
+                                    system_prompt=task_prompt,
+                                    config=config,
+                                    batch_idx=claimed_task.batch_idx,
+                                    condition_name=claimed_task.condition_name,
+                                    rag_manager=active_rag
+                                )
+                                task_queue.acknowledge(claimed_task.task_id)
+                                with state_lock:
+                                    mark_batch_completed(state, claimed_task.condition_name, claimed_task.batch_idx, batch_results)
+                                    save_checkpoint(state, checkpoint_path)
+                                new_w = adaptive_ctrl.report_success()
+                                config.num_workers = new_w
+                            except Exception as exc:
+                                is_rl = is_rate_limit_exception(exc)
+                                new_w = adaptive_ctrl.report_error(is_rate_limit=is_rl)
+                                config.num_workers = new_w
+                                logger.error(f"[Worker {worker_id}] Error: {exc}")
+                    with ThreadPoolExecutor(max_workers=num_queue_workers) as executor:
+                        futures = [executor.submit(worker_consumer, idx + 1) for idx in range(num_queue_workers)]
+                        for future in futures: future.result()
+            logger.info(f"Unloading model weights for {model} to protect VRAM.")
+            manage_model_lifecycle(model, None, config.ollama_base_url)
+    elif ablation:
         # Prompt Ablation Study (REQ41)
         model = config.models[0]
         if not check_model_available(model, config.ollama_base_url):
@@ -587,6 +679,7 @@ def main():
     parser.add_argument("--system-prompt-file", type=str, default="SYSTEM_PROMPT.md", help="Path to system prompt MD file")
     parser.add_argument("--compare-annotators", nargs=2, metavar=("FILE1", "FILE2"), help="Compute Cohen's Kappa inter-annotator agreement between two ground truth files")
     parser.add_argument("--ablation", action="store_true", help="Perform prompt ablation study comparing Zero-Shot EN, Zero-Shot ES, and Few-Shot ES prompts (REQ41)")
+    parser.add_argument("--rag-study", action="store_true", help="Perform RAG integration study with and without dictionaries")
     parser.add_argument("--num-workers", type=int, default=2, help="Number of concurrent worker threads")
     
     args = parser.parse_args()
@@ -609,7 +702,8 @@ def main():
         temperature=args.temperature,
         max_tokens=args.max_tokens,
         seed=args.seed,
-        system_prompt_file=args.system_prompt_file
+        system_prompt_file=args.system_prompt_file,
+        rag_study=args.rag_study
     )
     if args.models:
         config.models = args.models

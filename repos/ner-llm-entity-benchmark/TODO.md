@@ -1,44 +1,39 @@
-# Project TODO List
+# Proyecto RAG NER - Plan de Implementación
 
-This file tracks all pending tasks for the NER-LLM Entity Benchmark project. Tasks are organized by priority and phase.
+Este documento detalla todas las tareas a realizar para integrar un sistema RAG (Retrieval-Augmented Generation) basado en diccionarios para mejorar el desempeño de los modelos NER locales.
 
-## 🔴 High Priority: Finalization & Validation (The "Thesis Ready" Phase)
-- [x] **Fix Synchronous Pub/Sub Facade (US-PAR-01/02)**:
-    - [x] Implement `ThreadPoolExecutor` in `main.py` to decouple producer and consumer.
-    - [x] Refactor `run_benchmark` to allow the main thread to publish while workers process.
-    - [x] Verify result aggregation for parallel runs.
-- [ ] **Scientific Reproducibility Validation (US-PAR-06)**:
-    - [ ] Create `tests/test_parallel_consistency.py` to compare sequential vs. parallel output metrics.
-    - [ ] Assert zero-variance (4th decimal) in F1/Precision/Recall.
-    - [ ] Document results in `WORKLOG.md` as formal thesis proof.
-- [ ] **VRAM-Aware Scaling (US-PAR-07)**:
-    - [ ] Implement VRAM probe to dynamically adjust `num_workers` based on model footprint.
-    - [ ] Implement more aggressive model rotation and pre-loading to avoid repeated `manage_model_lifecycle` overhead.
-- [ ] **Distributed Worker Implementation (US-PAR-03)**:
-    - [ ] Create standalone `worker.py` for independent consumption of `RedisTaskQueue`.
-    - [ la l la ] Implement result-writing mechanism for distributed workers (e.g., shared JSON/DB).
-    - [ ] Validate horizontal scaling across multiple Ollama nodes.
+## 1. Configuración Inicial y Exploración (Graphify)
+- [x] Instalar la herramienta `graphifyy` (Graphify).
+- [x] Indexar el repositorio con `graphify` para generar el grafo de conocimiento del proyecto y poder consultarlo.
+- [x] Investigate Graphify and how it relates to vector databases (Graphify maps structural relationships rather than semantic vector embeddings).
 
-## 🟡 Medium Priority: Dataset & Metric Expansion
-- [ ] **Large-Scale Experimentation**:
-    - [ ] Expand evaluation from 20-record sample to full financial compliance sanctions dataset.
-    - [ ] Run benchmark sweeps across `gemma3:latest`, `llama3:latest`, and `deepseek`.
-    - [ ] Benchmark against the manual F1 baseline (75-80%).
-- [ ] **Academic Reporting**:
-    - [ ] Generate final thesis validation report with pairwise Adjusted p-values (Tukey HSD).
-    - [ ] Create confusion matrices segmented by entity type (Person, Org, Loc).
-- [ ] **Prompt Optimization (US-PAR-08)**:
-    - [ ] Implement `batch_prompting_enabled` flag in `BenchmarkConfig`.
-    - [ ] Develop prompt logic for multi-record processing per LLM call.
+## 2. Preparación de Diccionarios y Vector DB
+- [x] Create generic entity dictionaries (`persons.json`, `organizations.json`)
+- [x] Search for dictionaries on the internet and ingest them.
+- [x] Create a `RAGManager` using ChromaDB to index the dictionaries (ensure it's small, fast, and local).
+- [x] Ensure indexing happens once at the start of the benchmark (reuse indexes).
 
-## 🟢 Low Priority: Refinements & Dashboard
-- [ ] **Advanced Observability (US-PAR-09)**:
-    - [ la l la ] Implement latency distribution box-plots in `statistics.py`.
-    - [ ] Integrate box-plots into the Streamlit dashboard.
-    - [ ] Improve qualitative validation UI in Streamlit.
-- [ ] **Source Documentation**:
-    - [ ] Expand `doc/references/` as new academic papers are consulted.
+## 3. Integración de RAG en el Flujo de NER
+- [x] Integrate RAG vector search into the model inference pipeline (`extract_entities_with_ollama`) so context is prepended to the prompt without expanding the context window too much.
 
-## 🛠️ Technical Debt & Maintenance
-- [ ] **Schema Validation**: Expand `validate_record_schema` to handle more edge cases in the Kleptotrace dataset.
-- [x] **Logging**: Improve trace logging to include worker ID in parallel execution logs.
+## 4. Orquestación de Pruebas (Dos Ciclos)
+- [x] Ajustar el script `src/main.py` para soportar la bandera `--rag-study`.
+- [x] Crear un ciclo de evaluación que corra dos veces sobre todos los modelos (Ciclo 1: Línea base sin RAG, Ciclo 2: Con inyección RAG).
+
+## 5. Documentación y Optimización Final
+- [x] Refactorizar los resultados agregados y actualizar `BENCHMARKS.md` para mostrar las tablas comparativas de F1 Score con y sin RAG.
+- [x] Explicar en `BENCHMARKS.md` cómo el RAG interactúa con el Prompt System.
+- [x] Incorporar listas extendidas del Censo de USA, Brasil, México, Venezuela, Chile, China y otros, manteniendo el tamaño por debajo de 10MB y conservando metadata de procedencia.
+- [x] Crear agent skills (`~/.gemini/config/skills/ner-entity-extraction/SKILL.md`) que sirvan como contexto avanzado para modelos evaluadores. pruebas completo utilizando los modelos definidos.
+- [x] Analizar si el RAG mejora la recuperación (Recall) y la puntuación F1 sin degradar severamente la precisión ni aumentar demasiado la latencia.
+- [x] Actualizar `BENCHMARKS.md` detallando los resultados de ambos ciclos y explicando la arquitectura de integración RAG-LLM.
+- [x] Documentar la incapacidad de subir >0.10 de F1 iterando sobre diccionarios (el Recall llega a 1.0 pero la Precisión penaliza el F1 general, sugiriendo que se requieren Few-Shot prompting o un corpus de testeo más masivo).
+- [x] Agregar métrica de capacidad OOV (Out of Vocabulary) para probar extracción de entidades fuera de los diccionarios.
+
+## 6. Creación de Agent Skills
+- [x] Crear un nuevo Skill (documento markdown estructurado) para agentes/modelos que defina heurísticas avanzadas para la identificación de entidades complejas (personas y organizaciones), basándose en la experimentación.
+
+## 7. Próximos Pasos Recomendados (Post-RAG)
+- [ ] Implementar In-Context Learning (Few-Shot Prompting) inyectando no solo las entidades del RAG sino ejemplos estructurados.
+- [ ] Aumentar el dataset `kleptotrace.json` a >100 records para obtener métricas OOV y de F1 más estables.
+- [ ] Experimentar con modelos más grandes (Gemma 31B o Qwen 14B) con el RAG para comparar si su capacidad de seguimiento de instrucciones previene los Falsos Positivos mejor que Llama3.1:8B.

@@ -155,6 +155,7 @@ class OllamaProvider(LLMProvider):
         max_tokens: int | None = None,
         seed: int | None = None,
         max_retries: int | None = None,
+        rag_context: list[str] | None = None,
     ) -> ExtractionResult:
         """Run NER with the configured Ollama model."""
         # Lazy import so the package stays importable even without `ollama`
@@ -182,13 +183,23 @@ class OllamaProvider(LLMProvider):
         is_qwen3_thinking = any(k in model_key for k in _QWEN3_THINKING_MODELS)
         is_cloud = _is_cloud_model(self.model_name)
 
+        # Inject RAG context if provided
+        rag_injection = ""
+        if rag_context:
+            rag_injection = "\n\n[RAG CONTEXT]\nThe following entities from our AML database MIGHT be present in the text. STRICT INSTRUCTION: DO NOT extract them unless they explicitly appear in the News text. They are provided only as hints for correct spelling and recognition:\n"
+            rag_injection += "\n".join(f"- {ctx}" for ctx in rag_context)
+
         # Build prompt
         if is_nuextract:
+            if rag_injection:
+                text = f"{rag_injection}\n\n{text}"
             messages = _build_nuextract_messages(text)
             logger.debug("Using NuExtract template format for '%s'.", self.model_name)
         else:
             if not system_prompt:
                 system_prompt = _FALLBACK_SYSTEM_PROMPT
+            if rag_injection:
+                system_prompt += rag_injection
             messages = _build_messages(system_prompt, text)
 
         client = ollama_lib.Client(host=self.ollama_base_url)

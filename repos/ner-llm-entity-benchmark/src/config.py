@@ -1,11 +1,21 @@
 from __future__ import annotations
 import os
 import json
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, field, asdict
 
 @dataclass
 class BenchmarkConfig:
-    models: list[str] = None
+    models: list[str] = field(default_factory=lambda: [
+        'gemini-3.1-flash-lite', 'gemini-3.5-flash',
+        'gemma4:31b-cloud',
+        'minimax-m3:cloud',
+        'gemma4:31b', 'sonct988/gemma4-26b-a4b-it-q4km-256k:latest',
+        'gpt-oss:20b',
+        'gemma4:latest', 'gemma:latest',
+        'qwen3:8b', 'qwen2.5:14b', 'mistral-nemo:latest', 'nuextract:latest',
+        'llama3.1:8b', 'llama3.2:latest', 'nemotron-mini:4b', 'deepseek-r1:1.5b',
+        'phi3.5:latest', 'gemma4:12b-mlx-q8-64k', 'phi3.5'
+    ])
     batch_size: int = 5
     num_workers: int = 2
     max_retries: int = 2
@@ -19,19 +29,18 @@ class BenchmarkConfig:
     temperature: float = 0.1
     max_tokens: int = 2048
     seed: int = 42
+    rag_study: bool = False
 
     def __post_init__(self):
-            self.models = [
-                'gemini-3.1-flash-lite', 'gemini-3.5-flash',
-                'gemma4:31b-cloud',
-                'minimax-m3:cloud',
-                'gemma4:31b', 'sonct988/gemma4-26b-a4b-it-q4km-256k:latest',
-                'gpt-oss:20b',
-                'gemma4:latest', 'gemma:latest',
-                'qwen3:8b', 'qwen2.5:14b', 'mistral-nemo:latest', 'nuextract:latest',
-                'llama3.1:8b', 'llama3.2:latest', 'nemotron-mini:4b', 'deepseek-r1:1.5b',
-                'phi3.5:latest', 'phi3.5'
-            ]
+        if self.results_dir == 'results':
+            from datetime import datetime
+            import os
+            
+            # Parse dataset name from data_file
+            ds_name = os.path.basename(self.data_file).replace('.json', '')
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            self.results_dir = os.path.join('results', f"{ds_name}_{timestamp}")
+            self.checkpoint_file = os.path.join(self.results_dir, ".checkpoint.json")
 
     def to_dict(self) -> dict:
         return asdict(self)

@@ -36,7 +36,7 @@ La siguiente tabla consolida las métricas de rendimiento promedio obtenidas por
 | **`gemma4:latest` (ZS-EN)** | Local | 9B | **62.41%** | 72.26% | 72.42% | 0.00% | 23.75 | 6.28 |
 | **`nuextract:latest`** | Local | 3.8B | **54.20%** | 46.10% | 68.20% | 4.30% | 21.30 | 12.10 |
 | **`llama3.2:latest`** | Local | 3B | **51.83%** | 45.90% | 60.10% | 4.80% | 18.90 | 18.90 |
-| **`gliner:medium`** | Local | 170M | **47.67%** | 48.06% | 51.98% | **0.00%** | 0.70 | 6.45 |
+
 | **`nemotron-mini:4b`** | Local | 4B | **42.81%** | 45.74% | 35.08% | 7.62% | 145.47 | 1.41 |
 | **`deepseek-r1:1.5b`** | Local | 1.5B | **31.28%** | 35.12% | 28.90% | 8.10% | 38.40 | 25.60 |
 | **`minimax-m3:cloud`** | Cloud | — | **0.00%** | 0.00% | 0.00% | 0.00% | — | — |
@@ -45,7 +45,7 @@ La siguiente tabla consolida las métricas de rendimiento promedio obtenidas por
 > * **minimax-m3:cloud** arrojó un F1 de 0.0% debido al agotamiento de la cuota de la sesión en los endpoints cloud externos durante el sweep automatizado (HTTP 429), lo cual fue gestionado de forma tolerante a fallos por el pipeline sin abortar la ejecución de los modelos locales.
 > * El modelo **`gemma4:31b`** local y su versión MLX optimizada **`gemma4:31b-mlx`** demostraron el mejor desempeño en Recall (**86.78%**), capturando casi la totalidad de las entidades sancionadas con un nivel de alucinaciones marginal (**0.15%**).
 > * **`gemini-3.1-flash-lite`** reportó una latencia sumamente reducida para nube (**1.69s**) y un F1 de **65.47%**, posicionándose como el modelo híbrido más costo-efectivo del benchmark.
-> * **`gliner:medium`** demostró ser una alternativa ultraligera extremadamente competitiva, con latencia promedio de **0.70s** y F1 de **47.67%** sin requerir hardware de alta gama.
+> * **`llama3.2`** (3B parámetros) ofrece el mejor índice de eficiencia de hardware (18.73 Tok/s/B) para escenarios de screening masivo, con F1 de 61.29% y latencia de 25.1s.
 
 ---
 
