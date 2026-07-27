@@ -72,10 +72,11 @@ results_dir = dir_mapping[selected_run_label]
 st.sidebar.markdown("---")
 view_mode = st.sidebar.radio("🔍 Filtro de Evaluación:", ["Todos los Modelos", "Solo Baseline (Sin RAG)", "Solo RAG Enhanced"])
 
+if results_dir != base_results_path:
     if st.sidebar.button("🗑️ Eliminar esta ejecución"):
         try:
             shutil.rmtree(results_dir)
-            st.sidebar.success(f"Ejecución {selected_run} eliminada.")
+            st.sidebar.success(f"Ejecución {selected_run_label} eliminada.")
             st.rerun()
         except Exception as e:
             st.sidebar.error(f"Error al eliminar: {e}")
