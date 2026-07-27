@@ -32,17 +32,45 @@ base_results_path = "results"
 if not os.path.exists(base_results_path):
     os.makedirs(base_results_path)
 
-# Scan for result directories
-result_dirs = [d for d in os.listdir(base_results_path) if os.path.isdir(os.path.join(base_results_path, d))]
-result_dirs.sort(reverse=True)
-options = ["Base (Actual / Anterior)"] + result_dirs
+# Scan for result directories and label them
+dir_options = []
+dir_mapping = {}
 
-selected_run = st.sidebar.selectbox("Seleccionar Ejecución (Dataset - Fecha)", options)
+# Check base directory first
+base_summary_path = os.path.join(base_results_path, "benchmark_summary.json")
+base_label = "Base (Actual / Anterior)"
+if os.path.exists(base_summary_path):
+    try:
+        with open(base_summary_path, "r", encoding="utf-8") as f:
+            b_data = json.load(f)
+            if "zs-en" in b_data:
+                base_label += " [Estudio de Ablación]"
+    except: pass
+dir_options.append(base_label)
+dir_mapping[base_label] = base_results_path
 
-if selected_run == "Base (Actual / Anterior)":
-    results_dir = base_results_path
-else:
-    results_dir = os.path.join(base_results_path, selected_run)
+for d in os.listdir(base_results_path):
+    full_path = os.path.join(base_results_path, d)
+    if os.path.isdir(full_path):
+        label = d
+        sum_path = os.path.join(full_path, "benchmark_summary.json")
+        if os.path.exists(sum_path):
+            try:
+                with open(sum_path, "r", encoding="utf-8") as f:
+                    s_data = json.load(f)
+                    if "zs-en" in s_data:
+                        label += " [Estudio de Ablación]"
+            except: pass
+        dir_options.append(label)
+        dir_mapping[label] = full_path
+
+# Sort options (keep Base first)
+sorted_options = [dir_options[0]] + sorted(dir_options[1:], reverse=True)
+selected_run_label = st.sidebar.selectbox("Seleccionar Ejecución (Dataset - Fecha)", sorted_options)
+results_dir = dir_mapping[selected_run_label]
+
+st.sidebar.markdown("---")
+view_mode = st.sidebar.radio("🔍 Filtro de Evaluación:", ["Todos los Modelos", "Solo Baseline (Sin RAG)", "Solo RAG Enhanced"])
 
     if st.sidebar.button("🗑️ Eliminar esta ejecución"):
         try:
@@ -323,6 +351,13 @@ def get_summary_df(summary_data):
         df = pd.DataFrame(summary_data).T.reset_index().rename(columns={"index": "Model"})
     else:
         df = pd.DataFrame(CONFIRMED_RESULTS).T.reset_index().rename(columns={"index": "Model"})
+        
+    # Apply view_mode filter if we have '_baseline' and '_rag_enhanced' in model names
+    if "Solo Baseline (Sin RAG)" in view_mode:
+        df = df[df["Model"].str.contains("_baseline") | ~df["Model"].str.contains("_rag_enhanced")]
+    elif "Solo RAG Enhanced" in view_mode:
+        df = df[df["Model"].str.contains("_rag_enhanced")]
+        
     return df
 
 if df_results is None and summary_data is None:
@@ -417,7 +452,18 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9 = st.tabs([
 
 # ── TAB 1: Model Comparison ───────────────────────────────────────────────────
 with tab1:
-    st.markdown("### 📊 Comparación de Modelos — Benchmark Real (Kleptotrace, 15 artículos)")
+    st.markdown(f"### 📊 Comparación de Modelos — Benchmark Real ({selected_run_label})")
+    
+    # Explicación del Estudio de Ablación si es aplicable
+    if "Estudio de Ablación" in selected_run_label:
+        st.info(
+            "💡 **Nota sobre el Estudio de Ablación:** Los modelos listados como `zs-en`, `fs-es`, etc., "
+            "pertenecen al estudio de Prompt Engineering realizado sobre el modelo base `gemma4:latest`.\n\n"
+            "- **zs**: Zero-Shot (Sin ejemplos)\n"
+            "- **fs**: Few-Shot (Con ejemplos)\n"
+            "- **en/es**: Prompt en Inglés o Español."
+        )
+    
     st.caption("Todos los resultados son de inferencia real local vía Ollama. Sin datos simulados o mockeados.")
 
     c1, c2 = st.columns(2)
@@ -433,13 +479,11 @@ with tab1:
     st.dataframe(df_summary.style.format(fmt_cols), hide_index=True, use_container_width=True)
 
     st.markdown("---")
-    st.markdown("#### 📌 Hallazgos Clave")
-    st.markdown("""
-- **`gemma4:latest` (8B)** es el modelo con mejor F1 (63.5%) y hallucination casi nula (0.2%). Recomendado para uso en producción.
-- **`llama3.2:latest` (3B)** ofrece F1 competitivo (61.3%) con latencia **15× menor** — candidato ideal cuando el throughput importa.
-- **`deepseek-r1:1.5b`** es el modelo más pequeño pero exhibe la **mayor tasa de alucinaciones (8.1%)** y el menor recall (28.9%) — no apto para compliance real.
-- **Brecha al objetivo**: El mejor modelo alcanza 63.5% vs el 85% target. La condición few-shot español cierra parte de esta brecha (70.2% F1).
-""")
+    st.markdown("#### 📌 Resumen General")
+    st.markdown(
+        "Utiliza la tabla interactiva superior para comparar todas las métricas de los modelos evaluados en esta ejecución. "
+        "Si visualizas la corrida Base, podrás ver hasta 30 configuraciones distintas (15 modelos * 2 condiciones de RAG)."
+    )
 
 # ── TAB 2: Hallucination Analysis ─────────────────────────────────────────────
 with tab2:
