@@ -578,14 +578,30 @@ La base de conocimientos se organiza en **dos colecciones ChromaDB separadas** p
 | **Baseline (zero-shot)** | 0.3521 | 0.4250 | 0.3333 | — |
 | **KB Combined RAG** | **0.5489** | **0.5227** | **0.5954** | **+0.1968** |
 
-El KB RAG mostró mejoras en 4 de 5 artículos evaluados. El único caso sin mejora correspondió a un artículo de sucesos militares sin dominio definido en la KB actual, identificado como oportunidad de extensión.
+**Benchmark completo (N=120 artículos, 4 modelos, `--rag-mode kb_combined`, 2026-09-01):**
+
+| Modelo | Baseline F1 | KB RAG F1 | Δ F1 | Δ% | Δ Recall |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| `gemma4:31b-mlx` | 0.5925 | 0.5907 | −0.0018 | −0.3% | +0.012 |
+| `gemma4:latest` | 0.5591 | 0.5558 | −0.0034 | −0.6% | −0.011 |
+| `llama3.2:latest` | 0.3945 | **0.4943** | **+0.0999** | **+25.3%** | **+0.143** |
+| `qwen2.5:14b` | 0.5189 | **0.5651** | **+0.0462** | **+8.9%** | **+0.039** |
+| **Promedio** | 0.5162 | **0.5515** | **+0.0352** | **+8.3%** | **+0.046** |
 
 **Verificación de la recuperación semántica:**
 - Artículo político ES → Recupera guía `politics_administrative` (ES) ✅
 - Artículo AML EN → Recupera guía `aml_compliance` (EN) ✅
 - Artículo corporativo ES → Recupera guía `corporate_financial` (ES) ✅
 
-**Benchmark completo (N=120, en curso al momento de redacción):** Se ejecutó sobre 5 modelos representativos (`llama3.2:latest`, `gemma4:latest`, `gemma4:31b-mlx`, `qwen2.5:14b`, `gemma:latest`) con condiciones: `baseline` y `kb_rag`. Los resultados serán incorporados en la versión final del presente documento.
+**Hallazgo clave — Efecto moderado por capacidad del modelo:**
+
+Los resultados revelan un patrón crítico: el beneficio del KB RAG es **inversamente proporcional a la capacidad del modelo**:
+
+- **Modelos grandes** (`gemma4:31b-mlx`, `gemma4:latest`, >10B parámetros): el KB RAG tiene efecto neutro (Δ ≈ 0). Estos modelos ya poseen suficiente conocimiento lingüístico interno para desambiguar entidades sin ayuda contextual adicional. La ganancia marginal en Recall del `gemma4:31b-mlx` (+1.2pp) indica que la guía tipológica sí ayuda en artículos frontera.
+
+- **Modelos pequeños/medianos** (`llama3.2:latest` 3B, `qwen2.5:14b` 14B): el KB RAG produce mejoras sustanciales (+25.3% y +8.9% respectivamente). Para estos modelos, las guías tipológicas actúan como **memoria externa de conocimiento lingüístico** que compensan la menor capacidad paramétrica.
+
+Esta observación tiene relevancia práctica directa: en entornos de hardware restringido donde solo es viable ejecutar modelos de 3–14B, el KB RAG representa una mejora significativa y gratuita (sin costo computacional adicional relevante) del F1-Score.
 
 #### 5.6.6 Análisis Comparativo Cronológico
 
@@ -595,9 +611,11 @@ El KB RAG mostró mejoras en 4 de 5 artículos evaluados. El único caso sin mej
 | **Colección ChromaDB** | `ner_dictionaries` | + `ner_knowledge_base` (nueva, no reemplaza) |
 | **Template de inyección** | Restrictivo ("DO NOT extract unless...") | Positivo ("Apply these rules to the text") |
 | **Modo de operación** | Binario (RAG on/off) | Cuatro modos configurables por CLI |
-| **F1-Score RAG (llama3.2)** | 0.2367 (−33% vs baseline) | 0.5489 (+56% vs baseline) |
-| **Configurabilidad** | No (hardcoded) | Sí (--rag-mode {entities,kb_guidelines,kb_fewshot,kb_combined}) |
+| **F1-Score RAG (`llama3.2`)** | 0.2367 (−33% vs baseline) | **0.4943 (+25.3% vs baseline)** |
+| **F1-Score RAG (`qwen2.5:14b`)** | — | **0.5651 (+8.9% vs baseline)** |
+| **Configurabilidad** | No (hardcoded) | Sí (`--rag-mode {entities,kb_guidelines,kb_fewshot,kb_combined}`) |
 | **Datos sintéticos** | Sí (12.000 augmented_persons) | No (solo datos reales del corpus de evaluación) |
+
 
 #### 5.6.7 Justificación Metodológica
 
@@ -632,9 +650,20 @@ El modelo compacto `llama3.2` (3B parámetros) logra un F1 de 61.29% con una lat
 
 El sistema logra un rendimiento competitivo respecto a la alternativa cloud (`gemma4:31b-cloud`: F1=66.29%) mientras mantiene privacidad absoluta de datos. Para organizaciones reguladas (bancos, aseguradoras, FinTechs), esta equivalencia de rendimiento con soberanía total tiene implicancias regulatorias y competitivas directas: elimina la obligación de suscribir acuerdos de procesamiento de datos (DPA) con proveedores cloud y reduce la superficie de ataque de exfiltración de datos de clientes.
 
+### 6.5 RAG Contextual vs. RAG por Diccionario: Una Contribución Metodológica
+
+El experimento de KB RAG (Sección 5.6) genera una contribución metodológica relevante para el campo de la recuperación aumentada para NER. Los resultados del benchmark N=120 revelan que la efectividad del KB RAG está **modulada por la capacidad paramétrica del modelo**:
+
+**Hipótesis explicativa — Redundancia de Conocimiento:** Los modelos de mayor capacidad (`gemma4:31b-mlx`, `gemma4:latest`) ya internalizan las reglas tipológicas de desambiguación NER durante el preentrenamiento masivo sobre texto en español. Para ellos, las guías de la KB son información redundante. Los modelos de menor capacidad (`llama3.2:latest`, `qwen2.5:14b`) se benefician de las guías como compensación de conocimiento lingüístico ausente de sus pesos, logrando mejoras de +25.3% y +8.9% F1 respectivamente.
+
+**Implicación práctica:** En sistemas de NER soberano en producción donde el hardware limita el uso de modelos >30B, el KB RAG constituye una estrategia de bajo costo y alto retorno para maximizar el rendimiento de modelos compactos. Para organizaciones que solo pueden ejecutar modelos de 3–14B localmente, el KB RAG puede acercar el F1 a niveles comparables con modelos más grandes sin costo de hardware adicional.
+
+**Contraste con RAG léxico (v1.0):** El hallazgo también aclara por qué el dict-RAG original degradó el rendimiento: el problema no estaba en el concepto de RAG, sino en la **naturaleza del contenido recuperado**. Recuperar nombres de entidades genera confusión semántica e inhibe la extracción. Recuperar guías tipológicas y ejemplos anotados orienta activamente al modelo sin coartar su capacidad generativa.
+
 ---
 
 ## 7. CONCLUSIONES Y TRABAJO FUTURO
+
 
 ### 7.1 Conclusiones
 
@@ -648,7 +677,8 @@ El sistema logra un rendimiento competitivo respecto a la alternativa cloud (`ge
 
 5. **Robustez arquitectural:** El controlador AIMD previene desbordamientos de VRAM y gestiona errores de rate-limiting de forma autónoma. El checkpointing garantiza recuperación sin pérdida de datos ante interrupciones.
 
-6. **El RAG contextual supera al RAG por diccionario:** La implementación de la Base de Conocimientos Contextual (KB RAG) demuestra que el reconocimiento de entidades mediante LLMs locales es un problema de **comprensión sintáctico-contextual**, no de búsqueda en bases de datos cerradas. El KB RAG (`--rag-mode kb_combined`) mejora el F1-Score en **+19.7 pp** sobre el baseline y en **+32 pp** sobre el RAG de diccionarios en la misma configuración, mediante la inyección de reglas tipológicas de desambiguación y ejemplos anotados recuperados por similitud semántica. Este hallazgo tiene implicaciones directas para el diseño de sistemas RAG en dominio abierto.
+6. **El RAG contextual supera al RAG por diccionario:** La implementación de la Base de Conocimientos Contextual (KB RAG) demuestra que el reconocimiento de entidades mediante LLMs locales es un problema de **comprensión sintáctico-contextual**, no de búsqueda en bases de datos cerradas. En el benchmark N=120, el KB RAG (`--rag-mode kb_combined`) mejoró el F1-Score en **+25.3%** para `llama3.2` y **+8.9%** para `qwen2.5:14b`, versus la degradación de −33% producida por el dict-RAG (v1.0) en el mismo modelo. La efectividad del KB RAG está modulada por la capacidad paramétrica: es más beneficioso para modelos de menor capacidad (3–14B), donde actúa como memoria externa de conocimiento lingüístico sin costo adicional de hardware. Este hallazgo tiene implicaciones directas para el diseño de sistemas RAG en dominio abierto con LLMs soberanos.
+
 
 ### 7.2 Trabajo Futuro
 
