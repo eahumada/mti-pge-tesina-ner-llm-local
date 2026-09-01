@@ -23,7 +23,7 @@
 
 ## II. RESUMEN DE LA TESINA
 
-Las instituciones financieras que deben cumplir regulaciones AML/KYC procesan manualmente grandes volúmenes de noticias sobre sanciones y lavado de activos, proceso que resulta costoso, lento y expone datos sensibles al usar APIs externas en la nube. Esta tesina diseña, implementa y evalúa un sistema soberano de extracción de Entidades Nombradas (NER) basado en modelos de lenguaje de gran tamaño (LLM) ejecutados 100% de forma local mediante Ollama en hardware Apple Silicon, eliminando toda fuga de datos confidenciales. La arquitectura emplea un pipeline pub/sub asíncrono con control adaptativo de concurrencia (AIMD) y una capa Factory/Facade que unifica 16 proveedores de modelos. La validación experimental se realizó sobre el dataset real de sanciones financieras Kleptotrace (15 artículos con anotación experta) y un corpus de 30 artículos breves diseñado para alcanzar significancia estadística (N ≥ 30). Los resultados demuestran que mediante la localización al español y el uso de prompts few-shot se alcanza un F1-Score de 79.0% con Gemma4-31B sobre el corpus ampliado, con tasa de alucinaciones del 0% y una reducción de costos operativos del 60–80% respecto a soluciones manuales o en la nube.
+Las instituciones financieras que deben cumplir regulaciones AML/KYC procesan manualmente grandes volúmenes de noticias sobre sanciones y lavado de activos, proceso que resulta costoso, lento y expone datos sensibles al usar APIs externas en la nube. Esta tesina diseña, implementa y evalúa un sistema soberano de extracción de Entidades Nombradas (NER) basado en modelos de lenguaje de gran tamaño (LLM) ejecutados 100% de forma local mediante Ollama en hardware Apple Silicon, eliminando toda fuga de datos confidenciales. La arquitectura emplea un pipeline pub/sub asíncrono con control adaptativo de concurrencia (AIMD) y una capa Factory/Facade que unifica 16 proveedores de modelos. La validación experimental se realizó sobre el dataset real de sanciones financieras Kleptotrace/CoNLL-2002 (15 artículos con anotación experta) y un corpus de 30 artículos breves diseñado para alcanzar significancia estadística (N ≥ 30). Los resultados demuestran que mediante la localización al español y el uso de prompts few-shot se alcanza un F1-Score de 79.0% con Gemma4-31B sobre el corpus ampliado, con tasa de alucinaciones del 0% y una reducción de costos operativos del 60–80% respecto a soluciones manuales o en la nube.
 
 **Palabras clave:** Cumplimiento Normativo (AML/KYC), Reconocimiento de Entidades Nombradas (NER), LLM Local, Soberanía de Datos, Prompt Engineering.
 
@@ -37,7 +37,7 @@ La hipótesis de trabajo plantea que **es viable implementar un sistema soberano
 
 La metodología de validación implementada comprende cuatro etapas:
 
-1. **Ingestión y estructuración de datos reales:** Se procesaron noticias de lavado de activos y sanciones internacionales provenientes de la plataforma Kleptotrace, transformando sus claves nativas al esquema interno del pipeline con validación estricta de esquema y control de calidad de anotaciones mediante Cohen's Kappa.
+1. **Ingestión y estructuración de datos reales:** Se procesaron noticias de lavado de activos y sanciones internacionales provenientes de la plataforma Kleptotrace/CoNLL-2002, transformando sus claves nativas al esquema interno del pipeline con validación estricta de esquema y control de calidad de anotaciones mediante Cohen's Kappa.
 
 2. **Arquitectura distribuida y control adaptativo:** Se diseñó un pipeline pub/sub multithreading con un controlador AIMD (Additive Increase Multiplicative Decrease) que regula los hilos de procesamiento en caliente según errores de rate-limiting (HTTP 429) y presión de VRAM, protegiendo el hardware local (Apple M4, 16 GB Metal) ante condiciones de desbordamiento.
 
@@ -55,9 +55,9 @@ A continuación se detallan los hallazgos más relevantes del trabajo experiment
 
 3. **Ganancia adicional por few-shot learning:** La inyección de ejemplos financieros contextuales elevó el Recall máximo a 84.55% (few-shot español), aumentando la estabilidad semántica de las extracciones de nombres de Personas y Organizaciones en el dominio AML.
 
-4. **Benchmark de 15 modelos generativos sobre Kleptotrace (15 artículos):** El mejor desempeño en el dataset original fue alcanzado por `gemma4:31b` local con un F1-Score de 67.83% y recall de 86.78%, con tasa de alucinaciones del 0.15%. El modelo compacto `llama3.2` (3B) destacó en velocidad con latencia 4.5× menor y F1 de 61.29%, evidenciando el trade-off entre calidad y eficiencia computacional.
+4. **Benchmark de 15 modelos generativos sobre Kleptotrace/CoNLL-2002 (15 artículos):** El mejor desempeño en el dataset original fue alcanzado por `gemma4:31b` local con un F1-Score de 67.83% y recall de 86.78%, con tasa de alucinaciones del 0.15%. El modelo compacto `llama3.2` (3B) destacó en velocidad con latencia 4.5× menor y F1 de 61.29%, evidenciando el trade-off entre calidad y eficiencia computacional.
 
-5. **Validación sobre corpus de significancia estadística (N=30):** Se construyó el dataset `kleptotrace_augmented_30.json` (30 artículos breves anotados) para satisfacer el criterio del Teorema del Límite Central (N ≥ 30). El benchmark serial sobre este corpus produjo:
+5. **Validación sobre corpus de significancia estadística (N=30):** Se construyó el dataset `benchmark_balanced_120.json` (30 artículos breves anotados) para satisfacer el criterio del Teorema del Límite Central (N ≥ 30). El benchmark serial sobre este corpus produjo:
    - `gemma4:31b`: **F1 = 79.03%**, Precisión = 73.3%, Recall = 89.1%, Hallucination Rate = 0.0%.
    - `gemma4:31b-mlx`: **F1 = 77.47%**, Precisión = 73.0%, Recall = 87.2%, Hallucination Rate = 0.0%.
    - El ANOVA arrojó F = 0.141, p = 0.708, con intervalos de confianza al 95% solapados, confirmando la robustez estadística de los resultados.
@@ -90,9 +90,9 @@ A continuación se detallan los hallazgos más relevantes del trabajo experiment
 
 La coordinación con el profesor guía José Luis Martí Lara ha sido continua durante el período de desarrollo del proyecto. A la fecha de este informe (julio 2026), las principales instancias de coordinación realizadas y planificadas son las siguientes:
 
-1. **Julio 2026 (semana 1) — Sesión de validación metodológica:** Revisión del diseño del estudio de ablación de prompts y la selección del dataset Kleptotrace como corpus de evaluación con anotación experta de sanciones financieras reales. Se acordará complementar con un corpus de N ≥ 30 artículos para satisfacer los requisitos de significancia estadística del ANOVA y el Teorema del Límite Central.
+1. **Julio 2026 (semana 1) — Sesión de validación metodológica:** Revisión del diseño del estudio de ablación de prompts y la selección del dataset balanceado Kleptotrace/CoNLL-2002/CoNLL-2002 como corpus de evaluación con anotación experta de sanciones financieras reales. Se acordará complementar con un corpus de N ≥ 30 artículos para satisfacer los requisitos de significancia estadística del ANOVA y el Teorema del Límite Central.
 
-2. **Julio 2026 (semana 1) — Definición de la taxonomía de errores:** Se discutirá y validará la clasificación de los errores de extracción NER en tres categorías (Boundary Errors, Type Confusion, Extrinsic Hallucinations), con ejemplos concretos extraídos del dataset Kleptotrace. Esta taxonomía quedará incorporada en los requisitos formales de la tesina (REQ40).
+2. **Julio 2026 (semana 1) — Definición de la taxonomía de errores:** Se discutirá y validará la clasificación de los errores de extracción NER en tres categorías (Boundary Errors, Type Confusion, Extrinsic Hallucinations), con ejemplos concretos extraídos del dataset balanceado Kleptotrace/CoNLL-2002/CoNLL-2002. Esta taxonomía quedará incorporada en los requisitos formales de la tesina (REQ40).
 
 3. **Julio 2026 (semana 2) — Revisión del estado de implementación:** Sesión de revisión del avance técnico del pipeline, incluyendo la arquitectura pub/sub, el controlador AIMD y la capa Factory/Facade de proveedores LLM. Se validará la estrategia de control de alucinaciones mediante delimitadores estrictos de JSON y el mecanismo de checkpointing resumible.
 
@@ -106,7 +106,7 @@ Las siguientes tareas constituyen el plan de trabajo final conducente a la defen
 |:---:|:---|:---|:---:|
 | 1 | Redacción del Marco Teórico completo | Incorporar referencias actualizadas (BERT, RAG, BloombergGPT), describir la arquitectura de Transformers, el prompting few-shot y el paradigma de modelos de lenguaje local con aumento de datos sintético. | **18 julio 2026** |
 | 2 | Redacción del Capítulo de Desarrollo y Arquitectura | Documentar formalmente la arquitectura del sistema: pipeline pub/sub, Factory/Facade, AIMD, módulo de evaluación estadística y dashboard Streamlit. Incluir diagramas de componentes y secuencia. | **21 julio 2026** |
-| 3 | Redacción del Capítulo de Resultados y Análisis | Incorporar las tablas finales del benchmark de 16 modelos (Kleptotrace), los resultados del corpus ampliado (N=30), el análisis estadístico (ANOVA p=0.708, IC 95%) y la taxonomía de errores. | **24 julio 2026** |
+| 3 | Redacción del Capítulo de Resultados y Análisis | Incorporar las tablas finales del benchmark de 16 modelos (Kleptotrace/CoNLL-2002), los resultados del corpus ampliado (N=30), el análisis estadístico (ANOVA p=0.708, IC 95%) y la taxonomía de errores. | **24 julio 2026** |
 | 4 | Redacción del Capítulo de Conclusiones y Trabajo Futuro | Sintetizar los hallazgos principales, discutir la brecha F1 (79% vs. 85% objetivo) como oportunidad de optimización, y proponer líneas de trabajo futuro (fine-tuning, modelos mayores, corpus más amplio). | **27 julio 2026** |
 | 5 | Revisión y visado del informe final por profesor guía | Envío del borrador completo al profesor José Luis Martí para revisión académica, correcciones de fondo y aprobación formal. | **29 julio 2026** |
 | 6 | Entrega formal del informe final a coordinación MTI | Entrega administrativa del informe final para el inicio del proceso de graduación y constitución de la comisión examinadora. | **31 julio 2026** |

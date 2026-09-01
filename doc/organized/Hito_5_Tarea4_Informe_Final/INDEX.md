@@ -12,7 +12,7 @@
 | :---: | :--- | :---: | :--- |
 | 2026-06-28 | `2026-06-28_REQUIREMENTS_SUMMARY.md` | 6 KB | Resumen ejecutivo de los 42 requisitos funcionales (FR) y no funcionales (NFR/RNF) del sistema |
 | 2026-06-28 | `2026-06-28_TRACEABILITY_MATRIX.md` | 8 KB | Matriz de trazabilidad que mapea código fuente con cada requisito y historia de usuario |
-| 2026-06-28 | `2026-06-28_DATASET_RESEARCH.md` | 2 KB | Investigación y recomendación del dataset principal (Kleptotrace) para evaluación NER |
+| 2026-06-28 | `2026-06-28_DATASET_RESEARCH.md` | 2 KB | Investigación y recomendación del dataset principal (Kleptotrace/CoNLL-2002) para evaluación NER |
 | 2026-06-28 | `2026-06-28_INTEGRATION_RESULTS.md` | 3 KB | Resultados de integración y evaluación del pipeline sobre el dataset de sanciones financieras |
 | 2026-06-28 | `2026-06-28_TODO.md` | 7 KB | Lista completa de tareas mapeadas a las 21 historias de usuario (117 tareas completadas) |
 | 2026-06-28 | `2026-06-28_SPRINT_SCHEDULE.md` | 2 KB | Calendario de sprints del proyecto con fechas y entregables |
@@ -45,7 +45,7 @@
 
 | Archivo | Descripción |
 | :--- | :--- |
-| `2026-06-28_HU01.md` | HU01 — Ingestión y adaptación del dataset Kleptotrace |
+| `2026-06-28_HU01.md` | HU01 — Ingestión y adaptación del dataset balanceado Kleptotrace/CoNLL-2002/CoNLL-2002 |
 | `2026-06-28_HU02.md` | HU02 — Control de calidad de anotaciones (Cohen's Kappa) |
 | `2026-06-28_HU03.md` | HU03 — Ejecución de LLM local con Ollama |
 | `2026-06-28_HU04.md` | HU04 — Rotación de modelos con liberación de VRAM |

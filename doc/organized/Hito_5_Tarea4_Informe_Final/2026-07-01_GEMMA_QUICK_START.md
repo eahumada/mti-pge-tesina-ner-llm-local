@@ -37,7 +37,7 @@ ollama pull gemma:7b-code
 cd /Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano
 
 python src/main.py \
-  --input data/kleptotrace.json \
+  --input data/benchmark_balanced_120.json \
   --model gemma:7b-code \
   --condition fs-es \
   --output results/gemma7b_code.json
@@ -66,19 +66,19 @@ cd /Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-
 # Test 1: Code variant (15 min)
 echo "Testing Gemma 7B-Code..."
 ollama pull gemma:7b-code
-python src/main.py --input data/kleptotrace.json --model gemma:7b-code \
+python src/main.py --input data/benchmark_balanced_120.json --model gemma:7b-code \
   --output results/test_code.json
 
 # Test 2: Instruct variant (15 min)
 echo "Testing Gemma 7B-Instruct..."
 ollama pull gemma:7b-instruct
-python src/main.py --input data/kleptotrace.json --model gemma:7b-instruct \
+python src/main.py --input data/benchmark_balanced_120.json --model gemma:7b-instruct \
   --output results/test_instruct.json
 
 # Test 3: Large model (45-60 min)
 echo "Testing Gemma 27B-Instruct (Q4)..."
 ollama pull gemma:27b-instruct-q4_0
-python src/main.py --input data/kleptotrace.json --model gemma:27b-instruct-q4_0 \
+python src/main.py --input data/benchmark_balanced_120.json --model gemma:27b-instruct-q4_0 \
   --monitor-vram --output results/test_27b.json
 
 # Compare all results (10 min)
@@ -274,7 +274,7 @@ SELECTED_MODEL = "gemma:27b-instruct-q4_0"  # Changed from gemma:7b
 **Step 3: Generate Final Results**
 ```bash
 python src/main.py \
-  --input data/kleptotrace.json \
+  --input data/benchmark_balanced_120.json \
   --model gemma:27b-instruct-q4_0 \
   --condition fs-es \
   --output results/final_benchmark.json

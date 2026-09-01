@@ -57,7 +57,7 @@
 - [ ] VRAM management: Model lifecycle, keep_alive=0
 
 ### Section 3: Methodology (3-4 slides)
-- [ ] Dataset: Kleptotrace (15 articles) + ground truth
+- [ ] Dataset: Kleptotrace/CoNLL-2002 (15 articles) + ground truth
 - [ ] Evaluation metrics: F1, Precision, Recall, Hallucination
 - [ ] Prompt conditions: Zero-shot English/Spanish, Few-shot Spanish
 - [ ] Statistical tests: ANOVA, Tukey HSD, Cohen's Kappa
@@ -113,7 +113,7 @@
 - [ ] Python environment activated (venv)
 - [ ] All dependencies installed (`pip install -r requirements.txt`)
 - [ ] Dashboard tested and ready (`streamlit run src/dashboard.py`)
-- [ ] Sample data ready: Use Kleptotrace test subset
+- [ ] Sample data ready: Use Kleptotrace/CoNLL-2002 test subset
 
 ### Demo Script
 

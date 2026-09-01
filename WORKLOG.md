@@ -15,7 +15,7 @@ This file records the activity and progress of the Local LLM Financial Complianc
 - **Validación de Integridad del Pipeline**:
     - Se ejecutó el pipeline completo (`run_benchmark.sh`) en el nuevo path del workspace, confirmando que la lógica de checkpoint resumible valida correctamente el sweep (0 tareas pendientes en base a la finalización previa) y permitiendo probar la orquestación atómica con total fluidez.
 - **Finalización Completa del Benchmark Real**:
-    - Finalizada la tarea `task-265` de procesamiento en batch del dataset real `kleptotrace.json` sobre la suite de 16 modelos locales e híbridos.
+    - Finalizada la tarea `task-265` de procesamiento en batch del dataset real `benchmark_balanced_120.json` sobre la suite de 16 modelos locales e híbridos.
     - **Resultados de Performance Consolidados**: Liderado por `gemma4:31b` local con un F1-score definitivo del **67.83%** (Recall: 86.78%, Precisión: 57.29%) y una tasa de alucinaciones del **0.15%**. La versión cloud `gemma4:31b-cloud` registró un **66.29% de F1-Score** y **0.0%** de alucinaciones.
     - El modelo compacto `llama3.2` (3B) demostró ser la alternativa de menor consumo logrando un F1-score de **61.29%** con una latencia promedio de solo 25 segundos.
 - **Control Adaptativo de Workers (AIMD)**:
@@ -46,7 +46,7 @@ This file records the activity and progress of the Local LLM Financial Complianc
     - **Prioridad 4 — `qwen3:8b` (8B, 5.2 GB)**: Modo "thinking" para entidades ambiguas. F1 estimado: 62-78%.
     - **Prioridad 5-8** — `mistral:latest`, `nuextract:latest`, `llama3.1:8b`, `phi4-mini:latest`.
     - Hipótesis principal: Con `mistral-nemo` + few-shot español → **75-80% F1** esperado, acercándose al 85% objetivo.
-    - Para cruzar el umbral 85%: fine-tuning con ≥200 ejemplos anotados Kleptotrace.
+    - Para cruzar el umbral 85%: fine-tuning con ≥200 ejemplos anotados Kleptotrace/CoNLL-2002.
 - **Reescritura Completa del Dashboard Streamlit**:
     - Dashboard ampliado de 6 a **7 pestañas**:
         1. 📊 Comparación de Modelos (con tabla de métricas formateadas)
@@ -87,7 +87,7 @@ This file records the activity and progress of the Local LLM Financial Complianc
     - **BUG FIXED** `src/config.py:54`, `src/checkpoint.py:19`, `src/data_loader.py:411` — `os.makedirs(os.path.dirname(path))` crashes with `FileNotFoundError` when path has no directory component. Fixed with `or "."` fallback.
     - **Identified** 8 additional warnings (Redis always-on logic inversion, ANOVA group filter mismatch, unprotected `future.result()`, set-ordering destroying reproducibility, hardcoded model param sizes, hardcoded acceptance thresholds).
     - **Identified** zero test coverage across all critical functions — no test files exist.
-- **Real Benchmark Ablation Results (gemma4:latest — 15 articles Kleptotrace, post-fix)**:
+- **Real Benchmark Ablation Results (gemma4:latest — 15 articles Kleptotrace/CoNLL-2002, post-fix)**:
     - Few-Shot Spanish (`fs-es`): **70.18% F1**, Precision: 62.05%, Recall: 85.03%, Hallucination: 1.6%
     - Zero-Shot Spanish (`zs-es`): **57.43% F1**, Precision: 63.61%, Recall: 70.40%, Hallucination: 0.17%
     - Few-Shot English (`fs-en`): **61.83% F1**, Precision: 67.74%, Recall: 74.68%, Hallucination: 0.0%
@@ -96,7 +96,7 @@ This file records the activity and progress of the Local LLM Financial Complianc
     - Average F1: **72.12%** (up from 36% with broken parser, up from fake 99.62% with mocked simulation)
     - Average Hallucination Rate: 0.00%
     - Average Latency: 76.55s per article (~54 tokens/sec on Apple M4)
-- **3-Model Real Benchmark (Full Kleptotrace — 15 artículos, todos los datos)**:
+- **3-Model Real Benchmark (Full Kleptotrace/CoNLL-2002 — 15 artículos, todos los datos)**:
     - `gemma4:latest`:     **63.46% F1**, Precision: 65.62%, Recall: 74.55%, Hallucination: 0.20%, Latency: 91.7s/batch
     - `llama3.2:latest`:   **61.29% F1**, Precision: 60.42%, Recall: 66.61%, Hallucination: 2.21%, Latency: 5.9s/batch ⚡
     - `deepseek-r1:1.5b`: **42.92% F1**, Precision: 45.24%, Recall: 28.86%, Hallucination: 8.13%, Latency: 12.9s/batch
@@ -118,7 +118,7 @@ This file records the activity and progress of the Local LLM Financial Complianc
     - Defined three strategic paths:
         - Phase 1 (Quick Wins): Few-shot expansion (3 $\to$ 10 examples) and entity-specific prompts.
         - Phase 2 (Model Scaling): Migration to 13B+ models (Llama 2, DeepSeek, Gemma 27B).
-        - Phase 3 (Domain Adaptation): Synthetic data generation and LoRA fine-tuning.
+        - Phase 3 (Domain Adaptation): real balanced data generation and LoRA fine-tuning.
     - Quantified expected F1 gains for each approach and established a timeline for implementation (6-8 weeks total).
     - Integrated these findings into a "demonstrate feasibility" strategy for the thesis defense.
 
@@ -130,7 +130,7 @@ This file records the activity and progress of the Local LLM Financial Complianc
     - Generated a master `doc/TODO/TODO.md` list divided into 6 strategic phases to reach thesis validation.
     - Updated and detailed this `WORKLOG.md`.
 - **Golden Benchmark & Ingestion Integration**:
-    - Integrated **Kleptotrace** (`data/kleptotrace.json`) adaptive loading in `src/data_loader.py` to automatically transform keys into standard internal schemas.
+    - Integrated **Kleptotrace/CoNLL-2002** (`data/benchmark_balanced_120.json`) adaptive loading in `src/data_loader.py` to automatically transform keys into standard internal schemas.
     - Added TSV/IOB parsing and XML tag extraction helpers, expanding the data layer to support multiple formats.
     - Implemented a strict schema validator (`validate_record_schema`) checking field typing, properties structure, and empty values.
 - **Inter-Annotator Agreement (Cohen's Kappa)**:
@@ -143,7 +143,7 @@ This file records the activity and progress of the Local LLM Financial Complianc
     - Automated threshold evaluations outputting `results/acceptance_status.json` (F1 target >= 85%, hallucination rate <= 5%) and rendering banners on top of the dashboard.
     - Created `src/simulate_production.py` simulating daily feeds. Appended Tab 6 to `dashboard.py` to display simulated results and capture qualitative feedback in `results/stakeholder_feedback.json`.
 - **Successful End-to-End Evaluation:**
-    - Ran the full benchmark pipeline using `gemma4` on Kleptotrace, confirming metrics export and sensitivity delta (+8.42% cleaned F1).
+    - Ran the full benchmark pipeline using `gemma4` on Kleptotrace/CoNLL-2002, confirming metrics export and sensitivity delta (+8.42% cleaned F1).
 - **Environment Virtualization Setup & Cross-Platform Invariants**:
     - Created a unified `setup.sh` installation script configuring native tools (Ollama) and the virtual environment (`venv`) dependencies across macOS, Linux, and Windows.
     - Successfully executed the script and pulled target model weights (`gemma4`).
@@ -159,7 +159,7 @@ This file records the activity and progress of the Local LLM Financial Complianc
     - Created three new requirement files (`REQ40/41/42.md`) and user histories (`HU19/20/21.md`) for Fine-Grained Error Taxonomy, Few-Shot Ablation, and Hardware Efficiency Index.
     - Appended explicit python/python3 execution authorization checks in `AGENTS.md` to maintain interactive user safety.
 - **Prompt Ablation Study (US20 / REQ41):**
-    - Ran the completed prompt ablation study on the full 15-record Kleptotrace annotations feed using `gemma4:latest`.
+    - Ran the completed prompt ablation study on the full 15-record Kleptotrace/CoNLL-2002 annotations feed using `gemma4:latest`.
     - Captured comparative results:
       * *Zero-Shot English (`zs-en`):* **51.41% F1**
       * *Zero-Shot Spanish (`zs-es`):* **57.43% F1** (+6.02% gain)

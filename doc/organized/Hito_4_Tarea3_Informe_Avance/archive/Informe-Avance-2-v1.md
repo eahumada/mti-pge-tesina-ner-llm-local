@@ -26,7 +26,7 @@
 **Defina el contexto y el problema, propuesta de solución, objetivos del trabajo, método(s) de validación y resultados esperados (máximo 200 palabras). Finalmente, agregue a lo más 5 palabras claves.**
 
 ### Resumen
-El presente proyecto de tesina aborda la problemática que enfrentan las instituciones financieras ante la necesidad de automatizar el monitoreo y cumplimiento normativo (KYC, PEP, AML) en grandes volúmenes de noticias no estructuradas. El proceso manual tradicional resulta sumamente ineficiente y costoso, mientras que el uso de APIs en la nube expone datos sensibles y vulnera la confidencialidad. Para solucionar este vacío, se diseñó e implementó un sistema distribuido y soberano de ejecución 100% local. El pipeline emplea una arquitectura de procesamiento pub/sub asíncrona que interactúa localmente con Ollama para realizar el Reconocimiento de Entidades Nombradas (NER). Mediante un estudio de ablación sistemático sobre el dataset de sanciones financieras reales Kleptotrace, la localización al español y la optimización de prompts few-shot elevaron el F1-Score a 70.18% con el modelo Gemma4, con una tasa de alucinaciones inferior al 5% y una reducción de costos de 60-80%, validado mediante pruebas estadísticas de significancia ANOVA y Tukey HSD.
+El presente proyecto de tesina aborda la problemática que enfrentan las instituciones financieras ante la necesidad de automatizar el monitoreo y cumplimiento normativo (KYC, PEP, AML) en grandes volúmenes de noticias no estructuradas. El proceso manual tradicional resulta sumamente ineficiente y costoso, mientras que el uso de APIs en la nube expone datos sensibles y vulnera la confidencialidad. Para solucionar este vacío, se diseñó e implementó un sistema distribuido y soberano de ejecución 100% local. El pipeline emplea una arquitectura de procesamiento pub/sub asíncrona que interactúa localmente con Ollama para realizar el Reconocimiento de Entidades Nombradas (NER). Mediante un estudio de ablación sistemático sobre el dataset de sanciones financieras reales Kleptotrace/CoNLL-2002, la localización al español y la optimización de prompts few-shot elevaron el F1-Score a 70.18% con el modelo Gemma4, con una tasa de alucinaciones inferior al 5% y una reducción de costos de 60-80%, validado mediante pruebas estadísticas de significancia ANOVA y Tukey HSD.
 
 **Palabras Clave:** Cumplimiento Normativo, Procesamiento de Lenguaje Natural (NLP), LLM Local, Reconocimiento de Entidades Nombradas (NER), Soberanía de Datos.
 
@@ -40,7 +40,7 @@ El presente proyecto de tesina aborda la problemática que enfrentan las institu
 La hipótesis planteada sostiene que es viable implementar un sistema de extracción y clasificación de entidades financieras para cumplimiento corporativo (AML/KYC) utilizando modelos de lenguaje de código abierto de tamaño medio (8B-32B) ejecutados localmente de forma soberana, alcanzando un desempeño competitivo en precisión y recall en idioma español (F1-score >= 70%) a través de técnicas sistemáticas de prompt engineering y few-shot learning, eliminando la fuga de datos confidenciales y reduciendo los costos operativos en más de un 60%.
 
 La metodología de validación aplicada comprende:
-1. Ingestión y estructuración de noticias reales de lavado de activos y sanciones internacionales provenientes de la plataforma Kleptotrace.
+1. Ingestión y estructuración de noticias reales de lavado de activos y sanciones internacionales provenientes de la plataforma Kleptotrace/CoNLL-2002.
 2. Definición de un pipeline pub/sub multithreading con control adaptativo de concurrencia AIMD (TCP-like congestion control) para regular los hilos de procesamiento en caliente, protegiendo la GPU local ante desbordes de VRAM y absorbiendo errores de red (HTTP 429) en endpoints externos.
 3. Ejecución de un análisis de sensibilidad y estudio de ablación sobre 20+ combinaciones de prompts en 16 modelos locales e híbridos (Factory/Facade).
 4. Validación estadística rigurosa contrastando hipótesis nulas de rendimiento mediante ANOVA de una vía y pruebas post-hoc de Tukey HSD con una confianza del 95% (alfa=0.05).
@@ -76,7 +76,7 @@ Los principales resultados y hallazgos alcanzados a la fecha son:
 ### a) Interacción con el profesor guía (15 líneas)
 Durante los meses de mayo y junio de 2026, la interacción periódica con el profesor guía José Luis Martí Lara se centró en:
 1. Sesiones de coordinación mensual para revisar el progreso del desarrollo de software y validar la metodología experimental.
-2. Revisión y validación del diseño de pruebas estadísticas (ANOVA/Tukey HSD) sobre el dataset Kleptotrace.
+2. Revisión y validación del diseño de pruebas estadísticas (ANOVA/Tukey HSD) sobre el dataset balanceado Kleptotrace/CoNLL-2002/CoNLL-2002.
 3. Definición de la taxonomía de errores del NER (Boundary Errors y Type Confusion) y de las estrategias de mitigación de alucinaciones en el runner.
 4. Revisión y visado del plan de trabajo de cara a la redacción y entrega final de la tesina para optar al grado de Magíster en Tecnologías de la Información (MTI).
 

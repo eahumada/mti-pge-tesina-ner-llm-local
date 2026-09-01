@@ -229,12 +229,12 @@ All user stories include:
 #### Phase 1: Foundation & Data Ingestion (2 stories)
 
 **HU01: Dataset Ingestion & Validation**
-- **AC1**: Load Kleptotrace dataset with adaptive schema mapping
+- **AC1**: Load balanced Kleptotrace/CoNLL-2002/CoNLL-2002 dataset with adaptive schema mapping
 - **AC2**: Validate schema (ID, schema, caption, properties)
 - **AC3**: Maintain data provenance (timestamp, source ID)
 - **Requirements Mapped**: FR1.1, FR5.1, FR5.3
 - **Status**: ✅ Complete
-- **Evidence**: `data/kleptotrace.json` loaded successfully; `src/data_loader.py` validates all records
+- **Evidence**: `data/benchmark_balanced_120.json` loaded successfully; `src/data_loader.py` validates all records
 
 **HU02: Ground Truth & Inter-Annotator Agreement**
 - **AC1**: Support IOB/XML annotated compliance datasets (100-200 articles)
@@ -453,7 +453,7 @@ TOTAL:                        21/21 ✅
 ### 4.2 Task Breakdown by Phase
 
 #### Phase 1: Foundation & Data Ingestion
-- [x] Adapt and load Kleptotrace dataset format
+- [x] Adapt and load balanced Kleptotrace/CoNLL-2002/CoNLL-2002 dataset format
 - [x] System loads JSONL/CSV records with FollowTheMoney schemas
 - [x] Schema validation rejects invalid records
 - [x] Data provenance maintained on all records
@@ -657,7 +657,7 @@ scipy:          Statistical functions
 
 **Test Evidence:**
 ```
-Kleptotrace Benchmark:
+Kleptotrace/CoNLL-2002 Benchmark:
 ├── 15 articles processed
 ├── 3 prompt conditions (ZS-EN, ZS-ES, FS-ES)
 ├── 3 models evaluated (Gemma-4, DeepSeek, Llama)
@@ -677,7 +677,7 @@ Kleptotrace Benchmark:
 
 | Capability | Status | Evidence |
 |-----------|--------|----------|
-| Load JSONL | ✅ | `data/kleptotrace.json` successfully parsed |
+| Load JSONL | ✅ | `data/benchmark_balanced_120.json` successfully parsed |
 | Load CSV | ✅ | Multiple CSV datasets supported |
 | Load XML | ✅ | XML entity annotation parsing |
 | Load IOB | ✅ | IOB ground truth format support |
@@ -1243,7 +1243,7 @@ Achievability: ✅ Gap is closable with additional engineering
    └─ Sovereign stack, local-only execution, Pub/Sub design
 
 3. Methodology (15 min)
-   ├─ Dataset (Kleptotrace + ground truth)
+   ├─ Dataset (Kleptotrace/CoNLL-2002 + ground truth)
    ├─ Evaluation (F1, Precision, Recall, ANOVA)
    └─ Prompt engineering (ablation study, Spanish localization)
 
@@ -1539,7 +1539,7 @@ src/main.py (380 LOC)
 Prompt Ablation Study Results
 ─────────────────────────────
 Model: Gemma-4 (latest)
-Dataset: Kleptotrace (15 articles)
+Dataset: Kleptotrace/CoNLL-2002 (15 articles)
 
 Configuration         F1 Score   Precision  Recall   Status
 ───────────────────────────────────────────────────────────

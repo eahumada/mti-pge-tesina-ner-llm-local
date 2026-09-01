@@ -22,7 +22,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.title("🔬 NER-LLM Entity Benchmark Dashboard")
-st.subheader("Evaluating Local Open-Source LLMs · Financial Compliance & AML · Dataset: Kleptotrace")
+st.subheader("Evaluating Local Open-Source LLMs · Financial Compliance & AML · Dataset: Kleptotrace/CoNLL-2002")
 
 # ─── Sidebar ──────────────────────────────────────────────────────────────────
 st.sidebar.header("⚙️ Configuration")
@@ -226,7 +226,7 @@ CANDIDATE_HYPOTHESES = [
         "halluc_risk": "Muy Bajo",
         "rationale": (
             "Microsoft Phi-4 14B tiene el mejor adherencia a instrucciones de su clase — "
-            "entrenado en datos sintéticos de alta densidad de razonamiento. Violaciones de esquema JSON "
+            "entrenado en datos reales balanceados de alta densidad de razonamiento. Violaciones de esquema JSON "
             "(fuente principal de degradación F1) se eliminan casi completamente. "
             "Menor hallucination rate esperado del conjunto. "
             "Limitación: contexto 16K (vs 128K de otros) puede truncar few-shot prompts extensos. "
@@ -757,7 +757,7 @@ Prioridad 3 (evaluación comparativa completa):
 
 **Meta:** Con `mistral-nemo:latest` + few-shot español, la hipótesis es alcanzar **75-80% F1**,
 acercándose al objetivo del 85%. Para cruzar ese umbral, se recomienda fine-tuning con 200+ 
-ejemplos anotados del dominio Kleptotrace.
+ejemplos anotados del dominio Kleptotrace/CoNLL-2002.
 """)
 
 # ── TAB 7: Production Simulation ─────────────────────────────────────────────
@@ -961,7 +961,7 @@ with tab9:
                         system_prompt = (
                             "Eres un experto en análisis de datos de inteligencia artificial y compliance financiero. "
                             "Tienes acceso a los resultados reales de un benchmark de modelos LLM locales (como Gemma4, Llama3, Mistral, Qwen, etc.) "
-                            "evaluados en Named Entity Recognition (NER) sobre noticias de sanciones y lavado de activos (Dataset Kleptotrace). "
+                            "evaluados en Named Entity Recognition (NER) sobre noticias de sanciones y lavado de activos (dataset balanceado Kleptotrace/CoNLL-2002/CoNLL-2002). "
                             "Responde las preguntas del usuario basándote únicamente en los datos provistos y en el contexto del proyecto. "
                             "Sé claro, conciso y académico en tu tono. Si los datos aún no están completamente generados, indícalo con cortesía.\n\n"
                             f"CONTEXTO DE LOS RESULTADOS DEL BENCHMARK:\n{context}"
@@ -993,7 +993,7 @@ with tab9:
 
 st.markdown("---")
 st.caption(
-    f"NER-LLM Benchmark Dashboard · Dataset: Kleptotrace (15 artículos reales AML) · "
+    f"NER-LLM Benchmark Dashboard · Dataset: Kleptotrace/CoNLL-2002 (15 artículos reales AML) · "
     f"Última actualización: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} · "
     "Todos los resultados son de inferencia real local (Ollama)"
 )

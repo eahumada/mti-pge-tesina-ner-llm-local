@@ -12,7 +12,7 @@ from src.evaluator import evaluate_single_record
 from src.llm_runner import extract_entities_with_ollama
 
 def simulate_daily_batch(
-    data_file: str = "data/kleptotrace.json",
+    data_file: str = "data/benchmark_balanced_120.json",
     model: str = "gemma4:latest",
     base_url: str = "http://localhost:11434",
     system_prompt_file: str = "SYSTEM_PROMPT.md",

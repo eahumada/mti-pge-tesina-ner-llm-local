@@ -92,7 +92,7 @@ Return ONLY valid JSON, no explanation:
 class GemmaModelTester:
     """Test suite for Gemma model variants"""
 
-    def __init__(self, data_path: str = "data/kleptotrace.json", output_dir: str = "results"):
+    def __init__(self, data_path: str = "data/benchmark_balanced_120.json", output_dir: str = "results"):
         self.data_path = Path(data_path)
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(exist_ok=True)
@@ -101,7 +101,7 @@ class GemmaModelTester:
         self.test_articles = self._load_test_articles()
 
     def _load_test_articles(self) -> List[Dict]:
-        """Load test articles from Kleptotrace dataset"""
+        """Load test articles from balanced Kleptotrace/CoNLL-2002/CoNLL-2002 dataset"""
         if not self.data_path.exists():
             print(f"❌ Data file not found: {self.data_path}")
             print("   Creating minimal test article...")
@@ -406,7 +406,7 @@ def main():
     )
     parser.add_argument(
         "--data",
-        default="data/kleptotrace.json",
+        default="data/benchmark_balanced_120.json",
         help="Path to test data file"
     )
     parser.add_argument(

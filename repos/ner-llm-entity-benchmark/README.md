@@ -29,9 +29,9 @@ source venv/bin/activate
 ```
 
 ### 2. Run the Benchmark Sweep
-Evaluate a model sweep on the primary Kleptotrace dataset:
+Evaluate a model sweep on the primary balanced Kleptotrace/CoNLL-2002/CoNLL-2002 dataset:
 ```bash
-python src/main.py --models gemma4 --data-file data/kleptotrace.json --batch-size 3
+python src/main.py --models gemma4 --data-file data/benchmark_balanced_120.json --batch-size 3
 ```
 
 ### 3. Run simulated daily batches

@@ -43,7 +43,7 @@ A continuación se registran los requerimientos y el contenido consolidado en la
 
 1. **Hipótesis y Metodología:**
    * *Hipótesis:* Es viable implementar un sistema soberano y local de extracción de entidades financieras para compliance (AML/KYC) utilizando modelos de lenguaje de código abierto de tamaño medio (8B-32B), alcanzando un desempeño competitivo en precisión y recall en idioma español (F1-score >= 70%) mediante técnicas de prompt engineering y few-shot learning, eliminando la fuga de datos a nubes públicas y reduciendo costos operativos.
-   * *Metodología:* Construcción de dataset de pruebas a partir de Kleptotrace; pipeline pub/sub concurrente con algoritmo adaptativo de workers (AIMD) para prevención de fallos de VRAM/red; estudio de ablación con 20+ combinaciones de prompts y 16 modelos; y análisis estadístico robusto de variables (ANOVA y Tukey HSD con p-value < 5%).
+   * *Metodología:* Construcción de dataset de pruebas a partir de Kleptotrace/CoNLL-2002; pipeline pub/sub concurrente con algoritmo adaptativo de workers (AIMD) para prevención de fallos de VRAM/red; estudio de ablación con 20+ combinaciones de prompts y 16 modelos; y análisis estadístico robusto de variables (ANOVA y Tukey HSD con p-value < 5%).
 
 2. **Resultados Logrados hasta la Fecha:**
    * **Ganancia neta de +18.77% en F1-Score** (de 51.41% en zero-shot inglés a 70.18% en few-shot español) en local usando el modelo Gemma4.

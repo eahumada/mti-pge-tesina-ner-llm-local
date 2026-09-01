@@ -4,7 +4,7 @@ This directory contains the documentation and references for the data sources an
 
 ## Index of Sources
 - [OpenSanctions](opensanctions.md) - Primary source of sanctions data.
-- [Kleptotrace](kleptotrace.md) - Dataset used for NER benchmarking.
+- [Kleptotrace/CoNLL-2002](Kleptotrace/CoNLL-2002.md) - Dataset used for NER benchmarking.
 - [FollowTheMoney (FtM)](followthemoney.md) - Data format and schema reference.
 - [Ollama](ollama.md) - Local LLM serving engine.
 

@@ -1,7 +1,7 @@
 # REFERENCIA DE DATASETS NER Y REGISTRO OPENSANCTIONS
 ## Análisis Comparativo de Corpuses para NLP de Cumplimiento y Sanciones
 
-Este documento recopila la información sobre datasets de Named Entity Recognition (NER) similares a Kleptotrace y el registro de fuentes de OpenSanctions para su posterior incorporación en el Informe de Avance del Magíster MTI.
+Este documento recopila la información sobre datasets de Named Entity Recognition (NER) similares a Kleptotrace/CoNLL-2002 y el registro de fuentes de OpenSanctions para su posterior incorporación en el Informe de Avance del Magíster MTI.
 
 ---
 
@@ -58,10 +58,10 @@ OpenSanctions organiza su base de datos bajo el modelo FollowTheMoney (FtM). A c
 
 ## 📈 3. NOTA METODOLÓGICA SOBRE SIGNIFICANCIA ESTADÍSTICA ($N \ge 30$) Y DATASETS AUMENTADOS
 
-Para la tesis de MTI, la adopción de datasets aumentados basados en Kleptotrace responde a la necesidad metodológica de validación estadística y estrés computacional:
+Para la tesis de MTI, la adopción de datasets aumentados basados en Kleptotrace/CoNLL-2002 responde a la necesidad metodológica de validación estadística y estrés computacional:
 
-1. **Kleptotrace (Original 15 registros):** La fuente original de Kleptotrace es un dataset público de noticias relacionadas con lavado de activos y crímenes financieros. Consiste en reportajes y recortes periodísticos en los que se extraen nombres de PEPs (Personas Expuestas Políticamente) y organizaciones ficticias o reales. Debido a que 15 artículos resultan muy pocos para una prueba estadística robusta, se optó por una estrategia de aumento de datos (*data augmentation*).
+1. **Kleptotrace/CoNLL-2002 (Original 15 registros):** La fuente original de Kleptotrace/CoNLL-2002 es un dataset público de noticias relacionadas con lavado de activos y crímenes financieros. Consiste en reportajes y recortes periodísticos en los que se extraen nombres de PEPs (Personas Expuestas Políticamente) y organizaciones ficticias o reales. Debido a que 15 artículos resultan muy pocos para una prueba estadística robusta, se optó por una estrategia de aumento de datos (*data augmentation*).
 
-2. **Dataset 30 Registros (`kleptotrace_augmented_30.json`):** Fue construido preservando los primeros 15 artículos de Kleptotrace y complementándolos con 15 registros adicionales curados a mano. Estos incluyen casos icónicos del mundo real (ej. Cártel de Sinaloa en HSBC, Danske Bank, multas de la SEC y OFAC). Su principal fin metodológico es alcanzar el **Teorema del Límite Central (TLC)** ($N \ge 30$), permitiendo aplicar pruebas paramétricas como el análisis de varianza (ANOVA de una vía) y la prueba Tukey HSD de manera válida.
+2. **Dataset 30 Registros (`benchmark_balanced_120.json`):** Fue construido preservando los primeros 15 artículos de Kleptotrace/CoNLL-2002 y complementándolos con 15 registros adicionales curados a mano. Estos incluyen casos icónicos del mundo real (ej. Cártel de Sinaloa en HSBC, Danske Bank, multas de la SEC y OFAC). Su principal fin metodológico es alcanzar el **Teorema del Límite Central (TLC)** ($N \ge 30$), permitiendo aplicar pruebas paramétricas como el análisis de varianza (ANOVA de una vía) y la prueba Tukey HSD de manera válida.
 
-3. **Datasets 60 y 120 Registros (`kleptotrace_augmented_60.json` y `kleptotrace_augmented_120.json`):** Estos archivos fueron generados de manera algorítmica utilizando plantillas sintácticas extraídas de los patrones observados en los primeros 30 artículos. Se incorporó una lista representativa de personas y organizaciones operando en marcos regulatorios globales (OFAC, FCA, SEC, Interpol, etc.) y se aseguró el etiquetado del *ground truth* exacto para asegurar una validación determinista de Precisión y Recall. Estos datasets sirven para realizar pruebas de estrés de infraestructura y escalabilidad computacional en la inferencia LLM local.
+3. **Datasets 60 y 120 Registros (`benchmark_balanced_120.json` y `benchmark_balanced_120.json`):** Estos archivos fueron generados de manera algorítmica utilizando plantillas sintácticas extraídas de los patrones observados en los primeros 30 artículos. Se incorporó una lista representativa de personas y organizaciones operando en marcos regulatorios globales (OFAC, FCA, SEC, Interpol, etc.) y se aseguró el etiquetado del *ground truth* exacto para asegurar una validación determinista de Precisión y Recall. Estos datasets sirven para realizar pruebas de estrés de infraestructura y escalabilidad computacional en la inferencia LLM local.

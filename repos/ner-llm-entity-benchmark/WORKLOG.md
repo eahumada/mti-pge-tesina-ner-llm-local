@@ -16,7 +16,7 @@ This worklog serves as the primary record of all technical decisions, research, 
 - **Optimization Analysis**: Performed a deep dive into the current sequential processing model. Identified the primary bottleneck as I/O wait time during LLM inference.
 - **Parallelization Research**: Created `RESEARCH_QUEUE_PARALIZATION.MD` proposing the use of `ThreadPoolExecutor` to overlap LLM request latency, which is expected to provide a significant speedup without the complexity of a full `asyncio` refactor.
 - **Model Configuration**: Updated `src/config.py` to use the latest local models: `gemma3:latest`, `llama3:latest`, and `deepseek`.
-- **Source Repository**: Created `doc/sources/` directory containing `README.md`, `CLAUDE.md`, and detailed documentation for `OpenSanctions`, `Kleptotrace`, `FollowTheMoney`, and `Ollama`.
+- **Source Repository**: Created `doc/sources/` directory containing `README.md`, `CLAUDE.md`, and detailed documentation for `OpenSanctions`, `Kleptotrace/CoNLL-2002`, `FollowTheMoney`, and `Ollama`.
 - **Academic Reference Framework**: Established a professional `doc/references/` directory. 
     - Categorized sources into Primary, Secondary, and Tertiary.
     - Conducted deep research on **OpenSanctions**, creating a formal justification for its use in the thesis (`opensanctions_justification.md`).
@@ -25,7 +25,7 @@ This worklog serves as the primary record of all technical decisions, research, 
 - **Governance Update**: Modified `CLAUDE.md` and `AGENTS.md` to enforce strict, detailed worklog entries oriented towards the academic thesis.
 
 ### Relation to Sources
-- The optimization research directly addresses the scalability and throughput requirements needed to process the full `Kleptotrace` and `OpenSanctions` datasets efficiently.
+- The optimization research directly addresses the scalability and throughput requirements needed to process the full `Kleptotrace/CoNLL-2002` and `OpenSanctions` datasets efficiently.
 - The source documentation and reference framework provide the necessary academic provenance, justification, and literature baseline required for the final thesis.
 
 ### Results
@@ -65,7 +65,7 @@ This worklog serves as the primary record of all technical decisions, research, 
   * Hardware Efficiency Index (Parameter size vs. Latency tokens/sec).
 - **Agent Guidelines updated:** Appended explicit python/python3 execution authorization checks inside `AGENTS.md` to guarantee interactive user-gating.
 - **Ablation Study Experiment Completed:**
-  * Evaluated `gemma4:latest` model using the full 15-record Kleptotrace annotations feed.
+  * Evaluated `gemma4:latest` model using the full 15-record Kleptotrace/CoNLL-2002 annotations feed.
   * *Zero-Shot English (`zs-en`):* **51.41% F1**
   * *Zero-Shot Spanish (`zs-es`):* **57.43% F1** (+6.02% gain)
   * *Few-Shot Spanish (`fs-es`):* **70.18% F1** (+18.77% gain over zero-shot baseline)

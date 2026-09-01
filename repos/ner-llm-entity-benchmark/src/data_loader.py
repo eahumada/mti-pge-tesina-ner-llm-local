@@ -56,7 +56,7 @@ def validate_record_schema(record: dict) -> bool:
             logger.error("Record properties 'name' field must be a list of strings.")
             return False
             
-    # Validate ground_truth if present (e.g. from Kleptotrace/annotated formats)
+    # Validate ground_truth if present (e.g. from Kleptotrace/CoNLL-2002/annotated formats)
     if "ground_truth" in record:
         gt = record["ground_truth"]
         if not isinstance(gt, dict):
@@ -108,7 +108,7 @@ def extract_ground_truth(record: dict) -> dict:
     return gt
 
 def adapt_kleptotrace_record(record: dict) -> dict:
-    """Adapts a Kleptotrace record to the internal FollowTheMoney schema."""
+    """Adapts a Kleptotrace/CoNLL-2002 record to the internal FollowTheMoney schema."""
     return {
         "id": str(record.get("article_id", "")),
         "schema": "Article",
@@ -296,7 +296,7 @@ def load_all_records(filepath: str) -> list[dict]:
     # 3. Try reading as standard JSON array first
     try:
         data = json.loads(content)
-        # If it's a dict containing a dataset list (e.g. Kleptotrace)
+        # If it's a dict containing a dataset list (e.g. Kleptotrace/CoNLL-2002)
         if isinstance(data, dict) and "dataset" in data:
             records = data["dataset"]
         elif isinstance(data, list):
@@ -304,7 +304,7 @@ def load_all_records(filepath: str) -> list[dict]:
         else:
             records = [data]
         
-        # Adapt/standardize if they are Kleptotrace format
+        # Adapt/standardize if they are Kleptotrace/CoNLL-2002 format
         adapted = []
         for r in records:
             if isinstance(r, dict):

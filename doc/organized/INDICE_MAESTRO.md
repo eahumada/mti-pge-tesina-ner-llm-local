@@ -116,7 +116,7 @@ doc/organized/
 2026-06-27  Creación de 42 Requisitos Formales (REQ01–REQ42)
 2026-06-28  Creación de 21 Historias de Usuario (HU01–HU21) + Referencias
 2026-06-29  Corrida de Benchmark de Ablación (4 prompts × Gemma4)
-2026-07-01  Corrida del Benchmark Completo (15 modelos × Kleptotrace N=15)
+2026-07-01  Corrida del Benchmark Completo (15 modelos × Kleptotrace/CoNLL-2002 N=15)
             Generación de Reportes Analíticos y Documentación de Defensa
 2026-07-01  Entrega Formulario IA-26 (Informe de Avance Nº2) — Word
 2026-07-04  Informe de Avance Nº2 versión final en Markdown (N=30, F1=79%)

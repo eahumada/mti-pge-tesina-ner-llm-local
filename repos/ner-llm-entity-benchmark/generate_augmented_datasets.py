@@ -2,7 +2,7 @@ import json
 import random
 
 # Load original 30
-with open("data/kleptotrace_augmented_30.json", "r", encoding="utf-8") as f:
+with open("data/benchmark_balanced_120.json", "r", encoding="utf-8") as f:
     original_data = json.load(f)["dataset"]
 
 templates = [
@@ -75,13 +75,13 @@ def generate_record(start_id, count):
 # Generate 60
 data_60 = original_data.copy()
 data_60.extend(generate_record(31, 30))
-with open("data/kleptotrace_augmented_60.json", "w", encoding="utf-8") as f:
+with open("data/benchmark_balanced_120.json", "w", encoding="utf-8") as f:
     json.dump({"dataset": data_60}, f, indent=2)
 
 # Generate 120
 data_120 = data_60.copy()
 data_120.extend(generate_record(61, 60))
-with open("data/kleptotrace_augmented_120.json", "w", encoding="utf-8") as f:
+with open("data/benchmark_balanced_120.json", "w", encoding="utf-8") as f:
     json.dump({"dataset": data_120}, f, indent=2)
 
-print("Created data/kleptotrace_augmented_60.json and data/kleptotrace_augmented_120.json successfully.")
+print("Created data/benchmark_balanced_120.json and data/benchmark_balanced_120.json successfully.")

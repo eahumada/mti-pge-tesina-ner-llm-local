@@ -166,7 +166,7 @@ ollama pull gemma:27b-instruct-q4_0
 
 # Run benchmark with memory monitoring
 python src/main.py \
-  --input data/kleptotrace.json \
+  --input data/benchmark_balanced_120.json \
   --model gemma:27b-instruct-q4_0 \
   --monitor-vram \
   --output results/gemma27b_q4.json
@@ -249,7 +249,7 @@ ollama pull gemma:7b-code
 ollama pull gemma:latest-code
 
 python src/main.py \
-  --input data/kleptotrace.json \
+  --input data/benchmark_balanced_120.json \
   --model gemma:7b-code \
   --output results/gemma7b_code.json
 ```
@@ -397,7 +397,7 @@ def run_benchmark(models_list):
     }
     
     # Load test article
-    with open("data/kleptotrace.json") as f:
+    with open("data/benchmark_balanced_120.json") as f:
         test_data = json.load(f)
         test_article = test_data[0]["text"]  # Use first article
     
@@ -525,7 +525,7 @@ ollama pull gemma:27b-instruct-q4_0
 
 # Step 2: Run full benchmark
 python src/main.py \
-  --input data/kleptotrace.json \
+  --input data/benchmark_balanced_120.json \
   --model gemma:27b-instruct-q4_0 \
   --condition fs-es \
   --output results/benchmark_gemma27b.json \

@@ -276,7 +276,7 @@ ollama pull deepseek-coder:13b
 
 # Run benchmark with new model
 python src/main.py \
-  --input data/kleptotrace.json \
+  --input data/benchmark_balanced_120.json \
   --model llama2:13b \
   --condition fs-es \
   --output results/benchmark_llama13b.json
@@ -456,7 +456,7 @@ Current ground truth: 15 articles
 Target: 500-1000 compliance extraction examples
 
 Options:
-1. Manually annotate more articles from Kleptotrace
+1. Manually annotate more articles from Kleptotrace/CoNLL-2002
    └─ Time: 50-100 hours at $20/hour = $1000-2000
    
 2. Use synthetic generation
@@ -728,9 +728,9 @@ Target Completion: Mid-August 2026 (within 6-8 weeks)
 
 **Step 1: Establish Baseline**
 ```bash
-# Run current system on full Kleptotrace dataset
+# Run current system on full balanced Kleptotrace/CoNLL-2002/CoNLL-2002 dataset
 python src/main.py \
-  --input data/kleptotrace.json \
+  --input data/benchmark_balanced_120.json \
   --model gemma4 \
   --condition fs-es \
   --output results/baseline_70.18.json
@@ -744,7 +744,7 @@ echo "Baseline F1: 70.18%" > results/BASELINE.txt
 ```bash
 # Apply improvement (e.g., model upgrade)
 python src/main.py \
-  --input data/kleptotrace.json \
+  --input data/benchmark_balanced_120.json \
   --model llama2:13b \
   --condition fs-es \
   --output results/improved_74.json

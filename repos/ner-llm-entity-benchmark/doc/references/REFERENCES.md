@@ -6,8 +6,8 @@ This document serves as the central index for all sources used in the NER-LLM En
 
 ### Primary Sources
 *Original, first-hand evidence or raw data.*
-- **Zenodo (Kleptotrace)**: Official archival source of benchmark raw data. [Details](./zenodo_kleptotrace.md)
-- **GitHub (Kleptotrace Implementation)**: Implementation and data distribution for the dataset. [Details](./github_kleptotrace.md)
+- **Zenodo (Kleptotrace/CoNLL-2002)**: Official archival source of benchmark raw data. [Details](./zenodo_Kleptotrace/CoNLL-2002.md)
+- **GitHub (Kleptotrace/CoNLL-2002 Implementation)**: Implementation and data distribution for the dataset. [Details](./github_Kleptotrace/CoNLL-2002.md)
 - **HuggingFace (OFAC Dataset)**: Recent sanctions data for high-fidelity NER testing. [Details](./huggingface_ofac.md)
 - **HuggingFace (Trade Screening Dataset)**: Specialized trade screening data for compliance scope expansion. [Details](./huggingface_trade.md)
 
@@ -26,7 +26,7 @@ This document serves as the central index for all sources used in the NER-LLM En
 ## 2. Reference List (Cited Works)
 The following sources are directly cited within the implementation and research documents of this project:
 - OpenSanctions (opensanctions.org)
-- Zenodo (Kleptotrace)
+- Zenodo (Kleptotrace/CoNLL-2002)
 - Ollama (ollama.com)
 
 ## 3. Bibliography (Consulted Works)

@@ -12,7 +12,7 @@
 | :---: | :--- | :---: | :---: | :--- |
 | 2026-07-01 | `Formulario-IA-26-Original.docx` | DOCX | 138 KB | Formulario oficial SIIG-PGE25 (IA-26) en blanco — copia del original recibido en `/Users/eahumada1/Downloads/Formulario-IA-26.docx` |
 | 2026-07-01 | `Formulario-IA-26-Rellenado.docx` | DOCX | 138 KB | Formulario oficial SIIG-PGE25 (IA-26) completado con los resultados reales del benchmark. Versión Word entregada formalmente |
-| 2026-07-01 | `benchmark_results_consolidated.md` | MD | 9 KB | Reporte consolidado del benchmark de 16 modelos LLM sobre Kleptotrace (15 artículos). Incluye tablas comparativas de F1, precisión, recall, tasas de alucinación, latencia y análisis estadístico ANOVA |
+| 2026-07-01 | `benchmark_results_consolidated.md` | MD | 9 KB | Reporte consolidado del benchmark de 16 modelos LLM sobre Kleptotrace/CoNLL-2002 (15 artículos). Incluye tablas comparativas de F1, precisión, recall, tasas de alucinación, latencia y análisis estadístico ANOVA |
 | 2026-07-01 | `referencia_datasets_nlp.md` | MD | 5 KB | Análisis comparativo de datasets NER similares (CoNLL-2003, FiNER-139, MultiCoNER, Flare-NER, AI4Privacy) e inventario de fuentes OpenSanctions con conteos de entidades |
 | 2026-07-04 | `Informe-Avance-2-v2.md` | MD | 13 KB | **Versión final** del Informe de Avance Nº2 en español. Corrección: actividades de coordinación con profesor guía actualizadas a julio 2026 (planificadas, no realizadas en mayo-junio). Copia disponible también en `/Users/eahumada1/Downloads/Informe-Avance-2-v2.md` |
 

@@ -19,7 +19,7 @@ else
 fi
 
 echo "📊 Running full benchmark sweep — 15 models (including MiniMax & gpt-oss) on ALL data..."
-./venv/bin/python src/main.py --data-file data/kleptotrace.json \
+./venv/bin/python src/main.py --data-file data/benchmark_balanced_120.json \
   --rag-study \
   --models \
     gemma4-12b-mlx-q8-64k:latest \
@@ -41,7 +41,7 @@ echo "📊 Running full benchmark sweep — 15 models (including MiniMax & gpt-o
   --batch-size 3
 
 echo "🧪 Running the prompt ablation study sweep on ALL data..."
-python src/main.py --ablation --data-file data/kleptotrace.json --models gemma4:latest --batch-size 3
+python src/main.py --ablation --data-file data/benchmark_balanced_120.json --models gemma4:latest --batch-size 3
 
 echo "📈 Simulating production batch flow..."
 python src/simulate_production.py

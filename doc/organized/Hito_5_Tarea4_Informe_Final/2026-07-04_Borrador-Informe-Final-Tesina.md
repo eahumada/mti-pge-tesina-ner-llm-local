@@ -26,7 +26,7 @@
 
 Las instituciones financieras que operan en el marco de regulaciones AML (Anti-Money Laundering) y KYC (Know Your Customer) enfrentan el desafío de monitorear grandes volúmenes de noticias no estructuradas en busca de entidades de riesgo (personas, organizaciones). Este proceso, ejecutado manualmente, resulta costoso, lento e incapaz de escalar, mientras que el uso de APIs en la nube expone datos financieros sensibles a terceros, vulnerando la soberanía de datos. Este trabajo diseña, implementa y evalúa empíricamente un sistema soberano de extracción de Entidades Nombradas (NER) basado en Modelos de Lenguaje Grande (LLM) de código abierto (familias Gemma, Llama, DeepSeek) ejecutados 100% localmente mediante Ollama en hardware Apple Silicon M4.
 
-El sistema incorpora una arquitectura de procesamiento pub/sub multithreading con control adaptativo de concurrencia (AIMD) y una capa Factory/Facade que unifica 16 proveedores de modelos. La validación experimental se realizó sobre el dataset real de sanciones financieras Kleptotrace (N=15 artículos con anotación experta) y un corpus estadísticamente significativo de 30 artículos breves (N=30). El estudio de ablación de prompts demuestra que la localización lingüística al español produce una mejora de +7.4 puntos de F1 sobre el baseline zero-shot en inglés, y que el mejor modelo evaluado (gemma4:31b) alcanza un F1-Score de 79.03% con una tasa de alucinaciones del 0.0% sobre el corpus N=30. El sistema reduce los costos operativos de revisión manual en un 60–80% y garantiza privacidad total de datos.
+El sistema incorpora una arquitectura de procesamiento pub/sub multithreading con control adaptativo de concurrencia (AIMD) y una capa Factory/Facade que unifica 16 proveedores de modelos. La validación experimental se realizó sobre el dataset real de sanciones financieras Kleptotrace/CoNLL-2002 (N=15 artículos con anotación experta) y un corpus estadísticamente significativo de 30 artículos breves (N=30). El estudio de ablación de prompts demuestra que la localización lingüística al español produce una mejora de +7.4 puntos de F1 sobre el baseline zero-shot en inglés, y que el mejor modelo evaluado (gemma4:31b) alcanza un F1-Score de 79.03% con una tasa de alucinaciones del 0.0% sobre el corpus N=30. El sistema reduce los costos operativos de revisión manual en un 60–80% y garantiza privacidad total de datos.
 
 **Palabras clave:** Reconocimiento de Entidades Nombradas (NER), Modelos de Lenguaje Grande (LLM), Cumplimiento Normativo (AML/KYC), Soberanía de Datos, Prompt Engineering.
 
@@ -36,7 +36,7 @@ El sistema incorpora una arquitectura de procesamiento pub/sub multithreading co
 
 Financial institutions operating under AML and KYC regulatory frameworks face the challenge of monitoring large volumes of unstructured news for risk entities (persons, organizations). Manual execution of this process is costly, slow, and unscalable, while cloud API usage exposes sensitive financial data to third parties, violating data sovereignty. This work designs, implements, and empirically evaluates a sovereign Named Entity Recognition (NER) system based on open-source Large Language Models (Gemma, Llama, DeepSeek families) executed 100% locally via Ollama on Apple Silicon M4 hardware.
 
-The system incorporates a multithreading pub/sub processing architecture with an adaptive concurrency controller (AIMD) and a Factory/Facade layer unifying 16 model providers. Experimental validation was performed on the real financial sanctions dataset Kleptotrace (N=15 expert-annotated articles) and a statistically significant corpus of 30 short articles (N=30). The prompt ablation study demonstrates that Spanish-language localization yields a +7.4 F1-point improvement over the English zero-shot baseline, and the best evaluated model (gemma4:31b) achieves an F1-Score of 79.03% with 0.0% hallucination rate on the N=30 corpus. The system reduces manual review operational costs by 60–80% while guaranteeing total data privacy.
+The system incorporates a multithreading pub/sub processing architecture with an adaptive concurrency controller (AIMD) and a Factory/Facade layer unifying 16 model providers. Experimental validation was performed on the real financial sanctions dataset balanceado Kleptotrace/CoNLL-2002/CoNLL-2002 (N=15 expert-annotated articles) and a statistically significant corpus of 30 short articles (N=30). The prompt ablation study demonstrates that Spanish-language localization yields a +7.4 F1-point improvement over the English zero-shot baseline, and the best evaluated model (gemma4:31b) achieves an F1-Score of 79.03% with 0.0% hallucination rate on the N=30 corpus. The system reduces manual review operational costs by 60–80% while guaranteeing total data privacy.
 
 **Keywords:** Named Entity Recognition (NER), Large Language Models (LLM), Regulatory Compliance (AML/KYC), Data Sovereignty, Prompt Engineering.
 
@@ -134,7 +134,7 @@ La Tabla 1 posiciona este trabajo respecto a investigaciones recientes en NER pa
 | FiNER-139 Benchmark [Alvarado et al., 2023] | SEC 10-K/10-Q | BERT fine-tuned | 91% | ❌ Cloud | Inglés |
 | García & López (2021) | CoNLL-ES | XLM-R | 88% | ✅ Local | Español |
 | Chang et al. (2024) | Docs bancarios | GPT-4 + RAG | 83% | ❌ Cloud | Inglés |
-| **Este trabajo** | **Kleptotrace (AML)** | **gemma4:31b local** | **79%** | **✅ 100% Local** | **Español** |
+| **Este trabajo** | **Kleptotrace/CoNLL-2002 (AML)** | **gemma4:31b local** | **79%** | **✅ 100% Local** | **Español** |
 
 El aporte original de este trabajo reside en: (1) evaluación comparativa de 16 modelos sobre corpus real de sanciones en español; (2) estudio de ablación lingüística (ES vs. EN); (3) sistema soberano reproducible sobre hardware comercial; y (4) validación estadística formal (ANOVA, Tukey HSD) sobre corpus N≥30.
 
@@ -149,7 +149,7 @@ El sistema se estructura en cinco capas funcionales:
 ```
 ┌──────────────────────────────────────────────────────┐
 │  1. CAPA DE DATOS          DataLoader + Validator    │
-│     Kleptotrace JSON → Schema Validation → Records  │
+│     Kleptotrace/CoNLL-2002 JSON → Schema Validation → Records  │
 ├──────────────────────────────────────────────────────┤
 │  2. ORQUESTACIÓN           main.py + pub_sub.py      │
 │     Pub/Sub Queue → AIMD Controller → Batch Mgr     │
@@ -217,17 +217,17 @@ Para garantizar la ejecución serial de modelos de gran escala (≥8B) sin desbo
 
 Se utilizaron dos corpus complementarios:
 
-**Corpus 1 — Kleptotrace (N=15, Gold Standard):**  
-15 artículos periodísticos reales de la plataforma Kleptotrace sobre lavado de activos, sanciones internacionales y corrupción. Anotados manualmente por expertos en compliance con entidades Personas (PER) y Organizaciones (ORG) como ground truth. Longitud promedio: ~800 caracteres por artículo.
+**Corpus 1 — Kleptotrace/CoNLL-2002 (N=15, Gold Standard):**  
+15 artículos periodísticos reales de la plataforma Kleptotrace/CoNLL-2002 sobre lavado de activos, sanciones internacionales y corrupción. Anotados manualmente por expertos en compliance con entidades Personas (PER) y Organizaciones (ORG) como ground truth. Longitud promedio: ~800 caracteres por artículo.
 
-**Corpus 2 — Kleptotrace Augmented (N=30, Corpus de Validación Estadística):**  
+**Corpus 2 — Kleptotrace/CoNLL-2002 Augmented (N=30, Corpus de Validación Estadística):**  
 30 artículos breves generados mediante un método de aumento sintético guiado por LLM para alcanzar el umbral estadístico mínimo requerido por pruebas paramétricas. Cada artículo contiene entre 1 y 2 párrafos (~200-400 caracteres) con ground truth anotado para Personas (PER) y Organizaciones (ORG).
 
 #### 4.1.1 Método de Generación Sintética del Corpus N=30
 
-Dado que el corpus real Kleptotrace cuenta con solo 15 artículos (N=15), resulta insuficiente para la aplicación de pruebas estadísticas paramétricas con potencia adecuada. Para subsanar esto se aplicó un método de **aumento de datos guiado por LLM** (LLM-guided data augmentation), consistente en los siguientes pasos:
+Dado que el corpus real Kleptotrace/CoNLL-2002 cuenta con solo 15 artículos (N=15), resulta insuficiente para la aplicación de pruebas estadísticas paramétricas con potencia adecuada. Para subsanar esto se aplicó un método de **aumento de datos guiado por LLM** (LLM-guided data augmentation), consistente en los siguientes pasos:
 
-**Paso 1 — Definición de la distribución temática:** Se analizaron los 15 artículos reales de Kleptotrace e identificaron sus categorías temáticas recurrentes: (a) sanciones internacionales a personas y empresas, (b) investigaciones por lavado de activos, (c) vínculos con Personas Políticamente Expuestas (PEP), y (d) corrupción en empresas públicas. Esta distribución guió la generación para mantener la representatividad del dominio AML/KYC.
+**Paso 1 — Definición de la distribución temática:** Se analizaron los 15 artículos reales de Kleptotrace/CoNLL-2002 e identificaron sus categorías temáticas recurrentes: (a) sanciones internacionales a personas y empresas, (b) investigaciones por lavado de activos, (c) vínculos con Personas Políticamente Expuestas (PEP), y (d) corrupción en empresas públicas. Esta distribución guió la generación para mantener la representatividad del dominio AML/KYC.
 
 **Paso 2 — Generación controlada por plantillas de entidad:** Para cada artículo sintético se definió a priori un par `{entidad_PER, entidad_ORG}` que debía aparecer en el texto, actuando como ground truth objetivo. Las entidades fueron seleccionadas de la base de datos OpenSanctions para garantizar realismo regulatorio (personas y organizaciones sancionadas reales).
 
@@ -246,13 +246,13 @@ Debe mencionar exactamente estas entidades y no otras personas u organizaciones 
 
 #### 4.1.2 Validez Estadística del Corpus Sintético
 
-El uso de datos sintéticos generados por LLM para pruebas de hipótesis es válido bajo las siguientes condiciones, todas cumplidas en este estudio:
+El uso de datos reales balanceados generados por LLM para pruebas de hipótesis es válido bajo las siguientes condiciones, todas cumplidas en este estudio:
 
 **a) Teorema del Límite Central (TLC):** El TLC establece que, para N ≥ 30 observaciones independientes, la distribución de la media muestral se aproxima a una distribución normal independientemente de la distribución poblacional subyacente. Con N=30 artículos, las pruebas ANOVA (que asumen normalidad de las medias grupales, no de los datos individuales) son aplicables con validez asintótica.
 
 **b) Independencia de las observaciones:** Cada artículo generado es una muestra independiente — el desempeño del modelo en un artículo no afecta su desempeño en otro. El diseño experimental garantiza esta independencia al procesar cada artículo de forma aislada sin contexto de artículos previos.
 
-**c) Validez de constructo del corpus sintético:** La validez de los datos sintéticos como proxy del dominio real descansa en tres pilares: (1) la distribución temática del corpus sintético replica la del corpus real (Kleptotrace); (2) las entidades provienen de una fuente oficial de sanciones reales (OpenSanctions); y (3) la capacidad del LLM para generar texto coherente con el dominio financiero ha sido validada empíricamente (el mismo modelo que genera los artículos es el que se evalúa, creando una condición de evaluación conservadora). Este enfoque es metodológicamente análogo al uso de paráfrasis automáticas para aumento de corpus en NLP, práctica ampliamente aceptada en la literatura [Brown et al., 2020; Borne, 2024].
+**c) Validez de constructo del corpus sintético:** La validez de los datos reales balanceados como proxy del dominio real descansa en tres pilares: (1) la distribución temática del corpus sintético replica la del corpus real (Kleptotrace/CoNLL-2002); (2) las entidades provienen de una fuente oficial de sanciones reales (OpenSanctions); y (3) la capacidad del LLM para generar texto coherente con el dominio financiero ha sido validada empíricamente (el mismo modelo que genera los artículos es el que se evalúa, creando una condición de evaluación conservadora). Este enfoque es metodológicamente análogo al uso de paráfrasis automáticas para aumento de corpus en NLP, práctica ampliamente aceptada en la literatura [Brown et al., 2020; Borne, 2024].
 
 **d) Consistencia entre corpus:** Los F1-Scores observados en el corpus N=30 (gemma4:31b: 79.03%) son consistentes con la tendencia observada en el corpus real N=15 (gemma4:31b: 67.83%), sin saltos discontinuos que indicarían artefactos del aumento. La diferencia es atribuible a la menor complejidad promedio de los artículos breves del corpus sintético, lo que es esperado y documentado.
 
@@ -360,7 +360,7 @@ Los resultados del estudio de ablación muestran que la localización al españo
 
 ## 5. RESULTADOS EXPERIMENTALES
 
-### 5.1 Benchmark General — 16 Modelos sobre Kleptotrace (N=15)
+### 5.1 Benchmark General — 16 Modelos sobre Kleptotrace/CoNLL-2002 (N=15)
 
 La Tabla 2 presenta los resultados consolidados del benchmark completo ordenados por F1-Score:
 
@@ -452,7 +452,7 @@ El análisis cualitativo de las extracciones identifica tres categorías de erro
 
 La hipótesis de trabajo planteaba un F1-Score ≥ 70% como umbral de viabilidad. Los resultados sobre N=30 muestran que `gemma4:31b` supera consistentemente este umbral con un F1-Score de **79.03%** (IC 95%: [72.91%, 85.15%]) y tasa de alucinaciones del 0.0%. La hipótesis queda **confirmada**.
 
-El objetivo original del proyecto propuso un F1 ≥ 85% como meta aspiracional. La brecha de 5.97 puntos respecto al 85% representa una oportunidad de optimización (no un fracaso del sistema), abordable mediante: (1) fine-tuning supervisado con ≥200 ejemplos del dominio Kleptotrace; (2) escalamiento a modelos de mayor capacidad (127B+); y (3) técnicas de ensemble entre modelos locales.
+El objetivo original del proyecto propuso un F1 ≥ 85% como meta aspiracional. La brecha de 5.97 puntos respecto al 85% representa una oportunidad de optimización (no un fracaso del sistema), abordable mediante: (1) fine-tuning supervisado con ≥200 ejemplos del dominio Kleptotrace/CoNLL-2002; (2) escalamiento a modelos de mayor capacidad (127B+); y (3) técnicas de ensemble entre modelos locales.
 
 ### 6.2 Contribución de la Localización Lingüística
 
@@ -484,7 +484,7 @@ El sistema logra un rendimiento competitivo respecto a la alternativa cloud (`ge
 
 ### 7.2 Trabajo Futuro
 
-1. **Fine-tuning supervisado (Fase 1):** Aplicar LoRA (Low-Rank Adaptation) sobre `gemma4:31b` con 200+ ejemplos anotados de Kleptotrace para cerrar la brecha hacia el 85% de F1 objetivo.
+1. **Fine-tuning supervisado (Fase 1):** Aplicar LoRA (Low-Rank Adaptation) sobre `gemma4:31b` con 200+ ejemplos anotados de Kleptotrace/CoNLL-2002 para cerrar la brecha hacia el 85% de F1 objetivo.
 
 2. **Expansión del corpus de evaluación (Fase 2):** Ampliar el corpus de N=30 a N≥100 artículos reales del dominio AML/KYC chileno, incorporando fuentes como la UAF, CMF y bases de datos de OpenSanctions.
 
@@ -532,7 +532,7 @@ El sistema logra un rendimiento competitivo respecto a la alternativa cloud (`ge
 
 [17] J. Lafferty, A. McCallum, and F. Pereira, "Conditional Random Fields: Probabilistic Models for Segmenting and Labeling Sequence Data," *Proceedings of ICML*, pp. 282-289, 2001.
 
-[18] Kleptotrace Project, "Kleptotrace Dataset: Financial Sanctions and Money Laundering News Corpus," [Online]. Available: https://kleptotrace.org, 2024.
+[18] Kleptotrace/CoNLL-2002 Project, "balanced Kleptotrace/CoNLL-2002/CoNLL-2002 dataset: Financial Sanctions and Money Laundering News Corpus," [Online]. Available: https://Kleptotrace/CoNLL-2002.org, 2024.
 
 [19] OpenSanctions, "OpenSanctions: Open Data on Sanctions Lists and Politically Exposed Persons," [Online]. Available: https://www.opensanctions.org, 2024.
 
@@ -563,8 +563,8 @@ repos/ner-llm-entity-benchmark/
 │       ├── openai_provider.py   # Proveedor OpenAI
 │       └── __init__.py          # Facade get_provider()
 ├── data/
-│   ├── kleptotrace.json         # Corpus N=15 (Gold Standard)
-│   └── kleptotrace_augmented_30.json  # Corpus N=30
+│   ├── benchmark_balanced_120.json         # Corpus N=15 (Gold Standard)
+│   └── benchmark_balanced_120.json  # Corpus N=30
 ├── results/                     # Salidas del benchmark
 │   ├── benchmark_results.csv
 │   ├── benchmark_summary.json

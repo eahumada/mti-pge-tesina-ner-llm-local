@@ -1,7 +1,7 @@
 # Dataset Recommendation: Sanctions Entity Extraction
 
-## 1. Recommended Primary Dataset: Kleptotrace
-The **Kleptotrace Dataset** is recommended as the primary "golden" benchmark for this project.
+## 1. Recommended Primary Dataset: Kleptotrace/CoNLL-2002
+The **balanced Kleptotrace/CoNLL-2002/CoNLL-2002 dataset** is recommended as the primary "golden" benchmark for this project.
 
 ### Why it is suitable:
 - **Domain Alignment**: Specifically designed for high-level corruption, sanctions evasion, and financial crime.
@@ -11,7 +11,7 @@ The **Kleptotrace Dataset** is recommended as the primary "golden" benchmark for
 
 ### Acquisition:
 - **Data Source**: [Zenodo (Record 14027005)](https://zenodo.org/records/14027005)
-- **Reference Implementation**: [GitHub (panagiotis-koletsis/KleptotraceDataset)](https://github.com/panagiotis-koletsis/KleptotraceDataset)
+- **Reference Implementation**: [GitHub (panagiotis-koletsis/Kleptotrace/CoNLL-2002Dataset)](https://github.com/panagiotis-koletsis/Kleptotrace/CoNLL-2002Dataset)
 
 ---
 
@@ -19,7 +19,7 @@ The **Kleptotrace Dataset** is recommended as the primary "golden" benchmark for
 
 ### For Large-Scale Domain Adaptation: **OFAC Recent Announcements**
 - **Source**: [HuggingFace (`emperor-mew/ofac-recent`)](https://huggingface.co/datasets/emperor-mew/ofac-recent)
-- **Purpose**: Provides ~4,600 official press releases. Use these as a high-volume corpus to fine-tune prompts or perform distant supervision before moving to the smaller "golden" Kleptotrace set.
+- **Purpose**: Provides ~4,600 official press releases. Use these as a high-volume corpus to fine-tune prompts or perform distant supervision before moving to the smaller "golden" Kleptotrace/CoNLL-2002 set.
 
 ### For Ground Truth Lists (The "Golden Lists"): **OpenSanctions / Trade Screening**
 - **Source**: [HuggingFace (`emperor-mew/trade-screening`)](https://huggingface.co/datasets/emperor-mew/trade-screening) or OpenSanctions API.
@@ -31,6 +31,6 @@ The **Kleptotrace Dataset** is recommended as the primary "golden" benchmark for
 
 | Dataset | Project Component | Mapped User Story | Integration Path |
 | :--- | :--- | :--- | :--- |
-| **Kleptotrace** | `src/data_loader.py` | **US01** (Ingestion) & **US02** (Ground Truth) | Load JSON records as the primary evaluation corpus for F1/Precision/Recall calculations. |
+| **Kleptotrace/CoNLL-2002** | `src/data_loader.py` | **US01** (Ingestion) & **US02** (Ground Truth) | Load JSON records as the primary evaluation corpus for F1/Precision/Recall calculations. |
 | **OFAC Recent** | `src/llm_runner.py` | **US03** (RAG) & **US15** (Localization) | Use as a diverse set of examples for "few-shot" prompting to improve Spanish/English extraction. |
 | **Trade Screening** | `src/evaluator.py` | **US07** (Fuzzy Matching) | Use as the master list for the fuzzy matching logic to verify "True Positives". |

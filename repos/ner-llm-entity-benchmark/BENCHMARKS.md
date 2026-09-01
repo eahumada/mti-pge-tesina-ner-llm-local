@@ -59,7 +59,7 @@ Edit `results/run_config.json` to list the models you want to benchmark.  The fi
   "max_retries": 2,
   "fuzzy_threshold": 85,
   "redis_url": "redis://localhost:6379",
-  "data_file": "data/kleptotrace.json",
+  "data_file": "data/benchmark_balanced_120.json",
   "results_dir": "results",
   "checkpoint_file": "results/.checkpoint.json",
   "system_prompt_file": "SYSTEM_PROMPT.md",

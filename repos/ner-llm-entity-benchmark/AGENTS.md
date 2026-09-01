@@ -24,10 +24,10 @@ Always ensure that modifications align with the metrics targets: F1-Score > 85% 
 ## 4. Key Implementation Findings
 Below is a summary of findings and updates developed during the final integration phase:
 
-- **Adaptive Dataset Loader (US01 / Phase 1):** The data loader in `src/data_loader.py` now automatically detects and adapts standard JSON structures (such as Kleptotrace) alongside the FollowTheMoney (FtM) JSONL format, as well as TSV/IOB column structures and XML schemas (with `<PER>`, `<ORG>`, and `<LOC>` tags).
+- **Adaptive Dataset Loader (US01 / Phase 1):** The data loader in `src/data_loader.py` now automatically detects and adapts standard JSON structures (such as Kleptotrace/CoNLL-2002) alongside the FollowTheMoney (FtM) JSONL format, as well as TSV/IOB column structures and XML schemas (with `<PER>`, `<ORG>`, and `<LOC>` tags).
 - **Inter-Annotator Agreement (US02 / Phase 1):** Implemented Cohen's Kappa score for annotations. Running `python src/main.py --compare-annotators file1.json file2.json` aligns categorizations and calculates agreement, logging warnings if Kappa is below 0.75.
 - **Spanish & LatAm Localization (US15 / Phase 2):** Created `SYSTEM_PROMPT_ES.md` specifically structured for Spanish compliance context and Latin American identifiers (e.g. RUT, RFC, RUN). It can be loaded using `--system-prompt-file SYSTEM_PROMPT_ES.md`.
-- **Sensitivity Analysis (US17 / Phase 5):** Evaluated outlier robustness in statistical testing. Outliers (texts where length is greater than mean + 500 characters) are isolated. During a run with `gemma4` on Kleptotrace:
+- **Sensitivity Analysis (US17 / Phase 5):** Evaluated outlier robustness in statistical testing. Outliers (texts where length is greater than mean + 500 characters) are isolated. During a run with `gemma4` on Kleptotrace/CoNLL-2002:
   * Standard F1: **42.41%**
   * Cleaned F1 (Filtered Outliers): **50.84%**
   * Performance Delta: **+8.42%** improvement.

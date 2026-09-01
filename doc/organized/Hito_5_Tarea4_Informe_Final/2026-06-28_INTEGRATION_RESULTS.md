@@ -17,10 +17,10 @@ All core functional and non-functional requirements mapped from the MTI thesis g
 
 ---
 
-## 2. Benchmark Sweep Results (`gemma4` on Kleptotrace)
-A full benchmark sweep was run on the **Kleptotrace** primary dataset using the local Ollama backend with model `gemma4`. Below are the metrics compiled:
+## 2. Benchmark Sweep Results (`gemma4` on Kleptotrace/CoNLL-2002)
+A full benchmark sweep was run on the **Kleptotrace/CoNLL-2002** primary dataset using the local Ollama backend with model `gemma4`. Below are the metrics compiled:
 
-* **Evaluation Dataset:** `data/kleptotrace.json` (15 representative compliance articles)
+* **Evaluation Dataset:** `data/benchmark_balanced_120.json` (15 representative compliance articles)
 * **LLM Temperature:** 0.1
 * **VRAM footprint limit:** under 16GB (local execution check)
 

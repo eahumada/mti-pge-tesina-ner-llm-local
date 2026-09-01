@@ -35,5 +35,5 @@ Este documento detalla todas las tareas a realizar para integrar un sistema RAG 
 
 ## 7. Próximos Pasos Recomendados (Post-RAG)
 - [ ] Implementar In-Context Learning (Few-Shot Prompting) inyectando no solo las entidades del RAG sino ejemplos estructurados.
-- [ ] Aumentar el dataset `kleptotrace.json` a >100 records para obtener métricas OOV y de F1 más estables.
+- [ ] Aumentar el dataset `benchmark_balanced_120.json` a >100 records para obtener métricas OOV y de F1 más estables.
 - [ ] Experimentar con modelos más grandes (Gemma 31B o Qwen 14B) con el RAG para comparar si su capacidad de seguimiento de instrucciones previene los Falsos Positivos mejor que Llama3.1:8B.

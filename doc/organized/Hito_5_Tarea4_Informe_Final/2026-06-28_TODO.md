@@ -4,7 +4,7 @@ This document tracks the detailed tasks and acceptance criteria derived from all
 
 ## Phase 1: Foundation & Data Ingestion
 ### HU01: Dataset Ingestion & Validation *(Reqs: FR1.1, FR5.1, FR5.3)*
-- [x] Adapt and load Kleptotrace dataset format (`article_id`, `text`, `name_entities`, `organizations`) into the internal unified structure.
+- [x] Adapt and load balanced Kleptotrace/CoNLL-2002/CoNLL-2002 dataset format (`article_id`, `text`, `name_entities`, `organizations`) into the internal unified structure.
 - [x] The system loads JSONL/CSV records matching FollowTheMoney schemas.
 - [x] Schema validation rejects records missing ID, schema, caption, or properties.
 - [x] Each record maintains data provenance including timestamp and source ID.

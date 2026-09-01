@@ -1,3 +1,3 @@
-### US01: Kleptotrace Adapter
+### US01: Kleptotrace/CoNLL-2002 Adapter
 - **Status:** Done
-- **Details:** Adaptive loader transformed Kleptotrace JSON to standard internal schemas.
+- **Details:** Adaptive loader transformed Kleptotrace/CoNLL-2002 JSON to standard internal schemas.

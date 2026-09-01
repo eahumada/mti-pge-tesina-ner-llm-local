@@ -12,13 +12,13 @@
 
 Este reporte presenta los resultados consolidados de la evaluación de desempeño de **16 modelos de lenguaje de gran tamaño (LLM)**, operados tanto en entornos 100% locales (mediante Ollama sobre hardware Apple M4) como de forma híbrida (a través de llamadas seguras de API). 
 
-Los modelos fueron evaluados utilizando el dataset real de noticias sobre lavado de activos y sanciones financieras de la plataforma **Kleptotrace** (15 artículos con anotación experta como *ground truth*). El objetivo principal del estudio fue analizar el compromiso (trade-off) entre el tamaño del modelo (número de parámetros), la latencia, la tasa de alucinaciones y la calidad de la extracción NER (*Persons, Organizations, Locations*) medida a través del **F1-Score**.
+Los modelos fueron evaluados utilizando el dataset real de noticias sobre lavado de activos y sanciones financieras de la plataforma **Kleptotrace/CoNLL-2002** (15 artículos con anotación experta como *ground truth*). El objetivo principal del estudio fue analizar el compromiso (trade-off) entre el tamaño del modelo (número de parámetros), la latencia, la tasa de alucinaciones y la calidad de la extracción NER (*Persons, Organizations, Locations*) medida a través del **F1-Score**.
 
 ---
 
 ## 📊 2. TABLA COMPARATIVA GENERAL DE MODELOS (BENCHMARK REAL)
 
-La siguiente tabla consolida las métricas de rendimiento promedio obtenidas por cada modelo durante el sweep completo sobre el dataset `kleptotrace.json`. Los modelos están ordenados por su desempeño global (**F1-Score**):
+La siguiente tabla consolida las métricas de rendimiento promedio obtenidas por cada modelo durante el sweep completo sobre el dataset `benchmark_balanced_120.json`. Los modelos están ordenados por su desempeño global (**F1-Score**):
 
 | Modelo | Tipo | Escala | Mean F1-Score | Precisión | Recall | Hallucination Rate | Latencia Promedio (s) | Tokens/s / Billón |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -51,7 +51,7 @@ La siguiente tabla consolida las métricas de rendimiento promedio obtenidas por
 
 ## 🧪 3. ESTUDIO DE ABLACIÓN DEL PROMPT (GEMMA4)
 
-Para validar el impacto del Prompt Engineering y la localización lingüística en español, se ejecutaron cuatro escenarios controlados utilizando el modelo local **Gemma4 (9B)** sobre los 15 artículos de Kleptotrace:
+Para validar el impacto del Prompt Engineering y la localización lingüística en español, se ejecutaron cuatro escenarios controlados utilizando el modelo local **Gemma4 (9B)** sobre los 15 artículos de Kleptotrace/CoNLL-2002:
 
 | Configuración de Prompt | F1-Score | Precisión | Recall | Hallucination Rate | Latencia Promedio (s) | Delta vs. Baseline |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -73,7 +73,7 @@ Para asegurar que las variaciones observadas en el rendimiento de los modelos no
 ### Resultados ANOVA:
 * **F-Statistic:** 0.3905
 * **p-Value:** 0.7603 ($p \ge 0.05$)
-* **Conclusión:** A nivel estadístico estricto, la diferencia entre las configuraciones de prompt de Gemma4 no es rechazada bajo la hipótesis nula debido a la varianza inherente en la longitud y dificultad de algunos artículos del dataset Kleptotrace. No obstante, las medias muestran una clara tendencia a favor de la localización en español.
+* **Conclusión:** A nivel estadístico estricto, la diferencia entre las configuraciones de prompt de Gemma4 no es rechazada bajo la hipótesis nula debido a la varianza inherente en la longitud y dificultad de algunos artículos del dataset balanceado Kleptotrace/CoNLL-2002/CoNLL-2002. No obstante, las medias muestran una clara tendencia a favor de la localización en español.
 
 ### Análisis Tukey HSD (Pairwise Comparisons):
 * **fs-en vs fs-es:** Mean Difference = 0.0238 ($p = 0.990$) $\to$ No significativo.
@@ -101,7 +101,7 @@ Durante la auditoría de extracciones, se categorizaron los fallos en tres tipol
    * Presentar el 70% de F1-Score obtenido con Gemma4 (9B) como un **éxito de viabilidad para modelos compactos de ejecución local**. 
    * Enfatizar que el beneficio de la **soberanía absoluta de datos** (privacidad 100% libre de fugas de APIs cloud) y el **ahorro de costos del 60-80%** justifican comercialmente el uso del sistema local, superando las limitaciones marginales de exactitud.
 2. **Ruta de Optimización Futura:**
-   * Proponer como trabajo futuro la expansión a modelos de mayor escala locales (como `gemma4:31b` que ya logramos correr a 9 workers concurrentes en Apple Silicon M4) o la realización de un *fine-tuning* supervisado utilizando al menos 200 ejemplos adicionales etiquetados bajo la plataforma Kleptotrace.
+   * Proponer como trabajo futuro la expansión a modelos de mayor escala locales (como `gemma4:31b` que ya logramos correr a 9 workers concurrentes en Apple Silicon M4) o la realización de un *fine-tuning* supervisado utilizando al menos 200 ejemplos adicionales etiquetados bajo la plataforma Kleptotrace/CoNLL-2002.
 
 ---
 
