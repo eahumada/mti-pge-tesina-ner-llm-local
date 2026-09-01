@@ -183,11 +183,48 @@ class OllamaProvider(LLMProvider):
         is_qwen3_thinking = any(k in model_key for k in _QWEN3_THINKING_MODELS)
         is_cloud = _is_cloud_model(self.model_name)
 
-        # Inject RAG context if provided
+        # Inject RAG context if provided.
+        #
+        # Two injection strategies depending on context type:
+        #   1. Entity-dict RAG (legacy): uses a restrictive warning template.
+        #      These are entity name strings like "GRANJA LA SIERRA LTDA. (Organization)".
+        #      The warning prevents the LLM from hallucinating listed entities that are
+        #      absent from the article text.
+        #
+        #   2. Knowledge-Base RAG (new): uses a positive instructive template.
+        #      These are domain guidelines and few-shot examples from KBRAGManager.
+        #      They begin with known KB prefixes:
+        #        - "[DOMAIN CONTEXT:" — domain NER disambiguation rules
+        #        - "[EXTRACTION EXAMPLE" — annotated few-shot example
+        #      A positive template is required: the restrictive warning would cause
+        #      the LLM to suppress legitimate extraction (root cause of the semantic
+        #      mismatch problem documented in
+        #      research/rag/2026-08-31_analisis_contenido_rag_base_conocimientos.md).
         rag_injection = ""
         if rag_context:
-            rag_injection = "\n\n[RAG CONTEXT]\nThe following entities from our AML database MIGHT be present in the text. STRICT INSTRUCTION: DO NOT extract them unless they explicitly appear in the News text. They are provided only as hints for correct spelling and recognition:\n"
-            rag_injection += "\n".join(f"- {ctx}" for ctx in rag_context)
+            _KB_PREFIXES = ("[DOMAIN CONTEXT:", "[EXTRACTION EXAMPLE")
+            _is_kb_context = any(
+                isinstance(ctx, str) and ctx.strip().startswith(_KB_PREFIXES)
+                for ctx in rag_context
+            )
+            if _is_kb_context:
+                # ── Knowledge-Base RAG: positive, instructive injection ──────────
+                rag_injection = (
+                    "\n\n[EXTRACTION GUIDANCE]\n"
+                    "The following domain-specific guidelines and/or example will help "
+                    "you extract entities accurately. Apply these rules to the news text:\n\n"
+                )
+                rag_injection += "\n\n".join(str(ctx) for ctx in rag_context)
+            else:
+                # ── Legacy entity-dict RAG: restrictive injection (original) ────
+                rag_injection = (
+                    "\n\n[RAG CONTEXT]\n"
+                    "The following entities from our AML database MIGHT be present in the "
+                    "text. STRICT INSTRUCTION: DO NOT extract them unless they explicitly "
+                    "appear in the News text. They are provided only as hints for correct "
+                    "spelling and recognition:\n"
+                )
+                rag_injection += "\n".join(f"- {ctx}" for ctx in rag_context)
 
         # Build prompt
         if is_nuextract:

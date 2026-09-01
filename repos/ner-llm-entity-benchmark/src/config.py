@@ -30,6 +30,14 @@ class BenchmarkConfig:
     max_tokens: int = 2048
     seed: int = 42
     rag_study: bool = False
+    # RAG mode selector — controls Knowledge Base vs. legacy entity dict retrieval.
+    # 'entities'      : Legacy mode (original dict-RAG behavior, default). Backward compatible.
+    # 'kb_guidelines' : Inject domain-specific NER disambiguation rules from KB.
+    # 'kb_fewshot'    : Inject a semantically similar annotated few-shot example from KB.
+    # 'kb_combined'   : Inject both guidelines + one exemplar (recommended, best F1).
+    # See: research/rag/2026-08-31_analisis_contenido_rag_base_conocimientos.md
+    # See: src/kb_rag_manager.py
+    rag_mode: str = 'entities'
 
     def __post_init__(self):
         if self.results_dir == 'results':

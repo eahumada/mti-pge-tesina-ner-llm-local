@@ -1,0 +1,37 @@
+[
+  {
+    "id": "politics_es",
+    "domain": "politics_administrative",
+    "language": "es",
+    "keywords": ["PSOE", "PP", "elecciones", "socialistas", "diputado", "senado", "ministerio", "junta", "ayuntamiento", "consejero", "portavoz", "gobierno", "partido", "congreso", "autonomía", "senador"],
+    "guideline": "[DOMAIN CONTEXT: NOTICIAS POLÍTICAS Y ADMINISTRATIVAS EN ESPAÑOL]\nREGLAS DE EXTRACCIÓN:\n1. PERSONAS: Extrae SOLO el nombre propio del individuo. Excluye cargos, títulos o tratamientos (el portavoz, el consejero, el presidente, el alcalde). Si el texto dice 'el portavoz García-Page', extrae solo 'García-Page'. Si dice 'José María Aznar', extrae 'José María Aznar' completo.\n2. ORGANIZACIONES: Incluye partidos políticos (PSOE, PP, PNV, IU, Ciudadanos, Podemos, Vox), administraciones públicas (Junta, Ayuntamiento, Diputación, Secretaría General, Ministerio, Gobierno, Consejo de Ministros), y agencias de noticias (EFE, Reuters, Ansa).\n3. DESAMBIGUACIÓN: Un apellido solo ('Bono', 'Conde', 'Belda') que se refiere a una persona mencionada previamente es Persona. Las siglas institucionales (PSOE, EFE, PP) son Organizaciones. 'El Gobierno' cuando hace referencia al gobierno del estado es Organización."
+  },
+  {
+    "id": "corporate_financial_es",
+    "domain": "corporate_financial",
+    "language": "es",
+    "keywords": ["bolsa", "empresa", "fusión", "adquisición", "banco", "consejo de administración", "accionista", "mercado", "acciones", "corporación", "sociedad", "presidente ejecutivo", "grupo empresarial"],
+    "guideline": "[DOMAIN CONTEXT: NOTICIAS CORPORATIVAS Y FINANCIERAS]\nREGLAS DE EXTRACCIÓN:\n1. PERSONAS: Extrae nombres propios de directivos, presidentes, consejeros y ejecutivos. Un apellido solo ('Alierta', 'Breuer', 'González') es Persona si se refiere a un individuo en contexto corporativo.\n2. ORGANIZACIONES: Incluye siempre el sufijo legal: S.A., S.L., AG, GmbH, Inc., Ltd, Corp. Incluye bolsas de valores (Bolsa de Madrid, Deutsche Boerse AG), bancos, empresas multinacionales y grupos empresariales. 'Consejo de Administración' es una Organización.\n3. DESAMBIGUACIÓN: 'Banco Santander' es Organización (no descomponer en 'Banco' + 'Santander'). 'La empresa' genérico sin nombre propio no es entidad."
+  },
+  {
+    "id": "aml_sanctions_en",
+    "domain": "aml_compliance",
+    "language": "en",
+    "keywords": ["sanctions", "indictment", "defendant", "Justice Department", "FBI", "AML", "money laundering", "OFAC", "Treasury", "arrested", "charged", "conspiracy", "kleptocracy", "export control", "pleaded guilty"],
+    "guideline": "[DOMAIN CONTEXT: AML, SANCTIONS AND FINANCIAL CRIME NEWS]\nEXTRACTION RULES:\n1. PERSONS: Extract all named individuals: defendants, co-conspirators, prosecutors, judges, agents, witnesses. Preserve full names including middle initials (e.g., 'John C. Demers'). Extract aliases if stated (e.g., 'also known as', 'a.k.a.').\n2. ORGANIZATIONS: Extract government departments (Justice Department, Department of Commerce), law enforcement (Homeland Security Investigations, FBI, DEA, ICE, OEE), regulatory bodies (OFAC, Iranian Transactions and Sanctions Regulations), courts (Eastern District of Michigan), and all named companies and financial institutions.\n3. DISAMBIGUATION: Keep full formal names for government units. An acronym in parentheses after a full name refers to the same entity — extract only once using the most complete form."
+  },
+  {
+    "id": "judicial_crime_es",
+    "domain": "judicial_crime",
+    "language": "es",
+    "keywords": ["tribunal", "juzgado", "sentencia", "condenado", "absuelto", "fiscal", "abogado", "detenido", "acusado", "juicio", "pena", "delito", "crimen", "narcotráfico", "prisión", "audiencia"],
+    "guideline": "[DOMAIN CONTEXT: NOTICIAS JUDICIALES Y DE CRIMEN]\nREGLAS DE EXTRACCIÓN:\n1. PERSONAS: Extrae acusados, imputados, jueces, fiscales, abogados y testigos por su nombre propio completo. Los apodos o alias entre comillas o después de 'alias' también son Personas.\n2. ORGANIZACIONES: Incluye tribunales (Audiencia Nacional, Tribunal Supremo, Audiencia Provincial), cuerpos policiales (Guardia Civil, Policía Nacional, Europol), y organizaciones criminales con nombre propio.\n3. DESAMBIGUACIÓN: 'El Chapo' como alias de Guzmán Loera es Persona. 'Cártel de Sinaloa' es Organización. 'El detenido' sin nombre no es entidad. 'La Fiscalía' es Organización."
+  },
+  {
+    "id": "sports_social_es",
+    "domain": "sports_social",
+    "language": "es",
+    "keywords": ["fútbol", "equipo", "jugador", "entrenador", "liga", "partido", "gol", "deporte", "federación", "torneo", "campeonato", "atleta", "tenista"],
+    "guideline": "[DOMAIN CONTEXT: NOTICIAS DEPORTIVAS Y SOCIALES]\nREGLAS DE EXTRACCIÓN:\n1. PERSONAS: Extrae deportistas, entrenadores, árbitros y directivos por nombre propio. Un apellido solo en contexto deportivo ('Ronaldo', 'Messi') es Persona.\n2. ORGANIZACIONES: Incluye clubs (FC Barcelona, Real Madrid), federaciones (FIFA, UEFA, RFEF), y ligas (Liga Española, Champions League).\n3. DESAMBIGUACIÓN: 'EFE' en cualquier contexto es la agencia de noticias (Organización). El nombre de un estadio ('Camp Nou') es Localización."
+  }
+]

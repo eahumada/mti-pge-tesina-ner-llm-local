@@ -25,6 +25,7 @@ from src.pub_sub import create_task_queue, TaskMessage
 from src.system_monitor import ThroughputTracker
 from src.adaptive_workers import AdaptiveWorkerController, is_rate_limit_exception
 from src.rag_manager import RAGManager
+from src.kb_rag_manager import KBRAGManager, RAG_MODE_ENTITIES
 
 logger = logging.getLogger("ner_benchmark")
 
@@ -256,12 +257,23 @@ def run_benchmark(config: BenchmarkConfig, resume: bool = False, ablation: bool 
     published_count = 0
     
     if config.rag_study:
-        rag_mgr = RAGManager()
-        rag_mgr.load_dictionaries()
+        # Select RAG manager based on configured mode:
+        #   'entities'     → legacy RAGManager (dict-based, original behavior)
+        #   'kb_*'         → KBRAGManager (knowledge-base, new approach)
+        # Default is 'entities' for full backward compatibility.
+        if config.rag_mode == RAG_MODE_ENTITIES:
+            rag_mgr = RAGManager()
+            rag_mgr.load_dictionaries()
+            rag_conditions = ['baseline', 'rag_enhanced']
+        else:
+            rag_mgr = KBRAGManager(rag_mode=config.rag_mode)
+            rag_mgr.load_knowledge_base()
+            rag_conditions = ['baseline', 'kb_rag']
+            logger.info(f"[RAG] Using Knowledge Base mode: '{config.rag_mode}'")
         for model in config.models:
             if not check_model_available(model, config.ollama_base_url):
                 continue
-            for condition_name in ['baseline', 'rag_enhanced']:
+            for condition_name in rag_conditions:
                 condition_key = f"{model}_{condition_name}"
                 for batch_idx in range(total_batches):
                     if is_batch_completed(state, condition_key, batch_idx):
@@ -351,11 +363,19 @@ def run_benchmark(config: BenchmarkConfig, resume: bool = False, ablation: bool 
     config.num_workers = adaptive_ctrl.current_workers
     
     if config.rag_study:
-        rag_mgr = RAGManager()
+        # Select RAG manager based on configured mode (same logic as producer phase above)
+        if config.rag_mode == RAG_MODE_ENTITIES:
+            rag_mgr = RAGManager()
+            rag_conditions = ['baseline', 'rag_enhanced']
+        else:
+            rag_mgr = KBRAGManager(rag_mode=config.rag_mode)
+            rag_mgr.load_knowledge_base()
+            rag_conditions = ['baseline', 'kb_rag']
+            logger.info(f"[RAG] Worker phase — Knowledge Base mode: '{config.rag_mode}'")
         for model in config.models:
             if not check_model_available(model, config.ollama_base_url):
                 continue
-            for condition_name in ['baseline', 'rag_enhanced']:
+            for condition_name in rag_conditions:
                 condition_key = f"{model}_{condition_name}"
                 task_queue = create_task_queue(use_redis=False)
                 published_count = 0
@@ -384,7 +404,12 @@ def run_benchmark(config: BenchmarkConfig, resume: bool = False, ablation: bool 
                             claimed_task = task_queue.subscribe()
                             if not claimed_task: break
                             task_prompt = load_system_prompt(claimed_task.prompt_file)
-                            active_rag = rag_mgr if 'rag_enhanced' in claimed_task.condition_name else None
+                            # Activate RAG for any non-baseline condition ('rag_enhanced' or 'kb_rag')
+                            is_rag_condition = (
+                                'rag_enhanced' in claimed_task.condition_name
+                                or 'kb_rag' in claimed_task.condition_name
+                            )
+                            active_rag = rag_mgr if is_rag_condition else None
                             try:
                                 batch_results = process_batch(
                                     batch=claimed_task.records,
@@ -680,6 +705,20 @@ def main():
     parser.add_argument("--compare-annotators", nargs=2, metavar=("FILE1", "FILE2"), help="Compute Cohen's Kappa inter-annotator agreement between two ground truth files")
     parser.add_argument("--ablation", action="store_true", help="Perform prompt ablation study comparing Zero-Shot EN, Zero-Shot ES, and Few-Shot ES prompts (REQ41)")
     parser.add_argument("--rag-study", action="store_true", help="Perform RAG integration study with and without dictionaries")
+    parser.add_argument(
+        "--rag-mode",
+        type=str,
+        default="entities",
+        choices=["entities", "kb_guidelines", "kb_fewshot", "kb_combined"],
+        help=(
+            "RAG retrieval strategy (only used with --rag-study). "
+            "'entities': legacy entity dict (original behavior, default). "
+            "'kb_guidelines': domain NER disambiguation rules. "
+            "'kb_fewshot': dynamic few-shot annotated example. "
+            "'kb_combined': guidelines + exemplar (recommended, best F1). "
+            "See: research/rag/2026-08-31_analisis_contenido_rag_base_conocimientos.md"
+        ),
+    )
     parser.add_argument("--num-workers", type=int, default=2, help="Number of concurrent worker threads")
     
     args = parser.parse_args()
@@ -703,7 +742,8 @@ def main():
         max_tokens=args.max_tokens,
         seed=args.seed,
         system_prompt_file=args.system_prompt_file,
-        rag_study=args.rag_study
+        rag_study=args.rag_study,
+        rag_mode=args.rag_mode,
     )
     if args.models:
         config.models = args.models

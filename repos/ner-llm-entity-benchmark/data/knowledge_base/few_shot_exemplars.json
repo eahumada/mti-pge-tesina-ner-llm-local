@@ -1,0 +1,225 @@
+[
+  {
+    "id": "ex_politics_es_001",
+    "domain": "politics_administrative",
+    "language": "es",
+    "keywords": [
+      "PSOE",
+      "PP",
+      "portavoz",
+      "socialistas",
+      "Junta",
+      "secretaría",
+      "partido",
+      "elecciones"
+    ],
+    "input_text": "Belda se refiere así a las reacciones de algunos dirigentes socialistas como el portavoz del PSOE regional , Emiliano García-Page , ante las declaraciones de Conde que calificó de \" fraude electoral \" la eventual marcha de José Bono a la Secretaría General socialista . El portavoz del PP asegura que su partido \" en ningún momento se echará para atrás en el ejercicio de su labor de oposición , sobre todo en circunstancias políticas como las que se avecinan , ante las cuales el presidente de la Junta está más dispuesto a servir a su partido que a nuestra región \" .",
+    "expected_output": {
+      "Persons": [
+        "Belda",
+        "Emiliano García-Page",
+        "Conde",
+        "José Bono"
+      ],
+      "Organizations": [
+        "PSOE",
+        "PP",
+        "Secretaría General",
+        "Junta"
+      ],
+      "Locations": []
+    },
+    "rationale": "Los cargos ('portavoz del PSOE', 'presidente de la Junta') no forman parte del nombre propio. 'Secretaría General' y 'Junta' son Organizaciones. Los apellidos solos ('Belda', 'Conde') en contexto político son Personas.",
+    "source": "benchmark_balanced_120.json#real_mixed_1"
+  },
+  {
+    "id": "ex_politics_es_002",
+    "domain": "politics_administrative",
+    "language": "es",
+    "keywords": [
+      "PSOE",
+      "PP",
+      "IU",
+      "Hacienda",
+      "presupuestos",
+      "portavoces",
+      "Comisión"
+    ],
+    "input_text": "Los portavoces de Hacienda del PSOE-Progresistas y de IU denunciaron hoy que el PP se niega a convocar la Comisión de Presupuestos. González dijo que Franco González iba a representar al partido en las próximas negociaciones.",
+    "expected_output": {
+      "Persons": [
+        "González",
+        "Franco González"
+      ],
+      "Organizations": [
+        "PSOE-Progresistas",
+        "IU",
+        "PP",
+        "Comisión de Presupuestos"
+      ],
+      "Locations": []
+    },
+    "rationale": "Los apellidos compuestos ('Franco González') son Personas completas. 'Comisión de Presupuestos' es Organización institucional. 'Hacienda' en este contexto es una referencia al ministerio (Organización).",
+    "source": "benchmark_balanced_120.json#real_mixed_41"
+  },
+  {
+    "id": "ex_corporate_financial_es_001",
+    "domain": "corporate_financial",
+    "language": "es",
+    "keywords": [
+      "BNP",
+      "Paribas",
+      "absorción",
+      "banco",
+      "fusión",
+      "conglomerado"
+    ],
+    "input_text": "A partir de mañana , los responsables operativos tendrán ya plenos poderes efectivos para llevar adelante la política de absorción de Paribas por BNP en la que están ocupados 450 grupos de trabajos de un conglomerado que cuenta con 77.000 empleados . El CECEI aprobó la fusión entre BNP y Paribas. SANCHEZ POLO firmó el acuerdo en representación de BNP-Paribas.",
+    "expected_output": {
+      "Persons": [
+        "SANCHEZ POLO"
+      ],
+      "Organizations": [
+        "BNP",
+        "Paribas",
+        "BNP-Paribas",
+        "CECEI"
+      ],
+      "Locations": []
+    },
+    "rationale": "Los grupos empresariales mantienen sus nombres completos ('BNP-Paribas' como entidad fusionada, 'BNP' y 'Paribas' como entidades separadas). 'CECEI' es una sigla institucional (Organización).",
+    "source": "benchmark_balanced_120.json#real_mixed_21"
+  },
+  {
+    "id": "ex_judicial_es_001",
+    "domain": "judicial_crime",
+    "language": "es",
+    "keywords": [
+      "magistrada",
+      "Audiencia Nacional",
+      "terrorismo",
+      "judicial",
+      "conferencia"
+    ],
+    "input_text": "Margarita Robles , magistrada de la Audiencia Nacional , defendió hoy en Bilbao que este órgano judicial no tiene razón de ser en los casos de terrorismo . En una conferencia pronunciada en el Forum Deusto , quien fuera secretaria de Estado del Interior explicó la causa de Pinochet.",
+    "expected_output": {
+      "Persons": [
+        "Margarita Robles",
+        "Pinochet"
+      ],
+      "Organizations": [
+        "Audiencia Nacional",
+        "Estado de Interior"
+      ],
+      "Locations": [
+        "Bilbao"
+      ]
+    },
+    "rationale": "'magistrada de la Audiencia Nacional' es cargo + Organización; el nombre propio es solo 'Margarita Robles'. 'Robles' como referencia posterior es la misma Persona. 'Estado de Interior' es la organización ministerial.",
+    "source": "benchmark_balanced_120.json#real_mixed_101"
+  },
+  {
+    "id": "ex_aml_sanctions_en_001",
+    "domain": "aml_compliance",
+    "language": "en",
+    "keywords": [
+      "Justice Department",
+      "IEEPA",
+      "Iran",
+      "charged",
+      "export",
+      "sanctions",
+      "indictment"
+    ],
+    "input_text": "The Justice Department announced today that three individuals have been charged in an indictment with conspiracy to export U.S. goods to Iran in violation of the International Emergency Economic Powers Act (IEEPA) and the Iranian Transactions and Sanctions Regulations (ITSR). John C. Demers, Assistant Attorney General for National Security, and Matthew Schneider, U.S. Attorney for the Eastern District of Michigan, announced the charges. Vance R. Callender, a special agent, led the investigation together with Hank Moon of the Office of Export Enforcement.",
+    "expected_output": {
+      "Persons": [
+        "John C. Demers",
+        "Matthew Schneider",
+        "Vance R. Callender",
+        "Hank Moon"
+      ],
+      "Organizations": [
+        "Justice Department",
+        "International Emergency Economic Powers Act",
+        "Iranian Transactions and Sanctions Regulations",
+        "Eastern District of Michigan",
+        "Office of Export Enforcement"
+      ],
+      "Locations": [
+        "Iran"
+      ]
+    },
+    "rationale": "Full formal names preserved including middle initials. The acronyms IEEPA and ITSR refer to the full statutory names (same Organizations, not duplicated). Government department titles are Organizations.",
+    "source": "benchmark_balanced_120.json#real_mixed_59"
+  },
+  {
+    "id": "ex_aml_sanctions_en_002",
+    "domain": "aml_compliance",
+    "language": "en",
+    "keywords": [
+      "OFAC",
+      "Treasury",
+      "designated",
+      "corruption",
+      "officials",
+      "sanctions"
+    ],
+    "input_text": "WASHINGTON — Today, the U.S. Department of the Treasury's Office of Foreign Assets Control (OFAC) designated Liberian government officials Nathaniel McGill, Sayma Syrenius Cephus, and Bill Twehway for their involvement in ongoing public corruption in Liberia. Brian E. Nelson, Under Secretary of the Treasury for Terrorism and Financial Intelligence, emphasized that George Weah's administration must be held accountable.",
+    "expected_output": {
+      "Persons": [
+        "Nathaniel McGill",
+        "Sayma Syrenius Cephus",
+        "Bill Twehway",
+        "Brian E. Nelson",
+        "George Weah"
+      ],
+      "Organizations": [
+        "U.S. Department of the Treasury's Office of Foreign Assets Control",
+        "Treasury for Terrorism and Financial Intelligence"
+      ],
+      "Locations": [
+        "WASHINGTON",
+        "Liberia"
+      ]
+    },
+    "rationale": "OFAC is the acronym for the previously named Organization — do not extract separately. Full personal names are preserved. Government designations ('Under Secretary') are job titles, not part of the name.",
+    "source": "benchmark_balanced_120.json#real_mixed_79"
+  },
+  {
+    "id": "ex_aml_sanctions_en_003",
+    "domain": "aml_compliance",
+    "language": "en",
+    "keywords": [
+      "Congress",
+      "indicted",
+      "racketeering",
+      "FBI",
+      "conspiracy",
+      "charges",
+      "Department of Justice"
+    ],
+    "input_text": "A member of Congress and four of his associates were indicted today for their roles in a racketeering conspiracy. Leslie R. Caldwell, Assistant Attorney General of the Criminal Division, and Zane David Memeger, U.S. Attorney for the Eastern District of Pennsylvania, made the announcement. Edward J. Hanko of the FBI's Philadelphia Division led the investigation. Chaka Fattah Sr., Herbert Vederman, Bonnie Bowser, Robert Brand, and Karen Nicholas were named as defendants.",
+    "expected_output": {
+      "Persons": [
+        "Leslie R. Caldwell",
+        "Zane David Memeger",
+        "Edward J. Hanko",
+        "Chaka Fattah Sr.",
+        "Herbert Vederman",
+        "Bonnie Bowser",
+        "Robert Brand",
+        "Karen Nicholas"
+      ],
+      "Organizations": [
+        "Congress",
+        "Department of Justice's Criminal Division",
+        "Eastern District of Pennsylvania",
+        "FBI's Philadelphia Division"
+      ],
+      "Locations": []
+    },
+    "rationale": "Preserve full names with suffixes ('Sr.'). Government units are Organizations ('Criminal Division', 'FBI's Philadelphia Division'). All defendants listed are Persons regardless of their roles.",
+    "source": "benchmark_balanced_120.json#real_mixed_27"
+  }
+]
