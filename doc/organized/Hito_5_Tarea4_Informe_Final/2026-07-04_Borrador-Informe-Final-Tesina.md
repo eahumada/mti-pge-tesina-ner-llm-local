@@ -578,15 +578,16 @@ La base de conocimientos se organiza en **dos colecciones ChromaDB separadas** p
 | **Baseline (zero-shot)** | 0.3521 | 0.4250 | 0.3333 | — |
 | **KB Combined RAG** | **0.5489** | **0.5227** | **0.5954** | **+0.1968** |
 
-**Benchmark completo (N=120 artículos, 4 modelos, `--rag-mode kb_combined`, 2026-09-01):**
+**Benchmark completo (N=120 artículos, 5 modelos, `--rag-mode kb_combined`, 2026-09-01):**
 
 | Modelo | Baseline F1 | KB RAG F1 | Δ F1 | Δ% | Δ Recall |
 |:---|:---:|:---:|:---:|:---:|:---:|
 | `gemma4:31b-mlx` | 0.5925 | 0.5907 | −0.0018 | −0.3% | +0.012 |
 | `gemma4:latest` | 0.5591 | 0.5558 | −0.0034 | −0.6% | −0.011 |
+| `gemma:latest` | 0.4734 | **0.5303** | **+0.0569** | **+12.0%** | **+0.117** |
 | `llama3.2:latest` | 0.3945 | **0.4943** | **+0.0999** | **+25.3%** | **+0.143** |
 | `qwen2.5:14b` | 0.5189 | **0.5651** | **+0.0462** | **+8.9%** | **+0.039** |
-| **Promedio** | 0.5162 | **0.5515** | **+0.0352** | **+8.3%** | **+0.046** |
+| **Promedio** | 0.5077 | **0.5472** | **+0.0396** | **+9.1%** | **+0.060** |
 
 **Verificación de la recuperación semántica:**
 - Artículo político ES → Recupera guía `politics_administrative` (ES) ✅
@@ -599,7 +600,7 @@ Los resultados revelan un patrón crítico: el beneficio del KB RAG es **inversa
 
 - **Modelos grandes** (`gemma4:31b-mlx`, `gemma4:latest`, >10B parámetros): el KB RAG tiene efecto neutro (Δ ≈ 0). Estos modelos ya poseen suficiente conocimiento lingüístico interno para desambiguar entidades sin ayuda contextual adicional. La ganancia marginal en Recall del `gemma4:31b-mlx` (+1.2pp) indica que la guía tipológica sí ayuda en artículos frontera.
 
-- **Modelos pequeños/medianos** (`llama3.2:latest` 3B, `qwen2.5:14b` 14B): el KB RAG produce mejoras sustanciales (+25.3% y +8.9% respectivamente). Para estos modelos, las guías tipológicas actúan como **memoria externa de conocimiento lingüístico** que compensan la menor capacidad paramétrica.
+- **Modelos pequeños/medianos** (`llama3.2:latest` 3B, `gemma:latest` 9B, `qwen2.5:14b` 14B): el KB RAG produce mejoras sustanciales (+25.3%, +12.0% y +8.9% respectivamente). Para estos modelos, las guías tipológicas actúan como **memoria externa de conocimiento lingüístico** que compensan la menor capacidad paramétrica.
 
 Esta observación tiene relevancia práctica directa: en entornos de hardware restringido donde solo es viable ejecutar modelos de 3–14B, el KB RAG representa una mejora significativa y gratuita (sin costo computacional adicional relevante) del F1-Score.
 
