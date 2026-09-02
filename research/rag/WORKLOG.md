@@ -107,23 +107,30 @@
 - Completados: `llama3.2:latest_*`, `gemma4:latest_*`, `gemma4:31b-mlx_*`, `qwen2.5:14b_baseline`
 - En curso: `qwen2.5:14b_kb_rag` (37.5%), `gemma:latest_*` (pendiente)
 
-### 19:37 — Reanudación (Gemini Pro)
-- Estado del benchmark: PID 74078 activo, qwen2.5:14b_kb_rag en progreso
-- Pendientes: extraer resultados finales, actualizar tesis, git commit + tag
+### 19:37 — 20:06 (Gemini Pro) - Cierre de Implementación
+- Estado del benchmark: Terminado (400/400 batches completados). `gemma:latest` finalizó.
+- Extracción de resultados: Se ejecutó `analyze_kb_rag_results.py` y se guardó en `results/kb_rag_analysis_20260901.json`.
+- Actualización de Tesis:
+  - Se añadieron los resultados finales de 5 modelos (N=120) en sección 5.6.5.
+  - Se agregó sección 6.5 (Discusión sobre la redundancia de conocimiento en modelos grandes).
+  - Conclusión 6 actualizada.
+  - Anexo A actualizado.
+- DOCX regenerado vía `pandoc`.
+- Git: Se hizo commit de todo el trabajo, push a GitHub y se creó el tag `v1.1.0-rag-knowledge-base`.
 
 ---
 
-## TAREAS PENDIENTES (al 2026-09-01 19:37)
+## TAREAS FINALIZADAS (al 2026-09-01 20:06)
 
 | Prioridad | Tarea | Estado |
 |-----------|-------|--------|
-| 1 | Esperar que termine el benchmark (qwen2.5 + gemma:latest) | 🔄 EN CURSO |
-| 2 | Extraer y analizar resultados comparativos (baseline vs kb_rag) | ⏳ PENDIENTE |
-| 3 | Actualizar sección 5.6.5 de la tesis con resultados finales N=120 | ⏳ PENDIENTE |
-| 4 | Regenerar `Formulario-IA-26-Rellenado.docx` con pandoc | ⏳ PENDIENTE |
-| 5 | Git commit: todos los archivos modificados | ⏳ PENDIENTE |
-| 6 | Git tag `v1.1.0-rag-knowledge-base` | ⏳ PENDIENTE |
+| 1 | Esperar que termine el benchmark (qwen2.5 + gemma:latest) | ✅ HECHO |
+| 2 | Extraer y analizar resultados comparativos (baseline vs kb_rag) | ✅ HECHO |
+| 3 | Actualizar sección 5.6.5 de la tesis con resultados finales N=120 | ✅ HECHO |
+| 4 | Regenerar DOCX de Tesis Final con pandoc | ✅ HECHO |
+| 5 | Git commit: todos los archivos modificados + push a origin | ✅ HECHO |
+| 6 | Git tag `v1.1.0-rag-knowledge-base` + push tags | ✅ HECHO |
 
 ---
-*Formato de entradas: `HH:MM — Agente (Rol): Descripción`*  
-*Última actualización: 2026-09-01 19:37*
+*Fase de implementación del RAG Contextual KB finalizada.*
+*Última actualización: 2026-09-01 20:06*
