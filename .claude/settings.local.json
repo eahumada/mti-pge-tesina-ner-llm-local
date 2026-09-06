@@ -2,7 +2,14 @@
   "permissions": {
     "allow": [
       "WebSearch",
-      "Skill(deep-research)"
+      "Skill(deep-research)",
+      "Bash(/usr/bin/python3 --version)",
+      "Bash(./venv/bin/python --version)",
+      "Bash(ollama list *)",
+      "Bash(echo \"=== exit: $? ===\")",
+      "Bash(curl -s -m 5 http://localhost:11434/api/tags)",
+      "Read(//Users/eahumada1/opt/homebrew/opt/python@3.14/bin/**)",
+      "Read(//Users/**)"
     ]
   }
 }

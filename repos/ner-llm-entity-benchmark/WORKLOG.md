@@ -223,3 +223,140 @@ Inspects exception message strings for known rate-limit signals across Ollama's 
 - All changes are backward-compatible: `--num-workers` CLI flag still sets the initial concurrency seed.
 - Ready for thesis chapter on *System Resilience and Adaptive Concurrency*.
 
+
+---
+
+## 2026-09-03: Reconstrucción del Entorno y Auditoría de Nomenclatura de Modelos (Claude Code)
+
+### Objetivos
+1. Completar el benchmark N=120 para los 11 modelos restantes (de 16), con protocolo baseline + KB RAG.
+2. Verificar entorno de ejecución (venv + Ollama) previo a la corrida.
+3. Auditar la nomenclatura del modelo derivado de 12B (sufijo `q8`) a solicitud del autor.
+
+### Hallazgo 1 — Entorno virtual roto (RESUELTO)
+El `venv` era inutilizable: todas sus rutas apuntaban a `/Users/eahumada1/` (home renombrado; el
+directorio no existe). Síntomas: `./venv/bin/python` era un symlink colgante y `source venv/bin/activate`
+dejaba un intérprete inexistente en el PATH.
+
+- **Alcance del daño**: symlink `venv/bin/python3.14`, `venv/pyvenv.cfg` (claves `home`, `executable`,
+  `command`) y shebangs de **41 scripts** en `venv/bin/`.
+- **Reparación aplicada** (backup en `venv/pyvenv.cfg.bak`):
+  - Repunte de `venv/bin/python3.14` → `/opt/homebrew/opt/python@3.14/bin/python3.14`
+  - Reescritura de `pyvenv.cfg` a rutas `/opt/homebrew` y versión real `3.14.7` (el venv fue creado con 3.14.6; mismo minor ⇒ ABI compatible)
+  - Corrección de los 41 shebangs
+- **No fue necesario reinstalar dependencias**: `site-packages` estaba intacto (316 paquetes).
+- **Verificación**: `./venv/bin/python --version` → Python 3.14.7; `pandas 3.0.5` importa correctamente.
+
+> **Nota metodológica**: durante la verificación, varios imports parecieron colgarse (>25 s). Se descartó
+> como falso positivo: `import requests` consumió 2m22s de reloj pero sólo **0.18 s de CPU (0 % cpu)** — estaba
+> bloqueado en I/O por las descargas concurrentes de modelos (13 GB + 16 GB), no por un problema del venv.
+
+### Hallazgo 2 — Store de Ollama vacío
+El daemon `ollama serve` estaba corriendo, pero `ollama list` y `GET /api/tags` devolvían **cero modelos**
+(`{"models":[]}`). No faltaba "alguno" de los 11 modelos: faltaban **todos**. Se relanzaron las descargas
+(~60 GB de pesos locales; disco disponible 377 GB).
+
+### Hallazgo 3 — Autorización explícita de modelos Cloud
+El autor autorizó explícitamente el uso de `gemma4:31b-cloud` y `minimax-m3:cloud` **como línea base de
+comparación**. Se documentó como excepción acotada en `AGENTS.md §2`, de forma **aditiva** (sin derogar la
+regla de zero-data-leakage, que sigue vigente para todo dato productivo/confidencial). La excepción aplica
+sólo al corpus público de evaluación (Kleptotrace + CoNLL-2002), que no contiene datos personales.
+Implicancia registrada: los 120 artículos se transmiten a servidores remotos de Ollama.
+
+### Hallazgo 4 — CRÍTICO: el sufijo `q8` del modelo derivado de 12B es INCORRECTO
+
+El tag del derivado con sufijo `q8` **no existe en el registro** (`Error: pull model manifest: file does
+not exist`); era un artefacto local perdido al vaciarse el store. Se auditó el modelo base real,
+`gemma4:12b-mlx`, que **sí existe** y cuyo tamaño (**7.71 GB**) coincide exactamente con los 7.7 GB
+registrados en `AGENTS.md §8.6` y en el snapshot de `ollama list` de `BENCHMARKS.md`.
+
+**Evidencia de que NO es q8** (obtenida del manifiesto y blobs del registro, sin descargar pesos):
+
+| Evidencia | Valor |
+|---|---|
+| `quantization.quant_algo` | `MIXED_PRECISION` |
+| `quantization.kv_cache_quant_algo` | `FP8` |
+| Algoritmo por capa | `NVFP4` (**4 bits**), `group_size` 16 |
+| Tamaño real | 7.71 GB |
+| Bits/peso derivados | 7.71e9 × 8 / 12e9 ≈ **5.14 bits** |
+| Tamaño de un q8 real de 12B | **12.84 GB** (`gemma4:12b-it-q8_0`, verificado) |
+| `model_format` | `safetensors` (MLX genuino, 725 capas `tensor`) |
+
+**Conclusión**: el modelo es **4-bit mixed-precision (NVFP4)**, no 8-bit. El literal `q8` en el nombre es
+un error de nomenclatura arrastrado desde julio de 2026. La parte `mlx` sí es correcta (formato safetensors,
+725 capas tensor); se confirma además que `gemma4:31b-mlx` (19.42 GB ≈ los 18 GB documentados) es de la
+misma familia y sí fue usado en la corrida del 2026-09-01.
+
+**Impacto en la tesina**: toda tabla, script o texto que citara ese nombre derivado estaba nombrando
+incorrectamente la cuantización del modelo. Pendiente de corrección transversal (ver Trabajo en curso).
+
+### Corrección de dos afirmaciones erróneas emitidas durante la sesión
+Se dejan registradas por trazabilidad académica:
+1. Se afirmó inicialmente que **"Ollama no ejecuta MLX"**. Es **falso** para esta versión de Ollama: el
+   registro sirve modelos MLX/safetensors (`gemma4:12b-mlx`, `gemma4:31b-mlx`) con capas `tensor`.
+2. Se conjeturó que el artefacto de 7.7 GB "no correspondía a ningún tag real". Es **falso**: corresponde
+   exactamente a `gemma4:12b-mlx`.
+
+### Estado de la corrida N=120 (EN CURSO — sin resultados aún)
+- Corrida previa (2026-09-01, `results/benchmark_balanced_120_20260901_140421/`) **verificada**: 1200 filas
+  = 5 modelos × 2 modos × 120 artículos. Modelos: `gemma4:31b-mlx`, `gemma4:latest`, `gemma:latest`,
+  `llama3.2:latest`, `qwen2.5:14b`.
+- Se confirmó que los 11 modelos solicitados son **disjuntos** de esos 5 ⇒ la unión da exactamente 16.
+- Corpus `data/benchmark_balanced_120.json` presente e íntegro (319.559 bytes).
+- **El benchmark aún NO se ha ejecutado**: bloqueado hasta completar las descargas de modelos.
+
+### Trabajo en curso / pendiente
+1. Completar descargas (~60 GB) y confirmar cuantización con `ollama show gemma4:12b-mlx`.
+2. Decidir y aplicar la corrección de nomenclatura `q8` → cuantización real en **toda** la documentación,
+   scripts y artefactos (`AGENTS.md §8.6`, `BENCHMARKS.md`, `README.md`, `results/run_config.json`, `src/config.py`).
+3. Ejecutar el benchmark de los 11 modelos (cloud primero, según convención `AGENTS.md §8.2`).
+4. Combinar con la corrida del 2026-09-01 y re-ejecutar ANOVA/Tukey sobre los 16 modelos × 2 modos.
+5. Implementar el versionado histórico de corridas por N (30/120) × modo (baseline/RAG) × shots.
+
+
+## 2026-09-03: Guardarraíl anti-sobrescritura de `results/` y persistencia del flag `ablation` (Claude Code)
+
+### Objetivo
+Impedir estructuralmente que se repita la **pérdida real de datos** detectada: la corrida del 2026-07-01
+sobre el corpus aumentado N=30 escribió sus artefactos en la **raíz** `results/` en lugar de un
+subdirectorio con marca temporal. La corrida del 2026-07-27 los sobrescribió y los datos **por registro**
+se perdieron de forma permanente; sólo sobreviven las métricas agregadas en `benchmark_augmented_30.log`
+de la raíz del repositorio. Esa corrida sustenta la conclusión principal de la tesina (F1 = 79,03 %).
+
+### Causa raíz
+En `src/config.py`, `BenchmarkConfig.__post_init__` sólo generaba el subdirectorio con marca temporal
+cuando `results_dir == 'results'` (comparación de cadena **exacta**). Cualquier grafía equivalente
+(`'results/'`, `'./results'`, ruta absoluta) o una mutación posterior del atributo dejaba la configuración
+apuntando a la raíz, y la escritura se producía sin ninguna advertencia.
+
+### Cambios (estrictamente aditivos)
+1. **`src/config.py`** — nuevo guardarraíl de dos niveles (backup: `src/config.py.bak_pre_guardrail`):
+   - `RESULTS_ROOT`, excepción `ResultsDirRootError`, predicado `_is_results_root()` (normaliza `''`,
+     `'results'`, `'results/'`, `'./results'`, `'results/.'`, `'results//'`, `'results/sub/..'` y toda
+     forma absoluta equivalente) y `assert_not_results_root()` con mensaje de aborto que documenta el
+     incidente y propone la corrección.
+   - Invocación al final de `__post_init__` (primera línea de defensa) y al inicio de
+     `ensure_directories()` (última barrera antes de cualquier escritura en disco, cubre las mutaciones
+     de `results_dir` posteriores a la construcción).
+   - Un **subdirectorio** explícito (`results/benchmark_x_16models`, el `results/<dataset>_<timestamp>`
+     autogenerado, o cualquier ruta fuera del árbol) sigue siendo válido: el flag `--results-dir` no se rompe.
+2. **`src/config.py`** — nuevo campo `ablation: bool = False` en `BenchmarkConfig`, de modo que
+   `to_dict()` (y por tanto `run_config.json`) registre si la corrida fue un estudio de ablación. Antes
+   `--ablation` viajaba **sólo** como argumento de `run_benchmark()` y las corridas de ablación eran
+   indistinguibles de un baseline en su metadata (`rag_study: false`, `SYSTEM_PROMPT.md`).
+3. **`src/main.py`** (backup: `src/main.py.bak_pre_guardrail`) — se pasa `ablation=args.ablation` al
+   construir `BenchmarkConfig`, y `run_benchmark()` reconcilia argumento y configuración
+   (`ablation = bool(ablation) or bool(config.ablation)`; `config.ablation = ablation`) antes de exportar.
+
+### Verificación
+- Nuevo archivo `tests/test_results_dir_guardrail.py` (15 casos, `unittest` de la biblioteca estándar —
+  no hay `pytest` en el venv y no se instaló nada). Ejecutado con `./venv/bin/python`: **15/15 OK**.
+  Cubre: aborto en la raíz (10 grafías), aceptación de subdirectorios explícitos/anidados/absolutos,
+  aborto en `ensure_directories()` ante mutación posterior, generación del subdirectorio con marca
+  temporal por defecto, ausencia de efectos de disco en `__post_init__`, y presencia de `ablation` en el
+  volcado JSON de configuración.
+- **Comparación old vs. new**: se instanciaron ambas versiones de `BenchmarkConfig` (backup y actual) con
+  cuatro juegos de argumentos; único delta = campo añadido `ablation: False`; **ningún campo preexistente
+  cambia**. El comportamiento por defecto es idéntico.
+- No se ejecutó el benchmark ni ningún modelo LLM (disco y red saturados por descargas en curso).
+- No se modificaron `src/statistics.py` ni `src/merge_and_analyze.py`.

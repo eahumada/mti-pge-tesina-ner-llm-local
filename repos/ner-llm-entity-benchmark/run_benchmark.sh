@@ -22,7 +22,7 @@ echo "📊 Running full benchmark sweep — 15 models (including MiniMax & gpt-o
 ./venv/bin/python src/main.py --data-file data/benchmark_balanced_120.json \
   --rag-study \
   --models \
-    gemma4-12b-mlx-q8-64k:latest \
+    gemma4:12b-mlx \
     gemma4:31b-cloud \
     minimax-m3:cloud \
     gemma4:31b-mlx \

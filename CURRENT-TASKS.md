@@ -1,0 +1,204 @@
+# CURRENT-TASKS — Coordinación entre Agentes
+
+> **Documento vivo de coordinación.** Varios agentes (Claude Code, Claude Desktop, Antigravity) trabajan
+> sobre este repositorio, a veces simultáneamente. Este archivo declara **quién está haciendo qué y sobre
+> qué archivos**, para evitar que dos agentes se pisen.
+
+**Última actualización:** 2026-09-04 14:00 · **Actualizado por:** Claude Code
+
+---
+
+## Protocolo obligatorio
+
+Para **cada tarea** que ejecutes:
+
+1. **LEER** este documento antes de empezar. Comprobar que ningún otro agente declara estar trabajando
+   sobre los archivos que vas a tocar.
+2. **ESCRIBIR** tu entrada en la sección de tu agente: tarea, estado `EN CURSO`, archivos que vas a tocar
+   y hora de inicio.
+3. Ejecutar la tarea.
+4. **ACTUALIZAR** tu entrada al terminar: estado `COMPLETADA` o `FALLIDA`, con el resultado.
+5. **VOLVER A LEER** el documento, por si otro agente escribió mientras trabajabas.
+
+**Reglas:**
+- Si un archivo aparece declarado por otro agente como `EN CURSO`, **no lo toques**. Espera o elige otro.
+- Al **reanudar** una tarea interrumpida, actualiza también su entrada (estado, motivo de la interrupción).
+- Escribe siempre por **append** dentro de tu sección; nunca reescribas las entradas de otro agente.
+- Todo **workflow** debe tener su propia subsección en §4 y mantenerla actualizada.
+- Toda tarea de **subagente** debe quedar reflejada bajo la tarea padre que lo lanzó.
+
+---
+
+## 1. Claude Code
+
+### 1.1 EN CURSO — Benchmark N=120 (7 modelos locales)
+- **Estado:** ▶️ EN CURSO desde 2026-09-03 16:08
+- **Archivos bloqueados:** `repos/ner-llm-entity-benchmark/results/benchmark_balanced_120_kbrag_9models/**`
+- **Progreso:** 27 / 1680 filas · `gemma4:12b-mlx_baseline` 9/40 lotes
+- **Configuración:** `--rag-mode kb_combined --num-workers 9 --batch-size 3 --results-dir <fijo>`
+  (compatible con la corrida de referencia del 2026-09-01, 9 parámetros verificados)
+- **Modelos:** gemma4:12b-mlx, qwen3:8b, mistral-nemo, nuextract, llama3.1:8b, nemotron-mini:4b, deepseek-r1:1.5b
+- **Excluidos:** `sonct988` (16 GB) y `gpt-oss:20b` (13 GB) por RAM de 16 GB; `gemma4:31b-cloud` (HTTP 429)
+  y `minimax-m3:cloud` (HTTP 402)
+- **ETA:** ~66 h de cómputo neto (más el tiempo perdido en suspensiones).
+- **Ejecución (2026-09-04):** migrada a **LaunchAgent de macOS** `local.tesina.benchmark`
+  (`~/Library/LaunchAgents/local.tesina.benchmark.plist`) con `KeepAlive`, tras 7 interrupciones del
+  ejecutor lanzado desde la sesión. macOS lo reinicia solo y `--resume` retoma desde el checkpoint.
+  Para detenerlo: `launchctl unload ~/Library/LaunchAgents/local.tesina.benchmark.plist`
+- ⚠️ **Calidad de datos:** 8 suspensiones del equipo (~4.6 h) contaminaron 2 de 48 latencias con valores
+  imposibles (9548 s y 15860 s). Media con anómalas 1245 s vs 747 s sin ellas. Requiere `sudo pmset -a
+  disablesleep 1` o filtrar los outliers y documentarlo.
+
+### 1.2 PAUSADA — Descarga de modelos 31B para recuperar N=30
+- **Estado:** ⏸️ PAUSADA 2026-09-03 16:05 (liberar RAM e I/O para el benchmark; `ollama` reanuda parciales)
+- **Pendiente:** `gemma4:31b` (19 GB), `gemma4:31b-mlx` (19.4 GB)
+- **Reanudar cuando:** termine la tarea 1.1
+- ⚠️ Ambos **exceden la RAM de 16 GB**: se espera swap intenso (~1200 s/artículo según el histórico)
+
+### 1.3 COMPLETADAS
+| Tarea | Resultado |
+|:---|:---|
+| Reparación del `venv` | ✅ Rutas repuntadas, 41 shebangs, sin reinstalar |
+| Corrección del flag `--resume` | ✅ Añadido `--results-dir`; era inoperante |
+| Guardarraíl anti-sobrescritura de `results/` | ✅ 15 tests pasan |
+| `src/merge_and_analyze.py` | ✅ Validado: reproduce F=10.2096, p=2.8730e-15 |
+| Auditoría de consistencia | ✅ 115 hallazgos confirmados, 17 descartados |
+| Corrección documental | ✅ 84 correcciones aplicadas |
+| Reparación de 5 regresiones del workflow | ✅ Verificadas |
+| `FINDINGS.md`, `LEARNING.md`, `TODO-INFORME-FINAL.md` | ✅ Creados |
+| `tools/docx_replace_terms.py` | ✅ Validado sobre copias; originales intactos |
+
+---
+
+## 2. Claude Desktop
+
+> **Responsable de la edición y el formato de los `.docx`.** Detalle completo en
+> [`TODO-INFORME-FINAL.md §7`](./TODO-INFORME-FINAL.md).
+> ⚠️ **No regenerar los `.docx` con pandoc**: destruiría correcciones manuales de numeración multinivel,
+> estilos de fila y saltos de página (ver `LEARNING.md §L12`).
+
+### 2.0 COMPLETADA — Coordinación multiagente: archivos de instrucciones de la raíz
+- **Estado:** ✅ COMPLETADA 2026-09-03 20:18 (iniciada 20:15) · **Agente:** Claude Desktop (Cowork)
+- **Resultado:** `AGENT.md` y `ANTIGRAVITY.md` de la raíz actualizados por *append* con el protocolo;
+  `GEMINI.md` creado en la raíz. `CLAUDE.md` ya lo incorporaba (Claude Code, 20:12) y no se tocó.
+- **Archivos que voy a tocar:** `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (los tres en la **raíz** del
+  proyecto) y las secciones §2 y §6 de este documento.
+- **Fuera de alcance (los cubre Claude Code):** `CLAUDE.md` raíz y todo `repos/ner-llm-entity-benchmark/**`
+  (`AGENTS.md §11`, `CLAUDE.md`, `GEMINI.md`, `ANTIGRAVITY.md`), ya actualizados a las 20:12–20:13.
+- **Objetivo:** que los cuatro puntos de entrada de agente de la raíz declaren el protocolo de
+  `CURRENT-TASKS.md`, hoy presente solo en `CLAUDE.md`.
+
+### 2.1 PENDIENTE — Reinserción de secciones faltantes (prioritario)
+- **Estado:** ⬜ PENDIENTE
+- **Archivo:** `Informe_Final_Tesina_NER.docx`
+- **Tarea:** reinsertar íntegras **§4.1.3** y **§5.3.5** (con la tabla 5 modelos × 2 modos y las cifras
+  ANOVA F=10.2096 / p=2.873e-15). Existen íntegras en el `.docx` del borrador y en el Markdown canónico.
+- **Verificado:** cero ocurrencias de `4.1.3`, `5.3.5` y `10.2096` en su XML.
+
+### 2.2 PENDIENTE — Propagar correcciones del Markdown a los `.docx`
+- **Estado:** ⬜ PENDIENTE
+- **Archivos:** los tres `.docx` de la tesina
+- **Fuente:** `AUDITORIA_CONSISTENCIA_20260903.md` y el Markdown canónico ya corregido
+- **Herramienta:** `tools/docx_replace_terms.py` para reemplazos de texto (no inserta secciones)
+
+### 2.3 PENDIENTE — Formato y verificación final
+- **Estado:** ⬜ PENDIENTE
+- Glosas tipográficas (negrita/cursiva), verificación del límite de **25 páginas**, ausencia de páginas en
+  blanco y tablas partidas, numeración multinivel correcta.
+- Dejar copia del `.docx` canónico **en la raíz**.
+
+
+### 2.4 Documentos producidos o actualizados por Claude Desktop en esta sesión
+- **Estado:** ✅ REFERENCIA (no requiere acción)
+
+| Documento | Rol |
+|:---|:---|
+| `Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.docx` | Entregable canónico. Maquetación institucional completa: estilos `Table`/`Compact` definidos, encabezado unificado con imágenes en línea, márgenes 3,3/2,5/3 cm, resumen y capítulos en página propia, 23 leyendas `table caption`, anchos de columna proporcionales, `sectPr` restituido. Cuerpo **20 pp.** de 25; total 29 pp. |
+| `doc/versions/informe_final/Informe_Final_Tesina_NER_v1.docx` | Versión congelada `_v1` (SHA-256 `6b53ebd4b1b7…`) |
+| `doc/versions/informe_final/VERSIONES.md` | Convención `_v1/_v2/_v3` y registro de versiones |
+| `PROMPT-PENDIENTE-INFORME-FINAL.md` | Pendientes con asunto y fecha + procedimiento de cierre de formato (bloque D) + prompt listo para pegar |
+| `ANALISIS-ACTUALIZACIONES-INFORME-FINAL_20260903.md` | Análisis de las actualizaciones que requerirá el `.docx`, separadas por dependencia de datos |
+| `HISTORIAL-CONSOLIDADO.md` | Historial consolidado: todo lo condensado o reubicado, con el texto suprimido citado literalmente, y §9 con la corrección de renderizado |
+| `research/rag/WORKLOG.md` | Tres entradas aditivas: §4.1.3/§5.3.5, redacción de la organización vinculada, y cumplimiento institucional + corrección de renderizado |
+| `doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.md` y `.docx` | §4.1.3 (corpus N=120 conmutable) y §5.3.5 (validación complementaria) añadidas de forma aditiva |
+| Anexo G del `.docx` canónico | Declaración de uso de IA, redactada sobre el historial de commits y ambos WORKLOG |
+| Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
+| `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
+
+### 2.5 PENDIENTE — Cierre de formato, una vez terminados los benchmarks
+- **Estado:** ⬜ PENDIENTE · **Bloqueada por:** tareas 1.1 (benchmark de 7 modelos) y 1.2 (N=30)
+- **Procedimiento completo:** `PROMPT-PENDIENTE-INFORME-FINAL.md` §4 (pasos D-0 a D-9) y §5 (prompt)
+- **Orden de ejecución:**
+  1. Incorporar el resultado consolidado del benchmark: §5.3.5, §5.6.5, Anexo E y §7.2, con un **único**
+     ANOVA/Tukey recalculado sobre la fusión de la corrida en curso con la del 2026-09-01.
+  2. Fijar el alcance real del estudio (**14 modelos**, no 16) y la razón de la exclusión de los cloud.
+  3. Sustituir el F1 titular de N=30 por el de la re-ejecución, según la decisión ya registrada del autor.
+  4. Repetir el bloque de maquetación D-2…D-7 (estilos, encabezado, márgenes y saltos, tablas y leyendas,
+     estructura XML, limpieza tipográfica).
+  5. Verificación D-8: cuerpo ≤ 25 pp., resumen ≤ 200 palabras, introducción ≤ 3 pp., sin páginas en
+     blanco, sin solapamiento con encabezado o pie, tablas con bordes y leyenda numerada, cifras
+     trazables a `results/`, anexos A–G en orden.
+  6. Congelar `_v2` (correcciones documentales), `_v3` (datos nuevos) y `_v4` (entrega) en
+     `doc/versions/informe_final/`, registrando cada una en `VERSIONES.md`.
+- **Advertencia:** el bloque de maquetación **no sobrevive** a una regeneración con pandoc. Si el `.docx`
+  se regenera desde el Markdown, hay que repetirlo íntegro.
+
+---
+
+## 3. Antigravity
+
+### 3.1 Sin tareas activas
+- **Estado:** ⬜ SIN ASIGNACIÓN
+- **Instrucciones aplicables:** `repos/ner-llm-entity-benchmark/ANTIGRAVITY.md` → `AGENTS.md`
+- Si se le asignan tareas, declararlas aquí antes de empezar.
+
+---
+
+## 4. Workflows
+
+> Todo workflow debe declarar aquí su subsección: objetivo, fases, agentes, archivos tocados y resultado.
+
+### 4.1 `auditoria-consistencia-tesina` — ✅ COMPLETADO
+- **Cuándo:** 2026-09-03, ~65 min · **Agentes:** 10 (5 auditores + 5 verificadores adversariales)
+- **Archivos:** solo lectura (no modificó nada)
+- **Resultado:** 115 hallazgos confirmados (26 altos, 55 medios, 34 bajos), 17 descartados
+- **Salida:** `AUDITORIA_CONSISTENCIA_20260903.md`
+
+### 4.2 `correccion-consistencia-tesina` — ✅ COMPLETADO (con regresiones reparadas)
+- **Cuándo:** 2026-09-03, ~18 min · **Agentes:** 8 (4 correctores + 4 verificadores de integridad)
+- **Archivos:** informe `.md`, `BENCHMARKS.md`, `AGENTS.md`, `README.md`, `TODO.md`, `RUNS_INDEX.md`,
+  `HISTORIAL-CONSOLIDADO.md`, `research/rag/WORKLOG.md`
+- **Resultado:** 84 correcciones aplicadas
+- ⚠️ **5 regresiones detectadas por la fase de verificación y reparadas por Claude Code**: borrado de
+  `glm-5.1:cloud` (violación de la política aditiva), snippet Python inválido, reaparición del nombre de
+  modelo retirado, autocontradicción entre §8.3 y §8.4, y consejo de `--resume` inoperante.
+- **Nota:** una primera ejecución fue **detenida antes de tocar archivo alguno** porque su prompt contenía
+  una premisa errónea que habría eliminado una fila de datos experimentales. Ver `CLAUDE.md §Orquestación`.
+
+---
+
+## 5. Procesos de fondo activos
+
+| Proceso | Función |
+|:---|:---|
+| `caffeinate -dimsu` | Impide la suspensión del equipo (`pmset` tiene `sleep 1`) |
+| Ejecutor resiliente | Reintentos con `--resume` para el benchmark |
+| Watchdog | Detecta suspensiones, caídas de red y muerte de `caffeinate` |
+| Detector de concurrencia | Registra cambios externos en los documentos críticos cada 45 s |
+
+---
+
+## 6. Registro de actualizaciones
+
+| Fecha/hora | Agente | Cambio |
+|:---|:---|:---|
+| 2026-09-03 16:15 | Claude Code | Creación del documento con el estado inicial |
+| 2026-09-03 16:22 | Claude Code | Protocolo documentado en `CLAUDE.md` (raíz y repo), `AGENTS.md §11`, `GEMINI.md` y `ANTIGRAVITY.md` |
+| 2026-09-03 16:24 | Claude Code | Exclusión de `sonct988` y `gpt-oss:20b` documentada en `FINDINGS.md §F23-F24`, `LEARNING.md §L14-L15`, `TODO-INFORME-FINAL.md §8` y `research/rag/WORKLOG.md` |
+| 2026-09-03 16:24 | Claude Code | Reparadas 5 regresiones introducidas por el workflow de corrección (ver §4.2) |
+| 2026-09-03 16:32 | Claude Code | `glm-5.1:cloud` eliminado globalmente (cero resultados, HTTP 402). Criterio adoptado: un modelo cloud se conserva si tiene resultados, se elimina si no. Ver `TODO-INFORME-FINAL.md §9` |
+| 2026-09-04 14:00 | Claude Code | Benchmark migrado a LaunchAgent tras 7 interrupciones. Bug corregido: bajo launchd faltaba `/opt/homebrew/bin` en el `PATH` y la lista de modelos salía vacía |
+| 2026-09-04 14:00 | Claude Code | 🔴 SEGURIDAD: 2 credenciales filtradas — API key de Google en `test_flash.py` **publicada en GitHub** (commits `0b27b5c`, `0cc973b`), y PAT de GitHub en `.git/config`. Pendiente de revocación por el autor |
+| 2026-09-04 14:00 | Claude Code | Ref git inválida `refs/remotes/origin/main 2` eliminada: rompía `git log --all` y causó 2 escaneos de seguridad con falso negativo |
+| 2026-09-03 16:38 | Claude Code | Inventario completo de resultados cloud: `gemma4:31b-cloud` y `minimax-m3:cloud` conservados en sus 2 corridas cada uno (N=15 y N=120). Detectado que ambas son de modo RAG legacy `entities`, no comparables con `kb_combined`. Ver `TODO-INFORME-FINAL.md §9.4-9.5` |
+| 2026-09-03 20:18 | Claude Desktop | Tarea 2.0: protocolo añadido a `AGENT.md`, `ANTIGRAVITY.md` y `GEMINI.md` de la raíz; §2.4 (documentos de la sesión) y §2.5 (cierre de formato tras los benchmarks) |

@@ -214,6 +214,12 @@ def export_results(results: list[dict], summary: dict, stat_report: str, confusi
 
 def run_benchmark(config: BenchmarkConfig, resume: bool = False, ablation: bool = False) -> None:
     """Main benchmark orchestration loop."""
+    # Reconcile the ablation flag with the config so it is persisted in
+    # run_config.json (previously it travelled only as a function argument and
+    # ablation runs were indistinguishable from baseline runs in metadata).
+    ablation = bool(ablation) or bool(getattr(config, "ablation", False))
+    config.ablation = ablation
+
     setup_logging(config.results_dir)
     ensure_directories(config)
     
@@ -697,6 +703,7 @@ def main():
     parser.add_argument("--batch-size", type=int, default=5, help="Batch size of articles per iteration")
     parser.add_argument("--data-file", type=str, default="data/sample_sanctions.json", help="Path to evaluation JSONL")
     parser.add_argument("--resume", action="store_true", help="Resume from last checkpoint")
+    parser.add_argument("--results-dir", type=str, default=None, help="Explicit results directory. Required for --resume to find its checkpoint; without it a new timestamped directory is created each run.")
     parser.add_argument("--generate-sample-data", action="store_true", help="Generate 20-record sample dataset and exit")
     parser.add_argument("--temperature", type=float, default=0.1, help="LLM temperature configuration")
     parser.add_argument("--max-tokens", type=int, default=2048, help="LLM max output tokens limit")
@@ -744,6 +751,15 @@ def main():
         system_prompt_file=args.system_prompt_file,
         rag_study=args.rag_study,
         rag_mode=args.rag_mode,
+        ablation=args.ablation,
+        **(
+            {
+                "results_dir": args.results_dir,
+                "checkpoint_file": os.path.join(args.results_dir, ".checkpoint.json"),
+            }
+            if args.results_dir
+            else {}
+        ),
     )
     if args.models:
         config.models = args.models

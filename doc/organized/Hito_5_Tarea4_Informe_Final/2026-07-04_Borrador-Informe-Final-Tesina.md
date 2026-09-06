@@ -16,7 +16,7 @@
 | **RUT** | 12.814.696-2 |
 | **Correo** | eahumada@gmail.com |
 | **Profesor Guía** | José Luis Martí Lara |
-| **Organización Vinculada** | Leanstack SpA / Austranet (contacto: Manuel Muñoz, Fundador) |
+| **Organización Vinculada** | Austranet |
 | **Programa** | Magíster en Tecnologías de la Información — Año de Ingreso 2013 |
 | **Fecha de Entrega** | Julio 2026 |
 
@@ -26,7 +26,7 @@
 
 Las instituciones financieras que operan en el marco de regulaciones AML (Anti-Money Laundering) y KYC (Know Your Customer) enfrentan el desafío de monitorear grandes volúmenes de noticias no estructuradas en busca de entidades de riesgo (personas, organizaciones). Este proceso, ejecutado manualmente, resulta costoso, lento e incapaz de escalar, mientras que el uso de APIs en la nube expone datos financieros sensibles a terceros, vulnerando la soberanía de datos. Este trabajo diseña, implementa y evalúa empíricamente un sistema soberano de extracción de Entidades Nombradas (NER) basado en Modelos de Lenguaje Grande (LLM) de código abierto (familias Gemma, Llama, DeepSeek) ejecutados 100% localmente mediante Ollama en hardware Apple Silicon M4.
 
-El sistema incorpora una arquitectura de procesamiento pub/sub multithreading con control adaptativo de concurrencia (AIMD) y una capa Factory/Facade que unifica 16 proveedores de modelos. La validación experimental se realizó sobre el dataset real de sanciones financieras Kleptotrace/CoNLL-2002 (N=15 artículos con anotación experta) y un corpus estadísticamente significativo de 30 artículos breves (N=30). El estudio de ablación de prompts demuestra que la localización lingüística al español produce una mejora de +7.4 puntos de F1 sobre el baseline zero-shot en inglés, y que el mejor modelo evaluado (gemma4:31b) alcanza un F1-Score de 79.03% con una tasa de alucinaciones del 0.0% sobre el corpus N=30. El sistema reduce los costos operativos de revisión manual en un 60–80% y garantiza privacidad total de datos.
+El sistema incorpora una arquitectura de procesamiento pub/sub multithreading con control adaptativo de concurrencia (AIMD) y una capa Factory/Facade que unifica cuatro proveedores de modelos. La validación experimental se realizó sobre el dataset real de sanciones financieras Kleptotrace/CoNLL-2002 (N=15 artículos con anotación experta) y un corpus estadísticamente significativo de 30 artículos breves (N=30). La comparación de configuraciones de prompt demuestra que la localización lingüística al español produce una mejora de +7.4 puntos de F1 sobre el baseline zero-shot en inglés, y que el mejor modelo evaluado (gemma4:31b) alcanza un F1-Score de 79.03% con una tasa de alucinaciones del 0.0% sobre el corpus N=30. El sistema reduce los costos operativos de revisión manual en un 60–80% y garantiza privacidad total de datos.
 
 **Palabras clave:** Reconocimiento de Entidades Nombradas (NER), Modelos de Lenguaje Grande (LLM), Cumplimiento Normativo (AML/KYC), Soberanía de Datos, Prompt Engineering.
 
@@ -36,7 +36,7 @@ El sistema incorpora una arquitectura de procesamiento pub/sub multithreading co
 
 Financial institutions operating under AML and KYC regulatory frameworks face the challenge of monitoring large volumes of unstructured news for risk entities (persons, organizations). Manual execution of this process is costly, slow, and unscalable, while cloud API usage exposes sensitive financial data to third parties, violating data sovereignty. This work designs, implements, and empirically evaluates a sovereign Named Entity Recognition (NER) system based on open-source Large Language Models (Gemma, Llama, DeepSeek families) executed 100% locally via Ollama on Apple Silicon M4 hardware.
 
-The system incorporates a multithreading pub/sub processing architecture with an adaptive concurrency controller (AIMD) and a Factory/Facade layer unifying 16 model providers. Experimental validation was performed on the real financial sanctions dataset balanceado Kleptotrace/CoNLL-2002/CoNLL-2002 (N=15 expert-annotated articles) and a statistically significant corpus of 30 short articles (N=30). The prompt ablation study demonstrates that Spanish-language localization yields a +7.4 F1-point improvement over the English zero-shot baseline, and the best evaluated model (gemma4:31b) achieves an F1-Score of 79.03% with 0.0% hallucination rate on the N=30 corpus. The system reduces manual review operational costs by 60–80% while guaranteeing total data privacy.
+The system incorporates a multithreading pub/sub processing architecture with an adaptive concurrency controller (AIMD) and a Factory/Facade layer unifying four model providers. Experimental validation was performed on the real financial sanctions dataset Kleptotrace/CoNLL-2002 (N=15 expert-annotated articles) and a statistically significant corpus of 30 short articles (N=30). The prompt ablation study demonstrates that Spanish-language localization yields a +7.4 F1-point improvement over the English zero-shot baseline, and the best evaluated model (gemma4:31b) achieves an F1-Score of 79.03% with 0.0% hallucination rate on the N=30 corpus. The system reduces manual review operational costs by 60–80% while guaranteeing total data privacy.
 
 **Keywords:** Named Entity Recognition (NER), Large Language Models (LLM), Regulatory Compliance (AML/KYC), Data Sovereignty, Prompt Engineering.
 
@@ -62,7 +62,7 @@ The system incorporates a multithreading pub/sub processing architecture with an
 
 Las instituciones financieras operan bajo un marco regulatorio estricto que les obliga a identificar y gestionar entidades de riesgo en tiempo real. Las regulaciones internacionales Anti-Money Laundering (AML) y Know Your Customer (KYC), implementadas en Chile por la Unidad de Análisis Financiero (UAF) y la Comisión para el Mercado Financiero (CMF), exigen la detección de Personas Políticamente Expuestas (PEP), sujetos sancionados y vínculos con redes de lavado de activos en flujos continuos de información pública.
 
-El proceso actual en instituciones como Leanstack SpA / Austranet implica la revisión manual de cientos de artículos periodísticos diarios por analistas especializados, un proceso con un costo promedio estimado de USD 8.75 por artículo analizado. A nivel global, el mercado de RegTech alcanza los USD 12.3 billones en 2024, proyectándose a USD 87.2 billones en 2028, evidenciando la urgencia de soluciones automatizadas y escalables [referencia KPMG 2024].
+El proceso actual en instituciones como Austranet implica la revisión manual de cientos de artículos periodísticos diarios por analistas especializados, un proceso con un costo promedio estimado de USD 8.75 por artículo analizado. A nivel global, el mercado de RegTech alcanza los USD 12.300 millones en 2024, proyectándose a USD 87.200 millones en 2028, evidenciando la urgencia de soluciones automatizadas y escalables [referencia KPMG 2024].
 
 ### 1.2 Planteamiento del Problema
 
@@ -76,7 +76,7 @@ Los enfoques existentes presentan limitaciones críticas:
 
 ### 1.3 Hipótesis de Trabajo
 
-> **Hipótesis:** Es viable implementar un sistema soberano de extracción y clasificación de entidades financieras para cumplimiento corporativo (AML/KYC) utilizando modelos de lenguaje de código abierto de escala media-grande (8B–32B parámetros) ejecutados localmente, alcanzando un desempeño competitivo en español (F1-Score ≥ 70%) mediante técnicas sistemáticas de prompt engineering y few-shot learning, eliminando la fuga de datos confidenciales y reduciendo los costos operativos en más del 60%.
+> **Hipótesis:** Es viable implementar un sistema soberano de extracción y clasificación de entidades financieras para cumplimiento corporativo (AML/KYC) utilizando modelos de lenguaje de código abierto de escala media-grande (8B–31B parámetros) ejecutados localmente, alcanzando un desempeño competitivo en español (F1-Score ≥ 70%) mediante técnicas sistemáticas de prompt engineering y few-shot learning, eliminando la fuga de datos confidenciales y reduciendo los costos operativos en más del 60%.
 
 **Variables independientes:** (1) Modelo LLM seleccionado; (2) Estrategia de prompt (zero-shot/few-shot, inglés/español).  
 **Variables dependientes:** (1) F1-Score por tipo de entidad; (2) Tasa de alucinaciones; (3) Latencia de procesamiento; (4) Consumo de VRAM.
@@ -87,14 +87,14 @@ Los enfoques existentes presentan limitaciones críticas:
 
 **Objetivos Específicos:**
 1. Diseñar e implementar una arquitectura pub/sub multithreading con control adaptativo de concurrencia para la ejecución segura de LLMs de gran escala en hardware Apple Silicon.
-2. Evaluar y comparar el desempeño de 15 modelos de lenguaje de código abierto generativos (familias Gemma, Llama, DeepSeek, Qwen, Mistral, NuExtract) en la tarea de NER sobre corpus de sanciones financieras reales en español.
-3. Ejecutar un estudio de ablación sistemático sobre cuatro configuraciones de prompt (zero-shot/few-shot × inglés/español) para cuantificar el impacto de la localización lingüística y el aprendizaje en contexto.
+2. Evaluar y comparar el desempeño de 12 modelos de lenguaje de código abierto generativos (familias Gemma, Llama, DeepSeek, Qwen, Mistral, NuExtract) en la tarea de NER sobre corpus de sanciones financieras reales en español.
+3. Ejecutar una comparación sistemática de cuatro configuraciones de prompt (zero-shot/few-shot × inglés/español) —un diseño factorial 2×2, denominado *estudio de ablación* en la literatura de aprendizaje automático— para cuantificar el impacto de la localización lingüística y el aprendizaje en contexto.
 4. Validar estadísticamente los resultados mediante ANOVA de una vía y pruebas post-hoc de Tukey HSD (α=0.05) sobre un corpus estadísticamente significativo (N≥30).
 5. Demostrar una reducción de costos operativos del 60–80% respecto a la revisión manual, manteniendo una tasa de alucinaciones inferior al 5%.
 
 ### 1.5 Estructura del Documento
 
-El presente informe se organiza de la siguiente manera: la Sección 2 presenta el marco teórico y estado del arte. La Sección 3 describe el sistema propuesto. La Sección 4 detalla el diseño experimental. La Sección 5 presenta los resultados. La Sección 6 discute los hallazgos. La Sección 7 presenta las conclusiones y trabajo futuro. La Sección 8 lista las referencias, y la Sección 9 incluye los anexos técnicos.
+El informe se organiza así: §2 marco teórico y estado del arte; §3 sistema propuesto; §4 diseño experimental; §5 resultados; §6 discusión de los hallazgos; §7 conclusiones y trabajo futuro; §8 referencias; §9 anexos técnicos.
 
 ---
 
@@ -134,9 +134,9 @@ La Tabla 1 posiciona este trabajo respecto a investigaciones recientes en NER pa
 | FiNER-139 Benchmark [Alvarado et al., 2023] | SEC 10-K/10-Q | BERT fine-tuned | 91% | ❌ Cloud | Inglés |
 | García & López (2021) | CoNLL-ES | XLM-R | 88% | ✅ Local | Español |
 | Chang et al. (2024) | Docs bancarios | GPT-4 + RAG | 83% | ❌ Cloud | Inglés |
-| **Este trabajo** | **Kleptotrace/CoNLL-2002 (AML)** | **gemma4:31b local** | **79%** | **✅ 100% Local** | **Español** |
+| **Este trabajo** | **Kleptotrace/CoNLL-2002 (AML), corpus sintético N=30** | **gemma4:31b local** | **79%** | **✅ 100% Local** | **Español** |
 
-El aporte original de este trabajo reside en: (1) evaluación comparativa de 16 modelos sobre corpus real de sanciones en español; (2) estudio de ablación lingüística (ES vs. EN); (3) sistema soberano reproducible sobre hardware comercial; y (4) validación estadística formal (ANOVA, Tukey HSD) sobre corpus N≥30.
+El aporte original de este trabajo reside en: (1) evaluación comparativa de 12 modelos sobre corpus real de sanciones en español; (2) comparación de configuraciones de prompt entre idiomas (ES vs. EN); (3) sistema soberano reproducible sobre hardware comercial; y (4) validación estadística formal (ANOVA, Tukey HSD) sobre corpus N≥30.
 
 ---
 
@@ -218,10 +218,10 @@ Para garantizar la ejecución serial de modelos de gran escala (≥8B) sin desbo
 Se utilizaron dos corpus complementarios:
 
 **Corpus 1 — Kleptotrace/CoNLL-2002 (N=15, Gold Standard):**  
-15 artículos periodísticos reales de la plataforma Kleptotrace/CoNLL-2002 sobre lavado de activos, sanciones internacionales y corrupción. Anotados manualmente por expertos en compliance con entidades Personas (PER) y Organizaciones (ORG) como ground truth. Longitud promedio: ~800 caracteres por artículo.
+15 artículos periodísticos reales de la plataforma Kleptotrace/CoNLL-2002 sobre lavado de activos, sanciones internacionales y corrupción. Anotados manualmente por expertos en compliance con entidades Personas (PER) y Organizaciones (ORG) como ground truth. Longitud promedio: ~4.833 caracteres por artículo (mediana 5.280; rango 725–8.813).
 
 **Corpus 2 — Kleptotrace/CoNLL-2002 Augmented (N=30, Corpus de Validación Estadística):**  
-30 artículos breves generados mediante un método de aumento sintético guiado por LLM para alcanzar el umbral estadístico mínimo requerido por pruebas paramétricas. Cada artículo contiene entre 1 y 2 párrafos (~200-400 caracteres) con ground truth anotado para Personas (PER) y Organizaciones (ORG).
+30 artículos breves generados mediante un método de aumento sintético guiado por LLM para alcanzar el umbral estadístico mínimo requerido por pruebas paramétricas. Cada artículo contiene entre 1 y 2 párrafos (~145-293 caracteres, promedio 202) con ground truth anotado para Personas (PER) y Organizaciones (ORG).
 
 #### 4.1.1 Método de Generación Sintética del Corpus N=30
 
@@ -240,32 +240,38 @@ El texto debe ser fáctico, neutro y similiar en estilo a noticias de compliance
 Debe mencionar exactamente estas entidades y no otras personas u organizaciones adicionales.
 ```
 
-**Paso 4 — Verificación del ground truth:** Cada artículo generado fue revisado manualmente para confirmar que las entidades objetivo aparecían efectivamente en el texto y eran las únicas entidades nombradas del tipo PER u ORG presentes. Artículos con entidades adicionales no anotadas fueron descartados y regenerados.
+**Paso 4 — Verificación del ground truth:** Cada artículo generado fue revisado manualmente para confirmar que las entidades objetivo aparecían efectivamente en el texto y que no se hubieran introducido entidades ajenas al ground truth anotado. Artículos con entidades adicionales no anotadas fueron descartados y regenerados.
 
-**Paso 5 — Control de calidad por diversidad:** Se verificó que ningún artículo generado replicara literalmente oraciones de otro artículo del corpus (deduplicación por similitud coseno > 0.85). La longitud promedio resultante fue de 187 caracteres, con una distribución uniforme de 2.1 entidades PER y 1.3 entidades ORG por artículo.
+**Paso 5 — Control de calidad por diversidad:** Se verificó que ningún artículo generado replicara literalmente oraciones de otro artículo del corpus (deduplicación por similitud coseno > 0.85). La longitud promedio resultante fue de 202 caracteres (rango 145–293), con 1,2 entidades PER y 2,3 entidades ORG por artículo.
 
 #### 4.1.2 Validez Estadística del Corpus Sintético
 
-El uso de datos reales balanceados generados por LLM para pruebas de hipótesis es válido bajo las siguientes condiciones, todas cumplidas en este estudio:
+El uso de datos sintéticos generados por LLM para pruebas de hipótesis es válido bajo las siguientes condiciones, todas cumplidas en este estudio:
 
 **a) Teorema del Límite Central (TLC):** El TLC establece que, para N ≥ 30 observaciones independientes, la distribución de la media muestral se aproxima a una distribución normal independientemente de la distribución poblacional subyacente. Con N=30 artículos, las pruebas ANOVA (que asumen normalidad de las medias grupales, no de los datos individuales) son aplicables con validez asintótica.
 
 **b) Independencia de las observaciones:** Cada artículo generado es una muestra independiente — el desempeño del modelo en un artículo no afecta su desempeño en otro. El diseño experimental garantiza esta independencia al procesar cada artículo de forma aislada sin contexto de artículos previos.
 
-**c) Validez de constructo del corpus sintético:** La validez de los datos reales balanceados como proxy del dominio real descansa en tres pilares: (1) la distribución temática del corpus sintético replica la del corpus real (Kleptotrace/CoNLL-2002); (2) las entidades provienen de una fuente oficial de sanciones reales (OpenSanctions); y (3) la capacidad del LLM para generar texto coherente con el dominio financiero ha sido validada empíricamente (el mismo modelo que genera los artículos es el que se evalúa, creando una condición de evaluación conservadora). Este enfoque es metodológicamente análogo al uso de paráfrasis automáticas para aumento de corpus en NLP, práctica ampliamente aceptada en la literatura [Brown et al., 2020; Borne, 2024].
+**c) Validez de constructo del corpus sintético:** La validez de los datos sintéticos como proxy del dominio real descansa en tres pilares: (1) la distribución temática del corpus sintético replica la del corpus real (Kleptotrace/CoNLL-2002); (2) las entidades provienen de una fuente oficial de sanciones reales (OpenSanctions); y (3) la capacidad del LLM para generar texto coherente con el dominio financiero ha sido validada empíricamente (el mismo modelo que genera los artículos es el que se evalúa, creando una condición de evaluación conservadora). Este enfoque es metodológicamente análogo al uso de paráfrasis automáticas para aumento de corpus en NLP, práctica ampliamente aceptada en la literatura [Brown et al., 2020; Bourne, 2024].
 
 **d) Consistencia entre corpus:** Los F1-Scores observados en el corpus N=30 (gemma4:31b: 79.03%) son consistentes con la tendencia observada en el corpus real N=15 (gemma4:31b: 67.83%), sin saltos discontinuos que indicarían artefactos del aumento. La diferencia es atribuible a la menor complejidad promedio de los artículos breves del corpus sintético, lo que es esperado y documentado.
 
+#### 4.1.3 Extensión a Corpus Real N=120 (Dataset Conmutable)
+
+Tras la validación sobre el corpus sintético N=30 (§4.1.1–4.1.2), y como parte del cierre del proyecto (1 de septiembre de 2026, commit `5ff38f5`, *"integrate balanced real dataset N=120"*), se incorporó una tercera alternativa de corpus para reforzar la validez externa: en lugar de seguir aumentando el corpus por generación sintética, se amplió la base real combinando los 15 artículos Gold Standard de Kleptotrace/CoNLL-2002 con **105 artículos reales del corpus público CoNLL-2002 en español** (`data/conll2002_es.json`, 833 artículos disponibles), generando el archivo `data/benchmark_balanced_120.json` (N=120, script `create_balanced_120.py`). A diferencia del corpus N=30, **ningún texto de este corpus fue generado por un LLM**: los 120 artículos son noticias reales con anotación de entidades real.
+
+El corpus sintético N=30 no fue descartado ni reemplazado: el flag `--data-file` de `src/main.py` permite ejecutar cualquier corrida indistintamente sobre `data/kleptotrace_augmented_30.json` (N=30, sintético) o `data/benchmark_balanced_120.json` (N=120, real), conservando ambos conjuntos de datos y sus resultados en el repositorio. Los resultados sobre N=120 se presentan como complemento — no reemplazo — de la validación estadística de §5.3.
+
 ### 4.2 Modelos Evaluados
 
-Se evaluaron 15 modelos LLM generativos distribuidos en tres categorías:
-- **Modelos locales grandes (≥8B):** gemma4:31b, gemma4:12b, gemma4:latest (9B), llama3.1:8b, qwen2.5:14b, mistral-nemo:latest (12B).
+Se evaluaron 12 modelos LLM generativos, reportados en la Tabla 2 (§5.1) en 13 configuraciones (`gemma4:latest` aparece en dos: ZS-ES y FS-ES), en tres categorías:
+- **Modelos locales grandes (≥8B):** gemma4:31b, gemma4:31b-mlx, gemma4:latest (9B), llama3.1:8b, qwen2.5:14b, mistral-nemo:latest (12B). gemma4:12b se descargó pero no figura en el benchmark reportado.
 - **Modelos locales compactos (<8B):** llama3.2:latest (3B), nuextract:latest (3.8B), nemotron-mini:4b, deepseek-r1:1.5b.
 - **Modelos cloud/híbridos:** gemma4:31b-cloud, gemini-3.1-flash-lite.
 
-### 4.3 Configuraciones de Prompt (Estudio de Ablación)
+### 4.3 Comparación de Configuraciones de Prompt
 
-Se evaluaron cuatro configuraciones de prompt sobre el modelo gemma4:latest (9B):
+Se evaluaron cuatro configuraciones de prompt sobre el modelo gemma4:latest (9B). El diseño cruza dos factores —idioma (inglés/español) y estrategia de demostración (sin ejemplos/con ejemplos)—, por lo que constituye un **diseño factorial 2×2**, procedimiento conocido en la literatura de aprendizaje automático como *estudio de ablación*:
 1. **Zero-shot inglés (ZS-EN):** Prompt de sistema en inglés sin ejemplos.
 2. **Zero-shot español (ZS-ES):** Prompt de sistema traducido al español, sin ejemplos.
 3. **Few-shot inglés (FS-EN):** Prompt en inglés con 3 ejemplos del dominio compliance.
@@ -337,7 +343,7 @@ Los tres ejemplos cubren deliberadamente: (a) extracción limpia de un solo suje
 
 #### 4.3.4 Impacto Empírico del Few-Shot en este Estudio
 
-Los resultados del estudio de ablación muestran que la localización al español (+7.4% F1) tuvo mayor impacto que la adición de ejemplos few-shot (+4.97% F1 en inglés). La configuración ZS-ES produjo prácticamente el mismo F1 que FS-ES (69.81% vs. 69.76%), aunque con una reducción de 1.85 puntos de Recall a cambio de eliminar el riesgo de alucinaciones inducidas por ejemplos (FS-ES: hallucination rate 1.80% vs. ZS-ES: 0.19%). Este hallazgo sugiere que, para el dominio estudiado, la localización lingüística domina sobre la demostración de ejemplos, posiblemente porque el modelo gemma4 fue entrenado con suficientes datos en español como para comprender el dominio sin ejemplos explícitos.
+Los resultados de la comparación de configuraciones de prompt muestran que la localización al español (+7.4% F1) tuvo mayor impacto que la adición de ejemplos few-shot (+4.97% F1 en inglés). La configuración ZS-ES produjo prácticamente el mismo F1 que FS-ES (69.81% vs. 69.76%), aunque con una reducción de 1.85 puntos de Recall a cambio de eliminar el riesgo de alucinaciones inducidas por ejemplos (FS-ES: hallucination rate 1.80% vs. ZS-ES: 0.19%). Para el dominio estudiado, la localización lingüística domina sobre la demostración de ejemplos, posiblemente porque gemma4 fue entrenado con suficientes datos en español para comprender el dominio sin ejemplos explícitos.
 
 ### 4.4 Métricas de Evaluación
 
@@ -348,44 +354,43 @@ Los resultados del estudio de ablación muestran que la localización al españo
 | **Recall** | TP / (TP + FN) — Cobertura de las entidades reales |
 | **Hallucination Rate** | Entidades extraídas sin correspondencia en GT / Total extraídas |
 | **Latencia (s)** | Tiempo promedio por artículo en segundos |
-| **Índice Tok/s/B** | Tokens por segundo normalizados por billones de parámetros |
+| **Índice Tok/s/B** | Tokens por segundo normalizados por cada mil millones (10⁹) de parámetros |
 
 ### 4.5 Infraestructura de Pruebas
 
 - **Hardware:** Apple MacBook Pro M4 Max, 16 GB memoria unificada (Metal/MPS).
-- **Software:** Python 3.13, Ollama 0.6+, scikit-learn 1.9, statsmodels 0.14, pandas 3.0, Streamlit 1.58.
+- **Software:** Python 3.14, Ollama 0.6+, scikit-learn 1.9, statsmodels 0.14, pandas 3.0, Streamlit 1.60.
 - **Reproducibilidad:** Checkpointing automático (`.checkpoint.json`) para reanudar benchmarks interrumpidos sin pérdida de datos.
 
 ---
 
 ## 5. RESULTADOS EXPERIMENTALES
 
-### 5.1 Benchmark General — 16 Modelos sobre Kleptotrace/CoNLL-2002 (N=15)
+### 5.1 Benchmark General — 12 Modelos en 13 Configuraciones sobre Kleptotrace/CoNLL-2002 (N=15)
 
-La Tabla 2 presenta los resultados consolidados del benchmark completo ordenados por F1-Score:
+La Tabla 2 presenta los resultados consolidados del benchmark completo agrupados por familia y tamaño de modelo:
 
 | Modelo | Tipo | Parámetros | F1 | Precisión | Recall | Hallucination | Latencia (s) | Tok/s/B |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **gemma4:31b** | Local | 31B | **67.83%** | 57.29% | 86.78% | 0.15% | 114.20 | 0.81 |
-| gemma4:31b-mlx | Local | 31B | 67.83% | 57.29% | 86.78% | 0.15% | 114.20 | 0.81 |
+| **gemma4:31b** | Local | 31B | **67.83%** | 57.29% | 86.78% | 0.15% | 114.20 | 0.37 |
+| gemma4:31b-mlx | Local | 31B | 67.83% | 57.29% | 86.78% | 0.15% | 114.20 | 0.89 |
 | gemma4:31b-cloud | Cloud | 31B | 66.29% | 55.43% | 84.12% | 0.00% | 35.80 | — |
-| gemma4:latest (ZS-ES) | Local | 9B | 69.81% | 62.59% | 82.70% | 0.19% | 22.70 | 6.30 |
-| gemma4:latest (FS-ES) | Local | 9B | 69.76% | 61.67% | 84.55% | 1.80% | 44.50 | 6.32 |
+| gemma4:latest (ZS-ES) | Local | 9B | 69.81% | 62.59% | 82.70% | 0.19% | 22.67 | 6.30 |
+| gemma4:latest (FS-ES) | Local | 9B | 69.76% | 61.67% | 84.55% | 1.80% | 44.47 | 6.30 |
 | gemini-3.1-flash-lite | Cloud | — | 65.47% | 54.10% | 84.69% | 0.00% | 1.69 | — |
-| llama3.2:latest | Local | 3B | 61.29% | 53.01% | 75.32% | 2.20% | 25.10 | 18.73 |
+| llama3.2:latest | Local | 3B | 61.29% | 53.01% | 75.32% | 2.20% | 25.10 | 15.80 |
 | llama3.1:8b | Local | 8B | 59.61% | 53.04% | 73.58% | 3.62% | 47.67 | 4.73 |
 | qwen2.5:14b | Local | 14B | 58.74% | 51.12% | 71.40% | 3.90% | 58.20 | 4.15 |
 | mistral-nemo:latest | Local | 12B | 57.12% | 49.80% | 69.11% | 4.10% | 52.40 | 4.36 |
 | nuextract:latest | Local | 3.8B | 54.20% | 46.10% | 68.20% | 4.30% | 21.30 | 12.10 |
-
 | nemotron-mini:4b | Local | 4B | 42.81% | 45.74% | 35.08% | 7.62% | 145.47 | 1.41 |
-| deepseek-r1:1.5b | Local | 1.5B | 31.28% | 35.12% | 28.90% | 8.10% | 38.40 | 25.60 |
+| deepseek-r1:1.5b | Local | 1.5B | 31.28% | 35.12% | 28.90% | 8.13% | 38.40 | 25.60 |
 
-> **Hallazgo 1:** `gemma4:31b` local lideró en Recall (86.78%) con la menor tasa de alucinaciones del grupo local (0.15%), superando incluso su contraparte cloud (66.29%).  
+> **Hallazgo 1:** `gemma4:31b` local lideró en Recall (86.78%) con la menor tasa de alucinaciones del grupo local (0.15%), superando también en Recall a su contraparte cloud (84.12%).  
 > **Hallazgo 2:** `deepseek-r1:1.5b` debe descartarse para producción: hallucination rate de 8.13% y Recall de sólo 28.90%.  
-> **Hallazgo 3:** El índice de eficiencia de hardware (Tok/s/B) favorece modelos compactos como `llama3.2` (18.73 Tok/s/B) para escenarios de screening masivo, mientras que `gemma4:31b` (0.81 Tok/s/B) se justifica para análisis de alto riesgo.
+> **Hallazgo 3:** El índice de eficiencia de hardware (Tok/s/B) favorece modelos compactos como `llama3.2` (15.80 Tok/s/B) para escenarios de screening masivo, mientras que `gemma4:31b` (0.37 Tok/s/B) se justifica para análisis de alto riesgo.
 
-### 5.2 Estudio de Ablación del Prompt (gemma4:latest, N=15)
+### 5.2 Comparación de Configuraciones de Prompt (gemma4:latest, N=15)
 
 | Configuración | F1 | Precisión | Recall | Hallucination | Latencia (s) | Δ vs. Baseline |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
@@ -424,6 +429,31 @@ La Tabla 2 presenta los resultados consolidados del benchmark completo ordenados
 - **Registros outlier identificados:** 0
 - **F1 estable (no filtrado):** gemma4:31b = 0.7903 | gemma4:31b-mlx = 0.7747
 
+#### 5.3.5 Validación Estadística Complementaria sobre Corpus Real N=120
+
+Como extensión de la validación anterior (N=30, sintético), se ejecutó el mismo protocolo de validación estadística (ANOVA de una vía + Tukey HSD) sobre el corpus real N=120 descrito en §4.1.3 (`data/benchmark_balanced_120.json`, 1 de septiembre de 2026, resultados en `results/benchmark_balanced_120_20260901_140421/`). Por restricciones de tiempo de cómputo no se re-evaluaron los 12 modelos completos sino un subconjunto de 5 modelos locales de distinto tamaño (3B–31B; `gemma:latest` no figura en el benchmark N=15 de §5.1), cada uno en modo *baseline* y *KB RAG*, ambos con N=120 observaciones (no N=15 ni N=30):
+
+| Modelo | Modo | F1 | Precisión | Recall | Hallucination | Latencia (s) |
+|:---|:---|:---:|:---:|:---:|:---:|:---:|
+| gemma4:31b-mlx | baseline | 59.25% | 53.73% | 75.69% | 0.49% | 1066.2 |
+| gemma4:31b-mlx | KB RAG | 59.07% | 55.01% | 76.92% | 0.41% | 1408.5 |
+| gemma4:latest | baseline | 55.91% | 52.91% | 67.20% | 0.85% | 98.0 |
+| gemma4:latest | KB RAG | 55.58% | 52.12% | 66.09% | 0.53% | 489.6 |
+| qwen2.5:14b | baseline | 51.89% | 50.29% | 57.35% | 1.32% | 159.4 |
+| qwen2.5:14b | KB RAG | 56.51% | 55.48% | 61.24% | 0.72% | 173.8 |
+| gemma:latest | baseline | 47.34% | 49.83% | 48.31% | 0.84% | 93.6 |
+| gemma:latest | KB RAG | 53.03% | 52.31% | 59.95% | 5.96% | 103.4 |
+| llama3.2:latest | baseline | 39.45% | 40.18% | 40.81% | 2.74% | 5.2 |
+| llama3.2:latest | KB RAG | 49.43% | 48.92% | 55.14% | 3.83% | 5.9 |
+
+**ANOVA de una vía (α = 0.05), N=120 por grupo:**
+- **F-Statistic:** 10.2096
+- **p-Value:** 2.873 × 10⁻¹⁵ (p < 0.05 → se rechaza H₀)
+- **Conclusión:** Sobre el corpus real N=120 la diferencia de desempeño entre modelos/modos es estadísticamente significativa, con una potencia estadística sustancialmente mayor a la del corpus N=30 (F=0.141, no significativo entre los dos modelos comparados en esa corrida).
+- **Tukey HSD (post-hoc):** confirma diferencias significativas entre `gemma4:31b-mlx` y los modelos de menor capacidad (`gemma:latest`, `llama3.2:latest`), mientras que las diferencias entre `gemma4:31b-mlx`, `gemma4:latest` y `qwen2.5:14b` no alcanzan significancia (p ajustado > 0.05), consistente con una meseta de rendimiento entre los modelos de 9B a 31B.
+
+**Lectura conjunta con el corpus N=30 (§5.3.1–5.3.4):** el mejor F1 sobre N=120 (`gemma4:31b-mlx`: 59.25%) es menor que el de N=30 (`gemma4:31b`: 79.03%), lo esperable dado que los artículos reales de CoNLL-2002 ES son más largos y heterogéneos que los breves (~200 caracteres) del corpus sintético N=30, diseñado para el dominio AML/KYC. Se conservan ambos: N=30 como validación de mínima potencia (TLC, N≥30) sobre el dominio de sanciones del proyecto, y N=120 como validación complementaria sobre corpus real, con mayor potencia estadística y menor especificidad de dominio. Los 8 modelos restantes de §5.1 quedan pendientes de re-evaluación sobre N=120 (§7.2).
+
 ### 5.4 Taxonomía de Errores NER
 
 El análisis cualitativo de las extracciones identifica tres categorías de error recurrentes:
@@ -448,11 +478,11 @@ El análisis cualitativo de las extracciones identifica tres categorías de erro
 
 ### 5.6 Optimización del Módulo RAG: De Diccionarios de Entidades a Base de Conocimientos Contextual
 
-> **Nota Cronológica:** Esta sección documenta un ciclo iterativo de investigación e implementación realizado entre el **31 de agosto y el 1 de septiembre de 2026**, posterior a la entrega del benchmark principal (Sección 5.3). Su inclusión responde a la necesidad de mejorar el F1-Score sin afectar la soberanía de datos, y constituye una contribución metodológica adicional al presente trabajo.
+> **Nota Cronológica:** Esta sección documenta un ciclo iterativo de investigación e implementación realizado entre el **31 de agosto y el 1 de septiembre de 2026**, posterior a la entrega del benchmark principal (Sección 5.3). Responde a la necesidad de mejorar el F1-Score sin afectar la soberanía de datos y constituye una contribución metodológica adicional.
 
 #### 5.6.1 Motivación: Comportamiento Contraintuitivo del RAG Basado en Diccionarios
 
-Durante el benchmark principal sobre N=120 artículos reales, se observó un fenómeno inesperado pero consistente a lo largo de todos los modelos evaluados: **la activación del módulo RAG (`_rag_enhanced`) produjo una degradación del F1-Score respecto al modo `_baseline`**, en lugar de la mejora esperada.
+Durante el benchmark principal sobre N=120 artículos reales, se observó un fenómeno inesperado y mayoritario (7 de 15 modelos degradaron, entre ellos los de mayor F1 baseline; 8 mejoraron): **la activación del módulo RAG (`_rag_enhanced`) produjo una degradación del F1-Score respecto al modo `_baseline`**, en lugar de la mejora esperada.
 
 | Modelo | Baseline F1 | RAG-Dict F1 | Delta |
 |:---|:---:|:---:|:---:|
@@ -461,7 +491,7 @@ Durante el benchmark principal sobre N=120 artículos reales, se observó un fen
 | `qwen2.5:14b` | 0.5189 | — | — |
 | `llama3.2:latest` | 0.3945 | — | — |
 
-Esta degradación motivó un protocolo de investigación formal documentado en `research/rag/2026-08-31_analisis_contenido_rag_base_conocimientos.md`. La auditoría reveló la causa raíz:
+Las cifras anteriores provienen de la corrida `benchmark_balanced_120_20260824_173036` (RAG por diccionario, ago 2026), distinta de la corrida KB RAG del 1-sep citada en §5.3.5 y §5.6.5. Esta degradación motivó un protocolo de investigación formal documentado en `research/rag/2026-08-31_analisis_contenido_rag_base_conocimientos.md`. La auditoría reveló la causa raíz:
 
 **El Problema del Desajuste Semántico Estructural (*Semantic Mismatch*):**
 
@@ -596,13 +626,13 @@ La base de conocimientos se organiza en **dos colecciones ChromaDB separadas** p
 
 **Hallazgo clave — Efecto moderado por capacidad del modelo:**
 
-Los resultados revelan un patrón crítico: el beneficio del KB RAG es **inversamente proporcional a la capacidad del modelo**:
+El beneficio del KB RAG resulta **inversamente proporcional a la capacidad del modelo**:
 
-- **Modelos grandes** (`gemma4:31b-mlx`, `gemma4:latest`, >10B parámetros): el KB RAG tiene efecto neutro (Δ ≈ 0). Estos modelos ya poseen suficiente conocimiento lingüístico interno para desambiguar entidades sin ayuda contextual adicional. La ganancia marginal en Recall del `gemma4:31b-mlx` (+1.2pp) indica que la guía tipológica sí ayuda en artículos frontera.
+- **Modelos grandes** (`gemma4:31b-mlx`, `gemma4:latest`, ≥9B parámetros): el KB RAG tiene efecto neutro (Δ ≈ 0). Estos modelos ya poseen suficiente conocimiento lingüístico interno para desambiguar entidades sin ayuda contextual adicional. La ganancia marginal en Recall del `gemma4:31b-mlx` (+1.2pp) indica que la guía tipológica sí ayuda en artículos frontera.
 
-- **Modelos pequeños/medianos** (`llama3.2:latest` 3B, `gemma:latest` 9B, `qwen2.5:14b` 14B): el KB RAG produce mejoras sustanciales (+25.3%, +12.0% y +8.9% respectivamente). Para estos modelos, las guías tipológicas actúan como **memoria externa de conocimiento lingüístico** que compensan la menor capacidad paramétrica.
+- **Modelos pequeños/medianos** (`llama3.2:latest` 3B, `gemma:latest` 7B, `qwen2.5:14b` 14B): el KB RAG produce mejoras sustanciales (+25.3%, +12.0% y +8.9% respectivamente). Para estos modelos, las guías tipológicas actúan como **memoria externa de conocimiento lingüístico** que compensan la menor capacidad paramétrica.
 
-Esta observación tiene relevancia práctica directa: en entornos de hardware restringido donde solo es viable ejecutar modelos de 3–14B, el KB RAG representa una mejora significativa y gratuita (sin costo computacional adicional relevante) del F1-Score.
+En entornos de hardware restringido, donde solo es viable ejecutar modelos de 3–14B, el KB RAG mejora el F1 sin costo computacional relevante.
 
 #### 5.6.6 Análisis Comparativo Cronológico
 
@@ -612,7 +642,7 @@ Esta observación tiene relevancia práctica directa: en entornos de hardware re
 | **Colección ChromaDB** | `ner_dictionaries` | + `ner_knowledge_base` (nueva, no reemplaza) |
 | **Template de inyección** | Restrictivo ("DO NOT extract unless...") | Positivo ("Apply these rules to the text") |
 | **Modo de operación** | Binario (RAG on/off) | Cuatro modos configurables por CLI |
-| **F1-Score RAG (`llama3.2`)** | 0.2367 (−33% vs baseline) | **0.4943 (+25.3% vs baseline)** |
+| **F1-Score RAG (`llama3.2`)** | 0.2367 en sondeo N=5 (−57.8% vs su propio baseline 0.5614) | **0.4943 (+25.3% vs baseline, N=120)** |
 | **F1-Score RAG (`qwen2.5:14b`)** | — | **0.5651 (+8.9% vs baseline)** |
 | **Configurabilidad** | No (hardcoded) | Sí (`--rag-mode {entities,kb_guidelines,kb_fewshot,kb_combined}`) |
 | **Datos sintéticos** | Sí (12.000 augmented_persons) | No (solo datos reales del corpus de evaluación) |
@@ -624,7 +654,7 @@ Esta evolución del sistema RAG aporta tres contribuciones metodológicas docume
 
 1. **Diagnóstico del Semantic Mismatch:** Identificación formal de un problema de diseño en la recuperación RAG para NER en vocabulario abierto, con evidencia empírica cuantitativa (Recall: 62.8% → 21.6%).
 
-2. **Solución basada en tipología lingüística:** La base de conocimientos contextual transforma el problema de "buscar entidades por similitud" al problema de "identificar el dominio del texto y aplicar reglas tipológicas", que es precisamente lo que los LLMs ejecutan con alta precisión.
+2. **Solución basada en tipología lingüística:** la base de conocimientos contextual transforma el problema de "buscar entidades por similitud" en el de "identificar el dominio del texto y aplicar reglas tipológicas", que es lo que los LLMs ejecutan con alta precisión.
 
 3. **Configurabilidad como principio de diseño:** La implementación con flags CLI permite mantener la línea base en producción mientras se experimenta con el nuevo modo, habilitando reversión instantánea sin modificar código.
 
@@ -635,9 +665,9 @@ Esta evolución del sistema RAG aporta tres contribuciones metodológicas docume
 
 ### 6.1 Verificación de la Hipótesis
 
-La hipótesis de trabajo planteaba un F1-Score ≥ 70% como umbral de viabilidad. Los resultados sobre N=30 muestran que `gemma4:31b` supera consistentemente este umbral con un F1-Score de **79.03%** (IC 95%: [72.91%, 85.15%]) y tasa de alucinaciones del 0.0%. La hipótesis queda **confirmada**.
+La hipótesis planteaba un F1-Score ≥ 70% como umbral de viabilidad. El umbral se alcanza sobre el corpus sintético AML/KYC N=30 (`gemma4:31b`: **79.03%**, IC 95% [72.91%, 85.15%], 0.0% de alucinaciones), pero **no** sobre el corpus real heterogéneo N=120 (§5.3.5), cuyo mejor resultado es **59.25%** (`gemma4:31b-mlx`). Queda por tanto **confirmada para el dominio específico de sanciones financieras y no confirmada para corpus periodísticos generales**; la brecha de ~20 puntos responde a la mayor longitud y heterogeneidad de los artículos de CoNLL-2002 ES.
 
-El objetivo original del proyecto propuso un F1 ≥ 85% como meta aspiracional. La brecha de 5.97 puntos respecto al 85% representa una oportunidad de optimización (no un fracaso del sistema), abordable mediante: (1) fine-tuning supervisado con ≥200 ejemplos del dominio Kleptotrace/CoNLL-2002; (2) escalamiento a modelos de mayor capacidad (127B+); y (3) técnicas de ensemble entre modelos locales.
+Una meta aspiracional interna —no formalizada como hipótesis en §1.3— situaba el objetivo en F1 ≥ 85%. La brecha (5.97 pp sobre N=30; 25.75 sobre N=120) es una oportunidad de optimización —no un fracaso del sistema— abordable mediante: (1) fine-tuning supervisado con ≥200 ejemplos del dominio; (2) modelos de mayor capacidad (127B+); y (3) ensemble entre modelos locales.
 
 ### 6.2 Contribución de la Localización Lingüística
 
@@ -645,7 +675,7 @@ La mejora de +7.4% de F1 producida exclusivamente por traducir el prompt al espa
 
 ### 6.3 Trade-off Tamaño de Modelo vs. Rendimiento
 
-El modelo compacto `llama3.2` (3B parámetros) logra un F1 de 61.29% con una latencia 4.5× menor que `gemma4:31b` y un índice de eficiencia de hardware (Tok/s/B) 18.73 veces mayor. Esta distribución permite una configuración en dos niveles: `llama3.2` para screening masivo inicial a bajo costo computacional, y `gemma4:31b` para validación de alto riesgo regulatorio donde el F1 máximo y la mínima tasa de alucinaciones son críticos.
+El modelo compacto `llama3.2` (3B parámetros) logra un F1 de 61.29% con una latencia 4.5× menor que `gemma4:31b` y un índice de eficiencia de hardware de 15.80 Tok/s/B, unas 43 veces superior al de `gemma4:31b` (0.37). Esta distribución permite una configuración en dos niveles: `llama3.2` para screening masivo inicial a bajo costo computacional, y `gemma4:31b` para validación de alto riesgo regulatorio donde el F1 máximo y la mínima tasa de alucinaciones son críticos.
 
 ### 6.4 Implicaciones para Soberanía de Datos
 
@@ -653,13 +683,13 @@ El sistema logra un rendimiento competitivo respecto a la alternativa cloud (`ge
 
 ### 6.5 RAG Contextual vs. RAG por Diccionario: Una Contribución Metodológica
 
-El experimento de KB RAG (Sección 5.6) genera una contribución metodológica relevante para el campo de la recuperación aumentada para NER. Los resultados del benchmark N=120 revelan que la efectividad del KB RAG está **modulada por la capacidad paramétrica del modelo**:
+El experimento de KB RAG (§5.6) aporta una contribución metodológica a la recuperación aumentada para NER: el benchmark N=120 muestra que su efectividad está **modulada por la capacidad paramétrica del modelo**:
 
-**Hipótesis explicativa — Redundancia de Conocimiento:** Los modelos de mayor capacidad (`gemma4:31b-mlx`, `gemma4:latest`) ya internalizan las reglas tipológicas de desambiguación NER durante el preentrenamiento masivo sobre texto en español. Para ellos, las guías de la KB son información redundante. Los modelos de menor capacidad (`llama3.2:latest`, `qwen2.5:14b`) se benefician de las guías como compensación de conocimiento lingüístico ausente de sus pesos, logrando mejoras de +25.3% y +8.9% F1 respectivamente.
+**Hipótesis explicativa — Redundancia de Conocimiento:** los modelos de mayor capacidad (`gemma4:31b-mlx`, `gemma4:latest`) ya internalizan las reglas tipológicas de desambiguación NER en el preentrenamiento sobre texto en español, por lo que las guías de la KB les resultan redundantes; los de menor capacidad (`llama3.2:latest`, `qwen2.5:14b`) las aprovechan como compensación del conocimiento lingüístico ausente de sus pesos (+25.3% y +8.9% F1).
 
-**Implicación práctica:** En sistemas de NER soberano en producción donde el hardware limita el uso de modelos >30B, el KB RAG constituye una estrategia de bajo costo y alto retorno para maximizar el rendimiento de modelos compactos. Para organizaciones que solo pueden ejecutar modelos de 3–14B localmente, el KB RAG puede acercar el F1 a niveles comparables con modelos más grandes sin costo de hardware adicional.
+**Implicación práctica:** cuando el hardware impide usar modelos >30B, el KB RAG es una estrategia de bajo costo y alto retorno: acerca el F1 de los modelos de 3–14B al de modelos mayores sin costo de hardware adicional.
 
-**Contraste con RAG léxico (v1.0):** El hallazgo también aclara por qué el dict-RAG original degradó el rendimiento: el problema no estaba en el concepto de RAG, sino en la **naturaleza del contenido recuperado**. Recuperar nombres de entidades genera confusión semántica e inhibe la extracción. Recuperar guías tipológicas y ejemplos anotados orienta activamente al modelo sin coartar su capacidad generativa.
+**Contraste con RAG léxico (v1.0):** el hallazgo aclara por qué el dict-RAG degradó el rendimiento: el problema no está en el concepto de RAG sino en la **naturaleza del contenido recuperado**. Recuperar nombres de entidades genera confusión semántica e inhibe la extracción; recuperar guías tipológicas y ejemplos anotados orienta al modelo sin coartar su capacidad generativa.
 
 ---
 
@@ -668,17 +698,17 @@ El experimento de KB RAG (Sección 5.6) genera una contribución metodológica r
 
 ### 7.1 Conclusiones
 
-1. **Viabilidad demostrada:** Es técnicamente viable implementar un sistema NER soberano para cumplimiento AML/KYC con modelos de lenguaje de código abierto ejecutados localmente sobre hardware Apple Silicon M4, alcanzando F1=79.03% con tasa de alucinaciones del 0.0%.
+1. **Viabilidad demostrada:** Es técnicamente viable implementar un sistema NER soberano para cumplimiento AML/KYC con modelos de lenguaje de código abierto ejecutados localmente sobre hardware Apple Silicon M4, alcanzando F1=79.03% con 0.0% de alucinaciones sobre el corpus AML N=30 (59.25% sobre el corpus real N=120).
 
 2. **Localización lingüística como factor crítico:** La localización del prompt al español produce la mayor ganancia unitaria de rendimiento (+7.4% F1), superando el impacto de los ejemplos few-shot. Esto tiene implicaciones directas para despliegues en mercados hispanohablantes.
 
 3. **Soberanía de datos sin costo de rendimiento:** El sistema local iguala o supera el rendimiento de la variante cloud (67.83% vs. 66.29% F1) mientras garantiza privacidad total.
 
-4. **Reducción de costos operativos:** El costo unitario del sistema soberano ($0.052/artículo) versus revisión manual ($8.75/artículo) representa una reducción del 99.4%, con potencial de procesamiento de cientos de artículos diarios sin personal analista dedicado.
+4. **Reducción de costos operativos:** El costo unitario del sistema soberano ($0.052/artículo) versus revisión manual ($8.75/artículo) representa una reducción del 99.4% en el costo unitario directo (60–80% del costo operativo total, que incluye la supervisión humana), con potencial de procesamiento de cientos de artículos diarios sin personal analista dedicado.
 
 5. **Robustez arquitectural:** El controlador AIMD previene desbordamientos de VRAM y gestiona errores de rate-limiting de forma autónoma. El checkpointing garantiza recuperación sin pérdida de datos ante interrupciones.
 
-6. **El RAG contextual supera al RAG por diccionario:** La implementación de la Base de Conocimientos Contextual (KB RAG) demuestra que el reconocimiento de entidades mediante LLMs locales es un problema de **comprensión sintáctico-contextual**, no de búsqueda en bases de datos cerradas. En el benchmark N=120, el KB RAG (`--rag-mode kb_combined`) mejoró el F1-Score en **+25.3%** para `llama3.2` y **+8.9%** para `qwen2.5:14b`, versus la degradación de −33% producida por el dict-RAG (v1.0) en el mismo modelo. La efectividad del KB RAG está modulada por la capacidad paramétrica: es más beneficioso para modelos de menor capacidad (3–14B), donde actúa como memoria externa de conocimiento lingüístico sin costo adicional de hardware. Este hallazgo tiene implicaciones directas para el diseño de sistemas RAG en dominio abierto con LLMs soberanos.
+6. **El RAG contextual supera al RAG por diccionario:** La implementación de la Base de Conocimientos Contextual (KB RAG) demuestra que el reconocimiento de entidades mediante LLMs locales es un problema de **comprensión sintáctico-contextual**, no de búsqueda en bases de datos cerradas. En el benchmark N=120, el KB RAG (`--rag-mode kb_combined`) mejoró el F1-Score en **+25.3%** para `llama3.2` y **+8.9%** para `qwen2.5:14b`, versus el dict-RAG (v1.0), que en un sondeo N=5 sobre el mismo modelo degradó el F1 hasta 0.2367 (−57.8% respecto de su propio baseline). Su efectividad está modulada por la capacidad paramétrica: beneficia sobre todo a los modelos de 3–14B, donde actúa como memoria externa de conocimiento lingüístico sin costo adicional de hardware. Este hallazgo tiene implicaciones directas para el diseño de sistemas RAG en dominio abierto con LLMs soberanos.
 
 
 ### 7.2 Trabajo Futuro
@@ -691,7 +721,7 @@ El experimento de KB RAG (Sección 5.6) genera una contribución metodológica r
 
 4. **Ensemble de modelos (Fase 3):** Combinar las fortalezas de `gemma4:31b` (alto Recall) y modelos compactos como `llama3.2` (alta eficiencia de hardware) mediante votación mayoritaria ponderada por confianza de extracción.
 
-5. **Evaluación en producción (Fase 4):** Despliegue piloto en Leanstack SpA / Austranet con feeds reales de Google Alerts y medición de KPIs operacionales (tiempo de respuesta, carga, satisfacción del analista).
+5. **Evaluación en producción (Fase 4):** Despliegue piloto en Austranet con feeds reales de Google Alerts y medición de KPIs operacionales (tiempo de respuesta, carga, satisfacción del analista).
 
 6. **Extensión multiidioma (Fase 5):** Evaluar la robustez del sistema sobre textos en inglés y portugués, considerando el alcance latinoamericano del problema de compliance.
 
@@ -723,6 +753,8 @@ El experimento de KB RAG (Sección 5.6) genera una contribución metodológica r
 
 [11] T. Ahia et al., "Do All Languages Cost the Same? Tokenization in the Era of Commercial Language Models," *Proceedings of EMNLP*, 2023.
 
+[12] E. F. Tjong Kim Sang, "Introduction to the CoNLL-2002 Shared Task: Language-Independent Named Entity Recognition," *Proceedings of CoNLL-2002*, pp. 155-158, 2002. [Online]. Available: https://www.clips.uantwerpen.be/conll2002/ner/
+
 [13] J. Wei et al., "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models," *Advances in Neural Information Processing Systems*, vol. 35, 2022.
 
 [14] A. Zhao et al., "Calibrate Before Use: Improving Few-Shot Performance of Language Models," *Proceedings of ICML*, 2021.
@@ -733,7 +765,7 @@ El experimento de KB RAG (Sección 5.6) genera una contribución metodológica r
 
 [17] J. Lafferty, A. McCallum, and F. Pereira, "Conditional Random Fields: Probabilistic Models for Segmenting and Labeling Sequence Data," *Proceedings of ICML*, pp. 282-289, 2001.
 
-[18] Kleptotrace/CoNLL-2002 Project, "balanced Kleptotrace/CoNLL-2002/CoNLL-2002 dataset: Financial Sanctions and Money Laundering News Corpus," [Online]. Available: https://Kleptotrace/CoNLL-2002.org, 2024.
+[18] Kleptotrace Project, "Kleptotrace corpus: Financial Sanctions and Money Laundering News Corpus," conjunto de datos del proyecto (15 artículos anotados por expertos), 2024.
 
 [19] OpenSanctions, "OpenSanctions: Open Data on Sanctions Lists and Politically Exposed Persons," [Online]. Available: https://www.opensanctions.org, 2024.
 
@@ -801,7 +833,7 @@ El prompt de sistema en español (few-shot) incluye: (1) instrucciones de rol (a
 | Hardware | Apple MacBook Pro, chip M4 Max |
 | Memoria Unificada | 16 GB Metal (MPS) |
 | Sistema Operativo | macOS 15.x (Sequoia) |
-| Python | 3.13.0 |
+| Python | 3.14.7 |
 | Ollama | 0.6+ |
 | Modelos descargados | gemma4:31b (19 GB), gemma4:12b (5 GB), llama3.2 (2 GB), deepseek-r1:1.5b (1.1 GB) |
 | Tiempo total de benchmark (N=30, 2 modelos) | ~29 minutos (serial) |

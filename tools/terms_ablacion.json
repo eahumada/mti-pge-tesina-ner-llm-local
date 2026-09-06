@@ -1,0 +1,65 @@
+{
+  "_comment": [
+    "Reglas de terminologia acordadas con el autor (2026-09-03): el termino principal",
+    "pasa a ser 'Comparacion de Configuraciones de Prompt'; se conservan 'diseno",
+    "factorial 2x2' y 'estudio de ablacion' como sinonimos tecnicos a modo de glosa.",
+    "Redaccion replicada literalmente del Markdown fuente:",
+    "doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.md",
+    "NOTA: el Abstract en INGLES conserva deliberadamente 'The prompt ablation study',",
+    "igual que en el Markdown; no se incluye regla para el.",
+    "Las reglas se aplican EN ORDEN."
+  ],
+  "parts": ["word/document.xml"],
+  "rules": [
+    {
+      "id": "R1",
+      "_where": "Resumen en espanol",
+      "find": "El estudio de ablación de prompts demuestra que",
+      "replace": "La comparación de configuraciones de prompt demuestra que",
+      "expect": 1,
+      "optional": true
+    },
+    {
+      "id": "R2",
+      "_where": "Objetivo especifico 3 (seccion 1.3)",
+      "find": "Ejecutar un estudio de ablación sistemático sobre cuatro configuraciones de prompt (zero-shot/few-shot × inglés/español) para cuantificar",
+      "replace": "Ejecutar una comparación sistemática de cuatro configuraciones de prompt (zero-shot/few-shot × inglés/español) —un diseño factorial 2×2, denominado estudio de ablación en la literatura de aprendizaje automático— para cuantificar",
+      "expect": 1
+    },
+    {
+      "id": "R3",
+      "_where": "Aporte original (seccion 2, tras Tabla 1)",
+      "find": "(2) estudio de ablación lingüística",
+      "replace": "(2) comparación de configuraciones de prompt entre idiomas",
+      "_nota": "No incluir '(ES vs. EN)' en el patrón: el .docx usa un ESPACIO DURO (U+00A0) en 'vs. EN'.",
+      "expect": 1
+    },
+    {
+      "id": "R4",
+      "_where": "Titulo seccion 4.3",
+      "find": "Configuraciones de Prompt (Estudio de Ablación)",
+      "replace": "Comparación de Configuraciones de Prompt",
+      "expect": 1
+    },
+    {
+      "id": "R5",
+      "_where": "Parrafo introductorio de 4.3 (glosa diseno factorial 2x2)",
+      "find": "Se evaluaron cuatro configuraciones de prompt sobre el modelo gemma4:latest (9B):",
+      "replace": "Se evaluaron cuatro configuraciones de prompt sobre el modelo gemma4:latest (9B). El diseño cruza dos factores —idioma (inglés/español) y estrategia de demostración (sin ejemplos/con ejemplos)—, por lo que constituye un diseño factorial 2×2, procedimiento conocido en la literatura de aprendizaje automático como estudio de ablación:",
+      "expect": 1
+    },
+    {
+      "id": "R6",
+      "_where": "Seccion 4.3.4",
+      "find": "Los resultados del estudio de ablación muestran",
+      "replace": "Los resultados de la comparación de configuraciones de prompt muestran",
+      "expect": 1
+    },
+    {
+      "id": "R7",
+      "_where": "Titulo seccion 5.2 y, en la plantilla, tambien el epigrafe 'Tabla 6.'",
+      "find": "Estudio de Ablación del Prompt",
+      "replace": "Comparación de Configuraciones de Prompt"
+    }
+  ]
+}

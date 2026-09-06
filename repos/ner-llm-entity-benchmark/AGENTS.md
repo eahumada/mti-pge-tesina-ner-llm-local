@@ -15,6 +15,7 @@ This project is an automated batch-processing system designed to evaluate the Na
 ## 2. Architectural Guidelines & Guardrails
 - **Pub/Sub Required:** Do NOT implement synchronous sequential batching. The project strictly requires a local Pub/Sub architecture (e.g., Redis, Celery, ZeroMQ) to decouple ingestion from LLM execution, allowing for scalability and fault tolerance/resumability.
 - **Privacy Constraints:** NEVER send news data to external APIs (e.g., OpenAI, Google Cloud NLP) for NER processing. The system must operate with zero-data-leakage using strictly local execution (Ollama/vLLM).
+  - **Excepción autorizada (2026-09-03, autorizada explícitamente por el autor):** Se habilita el uso de los modelos *Ollama Cloud* `gemma4:31b-cloud` y `minimax-m3:cloud` **exclusivamente como línea base de comparación** en el benchmark académico sobre `data/benchmark_balanced_120.json`. Implicancia explícita: los 120 artículos del corpus se transmiten a servidores remotos de Ollama. Esta excepción **no deroga** la regla anterior, que sigue vigente para todo dato productivo, de clientes o de la Compañía; aplica sólo al corpus público de evaluación (Kleptotrace + CoNLL-2002), que no contiene datos personales ni confidenciales. Cualquier otro uso de APIs externas sigue prohibido.
 - **GPU Memory Management:** Explicitly manage model lifecycles (unloading weights) when switching between models to prevent OOM crashes.
 - **JSON Fallbacks:** Always implement regex fallbacks and automatic retries for LLM outputs, as JSON hallucination is an identified critical risk.
 
@@ -30,7 +31,7 @@ Below is a summary of findings and updates developed during the final integratio
 - **Sensitivity Analysis (US17 / Phase 5):** Evaluated outlier robustness in statistical testing. Outliers (texts where length is greater than mean + 500 characters) are isolated. During a run with `gemma4` on Kleptotrace/CoNLL-2002:
   * Standard F1: **42.41%**
   * Cleaned F1 (Filtered Outliers): **50.84%**
-  * Performance Delta: **+8.42%** improvement.
+  * Performance Delta: **+8.43 percentage points** (50.84 - 42.41); expressed as a relative gain that is **+19.9%**. *(Corrected 2026-09-03: the previous text read "+8.42%", an arithmetic slip that also mislabelled percentage points as percent.)*
 - **Automated System Acceptance Check (US16 / Phase 6):** Run outputs are validated against thresholds and saved in `results/acceptance_status.json`. If F1 target of 85% is unmet or hallucination rates exceed 5%, warning banners are dynamically flagged on top of the dashboard.
 - **Simulated Production Batch Validation (US18 / Phase 6):** Developed `src/simulate_production.py` to process news article feeds through mock LLM workers. Reconstructed pipeline metrics and logged qualitative feedback are integrated in Tab 6 of the Streamlit dashboard (`src/dashboard.py`).
 - **Strict Ingestion Validation & CSV Support (FR5.1 / Phase 1):** Built `validate_record_schema` checks in `data_loader.py` enforcing strict type, key, and length assertions. Added CSV parsing using Python's standard `csv` library.
@@ -44,6 +45,18 @@ Future agents should prioritize the remaining pending items from the master `TOD
    - Run benchmark sweeps across multiple local LLMs (Gemma, DeepSeek, LLaMA) using the local Ollama backend to produce statistical comparison traces.
    - Benchmark models against the manual F1 baseline (75-80%) to mathematically validate improvement.
 2. **Academic Reporting & Stats:** Produce the final thesis validation report including pairwise Adjusted p-values from Tukey HSD and confusion matrices segmented by entity type (Person, Org, Loc) once large-scale results are fully generated.
+
+> ✅ **Status update (2026-09-03).** Both items above are **already executed**; they are kept here for
+> traceability, not as open work.
+> - Item 1 — the sweep left the 20-record prototype long ago: run **#11**
+>   (`balanced120_N120__rag-entities__zs-en__20260824_173036`, 15 models, 3600 rows) and run **#13**
+>   (`balanced120_N120__rag-kb-combined__zs-en__20260901_140421`, 5 models, 1200 rows, ANOVA
+>   F=10.2096, p=2.87e-15) both ran on `data/benchmark_balanced_120.json` (N=120).
+> - Item 2 — `run_tukey_posthoc` is imported and executed in `src/main.py`, and every run writes
+>   `confusion_matrix.json` into its own results directory.
+> - The run catalogue is `results/RUNS_INDEX.md` (run ids referenced above).
+> - ⚠️ The "master `TODO.md`" referenced in this section is **not** the repo's `TODO.md`: that file
+>   tracks only the RAG implementation plan and contains none of these items.
 
 ## 6. Documentation & Thesis Evidence (WORKLOG)
 The project requires a rigorous audit trail for academic validation.
@@ -65,13 +78,20 @@ Every agent MUST log resolved issues, bugs, and performance optimization details
 
 ### 8.1 — The only file you need to edit
 
-All model changes require editing **one file only**:
+The canonical model list lives in **one file**:
 
 ```
-src/config.py  →  BenchmarkConfig.__post_init__  →  self.models = [...]
+src/config.py  →  BenchmarkConfig.models   (dataclass field, line ~59: models: list[str] = field(default_factory=lambda: [...]))
 ```
 
-No other file needs to be changed. The pipeline auto-routes based on model name.
+> ⚠️ **Corrected 2026-09-03.** This section previously pointed at
+> `BenchmarkConfig.__post_init__ → self.models = [...]`. `__post_init__` does **not** define the
+> model list: it only derives `results_dir` / `checkpoint_file` and calls `assert_not_results_root()`.
+>
+> ⚠️ **"No other file needs to be changed" is false.** `run_benchmark.sh` (lines 25-40) hardcodes its
+> own model list and passes it via `--models`, which **overrides** `config.models`
+> (`src/main.py`: `if args.models: config.models = args.models`). Keep both in sync, or the sweep will
+> silently ignore your edit to `src/config.py`. The pipeline auto-routes each name to its provider.
 
 ---
 
@@ -79,12 +99,23 @@ No other file needs to be changed. The pipeline auto-routes based on model name.
 
 | Type | Name pattern | Pulled locally? | VRAM managed? | Needs `ollama pull`? |
 |------|-------------|-----------------|---------------|----------------------|
-| **Local** | any name without `-cloud` or `minimax` | ✅ Yes | ✅ Yes (unloaded after run) | ✅ Yes |
-| **Cloud (Ollama)** | name ends in `-cloud` OR starts with `minimax` | ❌ No (served remotely) | ❌ No (skip VRAM ops) | ✅ Yes (`ollama pull`) |
+| **Local** | any Ollama name that does NOT contain `-cloud` nor `minimax` | ✅ Yes | ✅ Yes (unloaded after run) | ✅ Yes |
+| **Cloud (Ollama)** | name **contains** `-cloud` OR **contains** `minimax` (substring, any position) | ❌ No (served remotely) | ❌ No (skip VRAM ops) | ❌ **No** — served remotely, nothing to pull |
 | **NuExtract** | `nuextract`, `nuextract:*` | ✅ Yes | ✅ Yes | ✅ Yes |
 | **Qwen3 (thinking)** | `qwen3:*` | ✅ Yes | ✅ Yes | ✅ Yes |
+| **Gemini (Vertex/AI Studio)** | `gemini-*`, `vertexai:*` → `VertexAIProvider` | ❌ No (remote API) | ❌ No | ❌ No (needs `GEMINI_API_KEY`) |
+| **OpenAI** | `gpt-*`, `openai:*` → `OpenAIProvider` | ❌ No (remote API) | ❌ No | ❌ No (needs `OPENAI_API_KEY`) |
+| **Anthropic** | `claude-*`, `anthropic:*` → `AnthropicProvider` | ❌ No (remote API) | ❌ No | ❌ No (needs `ANTHROPIC_API_KEY`) |
+| **GLiNER (encoder NER)** | `gliner:*`, `gliner_*`, `urchade/gliner*` → `GlinerProvider` | ✅ Yes (HF weights) | ✅ Yes | ❌ No (`pip install gliner`) |
 
-The routing logic lives in `src/llm_runner.py`:
+> ⚠️ **Corrected 2026-09-03 (two fixes).** (1) The cloud pattern is **substring containment**, not
+> "ends in / starts with": `is_cloud_model()` (`src/llm_runner.py:61-64`) does
+> `key = model_name.lower(); return "-cloud" in key or "minimax" in key`. (2) The row previously
+> claimed cloud models need `ollama pull`, contradicting §8.3 step 1 — they do **not**.
+> The last four rows were missing entirely: without them `gemini-*` / `gpt-*` / `claude-*` /
+> `gliner:*` fall into "Local" here, while `src/providers/factory.py:45-49` routes them elsewhere.
+
+The routing logic lives in `src/llm_runner.py` and `src/providers/factory.py`:
 - `is_cloud_model(name)` → detects cloud models
 - `_NUEXTRACT_MODELS` set → detects NuExtract template format
 - `_QWEN3_THINKING_MODELS` set → enables chain-of-thought
@@ -102,14 +133,14 @@ ollama pull <model_name>
 
 **Step 2 — Add to `src/config.py`**:
 ```python
-# src/config.py  →  BenchmarkConfig.__post_init__
-self.models = [
+# src/config.py  →  BenchmarkConfig.models  (dataclass field, ~line 59)
+models: list[str] = field(default_factory=lambda: [
     'gemma4:31b-cloud',    # cloud models FIRST (run while local models load)
     'minimax-m3:cloud',
     'gemma4:31b',
     'llama3.3:70b',        # <-- ADD HERE, any position in the list
     ...
-]
+])
 ```
 
 **Step 3 — If the model is a special type**, register it in `src/llm_runner.py`:
@@ -127,11 +158,12 @@ self.models = [
 
 Delete the model name string from the list in `src/config.py`:
 ```python
-self.models = [
+# src/config.py  →  BenchmarkConfig.models  (dataclass field)
+models: list[str] = field(default_factory=lambda: [
     'gemma4:31b-cloud',
     # 'minimax-m3:cloud',   # <-- commented out = disabled, not deleted from Ollama
     'gemma4:31b',
-]
+])
 ```
 
 > **Tip**: Prefer commenting out (`#`) over deleting — preserves history for the thesis WORKLOG.
@@ -165,27 +197,46 @@ Expected output: `Entities:` dict with `Persons`, `Organizations`, `Locations` a
 
 ---
 
-### 8.6 — Current model list (as of 2026-06-30)
+### 8.6 — Current model list (as of 2026-06-30; reviewed and completed 2026-09-03)
 
-| Model | Type | Ollama Status | Benchmark Status |
-|-------|------|---------------|-----------------|
-| `gemma4:31b-cloud` | Cloud (Ollama) | ✅ Pulled | ✅ Active |
-| `minimax-m3:cloud` | Cloud (Ollama) | ✅ Pulled | ✅ Active |
-| `gemini-1.5-flash-lite` | Cloud (AI Studio) | ☁️ API Cloud | ✅ Active |
-| `gemma4:31b` | Local | ✅ Pulled (19 GB) | ✅ Active |
-| `sonct988/gemma4-26b-a4b-it-q4km-256k:latest` | Local | ✅ Pulled (16 GB) | ✅ Active |
-| `gpt-oss:20b` | Local | ✅ Pulled (13 GB) | ✅ Active |
-| `gemma4:latest` | Local | ✅ Pulled (9.6 GB) | ✅ Active |
-| `gemma:latest` | Local | ✅ Pulled (5.0 GB) | ✅ Active |
-| `qwen3:8b` | Local + Thinking | ✅ Pulled (5.2 GB) | ✅ Active |
-| `qwen2.5:14b` | Local | ✅ Pulled (9.0 GB) | ✅ Active |
-| `mistral-nemo:latest` | Local | ✅ Pulled (7.1 GB) | ✅ Active |
-| `nuextract:latest` | Local + Template | ✅ Pulled (2.2 GB) | ✅ Active |
-| `llama3.1:8b` | Local | ✅ Pulled (4.9 GB) | ✅ Active |
-| `llama3.2:latest` | Local | ✅ Pulled (2.0 GB) | ✅ Active |
-| `phi3.5` | Local | ✅ Pulled (2.2 GB) | ✅ Active |
-| `nemotron-mini:4b` | Local | ✅ Pulled (2.7 GB) | ✅ Active |
-| `deepseek-r1:1.5b` | Local | ✅ Pulled (1.1 GB) | ✅ Active |
+| Model | Type | Ollama Status | Benchmark Status | Note |
+|-------|------|---------------|-----------------|------|
+| `gemma4:31b-cloud` | Cloud (Ollama) | ✅ Pulled | ✅ Active | |
+| `minimax-m3:cloud` | Cloud (Ollama) | ✅ Pulled | ✅ Active | |
+| `gemini-3.1-flash-lite` | Cloud (AI Studio) | ☁️ API Cloud | ✅ Active | *Name corrected 2026-09-03: was written `gemini-1.5-flash-lite`, a model that exists in no config and no run. `src/config.py:60` declares `gemini-3.1-flash-lite`; it is the model of run #4 (F1 0.6547).* |
+| `gemini-3.5-flash` | Cloud (AI Studio) | ☁️ API Cloud | ⚪ Declared, not run | *Added 2026-09-03: present in `src/config.py:60`, no catalogued run.* |
+| `gemma4:31b` | Local | ✅ Pulled (19 GB) | ✅ Active | |
+| `sonct988/gemma4-26b-a4b-it-q4km-256k:latest` | Local | ✅ Pulled (16 GB) | ✅ Active | |
+| `gpt-oss:20b` | Local | ✅ Pulled (13 GB) | ✅ Active | |
+| `gemma4:latest` | Local | ✅ Pulled (9.6 GB) | ✅ Active | |
+| `gemma:latest` | Local | ✅ Pulled (5.0 GB) | ✅ Active | |
+| `qwen3:8b` | Local + Thinking | ✅ Pulled (5.2 GB) | ✅ Active | |
+| `qwen2.5:14b` | Local | ✅ Pulled (9.0 GB) | ✅ Active | |
+| `mistral-nemo:latest` | Local | ✅ Pulled (7.1 GB) | ✅ Active | |
+| `nuextract:latest` | Local + Template | ✅ Pulled (2.2 GB) | ✅ Active | |
+| `llama3.1:8b` | Local | ✅ Pulled (4.9 GB) | ✅ Active | |
+| `llama3.2:latest` | Local | ✅ Pulled (2.0 GB) | ✅ Active | |
+| `phi3.5` | Local | ✅ Pulled (2.2 GB) | ✅ Active | |
+| `nemotron-mini:4b` | Local | ✅ Pulled (2.7 GB) | ✅ Active | |
+| `deepseek-r1:1.5b` | Local | ✅ Pulled (1.1 GB) | ✅ Active | |
+| `gemma4:31b-mlx` | Local (MLX) | ✅ Pulled (18 GB) | ✅ Active | *Added 2026-09-03: best F1 of the N=120 run #13 (baseline 0.5925) and second model of the headline N=30 result (F1 0.7747).* |
+| `gemma4:12b-mlx` | Local (MLX) | ✅ Pulled (7.7 GB) | ✅ Active | *Added 2026-09-03: in `src/config.py` and `run_benchmark.sh:25`. Canonical name. The previous label for this artefact carried a false `q8` suffix (the model is 4-bit NVFP4) and was retired project-wide; see `FINDINGS.md §F4`.* |
+| `gliner:medium` | Local encoder (GlinerProvider) | ✅ Pulled (HF weights) | ✅ Active | *Added 2026-09-03: run #3 of `results/RUNS_INDEX.md`, F1 0.4767. Has its own provider (`src/providers/gliner_provider.py`).* |
+
+### 8.7 — Run-flag traps (added 2026-09-03; verified against `src/main.py`)
+
+Before quoting or reusing any run command, check it against the real argparse of `src/main.py`.
+The parser accepts exactly: `--models`, `--batch-size`, `--data-file`, `--resume`, `--results-dir`,
+`--generate-sample-data`, `--temperature`, `--max-tokens`, `--seed`, `--system-prompt-file`,
+`--compare-annotators`, `--ablation`, `--rag-study`, `--rag-mode`, `--num-workers`. There is **no**
+`--run-config` flag, and `results/<run_dir>/run_config.json` is an **output** artefact, never an input.
+
+| Trap | What actually happens |
+|------|----------------------|
+| 🪤 **`--rag-mode` defaults to `entities`, not to `kb_combined`** | `--rag-study` alone runs the *legacy dictionary RAG* and emits `*_rag_enhanced` conditions. The thesis' reference run #13 used `--rag-mode kb_combined` and emits `*_kb_rag`. A run launched on 2026-09-03 without the flag had to be discarded (`results/DESCARTADA_ragmode_incorrecto_142604/`, catalogued as #14). |
+| `--results-dir` is optional but load-bearing | Omitted → a fresh `results/<dataset>_<timestamp>/` per run. **`--resume` needs it** to locate the checkpoint. `--results-dir results` (the ROOT) **aborts** with `ResultsDirRootError`. |
+| `--models` overrides `src/config.py` | Whatever `run_benchmark.sh` passes wins over `BenchmarkConfig.models` (see §8.1). |
+| `--ablation` is the *Prompt Configuration Comparison* | Same experiment the thesis calls "Comparación de Configuraciones de Prompt" (a.k.a. prompt ablation study / 2x2 factorial design). The flag name stays as-is; it is a code identifier. |
 
 ---
 
@@ -299,3 +350,42 @@ result = provider.extract_entities(
 ### Backward compatibility
 
 `src/llm_runner.extract_entities_with_ollama()` continues to work unchanged — it internally delegates to `OllamaProvider` via the Facade. No existing code breaks.
+
+---
+
+## 11. Agent Coordination — `CURRENT-TASKS.md`
+
+Multiple agents (Claude Code, Claude Desktop, Antigravity, Gemini) work on this project, sometimes
+concurrently. A living coordination document at the project root declares **who is doing what, on which
+files**: [`../../CURRENT-TASKS.md`](../../CURRENT-TASKS.md).
+
+### 11.1 Mandatory protocol — for every task
+
+1. **READ** `CURRENT-TASKS.md` before starting. Check that no other agent declares work on the files you
+   intend to touch.
+2. **WRITE** your entry under your agent's section: task, status `EN CURSO`, affected files, start time.
+3. Execute the task.
+4. **UPDATE** your entry when done: `COMPLETADA` or `FALLIDA`, with the outcome.
+5. **RE-READ** the document, in case another agent wrote while you were working.
+
+### 11.2 Rules
+
+- If a file is declared `EN CURSO` by another agent, **do not touch it**. Wait, or pick another.
+- When **resuming** an interrupted task, update its entry too (status and reason for the interruption).
+- Always **append** within your own section; never rewrite another agent's entries.
+- **Every workflow** must own a subsection under §4 of `CURRENT-TASKS.md` (objective, phases, agents, files
+  touched, outcome) and keep it current.
+- **Every subagent** must be reflected under the parent task that spawned it.
+
+### 11.3 Sections
+
+| Section | Owner | Scope |
+|---------|-------|-------|
+| §1 Claude Code | Claude Code (CLI) | Pipeline, benchmarks, orchestration, statistical verification |
+| §2 Claude Desktop | Claude Desktop | `.docx` editing and formatting (see `TODO-INFORME-FINAL.md §7`) |
+| §3 Antigravity | Antigravity / Gemini | IDE-side development assistance |
+| §4 Workflows | whoever launches them | One subsection per workflow |
+
+> **Why this exists.** On 2026-09-03, `HISTORIAL-CONSOLIDADO.md` was modified by an agent outside the
+> session working on it. `ListAgents` enumerates Claude Code sessions but **not** Claude Desktop, so the
+> absence of a peer in that listing does not prove nobody else is editing.

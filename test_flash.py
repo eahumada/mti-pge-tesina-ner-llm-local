@@ -1,9 +1,15 @@
+import os
 import google.generativeai as genai
 import json
 import time
 
-# 1. CONFIGURACIÓN (Usando la key proporcionada)
-API_KEY = "<GOOGLE_API_KEY-PURGADA-DEL-HISTORIAL>"
+# 1. CONFIGURACIÓN (key leida del entorno; ver gopass)
+API_KEY = os.environ.get("GOOGLE_API_KEY")
+if not API_KEY:
+    raise SystemExit(
+        "Falta GOOGLE_API_KEY. Obtenla de gopass y exportala:\n"
+        "  export GOOGLE_API_KEY=$(gopass show -o google/api-keys/gemini)"
+    )
 genai.configure(api_key=API_KEY)
 
 # 2. CONFIGURACIÓN DEL MODELO

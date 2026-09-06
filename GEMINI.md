@@ -1,9 +1,20 @@
-# NER Benchmark Project Directives
-## RAG Integration Policy
-- **Strict Additive Documentation**: Never overwrite or delete existing documentation when adding new session findings. All documents (`BENCHMARKS.md`, `TODO.md`, `ROADMAP.md`, etc.) must be strictly additive. Verify via git history that no previous content is lost.
-- **Comparative Study Value**: A difference of up to 0.02 in F1 Score when comparing Baseline vs RAG is tolerable and considered highly relevant information. Always preserve the RAG infrastructure and indexing work to allow alternate runs (with and without RAG) side-by-side.
-- **Metric Degradation Rule**: A drop of up to 0.02 in F1 score is acceptable for the sake of comparison. However, continue evaluating whether further lists degrade precision. The goal is to accurately present the results of the study with and without RAG.
-- **Optimal Analysis**: Always analyze the optimal configuration carefully before rolling out to the full 16-model benchmark sweep.
+# Instrucciones para Gemini — Proyecto Tesina NER MTI
+
+Este archivo es el punto de entrada para agentes basados en Gemini (incluido Antigravity) que trabajen en
+la **raíz** del proyecto. Las directivas técnicas del banco de pruebas están en
+[`repos/ner-llm-entity-benchmark/GEMINI.md`](./repos/ner-llm-entity-benchmark/GEMINI.md) y en
+[`repos/ner-llm-entity-benchmark/AGENTS.md`](./repos/ner-llm-entity-benchmark/AGENTS.md).
+
+## Directivas del proyecto
+
+- **Documentación estrictamente aditiva:** nunca se sobrescribe ni se elimina documentación existente al
+  añadir hallazgos de una sesión. Si un conteo no cuadra, se corrige el conteo, no los datos.
+- **Trazabilidad:** toda cifra citada en la tesina debe corresponder a un archivo versionado bajo
+  `repos/ner-llm-entity-benchmark/results/`.
+- **Entregables:** el `.docx` canónico y sus versiones congeladas se describen en
+  [`CLAUDE.md`](./CLAUDE.md) y en [`doc/versions/informe_final/VERSIONES.md`](./doc/versions/informe_final/VERSIONES.md).
+- **No regenerar los `.docx` con pandoc:** contienen correcciones manuales de numeración multinivel,
+  estilos de fila y saltos de página que una regeneración destruiría.
 
 
 ---
