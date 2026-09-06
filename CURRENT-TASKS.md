@@ -274,6 +274,10 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-05 21:45 | Claude Code | `gemma4:12b-mlx_baseline` COMPLETADO (40/40 lotes). Descarga de `gemma4:31b-mlx` reanudada; `gemma4:31b` ya estaba local |
 | 2026-09-06 04:35 | Claude Code | Progreso 348/1680 (20,7%). `gemma4:12b-mlx` COMPLETO (baseline y kb_rag 40/40). Contaminadas congeladas en 36 tras desactivar la suspensión: 22% → 10% |
 | 2026-09-06 04:35 | Claude Code | Proyección revisada con latencias MEDIDAS: ~518 h (21 días). La estimación previa de 66 h partía de extrapolar el histórico N=15 y era 7× optimista |
+| 2026-09-06 05:10 | Claude Code | Entrega remota integrada y verificada (0% fallo, protocolo correcto). ANOVA conjunto **9 modelos**: **F=64.0586, p=7.26e-177** (antes 5 modelos: F=10.21, p=2.87e-15). Ver `INFORME-AVANCE-20260906.md` |
+| 2026-09-06 05:10 | Claude Code | 🔴 Bloqueante resuelto: `gemma4:31b` N=15 con dato propio (F1=0.6912), a 1.3 pp del 0.6783 que la Tabla 2 afirmaba sin respaldo |
+| 2026-09-06 05:10 | Claude Code | Hallazgo nuevo: el KB RAG **beneficia a los modelos pequeños y perjudica a los grandes** (5 mejoran, 4 empeoran). `llama3.2` +0.0999; `gemma4:31b-mlx` −0.0018 |
+| 2026-09-06 05:10 | Claude Code | Anomalía de `gemma4:12b-mlx` explicada: F1=0.0987 por **fallo de formato de salida**, no de comprensión (104/120 `fallback`, P=0.93 / R=0.14) |
 | 2026-09-06 04:35 | Autor | Decisión: **esperar resultados parciales del equipo remoto**. La corrida local continúa como red de seguridad |
 | 2026-09-05 21:45 | Claude Code | Suite de guardarraíles: 15/15 tests OK. `src/memory_stress_test.py` pospuesto para no competir por RAM con el benchmark |
 | 2026-09-04 14:00 | Claude Code | Ref git inválida `refs/remotes/origin/main 2` eliminada: rompía `git log --all` y causó 2 escaneos de seguridad con falso negativo |
