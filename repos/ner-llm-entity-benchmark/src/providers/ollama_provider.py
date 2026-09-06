@@ -60,6 +60,35 @@ _THINKING_DISABLED_MODELS: set[str] = {
     "gemma4:12b-mlx", "gemma4:31b-mlx", "gemma4-12b-mlx",
 }
 
+# ---------------------------------------------------------------------------
+# Rate limiter global (respeta cuota de modelos cloud). Activado por
+# OLLAMA_REQUEST_DELAY_SEC (segundos mínimos entre requests). 0 = desactivado.
+# Añadido 2026-09-06 para gemma4:31b-cloud (HTTP 429 por cuota).
+# ---------------------------------------------------------------------------
+import os as _os
+import threading as _threading
+
+_rl_lock = _threading.Lock()
+_rl_last_ts: float = 0.0
+
+
+def _rate_limit_gate() -> None:
+    """Bloquea hasta respetar el intervalo mínimo global entre requests."""
+    try:
+        delay = float(_os.getenv("OLLAMA_REQUEST_DELAY_SEC", "0") or "0")
+    except ValueError:
+        delay = 0.0
+    if delay <= 0:
+        return
+    global _rl_last_ts
+    with _rl_lock:
+        now = time.time()
+        wait = _rl_last_ts + delay - now
+        if wait > 0:
+            time.sleep(wait)
+            now = time.time()
+        _rl_last_ts = now
+
 _FALLBACK_SYSTEM_PROMPT = (
     "You are an expert compliance and anti-money laundering (AML) analyst. "
     "Perform Named Entity Recognition (NER) on news. Extract entities into: "
@@ -290,6 +319,7 @@ class OllamaProvider(LLMProvider):
 
         last_error: str | None = None
         for attempt in range(max_retries + 1):
+            _rate_limit_gate()  # respeta cuota cloud (OLLAMA_REQUEST_DELAY_SEC)
             start_time = time.time()
             try:
                 if _has_monitor:

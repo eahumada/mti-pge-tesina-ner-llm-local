@@ -220,8 +220,17 @@ Para **cada tarea** que ejecutes:
 - **Archivos:** `results/ablacion_n15_REMOTO/`
 - **Bloquea:** 4 cifras de la tesina que no existen en ningún dato
 
-### 3.bis.6 ⬜ NUEVA — `gemma4:31b-cloud` sobre N=120 (puede ir EN PARALELO)
-- **Estado:** ⬜ SIN INICIAR · **Encargo:** [`ADENDA-EQUIPO-REMOTO-20260906.md`](./ADENDA-EQUIPO-REMOTO-20260906.md)
+### 3.bis.6 ▶️ EN CURSO — `gemma4:31b-cloud` sobre N=120 (EN PARALELO)
+- **Estado:** ▶️ EN CURSO desde 2026-09-06 09:46 (equipo remoto 48 GB) · **Encargo:** [`ADENDA-EQUIPO-REMOTO-20260906.md`](./ADENDA-EQUIPO-REMOTO-20260906.md)
+- **Ejecución:** wrapper resiliente `run_cloud_resilient.sh` — `--rag-mode kb_combined`, workers 3, `--resume`.
+  Corre **en paralelo** con la cadena local (no consume RAM local). Auth OK tras signin del autor + `OLLAMA_API_KEY`.
+- **Rate limit implementado (2026-09-06):** flags nuevos `--max-workers` (topa el AIMD) y `--request-delay`
+  (intervalo mínimo global entre requests, vía `OLLAMA_REQUEST_DELAY_SEC` en `ollama_provider.py`).
+  Corrida cloud lanzada con **`--num-workers 1 --max-workers 1 --request-delay 3.0`**.
+  - Sin rate limit (workers 3): **172× HTTP 429**. Con rate limit (1 worker + 3s): **0× 429**, 28× 200 OK. ✅
+- **Resiliencia:** wrapper `run_cloud_resilient.sh` con `--resume` — continúa tras cortes; espera 15 min en
+  429; se detiene en 402 (barrera de plan) o al completar 240 filas.
+- **Criterio de parada (ADENDA):** comprobar fallo a mitad; parar si >10%. 429=esperar, 402=avisar.
 - **Archivos que producirá:** `results/gemma4_31b_cloud_n120_REMOTO/`
 - **Por qué:** su única corrida sobre N=120 es inservible — **190 de 240 fallos (79 %)** por cuota, y con
   modo RAG legacy `entities` en vez de `kb_combined`. Su dato limpio (F1 0,6699) es de N=15 y no sirve
@@ -318,3 +327,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-06 02:19 | Equipo Remoto 48 GB (Claude Code) | P2 §3.bis.2 PARCIAL: `sonct988` OK (fallo 0, F1 0.5627/0.5964). `gpt-oss:20b` bloqueado por bug de routing (`gpt-*`→OpenAIProvider). Estudio 12→13 |
 | 2026-09-06 02:25 | Equipo Remoto 48 GB (Claude Code) | Fix aprobado por el autor: `factory.py:46` ahora excluye tags Ollama (`:`) de la regla `gpt-*` → `gpt-oss:20b` rutea a Ollama. Backup `factory.py.bak_gptoss_routing_20260906`. Verificado (gpt-4o sigue OpenAI). Re-run de gpt-oss encolado tras P3/P4 con `--resume` |
 | 2026-09-06 09:04 | Equipo Remoto 48 GB (Claude Code) | Leída ALERTA-EQUIPO-REMOTO-20260906: bug thinking invalida `gemma4:12b-mlx` (recall=0 66-94/120) y `qwen3:8b` en P3. Fix `743054d` ya en árbol. Decisión del autor: dejar P3 terminar (5 modelos válidos) y re-correr los 2 afectados con el fix en `results/afectados_thinking_n120_REMOTO/` (encolado tras gpt-oss). Analizado también INFORME-AVANCE-20260906 (ANOVA 9 modelos F=64.06; sonct988 lidera) |
+| 2026-09-06 09:54 | Equipo Remoto 48 GB (Claude Code) | Tarea nueva §3.bis.6 `gemma4:31b-cloud` N=120 lanzada EN PARALELO. Implementado rate limit: flags `--max-workers` + `--request-delay` (`ollama_provider.py` gate por `OLLAMA_REQUEST_DELAY_SEC`). Con 1 worker + 3s: **0× 429** (vs 172 sin límite). Wrapper resiliente `--resume` (429=espera, 402=avisa). Backups `*.bak_ratelimit_20260906` |

@@ -357,7 +357,7 @@ def run_benchmark(config: BenchmarkConfig, resume: bool = False, ablation: bool 
     # Initial value comes from config.num_workers (CLI --num-workers, default 2).
     adaptive_ctrl = AdaptiveWorkerController(
         min_workers=1,
-        max_workers=None,  # auto: max(1, os.cpu_count() - 2)
+        max_workers=getattr(config, "max_workers", None),  # None=auto (cpu-2); topado por --max-workers
         initial_workers=config.num_workers,
         stable_window_sec=600.0,       # 10 min without errors before AI phase
         increase_interval_sec=120.0,   # +1 worker every 2 min during AI phase
@@ -727,7 +727,13 @@ def main():
         ),
     )
     parser.add_argument("--num-workers", type=int, default=2, help="Number of concurrent worker threads")
-    
+    parser.add_argument("--max-workers", type=int, default=None,
+                        help="Hard cap on concurrent workers (AIMD never grows past this). "
+                             "Use for cloud/quota-limited models, e.g. 1.")
+    parser.add_argument("--request-delay", type=float, default=0.0,
+                        help="Minimum seconds between LLM requests (global rate limit). "
+                             "Use for cloud/quota-limited models, e.g. 4.0.")
+
     args = parser.parse_args()
     
     if args.compare_annotators:
@@ -763,7 +769,15 @@ def main():
     )
     if args.models:
         config.models = args.models
-        
+
+    # Rate limiting / paralelismo tope para modelos cloud sujetos a cuota (2026-09-06).
+    config.max_workers = args.max_workers  # None = auto (cpu-2); un entero lo topa
+    if args.request_delay and args.request_delay > 0:
+        os.environ["OLLAMA_REQUEST_DELAY_SEC"] = str(args.request_delay)
+        logger.info("Rate limit activo: mínimo %.2fs entre requests LLM.", args.request_delay)
+    if args.max_workers is not None:
+        logger.info("Paralelismo topado a max_workers=%d.", args.max_workers)
+
     # Ensure sample data is present if file not found
     if not os.path.exists(config.data_file):
         logger.info(f"Data file '{config.data_file}' not found. Seeding with realistic sample sanctions records...")
