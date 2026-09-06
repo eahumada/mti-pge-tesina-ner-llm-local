@@ -39,7 +39,7 @@
       directorio nuevo y el checkpoint jamás se encontraba, reiniciando desde cero en silencio.
 - [x] Guardarraíl que impide escribir en la raíz de `results/` (causa de la pérdida de datos de N=30),
       con 15 tests que lo cubren.
-- [x] Persistencia del flag `ablation` en `run_config.json` (antes las corridas de comparación de prompts eran
+- [x] Persistencia del flag `ablation` en `run_config.json` (antes las corridas de análisis comparativo de prompts eran
       indistinguibles de un baseline en su metadata).
 
 ### 2.3 Nomenclatura y terminología
@@ -49,9 +49,9 @@
       ⚠️ **Corrección 2026-09-05:** la eliminación cubrió documentación y configuración, **no los datos
       experimentales**. El nombre retirado sigue en 14 archivos de `results/`, incluidas **30 filas** de
       `results/benchmark_results.csv`. Ver §10.
-- [x] Terminología: «Comparación de Configuraciones de Prompt» como término principal, con
-      «diseño factorial 2×2» y «comparación de configuraciones de prompt» como sinónimos glosados. Aplicado al `.md`.
-      El abstract en inglés conserva *prompt prompt configuration comparison*.
+- [x] Terminología: «Análisis Comparativo de Prompts» como término principal, con
+      «diseño factorial 2×2» y «análisis comparativo de prompts» como sinónimos glosados. Aplicado al `.md`.
+      El abstract en inglés conserva *prompt comparative prompt analysis*.
 - [x] Herramienta `tools/docx_replace_terms.py` para aplicar el cambio a los `.docx` sin regenerarlos
       (regenerar destruiría las correcciones manuales de numeración y saltos de página).
 
@@ -111,7 +111,7 @@
 |:---|:---|
 | 2026-09-03 | Autorizar modelos cloud como línea base de comparación (excepción acotada al corpus público, registrada en `AGENTS.md §2`). |
 | 2026-09-03 | Adoptar `gemma4:12b-mlx` como nombre canónico y eliminar toda referencia al nombre con sufijo `q8`. |
-| 2026-09-03 | Usar «Comparación de Configuraciones de Prompt» como término principal, conservando los sinónimos técnicos. |
+| 2026-09-03 | Usar «Análisis Comparativo de Prompts» como término principal, conservando los sinónimos técnicos. |
 | 2026-09-03 | Ante divergencia en la re-ejecución de N=30, **reemplazar** por el nuevo resultado. |
 | 2026-09-03 | Las filas `gemma4:latest (ZS-ES)` y `(FS-ES)` son legítimas y **no deben eliminarse**. |
 
@@ -209,7 +209,7 @@ datos experimentales del informe.
 
 ### 7.3 Correcciones tipográficas pendientes
 - [ ] Las glosas de terminología quedaron en los `.docx` con formato de párrafo plano. En el Markdown,
-      «diseño factorial 2×2» va en **negrita** y «comparación de configuraciones de prompt» en *cursiva*. Son 4 selecciones
+      «diseño factorial 2×2» va en **negrita** y «análisis comparativo de prompts» en *cursiva*. Son 4 selecciones
       manuales en Word.
 
 ### 7.4 Verificación final de formato
@@ -430,7 +430,7 @@ modelos locales**.
 1. `gemma4:31b` sobre N=15 — **en curso** (local, en solitario)
 2. Cloud en paralelo, en cuanto se resuelva el `signin`
 3. Reanudar el benchmark principal N=120 (local, en solitario) — pausado en 153/1680
-4. Comparación de configuraciones de prompt con `gemma4:latest` si se decide re-ejecutarla
+4. Análisis comparativo de prompts con `gemma4:latest` si se decide re-ejecutarla
 5. KPMG y cierre documental
 
 ---
@@ -482,5 +482,5 @@ Desbloqueado por la reautenticación. Corrige la contaminación documentada en `
 1. ~~`gemma4:31b` local~~ — **descartado por hardware**
 2. **`gemma4:31b-cloud` limpio** — puede empezar ya, en paralelo
 3. **Reanudar benchmark principal N=120** — local, en serie, desde 153/1680
-4. Comparación de configuraciones de prompt con `gemma4:latest` (9.6 GB, dentro del límite) si se decide re-ejecutarla
+4. Análisis comparativo de prompts con `gemma4:latest` (9.6 GB, dentro del límite) si se decide re-ejecutarla
 5. KPMG y cierre documental

@@ -26,7 +26,7 @@
 
 Las instituciones financieras que operan en el marco de regulaciones AML (Anti-Money Laundering) y KYC (Know Your Customer) enfrentan el desafío de monitorear grandes volúmenes de noticias no estructuradas en busca de entidades de riesgo (personas, organizaciones). Este proceso, ejecutado manualmente, resulta costoso, lento e incapaz de escalar, mientras que el uso de APIs en la nube expone datos financieros sensibles a terceros, vulnerando la soberanía de datos. Este trabajo diseña, implementa y evalúa empíricamente un sistema soberano de extracción de Entidades Nombradas (NER) basado en Modelos de Lenguaje Grande (LLM) de código abierto (familias Gemma, Llama, DeepSeek) ejecutados 100% localmente mediante Ollama en hardware Apple Silicon M4.
 
-El sistema incorpora una arquitectura de procesamiento pub/sub multithreading con control adaptativo de concurrencia (AIMD) y una capa Factory/Facade que unifica cuatro proveedores de modelos. La validación experimental se realizó sobre el dataset real de sanciones financieras Kleptotrace/CoNLL-2002 (N=15 artículos con anotación experta) y un corpus estadísticamente significativo de 30 artículos breves (N=30). La comparación de configuraciones de prompt demuestra que la localización lingüística al español produce una mejora de +7.4 puntos de F1 sobre el baseline zero-shot en inglés, y que el mejor modelo evaluado (gemma4:31b) alcanza un F1-Score de 79.03% con una tasa de alucinaciones del 0.0% sobre el corpus N=30. El sistema reduce los costos operativos de revisión manual en un 60–80% y garantiza privacidad total de datos.
+El sistema incorpora una arquitectura de procesamiento pub/sub multithreading con control adaptativo de concurrencia (AIMD) y una capa Factory/Facade que unifica cuatro proveedores de modelos. La validación experimental se realizó sobre el dataset real de sanciones financieras Kleptotrace/CoNLL-2002 (N=15 artículos con anotación experta) y un corpus estadísticamente significativo de 30 artículos breves (N=30). La análisis comparativo de prompts demuestra que la localización lingüística al español produce una mejora de +7.4 puntos de F1 sobre el baseline zero-shot en inglés, y que el mejor modelo evaluado (gemma4:31b) alcanza un F1-Score de 79.03% con una tasa de alucinaciones del 0.0% sobre el corpus N=30. El sistema reduce los costos operativos de revisión manual en un 60–80% y garantiza privacidad total de datos.
 
 **Palabras clave:** Reconocimiento de Entidades Nombradas (NER), Modelos de Lenguaje Grande (LLM), Cumplimiento Normativo (AML/KYC), Soberanía de Datos, Prompt Engineering.
 
@@ -88,7 +88,7 @@ Los enfoques existentes presentan limitaciones críticas:
 **Objetivos Específicos:**
 1. Diseñar e implementar una arquitectura pub/sub multithreading con control adaptativo de concurrencia para la ejecución segura de LLMs de gran escala en hardware Apple Silicon.
 2. Evaluar y comparar el desempeño de 12 modelos de lenguaje de código abierto generativos (familias Gemma, Llama, DeepSeek, Qwen, Mistral, NuExtract) en la tarea de NER sobre corpus de sanciones financieras reales en español.
-3. Ejecutar una comparación sistemática de cuatro configuraciones de prompt (zero-shot/few-shot × inglés/español) —un diseño factorial 2×2, denominado *estudio de ablación* en la literatura de aprendizaje automático— para cuantificar el impacto de la localización lingüística y el aprendizaje en contexto.
+3. Ejecutar una comparación sistemática de cuatro configuraciones de prompt (zero-shot/few-shot × inglés/español) —un diseño factorial 2×2, que la literatura anglosajona de aprendizaje automático denomina *ablation study*— para cuantificar el impacto de la localización lingüística y el aprendizaje en contexto.
 4. Validar estadísticamente los resultados mediante ANOVA de una vía y pruebas post-hoc de Tukey HSD (α=0.05) sobre un corpus estadísticamente significativo (N≥30).
 5. Demostrar una reducción de costos operativos del 60–80% respecto a la revisión manual, manteniendo una tasa de alucinaciones inferior al 5%.
 
@@ -136,7 +136,7 @@ La Tabla 1 posiciona este trabajo respecto a investigaciones recientes en NER pa
 | Chang et al. [9] | Docs bancarios | GPT-4 + RAG | 83% | ❌ Cloud | Inglés |
 | **Este trabajo** | **Kleptotrace/CoNLL-2002 (AML), corpus sintético N=30** | **gemma4:31b local** | **79%** | **✅ 100% Local** | **Español** |
 
-El aporte original de este trabajo reside en: (1) evaluación comparativa de 12 modelos sobre corpus real de sanciones en español; (2) comparación de configuraciones de prompt entre idiomas (ES vs. EN); (3) sistema soberano reproducible sobre hardware comercial; y (4) validación estadística formal (ANOVA, Tukey HSD) sobre corpus N≥30.
+El aporte original de este trabajo reside en: (1) evaluación comparativa de 12 modelos sobre corpus real de sanciones en español; (2) análisis comparativo de prompts entre idiomas (ES vs. EN); (3) sistema soberano reproducible sobre hardware comercial; y (4) validación estadística formal (ANOVA, Tukey HSD) sobre corpus N≥30.
 
 ---
 
@@ -269,9 +269,9 @@ Se evaluaron 12 modelos LLM generativos, reportados en la Tabla 2 (§5.1) en 13 
 - **Modelos locales compactos (<8B):** llama3.2:latest (3B), nuextract:latest (3.8B), nemotron-mini:4b, deepseek-r1:1.5b.
 - **Modelos cloud/híbridos:** gemma4:31b-cloud, gemini-3.1-flash-lite.
 
-### 4.3 Comparación de Configuraciones de Prompt
+### 4.3 Análisis Comparativo de Prompts
 
-Se evaluaron cuatro configuraciones de prompt sobre el modelo gemma4:latest (9B). El diseño cruza dos factores —idioma (inglés/español) y estrategia de demostración (sin ejemplos/con ejemplos)—, por lo que constituye un **diseño factorial 2×2**, procedimiento conocido en la literatura de aprendizaje automático como *estudio de ablación*:
+Se evaluaron cuatro configuraciones de prompt sobre el modelo gemma4:latest (9B). El diseño cruza dos factores —idioma (inglés/español) y estrategia de demostración (sin ejemplos/con ejemplos)—, por lo que constituye un **diseño factorial 2×2**, procedimiento que la literatura anglosajona de aprendizaje automático denomina *ablation study*:
 1. **Zero-shot inglés (ZS-EN):** Prompt de sistema en inglés sin ejemplos.
 2. **Zero-shot español (ZS-ES):** Prompt de sistema traducido al español, sin ejemplos.
 3. **Few-shot inglés (FS-EN):** Prompt en inglés con 3 ejemplos del dominio compliance.
@@ -343,7 +343,7 @@ Los tres ejemplos cubren deliberadamente: (a) extracción limpia de un solo suje
 
 #### 4.3.4 Impacto Empírico del Few-Shot en este Estudio
 
-Los resultados de la comparación de configuraciones de prompt muestran que la localización al español (+7.4% F1) tuvo mayor impacto que la adición de ejemplos few-shot (+4.97% F1 en inglés). La configuración ZS-ES produjo prácticamente el mismo F1 que FS-ES (69.81% vs. 69.76%), aunque con una reducción de 1.85 puntos de Recall a cambio de eliminar el riesgo de alucinaciones inducidas por ejemplos (FS-ES: hallucination rate 1.80% vs. ZS-ES: 0.19%). Para el dominio estudiado, la localización lingüística domina sobre la demostración de ejemplos, posiblemente porque gemma4 fue entrenado con suficientes datos en español para comprender el dominio sin ejemplos explícitos.
+Los resultados de la análisis comparativo de prompts muestran que la localización al español (+7.4% F1) tuvo mayor impacto que la adición de ejemplos few-shot (+4.97% F1 en inglés). La configuración ZS-ES produjo prácticamente el mismo F1 que FS-ES (69.81% vs. 69.76%), aunque con una reducción de 1.85 puntos de Recall a cambio de eliminar el riesgo de alucinaciones inducidas por ejemplos (FS-ES: hallucination rate 1.80% vs. ZS-ES: 0.19%). Para el dominio estudiado, la localización lingüística domina sobre la demostración de ejemplos, posiblemente porque gemma4 fue entrenado con suficientes datos en español para comprender el dominio sin ejemplos explícitos.
 
 ### 4.4 Métricas de Evaluación
 
@@ -390,7 +390,7 @@ La Tabla 2 presenta los resultados consolidados del benchmark completo agrupados
 > **Hallazgo 2:** `deepseek-r1:1.5b` debe descartarse para producción: hallucination rate de 8.13% y Recall de sólo 28.90%.  
 > **Hallazgo 3:** El índice de eficiencia de hardware (Tok/s/B) favorece modelos compactos como `llama3.2` (15.80 Tok/s/B) para escenarios de screening masivo, mientras que `gemma4:31b` (0.37 Tok/s/B) se justifica para análisis de alto riesgo.
 
-### 5.2 Comparación de Configuraciones de Prompt (gemma4:latest, N=15)
+### 5.2 Análisis Comparativo de Prompts (gemma4:latest, N=15)
 
 | Configuración | F1 | Precisión | Recall | Hallucination | Latencia (s) | Δ vs. Baseline |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|

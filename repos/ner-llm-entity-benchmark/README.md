@@ -57,9 +57,9 @@ python src/main.py --data-file data/benchmark_balanced_120.json \
 
 Valid values: `entities` (legacy dict), `kb_guidelines`, `kb_fewshot`, `kb_combined` (best F1).
 
-### 2c. Run the Prompt Configuration Comparison (`--ablation`)
+### 2c. Run the Comparative Prompt Analysis (`--ablation`)
 
-Also referred to as the 2x2 factorial design / prompt prompt configuration comparison. One model is swept across the
+Also referred to as the 2x2 factorial design / prompt comparative prompt analysis. One model is swept across the
 four prompt conditions (zs-en, zs-es, fs-es, fs-en) in a single run. Note that `--ablation` reads
 **only the first name** given to `--models`; any further names are ignored:
 
