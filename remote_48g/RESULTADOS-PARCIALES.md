@@ -178,3 +178,16 @@ Cloud (paralelo): `gemma4:31b-cloud` (~1 h para 240).
 ### Estado de modelos para el ANOVA
 Válidos y completos: sonct988, gpt-oss:20b, gemma4:31b-cloud, + 5 de P3 (llama3.1, mistral-nemo, nuextract,
 deepseek-r1, nemotron*). Pendientes de re-corrida (en curso): gemma4:12b-mlx, qwen3:8b, nemotron-mini*.
+
+---
+
+## Actualización 2026-09-06 16:21 — re-corridas de afectados
+
+- **gemma4:12b-mlx (fix thinking) — ✅ LIMPIO:** 120 baseline + 120 kb_rag, **0 failed**, recall=0 residual (0 y 1).
+  F1 baseline **0.5618** / kb_rag **0.5929** (vs P3 inválido 0.27/0.11). Reemplaza los datos inválidos de P3.
+- **qwen3:8b — ⚠️ RE-CORRIDA LIMPIA EN CURSO.** Los reinicios para acelerar introdujeron dupes y dejaron
+  registros sin guardar (baseline 99/120 únicos, kb_rag 114/120). Se re-corre desde cero en dir fresco
+  `results/qwen3_clean_n120_REMOTO/` (workers 6 fijos, sin reinicios). ETA ~2 h. **Usar esta, no la de afectados.**
+- **nemotron-mini:4b re-run:** 240/240, 7 `failed` (vacíos esporádicos inherentes al 4B; no corregibles). Excluir esos 7.
+- **Aprendizaje:** no reiniciar corridas con checkpoint para "optimizar" concurrencia — corrompe cobertura. Elegir
+  workers una vez y dejar correr.
