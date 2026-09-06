@@ -489,8 +489,15 @@ Desbloqueado por la reautenticación. Corrige la contaminación documentada en `
 
 ## 13. ⏳ DIFERIDO — Renombrar el término a «Test de Variación de los Prompts»
 
-**Decisión del autor (2026-09-06, refinada):** el término definitivo será **«Test de Variación de los
-Prompts»**. *(Sustituye a «Análisis de Variantes de Prompt», registrado antes ese mismo día.)*
+**Decisión del autor (2026-09-06).** Se aceptan **dos formulaciones**, ambas válidas:
+
+| Término | Dónde encaja mejor |
+|:---|:---|
+| **«Test de Variación de los Prompts»** | Títulos de sección y referencias al procedimiento. Más corto y nombra el método. |
+| **«Análisis de Variantes de Prompts»** | Prosa corrida, cuando se habla del análisis en sí. Fluye mejor dentro de una frase. |
+
+Ambas son intercambiables; usar la que mejor suene en cada contexto. Lo que importa es que **ninguna use
+«ablación»**.
 Se aplicará **de forma global al final**, cuando haya terminado de generarse toda la evidencia, para no
 hacer el cambio dos veces ni desincronizar documentos mientras el equipo remoto sigue entregando.
 
