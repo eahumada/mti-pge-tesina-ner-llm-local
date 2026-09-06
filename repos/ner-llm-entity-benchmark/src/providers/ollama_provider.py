@@ -41,6 +41,25 @@ _QWEN3_THINKING_MODELS: set[str] = {
     "qwen3:8b", "qwen3:14b", "qwen3:32b", "qwen3:latest"
 }
 
+# Modelos con capacidad `thinking` en los que el razonamiento DEBE desactivarse.
+#
+# Bug detectado 2026-09-06: `gemma4:12b-mlx` declara capability "thinking" y Ollama la
+# activa por defecto. En articulos largos el razonamiento agota `num_predict` (2048) antes
+# de emitir la respuesta, de modo que `message.content` llega VACIO y el pipeline registra
+# cero entidades. Medido sobre N=120: 101 de 120 registros con recall 0, F1 aparente 0.0987.
+# Los articulos que fallan son 1.36x mas largos que los que sobreviven.
+#
+# Verificado en el peor caso (articulo de 8813 chars):
+#   sin think  -> content=0    thinking=7651  eval_count=2048 (tope)  => VACIO
+#   think=False-> content=918  thinking=0     eval_count=311          => extraccion correcta
+#
+# No es una limitacion del modelo sino de la configuracion del arnes: con el razonamiento
+# desactivado extrae correctamente. Se desactiva para que su presupuesto de tokens se dedique
+# integro a la respuesta, en igualdad de condiciones con el resto de modelos del estudio.
+_THINKING_DISABLED_MODELS: set[str] = {
+    "gemma4:12b-mlx", "gemma4:31b-mlx", "gemma4-12b-mlx",
+}
+
 _FALLBACK_SYSTEM_PROMPT = (
     "You are an expert compliance and anti-money laundering (AML) analyst. "
     "Perform Named Entity Recognition (NER) on news. Extract entities into: "
@@ -245,9 +264,20 @@ class OllamaProvider(LLMProvider):
             "num_predict": max_tokens,
             "seed": seed,
         }
+        # `think` es parametro de PRIMER NIVEL de Client.chat(), no una clave de `options`.
+        # Bug detectado 2026-09-06: estaba en options, donde Ollama lo ignora en silencio, de
+        # modo que el modo thinking de Qwen3 NUNCA llego a activarse.
+        think_flag: bool | None = None
         if is_qwen3_thinking and not is_cloud:
-            options["think"] = True
+            think_flag = True
             logger.debug("Qwen3 thinking mode enabled for '%s'.", self.model_name)
+        elif any(k in model_key for k in _THINKING_DISABLED_MODELS) and not is_cloud:
+            think_flag = False
+            logger.debug(
+                "Thinking DISABLED for '%s': su razonamiento agota num_predict y vacia content.",
+                self.model_name,
+            )
+        think_kw: dict[str, Any] = {"think": think_flag} if think_flag is not None else {}
         if is_cloud:
             logger.debug("Cloud-hosted Ollama model '%s': using cloud endpoint.", self.model_name)
 
@@ -272,6 +302,7 @@ class OllamaProvider(LLMProvider):
                             model=self.model_name,
                             messages=messages,
                             options=options,
+                            **think_kw,
                         )
                     sys_metrics = monitor.metrics.to_dict()
                 else:
@@ -279,6 +310,7 @@ class OllamaProvider(LLMProvider):
                         model=self.model_name,
                         messages=messages,
                         options=options,
+                        **think_kw,
                     )
                     sys_metrics = {}
 

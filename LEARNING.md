@@ -340,3 +340,30 @@ equivalía a obtener lo mismo.
 > **Aplicación:** cuando redactéis instrucciones para otros, marcad qué pasos descansan en supuestos que no
 > habéis comprobado. Los pasos que dicen «generad», «descargad» o «reinstalad» son los candidatos: todos
 > presuponen que el resultado será idéntico al original.
+
+### L31. Una métrica agregada no distingue «modelo malo» de «arnés roto»
+Un F1 de 0,0987 se interpretó primero como una limitación del modelo. Era un bug del arnés: el modelo
+extraía correctamente, pero su respuesta nunca llegaba al pipeline.
+
+Tres señales lo delataban, y ninguna estaba en el F1:
+
+1. **Precisión de 0,93 en un modelo «malo»** — sospechoso. Era el caso degenerado: con `tp=0` y `fp=0`, la
+   precisión se define como 1,0. **Un modelo que no extrae nada tiene precisión perfecta.**
+2. **`tokens_per_sec` × latencia ≈ 24 000 tokens generados**, más que modelos que sí funcionaban. El modelo
+   estaba trabajando; los tokens iban a otro sitio.
+3. **Cero errores HTTP y cero reintentos** — no era la red.
+
+> **Aplicación:** ante una métrica anómala, mirad la **metadata por fila** antes de interpretarla:
+> `parse_method`, `retries`, `recall=0`, tokens generados. El agregado dice *cuánto*; la metadata dice
+> *por qué*. Y desconfiad de una precisión alta acompañada de recall ínfimo: casi siempre es el caso
+> degenerado disfrazado de virtud.
+
+### L32. Un parámetro en el sitio equivocado falla en silencio
+`think` es parámetro de primer nivel de `Client.chat()`, pero el código lo ponía dentro de `options`.
+Ollama **ignora las claves desconocidas sin avisar**, así que el modo thinking de Qwen3 nunca se activó —
+y el código, los logs y la documentación afirmaban lo contrario durante meses.
+
+> **Aplicación:** cuando una opción de una API externa «no parece hacer nada», verificad su **firma real**
+> (`inspect.signature`) antes de asumir que el efecto es sutil. Las APIs que aceptan diccionarios de
+> opciones arbitrarias no validan las claves: un error de ubicación no produce excepción, produce un
+> comportamiento silenciosamente distinto del declarado.

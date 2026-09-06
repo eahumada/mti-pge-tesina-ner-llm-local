@@ -613,3 +613,48 @@ modo de fallo que el `--rag-mode` por defecto (F3): una divergencia silenciosa q
 **Corregido:** los diccionarios se versionan (1.8 MB), se añade `data/dictionaries/PROCEDENCIA.md`
 documentando fuentes y fecha, y el encargo remoto pasa de «regeneradlos» a «**NO los regeneréis**», con una
 comprobación de conteo (3605 / 1848 / 12000) antes de empezar.
+
+---
+
+## 15. El F1 anómalo era un bug del arnés, no del modelo
+
+### F40. 🔴 `gemma4:12b-mlx` devolvía respuestas vacías por agotamiento del presupuesto de tokens
+**Severidad: crítica.** Investigado el 2026-09-06 a petición del autor. **Invalida el hallazgo F-anterior**
+que interpretaba su F1 de 0,0987 como una limitación de formato del modelo.
+
+`gemma4:12b-mlx` declara capacidad `thinking` y Ollama la activa por defecto. En artículos largos el
+razonamiento **agota `num_predict` (2048) antes de emitir la respuesta**: `message.content` llega vacío y
+el pipeline registra cero entidades.
+
+| Indicador (N=120, baseline) | Valor |
+|:---|--:|
+| Registros con recall = 0 | **101 / 120** |
+| Respuestas crudas vacías | **272 / 273** |
+| Errores HTTP · reintentos | **0 · 0** |
+| Artículos que fallan vs. que sobreviven | **1,36× más largos** (1976 vs 1453 chars) |
+
+**Reproducción y fix, peor caso (8813 chars):**
+
+| Configuración | `content` | `thinking` | `eval_count` |
+|:---|--:|--:|--:|
+| Actual | **0** | 7 651 | **2 048** ← tope exacto |
+| `think=False` | **918** | 0 | 311 |
+
+Con el razonamiento desactivado extrae **14 personas, 6 organizaciones y 16 ubicaciones** del mismo
+artículo que antes devolvía nada.
+
+**Corrección de la interpretación previa.** Se había concluido que era «un fallo de formato de salida, no
+de comprensión», y que la precisión de 0,93 mostraba que «cuando extrae algo acierta». **Ambas afirmaciones
+eran falsas.** La precisión de 0,93 es el **caso degenerado**: con `tp=0` y `fp=0` la precisión se define
+como 1,0. Un modelo que no extrae nada tiene precisión perfecta.
+
+### F41. 🔴 El modo *thinking* de Qwen3 nunca llegó a activarse
+Descubierto al corregir F40. `think` es **parámetro de primer nivel** de `Client.chat()`, no una clave de
+`options`. El código hacía `options["think"] = True`, donde **Ollama lo ignora en silencio**.
+
+Consecuencia: las cifras de `qwen3:8b` del estudio se midieron con el modo thinking **desactivado**, pese a
+que el código creía activarlo y así lo documentaba `AGENTS.md §8.2`. Sus resultados no son incorrectos,
+pero **no miden lo que se declaraba medir**.
+
+**Ambos corregidos** en `src/providers/ollama_provider.py`: `think` pasa como parámetro de primer nivel,
+con un nuevo `_THINKING_DISABLED_MODELS` para las variantes MLX de gemma4.
