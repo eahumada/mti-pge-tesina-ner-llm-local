@@ -43,7 +43,10 @@ def _is_gliner_model(name: str) -> bool:
 
 _ROUTING_TABLE: list[tuple[Any, str]] = [
     # (predicate, dotted import path to class)
-    (lambda name: name.startswith("gpt-"),     "src.providers.openai_provider.OpenAIProvider"),
+    # `gpt-*` → OpenAI, EXCEPTO nombres con tag Ollama (`:`, p.ej. `gpt-oss:20b`), que son locales.
+    # Fix 2026-09-06: `gpt-oss:20b` es Ollama local pero el prefijo `gpt-` lo enviaba a OpenAIProvider
+    # (error `unexpected keyword argument 'rag_context'`). Los modelos OpenAI reales no llevan `:` (gpt-4o).
+    (lambda name: name.startswith("gpt-") and ":" not in name, "src.providers.openai_provider.OpenAIProvider"),
     (lambda name: name.startswith("claude-"),  "src.providers.anthropic_provider.AnthropicProvider"),
     (lambda name: name.startswith("gemini-"),  "src.providers.vertexai_provider.VertexAIProvider"),
     (_is_gliner_model,                         "src.providers.gliner_provider.GlinerProvider"),

@@ -161,24 +161,30 @@ Para **cada tarea** que ejecutes:
 > **Protocolo:** el equipo remoto debe **leer este documento antes de empezar**, escribir su entrada al
 > iniciar cada tarea, actualizarla al terminar y **volver a leerlo** por si otro agente escribió mientras.
 
-### 3.bis.1 ⏸️ PAUSADA — `gemma4:31b` sobre N=15 (PRIORIDAD 1)
-- **Estado:** ⏸️ PAUSADA 2026-09-06 (iniciada 2026-09-05 23:40) · **Equipo:** Remoto 48 GB (Claude Code)
-- **Motivo de la pausa:** el autor retiene las 4 tareas; llegarán por git **corpus faltantes y nuevas
-  instrucciones**. No reanudar ni pushear hasta recibir el pull.
-- **Estado técnico:** checkpoint preservado en `results/gemma4_31b_n15_REMOTO/.checkpoint.json` (23 KB).
-  Reanudable con `--resume` (requiere el mismo `--results-dir`). Sin `benchmark_results.csv` aún.
-- **Verificado antes de pausar:** `gemma4:31b` responde inferencia real (43 s, sin error), ya local (sin `pull`).
-- **P2/P3/P4:** SIN INICIAR — driver de cadena detenido antes de arrancarlas; `caffeinate` y monitor detenidos.
+### 3.bis.1 ✅ COMPLETADA — `gemma4:31b` sobre N=15 (PRIORIDAD 1)
+- **Ejecutada:** 2026-09-05 23:40 → 2026-09-06 01:55 (reanudada con `--resume` tras pausa) · **Equipo:** Remoto 48 GB (Claude Code)
+- **Hardware:** 48 GB · VRAM/modelo 18.8 GB (el de 19 GB cupo; imposible en 16 GB) · sin suspensiones: sí (`caffeinate -dimsu`)
+- **Resultados:** baseline F1=0.6912 P=0.5883 R=0.8680 (aluc. 0.16%) · rag_enhanced F1=0.6391 P=0.6080 R=0.8119 (aluc. 0%)
+- **Tasa de fallo:** 0/30 · `parse_method`: 29 `direct_json` + 1 `fallback` (recuperación blanda, no `failed`)
+- **Protocolo:** `--rag-mode entities` (correcto N=15), `--results-dir` explícito, batch 3 / workers 4. Sin desviaciones.
+- **Pre-checks previos (OK):** corpus 15/120 · diccionarios 3605/1848/12000 · diccionarios NO regenerados
+- **Entregado en:** `results/gemma4_31b_n15_REMOTO/` (CSV, JSON, statistical_report.md, benchmark.log, run_config.json)
+- **Respalda:** la fila de `gemma4:31b` en la Tabla 2 (que citaba F1=67.83% sin dato crudo alguno)
 - **Archivos que producirá:** `results/gemma4_31b_n15_REMOTO/`
 - **Bloquea:** la fila de `gemma4:31b` en la Tabla 2 del informe, hoy sin respaldo alguno
 - **Reportar aquí:** fecha de inicio/fin · F1, P, R obtenidos · **tasa de fallo (debe ser 0)** · RAM pico
 
-### 3.bis.2 ⬜ PENDIENTE — Modelos excluidos por RAM sobre N=120 (PRIORIDAD 2)
-- **Estado:** ⬜ SIN INICIAR
-- **Modelos:** `gpt-oss:20b` (13 GB), `sonct988/gemma4-26b-a4b-it-q4km-256k` (16 GB)
+### 3.bis.2 🟡 PARCIAL — Modelos excluidos por RAM sobre N=120 (PRIORIDAD 2)
+- **Estado:** 🟡 PARCIAL 2026-09-06 02:19 — 1 de 2 modelos OK · **Equipo:** Remoto 48 GB (Claude Code)
+- **`sonct988/gemma4-26b-a4b-it-q4km-256k` ✅:** 240 filas, tasa de fallo 0.
+  baseline F1=0.5627 P=0.5233 R=0.7171 · kb_rag F1=0.5964 P=0.5297 R=0.7608. RAG `kb_combined` confirmado.
+- **`gpt-oss:20b` ❌ BLOQUEADO:** 0 filas. **Bug de enrutado**, no de RAM: `factory.py:46` manda todo
+  `gpt-*` a `OpenAIProvider`; `gpt-oss:20b` es Ollama local. Error:
+  `OpenAIProvider.extract_entities() got an unexpected keyword argument 'rag_context'`.
+  AGENTS.md §8.2 lo clasifica «Local/Active» (contradice la fila `gpt-*→OpenAI` de la misma tabla).
+- **Efecto actual:** estudio de 12 → **13** modelos (con sonct988). Falta gpt-oss para llegar a 14.
+- **Pendiente:** decisión del autor sobre parche de routing (`gpt-oss` → Ollama) para re-correr solo gpt-oss.
 - **Archivos:** `results/excluidos_n120_REMOTO/`
-- **Efecto:** devolvería el estudio de **12 a 14 modelos**
-- ⚠️ `--rag-mode kb_combined` obligatorio, o los datos no serán comparables
 
 ### 3.bis.3 ⬜ PENDIENTE — Benchmark principal N=120, 7 modelos (PRIORIDAD 3)
 - **Estado:** ⬜ SIN INICIAR · *(en la máquina local avanza a ~2 filas/hora; van 153/1680)*
@@ -261,3 +267,6 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-04 14:00 | Claude Code | Ref git inválida `refs/remotes/origin/main 2` eliminada: rompía `git log --all` y causó 2 escaneos de seguridad con falso negativo |
 | 2026-09-03 16:38 | Claude Code | Inventario completo de resultados cloud: `gemma4:31b-cloud` y `minimax-m3:cloud` conservados en sus 2 corridas cada uno (N=15 y N=120). Detectado que ambas son de modo RAG legacy `entities`, no comparables con `kb_combined`. Ver `TODO-INFORME-FINAL.md §9.4-9.5` |
 | 2026-09-03 20:18 | Claude Desktop | Tarea 2.0: protocolo añadido a `AGENT.md`, `ANTIGRAVITY.md` y `GEMINI.md` de la raíz; §2.4 (documentos de la sesión) y §2.5 (cierre de formato tras los benchmarks) |
+| 2026-09-06 01:55 | Equipo Remoto 48 GB (Claude Code) | P1 §3.bis.1 COMPLETADA: `gemma4:31b` N=15. Pre-checks OK (15/120, 3605/1848/12000). Tasa de fallo 0/30. baseline F1=0.6912 / rag F1=0.6391. VRAM 18.8 GB. Entregado en `results/gemma4_31b_n15_REMOTO/`. P2 en curso. Al cerrar las 4: copiar a `remote_48g/results/` + push |
+| 2026-09-06 02:19 | Equipo Remoto 48 GB (Claude Code) | P2 §3.bis.2 PARCIAL: `sonct988` OK (fallo 0, F1 0.5627/0.5964). `gpt-oss:20b` bloqueado por bug de routing (`gpt-*`→OpenAIProvider). Estudio 12→13 |
+| 2026-09-06 02:25 | Equipo Remoto 48 GB (Claude Code) | Fix aprobado por el autor: `factory.py:46` ahora excluye tags Ollama (`:`) de la regla `gpt-*` → `gpt-oss:20b` rutea a Ollama. Backup `factory.py.bak_gptoss_routing_20260906`. Verificado (gpt-4o sigue OpenAI). Re-run de gpt-oss encolado tras P3/P4 con `--resume` |
