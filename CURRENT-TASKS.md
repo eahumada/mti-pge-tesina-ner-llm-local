@@ -302,6 +302,19 @@ Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **Invest
   Motivo: los reinicios para optimizar concurrencia corrompieron la cobertura en la corrida de afectados
   (baseline 99/120 únicos). **Usar `qwen3_clean_n120_REMOTO`, no la de afectados.** ETA ~1.5-2 h.
 
+### 3.bis.9 🟠 ENVIADA — Corrección del hallazgo qwen3 thinking (instrucciones nuevas)
+- **Documento:** [`CORRECCION-QWEN3-THINKING-20260906.md`](./CORRECCION-QWEN3-THINKING-20260906.md)
+- **Qué corrige:** `HALLAZGO-QWEN3-THINKING.md` da P3 como *think OFF*; era **think ON**. Antes del fix
+  `743054d`, `think` iba dentro de `options` y Ollama lo descartaba, dejando **el default (thinking ON)**.
+- **Evidencia:** P3 vs corrida limpia = **120/120 filas con (F1,P,R) idénticos** y 0/120 con latencia igual;
+  P3 corrió 05:07-06:19, el fix llegó 09:08. Latencia mediana 789 s / 517 s / **67 s** (nothink).
+- **Comparación válida** (78 artículos comunes, P3 think ON vs nothink think OFF):
+  F1 **0.4606 → 0.5122** (+5,2 pp) · `recall=0` **10 → 1** · latencia **688 s → 66,5 s** (10,3×).
+- **Decisión `think=False`: se mantiene** (mejor respaldada de lo que se argumentó).
+- **Pedidos al remoto:** nota de corrección aditiva en su hallazgo; terminar `qwen3_nothink_n120_REMOTO`;
+  marcar inválidas las filas qwen3 de P3/limpia; publicar los `run_config.json` que faltan; revisar
+  `qwen3:14b/32b/latest`; enumerar modelos con capacidad `thinking`; no tocar `real_mixed_64`.
+
 ### 3.bis.5 Plantilla de reporte
 Al terminar cada tarea, sustituid su bloque por:
 
@@ -404,3 +417,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-06 16:46 | Equipo Remoto 48 GB (Claude Code) | §3.bis.7 RESUELTA: nemotron 8 failed = vacíos esporádicos inherentes del 4B (no thinking, no longitud; re-run deja 7/240 → excluir); mistral-nemo benigno. §3.bis.8: gemma4:12b-mlx re-run LIMPIO (F1 0.5618/0.5929); qwen3:8b re-corrida limpia en curso (los reinicios corrompieron cobertura). REPORTE-COMPLETO.md publicado en remote_48g/ |
 | 2026-09-06 17:00 | Equipo Remoto 48 GB (Claude Code) | 🔴 HALLAZGO scoring: `evaluator.py:126-134` da F1=1.0 a extracción vacía sobre gold no-vacío (default 1.0 sin predicciones). Infla F1 de modelos débiles hasta +0.208 (nuextract kb_rag) / +0.150 (nemotron). No uniforme → sesga ranking. Afecta TODAS las corridas. Decisión del autor: documentar, no tocar scorer. Detalle: `remote_48g/HALLAZGO-SCORING-F1.md` |
 | 2026-09-06 17:40 | Equipo Remoto 48 GB (Claude Code) | Hallazgo qwen3 thinking: comparación N=120 (P3 think OFF vs run limpio think ON) → F1 baseline idéntico 0.4483, kb_rag no mejor con think, solo más lento/vacíos. Decisión del autor: qwen3:8b a `think=False` (`ollama_provider.py`, backup `.bak_qwen3nothink_20260906`). Corrida limpia think=false en `results/qwen3_nothink_n120_REMOTO/`. Detalle: `remote_48g/HALLAZGO-QWEN3-THINKING.md` |
+| 2026-09-06 17:55 | Claude Code (equipo principal) | 🟠 CORRECCIÓN enviada al remoto: el hallazgo qwen3 tenía la evidencia invertida (P3 era think **ON**, no OFF; 120/120 filas idénticas lo prueban). Efecto real de `think=False`: F1 +5,2 pp, `recall=0` 10→1, 10,3× más rápido. Decisión mantenida. Instrucciones en `CORRECCION-QWEN3-THINKING-20260906.md`; detalle en §3.bis.9 |
