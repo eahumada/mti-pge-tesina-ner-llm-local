@@ -561,9 +561,19 @@ que elegir entre autenticar o preservar el benchmark era infundada.
 
 | Evidencia | Origen |
 |:---|:---|
-| **9 de 15 extracciones fallidas** por cuota; **10 de 15 con recall = 0**; N efectiva = **6** | F35 |
-| **HTTP 402 — requiere plan de pago.** Verificado con las tres cuentas disponibles; ninguna lo desbloquea | F6, F37 |
+| **9 de 15 extracciones fallidas**; **10 de 15 con recall = 0**; N efectiva = **6** | F35 |
+| **HTTP 402 — requiere plan de pago.** Re-verificado el 2026-09-06 tras reautenticar: sigue devolviendo 402 | F6, F37, F42 |
 | Su fila declaraba F1 = 0.6321 sobre un supuesto N=15; el crudo da 0.2011 y el subconjunto exitoso 0.5028 (n=6) | F35 |
+
+> ⚠️ **Precisión sobre la justificación (corregida el 2026-09-06).** La redacción original de este hallazgo
+> atribuía los fallos de julio al plan de pago. **Es inexacto:** el log de aquella corrida registra
+> **140 líneas con `status code: 429`** (cuota) frente a **1 sola** mención de 402. En julio el modelo
+> falló por **cuota agotada**, que es temporal y se renueva. La barrera de **plan de pago (402)** es lo que
+> impide recuperarlo **hoy**, y fue confirmada de nuevo tras la reautenticación del autor.
+>
+> La distinción importa porque, según `LEARNING.md §L22`, un 429 justifica esperar y un 402 obliga a
+> retirar. **La decisión de retirarlo sigue siendo correcta**, pero por la barrera actual, no por la de
+> julio.
 
 Un resultado con **60 % de tasa de fallo** y **sin posibilidad de repetición** no es defendible. A diferencia
 de `gemma4:31b-cloud` —cuya cuota se renueva y sí pudo reautenticarse—, aquí la barrera es de plan
@@ -658,3 +668,27 @@ pero **no miden lo que se declaraba medir**.
 
 **Ambos corregidos** en `src/providers/ollama_provider.py`: `think` pasa como parámetro de primer nivel,
 con un nuevo `_THINKING_DISABLED_MODELS` para las variantes MLX de gemma4.
+
+### F42. ✅ Auditoría de las recomendaciones sobre modelos cloud
+**Realizada el 2026-09-06 a petición del autor**, aplicando a los cloud el mismo escrutinio que destapó el
+bug de *thinking* en `gemma4:12b-mlx` (F40).
+
+**Lo que se confirmó válido:**
+
+| Comprobación | Resultado |
+|:---|:---|
+| ¿La corrida limpia de `gemma4:31b-cloud` tiene la firma del bug de *thinking*? | **No.** 30/30 `direct_json`, cero recall=0, ~74-83 tokens generados |
+| ¿Los fallos de julio eran el bug de *thinking*? | **No.** Latencia **0,0 s** y **0 tokens**: la petición nunca obtuvo respuesta. El bug de thinking produce lo contrario — latencia alta y miles de tokens con `content` vacío |
+| ¿F1 = 0,6699 de `gemma4:31b-cloud` se sostiene? | **Sí**, sin salvedades |
+
+**Lo que se corrigió:** la justificación de la retirada de `minimax-m3:cloud` confundía dos modos de fallo
+distintos (ver la advertencia en F38).
+
+**Dato operativo nuevo:** tras el `ollama signin` del autor, las dos cuentas alternativas
+(`delmartg`, `4useguros`) devuelven **Unauthorized** al invocarlas directamente con su API key, cuando antes
+respondían. El `signin` parece haber cambiado el contexto de autenticación. No afecta a ninguna corrida en
+marcha, pero invalida la rotación de cuentas como plan de contingencia.
+
+> **Método que hizo falta:** distinguir un fallo de infraestructura de uno del arnés exige mirar
+> `latencia` y `tokens generados`, no solo `parse_method`. Latencia 0 con 0 tokens es un rechazo de red;
+> latencia alta con muchos tokens y `content` vacío es el arnés perdiendo la respuesta.

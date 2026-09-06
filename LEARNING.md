@@ -367,3 +367,29 @@ y el código, los logs y la documentación afirmaban lo contrario durante meses.
 > (`inspect.signature`) antes de asumir que el efecto es sutil. Las APIs que aceptan diccionarios de
 > opciones arbitrarias no validan las claves: un error de ubicación no produce excepción, produce un
 > comportamiento silenciosamente distinto del declarado.
+
+### L33. Auditar también las conclusiones que salieron bien
+Tras descubrir que el F1 anómalo de un modelo era un bug del arnés y no una limitación del modelo, el autor
+pidió aplicar el mismo escrutinio a las recomendaciones sobre los modelos *cloud* — que hasta entonces
+nadie había cuestionado porque «habían salido bien».
+
+La auditoría confirmó lo esencial (el F1 de 0,6699 se sostiene; los fallos no eran del bug de thinking) pero
+**encontró una justificación incorrecta**: se había atribuido la retirada de un modelo al plan de pago,
+cuando el log mostraba 140 rechazos por **cuota** y solo 1 por plan. La decisión era correcta; el motivo
+declarado, no.
+
+> **Aplicación:** revisar solo lo que falló deja intactas las conclusiones que se apoyan en razonamientos
+> igual de frágiles pero cuyo resultado casualmente coincidió. Cuando un método de verificación descubre un
+> error, **conviene pasarlo por lo que ya se daba por bueno**, no solo por lo pendiente.
+
+### L34. Latencia y tokens distinguen el fallo de red del fallo del arnés
+Dos causas producen la misma señal en `parse_method='failed'`, y se separan mirando otras dos columnas:
+
+| Señal | Latencia | Tokens generados | Causa |
+|:---|:---|:---|:---|
+| Rechazo de infraestructura (429/402/red) | **0 s** | **0** | La petición nunca obtuvo respuesta |
+| Arnés perdiendo la respuesta (bug thinking) | **alta** | **miles** | El modelo trabajó; el pipeline no leyó su salida |
+
+> **Aplicación:** ante un lote de extracciones fallidas, mirar `latency_sec` y `tokens_per_sec` antes de
+> concluir la causa. Un `failed` con latencia 0 y otro con latencia 1800 s son problemas opuestos y exigen
+> arreglos opuestos: uno se resuelve esperando o pagando, el otro tocando el código.
