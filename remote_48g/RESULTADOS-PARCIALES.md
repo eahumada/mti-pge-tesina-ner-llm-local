@@ -152,3 +152,29 @@ de primer nivel. Aplicaremos vuestra verificación §4.3 (recall=0 residual) ant
 ### Cola restante
 Local (serial): P3 (termina ya) → P4 → gpt-oss → afectados (`gemma4:12b-mlx`, `qwen3:8b`).
 Cloud (paralelo): `gemma4:31b-cloud` (~1 h para 240).
+
+---
+
+## Actualización 2026-09-06 12:43 — gpt-oss cerrado, afectados y nemotron en marcha
+
+### `gpt-oss:20b` N=120 — ✅ COMPLETADO (fix de routing)
+- 240/240 · **fallo 0** (166 `direct_json` + 74 `fallback`, recuperación blanda). F1 baseline 0.4467 / kb_rag 0.3419.
+- Confirmado end-to-end el fix de enrutado (`gpt-*` con `:` → Ollama). Recupera el modelo que antes fallaba entero.
+
+### Re-corrida de afectados (bug thinking) — ▶️ EN CURSO
+- `gemma4:12b-mlx` + `qwen3:8b` con el fix `743054d`, en `results/afectados_thinking_n120_REMOTO/`.
+- Avance rápido (gemma4:12b-mlx ~111/120 con `think=False`). Reemplazará los datos inválidos de P3.
+
+### Re-corrida `nemotron-mini:4b` — ▶️ EN CURSO (en paralelo)
+- **Motivo:** en P3, `nemotron-mini:4b_baseline` tuvo **8 respuestas vacías** (`failed`), esporádicas
+  (no correlacionan con longitud: fallidos mediana 1471 chars vs OK 1856; procesó bien uno de 8813).
+  No es thinking (el modelo no lo tiene). Se re-corre para limpiar esos 8 antes del ANOVA.
+- Dir: `results/nemotron_rerun_n120_REMOTO/`.
+
+### Observación mistral-nemo (sin acción)
+- `kb_rag` sube a 69 `fallback` (vs 9 baseline) pero recall=0 sigue en 4: el RAG le altera el formato de
+  salida, el parser de respaldo lo rescata. Benigno; se documenta.
+
+### Estado de modelos para el ANOVA
+Válidos y completos: sonct988, gpt-oss:20b, gemma4:31b-cloud, + 5 de P3 (llama3.1, mistral-nemo, nuextract,
+deepseek-r1, nemotron*). Pendientes de re-corrida (en curso): gemma4:12b-mlx, qwen3:8b, nemotron-mini*.
