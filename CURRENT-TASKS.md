@@ -261,8 +261,15 @@ Para **cada tarea** que ejecutes:
 - ⚠️ **Criterio de parada:** comprobar la tasa de fallo **a mitad de corrida**. Si supera el **10 %**, parar.
   429 = esperar a que renueve la cuota. 402 = avisar, es barrera de plan.
 
-### 3.bis.7 🔍 PARA INVESTIGAR — dos anomalías detectadas en P3
-Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **El equipo remoto investiga.**
+### 3.bis.7 ✅ RESUELTA — dos anomalías detectadas en P3
+Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **Investigadas por el equipo remoto (2026-09-06 16:46).**
+
+> **Conclusión a):** `nemotron-mini:4b_baseline` — los 8 `failed` son **respuestas vacías** (len 0, 2 reintentos),
+> pero **NO es thinking** (el modelo no la declara) y **NO correlaciona con longitud** (fallidos mediana 1471
+> chars vs OK 1856; procesó bien uno de 8813). Son **vacíos esporádicos inherentes al 4B**. Re-corrida en
+> `results/nemotron_rerun_n120_REMOTO/` → siguen 7/240 → confirmado no corregible. **Acción:** excluir esas filas.
+> **Conclusión b):** `mistral-nemo` — confirmado benigno: el RAG le altera el formato (69 `fallback`) pero el
+> respaldo rescata (recall=0 solo 4). Sin acción; documentado.
 
 #### a) `nemotron-mini:4b_baseline` — los únicos `failed` de toda la corrida
 - **8 `parse_method: failed`** y **26 `recall=0`** de 120.
@@ -287,6 +294,13 @@ Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **El equ
 > **Método sugerido** (el que funcionó con `gemma4:12b-mlx`): cruzar `parse_method` con `recall` distingue un
 > respaldo que funciona de uno que encubre un fallo. Y `latency_sec` con tokens generados distingue un
 > rechazo de infraestructura (latencia 0) de que el arnés pierda la respuesta (latencia alta, `content` vacío).
+
+### 3.bis.8 ▶️ EN CURSO — re-corridas de modelos afectados por bug thinking
+- **`gemma4:12b-mlx` ✅ LIMPIO:** `results/afectados_thinking_n120_REMOTO/` — 120+120, 0 failed,
+  F1 0.5618/0.5929 (reemplaza P3 inválido 0.27/0.11).
+- **`qwen3:8b` ▶️ RE-CORRIDA LIMPIA:** `results/qwen3_clean_n120_REMOTO/` (dir fresco, sin reinicios, workers 6).
+  Motivo: los reinicios para optimizar concurrencia corrompieron la cobertura en la corrida de afectados
+  (baseline 99/120 únicos). **Usar `qwen3_clean_n120_REMOTO`, no la de afectados.** ETA ~1.5-2 h.
 
 ### 3.bis.5 Plantilla de reporte
 Al terminar cada tarea, sustituid su bloque por:
@@ -385,3 +399,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-06 10:08 | Equipo Remoto 48 GB (Claude Code) | P3 §3.bis.3 COMPLETADA: 1680/1680, fallo 8/1680 (solo nemotron-mini baseline). `gemma4:12b-mlx`+`qwen3:8b` inválidos (bug thinking) → re-corrida aparte. P4 (ablación) arrancó. Cloud 234/240 |
 | 2026-09-06 10:08 | Equipo Remoto 48 GB (Claude Code) | §3.bis.6 COMPLETADA: `gemma4:31b-cloud` N=120, 240/240, **fallo 0%**, F1 0.6238/0.6268. 10º modelo del ANOVA. Rate limit efectivo (0× 429 vs 79% fallo previo). Entregado en `results/gemma4_31b_cloud_n120_REMOTO/`. P4 en curso |
 | 2026-09-06 10:35 | Equipo Remoto 48 GB (Claude Code) | P4 §3.bis.4 COMPLETADA: ablación 60/60, fallo 0. fs-es 0.7444 / zs-es 0.6843 / zs-en 0.6405 / fs-en 0.6332. CADENA local COMPLETA (P2-P4). gpt-oss:20b arrancó con el fix de routing (200 OK). Sigue re-corrida de afectados |
+| 2026-09-06 16:46 | Equipo Remoto 48 GB (Claude Code) | §3.bis.7 RESUELTA: nemotron 8 failed = vacíos esporádicos inherentes del 4B (no thinking, no longitud; re-run deja 7/240 → excluir); mistral-nemo benigno. §3.bis.8: gemma4:12b-mlx re-run LIMPIO (F1 0.5618/0.5929); qwen3:8b re-corrida limpia en curso (los reinicios corrompieron cobertura). REPORTE-COMPLETO.md publicado en remote_48g/ |
