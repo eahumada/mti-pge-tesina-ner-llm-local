@@ -25,9 +25,20 @@
 - **P4** estudio de ablación de prompts (`gemma4:latest`, `--ablation`) — regenera 4 cifras (ZS/FS × EN/ES)
   que el informe cita sin dato crudo.
 - **P2 (completar)** re-corrida de `gpt-oss:20b` con el routing ya corregido → estudio 13 → 14 modelos.
-- Verificación final de tasa de fallo por tarea antes de dar cifras por buenas.
-- Copia definitiva de las 4 corridas a `remote_48g/results/` + push de cierre.
+- **Re-corrida modelos afectados por bug thinking** (`gemma4:12b-mlx`, `qwen3:8b`) con el fix `743054d`, en
+  `results/afectados_thinking_n120_REMOTO/`. Encolada tras gpt-oss. Ref: `ALERTA-EQUIPO-REMOTO-20260906.md`.
+  El equipo principal fusiona.
+- Verificación final de tasa de fallo por tarea antes de dar cifras por buenas (incl. recall=0 residual en
+  los afectados: criterio de aceptación del alerta §4.3).
+- Copia definitiva de las corridas a `remote_48g/results/` + push de cierre.
 - Reflejar el fix de routing en `AGENTS.md §8.2` (contradicción `gpt-oss` Local vs regla `gpt-*→OpenAI`).
 
+## Alertas recibidas del equipo principal
+- 🔴 `ALERTA-EQUIPO-REMOTO-20260906.md`: bug thinking invalida `gemma4:12b-mlx` + `qwen3:8b`. Fix ya en árbol.
+  Acción tomada: re-corrida encolada de esos 2 (arriba).
+- 📄 `INFORME-AVANCE-20260906.md`: ANOVA conjunto 9 modelos (F=64.06, p=7.26e-177); `sonct988` (recuperado
+  por este equipo) **lidera** el ranking N=120; hallazgo RAG diferencial (modelos pequeños ganan, grandes pierden).
+
 ## Orden de ejecución restante
-P3 → P4 → re-run `gpt-oss` (serialidad: un modelo local a la vez, trampa 06).
+P3 → P4 → re-run `gpt-oss` → re-run afectados (`gemma4:12b-mlx`, `qwen3:8b`).
+Serialidad: un modelo local a la vez (trampa 06).

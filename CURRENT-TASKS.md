@@ -201,9 +201,16 @@ Para **cada tarea** que ejecutes:
 - **Pendiente:** decisión del autor sobre parche de routing (`gpt-oss` → Ollama) para re-correr solo gpt-oss.
 - **Archivos:** `results/excluidos_n120_REMOTO/`
 
-### 3.bis.3 ⬜ PENDIENTE — Benchmark principal N=120, 7 modelos (PRIORIDAD 3)
-- **Estado:** ⬜ SIN INICIAR · *(en la máquina local avanza a ~2 filas/hora; van 153/1680)*
+### 3.bis.3 ▶️ EN CURSO — Benchmark principal N=120, 7 modelos (PRIORIDAD 3)
+- **Estado:** ▶️ EN CURSO (equipo remoto 48 GB) — 921/1680 al 2026-09-06 09:04 · `kb_combined`, workers 8
 - **Archivos:** `results/benchmark_n120_REMOTO/`
+- **Completos y válidos:** `mistral-nemo`, `nuextract` (en curso), `llama3.1:8b`, `nemotron-mini:4b`,
+  `deepseek-r1:1.5b` (ninguno usa *thinking*).
+- 🔴 **AFECTADOS por el bug thinking (ALERTA-EQUIPO-REMOTO-20260906):** `gemma4:12b-mlx` (recall=0 en 66-94/120,
+  respuestas vacías) y `qwen3:8b` (thinking nunca se activó). El fix (`ollama_provider.py`, commit `743054d`)
+  ya está en el árbol, pero **P3 corre con el código viejo cargado** → esos 2 no se salvan en esta corrida.
+- **Decisión del autor (aprobada):** dejar P3 terminar (5 modelos válidos) y **re-correr solo los 2 afectados**
+  con el fix en `results/afectados_thinking_n120_REMOTO/` (encolado tras P4/gpt-oss). El equipo principal fusiona.
 
 ### 3.bis.4 ⬜ PENDIENTE — Configuraciones de prompt (PRIORIDAD 4)
 - **Estado:** ⬜ SIN INICIAR
@@ -295,3 +302,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-06 01:55 | Equipo Remoto 48 GB (Claude Code) | P1 §3.bis.1 COMPLETADA: `gemma4:31b` N=15. Pre-checks OK (15/120, 3605/1848/12000). Tasa de fallo 0/30. baseline F1=0.6912 / rag F1=0.6391. VRAM 18.8 GB. Entregado en `results/gemma4_31b_n15_REMOTO/`. P2 en curso. Al cerrar las 4: copiar a `remote_48g/results/` + push |
 | 2026-09-06 02:19 | Equipo Remoto 48 GB (Claude Code) | P2 §3.bis.2 PARCIAL: `sonct988` OK (fallo 0, F1 0.5627/0.5964). `gpt-oss:20b` bloqueado por bug de routing (`gpt-*`→OpenAIProvider). Estudio 12→13 |
 | 2026-09-06 02:25 | Equipo Remoto 48 GB (Claude Code) | Fix aprobado por el autor: `factory.py:46` ahora excluye tags Ollama (`:`) de la regla `gpt-*` → `gpt-oss:20b` rutea a Ollama. Backup `factory.py.bak_gptoss_routing_20260906`. Verificado (gpt-4o sigue OpenAI). Re-run de gpt-oss encolado tras P3/P4 con `--resume` |
+| 2026-09-06 09:04 | Equipo Remoto 48 GB (Claude Code) | Leída ALERTA-EQUIPO-REMOTO-20260906: bug thinking invalida `gemma4:12b-mlx` (recall=0 66-94/120) y `qwen3:8b` en P3. Fix `743054d` ya en árbol. Decisión del autor: dejar P3 terminar (5 modelos válidos) y re-correr los 2 afectados con el fix en `results/afectados_thinking_n120_REMOTO/` (encolado tras gpt-oss). Analizado también INFORME-AVANCE-20260906 (ANOVA 9 modelos F=64.06; sonct988 lidera) |
