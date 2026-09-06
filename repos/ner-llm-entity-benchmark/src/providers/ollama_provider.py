@@ -37,8 +37,11 @@ logger = logging.getLogger("ner_benchmark.providers.ollama")
 _NUEXTRACT_MODELS: set[str] = {
     "nuextract", "nuextract:latest", "nuextract:3.8b", "nuextract:8b"
 }
+# Nota (2026-09-06, decisión del autor): `qwen3:8b` se saca de este set. Prueba empírica N=120
+# (think OFF en P3 vs think ON) mostró F1 baseline idéntico (0.4483) y kb_rag no mejor con think;
+# el thinking solo añade lentitud y riesgo de vacíos. Se corre con think=False (ver _THINKING_DISABLED_MODELS).
 _QWEN3_THINKING_MODELS: set[str] = {
-    "qwen3:8b", "qwen3:14b", "qwen3:32b", "qwen3:latest"
+    "qwen3:14b", "qwen3:32b", "qwen3:latest"
 }
 
 # Modelos con capacidad `thinking` en los que el razonamiento DEBE desactivarse.
@@ -58,6 +61,7 @@ _QWEN3_THINKING_MODELS: set[str] = {
 # integro a la respuesta, en igualdad de condiciones con el resto de modelos del estudio.
 _THINKING_DISABLED_MODELS: set[str] = {
     "gemma4:12b-mlx", "gemma4:31b-mlx", "gemma4-12b-mlx",
+    "qwen3:8b",  # 2026-09-06: think no mejora F1 (prueba N=120), solo añade lentitud/vacíos
 }
 
 # ---------------------------------------------------------------------------
