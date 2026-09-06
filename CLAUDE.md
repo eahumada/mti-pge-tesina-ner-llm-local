@@ -86,7 +86,14 @@ en el listado no prueba que no haya nadie más editando.
 
 Existe un documento vivo de coordinación en la raíz del proyecto: [`CURRENT-TASKS.md`](./CURRENT-TASKS.md).
 Declara **qué agente está trabajando en qué y sobre qué archivos**, con secciones separadas para
-**Claude Code**, **Claude Desktop** y **Antigravity**.
+**Claude Code**, **Claude Desktop**, **Antigravity** y **Equipo Remoto 48 GB** (§3.bis).
+
+> ⚠️ **PRIORIDAD MÁXIMA: mantener `CURRENT-TASKS.md` actualizado en todo momento.** Es la única fuente de
+> verdad sobre qué agente hace qué. Un `CURRENT-TASKS.md` desactualizado provoca solapamientos y pérdida de
+> trabajo entre sesiones concurrentes. Actualizar la entrada propia **al iniciar** (`EN CURSO`), **al
+> terminar** (`COMPLETADA`/`FALLIDA`) y en cada cambio de estado relevante, y añadir la fila correspondiente
+> al **§6 Registro de actualizaciones**. Esto tiene prioridad sobre avanzar en la tarea: primero declarar,
+> luego ejecutar.
 
 **Protocolo obligatorio para cada tarea:**
 
