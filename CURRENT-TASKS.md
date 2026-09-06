@@ -179,6 +179,17 @@ Para **cada tarea** que ejecutes:
 > **Protocolo:** el equipo remoto debe **leer este documento antes de empezar**, escribir su entrada al
 > iniciar cada tarea, actualizarla al terminar y **volver a leerlo** por si otro agente escribió mientras.
 
+### 3.bis.0 🔴 URGENTE — Re-corrida de `gemma4:12b-mlx` (SUBIR DE PRIORIDAD)
+- **Estado:** 🔴 PEDIDO · **Encargo:** [`URGENTE-REMOTO-RECORRIDA-20260906.md`](./URGENTE-REMOTO-RECORRIDA-20260906.md)
+- **Por qué sube:** es el **único modelo del barrido cuyos datos hay que descartar íntegros**, y bloquea el
+  ANOVA definitivo. Estaba encolado tras P4 y `gpt-oss`; se pide adelantarlo.
+- **Magnitud confirmada en los datos del remoto:** `recall=0` en **66/120 (baseline)** y **94/120 (kb_rag)**;
+  **203 de 206 respuestas crudas vacías** en su `benchmark.log`.
+- **Causa:** bug de *thinking* (`FINDINGS.md §F40`). El razonamiento agota `num_predict=2048` antes de emitir
+  la respuesta. `kb_rag` falla más porque el contexto RAG alarga el prompt (**+22 % de latencia**).
+- **Fix:** commit `743054d`, ya en el árbol. **Requiere `git pull` antes de relanzar.**
+- **Criterio de aceptación:** `recall=0` debe ser **residual**, no decenas. Si reaparecen, parar y avisar.
+
 ### 3.bis.1 ✅ COMPLETADA — `gemma4:31b` sobre N=15 (PRIORIDAD 1)
 - **Ejecutada:** 2026-09-05 23:40 → 2026-09-06 01:55 (reanudada con `--resume` tras pausa) · **Equipo:** Remoto 48 GB (Claude Code)
 - **Hardware:** 48 GB · VRAM/modelo 18.8 GB (el de 19 GB cupo; imposible en 16 GB) · sin suspensiones: sí (`caffeinate -dimsu`)
@@ -309,6 +320,8 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-05 21:45 | Claude Code | `gemma4:12b-mlx_baseline` COMPLETADO (40/40 lotes). Descarga de `gemma4:31b-mlx` reanudada; `gemma4:31b` ya estaba local |
 | 2026-09-06 04:35 | Claude Code | Progreso 348/1680 (20,7%). `gemma4:12b-mlx` COMPLETO (baseline y kb_rag 40/40). Contaminadas congeladas en 36 tras desactivar la suspensión: 22% → 10% |
 | 2026-09-06 04:35 | Claude Code | Proyección revisada con latencias MEDIDAS: ~518 h (21 días). La estimación previa de 66 h partía de extrapolar el histórico N=15 y era 7× optimista |
+| 2026-09-06 13:00 | Claude Code | 🔴 Analizado a fondo el P3 remoto: bug de *thinking* confirmado con la misma firma (**203/206 respuestas vacías**). `kb_rag` falla más (78 %) que `baseline` (55 %) porque el contexto RAG alarga el prompt: **+22 % de latencia**. Su máquina de 48 GB alivia el síntoma (55 % vs nuestro 84 %) pero no lo cura |
+| 2026-09-06 13:00 | Claude Code | Pedido **adelantar** la re-corrida de `gemma4:12b-mlx`: único modelo con datos a descartar íntegros, bloquea el ANOVA. Ver `URGENTE-REMOTO-RECORRIDA-20260906.md` |
 | 2026-09-06 10:15 | Autor | Decisión: **delegar TODO lo pendiente al equipo remoto**. El equipo principal no ejecuta más corridas; su máquina queda libre y la corrida local se cierra donde está |
 | 2026-09-06 10:15 | Claude Code | Tarea nueva para el remoto: `gemma4:31b-cloud` sobre N=120. Su corrida existente tiene **190/240 fallos (79 %)** y modo RAG legacy. Ver `ADENDA-EQUIPO-REMOTO-20260906.md` |
 | 2026-09-06 09:30 | Autor | Decisión: **esperar la respuesta del equipo remoto** antes de relanzar nada en local, para no duplicar esfuerzo |
