@@ -484,3 +484,34 @@ Desbloqueado por la reautenticación. Corrige la contaminación documentada en `
 3. **Reanudar benchmark principal N=120** — local, en serie, desde 153/1680
 4. Análisis comparativo de prompts con `gemma4:latest` (9.6 GB, dentro del límite) si se decide re-ejecutarla
 5. KPMG y cierre documental
+
+---
+
+## 13. ⏳ DIFERIDO — Renombrar el término a «Análisis de Variantes de Prompt»
+
+**Decisión del autor (2026-09-06):** el término definitivo será **«Análisis de Variantes de Prompt»**.
+Se aplicará **de forma global al final**, cuando haya terminado de generarse toda la evidencia, para no
+hacer el cambio dos veces ni desincronizar documentos mientras el equipo remoto sigue entregando.
+
+### Estado actual
+El término vigente en toda la documentación es **«Análisis Comparativo de Prompts»** (commit `852ccd5`).
+Es correcto y neutro; solo se sustituirá por el definitivo en la pasada final.
+
+### Por qué «variantes» es mejor
+Las cuatro configuraciones evaluadas —zs-en, zs-es, fs-en, fs-es— **son literalmente variantes** del mismo
+prompt: cambia el idioma y la presencia de ejemplos, no el prompt en sí. El término describe el objeto de
+estudio con más exactitud que «configuraciones», y es más corto.
+
+### Qué habrá que cambiar cuando llegue el momento
+
+| Ámbito | Acción |
+|:---|:---|
+| **Prosa de documentos vigentes** | Sustituir «Análisis Comparativo de Prompts» → «Análisis de Variantes de Prompt». Afecta a: informe final (§4.3 y §5.2), `TODO-INFORME-FINAL.md`, `BENCHMARKS.md`, `README.md`, `RUNS_INDEX.md`, `research/rag/WORKLOG.md` |
+| **Las dos glosas del informe** | Hoy citan *ablation study* en cursiva como término de la literatura anglosajona. **Mantener así**: preserva la trazabilidad académica sin usar la palabra en español |
+| **Identificadores técnicos** | ⚠️ **NO tocar**: el flag `--ablation`, la clave `ablation` de `run_config.json` y los nombres de directorio (`ablacion_n15_REMOTO`, `klepto_N15__ablation__4-prompts__…`). Renombrarlos rompería comandos documentados, scripts del equipo remoto y rutas ya publicadas en el encargo |
+| **Registros históricos** | ⚠️ **NO tocar**: Hito 4, carpetas `archive/` y volcados de auditoría |
+| **Los `.docx`** | Propagar con `tools/docx_replace_terms.py` (edición quirúrgica; **no** regenerar con pandoc) |
+
+### Condición de disparo
+- [ ] Ejecutar **solo cuando** el equipo remoto haya cerrado todas sus tareas y el ANOVA definitivo esté
+      calculado. Antes de eso, cualquier cambio global habría que repetirlo.
