@@ -1,6 +1,6 @@
 # Resultados parciales — Equipo Remoto 48 GB
 
-**Fecha del corte:** 2026-09-06 09:28 (actualización; cortes previos 04:33 / 08:58 / 09:01)
+**Fecha del corte:** 2026-09-06 09:32 (actualización; ver historial abajo)
 **Equipo:** Remoto 48 GB RAM (Claude Code)
 **Encargo:** `PROMPT-EQUIPO-REMOTO-48GB.md` / artefacto de ejecución (4 tareas)
 **Rama:** `sesion/revision-final-20260905`
@@ -33,7 +33,7 @@ suspensiones. Todos los modelos ya locales (cero `pull`).
 | **P1** `gemma4:31b` N=15 | ✅ COMPLETADA | 30/30 | **0** |
 | **P2** `sonct988/gemma4-26b…` N=120 | ✅ COMPLETADA | 240/240 | **0** |
 | **P2** `gpt-oss:20b` N=120 | ⏳ encolado (fix aplicado) | 0 | — |
-| **P3** principal N=120 (7 modelos) | ▶️ EN CURSO | 1047/1680 (~62%) | 0 hasta ahora |
+| **P3** principal N=120 (7 modelos) | ▶️ EN CURSO | 1137/1680 (~68%) | 0 hasta ahora |
 | **P4** ablación de prompts | ⏳ en cola | 0 | — |
 | **Re-corrida afectados** `gemma4:12b-mlx` + `qwen3:8b` | ⏳ encolada (fix thinking) | 0 | — |
 
@@ -86,7 +86,7 @@ llegaría a **14 modelos**.
 
 ## Progreso de P3 (detalle)
 
-Al corte 09:28: **1047/1680 (~62%)**, tasa de fallo 0.
+Al corte 09:28: **1137/1680 (~68%)**, tasa de fallo 0.
 - ✅ Completos válidos (240/240): `mistral-nemo`, `nuextract`, `qwen3:8b`* (ver aviso), `gemma4:12b-mlx`* (inválido).
 - ▶️ `llama3.1:8b`: baseline 87/120.
 - ⏳ Faltan: `llama3.1:8b` kb_rag, `nemotron-mini:4b`, `deepseek-r1:1.5b`.

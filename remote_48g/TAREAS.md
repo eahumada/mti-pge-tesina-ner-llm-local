@@ -1,6 +1,6 @@
 # Lista de tareas — Equipo Remoto 48 GB
 
-**Actualizado:** 2026-09-06 09:28
+**Actualizado:** 2026-09-06 09:32
 
 ## ✅ Realizadas
 - Verificación de entorno (48 GB, Ollama, repo, modelos ya locales — cero `pull`).
@@ -16,7 +16,7 @@
 - Actualización de la URL del remote al repo movido.
 
 ## ▶️ En curso
-- **P3** benchmark principal N=120, 7 modelos — 1047/1680 (~62%), fallo 0.
+- **P3** benchmark principal N=120, 7 modelos — 1137/1680 (~68%), fallo 0.
   - Completos válidos: `mistral-nemo`, `nuextract`.
   - Completos pero INVÁLIDOS (bug thinking, se re-corren): `gemma4:12b-mlx`, `qwen3:8b`.
   - En curso: `llama3.1:8b` (baseline 87/120).
