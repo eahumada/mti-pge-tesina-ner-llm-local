@@ -26,8 +26,11 @@ env/
 # ---------------------------------------------------------------------------
 # 60 MB · se regenera indexando los diccionarios
 data/chroma_db/
-# 1.8 MB · descargables con los scripts del repo (download_*.py)
-data/dictionaries/
+# data/dictionaries/ SI se versiona (1.8 MB). Aunque hay scripts que lo
+# regeneran, sus fuentes son VIVAS: la lista SDN de OFAC cambia cada pocos dias
+# y los repos de GitHub apuntan a master. Regenerarlo produciria un conjunto
+# DISTINTO al usado en los experimentos, sin que nada lo advierta. Es un
+# snapshot irreproducible del 2026-07-27 y, por tanto, entrada experimental.
 
 # ---------------------------------------------------------------------------
 # RESULTADOS

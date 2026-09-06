@@ -580,3 +580,36 @@ comercial y no desaparece con el tiempo.
 | `AGENTS.md §8.6` — marcado ❌ **RETIRADO**, no borrado | Datos crudos en `results/` — evidencia primaria intacta |
 
 La tesina (`.md`) **no lo mencionaba**: verificado, cero ocurrencias antes de la retirada.
+
+---
+
+## 14. Entradas experimentales tratadas como artefactos regenerables
+
+### F39. 🔴 Los diccionarios del RAG son un snapshot irreproducible, y estuvieron sin versionar
+**Severidad: crítica (reproducibilidad).** Detectado el 2026-09-06 a partir de una pregunta del autor:
+*«¿por qué los diccionarios no están versionados?»*.
+
+Se habían excluido del repositorio con el razonamiento de que son «descargables con los scripts del repo».
+**El razonamiento era falso.** Los scripts construyen los diccionarios desde **fuentes vivas**:
+
+| Fuente | Estabilidad |
+|:---|:---|
+| `treasury.gov/ofac/downloads/sdn.csv` | ❌ La lista SDN cambia **cada pocos días** |
+| 3 repositorios de GitHub | ❌ Todos apuntan a `master`, rama móvil |
+
+Ningún script fija fecha, versión ni commit, y **los archivos generados no llevan metadata alguna**: son
+listas planas de 3.605, 1.848 y 12.000 entradas, sin fuente ni fecha. Solo el mtime del sistema de archivos
+(2026-07-27) delata cuándo se crearon.
+
+**Por qué son entrada experimental y no un artefacto.** El RAG en modo `entities` **inyecta estas entradas
+en el prompt**. Un diccionario distinto cambia el contexto que ve el modelo y, por tanto, los resultados.
+Regenerarlos no reconstruye el experimento: lo altera.
+
+**Riesgo concreto que se evitó.** El encargo al equipo remoto **les instruía explícitamente a
+regenerarlos** antes de las tareas 1 y 4. Habrían obtenido un conjunto distinto, sus resultados RAG no
+habrían sido comparables con las corridas previas, y **nada en la salida lo habría advertido**. Es el mismo
+modo de fallo que el `--rag-mode` por defecto (F3): una divergencia silenciosa que solo aparece al comparar.
+
+**Corregido:** los diccionarios se versionan (1.8 MB), se añade `data/dictionaries/PROCEDENCIA.md`
+documentando fuentes y fecha, y el encargo remoto pasa de «regeneradlos» a «**NO los regeneréis**», con una
+comprobación de conteo (3605 / 1848 / 12000) antes de empezar.

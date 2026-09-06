@@ -312,3 +312,31 @@ delatara.
 > **Aplicación:** ante un «elimínalo de todas partes», clasificar cada aparición antes de tocarla:
 > *declaración* (fuera), *mecanismo* (se queda), *registro histórico* (se conserva, documenta el porqué).
 > Un `sed` global sobre el nombre habría hecho las tres cosas indistintamente.
+
+### L29. «Regenerable» no es lo mismo que «reproducible»
+Los diccionarios del RAG se excluyeron del repositorio porque existían scripts que los generaban. El
+razonamiento parecía sólido y era falso: los scripts leen de **fuentes vivas** —la lista de sanciones OFAC
+cambia cada pocos días, y tres repos apuntan a `master`— sin fijar fecha ni commit.
+
+Un artefacto es *regenerable* si el script existe. Es *reproducible* solo si el script, **ejecutado hoy,
+produce lo mismo que produjo entonces**. No es la misma propiedad, y confundirlas casi corrompe los
+resultados de otro equipo.
+
+> **Aplicación:** antes de excluir algo de git por «se puede regenerar», mirad **de dónde lee el
+> generador**. Si la fuente es una URL sin pin de versión, el artefacto es un **snapshot** y hay que
+> versionarlo, por grande que sea. 1,8 MB es un precio irrisorio frente a un experimento irrepetible.
+>
+> Señal de alarma: un archivo generado **sin metadata de procedencia**. Si no dice de dónde salió ni
+> cuándo, nadie podrá saber después si el que tiene delante es el mismo que se usó.
+
+### L30. Una instrucción bienintencionada puede ser el vector del error
+El encargo al equipo remoto les decía que regenerasen los diccionarios. Era una instrucción útil en
+apariencia —evitaba pedirles archivos que no estaban en el repo— y habría corrompido sus resultados en
+silencio.
+
+El fallo no estuvo en la ejecución sino en el **supuesto no verificado** que había detrás: que regenerar
+equivalía a obtener lo mismo.
+
+> **Aplicación:** cuando redactéis instrucciones para otros, marcad qué pasos descansan en supuestos que no
+> habéis comprobado. Los pasos que dicen «generad», «descargad» o «reinstalad» son los candidatos: todos
+> presuponen que el resultado será idéntico al original.

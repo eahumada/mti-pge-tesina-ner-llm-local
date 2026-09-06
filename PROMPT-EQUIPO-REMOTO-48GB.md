@@ -228,22 +228,38 @@ El sistema RAG usa dos fuentes distintas según el modo, y **solo una viaja en e
 | Recurso | ¿Versionado? | Lo necesitan |
 |:---|:---|:---|
 | `data/knowledge_base/` | ✅ sí | Tareas **2 y 3** (`--rag-mode kb_combined`) |
-| `data/dictionaries/` | ❌ **no** (1.8 MB, descargable) | Tareas **1 y 4** (`--rag-mode entities`) |
+| `data/dictionaries/` | ✅ **sí** (1.8 MB) | Tareas **1 y 4** (`--rag-mode entities`) |
 | `data/chroma_db/` | ❌ no (60 MB) | Se genera solo a partir de los diccionarios |
 
-**Antes de las tareas 1 y 4**, regenerad los diccionarios:
+### 🔴 NO regeneréis los diccionarios
+
+Existen scripts que los construyen (`fetch_dictionaries.py`, `download_ofac.py`,
+`generate_metadata_dicts.py`), pero **ejecutarlos corrompería vuestros resultados en silencio**.
+
+Sus fuentes son **vivas**: la lista SDN de OFAC (`treasury.gov/ofac/downloads/sdn.csv`) cambia cada pocos
+días porque las designaciones de sanciones se añaden y retiran continuamente, y los tres repositorios de
+GitHub que usan apuntan a `master`. Ningún script fija fecha, versión ni commit.
+
+Los diccionarios del repositorio son un **snapshot del 2026-07-27** y son **entrada experimental**: el RAG
+en modo `entities` inyecta sus entradas en el prompt, así que un diccionario distinto cambia el contexto
+que ve el modelo y, por tanto, los resultados. Detalle completo en `data/dictionaries/PROCEDENCIA.md`.
+
+Comprobad que llegaron antes de empezar:
 
 ```bash
-python3 fetch_dictionaries.py
-python3 download_ofac.py           # listas de sanciones OFAC
-python3 generate_metadata_dicts.py
+python3 -c "
+import json
+for f in ['persons','organizations','augmented_persons']:
+    d=json.load(open(f'data/dictionaries/{f}.json'))
+    print(f'{f}: {len(d)} entradas')"
 ```
+
+Debe imprimir **3605**, **1848** y **12000**. Si alguno sale vacío o con otro número, **parad y avisad**:
+con un diccionario distinto, la condición `_rag_enhanced` deja de ser comparable con las corridas previas
+y nada en la salida lo advertirá.
 
 `src/rag_manager.py` indexa automáticamente en ChromaDB la primera vez que se ejecuta, así que
 `data/chroma_db/` **no hay que crearlo a mano** — pero la primera corrida tardará algo más mientras indexa.
-
-Si `data/dictionaries/` está vacío al lanzar una tarea con `--rag-mode entities`, el RAG no inyectará
-contexto y la condición `_rag_enhanced` será **indistinguible del baseline**, sin que nada lo advierta.
 
 ### 7.4 Comprobación previa del modelo
 
