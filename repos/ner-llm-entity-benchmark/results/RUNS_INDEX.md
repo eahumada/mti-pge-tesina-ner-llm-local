@@ -23,7 +23,7 @@
 | Corridas con evidencia **solo en log** (resultados perdidos por sobrescritura) | **6** |
 | Corpus efectivamente ejecutados | `kleptotrace.json` (N=15), `kleptotrace_augmented_30.json` (N=30), `benchmark_balanced_120.json` (N=120) |
 | Modos ejecutados | `baseline`, `rag_study` legacy (`entities`), `rag_study` KB (`kb_combined`), `ablation` (4 prompts) |
-| Combinaciones **nunca ejecutadas** | N=30 con RAG, N=30 con Comparación de Configuraciones de Prompt (ablación), N=120 con `kb_guidelines` / `kb_fewshot`, ablación cruzada con RAG |
+| Combinaciones **nunca ejecutadas** | N=30 con RAG, N=30 con comparación de configuraciones de prompt, N=120 con `kb_guidelines` / `kb_fewshot`, ablación cruzada con RAG |
 
 **Hallazgo crítico:** el resultado titular de la tesina (`gemma4:31b`, **F1 = 79.03 %**, 0 % de
 alucinaciones, corpus **N=30**) proviene de la corrida `2026-07-01 17:27` cuyos archivos de
@@ -92,7 +92,7 @@ Leyenda de **Prompt**: `zs-en` = `SYSTEM_PROMPT.md` · `zs-es` = `SYSTEM_PROMPT_
 **Brecha principal para el requisito del autor** ("poder hacer pruebas con N=30 y N=120, con y sin
 RAG, y para los distintos shots"): el corpus **N=30 solo tiene una corrida baseline zs-en, y sus
 resultados no se conservan**. Toda la columna RAG y la de Comparación de Configuraciones de Prompt
-(ablación) están vacías para N=30.
+(comparación de configuraciones de prompt) están vacías para N=30.
 
 ---
 
