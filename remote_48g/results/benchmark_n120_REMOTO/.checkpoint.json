@@ -572,7 +572,13 @@
       22,
       23,
       24,
-      25
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
     ]
   },
   "results": [
@@ -150810,8 +150816,1646 @@
         "model_version": "deepseek-r1:1.5b",
         "prompt_hash": "a6af280e"
       }
+    },
+    {
+      "batch_idx": 26,
+      "record_id": "real_mixed_79",
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "latency_sec": 158.1740689277649,
+      "tokens_per_sec": 129.22,
+      "retries": 0,
+      "parse_method": "direct_json",
+      "precision": 0.3181818181818182,
+      "recall": 0.7,
+      "f1": 0.4375,
+      "hallucination_rate": 0.5909090909090909,
+      "hallucinated_count": 13,
+      "cpu_avg_pct": 10.4,
+      "cpu_peak_pct": 46.5,
+      "proc_cpu_avg_pct": 8.4,
+      "mem_avg_mb": 614.8,
+      "mem_peak_mb": 808.6,
+      "sys_mem_avg_mb": 17340.9,
+      "sys_mem_avg_pct": 77.8,
+      "vram_mb": 1723.0,
+      "model_disk_mb": 1065.6,
+      "metrics": {
+        "per_type": {
+          "Persons": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 5,
+            "fp": 0,
+            "fn": 0
+          },
+          "Organizations": {
+            "precision": 0.13333333333333333,
+            "recall": 0.4,
+            "f1": 0.2,
+            "tp": 2,
+            "fp": 13,
+            "fn": 3
+          },
+          "Locations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 2,
+            "fn": 0
+          }
+        },
+        "overall": {
+          "precision": 0.3181818181818182,
+          "recall": 0.7,
+          "f1": 0.4375,
+          "tp": 7,
+          "fp": 15,
+          "fn": 3,
+          "oov_recall": 1.0
+        }
+      },
+      "error_taxonomy": {
+        "boundary_errors": [],
+        "type_confusion": [],
+        "abbreviation_misses": [],
+        "extrinsic_hallucinations": []
+      },
+      "data_provenance": {
+        "timestamp": "2026-09-06T13:05:09.171588+00:00",
+        "model_version": "deepseek-r1:1.5b",
+        "prompt_hash": "a6af280e"
+      }
+    },
+    {
+      "batch_idx": 26,
+      "record_id": "real_mixed_80",
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "latency_sec": 149.11777114868164,
+      "tokens_per_sec": 139.71,
+      "retries": 0,
+      "parse_method": "codeblock",
+      "precision": 0.125,
+      "recall": 0.08333333333333333,
+      "f1": 0.1,
+      "hallucination_rate": 0.0,
+      "hallucinated_count": 0,
+      "cpu_avg_pct": 10.7,
+      "cpu_peak_pct": 46.5,
+      "proc_cpu_avg_pct": 8.2,
+      "mem_avg_mb": 624.7,
+      "mem_peak_mb": 800.3,
+      "sys_mem_avg_mb": 17338.2,
+      "sys_mem_avg_pct": 77.8,
+      "vram_mb": 1723.0,
+      "model_disk_mb": 1065.6,
+      "metrics": {
+        "per_type": {
+          "Persons": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 7,
+            "fn": 8
+          },
+          "Organizations": {
+            "precision": 0.3333333333333333,
+            "recall": 0.125,
+            "f1": 0.18181818181818182,
+            "tp": 2,
+            "fp": 4,
+            "fn": 14
+          },
+          "Locations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 3,
+            "fn": 0
+          }
+        },
+        "overall": {
+          "precision": 0.125,
+          "recall": 0.08333333333333333,
+          "f1": 0.1,
+          "tp": 2,
+          "fp": 14,
+          "fn": 22,
+          "oov_recall": 0.09090909090909091
+        }
+      },
+      "error_taxonomy": {
+        "boundary_errors": [
+          {
+            "entity": "Vadim",
+            "ground_truth_target": "Vadims Ananics",
+            "ratio": 52.63157894736843
+          },
+          {
+            "entity": "Ananics",
+            "ground_truth_target": "Vadims Ananics",
+            "ratio": 66.66666666666667
+          },
+          {
+            "entity": "Mamonovs",
+            "ground_truth_target": "Eriks Mamonovs",
+            "ratio": 72.72727272727273
+          },
+          {
+            "entity": "Vadims",
+            "ground_truth_target": "Vadims Ananics",
+            "ratio": 60.0
+          },
+          {
+            "entity": "Uzbalis",
+            "ground_truth_target": "Janis Uzbalis",
+            "ratio": 70.0
+          },
+          {
+            "entity": "Romanyuk",
+            "ground_truth_target": "Stanislav Romanyuk",
+            "ratio": 61.53846153846154
+          },
+          {
+            "entity": "Janis",
+            "ground_truth_target": "Janis Uzbalis",
+            "ratio": 55.55555555555556
+          }
+        ],
+        "type_confusion": [
+          {
+            "entity": "Stanislav Romanyuk",
+            "extracted_type": "Organizations",
+            "correct_type": "Persons",
+            "matched_ground_truth": "Stanislav Romanyuk"
+          },
+          {
+            "entity": "Stanislava Romanyuk",
+            "extracted_type": "Organizations",
+            "correct_type": "Persons",
+            "matched_ground_truth": "Stanislav Romanyuk"
+          }
+        ],
+        "abbreviation_misses": [
+          {
+            "ground_truth_entity": "HSI",
+            "category": "Organizations"
+          },
+          {
+            "ground_truth_entity": "FBI",
+            "category": "Organizations"
+          }
+        ],
+        "extrinsic_hallucinations": []
+      },
+      "data_provenance": {
+        "timestamp": "2026-09-06T13:05:00.131473+00:00",
+        "model_version": "deepseek-r1:1.5b",
+        "prompt_hash": "a6af280e"
+      }
+    },
+    {
+      "batch_idx": 26,
+      "record_id": "real_mixed_81",
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "latency_sec": 145.61028480529785,
+      "tokens_per_sec": 141.24,
+      "retries": 0,
+      "parse_method": "codeblock",
+      "precision": 0.3333333333333333,
+      "recall": 0.2727272727272727,
+      "f1": 0.3,
+      "hallucination_rate": 0.1111111111111111,
+      "hallucinated_count": 1,
+      "cpu_avg_pct": 10.0,
+      "cpu_peak_pct": 50.0,
+      "proc_cpu_avg_pct": 9.0,
+      "mem_avg_mb": 628.4,
+      "mem_peak_mb": 808.7,
+      "sys_mem_avg_mb": 17339.1,
+      "sys_mem_avg_pct": 77.8,
+      "vram_mb": 1723.0,
+      "model_disk_mb": 1065.6,
+      "metrics": {
+        "per_type": {
+          "Persons": {
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "tp": 2,
+            "fp": 2,
+            "fn": 2
+          },
+          "Organizations": {
+            "precision": 0.3333333333333333,
+            "recall": 0.14285714285714285,
+            "f1": 0.2,
+            "tp": 1,
+            "fp": 2,
+            "fn": 6
+          },
+          "Locations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 2,
+            "fn": 0
+          }
+        },
+        "overall": {
+          "precision": 0.3333333333333333,
+          "recall": 0.2727272727272727,
+          "f1": 0.3,
+          "tp": 3,
+          "fp": 6,
+          "fn": 8,
+          "oov_recall": 0.2727272727272727
+        }
+      },
+      "error_taxonomy": {
+        "boundary_errors": [
+          {
+            "entity": "Jos\u00c3\u00a9 Zamarriego",
+            "ground_truth_target": "Jos\u00c3\u00a9 Luis Vega",
+            "ratio": 58.06451612903225
+          },
+          {
+            "entity": "Junta Electoral del Ilustre Colegio de Oficial de M\u00c3\u00a9dicos de Madrid (ICOMEM)",
+            "ground_truth_target": "Colegio de M\u00c3\u00a9dicos de Madrid",
+            "ratio": 54.71698113207547
+          }
+        ],
+        "type_confusion": [],
+        "abbreviation_misses": [
+          {
+            "ground_truth_entity": "EFE",
+            "category": "Organizations"
+          }
+        ],
+        "extrinsic_hallucinations": []
+      },
+      "data_provenance": {
+        "timestamp": "2026-09-06T13:04:56.604259+00:00",
+        "model_version": "deepseek-r1:1.5b",
+        "prompt_hash": "a6af280e"
+      }
+    },
+    {
+      "batch_idx": 27,
+      "record_id": "real_mixed_82",
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "latency_sec": 147.07242012023926,
+      "tokens_per_sec": 142.09,
+      "retries": 0,
+      "parse_method": "codeblock",
+      "precision": 0.5,
+      "recall": 0.3333333333333333,
+      "f1": 0.4,
+      "hallucination_rate": 0.16666666666666666,
+      "hallucinated_count": 1,
+      "cpu_avg_pct": 10.3,
+      "cpu_peak_pct": 50.0,
+      "proc_cpu_avg_pct": 8.7,
+      "mem_avg_mb": 601.7,
+      "mem_peak_mb": 808.6,
+      "sys_mem_avg_mb": 17356.1,
+      "sys_mem_avg_pct": 77.8,
+      "vram_mb": 1723.0,
+      "model_disk_mb": 1065.6,
+      "metrics": {
+        "per_type": {
+          "Persons": {
+            "precision": 1.0,
+            "recall": 0.2857142857142857,
+            "f1": 0.4444444444444445,
+            "tp": 2,
+            "fp": 0,
+            "fn": 5
+          },
+          "Organizations": {
+            "precision": 0.3333333333333333,
+            "recall": 0.5,
+            "f1": 0.4,
+            "tp": 1,
+            "fp": 2,
+            "fn": 1
+          },
+          "Locations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 1,
+            "fn": 0
+          }
+        },
+        "overall": {
+          "precision": 0.5,
+          "recall": 0.3333333333333333,
+          "f1": 0.4,
+          "tp": 3,
+          "fp": 3,
+          "fn": 6,
+          "oov_recall": 0.3333333333333333
+        }
+      },
+      "error_taxonomy": {
+        "boundary_errors": [
+          {
+            "entity": "Gobierno yugoslavo",
+            "ground_truth_target": "Gobierno",
+            "ratio": 61.53846153846154
+          }
+        ],
+        "type_confusion": [],
+        "abbreviation_misses": [],
+        "extrinsic_hallucinations": []
+      },
+      "data_provenance": {
+        "timestamp": "2026-09-06T13:05:14.210812+00:00",
+        "model_version": "deepseek-r1:1.5b",
+        "prompt_hash": "a6af280e"
+      }
+    },
+    {
+      "batch_idx": 27,
+      "record_id": "real_mixed_83",
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "latency_sec": 152.18185901641846,
+      "tokens_per_sec": 142.42,
+      "retries": 0,
+      "parse_method": "codeblock",
+      "precision": 0.7777777777777778,
+      "recall": 0.7,
+      "f1": 0.7368421052631577,
+      "hallucination_rate": 0.0,
+      "hallucinated_count": 0,
+      "cpu_avg_pct": 10.0,
+      "cpu_peak_pct": 46.5,
+      "proc_cpu_avg_pct": 8.3,
+      "mem_avg_mb": 599.5,
+      "mem_peak_mb": 811.5,
+      "sys_mem_avg_mb": 17354.2,
+      "sys_mem_avg_pct": 77.8,
+      "vram_mb": 1723.0,
+      "model_disk_mb": 1065.6,
+      "metrics": {
+        "per_type": {
+          "Persons": {
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1": 0.8,
+            "tp": 4,
+            "fp": 0,
+            "fn": 2
+          },
+          "Organizations": {
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571,
+            "tp": 3,
+            "fp": 0,
+            "fn": 1
+          },
+          "Locations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 2,
+            "fn": 0
+          }
+        },
+        "overall": {
+          "precision": 0.7777777777777778,
+          "recall": 0.7,
+          "f1": 0.7368421052631577,
+          "tp": 7,
+          "fp": 2,
+          "fn": 3,
+          "oov_recall": 0.7
+        }
+      },
+      "error_taxonomy": {
+        "boundary_errors": [
+          {
+            "entity": "Valencia",
+            "ground_truth_target": "Panaria",
+            "ratio": 53.333333333333336
+          }
+        ],
+        "type_confusion": [],
+        "abbreviation_misses": [
+          {
+            "ground_truth_entity": "Suker",
+            "category": "Persons"
+          }
+        ],
+        "extrinsic_hallucinations": []
+      },
+      "data_provenance": {
+        "timestamp": "2026-09-06T13:05:19.325773+00:00",
+        "model_version": "deepseek-r1:1.5b",
+        "prompt_hash": "a6af280e"
+      }
+    },
+    {
+      "batch_idx": 27,
+      "record_id": "real_mixed_84",
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "latency_sec": 144.56084036827087,
+      "tokens_per_sec": 141.0,
+      "retries": 0,
+      "parse_method": "codeblock",
+      "precision": 0.5,
+      "recall": 0.2222222222222222,
+      "f1": 0.30769230769230765,
+      "hallucination_rate": 0.0,
+      "hallucinated_count": 0,
+      "cpu_avg_pct": 10.4,
+      "cpu_peak_pct": 50.0,
+      "proc_cpu_avg_pct": 8.6,
+      "mem_avg_mb": 600.4,
+      "mem_peak_mb": 808.6,
+      "sys_mem_avg_mb": 17357.6,
+      "sys_mem_avg_pct": 77.8,
+      "vram_mb": 1723.0,
+      "model_disk_mb": 1065.6,
+      "metrics": {
+        "per_type": {
+          "Persons": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 1,
+            "fn": 2
+          },
+          "Organizations": {
+            "precision": 0.6666666666666666,
+            "recall": 0.2857142857142857,
+            "f1": 0.4,
+            "tp": 2,
+            "fp": 1,
+            "fn": 5
+          },
+          "Locations": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "overall": {
+          "precision": 0.5,
+          "recall": 0.2222222222222222,
+          "f1": 0.30769230769230765,
+          "tp": 2,
+          "fp": 2,
+          "fn": 7,
+          "oov_recall": 0.2222222222222222
+        }
+      },
+      "error_taxonomy": {
+        "boundary_errors": [
+          {
+            "entity": "Miguel Garc\u00ed'a-Dur\u00e1n",
+            "ground_truth_target": "Miguel Garc\u00c3\u00ada-Dur\u00c3\u00a1n",
+            "ratio": 82.92682926829268
+          },
+          {
+            "entity": "Telef\u00f3nica",
+            "ground_truth_target": "Grupo Telef\u00c3\u00b3nica",
+            "ratio": 66.66666666666667
+          }
+        ],
+        "type_confusion": [],
+        "abbreviation_misses": [
+          {
+            "ground_truth_entity": "EFE",
+            "category": "Organizations"
+          }
+        ],
+        "extrinsic_hallucinations": []
+      },
+      "data_provenance": {
+        "timestamp": "2026-09-06T13:05:11.697254+00:00",
+        "model_version": "deepseek-r1:1.5b",
+        "prompt_hash": "a6af280e"
+      }
+    },
+    {
+      "batch_idx": 28,
+      "record_id": "real_mixed_85",
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "latency_sec": 134.95264196395874,
+      "tokens_per_sec": 142.72,
+      "retries": 0,
+      "parse_method": "direct_json",
+      "precision": 0.3333333333333333,
+      "recall": 0.125,
+      "f1": 0.18181818181818182,
+      "hallucination_rate": 0.3333333333333333,
+      "hallucinated_count": 1,
+      "cpu_avg_pct": 17.1,
+      "cpu_peak_pct": 61.9,
+      "proc_cpu_avg_pct": 9.2,
+      "mem_avg_mb": 600.7,
+      "mem_peak_mb": 800.3,
+      "sys_mem_avg_mb": 17395.8,
+      "sys_mem_avg_pct": 77.8,
+      "vram_mb": 1723.0,
+      "model_disk_mb": 1065.6,
+      "metrics": {
+        "per_type": {
+          "Persons": {
+            "precision": 1.0,
+            "recall": 0.16666666666666666,
+            "f1": 0.2857142857142857,
+            "tp": 1,
+            "fp": 0,
+            "fn": 5
+          },
+          "Organizations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 1,
+            "fn": 2
+          },
+          "Locations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 1,
+            "fn": 0
+          }
+        },
+        "overall": {
+          "precision": 0.3333333333333333,
+          "recall": 0.125,
+          "f1": 0.18181818181818182,
+          "tp": 1,
+          "fp": 2,
+          "fn": 7,
+          "oov_recall": 0.125
+        }
+      },
+      "error_taxonomy": {
+        "boundary_errors": [
+          {
+            "entity": "Miki Tzavella",
+            "ground_truth_target": "Tzavella",
+            "ratio": 76.19047619047619
+          }
+        ],
+        "type_confusion": [],
+        "abbreviation_misses": [
+          {
+            "ground_truth_entity": "EFE",
+            "category": "Organizations"
+          }
+        ],
+        "extrinsic_hallucinations": []
+      },
+      "data_provenance": {
+        "timestamp": "2026-09-06T13:05:26.582721+00:00",
+        "model_version": "deepseek-r1:1.5b",
+        "prompt_hash": "a6af280e"
+      }
+    },
+    {
+      "batch_idx": 28,
+      "record_id": "real_mixed_86",
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "latency_sec": 138.5044560432434,
+      "tokens_per_sec": 142.31,
+      "retries": 0,
+      "parse_method": "codeblock",
+      "precision": 0.25,
+      "recall": 0.15384615384615385,
+      "f1": 0.1904761904761905,
+      "hallucination_rate": 0.0,
+      "hallucinated_count": 0,
+      "cpu_avg_pct": 16.2,
+      "cpu_peak_pct": 100.0,
+      "proc_cpu_avg_pct": 9.0,
+      "mem_avg_mb": 597.1,
+      "mem_peak_mb": 800.3,
+      "sys_mem_avg_mb": 17392.9,
+      "sys_mem_avg_pct": 77.8,
+      "vram_mb": 1723.0,
+      "model_disk_mb": 1065.6,
+      "metrics": {
+        "per_type": {
+          "Persons": {
+            "precision": 0.3333333333333333,
+            "recall": 0.16666666666666666,
+            "f1": 0.2222222222222222,
+            "tp": 1,
+            "fp": 2,
+            "fn": 5
+          },
+          "Organizations": {
+            "precision": 0.3333333333333333,
+            "recall": 0.14285714285714285,
+            "f1": 0.2,
+            "tp": 1,
+            "fp": 2,
+            "fn": 6
+          },
+          "Locations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 2,
+            "fn": 0
+          }
+        },
+        "overall": {
+          "precision": 0.25,
+          "recall": 0.15384615384615385,
+          "f1": 0.1904761904761905,
+          "tp": 2,
+          "fp": 6,
+          "fn": 11,
+          "oov_recall": 0.16666666666666666
+        }
+      },
+      "error_taxonomy": {
+        "boundary_errors": [
+          {
+            "entity": "Joaqu\u00ed\u00f1o Calvo",
+            "ground_truth_target": "Joaqu\u00c3\u00adn Calvo",
+            "ratio": 78.57142857142857
+          },
+          {
+            "entity": "Real Club de Barcelona",
+            "ground_truth_target": "Real Club de Polo",
+            "ratio": 76.92307692307692
+          },
+          {
+            "entity": "Real Club de Polo",
+            "ground_truth_target": "Real Club de Polo de Barcelona",
+            "ratio": 72.34042553191489
+          },
+          {
+            "entity": "Real Club de Egara",
+            "ground_truth_target": "Real Club de Polo",
+            "ratio": 74.28571428571429
+          }
+        ],
+        "type_confusion": [
+          {
+            "entity": "Efe",
+            "extracted_type": "Locations",
+            "correct_type": "Organizations",
+            "matched_ground_truth": "EFE"
+          }
+        ],
+        "abbreviation_misses": [
+          {
+            "ground_truth_entity": "Amat",
+            "category": "Persons"
+          },
+          {
+            "ground_truth_entity": "Egara",
+            "category": "Organizations"
+          }
+        ],
+        "extrinsic_hallucinations": []
+      },
+      "data_provenance": {
+        "timestamp": "2026-09-06T13:05:30.149616+00:00",
+        "model_version": "deepseek-r1:1.5b",
+        "prompt_hash": "a6af280e"
+      }
+    },
+    {
+      "batch_idx": 28,
+      "record_id": "real_mixed_87",
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "latency_sec": 132.52909803390503,
+      "tokens_per_sec": 141.6,
+      "retries": 0,
+      "parse_method": "codeblock",
+      "precision": 0.3333333333333333,
+      "recall": 0.2857142857142857,
+      "f1": 0.30769230769230765,
+      "hallucination_rate": 0.16666666666666666,
+      "hallucinated_count": 1,
+      "cpu_avg_pct": 15.7,
+      "cpu_peak_pct": 100.0,
+      "proc_cpu_avg_pct": 9.7,
+      "mem_avg_mb": 600.3,
+      "mem_peak_mb": 800.3,
+      "sys_mem_avg_mb": 17398.9,
+      "sys_mem_avg_pct": 77.8,
+      "vram_mb": 1723.0,
+      "model_disk_mb": 1065.6,
+      "metrics": {
+        "per_type": {
+          "Persons": {
+            "precision": 0.25,
+            "recall": 0.3333333333333333,
+            "f1": 0.28571428571428575,
+            "tp": 1,
+            "fp": 3,
+            "fn": 2
+          },
+          "Organizations": {
+            "precision": 1.0,
+            "recall": 0.25,
+            "f1": 0.4,
+            "tp": 1,
+            "fp": 0,
+            "fn": 3
+          },
+          "Locations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 1,
+            "fn": 0
+          }
+        },
+        "overall": {
+          "precision": 0.3333333333333333,
+          "recall": 0.2857142857142857,
+          "f1": 0.30769230769230765,
+          "tp": 2,
+          "fp": 4,
+          "fn": 5,
+          "oov_recall": 0.2857142857142857
+        }
+      },
+      "error_taxonomy": {
+        "boundary_errors": [
+          {
+            "entity": "Emilio Oliva Calahorra",
+            "ground_truth_target": "Emilio Oliva",
+            "ratio": 70.58823529411764
+          }
+        ],
+        "type_confusion": [
+          {
+            "entity": "Rayo Vallecano",
+            "extracted_type": "Persons",
+            "correct_type": "Organizations",
+            "matched_ground_truth": "Rayo Vallecano"
+          }
+        ],
+        "abbreviation_misses": [
+          {
+            "ground_truth_entity": "REYES",
+            "category": "Persons"
+          },
+          {
+            "ground_truth_entity": "EFE",
+            "category": "Organizations"
+          }
+        ],
+        "extrinsic_hallucinations": []
+      },
+      "data_provenance": {
+        "timestamp": "2026-09-06T13:05:24.158702+00:00",
+        "model_version": "deepseek-r1:1.5b",
+        "prompt_hash": "a6af280e"
+      }
+    },
+    {
+      "batch_idx": 29,
+      "record_id": "real_mixed_88",
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "latency_sec": 125.5583770275116,
+      "tokens_per_sec": 141.28,
+      "retries": 0,
+      "parse_method": "codeblock",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 1.0,
+      "hallucination_rate": 0.14285714285714285,
+      "hallucinated_count": 1,
+      "cpu_avg_pct": 11.8,
+      "cpu_peak_pct": 100.0,
+      "proc_cpu_avg_pct": 10.1,
+      "mem_avg_mb": 594.2,
+      "mem_peak_mb": 800.3,
+      "sys_mem_avg_mb": 17405.9,
+      "sys_mem_avg_pct": 77.9,
+      "vram_mb": 1723.0,
+      "model_disk_mb": 1065.6,
+      "metrics": {
+        "per_type": {
+          "Persons": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 3,
+            "fn": 0
+          },
+          "Organizations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 2,
+            "fn": 4
+          },
+          "Locations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 2,
+            "fn": 0
+          }
+        },
+        "overall": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 7,
+          "fn": 4,
+          "oov_recall": 0.0
+        }
+      },
+      "error_taxonomy": {
+        "boundary_errors": [
+          {
+            "entity": "Junta Badajoz",
+            "ground_truth_target": "Junta",
+            "ratio": 55.55555555555556
+          }
+        ],
+        "type_confusion": [],
+        "abbreviation_misses": [
+          {
+            "ground_truth_entity": "UEX",
+            "category": "Organizations"
+          },
+          {
+            "ground_truth_entity": "PP",
+            "category": "Organizations"
+          },
+          {
+            "ground_truth_entity": "Junta",
+            "category": "Organizations"
+          }
+        ],
+        "extrinsic_hallucinations": []
+      },
+      "data_provenance": {
+        "timestamp": "2026-09-06T13:05:34.855489+00:00",
+        "model_version": "deepseek-r1:1.5b",
+        "prompt_hash": "a6af280e"
+      }
+    },
+    {
+      "batch_idx": 29,
+      "record_id": "real_mixed_89",
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "latency_sec": 129.35377407073975,
+      "tokens_per_sec": 142.86,
+      "retries": 0,
+      "parse_method": "codeblock",
+      "precision": 0.6,
+      "recall": 0.23076923076923078,
+      "f1": 0.33333333333333337,
+      "hallucination_rate": 0.2,
+      "hallucinated_count": 1,
+      "cpu_avg_pct": 17.0,
+      "cpu_peak_pct": 100.0,
+      "proc_cpu_avg_pct": 10.1,
+      "mem_avg_mb": 594.5,
+      "mem_peak_mb": 800.3,
+      "sys_mem_avg_mb": 17397.2,
+      "sys_mem_avg_pct": 77.9,
+      "vram_mb": 1723.0,
+      "model_disk_mb": 1065.6,
+      "metrics": {
+        "per_type": {
+          "Persons": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 4
+          },
+          "Organizations": {
+            "precision": 0.75,
+            "recall": 0.3333333333333333,
+            "f1": 0.46153846153846156,
+            "tp": 3,
+            "fp": 1,
+            "fn": 6
+          },
+          "Locations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 1,
+            "fn": 0
+          }
+        },
+        "overall": {
+          "precision": 0.6,
+          "recall": 0.23076923076923078,
+          "f1": 0.33333333333333337,
+          "tp": 3,
+          "fp": 2,
+          "fn": 10,
+          "oov_recall": 0.23076923076923078
+        }
+      },
+      "error_taxonomy": {
+        "boundary_errors": [],
+        "type_confusion": [],
+        "abbreviation_misses": [
+          {
+            "ground_truth_entity": "Maura",
+            "category": "Persons"
+          }
+        ],
+        "extrinsic_hallucinations": []
+      },
+      "data_provenance": {
+        "timestamp": "2026-09-06T13:05:38.661092+00:00",
+        "model_version": "deepseek-r1:1.5b",
+        "prompt_hash": "a6af280e"
+      }
+    },
+    {
+      "batch_idx": 29,
+      "record_id": "real_mixed_90",
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "latency_sec": 135.10389399528503,
+      "tokens_per_sec": 142.04,
+      "retries": 0,
+      "parse_method": "codeblock",
+      "precision": 0.2222222222222222,
+      "recall": 0.25,
+      "f1": 0.23529411764705882,
+      "hallucination_rate": 0.3333333333333333,
+      "hallucinated_count": 3,
+      "cpu_avg_pct": 12.5,
+      "cpu_peak_pct": 100.0,
+      "proc_cpu_avg_pct": 9.2,
+      "mem_avg_mb": 591.1,
+      "mem_peak_mb": 800.3,
+      "sys_mem_avg_mb": 17379.0,
+      "sys_mem_avg_pct": 77.9,
+      "vram_mb": 1723.0,
+      "model_disk_mb": 1065.6,
+      "metrics": {
+        "per_type": {
+          "Persons": {
+            "precision": 0.5,
+            "recall": 0.3333333333333333,
+            "f1": 0.4,
+            "tp": 1,
+            "fp": 1,
+            "fn": 2
+          },
+          "Organizations": {
+            "precision": 0.3333333333333333,
+            "recall": 0.2,
+            "f1": 0.25,
+            "tp": 1,
+            "fp": 2,
+            "fn": 4
+          },
+          "Locations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 4,
+            "fn": 0
+          }
+        },
+        "overall": {
+          "precision": 0.2222222222222222,
+          "recall": 0.25,
+          "f1": 0.23529411764705882,
+          "tp": 2,
+          "fp": 7,
+          "fn": 6,
+          "oov_recall": 0.25
+        }
+      },
+      "error_taxonomy": {
+        "boundary_errors": [
+          {
+            "entity": "Valenciana Club Real Madrid",
+            "ground_truth_target": "Real Madrid",
+            "ratio": 57.89473684210527
+          }
+        ],
+        "type_confusion": [
+          {
+            "entity": "Valencia",
+            "extracted_type": "Locations",
+            "correct_type": "Organizations",
+            "matched_ground_truth": "Valencia"
+          }
+        ],
+        "abbreviation_misses": [],
+        "extrinsic_hallucinations": []
+      },
+      "data_provenance": {
+        "timestamp": "2026-09-06T13:05:44.419435+00:00",
+        "model_version": "deepseek-r1:1.5b",
+        "prompt_hash": "a6af280e"
+      }
+    },
+    {
+      "batch_idx": 30,
+      "record_id": "real_mixed_91",
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "latency_sec": 134.58356499671936,
+      "tokens_per_sec": 142.15,
+      "retries": 0,
+      "parse_method": "direct_json",
+      "precision": 0.6363636363636364,
+      "recall": 0.5833333333333334,
+      "f1": 0.6086956521739131,
+      "hallucination_rate": 0.0,
+      "hallucinated_count": 0,
+      "cpu_avg_pct": 10.0,
+      "cpu_peak_pct": 46.5,
+      "proc_cpu_avg_pct": 9.3,
+      "mem_avg_mb": 599.5,
+      "mem_peak_mb": 811.3,
+      "sys_mem_avg_mb": 17354.0,
+      "sys_mem_avg_pct": 78.0,
+      "vram_mb": 1723.0,
+      "model_disk_mb": 1065.6,
+      "metrics": {
+        "per_type": {
+          "Persons": {
+            "precision": 0.8333333333333334,
+            "recall": 0.625,
+            "f1": 0.7142857142857143,
+            "tp": 5,
+            "fp": 1,
+            "fn": 3
+          },
+          "Organizations": {
+            "precision": 0.6666666666666666,
+            "recall": 0.5,
+            "f1": 0.5714285714285715,
+            "tp": 2,
+            "fp": 1,
+            "fn": 2
+          },
+          "Locations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 2,
+            "fn": 0
+          }
+        },
+        "overall": {
+          "precision": 0.6363636363636364,
+          "recall": 0.5833333333333334,
+          "f1": 0.6086956521739131,
+          "tp": 7,
+          "fp": 4,
+          "fn": 5,
+          "oov_recall": 0.5833333333333334
+        }
+      },
+      "error_taxonomy": {
+        "boundary_errors": [
+          {
+            "entity": "Sauquillo Fund",
+            "ground_truth_target": "Sauquillo",
+            "ratio": 78.26086956521739
+          },
+          {
+            "entity": "Eduardo Corchero",
+            "ground_truth_target": "Corchero",
+            "ratio": 66.66666666666667
+          },
+          {
+            "entity": "Manuel Carmena",
+            "ground_truth_target": "Carmen Alborch",
+            "ratio": 50.0
+          },
+          {
+            "entity": "Carmen Alborch",
+            "ground_truth_target": "Carmen Romero",
+            "ratio": 66.66666666666667
+          },
+          {
+            "entity": "Carmen Romero",
+            "ground_truth_target": "Carmen Alborch",
+            "ratio": 66.66666666666667
+          }
+        ],
+        "type_confusion": [],
+        "abbreviation_misses": [
+          {
+            "ground_truth_entity": "EFE",
+            "category": "Organizations"
+          }
+        ],
+        "extrinsic_hallucinations": []
+      },
+      "data_provenance": {
+        "timestamp": "2026-09-06T13:05:54.734433+00:00",
+        "model_version": "deepseek-r1:1.5b",
+        "prompt_hash": "a6af280e"
+      }
+    },
+    {
+      "batch_idx": 30,
+      "record_id": "real_mixed_92",
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "latency_sec": 130.91850018501282,
+      "tokens_per_sec": 142.24,
+      "retries": 0,
+      "parse_method": "codeblock",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 1.0,
+      "hallucination_rate": 0.14285714285714285,
+      "hallucinated_count": 1,
+      "cpu_avg_pct": 10.1,
+      "cpu_peak_pct": 46.5,
+      "proc_cpu_avg_pct": 10.2,
+      "mem_avg_mb": 597.7,
+      "mem_peak_mb": 811.3,
+      "sys_mem_avg_mb": 17360.9,
+      "sys_mem_avg_pct": 78.0,
+      "vram_mb": 1723.0,
+      "model_disk_mb": 1065.6,
+      "metrics": {
+        "per_type": {
+          "Persons": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 2,
+            "fn": 10
+          },
+          "Organizations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 3,
+            "fn": 5
+          },
+          "Locations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 2,
+            "fn": 0
+          }
+        },
+        "overall": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 7,
+          "fn": 15,
+          "oov_recall": 0.0
+        }
+      },
+      "error_taxonomy": {
+        "boundary_errors": [
+          {
+            "entity": "Mu\u00f1oz Mar\u00edn",
+            "ground_truth_target": "Luis Mu\u00c3\u00b1oz Mar\u00c3\u00adn",
+            "ratio": 62.06896551724138
+          }
+        ],
+        "type_confusion": [
+          {
+            "entity": "FBI",
+            "extracted_type": "Persons",
+            "correct_type": "Organizations",
+            "matched_ground_truth": "FBI"
+          }
+        ],
+        "abbreviation_misses": [
+          {
+            "ground_truth_entity": "Freeh",
+            "category": "Persons"
+          },
+          {
+            "ground_truth_entity": "EEUU",
+            "category": "Organizations"
+          }
+        ],
+        "extrinsic_hallucinations": []
+      },
+      "data_provenance": {
+        "timestamp": "2026-09-06T13:05:51.077862+00:00",
+        "model_version": "deepseek-r1:1.5b",
+        "prompt_hash": "a6af280e"
+      }
+    },
+    {
+      "batch_idx": 30,
+      "record_id": "real_mixed_93",
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "latency_sec": 127.90991997718811,
+      "tokens_per_sec": 141.71,
+      "retries": 0,
+      "parse_method": "direct_json",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 1.0,
+      "hallucination_rate": 0.16666666666666666,
+      "hallucinated_count": 1,
+      "cpu_avg_pct": 10.1,
+      "cpu_peak_pct": 46.5,
+      "proc_cpu_avg_pct": 10.3,
+      "mem_avg_mb": 593.3,
+      "mem_peak_mb": 811.3,
+      "sys_mem_avg_mb": 17366.8,
+      "sys_mem_avg_pct": 77.9,
+      "vram_mb": 1723.0,
+      "model_disk_mb": 1065.6,
+      "metrics": {
+        "per_type": {
+          "Persons": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 1,
+            "fn": 4
+          },
+          "Organizations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 3,
+            "fn": 6
+          },
+          "Locations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 2,
+            "fn": 0
+          }
+        },
+        "overall": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 6,
+          "fn": 10,
+          "oov_recall": 0.0
+        }
+      },
+      "error_taxonomy": {
+        "boundary_errors": [
+          {
+            "entity": "Airplane Airlines (PAL)",
+            "ground_truth_target": "Philippine Airlines",
+            "ratio": 61.904761904761905
+          }
+        ],
+        "type_confusion": [],
+        "abbreviation_misses": [
+          {
+            "ground_truth_entity": "Puno",
+            "category": "Persons"
+          },
+          {
+            "ground_truth_entity": "DZMM",
+            "category": "Organizations"
+          },
+          {
+            "ground_truth_entity": "DZRB",
+            "category": "Organizations"
+          },
+          {
+            "ground_truth_entity": "PAL",
+            "category": "Organizations"
+          },
+          {
+            "ground_truth_entity": "EFE",
+            "category": "Organizations"
+          }
+        ],
+        "extrinsic_hallucinations": [
+          {
+            "entity": "Group of Men",
+            "category": "Organizations",
+            "text_match_ratio": 48.0
+          }
+        ]
+      },
+      "data_provenance": {
+        "timestamp": "2026-09-06T13:05:48.053645+00:00",
+        "model_version": "deepseek-r1:1.5b",
+        "prompt_hash": "a6af280e"
+      }
+    },
+    {
+      "batch_idx": 31,
+      "record_id": "real_mixed_94",
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "latency_sec": 137.0328619480133,
+      "tokens_per_sec": 134.04,
+      "retries": 0,
+      "parse_method": "fallback",
+      "precision": 1.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "hallucination_rate": 0.0,
+      "hallucinated_count": 0,
+      "cpu_avg_pct": 9.9,
+      "cpu_peak_pct": 39.1,
+      "proc_cpu_avg_pct": 20.7,
+      "mem_avg_mb": 598.2,
+      "mem_peak_mb": 799.7,
+      "sys_mem_avg_mb": 17308.8,
+      "sys_mem_avg_pct": 78.1,
+      "vram_mb": 1723.0,
+      "model_disk_mb": 1065.6,
+      "metrics": {
+        "per_type": {
+          "Persons": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 8
+          },
+          "Organizations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 12
+          },
+          "Locations": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "overall": {
+          "precision": 1.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 20,
+          "oov_recall": 0.0
+        }
+      },
+      "error_taxonomy": {
+        "boundary_errors": [],
+        "type_confusion": [],
+        "abbreviation_misses": [
+          {
+            "ground_truth_entity": "Raul",
+            "category": "Persons"
+          },
+          {
+            "ground_truth_entity": "Cuper",
+            "category": "Persons"
+          },
+          {
+            "ground_truth_entity": "Kopa",
+            "category": "Persons"
+          },
+          {
+            "ground_truth_entity": "FRU",
+            "category": "Organizations"
+          },
+          {
+            "ground_truth_entity": "Real",
+            "category": "Organizations"
+          },
+          {
+            "ground_truth_entity": "Lazio",
+            "category": "Organizations"
+          },
+          {
+            "ground_truth_entity": "EFE",
+            "category": "Organizations"
+          }
+        ],
+        "extrinsic_hallucinations": []
+      },
+      "data_provenance": {
+        "timestamp": "2026-09-06T13:06:14.659863+00:00",
+        "model_version": "deepseek-r1:1.5b",
+        "prompt_hash": "a6af280e"
+      }
+    },
+    {
+      "batch_idx": 31,
+      "record_id": "real_mixed_95",
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "latency_sec": 140.14065313339233,
+      "tokens_per_sec": 141.99,
+      "retries": 0,
+      "parse_method": "codeblock",
+      "precision": 0.06666666666666667,
+      "recall": 0.5,
+      "f1": 0.11764705882352941,
+      "hallucination_rate": 0.13333333333333333,
+      "hallucinated_count": 2,
+      "cpu_avg_pct": 10.1,
+      "cpu_peak_pct": 39.1,
+      "proc_cpu_avg_pct": 9.4,
+      "mem_avg_mb": 595.0,
+      "mem_peak_mb": 799.7,
+      "sys_mem_avg_mb": 17306.1,
+      "sys_mem_avg_pct": 78.1,
+      "vram_mb": 1723.0,
+      "model_disk_mb": 1065.6,
+      "metrics": {
+        "per_type": {
+          "Persons": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 5,
+            "fn": 0
+          },
+          "Organizations": {
+            "precision": 0.2,
+            "recall": 0.5,
+            "f1": 0.28571428571428575,
+            "tp": 1,
+            "fp": 4,
+            "fn": 1
+          },
+          "Locations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 5,
+            "fn": 0
+          }
+        },
+        "overall": {
+          "precision": 0.06666666666666667,
+          "recall": 0.5,
+          "f1": 0.11764705882352941,
+          "tp": 1,
+          "fp": 14,
+          "fn": 1,
+          "oov_recall": 0.5
+        }
+      },
+      "error_taxonomy": {
+        "boundary_errors": [
+          {
+            "entity": "EFECOM",
+            "ground_truth_target": "EFE",
+            "ratio": 66.66666666666667
+          }
+        ],
+        "type_confusion": [],
+        "abbreviation_misses": [
+          {
+            "ground_truth_entity": "EFE",
+            "category": "Organizations"
+          }
+        ],
+        "extrinsic_hallucinations": []
+      },
+      "data_provenance": {
+        "timestamp": "2026-09-06T13:06:17.757246+00:00",
+        "model_version": "deepseek-r1:1.5b",
+        "prompt_hash": "a6af280e"
+      }
+    },
+    {
+      "batch_idx": 31,
+      "record_id": "real_mixed_96",
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "latency_sec": 121.46800684928894,
+      "tokens_per_sec": 141.3,
+      "retries": 0,
+      "parse_method": "codeblock",
+      "precision": 0.2857142857142857,
+      "recall": 0.16666666666666666,
+      "f1": 0.2105263157894737,
+      "hallucination_rate": 0.0,
+      "hallucinated_count": 0,
+      "cpu_avg_pct": 11.5,
+      "cpu_peak_pct": 100.0,
+      "proc_cpu_avg_pct": 10.9,
+      "mem_avg_mb": 599.7,
+      "mem_peak_mb": 799.7,
+      "sys_mem_avg_mb": 17337.3,
+      "sys_mem_avg_pct": 78.0,
+      "vram_mb": 1723.0,
+      "model_disk_mb": 1065.6,
+      "metrics": {
+        "per_type": {
+          "Persons": {
+            "precision": 0.25,
+            "recall": 0.3333333333333333,
+            "f1": 0.28571428571428575,
+            "tp": 1,
+            "fp": 3,
+            "fn": 2
+          },
+          "Organizations": {
+            "precision": 1.0,
+            "recall": 0.1111111111111111,
+            "f1": 0.19999999999999998,
+            "tp": 1,
+            "fp": 0,
+            "fn": 8
+          },
+          "Locations": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 2,
+            "fn": 0
+          }
+        },
+        "overall": {
+          "precision": 0.2857142857142857,
+          "recall": 0.16666666666666666,
+          "f1": 0.2105263157894737,
+          "tp": 2,
+          "fp": 5,
+          "fn": 10,
+          "oov_recall": 0.18181818181818182
+        }
+      },
+      "error_taxonomy": {
+        "boundary_errors": [],
+        "type_confusion": [
+          {
+            "entity": "Eurobank",
+            "extracted_type": "Persons",
+            "correct_type": "Organizations",
+            "matched_ground_truth": "Eurobank"
+          }
+        ],
+        "abbreviation_misses": [
+          {
+            "ground_truth_entity": "BCR",
+            "category": "Organizations"
+          },
+          {
+            "ground_truth_entity": "EFE",
+            "category": "Organizations"
+          },
+          {
+            "ground_truth_entity": "Suiza",
+            "category": "Organizations"
+          }
+        ],
+        "extrinsic_hallucinations": []
+      },
+      "data_provenance": {
+        "timestamp": "2026-09-06T13:05:59.092376+00:00",
+        "model_version": "deepseek-r1:1.5b",
+        "prompt_hash": "a6af280e"
+      }
     }
   ],
-  "timestamp": "2026-09-06T13:04:51Z",
+  "timestamp": "2026-09-06T13:06:17Z",
   "config_hash": "5d131e6b0ef6"
 }
