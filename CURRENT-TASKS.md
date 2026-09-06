@@ -261,6 +261,33 @@ Para **cada tarea** que ejecutes:
 - ⚠️ **Criterio de parada:** comprobar la tasa de fallo **a mitad de corrida**. Si supera el **10 %**, parar.
   429 = esperar a que renueve la cuota. 402 = avisar, es barrera de plan.
 
+### 3.bis.7 🔍 PARA INVESTIGAR — dos anomalías detectadas en P3
+Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **El equipo remoto investiga.**
+
+#### a) `nemotron-mini:4b_baseline` — los únicos `failed` de toda la corrida
+- **8 `parse_method: failed`** y **26 `recall=0`** de 120.
+- Su condición `kb_rag` solo tiene **9 `recall=0`** y **cero `failed`** — el baseline falla 3× más.
+- Son los **únicos 8 `failed` de las 1680 filas** de P3. Todo lo demás resuelve por `direct_json`,
+  `codeblock` o `fallback`.
+- **Qué mirar:** ¿respuestas vacías (firma del bug de *thinking*) o malformadas? El diagnóstico es el mismo
+  que usamos en `gemma4:12b-mlx`: `grep "Failed to parse JSON from raw response:" benchmark.log` y comprobar
+  si lo que sigue está vacío. Si lo está, y `nemotron-mini` declarara capacidad `thinking`, sería el mismo
+  caso y bastaría añadirlo a `_THINKING_DISABLED_MODELS`.
+- **Impacto:** F1 baseline 0,3630 frente a 0,4399 en kb_rag. Si los 8 fallos y parte de los 26 ceros son
+  espurios, su cifra de baseline está subestimada.
+
+#### b) `mistral-nemo:latest` — salto de `fallback` con RAG
+- `baseline`: 9 `fallback` de 120 · `kb_rag`: **69 de 120**.
+- El respaldo **sí rescata contenido** (recall=0 se mantiene en 3 y 4), así que no es el caso de
+  `gemma4:12b-mlx`. Pero un salto de 9 a 69 indica que **el contexto RAG le altera el formato de salida**.
+- **Qué mirar:** si el modelo, al recibir contexto RAG, envuelve la respuesta de otro modo (bloque de código,
+  preámbulo) que el parser directo no acepta. No invalida sus cifras, pero conviene entenderlo antes de
+  citarlas.
+
+> **Método sugerido** (el que funcionó con `gemma4:12b-mlx`): cruzar `parse_method` con `recall` distingue un
+> respaldo que funciona de uno que encubre un fallo. Y `latency_sec` con tokens generados distingue un
+> rechazo de infraestructura (latencia 0) de que el arnés pierda la respuesta (latencia alta, `content` vacío).
+
 ### 3.bis.5 Plantilla de reporte
 Al terminar cada tarea, sustituid su bloque por:
 
@@ -331,6 +358,8 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-05 21:45 | Claude Code | `gemma4:12b-mlx_baseline` COMPLETADO (40/40 lotes). Descarga de `gemma4:31b-mlx` reanudada; `gemma4:31b` ya estaba local |
 | 2026-09-06 04:35 | Claude Code | Progreso 348/1680 (20,7%). `gemma4:12b-mlx` COMPLETO (baseline y kb_rag 40/40). Contaminadas congeladas en 36 tras desactivar la suspensión: 22% → 10% |
 | 2026-09-06 04:35 | Claude Code | Proyección revisada con latencias MEDIDAS: ~518 h (21 días). La estimación previa de 66 h partía de extrapolar el histórico N=15 y era 7× optimista |
+| 2026-09-06 14:10 | Claude Code | Analizadas las 5 entregas remotas. **`gemma4:31b-cloud` es ahora el mejor modelo en N=120** (F1 0,6268, 240/240 `direct_json`, cero fallos). La **ablación regenera las 4 cifras que no existían en ningún dato**: fs-es 0,7444 · zs-es 0,6843 · zs-en 0,6405 · fs-en 0,6332 — el ranking de la tesina se mantiene |
+| 2026-09-06 14:10 | Claude Code | Dos anomalías pasadas al remoto para investigar (§3.bis.7): `nemotron-mini:4b_baseline` con los únicos 8 `failed` de las 1680 filas, y `mistral-nemo` con salto de 9 a 69 `fallback` al activar RAG |
 | 2026-09-06 13:00 | Claude Code | 🔴 Analizado a fondo el P3 remoto: bug de *thinking* confirmado con la misma firma (**203/206 respuestas vacías**). `kb_rag` falla más (78 %) que `baseline` (55 %) porque el contexto RAG alarga el prompt: **+22 % de latencia**. Su máquina de 48 GB alivia el síntoma (55 % vs nuestro 84 %) pero no lo cura |
 | 2026-09-06 13:00 | Claude Code | Pedido **adelantar** la re-corrida de `gemma4:12b-mlx`: único modelo con datos a descartar íntegros, bloquea el ANOVA. Ver `URGENTE-REMOTO-RECORRIDA-20260906.md` |
 | 2026-09-06 10:15 | Autor | Decisión: **delegar TODO lo pendiente al equipo remoto**. El equipo principal no ejecuta más corridas; su máquina queda libre y la corrida local se cierra donde está |
