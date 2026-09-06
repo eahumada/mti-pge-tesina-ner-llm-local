@@ -63,3 +63,31 @@ Al recalcular el ANOVA definitivo, decidir explícitamente la convención para e
 no-vacío (F1=0 es lo correcto). Si se corrige el scorer, **recomputar todas las corridas** y re-fusionar.
 Mientras tanto, estas cifras registradas están **infladas para los modelos débiles** y no deben citarse como
 absolutas sin esta nota.
+
+---
+
+## ✅ CORREGIDO (2026-09-06) — sin re-inferir
+
+`evaluator.py:126-134` arreglado (default 0.0; F1=1.0 solo si `tp+fp+fn==0`). Los datos guardados se
+**re-puntuaron desde los `tp/fp/fn` persistidos** (`detailed_results.json`) con `tools/rescore_saved.py`
+— **no hizo falta re-ejecutar ningún modelo**. CSVs corregidos (backup `.bak_prescore`).
+
+### F1 corregido definitivo (N=120, kb_combined salvo Tabla 2)
+
+| Modelo | baseline | kb_rag | Fuente |
+|:---|--:|--:|:---|
+| `sonct988/gemma4-26b` | 0.5627 | **0.5964** | excluidos |
+| `gemma4:31b-cloud` | 0.6238 | 0.6185 | cloud |
+| `gemma4:12b-mlx` | 0.5618 | 0.5846 | afectados |
+| `qwen3:8b` (think=false) | 0.4821 | 0.5146 | qwen3_nothink |
+| `llama3.1:8b` | 0.4876 | 0.5075 | P3 |
+| `mistral-nemo` | 0.4338 | 0.4576 | P3 |
+| `nuextract` | 0.4288 | 0.2240 | P3 |
+| `nemotron-mini:4b` | 0.2150 | 0.3712 | rerun (excluir 7 failed) |
+| `deepseek-r1:1.5b` | 0.2483 | 0.2394 | P3 |
+| `gpt-oss:20b` | 0.4384 | 0.3419 | excluidos |
+| **Tabla 2 `gemma4:31b` N=15** | 0.6912 | 0.6391 | P1 |
+| **Variación prompts** (gemma4:latest) | — | fs-es 0.7444 / zs-es 0.6843 / zs-en 0.6405 / fs-en 0.6332 | P4 |
+
+Cambios mayores por la corrección: nuextract kb_rag 0.4323→0.2240, nemotron baseline 0.3630→0.2130,
+deepseek 0.34→0.24. Modelos con parsing limpio casi no cambian.

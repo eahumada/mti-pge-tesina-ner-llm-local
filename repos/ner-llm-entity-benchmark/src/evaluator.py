@@ -122,12 +122,16 @@ def evaluate_extraction_by_type(extracted: dict, ground_truth: dict, threshold: 
         overall_fp += fp
         overall_fn += fn
         
-    # Micro/macro metrics calculation
-    overall_precision = overall_tp / (overall_tp + overall_fp) if (overall_tp + overall_fp) > 0 else 1.0
-    overall_recall = overall_tp / (overall_tp + overall_fn) if (overall_tp + overall_fn) > 0 else 1.0
-    overall_f1 = 2 * (overall_precision * overall_recall) / (overall_precision + overall_recall) if (overall_precision + overall_recall) > 0 else 1.0
-    
-    # If there were no entities anywhere, defaults to 1.0
+    # Micro metrics calculation.
+    # Fix 2026-09-06: los defaults eran 1.0, lo que daba F1=1.0 a una extracción VACÍA sobre gold no-vacío
+    # (no hay predicciones -> tp+fp=0 -> precisión caía a 1.0). Eso premiaba el silencio/fallo e inflaba a los
+    # modelos propensos a vacío (hasta +0.21). Correcto: default 0.0; F1=1.0 SOLO si no había nada que extraer
+    # y el modelo tampoco extrajo (tp+fp+fn==0).
+    overall_precision = overall_tp / (overall_tp + overall_fp) if (overall_tp + overall_fp) > 0 else 0.0
+    overall_recall = overall_tp / (overall_tp + overall_fn) if (overall_tp + overall_fn) > 0 else 0.0
+    overall_f1 = 2 * (overall_precision * overall_recall) / (overall_precision + overall_recall) if (overall_precision + overall_recall) > 0 else 0.0
+
+    # Match vacío legítimo: no había entidades en el gold y el modelo tampoco inventó ninguna.
     if overall_tp == 0 and overall_fp == 0 and overall_fn == 0:
         overall_precision = 1.0
         overall_recall = 1.0
