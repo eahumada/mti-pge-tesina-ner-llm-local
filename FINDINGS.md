@@ -692,3 +692,34 @@ marcha, pero invalida la rotación de cuentas como plan de contingencia.
 > **Método que hizo falta:** distinguir un fallo de infraestructura de uno del arnés exige mirar
 > `latencia` y `tokens generados`, no solo `parse_method`. Latencia 0 con 0 tokens es un rechazo de red;
 > latencia alta con muchos tokens y `content` vacío es el arnés perdiendo la respuesta.
+
+### F43. `nuextract:latest` retirado del estudio
+**Decisión del autor, 2026-09-06.** Se retira del benchmark y de la documentación operativa.
+
+**Datos que motivaron la revisión:** en la corrida P3 del equipo remoto, **109 de 120 extracciones**
+requirieron el parser de respaldo (`parse_method='fallback'`), una proporción del 90 % comparable a la de
+`gemma4:12b-mlx` (F40).
+
+**Evidencia que distingue ambos casos** — se recoge porque la decisión se tomó *a pesar* de ella:
+
+| Modelo | `fallback` | De ellos con recall = 0 | F1 de esas filas |
+|:---|--:|--:|--:|
+| `nuextract:latest` | 109 | **2** | **0,4459** |
+| `gemma4:12b-mlx` | 70 | **66** | 0,0472 |
+
+En `nuextract` el respaldo **sí rescata contenido** (107 de 109) con F1 normal, coherente con su histórico.
+No es un fallo del arnés: es un **extractor de plantilla**, tratado explícitamente como tal por el código
+(`_NUEXTRACT_MODELS`, `ollama_provider.py:278`), que emite un formato propio **por diseño**.
+
+**Justificación de la retirada:** el barrido compara modelos generalistas bajo un mismo contrato de formato
+de salida. Un extractor especializado con formato propio no es homologable a ellos, y su alta tasa de
+respaldo introduce una variable de tratamiento distinta a la del resto de la tabla.
+
+**Alcance:** retirado de `src/config.py`, `run_benchmark.sh`, la tabla de resultados de `BENCHMARKS.md` y
+marcado en `AGENTS.md §8.6`. **Se conserva** el manejo de plantilla en `ollama_provider.py`
+(`_NUEXTRACT_MODELS`): es mecanismo de enrutado, no declaración del modelo — misma distinción aplicada al
+retirar `minimax-m3` (F38, L28). Los datos crudos en `results/` permanecen intactos.
+
+> **Nota de método.** La alerta que originó esta revisión fue **engañosa**: se señaló la tasa de fallback
+> como anomalía equiparable a la de `gemma4:12b-mlx`, sin comprobar antes el indicador que de verdad
+> discrimina —si el respaldo rescata contenido—. Ver `LEARNING.md §L36`.

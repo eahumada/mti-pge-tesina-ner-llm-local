@@ -393,3 +393,37 @@ Dos causas producen la misma señal en `parse_method='failed'`, y se separan mir
 > **Aplicación:** ante un lote de extracciones fallidas, mirar `latency_sec` y `tokens_per_sec` antes de
 > concluir la causa. Un `failed` con latencia 0 y otro con latencia 1800 s son problemas opuestos y exigen
 > arreglos opuestos: uno se resuelve esperando o pagando, el otro tocando el código.
+
+### L35. Un filtro `if valor` descarta los ceros en silencio
+Al analizar los resultados del equipo remoto se reportó un F1 de 0,6302 para un modelo. **El valor real era
+0,2731.** La causa: el filtro `[float(x['f1']) for x in v if x.get('f1')]`.
+
+En un checkpoint JSON los valores son tipos nativos, y **`0.0` es *falsy*** en Python. El filtro eliminaba
+todas las filas con F1 cero —las 66 fallidas— y promediaba solo las 54 buenas, inflando el resultado en más
+del doble.
+
+El mismo código sobre un CSV **no** habría fallado: `csv.DictReader` devuelve cadenas, y `"0.0"` es truthy.
+El bug solo aparece al leer JSON.
+
+> **Aplicación:** para filtrar valores ausentes usad `if x.get('k') is not None`, nunca `if x.get('k')`.
+> Y como control de sanidad: **el número de filas promediadas debe coincidir con el de filas del grupo**.
+> Si `len(f1) != len(v)`, algo se descartó.
+>
+> Es especialmente insidioso porque el resultado inflado **parece plausible**: 0,63 era una cifra creíble
+> para ese modelo, y solo saltó al no cuadrar con las 66 filas en cero que la propia tabla mostraba.
+
+### L36. Comparar una tasa sin comparar su efecto lleva a conclusiones opuestas
+Se señaló que `nuextract` tenía «109 de 120 fallback, casi tanto como `gemma4:12b-mlx`», sugiriendo la misma
+anomalía. La tasa era comparable; **el efecto, opuesto**:
+
+| Modelo | `fallback` | recall = 0 entre ellos | F1 de esas filas |
+|:---|--:|--:|--:|
+| `nuextract` | 109 | 2 | 0,4459 |
+| `gemma4:12b-mlx` | 70 | 66 | 0,0472 |
+
+En uno el respaldo **rescata** el contenido; en el otro no rescata nada. Una es una ruta de parseo que
+funciona, la otra un fallo encubierto.
+
+> **Aplicación:** una tasa de eventos no es un diagnóstico. Antes de equiparar dos síntomas por su
+> frecuencia, comprobad **qué consecuencia tiene cada uno sobre el resultado**. Aquí bastaba cruzar
+> `parse_method` con `recall` — dos columnas que ya estaban en los datos.

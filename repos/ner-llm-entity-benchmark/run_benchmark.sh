@@ -32,7 +32,6 @@ echo "📊 Running full benchmark sweep — 15 models (including MiniMax & gpt-o
     qwen3:8b \
     qwen2.5:14b \
     mistral-nemo:latest \
-    nuextract:latest \
     llama3.1:8b \
     llama3.2:latest \
     nemotron-mini:4b \

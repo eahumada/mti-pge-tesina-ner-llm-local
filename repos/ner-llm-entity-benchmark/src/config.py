@@ -62,7 +62,7 @@ class BenchmarkConfig:
         'gemma4:31b', 'sonct988/gemma4-26b-a4b-it-q4km-256k:latest',
         'gpt-oss:20b',
         'gemma4:latest', 'gemma:latest',
-        'qwen3:8b', 'qwen2.5:14b', 'mistral-nemo:latest', 'nuextract:latest',
+        'qwen3:8b', 'qwen2.5:14b', 'mistral-nemo:latest', 
         'llama3.1:8b', 'llama3.2:latest', 'nemotron-mini:4b', 'deepseek-r1:1.5b',
         'phi3.5:latest', 'gemma4:12b-mlx', 'phi3.5'
     ])

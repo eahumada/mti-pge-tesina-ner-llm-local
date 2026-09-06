@@ -219,7 +219,7 @@ Expected output: `Entities:` dict with `Persons`, `Organizations`, `Locations` a
 | `qwen3:8b` | Local + Thinking | ✅ Pulled (5.2 GB) | ✅ Active | |
 | `qwen2.5:14b` | Local | ✅ Pulled (9.0 GB) | ✅ Active | |
 | `mistral-nemo:latest` | Local | ✅ Pulled (7.1 GB) | ✅ Active | |
-| `nuextract:latest` | Local + Template | ✅ Pulled (2.2 GB) | ✅ Active | |
+| `nuextract:latest` | Local + Template | ✅ Pulled (2.2 GB) | ❌ **RETIRADO 2026-09-06** | |
 | `llama3.1:8b` | Local | ✅ Pulled (4.9 GB) | ✅ Active | |
 | `llama3.2:latest` | Local | ✅ Pulled (2.0 GB) | ✅ Active | |
 | `phi3.5` | Local | ✅ Pulled (2.2 GB) | ✅ Active | |

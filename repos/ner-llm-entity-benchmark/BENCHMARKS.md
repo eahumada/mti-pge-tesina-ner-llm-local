@@ -49,7 +49,6 @@ La lista de modelos se define en `src/config.py` (campo `BenchmarkConfig.models`
     "qwen2.5:14b",
     "mistral-nemo:latest",
     "qwen3:8b",
-    "nuextract:latest",
     "deepseek-r1:1.5b",
     "llama3.2:latest",
     "gemma4:12b-mlx"
@@ -160,7 +159,6 @@ Tabla histórica. Su origen trazable es la corrida `klepto_N15__rag-entities__zs
 | gemma:latest | 0.6266 | 0.5847 | 0.7147 | 1.08% | 7.84 | 0.128 |
 | qwen2.5:14b | 0.6106 | 0.5760 | 0.7176 | 0.87% | 86.14 | 0.012 |
 | llama3.1:8b | 0.6072 | 0.5370 | 0.7580 | 3.39% | 55.70 | 0.018 |
-| nuextract:latest | 0.5415 | 0.4869 | 0.4180 | 6.29% | 154.29 | 0.006 |
 | qwen3:8b | 0.5365 | 0.6675 | 0.6561 | 0.00% | 63.76 | 0.016 |
 | mistral-nemo:latest | 0.5307 | 0.5813 | 0.5600 | 0.83% | 54.34 | 0.018 |
 | nemotron-mini:4b | 0.4199 | 0.4437 | 0.3492 | 2.62% | 22.42 | 0.045 |
@@ -172,6 +170,12 @@ Tabla histórica. Su origen trazable es la corrida `klepto_N15__rag-entities__zs
 > benchmark: su única medición tenía **9 de 15 extracciones fallidas por cuota** (N efectiva = 6) y
 > **no es re-ejecutable** — devuelve HTTP 402 por requerir plan de pago. Un resultado con 60 % de
 > fallo y sin posibilidad de repetición no es defendible. Ver `FINDINGS.md §F38`.
+
+> **Retirado del estudio (2026-09-06, decisión del autor).** `nuextract:latest` se elimina del
+> benchmark. Es un extractor de plantilla, no un modelo generalista: **109 de 120 extracciones**
+> requirieron el parser de respaldo por su formato propio. Aunque ese respaldo rescataba contenido
+> con F1 normal, se retira para que el barrido compare modelos generalistas en igualdad de
+> condiciones de formato de salida. Ver `FINDINGS.md §F43`.
 
 > ⚠️ **Trazabilidad.** Once de las catorce filas reproducen exactamente (F1/Precision/Recall) las condiciones `_baseline` de `results/benchmark_summary.json` (corrida #8). Las tres marcadas ⚠️ no: el archivo crudo da `gemma4:31b-cloud` F1 0.3973 / P 0.7284 / R 0.5233, `gemma4:31b-mlx` F1 0.6852 / P 0.5831 / R 0.8676 y `minimax-m3:cloud` F1 0.2011 / P 0.8396 / R 0.2434. Las latencias tampoco coinciden fila a fila con el crudo. Se conservan tal cual y se marcan; su corrección requiere decisión del autor sobre cuál es la fuente válida. Los dos modelos *cloud* ya no son re-ejecutables (cuota semanal 429 y suscripción de pago 402).
 
