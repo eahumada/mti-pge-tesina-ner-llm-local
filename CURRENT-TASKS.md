@@ -232,10 +232,12 @@ Para **cada tarea** que ejecutes:
 - **Decisión del autor (aprobada):** dejar P3 terminar (5 modelos válidos) y **re-correr solo los 2 afectados**
   con el fix en `results/afectados_thinking_n120_REMOTO/` (encolado tras P4/gpt-oss). El equipo principal fusiona.
 
-### 3.bis.4 ⬜ PENDIENTE — Configuraciones de prompt (PRIORIDAD 4)
-- **Estado:** ⬜ SIN INICIAR
+### 3.bis.4 ✅ COMPLETADA — Configuraciones de prompt (PRIORIDAD 4)
+- **Estado:** ✅ COMPLETADA 2026-09-06 10:35 (equipo remoto 48 GB) — 60/60, **fallo 0**
 - **Archivos:** `results/ablacion_n15_REMOTO/`
-- **Bloquea:** 4 cifras de la tesina que no existen en ningún dato
+- **4 cifras regeneradas (F1, gemma4:latest, N=15):** fs-es **0.7444** (mejor) · zs-es 0.6843 · zs-en 0.6405 · fs-en 0.6332
+- **Hallazgo confirmado:** el español mejora; few-shot español es el óptimo. Las cifras que la tesina citaba
+  (0.7169/0.6640/0.6482/0.5874) no existían en datos; ahora hay medición trazable.
 
 ### 3.bis.6 ✅ COMPLETADA — `gemma4:31b-cloud` sobre N=120 (EN PARALELO)
 - **Estado:** ✅ COMPLETADA 2026-09-06 10:08 (iniciada 09:46, equipo remoto 48 GB) · **Encargo:** [`ADENDA-EQUIPO-REMOTO-20260906.md`](./ADENDA-EQUIPO-REMOTO-20260906.md)
@@ -352,3 +354,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-06 09:54 | Equipo Remoto 48 GB (Claude Code) | Tarea nueva §3.bis.6 `gemma4:31b-cloud` N=120 lanzada EN PARALELO. Implementado rate limit: flags `--max-workers` + `--request-delay` (`ollama_provider.py` gate por `OLLAMA_REQUEST_DELAY_SEC`). Con 1 worker + 3s: **0× 429** (vs 172 sin límite). Wrapper resiliente `--resume` (429=espera, 402=avisa). Backups `*.bak_ratelimit_20260906` |
 | 2026-09-06 10:08 | Equipo Remoto 48 GB (Claude Code) | P3 §3.bis.3 COMPLETADA: 1680/1680, fallo 8/1680 (solo nemotron-mini baseline). `gemma4:12b-mlx`+`qwen3:8b` inválidos (bug thinking) → re-corrida aparte. P4 (ablación) arrancó. Cloud 234/240 |
 | 2026-09-06 10:08 | Equipo Remoto 48 GB (Claude Code) | §3.bis.6 COMPLETADA: `gemma4:31b-cloud` N=120, 240/240, **fallo 0%**, F1 0.6238/0.6268. 10º modelo del ANOVA. Rate limit efectivo (0× 429 vs 79% fallo previo). Entregado en `results/gemma4_31b_cloud_n120_REMOTO/`. P4 en curso |
+| 2026-09-06 10:35 | Equipo Remoto 48 GB (Claude Code) | P4 §3.bis.4 COMPLETADA: ablación 60/60, fallo 0. fs-es 0.7444 / zs-es 0.6843 / zs-en 0.6405 / fs-en 0.6332. CADENA local COMPLETA (P2-P4). gpt-oss:20b arrancó con el fix de routing (200 OK). Sigue re-corrida de afectados |
