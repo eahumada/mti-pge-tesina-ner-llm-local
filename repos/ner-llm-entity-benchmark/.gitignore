@@ -1,9 +1,51 @@
+# ---------------------------------------------------------------------------
+# Entornos y cachés
+# ---------------------------------------------------------------------------
 __pycache__/
 *.pyc
-.env
 venv/
 env/
-data/
-results/
-*.csv
+
+# ---------------------------------------------------------------------------
+# Secretos — NUNCA versionar
+# ---------------------------------------------------------------------------
+.env
 .setenv.sh
+
+# ---------------------------------------------------------------------------
+# Respaldos de trabajo de agentes
+# ---------------------------------------------------------------------------
+*.bak_*
+
+# ---------------------------------------------------------------------------
+# DATOS
+#
+# Los corpus de evaluación SÍ se versionan: son la ENTRADA del experimento y
+# sin ellos ninguna corrida es reproducible por un tercero. Pesan ~400 KB.
+# Solo se ignora lo voluminoso y regenerable:
+# ---------------------------------------------------------------------------
+# 60 MB · se regenera indexando los diccionarios
+data/chroma_db/
+# 1.8 MB · descargables con los scripts del repo (download_*.py)
+data/dictionaries/
+
+# ---------------------------------------------------------------------------
+# RESULTADOS
+#
+# La EVIDENCIA CITABLE de cada corrida SÍ se versiona (CSV de resultados,
+# resúmenes, reportes estadísticos, matrices de confusión y configuración
+# efectiva): es la prueba que sustenta las cifras de la tesina, y su pérdida
+# ya costó los datos por registro del corpus N=30 (ver FINDINGS.md §F1).
+# Cuesta ~1.9 MB en total.
+#
+# Se ignoran únicamente los artefactos pesados de proceso (~37 MB):
+# ---------------------------------------------------------------------------
+results/**/.checkpoint.json
+results/.checkpoint.json
+results/**/detailed_results.json
+results/detailed_results.json
+results/**/*.log
+results/*.log
+
+# Los logs de la RAÍZ del repo SÍ se conservan: para varias corridas antiguas
+# son la única evidencia superviviente de sus métricas agregadas.

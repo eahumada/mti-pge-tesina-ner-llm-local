@@ -194,19 +194,64 @@ Acompañad la entrega con:
 
 ## 7. Preparación del entorno
 
+### 7.1 Rama y dependencias
+
 ```bash
-cd repos/ner-llm-entity-benchmark
+git clone <repo> && cd repos/ner-llm-entity-benchmark
+git checkout sesion/revision-final-20260905     # rama con los corpus versionados
+
 python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 ollama serve &          # dejar corriendo
+```
 
-# comprobación previa: ¿el modelo responde de verdad?
+### 7.2 Verificad que los corpus llegaron
+
+Los corpus **sí van en el repositorio** desde 2026-09-06 (antes estaban excluidos por `.gitignore`, lo que
+habría impedido ejecutar cualquier tarea). Comprobadlo antes de empezar:
+
+```bash
+python3 -c "
+import json
+for f in ['data/kleptotrace.json','data/benchmark_balanced_120.json']:
+    d=json.load(open(f)); r=d if isinstance(d,list) else d.get('dataset',[])
+    print(f'{f}: {len(r)} registros')"
+```
+
+Debe imprimir **15** y **120** respectivamente. **No los regeneréis**: los resultados tienen que ser
+comparables con las corridas existentes.
+
+### 7.3 ⚠️ Datos del RAG — necesarios para las tareas 1 y 4
+
+El sistema RAG usa dos fuentes distintas según el modo, y **solo una viaja en el repositorio**:
+
+| Recurso | ¿Versionado? | Lo necesitan |
+|:---|:---|:---|
+| `data/knowledge_base/` | ✅ sí | Tareas **2 y 3** (`--rag-mode kb_combined`) |
+| `data/dictionaries/` | ❌ **no** (1.8 MB, descargable) | Tareas **1 y 4** (`--rag-mode entities`) |
+| `data/chroma_db/` | ❌ no (60 MB) | Se genera solo a partir de los diccionarios |
+
+**Antes de las tareas 1 y 4**, regenerad los diccionarios:
+
+```bash
+python3 fetch_dictionaries.py
+python3 download_ofac.py           # listas de sanciones OFAC
+python3 generate_metadata_dicts.py
+```
+
+`src/rag_manager.py` indexa automáticamente en ChromaDB la primera vez que se ejecuta, así que
+`data/chroma_db/` **no hay que crearlo a mano** — pero la primera corrida tardará algo más mientras indexa.
+
+Si `data/dictionaries/` está vacío al lanzar una tarea con `--rag-mode entities`, el RAG no inyectará
+contexto y la condición `_rag_enhanced` será **indistinguible del baseline**, sin que nada lo advierta.
+
+### 7.4 Comprobación previa del modelo
+
+```bash
+# ¿responde de verdad, o solo está en `ollama list`?
 curl -s http://localhost:11434/api/chat \
   -d '{"model":"gemma4:31b","messages":[{"role":"user","content":"di OK"}],"stream":false}'
 ```
-
-Los corpus (`data/kleptotrace.json`, `data/benchmark_balanced_120.json`) van en el repositorio.
-**No los regeneréis**: los resultados deben ser comparables con las corridas existentes.
 
 ---
 

@@ -161,8 +161,14 @@ Para **cada tarea** que ejecutes:
 > **Protocolo:** el equipo remoto debe **leer este documento antes de empezar**, escribir su entrada al
 > iniciar cada tarea, actualizarla al terminar y **volver a leerlo** por si otro agente escribió mientras.
 
-### 3.bis.1 ⬜ PENDIENTE — `gemma4:31b` sobre N=15 (PRIORIDAD 1)
-- **Estado:** ⬜ SIN INICIAR
+### 3.bis.1 ⏸️ PAUSADA — `gemma4:31b` sobre N=15 (PRIORIDAD 1)
+- **Estado:** ⏸️ PAUSADA 2026-09-06 (iniciada 2026-09-05 23:40) · **Equipo:** Remoto 48 GB (Claude Code)
+- **Motivo de la pausa:** el autor retiene las 4 tareas; llegarán por git **corpus faltantes y nuevas
+  instrucciones**. No reanudar ni pushear hasta recibir el pull.
+- **Estado técnico:** checkpoint preservado en `results/gemma4_31b_n15_REMOTO/.checkpoint.json` (23 KB).
+  Reanudable con `--resume` (requiere el mismo `--results-dir`). Sin `benchmark_results.csv` aún.
+- **Verificado antes de pausar:** `gemma4:31b` responde inferencia real (43 s, sin error), ya local (sin `pull`).
+- **P2/P3/P4:** SIN INICIAR — driver de cadena detenido antes de arrancarlas; `caffeinate` y monitor detenidos.
 - **Archivos que producirá:** `results/gemma4_31b_n15_REMOTO/`
 - **Bloquea:** la fila de `gemma4:31b` en la Tabla 2 del informe, hoy sin respaldo alguno
 - **Reportar aquí:** fecha de inicio/fin · F1, P, R obtenidos · **tasa de fallo (debe ser 0)** · RAM pico
