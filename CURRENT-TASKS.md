@@ -31,6 +31,15 @@ Para **cada tarea** que ejecutes:
 
 ## 1. Claude Code
 
+### 1.0 ⏳ EN ESPERA — Resultados parciales del equipo remoto
+- **Decisión del autor (2026-09-06):** esperar los resultados parciales del equipo de 48 GB antes de
+  decidir el alcance final del estudio.
+- **La corrida local sigue viva como red de seguridad**, sin bloquear nada. Ver 1.1.
+- **Motivo:** con latencias ya medidas (no estimadas), la proyección local es de **~518 h ≈ 21 días**.
+  `qwen3:8b` mide **1360 s/artículo** frente a los 192 s que se habían estimado desde su histórico N=15:
+  los artículos de N=120 son mucho más largos y la máquina pagina.
+- **Qué se espera del remoto:** la tarea de prioridad 3 del encargo es exactamente esta corrida.
+
 ### 1.1 EN CURSO — Benchmark N=120 (7 modelos locales)
 - **Estado:** ▶️ EN CURSO desde 2026-09-03 16:08
 - **Archivos bloqueados:** `repos/ner-llm-entity-benchmark/results/benchmark_balanced_120_kbrag_9models/**`
@@ -263,6 +272,9 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-05 21:45 | Claude Code | Commit `33ddb00` en rama `sesion/revision-final-20260905`: 45 archivos, 5405 inserciones. Verificado sin secretos ni backups |
 | 2026-09-05 21:45 | Claude Code | Todos los secretos consolidados en `.setenv.sh` (raíz, permisos 600, gitignored). Token retirado de `.git/config`; credential helper lee `GITHUB_TOKEN` del entorno |
 | 2026-09-05 21:45 | Claude Code | `gemma4:12b-mlx_baseline` COMPLETADO (40/40 lotes). Descarga de `gemma4:31b-mlx` reanudada; `gemma4:31b` ya estaba local |
+| 2026-09-06 04:35 | Claude Code | Progreso 348/1680 (20,7%). `gemma4:12b-mlx` COMPLETO (baseline y kb_rag 40/40). Contaminadas congeladas en 36 tras desactivar la suspensión: 22% → 10% |
+| 2026-09-06 04:35 | Claude Code | Proyección revisada con latencias MEDIDAS: ~518 h (21 días). La estimación previa de 66 h partía de extrapolar el histórico N=15 y era 7× optimista |
+| 2026-09-06 04:35 | Autor | Decisión: **esperar resultados parciales del equipo remoto**. La corrida local continúa como red de seguridad |
 | 2026-09-05 21:45 | Claude Code | Suite de guardarraíles: 15/15 tests OK. `src/memory_stress_test.py` pospuesto para no competir por RAM con el benchmark |
 | 2026-09-04 14:00 | Claude Code | Ref git inválida `refs/remotes/origin/main 2` eliminada: rompía `git log --all` y causó 2 escaneos de seguridad con falso negativo |
 | 2026-09-03 16:38 | Claude Code | Inventario completo de resultados cloud: `gemma4:31b-cloud` y `minimax-m3:cloud` conservados en sus 2 corridas cada uno (N=15 y N=120). Detectado que ambas son de modo RAG legacy `entities`, no comparables con `kb_combined`. Ver `TODO-INFORME-FINAL.md §9.4-9.5` |
