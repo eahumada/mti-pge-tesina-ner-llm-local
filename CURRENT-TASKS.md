@@ -215,8 +215,14 @@ Para **cada tarea** que ejecutes:
 - **Pendiente:** decisión del autor sobre parche de routing (`gpt-oss` → Ollama) para re-correr solo gpt-oss.
 - **Archivos:** `results/excluidos_n120_REMOTO/`
 
-### 3.bis.3 ▶️ EN CURSO — Benchmark principal N=120, 7 modelos (PRIORIDAD 3)
-- **Estado:** ▶️ EN CURSO (equipo remoto 48 GB) — 921/1680 al 2026-09-06 09:04 · `kb_combined`, workers 8
+### 3.bis.3 ✅ COMPLETADA — Benchmark principal N=120, 7 modelos (PRIORIDAD 3)
+- **Estado:** ✅ COMPLETADA 2026-09-06 10:08 (equipo remoto 48 GB) — **1680/1680** · `kb_combined`, workers 8
+- **Tasa de fallo:** 8/1680 (0,5%), todos en `nemotron-mini:4b_baseline` (6,7% de ese grupo; residual, sin thinking).
+- **F1 modelos válidos (media baseline/kb_rag):** llama3.1:8b 0.496/0.549 · mistral-nemo 0.451/0.483 ·
+  nuextract 0.446/0.432 · nemotron-mini 0.363/0.440 · deepseek-r1 0.340/0.339.
+- 🔴 **INVÁLIDOS (bug thinking, se re-corren aparte):** `gemma4:12b-mlx` (0.273/0.112) y `qwen3:8b` (0.448/0.443).
+- **Entregado:** `results/benchmark_n120_REMOTO/`. Detalle EN CURSO original abajo.
+- **Detalle histórico:** arrancó 2026-09-06 02:18, 921/1680 al 09:04.
 - **Archivos:** `results/benchmark_n120_REMOTO/`
 - **Completos y válidos:** `mistral-nemo`, `nuextract` (en curso), `llama3.1:8b`, `nemotron-mini:4b`,
   `deepseek-r1:1.5b` (ninguno usa *thinking*).
@@ -231,8 +237,11 @@ Para **cada tarea** que ejecutes:
 - **Archivos:** `results/ablacion_n15_REMOTO/`
 - **Bloquea:** 4 cifras de la tesina que no existen en ningún dato
 
-### 3.bis.6 ▶️ EN CURSO — `gemma4:31b-cloud` sobre N=120 (EN PARALELO)
-- **Estado:** ▶️ EN CURSO desde 2026-09-06 09:46 (equipo remoto 48 GB) · **Encargo:** [`ADENDA-EQUIPO-REMOTO-20260906.md`](./ADENDA-EQUIPO-REMOTO-20260906.md)
+### 3.bis.6 ✅ COMPLETADA — `gemma4:31b-cloud` sobre N=120 (EN PARALELO)
+- **Estado:** ✅ COMPLETADA 2026-09-06 10:08 (iniciada 09:46, equipo remoto 48 GB) · **Encargo:** [`ADENDA-EQUIPO-REMOTO-20260906.md`](./ADENDA-EQUIPO-REMOTO-20260906.md)
+- **Resultados:** 240/240 · **tasa de fallo 0/240 (0.0%)**, todo `direct_json`. F1 baseline **0.6238** / kb_rag **0.6268**.
+- **Cumple §4.3 del ADENDA** (0 fallo). Es el **10º modelo** del ANOVA. Antes fallaba al 79% por cuota.
+- **Entregado:** `results/gemma4_31b_cloud_n120_REMOTO/` (copiado a `remote_48g/`).
 - **Ejecución:** wrapper resiliente `run_cloud_resilient.sh` — `--rag-mode kb_combined`, workers 3, `--resume`.
   Corre **en paralelo** con la cadena local (no consume RAM local). Auth OK tras signin del autor + `OLLAMA_API_KEY`.
 - **Rate limit implementado (2026-09-06):** flags nuevos `--max-workers` (topa el AIMD) y `--request-delay`
@@ -341,3 +350,5 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-06 02:25 | Equipo Remoto 48 GB (Claude Code) | Fix aprobado por el autor: `factory.py:46` ahora excluye tags Ollama (`:`) de la regla `gpt-*` → `gpt-oss:20b` rutea a Ollama. Backup `factory.py.bak_gptoss_routing_20260906`. Verificado (gpt-4o sigue OpenAI). Re-run de gpt-oss encolado tras P3/P4 con `--resume` |
 | 2026-09-06 09:04 | Equipo Remoto 48 GB (Claude Code) | Leída ALERTA-EQUIPO-REMOTO-20260906: bug thinking invalida `gemma4:12b-mlx` (recall=0 66-94/120) y `qwen3:8b` en P3. Fix `743054d` ya en árbol. Decisión del autor: dejar P3 terminar (5 modelos válidos) y re-correr los 2 afectados con el fix en `results/afectados_thinking_n120_REMOTO/` (encolado tras gpt-oss). Analizado también INFORME-AVANCE-20260906 (ANOVA 9 modelos F=64.06; sonct988 lidera) |
 | 2026-09-06 09:54 | Equipo Remoto 48 GB (Claude Code) | Tarea nueva §3.bis.6 `gemma4:31b-cloud` N=120 lanzada EN PARALELO. Implementado rate limit: flags `--max-workers` + `--request-delay` (`ollama_provider.py` gate por `OLLAMA_REQUEST_DELAY_SEC`). Con 1 worker + 3s: **0× 429** (vs 172 sin límite). Wrapper resiliente `--resume` (429=espera, 402=avisa). Backups `*.bak_ratelimit_20260906` |
+| 2026-09-06 10:08 | Equipo Remoto 48 GB (Claude Code) | P3 §3.bis.3 COMPLETADA: 1680/1680, fallo 8/1680 (solo nemotron-mini baseline). `gemma4:12b-mlx`+`qwen3:8b` inválidos (bug thinking) → re-corrida aparte. P4 (ablación) arrancó. Cloud 234/240 |
+| 2026-09-06 10:08 | Equipo Remoto 48 GB (Claude Code) | §3.bis.6 COMPLETADA: `gemma4:31b-cloud` N=120, 240/240, **fallo 0%**, F1 0.6238/0.6268. 10º modelo del ANOVA. Rate limit efectivo (0× 429 vs 79% fallo previo). Entregado en `results/gemma4_31b_cloud_n120_REMOTO/`. P4 en curso |
