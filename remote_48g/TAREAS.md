@@ -1,6 +1,6 @@
 # Lista de tareas — Equipo Remoto 48 GB
 
-**Actualizado:** 2026-09-06 09:01
+**Actualizado:** 2026-09-06 09:28
 
 ## ✅ Realizadas
 - Verificación de entorno (48 GB, Ollama, repo, modelos ya locales — cero `pull`).
@@ -16,10 +16,11 @@
 - Actualización de la URL del remote al repo movido.
 
 ## ▶️ En curso
-- **P3** benchmark principal N=120, 7 modelos — 885/1680 (~53%), fallo 0.
-  - Completos: `gemma4:12b-mlx`, `mistral-nemo`, `qwen3:8b`.
-  - En curso: `nuextract` (kb_rag 45/120).
-  - Faltan: `llama3.1:8b`, `nemotron-mini:4b`, `deepseek-r1:1.5b`.
+- **P3** benchmark principal N=120, 7 modelos — 1047/1680 (~62%), fallo 0.
+  - Completos válidos: `mistral-nemo`, `nuextract`.
+  - Completos pero INVÁLIDOS (bug thinking, se re-corren): `gemma4:12b-mlx`, `qwen3:8b`.
+  - En curso: `llama3.1:8b` (baseline 87/120).
+  - Faltan: `llama3.1:8b` kb_rag, `nemotron-mini:4b`, `deepseek-r1:1.5b`.
 
 ## ⏳ Por realizar
 - **P4** estudio de ablación de prompts (`gemma4:latest`, `--ablation`) — regenera 4 cifras (ZS/FS × EN/ES)
