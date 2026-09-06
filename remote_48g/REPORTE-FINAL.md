@@ -74,3 +74,19 @@ Ninguna bloquea la ejecución; requieren tu criterio o fuente externa (ver `TODO
 
 **Merge + ANOVA** sobre el set de 10 modelos N=120 (+ referencia 2026-09-01) con F1 corregido, más Tabla 2 y
 Variación de prompts. Todos los CSV en `remote_48g/results/` re-puntuados.
+
+---
+
+## Adenda 18:25 — nemotron: los 7 vacíos RESUELTOS
+
+Investigados y **solucionados**. Diagnóstico:
+- No era longitud (ctx 4096 holgado; prompt_eval ~800 tok), no thinking (nemotron no la declara), no concurrencia
+  (fallan también en serial), no framing ni seed.
+- Causa: **artefacto del contexto batch del harness** (SystemMonitor). Fuera de ese contexto, el modelo extrae:
+  llamada directa y `OllamaProvider` con los mismos params (temp 0.1, seed 42, max_tokens 2048, mismo prompt)
+  devuelven las 7 con contenido válido.
+- **Fix aplicado** (`tools/patch_nemotron_failed.py`): re-extrae solo esas 7 vía `OllamaProvider` con params
+  idénticos, las puntúa con el evaluator corregido y actualiza el CSV (backup `.bak_prepatch`).
+
+Resultado: `nemotron-mini:4b` **baseline 0.2259 / kb_rag 0.3712, 0 failed** en ambas condiciones. Ya no hay
+ninguna corrida con `failed>0`. (La tabla §2 se actualiza: nemotron baseline 0.2150 → **0.2259**.)
