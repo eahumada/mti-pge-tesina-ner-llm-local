@@ -487,9 +487,10 @@ Desbloqueado por la reautenticación. Corrige la contaminación documentada en `
 
 ---
 
-## 13. ⏳ DIFERIDO — Renombrar el término a «Análisis de Variantes de Prompt»
+## 13. ⏳ DIFERIDO — Renombrar el término a «Test de Variación de los Prompts»
 
-**Decisión del autor (2026-09-06):** el término definitivo será **«Análisis de Variantes de Prompt»**.
+**Decisión del autor (2026-09-06, refinada):** el término definitivo será **«Test de Variación de los
+Prompts»**. *(Sustituye a «Análisis de Variantes de Prompt», registrado antes ese mismo día.)*
 Se aplicará **de forma global al final**, cuando haya terminado de generarse toda la evidencia, para no
 hacer el cambio dos veces ni desincronizar documentos mientras el equipo remoto sigue entregando.
 
@@ -497,16 +498,20 @@ hacer el cambio dos veces ni desincronizar documentos mientras el equipo remoto 
 El término vigente en toda la documentación es **«Análisis Comparativo de Prompts»** (commit `852ccd5`).
 Es correcto y neutro; solo se sustituirá por el definitivo en la pasada final.
 
-### Por qué «variantes» es mejor
-Las cuatro configuraciones evaluadas —zs-en, zs-es, fs-en, fs-es— **son literalmente variantes** del mismo
-prompt: cambia el idioma y la presencia de ejemplos, no el prompt en sí. El término describe el objeto de
-estudio con más exactitud que «configuraciones», y es más corto.
+### Por qué «variación» es el término correcto
+Las cuatro configuraciones evaluadas —zs-en, zs-es, fs-en, fs-es— **son variaciones** del mismo prompt:
+cambia el idioma y la presencia de ejemplos, no el prompt en sí. «Variación» describe con exactitud lo que
+se manipula, es de uso corriente en español, y **no arrastra ninguna connotación** — que era el motivo de
+fondo para abandonar «ablación».
+
+**Prohibido en adelante:** «test de ablación de los prompts», «estudio de ablación» y cualquier variante en
+español de ese término.
 
 ### Qué habrá que cambiar cuando llegue el momento
 
 | Ámbito | Acción |
 |:---|:---|
-| **Prosa de documentos vigentes** | Sustituir «Análisis Comparativo de Prompts» → «Análisis de Variantes de Prompt». Afecta a: informe final (§4.3 y §5.2), `TODO-INFORME-FINAL.md`, `BENCHMARKS.md`, `README.md`, `RUNS_INDEX.md`, `research/rag/WORKLOG.md` |
+| **Prosa de documentos vigentes** | Sustituir «Análisis Comparativo de Prompts» → «Test de Variación de los Prompts». Afecta a: informe final (§4.3 y §5.2), `TODO-INFORME-FINAL.md`, `BENCHMARKS.md`, `README.md`, `RUNS_INDEX.md`, `research/rag/WORKLOG.md` |
 | **Las dos glosas del informe** | Hoy citan *ablation study* en cursiva como término de la literatura anglosajona. **Mantener así**: preserva la trazabilidad académica sin usar la palabra en español |
 | **Identificadores técnicos** | ⚠️ **NO tocar**: el flag `--ablation`, la clave `ablation` de `run_config.json` y los nombres de directorio (`ablacion_n15_REMOTO`, `klepto_N15__ablation__4-prompts__…`). Renombrarlos rompería comandos documentados, scripts del equipo remoto y rutas ya publicadas en el encargo |
 | **Registros históricos** | ⚠️ **NO tocar**: Hito 4, carpetas `archive/` y volcados de auditoría |
