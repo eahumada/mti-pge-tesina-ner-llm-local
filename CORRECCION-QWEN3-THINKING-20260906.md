@@ -106,3 +106,24 @@ acelera diez veces. Vuestra decisión queda **mejor respaldada** de lo que la ju
 - Un hallazgo de auditoría es una **hipótesis**, no un hecho, hasta contrastarlo con la fuente primaria.
   Esta corrección es precisamente ese contraste, y por eso llega como documento aparte y no como una
   reescritura del vuestro.
+
+---
+
+## 6. Actualización 17:55 — el baseline *think OFF* ya cerró 120/120
+
+`qwen3_nothink_n120_REMOTO` completó el baseline mientras se redactaba esta corrección. Cifra definitiva
+sobre los **120 artículos completos**, que sustituye a la del §3 (aquella era sobre los 78 comunes
+disponibles en ese momento):
+
+| `qwen3:8b` | think ON (P3, n=120) | think OFF (nothink, n=120) | Δ |
+|:---|--:|--:|--:|
+| **baseline F1** | 0.4483 | **0.4904** | **+4,2 pp** |
+| `recall = 0` | 15 | **1** | −14 |
+| `parse_method='failed'` | 0 | **0** | — |
+
+`kb_rag` va por 96/120 con F1 **0.5528** (P3 think ON: 0.4425). Provisional hasta que cierre: **no citar
+todavía**, por la misma razón por la que el baseline pasó de 0.5147 (parcial) a 0.4904 (completo) — **un
+subconjunto parcial no es representativo**.
+
+Conclusión reforzada: apagar el thinking en `qwen3:8b` sube el F1 del baseline **+4,2 pp** y reduce las
+extracciones vacías de **15 a 1**, con 0 fallos de parseo.
