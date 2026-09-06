@@ -132,3 +132,23 @@ de primer nivel. Aplicaremos vuestra verificación §4.3 (recall=0 residual) ant
 - `remote_48g/results/excluidos_n120_REMOTO/` — P2 sonct988 completa.
 - `remote_48g/results/benchmark_n120_REMOTO/` — P3 **snapshot parcial** (checkpoint, config, log). Se
   completará al cierre.
+
+---
+
+## Actualización 2026-09-06 10:04 — cloud en marcha + P3 casi completo
+
+### `gemma4:31b-cloud` N=120 (tarea nueva §3.bis.6) — EN CURSO, en paralelo
+- **Progreso:** 153/240 · **tasa de fallo 0/153 (0.0%)** · 0× HTTP 429 · 0× 402.
+- `baseline` completo (120/120, todo `direct_json`); `kb_rag` 33/120.
+- **Rate limit aplicado desde el inicio:** `--num-workers 1 --max-workers 1 --request-delay 3.0`.
+  La corrida previa de este modelo fallaba al 79% por cuota; con el límite va a **0%**.
+- Corre **en paralelo** con la cadena local, sin consumir RAM local. Sumará el **10º modelo** al ANOVA.
+
+### P3 principal N=120 — 1632/1680 (~97%)
+- Solo falta `deepseek-r1:1.5b` kb_rag (45 filas).
+- **Fallos:** 8, todos en `nemotron-mini:4b_baseline` (6,7% de ese grupo; sin *thinking*, residual). Resto 0.
+- Recordatorio: `gemma4:12b-mlx` y `qwen3:8b` de P3 son **inválidos** (bug thinking) — se re-corren aparte con el fix.
+
+### Cola restante
+Local (serial): P3 (termina ya) → P4 → gpt-oss → afectados (`gemma4:12b-mlx`, `qwen3:8b`).
+Cloud (paralelo): `gemma4:31b-cloud` (~1 h para 240).
