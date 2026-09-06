@@ -39,7 +39,7 @@ Leyenda de **Modo**: `baseline` = sin RAG · `rag-entities` = `--rag-study` con 
 (dict-RAG legacy; condiciones `*_baseline` + `*_rag_enhanced`) · `rag-kb-<modo>` = `--rag-study`
 con base de conocimientos (condiciones `*_baseline` + `*_kb_rag`) · `ablation` = `--ablation`,
 que ejecuta la **Comparación de Configuraciones de Prompt** (término principal del proyecto;
-sinónimos glosados: *estudio de ablación*, *diseño factorial 2x2*) recorriendo los 4 prompts sobre
+sinónimos glosados: *comparación de configuraciones de prompt*, *diseño factorial 2x2*) recorriendo los 4 prompts sobre
 1 modelo. `ablation` se conserva como etiqueta corta porque es el nombre del flag CLI y del campo
 `BenchmarkConfig.ablation`; los identificadores de código no se renombran.
 
@@ -219,7 +219,7 @@ Prioridad descendente. **No ejecutar mientras haya descargas de modelos en curso
 ## 7. Limitaciones conocidas del versionado actual (estado al 2026-09-03)
 
 1. **`--ablation` no se persiste.** El flag viaja como argumento de `run_benchmark()` y no forma
-   parte de `BenchmarkConfig`, por lo que `run_config.json` de una corrida de ablación (#9, #12)
+   parte de `BenchmarkConfig`, por lo que `run_config.json` de una corrida de configuraciones de prompt (#9, #12)
    es indistinguible de un baseline: dice `rag_study: false` y `system_prompt_file:
    SYSTEM_PROMPT.md`. Hoy solo se detecta leyendo la columna `model` del CSV.
 2. **El nombre del directorio solo codifica dataset + timestamp** (`__post_init__` en

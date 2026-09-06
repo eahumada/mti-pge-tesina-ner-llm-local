@@ -39,7 +39,7 @@
       directorio nuevo y el checkpoint jamás se encontraba, reiniciando desde cero en silencio.
 - [x] Guardarraíl que impide escribir en la raíz de `results/` (causa de la pérdida de datos de N=30),
       con 15 tests que lo cubren.
-- [x] Persistencia del flag `ablation` en `run_config.json` (antes las corridas de ablación eran
+- [x] Persistencia del flag `ablation` en `run_config.json` (antes las corridas de comparación de prompts eran
       indistinguibles de un baseline en su metadata).
 
 ### 2.3 Nomenclatura y terminología
@@ -50,8 +50,8 @@
       experimentales**. El nombre retirado sigue en 14 archivos de `results/`, incluidas **30 filas** de
       `results/benchmark_results.csv`. Ver §10.
 - [x] Terminología: «Comparación de Configuraciones de Prompt» como término principal, con
-      «diseño factorial 2×2» y «estudio de ablación» como sinónimos glosados. Aplicado al `.md`.
-      El abstract en inglés conserva *prompt ablation study*.
+      «diseño factorial 2×2» y «comparación de configuraciones de prompt» como sinónimos glosados. Aplicado al `.md`.
+      El abstract en inglés conserva *prompt prompt configuration comparison*.
 - [x] Herramienta `tools/docx_replace_terms.py` para aplicar el cambio a los `.docx` sin regenerarlos
       (regenerar destruiría las correcciones manuales de numeración y saltos de página).
 
@@ -209,7 +209,7 @@ datos experimentales del informe.
 
 ### 7.3 Correcciones tipográficas pendientes
 - [ ] Las glosas de terminología quedaron en los `.docx` con formato de párrafo plano. En el Markdown,
-      «diseño factorial 2×2» va en **negrita** y «estudio de ablación» en *cursiva*. Son 4 selecciones
+      «diseño factorial 2×2» va en **negrita** y «comparación de configuraciones de prompt» en *cursiva*. Son 4 selecciones
       manuales en Word.
 
 ### 7.4 Verificación final de formato
@@ -348,7 +348,7 @@ o una fuente que solo tú puedes aportar.
 | 3 | **Cita inventada pendiente**: marcador `[referencia KPMG 2024]` junto a cifras de mercado (USD 12.300 y 87.200 millones) | Informe §1.1, L65 | Sin la fuente real, las cifras no tienen respaldo. Fabricar la cita sería falsificación académica |
 | 4 | **Contradicción de hardware**: se declara ejecutar modelos de ~24.7 GB de VRAM sobre 16 GB de memoria unificada | Informe §2.4 (L125) y §3.6 (L210) | Físicamente contradictorio tal como está redactado |
 | 5 | **Tabla de eficiencia no reproducible**: VRAM y Tok/s de §5.5 no se derivan de ningún CSV | Informe §5.5, L471-473 | El CSV da 24.607 MB / 22.80 tok/s frente a 24.751 / 27.56 de la tabla |
-| 6 | **Tabla de ablación sin corrida de origen**: 0.7169 / 0.6640 / 0.6482 / 0.5874 solo existen en `BENCHMARKS.md` | `BENCHMARKS.md` L195-202 | No trazables a ningún resultado |
+| 6 | **Tabla de configuraciones de prompt sin corrida de origen**: 0.7169 / 0.6640 / 0.6482 / 0.5874 solo existen en `BENCHMARKS.md` | `BENCHMARKS.md` L195-202 | No trazables a ningún resultado |
 | 7 | **Etiqueta `q8-64k` viva en los datos** que alimentan la Tabla 2 (30 filas del CSV) | `results/benchmark_results.csv` | Ver `FINDINGS.md §F26`. Recomendación: documentar la equivalencia en el informe |
 | 8 | **Discrepancia tabla vs crudo** en modelos cloud: 0.6754 vs 0.3973 (`gemma4:31b-cloud`), 0.6321 vs 0.2011 (`minimax-m3:cloud`) | `BENCHMARKS.md`, nota de trazabilidad | Requiere decidir cuál es la fuente válida |
 
@@ -419,7 +419,7 @@ modelos locales**.
       tienen F1 **aritméticamente imposibles**, y **ninguno de sus seis valores existe en dato alguno** del
       proyecto (verificado sobre CSV, JSON y logs). No es que el CSV no sobreviva: no hay rastro.
       → Retirar, o marcar como «prototipo temprano, cifras no verificables».
-- [ ] Tabla de ablación: sus 4 cifras (0.7169 / 0.6640 / 0.6482 / 0.5874) tampoco existen en datos.
+- [ ] Tabla de configuraciones de prompt: sus 4 cifras (0.7169 / 0.6640 / 0.6482 / 0.5874) tampoco existen en datos.
       Re-ejecutable con `gemma4:latest` (9.6 GB) sobre N=15, 4 configuraciones de prompt.
 
 ### 11.6 ⬜ PRIORIDAD BAJA — Aparcado por decisión del autor
@@ -430,7 +430,7 @@ modelos locales**.
 1. `gemma4:31b` sobre N=15 — **en curso** (local, en solitario)
 2. Cloud en paralelo, en cuanto se resuelva el `signin`
 3. Reanudar el benchmark principal N=120 (local, en solitario) — pausado en 153/1680
-4. Ablación con `gemma4:latest` si se decide re-ejecutarla
+4. Comparación de configuraciones de prompt con `gemma4:latest` si se decide re-ejecutarla
 5. KPMG y cierre documental
 
 ---
@@ -482,5 +482,5 @@ Desbloqueado por la reautenticación. Corrige la contaminación documentada en `
 1. ~~`gemma4:31b` local~~ — **descartado por hardware**
 2. **`gemma4:31b-cloud` limpio** — puede empezar ya, en paralelo
 3. **Reanudar benchmark principal N=120** — local, en serie, desde 153/1680
-4. Ablación con `gemma4:latest` (9.6 GB, dentro del límite) si se decide re-ejecutarla
+4. Comparación de configuraciones de prompt con `gemma4:latest` (9.6 GB, dentro del límite) si se decide re-ejecutarla
 5. KPMG y cierre documental

@@ -88,7 +88,7 @@ phi3.5:latest                                  61819fb370a3    2.2 GB    3 weeks
 The repository ships a convenience script. **`./run_benchmark.sh` no lee la configuración de arriba**: encadena tres pasos con listas propias (`run_benchmark.sh:22-47`):
 
 1. Barrido `--rag-study` sobre `data/benchmark_balanced_120.json` con 16 modelos fijos vía `--models` y `--batch-size 3` (el `echo` de la línea 21 dice "15 models"; son 16).
-2. Ablación de prompts: `--ablation` sobre `gemma4:latest`, mismo corpus y `--batch-size 3`.
+2. Comparación de configuraciones de prompt: `--ablation` sobre `gemma4:latest`, mismo corpus y `--batch-size 3`.
 3. Simulación de flujo productivo: `src/simulate_production.py`.
 
 ```bash
@@ -200,7 +200,7 @@ Barrido vigente: corpus `data/benchmark_balanced_120.json`, **N=120**, prompt `z
 
 ### Comparación de Configuraciones de Prompt (gemma4:latest) — cifras sin corrida de origen
 
-⚠️ Las cuatro filas siguientes no son trazables a ningún artefacto del repositorio (`0.7169`, `0.6482` y `0.5874` solo aparecen aquí). Se conservan como registro y se contrastan con las dos corridas de ablación catalogadas, que sí tienen evidencia completa.
+⚠️ Las cuatro filas siguientes no son trazables a ningún artefacto del repositorio (`0.7169`, `0.6482` y `0.5874` solo aparecen aquí). Se conservan como registro y se contrastan con las dos corridas de configuraciones de prompt catalogadas, que sí tienen evidencia completa.
 
 | Prompt Configuration | F1 | Precision | Recall | Hallucination % | Latency s | Throughput req/s |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
