@@ -40,7 +40,13 @@ Para **cada tarea** que ejecutes:
   los artículos de N=120 son mucho más largos y la máquina pagina.
 - **Qué se espera del remoto:** la tarea de prioridad 3 del encargo es exactamente esta corrida.
 
-### 1.1 EN CURSO — Benchmark N=120 (7 modelos locales)
+### 1.1 ⏸️ DETENIDA A PROPÓSITO — Benchmark N=120 (7 modelos locales)
+> **No reanudar todavía.** Los bugs de *thinking* (`FINDINGS.md §F40-F41`) invalidan los resultados de
+> `gemma4:12b-mlx` y `qwen3:8b` producidos antes del fix `743054d`. Al retomarla habrá que **relanzar esos
+> dos modelos desde cero**; el resto de grupos completos (`mistral-nemo`) sí son aprovechables.
+> Se espera la respuesta del equipo remoto para no duplicar esfuerzo.
+
+#### Detalle original de la tarea
 - **Estado:** ▶️ EN CURSO desde 2026-09-03 16:08
 - **Archivos bloqueados:** `repos/ner-llm-entity-benchmark/results/benchmark_balanced_120_kbrag_9models/**`
 - **Progreso:** 126 / 1680 filas · `gemma4:12b-mlx_baseline` COMPLETADO (40/40), `_kb_rag` en curso
@@ -274,6 +280,9 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-05 21:45 | Claude Code | `gemma4:12b-mlx_baseline` COMPLETADO (40/40 lotes). Descarga de `gemma4:31b-mlx` reanudada; `gemma4:31b` ya estaba local |
 | 2026-09-06 04:35 | Claude Code | Progreso 348/1680 (20,7%). `gemma4:12b-mlx` COMPLETO (baseline y kb_rag 40/40). Contaminadas congeladas en 36 tras desactivar la suspensión: 22% → 10% |
 | 2026-09-06 04:35 | Claude Code | Proyección revisada con latencias MEDIDAS: ~518 h (21 días). La estimación previa de 66 h partía de extrapolar el histórico N=15 y era 7× optimista |
+| 2026-09-06 09:30 | Autor | Decisión: **esperar la respuesta del equipo remoto** antes de relanzar nada en local, para no duplicar esfuerzo |
+| 2026-09-06 09:30 | Claude Code | 🔴 Bugs de *thinking* corregidos y alerta enviada (`743054d`). La corrida local queda **DETENIDA a propósito**: reanudarla produciría datos inválidos para `gemma4:12b-mlx` y `qwen3:8b` |
+| 2026-09-06 09:30 | Claude Code | Estado remoto al último pull: P1 y P2 completas (fallo 0), **P3 al 53% (885/1680)**, P2-gpt-oss y P4 en cola. Su último commit es anterior a la alerta |
 | 2026-09-06 05:10 | Claude Code | Entrega remota integrada y verificada (0% fallo, protocolo correcto). ANOVA conjunto **9 modelos**: **F=64.0586, p=7.26e-177** (antes 5 modelos: F=10.21, p=2.87e-15). Ver `INFORME-AVANCE-20260906.md` |
 | 2026-09-06 05:10 | Claude Code | 🔴 Bloqueante resuelto: `gemma4:31b` N=15 con dato propio (F1=0.6912), a 1.3 pp del 0.6783 que la Tabla 2 afirmaba sin respaldo |
 | 2026-09-06 05:10 | Claude Code | Hallazgo nuevo: el KB RAG **beneficia a los modelos pequeños y perjudica a los grandes** (5 mejoran, 4 empeoran). `llama3.2` +0.0999; `gemma4:31b-mlx` −0.0018 |
