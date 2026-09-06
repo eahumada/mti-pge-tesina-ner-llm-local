@@ -191,3 +191,16 @@ deepseek-r1, nemotron*). Pendientes de re-corrida (en curso): gemma4:12b-mlx, qw
 - **nemotron-mini:4b re-run:** 240/240, 7 `failed` (vacíos esporádicos inherentes al 4B; no corregibles). Excluir esos 7.
 - **Aprendizaje:** no reiniciar corridas con checkpoint para "optimizar" concurrencia — corrompe cobertura. Elegir
   workers una vez y dejar correr.
+
+---
+
+## Cierre 2026-09-06 17:58 — qwen3:8b think=false COMPLETO (todos los modelos listos)
+
+`results/qwen3_nothink_n120_REMOTO/` — **240/240, 0 failed**, 1 fallback, recall=0 residual (1-2). §4.3 ✅.
+- baseline **F1=0.4904** · kb_rag **F1=0.5313** · latencia **66 s** (vs 517-789 s con thinking).
+- **think=false supera a think=on** (parsing limpio: 1 fallback vs 15-25) y es ~10× más rápido.
+- **Fuente de verdad definitiva para qwen3:8b.** (No usar la de P3 ni la de afectados.)
+
+**Todos los modelos del estudio N=120 están completos y verificados** (tasa de fallo 0 salvo nemotron 7
+esporádicos inherentes). Set listo para merge + ANOVA. Recordatorio: aplicar la nota del hallazgo de scoring
+(`HALLAZGO-SCORING-F1.md`) al recalcular.
