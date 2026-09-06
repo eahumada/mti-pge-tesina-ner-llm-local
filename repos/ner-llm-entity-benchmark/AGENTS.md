@@ -149,7 +149,7 @@ models: list[str] = field(default_factory=lambda: [
 |-----------|-------------|
 | NuExtract variant | Add to `_NUEXTRACT_MODELS` set (line ~56) |
 | Qwen3 thinking variant | Add to `_QWEN3_THINKING_MODELS` set (line ~57) |
-| New cloud pattern (not `-cloud` suffix) | Update `is_cloud_model()` function body |
+| New cloud pattern (name does not contain `-cloud` nor `minimax`) | Update `is_cloud_model()` function body (substring test, see §8.2) |
 | Standard local model | **Nothing else needed** |
 
 ---
@@ -199,10 +199,16 @@ Expected output: `Entities:` dict with `Persons`, `Organizations`, `Locations` a
 
 ### 8.6 — Current model list (as of 2026-06-30; reviewed and completed 2026-09-03)
 
+
+> **Decisión del autor (2026-09-05): `gliner:medium`, `gemini-3.1-flash-lite`, `gemini-3.5-flash` y
+> `phi3.5` NO forman parte del estudio de la tesina.** No están entre los 12 modelos evaluados
+> (ver `TODO-INFORME-FINAL.md §8.2`). Su presencia en esta tabla es únicamente de soporte de la
+> plataforma multi-proveedor; sus métricas no deben citarse como resultados del estudio.
+
 | Model | Type | Ollama Status | Benchmark Status | Note |
 |-------|------|---------------|-----------------|------|
 | `gemma4:31b-cloud` | Cloud (Ollama) | ✅ Pulled | ✅ Active | |
-| `minimax-m3:cloud` | Cloud (Ollama) | ✅ Pulled | ✅ Active | |
+| `minimax-m3:cloud` | Cloud (Ollama) | ✅ Pulled | ❌ **RETIRADO 2026-09-05** | *Fuera del estudio: HTTP 402 (requiere plan de pago) y su única medición tuvo 9/15 fallos por cuota. Ver `FINDINGS.md §F38`.* |
 | `gemini-3.1-flash-lite` | Cloud (AI Studio) | ☁️ API Cloud | ✅ Active | *Name corrected 2026-09-03: was written `gemini-1.5-flash-lite`, a model that exists in no config and no run. `src/config.py:60` declares `gemini-3.1-flash-lite`; it is the model of run #4 (F1 0.6547).* |
 | `gemini-3.5-flash` | Cloud (AI Studio) | ☁️ API Cloud | ⚪ Declared, not run | *Added 2026-09-03: present in `src/config.py:60`, no catalogued run.* |
 | `gemma4:31b` | Local | ✅ Pulled (19 GB) | ✅ Active | |
@@ -236,7 +242,7 @@ The parser accepts exactly: `--models`, `--batch-size`, `--data-file`, `--resume
 | 🪤 **`--rag-mode` defaults to `entities`, not to `kb_combined`** | `--rag-study` alone runs the *legacy dictionary RAG* and emits `*_rag_enhanced` conditions. The thesis' reference run #13 used `--rag-mode kb_combined` and emits `*_kb_rag`. A run launched on 2026-09-03 without the flag had to be discarded (`results/DESCARTADA_ragmode_incorrecto_142604/`, catalogued as #14). |
 | `--results-dir` is optional but load-bearing | Omitted → a fresh `results/<dataset>_<timestamp>/` per run. **`--resume` needs it** to locate the checkpoint. `--results-dir results` (the ROOT) **aborts** with `ResultsDirRootError`. |
 | `--models` overrides `src/config.py` | Whatever `run_benchmark.sh` passes wins over `BenchmarkConfig.models` (see §8.1). |
-| `--ablation` is the *Prompt Configuration Comparison* | Same experiment the thesis calls "Comparación de Configuraciones de Prompt" (a.k.a. prompt ablation study / 2x2 factorial design). The flag name stays as-is; it is a code identifier. |
+| `--ablation` is the *Prompt Configuration Comparison* | Same experiment the thesis calls "Comparación de Configuraciones de Prompt" (a.k.a. prompt ablation study / 2x2 factorial design). The flag name stays as-is; it is a code identifier. It sweeps **four** conditions (`zs-en`, `zs-es`, `fs-es`, `fs-en` → `SYSTEM_PROMPT.md`, `SYSTEM_PROMPT_ES.md`, `SYSTEM_PROMPT_ES_FEWSHOT.md`, `SYSTEM_PROMPT_EN_FEWSHOT.md`) and uses **only `config.models[0]`** — extra names passed to `--models` are ignored. ⚠️ The argparse help string of `--ablation` still names only three conditions (it predates `fs-en`); trust `src/main.py:308-312` / `452-456`, not the help text. |
 
 ---
 

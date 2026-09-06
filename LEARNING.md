@@ -241,3 +241,74 @@ recuperables:
 
 > **Aplicación:** al descartar un modelo cloud, registrar **el código exacto**. Un 429 justifica esperar;
 > un 402 obliga a decidir entre pagar o excluirlo del estudio de forma permanente.
+
+### L23. Antes de comparar dos fuentes discrepantes, verificar que midan lo mismo
+Los datos crudos daban F1=0.3973 para un modelo cloud y la tabla del informe 0.6754. Dos fuentes primarias
+concordantes entre sí (el CSV y el agregado del pipeline) apuntaban a que la tabla era la equivocada, y se
+llegó a recomendar sustituirla.
+
+Era un error. Las extracciones **habían fallado por cuota** en 6 de 15 casos, y esos ceros arrastraban la
+media. Excluyéndolos, el dato crudo daba 0.6622 — prácticamente el valor de la tabla.
+
+> **Aplicación:** cuando dos fuentes discrepan, no basta con contar cuál tiene más respaldo. Hay que
+> comprobar **qué mide cada una**. Un promedio contaminado por fallos de infraestructura es
+> internamente consistente y perfectamente reproducible, y aun así no mide lo que dice medir.
+>
+> Señales de alarma que estaban a la vista y no se miraron: `parse_method='failed'`, `retries=2`,
+> `recall=0` en filas concretas. **La metadata por fila delata la contaminación antes que el agregado.**
+
+### L24. Un fallo de infraestructura no es un resultado del modelo
+El pipeline etiqueta como `failed` tanto un rechazo por cuota (HTTP 429/402) como un fallo de parseo del
+modelo. La primera causa es ajena al modelo; la segunda es una limitación real que **sí** debe reportarse.
+
+> **Aplicación:** instrumentar la **causa** del fallo, no solo su existencia. Y publicar siempre la **N
+> efectiva** junto a la nominal: una tabla que dice «N=15» cuando 6 extracciones fallaron está informando
+> mal aunque cada cifra individual sea correcta.
+
+### L25. Un modelo que no cabe en RAM no se ejecuta «más lento»: no se ejecuta
+Se asumió que un modelo de 19 GB en una máquina de 16 GB sería lento pero viable, y que bastaría reducir la
+concurrencia. Con 8 workers: 0 respuestas en 26 minutos y 16 GB de swap. Con **1 worker**: mismo resultado.
+
+El paralelismo no era la causa. Con los pesos excediendo la memoria física, **cada paso de inferencia
+requiere paginar desde disco**, y eso no mejora al reducir peticiones concurrentes.
+
+> **Aplicación:** la regla operativa no es «reducir workers si va lento», sino **«el modelo debe caber en
+> RAM, con margen para el KV-cache»**. Si `tamaño_modelo > RAM_física × 0.7`, ese modelo no pertenece al
+> plan de evaluación de esa máquina. Comprobarlo *antes* de incluirlo, no después de perder horas.
+>
+> Señal diagnóstica inequívoca: `llama-server` con **CPU baja (~30%) y swap alto**. Si estuviera calculando,
+> la CPU estaría al máximo; una CPU baja con swap alto significa que espera disco.
+
+### L26. Verificar los supuestos operativos antes de planificar alrededor de ellos
+Se dio por hecho que `ollama signin` reiniciaría el daemon y por tanto cortaría el benchmark en curso, y se
+llegó a plantear al autor una disyuntiva entre autenticar o preservar la corrida.
+
+**Era falso.** El daemon siguió con 2 días y 11 h de uptime tras el signin. La disyuntiva no existía.
+
+> **Aplicación:** antes de trasladar al usuario una decisión incómoda basada en un supuesto técnico,
+> **comprobar el supuesto**. Aquí bastaba un `ps -o lstart` sobre el proceso.
+
+### L27. Un modelo irreproducible no pertenece a un benchmark, por buenos que parezcan sus números
+`minimax-m3:cloud` figuraba con F1 = 0.6321, una cifra intermedia y nada sospechosa. Detrás había **9 de 15
+extracciones fallidas** y una barrera de plan de pago que impide volver a medirlo con **ninguna** de las tres
+cuentas disponibles.
+
+Lo decisivo no fue el valor, sino la **irreproducibilidad**: un resultado que nadie —ni el propio autor—
+puede volver a obtener no es evidencia científica, es una anécdota.
+
+> **Aplicación:** al admitir un modelo en un benchmark académico, comprobar antes que sea **reproducible
+> por un tercero** con los recursos declarados. Un modelo tras un muro de pago que el autor no mantiene
+> introduce una dependencia externa que caduca — y cuando caduca, el resultado queda huérfano.
+>
+> Distinción útil que emergió aquí: **HTTP 429 (cuota) es temporal y se recupera; HTTP 402 (plan) es
+> estructural y no**. La primera justifica esperar; la segunda, retirar el modelo.
+
+### L28. Al retirar un elemento, separar la declaración del mecanismo
+Retirar `minimax-m3:cloud` no significaba borrar todas sus apariciones. El patrón `"minimax"` de
+`is_cloud_model()` no es una declaración del modelo: es **lógica de enrutamiento genérica** que detecta
+cualquier modelo remoto con ese nombre. Eliminarlo habría roto el enrutamiento sin que ningún test lo
+delatara.
+
+> **Aplicación:** ante un «elimínalo de todas partes», clasificar cada aparición antes de tocarla:
+> *declaración* (fuera), *mecanismo* (se queda), *registro histórico* (se conserva, documenta el porqué).
+> Un `sed` global sobre el nombre habría hecho las tres cosas indistintamente.

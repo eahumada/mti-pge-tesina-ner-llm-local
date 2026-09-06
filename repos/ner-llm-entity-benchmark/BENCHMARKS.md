@@ -40,8 +40,8 @@ La lista de modelos se define en `src/config.py` (campo `BenchmarkConfig.models`
     "gemini-3.1-flash-lite",
     "gemini-3.5-flash",
     "phi3.5:latest",
+    "gemma4:latest",
     "gemma:latest",
-    "minimax-m3:cloud",
     "gemma4:31b-cloud",
     "llama3.1:8b",
     "nemotron-mini:4b",
@@ -156,7 +156,6 @@ Tabla histórica. Su origen trazable es la corrida `klepto_N15__rag-entities__zs
 | gemma4:latest | 0.6676 | 0.6791 | 0.7852 | 0.00% | 29.57 | 0.034 |
 | sonct988/gemma4-26b-a4b-it-q4km-256k:latest | 0.6525 | 0.5341 | 0.8595 | 0.91% | 74.93 | 0.013 |
 | gemma4:31b-mlx ⚠️ | 0.6456 | 0.6149 | 0.8136 | 0.00% | 165.48 | 0.006 |
-| minimax-m3:cloud ⚠️ | 0.6321 | 0.5948 | 0.8123 | 0.26% | 11.91 | 0.084 |
 | llama3.2:latest | 0.6319 | 0.6282 | 0.6799 | 2.31% | 27.42 | 0.036 |
 | gemma:latest | 0.6266 | 0.5847 | 0.7147 | 1.08% | 7.84 | 0.128 |
 | qwen2.5:14b | 0.6106 | 0.5760 | 0.7176 | 0.87% | 86.14 | 0.012 |
@@ -168,6 +167,11 @@ Tabla histórica. Su origen trazable es la corrida `klepto_N15__rag-entities__zs
 | deepseek-r1:1.5b | 0.3431 | 0.3949 | 0.2577 | 1.35% | 43.76 | 0.023 |
 
 *(Note: Throughput req/s is calculated as `1 / Latency_s`)*
+
+> **Retirado del estudio (2026-09-05, decisión del autor).** `minimax-m3:cloud` se elimina del
+> benchmark: su única medición tenía **9 de 15 extracciones fallidas por cuota** (N efectiva = 6) y
+> **no es re-ejecutable** — devuelve HTTP 402 por requerir plan de pago. Un resultado con 60 % de
+> fallo y sin posibilidad de repetición no es defendible. Ver `FINDINGS.md §F38`.
 
 > ⚠️ **Trazabilidad.** Once de las catorce filas reproducen exactamente (F1/Precision/Recall) las condiciones `_baseline` de `results/benchmark_summary.json` (corrida #8). Las tres marcadas ⚠️ no: el archivo crudo da `gemma4:31b-cloud` F1 0.3973 / P 0.7284 / R 0.5233, `gemma4:31b-mlx` F1 0.6852 / P 0.5831 / R 0.8676 y `minimax-m3:cloud` F1 0.2011 / P 0.8396 / R 0.2434. Las latencias tampoco coinciden fila a fila con el crudo. Se conservan tal cual y se marcan; su corrección requiere decisión del autor sobre cuál es la fuente válida. Los dos modelos *cloud* ya no son re-ejecutables (cuota semanal 429 y suscripción de pago 402).
 
@@ -234,4 +238,4 @@ Injecting vector-retrieved context from local organizational and personal dictio
 | llama3.1:8b_rag_enhanced | 0.7750 | 0.6667 | 1.0000 | 7.50% | 3.85 | 0.25 | 0.00 |
 | llama3.1:8b_rag_strict_prompt | 0.7500 | 0.6333 | 1.0000 | 4.16% | 3.23 | 0.30 | 0.00 |
 
-> ⚠️ **Consistencia aritmética.** El F1 de esta tabla es la media de los F1 por registro (`src/evaluator.py:356-359` promedia f1, precision y recall por separado), no un F1 derivado de la P y la R agregadas. Aun así, como `f1_i ≤ (p_i+r_i)/2` para todo registro, se cumple `mean(F1) ≤ (mean(P)+mean(R))/2`. Las dos filas marcadas ⚠️ violan esa cota: `llama3.2:latest_rag` (cota 0.7646 < 0.8783) y `llama3.1:8b_baseline` (cota 0.7334 < 0.7667). `llama3.1:8b_rag_enhanced` sí es consistente (cota 0.8334 ≥ 0.7750). Estas cifras corresponden a prototipos tempranos sobre el sample de 20 registros (`data/sample_sanctions.json`), cuyo CSV no sobrevive; no se pueden recalcular y quedan pendientes de decisión del autor. La tabla tampoco declara `run_id` ni figura en RUNS_INDEX.md.
+> ⚠️ **Consistencia aritmética.** El F1 de esta tabla es la media de los F1 por registro (`src/evaluator.py:357-359` promedia f1, precision y recall por separado), no un F1 derivado de la P y la R agregadas. Aun así, como `f1_i ≤ (p_i+r_i)/2` para todo registro, se cumple `mean(F1) ≤ (mean(P)+mean(R))/2`. Las dos filas marcadas ⚠️ violan esa cota: `llama3.2:latest_rag` (cota 0.7646 < 0.8783) y `llama3.1:8b_baseline` (cota 0.7334 < 0.7667). `llama3.1:8b_rag_enhanced` sí es consistente (cota 0.8334 ≥ 0.7750). Estas cifras corresponden a prototipos tempranos sobre el sample de 20 registros (`data/sample_sanctions.json`), cuyo CSV no sobrevive; no se pueden recalcular y quedan pendientes de decisión del autor. La tabla tampoco declara `run_id` ni figura en RUNS_INDEX.md.

@@ -73,7 +73,11 @@ configuración **exclusivo de ese tag**:
 Tres vías independientes coinciden: metadatos explícitos, aritmética de tamaño y contraste con el q8 real.
 
 - **Impacto:** toda tabla o texto que citara ese nombre describía **incorrectamente** la cuantización.
-- **Estado:** eliminado de todo el proyecto por decisión del autor. Nombre canónico: `gemma4:12b-mlx`.
+- **Estado:** eliminado de **documentación y configuración** por decisión del autor. Nombre canónico:
+  `gemma4:12b-mlx`.
+- ⚠️ **Alcance real (verificado 2026-09-05):** el nombre retirado **sigue presente en los datos
+  experimentales** — 14 archivos bajo `results/`, incluidas 30 filas de `results/benchmark_results.csv`
+  (`..._baseline` y `..._rag_enhanced`). La Tabla 2 de la tesina se apoya en ese CSV. Ver F26.
 
 ---
 
@@ -92,7 +96,8 @@ Verificado llamando directamente a la API de Ollama con la clave del proyecto:
 | `gemma4:31b-cloud` | **429** | *"you have reached your weekly usage limit"* |
 | `minimax-m3:cloud` | **402** | Requiere suscripción de pago; la API key no lo desbloquea |
 
-- **Impacto:** el estudio queda con **14 modelos** (5 + 9 locales), no 16.
+- **Impacto:** el estudio queda con **12 modelos** (5 de la corrida 2026-09-01 + 7 locales). *Corrección
+  2026-09-05: esta línea decía 14 antes de la exclusión de `sonct988` y `gpt-oss:20b` por RAM (ver F24).*
 
 ### F7. La conexión es un hotspot celular con Modo de Datos Reducidos
 `gateway 172.20.10.1` (rango de Hotspot Personal de iPhone) y la interfaz `en0` marcada como
@@ -170,8 +175,11 @@ documentos de decenas de páginas. Solo el de plantilla declara 6 páginas / 164
 al límite de 25), mientras §9 y `research/rag/WORKLOG.md` dicen **«cuerpo de 20 páginas, 29 totales»**
 (margen de 5).
 
-- **Impacto:** el margen real disponible para las correcciones es **desconocido** hasta verificarlo en Word.
-  Se adoptó el supuesto conservador (1 página) para no arriesgar el incumplimiento.
+- **Impacto:** el margen real disponible era **desconocido** mientras duró la contradicción.
+- ✅ **RESUELTO (verificado 2026-09-05):** `HISTORIAL-CONSOLIDADO.md` unificó la cifra a **20 pp. de
+  cuerpo**, anexos desde la 21, 29 pp. totales, con **holgura real de 5 páginas** frente al límite de 25.
+  La medición intermedia de 24 pp. quedó superada por la corrección de estilos. El supuesto conservador
+  de «1 página» que se usó durante la sesión era **innecesariamente restrictivo**.
 
 ### F17. Los artefactos de `results/` no están versionados
 `results/` figura en `.gitignore` (línea 7). Por tanto `results/RUNS_INDEX.md` —el índice histórico de
@@ -279,7 +287,9 @@ el mismo corpus y el mismo protocolo: la fusión para el ANOVA conjunto sigue si
 De 84 correcciones aplicadas, la etapa de verificación detectó **5 regresiones**, todas reparadas:
 
 1. **Violación de la política aditiva**: se eliminó la entrada `glm-5.1:cloud` de `BENCHMARKS.md` sin dejar
-   marca. Restaurada con una nota explicativa.
+   marca. Restaurada con una nota explicativa. *(Actualización 2026-09-05: horas después, y ya con
+   decisión explícita del autor, se eliminó definitivamente al comprobarse que **nunca tuvo resultados**
+   y que requiere suscripción de pago. Ver `TODO-INFORME-FINAL.md §9`.)*
 2. **Código de ejemplo sintácticamente inválido** en `AGENTS.md §8.3`: un `field(default_factory=lambda: [`
    quedó sin cerrar el paréntesis.
 3. **Reaparición del nombre de modelo retirado** en `AGENTS.md §8.6`, dentro de una nota de retiro.
@@ -289,3 +299,284 @@ De 84 correcciones aplicadas, la etapa de verificación detectó **5 regresiones
 5. **Consejo inoperante**: se documentó `--resume` sin mencionar que requiere `--results-dir`.
 
 > La etapa de verificación adversarial **valió su coste**: sin ella, las cinco habrían pasado inadvertidas.
+
+---
+
+## 9. Alcance real de la retirada de nombres
+
+### F26. El nombre de modelo retirado sobrevive en los datos experimentales
+**Severidad: alta (integridad académica).** Detectado el 2026-09-05 por una auditoría de coherencia.
+
+Se afirmó en varios documentos que el nombre `gemma4-12b-mlx-q8-64k` tenía **«cero ocurrencias en todo el
+proyecto»**. La afirmación era **falsa**: la limpieza cubrió documentación y configuración, pero **no los
+datos**.
+
+Sigue presente en **14 archivos** bajo `results/`, entre ellos:
+
+| Archivo | Contenido |
+|:---|:---|
+| `results/benchmark_results.csv` | **30 filas** con `gemma4-12b-mlx-q8-64k:latest_baseline` y `..._rag_enhanced` |
+| `results/statistical_report.md` | Reporte estadístico derivado de ese CSV |
+| `results/benchmark_summary.json`, `detailed_results.json`, `.checkpoint.json`, `run_config.json` | Artefactos de la misma corrida |
+| `results/benchmark_balanced_120_20260824_173036/*` | Corrida N=120 completa con los mismos artefactos |
+
+**Por qué importa:** la Tabla 2 del informe se apoya en esos datos. Un revisor que descienda del texto a los
+datos crudos encontrará un modelo etiquetado con una cuantización que **no corresponde** (el artefacto es
+4-bit NVFP4, no q8 — ver F4).
+
+**Opciones:**
+1. Renombrar la etiqueta en los CSV y regenerar los reportes derivados. Altera datos históricos.
+2. Dejar los datos intactos y **documentar la equivalencia** en el informe: «la etiqueta
+   `gemma4-12b-mlx-q8-64k` de los datos crudos corresponde a `gemma4:12b-mlx`; el sufijo `q8` es erróneo».
+3. Excluir del informe las filas de ese modelo.
+
+**Recomendación:** la opción 2. Preserva la trazabilidad de los datos y corrige la interpretación, que es lo
+que la política aditiva del proyecto favorece. **Requiere decisión del autor.**
+
+---
+
+## 10. Hallazgos de integridad numérica (ronda 2 de correcciones)
+
+### F27. Valores de F1 aritméticamente imposibles
+**Severidad: crítica.** Dos filas de `BENCHMARKS.md` («RAG Integration Study») declaran un F1 **superior al
+máximo matemáticamente posible**.
+
+F1 es la media armónica de precisión y recall, y la media armónica **nunca** supera a la aritmética. Por
+tanto `F1 ≤ (P+R)/2` siempre. Verificado:
+
+| Fila | F1 declarado | Cota máxima (P+R)/2 | F1 armónico real |
+|:---|---:|---:|---:|
+| `llama3.2:latest_rag` | **0.8783** | 0.7646 | 0.7551 |
+| `llama3.1:8b_baseline` | **0.7667** | 0.7333 | 0.6955 |
+
+Ambas violan la cota. **No son cifras con ruido: son imposibles.** Un revisor que haga la comprobación —
+que es de aritmética elemental— concluirá que los datos no fueron calculados con la fórmula declarada.
+
+- **Origen:** el CSV del prototipo sobre `data/sample_sanctions.json` (20 registros) no sobrevive, y la
+  corrida no figura en `results/RUNS_INDEX.md`. No son recalculables.
+- **Requiere decisión del autor:** recalcular desde datos que ya no existen es imposible; las opciones son
+  retirar esas filas del informe, o marcarlas explícitamente como no verificables.
+
+### F28. Dos modelos distintos con métricas byte-idénticas
+**Severidad: alta.** En la Tabla 2 del informe:
+
+```
+| **gemma4:31b** | Local | 31B | 67.83% | 57.29% | 86.78% | 0.15% | 114.20 |
+| gemma4:31b-mlx | Local | 31B | 67.83% | 57.29% | 86.78% | 0.15% | 114.20 |
+```
+
+Dos modelos con **runtime distinto** (GGUF vs MLX) coinciden en F1, precisión, recall, tasa de alucinación
+**y latencia**, hasta el último decimal. Es estadísticamente inverosímil: sugiere que una fila se copió de
+la otra.
+
+Además, **el 67.83% no tiene respaldo en datos crudos**: solo aparece en `results/RUNS_INDEX.md` (un
+catálogo, no una medición) y en el checkpoint de una corrida descartada. La única medición independiente de
+`gemma4:31b-mlx` que existe (`results/benchmark_summary.json`, 27-jul, 15 registros) da **F1=0.6852 /
+P=0.5831 / R=0.8676** — cifras distintas.
+
+- **Requiere decisión del autor** sobre qué corrida cita realmente la Tabla 2.
+
+### F29. Cifras de mercado sin fuente
+`§1.1` del informe contiene el marcador literal `[referencia KPMG 2024]` junto a cifras de mercado
+(USD 12.300 y 87.200 millones). El agente corrector **se negó a inventar la cita**, con buen criterio:
+fabricar una referencia bibliográfica en una tesina es falsificación académica.
+
+- **Requiere que el autor aporte el informe exacto** y se añada como referencia numerada. Si no existe, hay
+  que retirar las cifras.
+
+### F30. Contradicción de hardware declarada en el método
+`§2.4` y `§3.6` declaran ejecutar modelos que la instrumentación registra con **24.6–26.6 GB de VRAM** sobre
+un equipo de **16 GB de memoria unificada** (`hw.memsize` verificado). Es físicamente contradictorio tal como
+está redactado; requiere explicar el mecanismo real (memoria comprimida, swap, offload por capas) o
+reinterpretar qué mide `vram_mb`.
+
+---
+
+## 11. Resolución de bloqueantes (2026-09-05)
+
+### F31. ✅ RESUELTO — La contradicción de hardware es un problema de etiquetado, no físico
+El informe declaraba ejecutar modelos de ~24.7 GB de VRAM sobre 16 GB de memoria unificada.
+
+**Causa raíz identificada en el código.** `src/system_monitor.py:163-185` obtiene `vram_mb` leyendo el
+campo `size_vram` de `/api/ps` de Ollama. Ese campo reporta memoria **asignada**, no residente. En Apple
+Silicon con memoria unificada, macOS permite *over-commit* mediante compresión y swap, de modo que la
+asignación puede superar la RAM física sin contradicción alguna.
+
+Datos que lo confirman: `gemma4:31b-mlx` (19.4 GB en disco) reporta 26.3–26.9 GB de asignación —coherente
+con pesos + KV cache bajo over-commit—, y **480 muestras** superan los 16 GB físicos.
+
+**Defecto adicional detectado:** si el nombre del modelo no coincide, el código cae en un *fallback* que
+**suma la VRAM de todos los modelos cargados** (`líneas 178-183`), lo que puede inflar el valor aún más.
+
+**Corrección para el informe:** sustituir «VRAM» por «memoria unificada asignada por Ollama (`size_vram`)»
+y añadir que macOS permite over-commit. La cifra deja de ser contradictoria.
+
+### F32. ⚠️ DIAGNOSTICADO — Ningún esquema de promediado explica los F1 imposibles
+Se consideró que los F1 fuera de rango pudieran deberse a macro-promediado. **No es posible.**
+
+**Demostración:** para cada registro *i*, `F1_i ≤ (P_i + R_i)/2` (la media armónica nunca supera a la
+aritmética). Promediando ambos lados: `mean(F1_i) ≤ (P̄ + R̄)/2`. La cota **se conserva bajo cualquier
+esquema de promediado**, micro o macro.
+
+Por tanto los valores son incorrectos, sin explicación metodológica posible:
+
+| Fila | F1 declarado | F1 armónico de los P,R declarados | Desviación |
+|:---|---:|---:|---:|
+| `llama3.2:latest_rag` | 0.8783 | **0.7551** | +0.1232 |
+| `llama3.1:8b_baseline` | 0.7667 | **0.6955** | +0.0712 |
+
+**Opciones:** (a) sustituir por el F1 armónico si se confía en P y R; (b) retirar las filas; (c) marcarlas
+como no verificables. Los datos crudos no sobreviven, así que no se puede determinar si el error está en F1
+o en P/R. **Requiere decisión del autor.**
+
+### F33. 🔴 CRÍTICO — El modelo `gemma4:31b` no tiene datos crudos en ninguna corrida
+Verificado exhaustivamente: **`gemma4:31b` (sin sufijo `-mlx` ni `-cloud`) no aparece en ningún
+`benchmark_results.csv` del proyecto.** Solo existen `gemma4:31b-mlx` y `gemma4:31b-cloud`.
+
+Esto explica F28 (las dos filas idénticas de la Tabla 2): la fila de `gemma4:31b` **no procede de una
+medición independiente**. Y afecta a dos lugares del informe:
+
+| Ubicación | Cifra citada | Respaldo |
+|:---|:---|:---|
+| Tabla 2 (§5.1) | `gemma4:31b` F1 = 67.83% | ❌ ninguno |
+| §5.5 eficiencia | `gemma4:31b` 18.803 MB / 11.37 tok/s | ❌ ninguno |
+| Log N=30 (2026-07-01) | `gemma4:31b` F1 = **79.03%** | ✅ log, pero es **otra cifra** |
+
+La única medición real de `gemma4:31b` que sobrevive da **79.03%**, no 67.83%. **Requiere decisión del
+autor** sobre el origen de la cifra de la Tabla 2.
+
+### F34. ✅ RESUELTO — La tabla de eficiencia cita muestras puntuales, no agregados
+Los valores de §5.5 **sí existen en los datos**, pero como observaciones individuales, no como medianas o
+medias de una corrida. Por ejemplo `27.593626` tok/s aparece como muestra suelta en
+`results/benchmark_results.csv`, mientras la **mediana** de `gemma4:31b-mlx` en esa corrida es **21.99**.
+
+Comparación con los agregados reales:
+
+| Modelo | §5.5 del informe | Mediana real (corrida raíz, N=15) |
+|:---|:---|:---|
+| `gemma4:31b-mlx` | 24.751 MB / 27.56 tok/s | 26.26 GB / **21.99 tok/s** |
+| `llama3.2` | ~3.000 MB / 47.5 tok/s | 3.92 GB / **78.57 tok/s** |
+
+**Corrección:** regenerar §5.5 desde los agregados reales, o declarar explícitamente que son mediciones
+puntuales de monitorización y no estadísticos de la corrida.
+
+---
+
+## 12. Contaminación de resultados por fallos de cuota
+
+### F35. 🔴 Los resultados de los modelos cloud están contaminados por fallos de infraestructura
+**Severidad: crítica.** Detectado el 2026-09-05 a partir de una hipótesis del autor: *«¿no será que se
+produjeron fallas en la ejecución por cuota?»*. **Confirmada.**
+
+La corrida N=15 registró **507 líneas con errores de cuota** (88 fallos de `gemma4:31b-cloud`, 95 de
+`minimax-m3:cloud`). Las extracciones fallidas se contabilizan con recall 0 y arrastran las medias:
+
+| Modelo | `parse_method=failed` | Recall = 0 | Reintentos | **N efectiva** |
+|:---|---:|---:|---:|---:|
+| `gemma4:31b-cloud` | 6 / 15 | 6 / 15 | 8 / 15 | **9** |
+| `minimax-m3:cloud` | 9 / 15 | 10 / 15 | 9 / 15 | **6** |
+| `gemma4:31b-mlx` (local, control) | **0 / 15** | 0 / 15 | 0 / 15 | 15 |
+
+El modelo local sirve de control perfecto: 15/15 `direct_json`, cero reintentos. **El problema es exclusivo
+de los modelos remotos.**
+
+**Consecuencia sobre el análisis previo.** Este hallazgo **invalida la recomendación de F8/§9.2** de
+sustituir la tabla por los valores crudos. Recalculando solo sobre las extracciones exitosas:
+
+| Modelo | Crudo (con fallos) | **Solo exitosas** | Tabla `BENCHMARKS.md` |
+|:---|---:|---:|---:|
+| `gemma4:31b-cloud` | 0.3973 | **0.6622** (n=9) | **0.6754** |
+| `minimax-m3:cloud` | 0.2011 | **0.5028** (n=6) | 0.6321 |
+| `gemma4:31b-mlx` | 0.6852 | 0.6852 (n=15) | 0.6456 |
+
+Para `gemma4:31b-cloud` la coincidencia es de 1-2 puntos en las tres métricas ⇒ **la tabla refleja el
+subconjunto exitoso**. No era una cifra inventada.
+
+**El defecto real de la tabla** no es el valor, sino **declarar N=15 ocultando que 6 extracciones
+fallaron**. Con 6 muestras útiles (`minimax-m3`), el intervalo de confianza es enorme.
+
+**Lección metodológica.** Un promedio que incluye ceros de fallos de infraestructura **no es una medición
+del modelo**. Antes de comparar dos fuentes discrepantes hay que verificar que **ambas midan lo mismo**.
+Sin la hipótesis del autor, se habrían incorporado a la tesina cifras contaminadas presentándolas como
+rendimiento del modelo.
+
+**Defecto de instrumentación asociado:** `parse_method` marca como `failed` tanto un fallo de cuota
+(HTTP 429/402) como un fallo de parseo del modelo. Son causas distintas —una es infraestructura, la otra una
+limitación del modelo— y hoy son indistinguibles en los datos. Ver `TODO-INFORME-FINAL.md §11.1`.
+
+---
+
+## 13. Límite físico del hardware para modelos de 19 GB
+
+### F36. 🔴 `gemma4:31b` no es ejecutable en esta máquina, ni con un solo worker
+**Severidad: alta (limita el alcance del estudio).** Verificado empíricamente el 2026-09-05.
+
+Primer intento con `--num-workers 9` (replicando el protocolo original):
+
+| Métrica | Valor |
+|:---|---:|
+| Extracciones iniciadas | 15 |
+| Respuestas recibidas en 26 min | **0** |
+| Swap usado | **16.1 GB de 17.4 GB** |
+| Pageouts | **7.834.527** |
+| Memoria libre | 8% |
+| CPU de `llama-server` | 31% (el resto, esperando disco) |
+
+Diagnóstico: 8 peticiones concurrentes ⇒ 8 KV-caches simultáneos sobre un modelo de 19 GB en 16 GB de RAM.
+
+**Segundo intento con `--num-workers 1`** (un único KV-cache). Tras liberar el modelo, la memoria subió al
+71% libre y el swap bajó a 4.3 GB. Pero a los 90 s de reanudar: **memoria de nuevo al 3%, swap en 15 GB, y
+0 respuestas**.
+
+**Conclusión:** el problema no es la concurrencia sino el **tamaño del modelo**. 19 GB de pesos no caben en
+16 GB de memoria física; el sistema pagina de forma continua independientemente del paralelismo.
+
+**Implicación para la tesina:** la fila de `gemma4:31b` de la Tabla 2 **no es recuperable en este hardware**.
+Las opciones se reducen a: (a) retirar la fila, (b) marcarla como no verificable, o (c) ejecutarla en un
+equipo con ≥32 GB de RAM.
+
+> Contraste útil: `gemma4:31b-cloud` es **el mismo modelo servido remotamente** y funciona sin consumir
+> memoria local. No sustituye a la fila local (compara runtimes distintos), pero demuestra que la
+> limitación es exclusivamente de hardware local.
+
+### F37. ✅ Acceso cloud restaurado por reautenticación
+Tras el `ollama signin` del autor con una cuenta alternativa, verificado a través del daemon local:
+
+| Modelo | Estado |
+|:---|:---|
+| `gemma4:31b-cloud` | ✅ **operativo** — responde correctamente |
+| `minimax-m3:cloud` | ❌ HTTP 402 — requiere plan de pago (limitación de plan, no de autenticación) |
+
+Esto **desbloquea la re-ejecución limpia de `gemma4:31b-cloud`** (ver F35: sus datos actuales tienen 6 de 15
+extracciones fallidas por cuota). `minimax-m3` seguirá sin ser re-ejecutable sin contratar plan.
+
+**Dato operativo verificado:** el `signin` **no reinicia** `ollama serve` (el daemon llevaba 2 días 11 h en
+marcha y siguió igual), por lo que **no interrumpe una corrida en curso**. La preocupación previa de tener
+que elegir entre autenticar o preservar el benchmark era infundada.
+
+### F38. 🔴 `minimax-m3:cloud` retirado del estudio — resultado irreparable
+**Decisión del autor, 2026-09-05.** El modelo sale del benchmark y de la documentación.
+
+**Justificación acumulada de tres hallazgos independientes:**
+
+| Evidencia | Origen |
+|:---|:---|
+| **9 de 15 extracciones fallidas** por cuota; **10 de 15 con recall = 0**; N efectiva = **6** | F35 |
+| **HTTP 402 — requiere plan de pago.** Verificado con las tres cuentas disponibles; ninguna lo desbloquea | F6, F37 |
+| Su fila declaraba F1 = 0.6321 sobre un supuesto N=15; el crudo da 0.2011 y el subconjunto exitoso 0.5028 (n=6) | F35 |
+
+Un resultado con **60 % de tasa de fallo** y **sin posibilidad de repetición** no es defendible. A diferencia
+de `gemma4:31b-cloud` —cuya cuota se renueva y sí pudo reautenticarse—, aquí la barrera es de plan
+comercial y no desaparece con el tiempo.
+
+**Alcance de la retirada:**
+
+| Retirado | Conservado y por qué |
+|:---|:---|
+| `src/config.py` — lista de modelos evaluados | `src/llm_runner.py:64` — el patrón `"minimax"` de `is_cloud_model()` es **lógica de enrutamiento genérica**; eliminarlo rompería la detección de cualquier modelo cloud futuro con ese nombre |
+| `run_benchmark.sh` — invocación | `AGENTS.md §8.2` — tablas que documentan ese mismo patrón de enrutamiento |
+| `BENCHMARKS.md` — fila de resultados y listado de configuración | Registros históricos (`WORKLOG.md`, `research/rag/WORKLOG.md`, auditorías) — documentan **por qué** se retiró |
+| `src/dashboard.py` — declaración del modelo | `doc/organized/Hito_4_*` — entregas históricas, no se modifican |
+| `AGENTS.md §8.6` — marcado ❌ **RETIRADO**, no borrado | Datos crudos en `results/` — evidencia primaria intacta |
+
+La tesina (`.md`) **no lo mencionaba**: verificado, cero ocurrencias antes de la retirada.

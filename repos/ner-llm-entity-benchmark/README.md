@@ -60,7 +60,8 @@ Valid values: `entities` (legacy dict), `kb_guidelines`, `kb_fewshot`, `kb_combi
 ### 2c. Run the Prompt Configuration Comparison (`--ablation`)
 
 Also referred to as the 2x2 factorial design / prompt ablation study. One model is swept across the
-four prompt conditions (zs-en, zs-es, fs-en, fs-es) in a single run:
+four prompt conditions (zs-en, zs-es, fs-es, fs-en) in a single run. Note that `--ablation` reads
+**only the first name** given to `--models`; any further names are ignored:
 
 ```bash
 python src/main.py --ablation --data-file data/benchmark_balanced_120.json \

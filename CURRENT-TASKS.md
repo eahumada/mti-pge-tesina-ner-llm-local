@@ -4,7 +4,7 @@
 > sobre este repositorio, a veces simultáneamente. Este archivo declara **quién está haciendo qué y sobre
 > qué archivos**, para evitar que dos agentes se pisen.
 
-**Última actualización:** 2026-09-04 14:00 · **Actualizado por:** Claude Code
+**Última actualización:** 2026-09-05 22:00 · **Actualizado por:** Claude Code
 
 ---
 
@@ -34,7 +34,7 @@ Para **cada tarea** que ejecutes:
 ### 1.1 EN CURSO — Benchmark N=120 (7 modelos locales)
 - **Estado:** ▶️ EN CURSO desde 2026-09-03 16:08
 - **Archivos bloqueados:** `repos/ner-llm-entity-benchmark/results/benchmark_balanced_120_kbrag_9models/**`
-- **Progreso:** 27 / 1680 filas · `gemma4:12b-mlx_baseline` 9/40 lotes
+- **Progreso:** 126 / 1680 filas · `gemma4:12b-mlx_baseline` COMPLETADO (40/40), `_kb_rag` en curso
 - **Configuración:** `--rag-mode kb_combined --num-workers 9 --batch-size 3 --results-dir <fijo>`
   (compatible con la corrida de referencia del 2026-09-01, 9 parámetros verificados)
 - **Modelos:** gemma4:12b-mlx, qwen3:8b, mistral-nemo, nuextract, llama3.1:8b, nemotron-mini:4b, deepseek-r1:1.5b
@@ -131,7 +131,7 @@ Para **cada tarea** que ejecutes:
 - **Orden de ejecución:**
   1. Incorporar el resultado consolidado del benchmark: §5.3.5, §5.6.5, Anexo E y §7.2, con un **único**
      ANOVA/Tukey recalculado sobre la fusión de la corrida en curso con la del 2026-09-01.
-  2. Fijar el alcance real del estudio (**14 modelos**, no 16) y la razón de la exclusión de los cloud.
+  2. Fijar el alcance real del estudio (**12 modelos**) y la razón de la exclusión de los cloud.
   3. Sustituir el F1 titular de N=30 por el de la re-ejecución, según la decisión ya registrada del autor.
   4. Repetir el bloque de maquetación D-2…D-7 (estilos, encabezado, márgenes y saltos, tablas y leyendas,
      estructura XML, limpieza tipográfica).
@@ -151,6 +151,52 @@ Para **cada tarea** que ejecutes:
 - **Estado:** ⬜ SIN ASIGNACIÓN
 - **Instrucciones aplicables:** `repos/ner-llm-entity-benchmark/ANTIGRAVITY.md` → `AGENTS.md`
 - Si se le asignan tareas, declararlas aquí antes de empezar.
+
+---
+
+## 3.bis Equipo Remoto (48 GB RAM)
+
+> **Encargo completo:** [`PROMPT-EQUIPO-REMOTO-48GB.md`](./PROMPT-EQUIPO-REMOTO-48GB.md)
+> **Motivo:** la máquina de desarrollo tiene 16 GB y varios modelos no caben (ver `FINDINGS.md §F36`).
+> **Protocolo:** el equipo remoto debe **leer este documento antes de empezar**, escribir su entrada al
+> iniciar cada tarea, actualizarla al terminar y **volver a leerlo** por si otro agente escribió mientras.
+
+### 3.bis.1 ⬜ PENDIENTE — `gemma4:31b` sobre N=15 (PRIORIDAD 1)
+- **Estado:** ⬜ SIN INICIAR
+- **Archivos que producirá:** `results/gemma4_31b_n15_REMOTO/`
+- **Bloquea:** la fila de `gemma4:31b` en la Tabla 2 del informe, hoy sin respaldo alguno
+- **Reportar aquí:** fecha de inicio/fin · F1, P, R obtenidos · **tasa de fallo (debe ser 0)** · RAM pico
+
+### 3.bis.2 ⬜ PENDIENTE — Modelos excluidos por RAM sobre N=120 (PRIORIDAD 2)
+- **Estado:** ⬜ SIN INICIAR
+- **Modelos:** `gpt-oss:20b` (13 GB), `sonct988/gemma4-26b-a4b-it-q4km-256k` (16 GB)
+- **Archivos:** `results/excluidos_n120_REMOTO/`
+- **Efecto:** devolvería el estudio de **12 a 14 modelos**
+- ⚠️ `--rag-mode kb_combined` obligatorio, o los datos no serán comparables
+
+### 3.bis.3 ⬜ PENDIENTE — Benchmark principal N=120, 7 modelos (PRIORIDAD 3)
+- **Estado:** ⬜ SIN INICIAR · *(en la máquina local avanza a ~2 filas/hora; van 153/1680)*
+- **Archivos:** `results/benchmark_n120_REMOTO/`
+
+### 3.bis.4 ⬜ PENDIENTE — Configuraciones de prompt (PRIORIDAD 4)
+- **Estado:** ⬜ SIN INICIAR
+- **Archivos:** `results/ablacion_n15_REMOTO/`
+- **Bloquea:** 4 cifras de la tesina que no existen en ningún dato
+
+### 3.bis.5 Plantilla de reporte
+Al terminar cada tarea, sustituid su bloque por:
+
+```
+### 3.bis.N ✅ COMPLETADA — <tarea>
+- **Ejecutada:** <inicio> → <fin>  ·  **Equipo/persona:** <nombre>
+- **Hardware:** <RAM total> · pico de uso <X GB> · sin suspensiones: <sí/no>
+- **Resultados:** F1=<x> P=<x> R=<x>  (por modelo y condición)
+- **Tasa de fallo:** <n>/<total>  ← debe ser 0; si no, indicar causa (429/402/parseo)
+- **Protocolo:** <confirmar --rag-mode usado y cualquier desviación>
+- **Entregado en:** results/<dir>/  (CSV, JSON, statistical_report.md, benchmark.log)
+```
+
+Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y cambio.
 
 ---
 
@@ -198,7 +244,14 @@ Para **cada tarea** que ejecutes:
 | 2026-09-03 16:24 | Claude Code | Reparadas 5 regresiones introducidas por el workflow de corrección (ver §4.2) |
 | 2026-09-03 16:32 | Claude Code | `glm-5.1:cloud` eliminado globalmente (cero resultados, HTTP 402). Criterio adoptado: un modelo cloud se conserva si tiene resultados, se elimina si no. Ver `TODO-INFORME-FINAL.md §9` |
 | 2026-09-04 14:00 | Claude Code | Benchmark migrado a LaunchAgent tras 7 interrupciones. Bug corregido: bajo launchd faltaba `/opt/homebrew/bin` en el `PATH` y la lista de modelos salía vacía |
-| 2026-09-04 14:00 | Claude Code | 🔴 SEGURIDAD: 2 credenciales filtradas — API key de Google en `test_flash.py` **publicada en GitHub** (commits `0b27b5c`, `0cc973b`), y PAT de GitHub en `.git/config`. Pendiente de revocación por el autor |
+| 2026-09-04 14:00 | Claude Code | 🔴 SEGURIDAD: 2 credenciales filtradas — API key de Google en `test_flash.py` **publicada en GitHub** (commits `0b27b5c`, `0cc973b`), y PAT de GitHub en `.git/config` |
+| 2026-09-05 22:00 | Claude Code | Workflow ronda 2 completado: 12 correcciones, 57 ya hechas, **integridad OK en los 4 archivos** (sin pérdida de contenido ni tablas rotas) |
+| 2026-09-05 22:00 | Claude Code | 🔴 Detectados 8 BLOQUEANTES de integridad numérica que requieren decisión del autor. Ver `TODO-INFORME-FINAL.md §10` y `FINDINGS.md §F27-F30`. El más grave: 2 valores de F1 **aritméticamente imposibles** |
+| 2026-09-05 21:50 | Claude Code | 🟡 SEGURIDAD (parcial): claves fuera del código — `test_flash.py` lee del entorno, todos los secretos en `.setenv.sh` (600, gitignored), PAT retirado de `.git/config`. Espejo con historia reescrita listo y verificado (0 blobs con la key), pero **el `push --force` sigue sin ejecutar**. ⚠️ **La revocación de ambas credenciales sigue pendiente y es lo único que mitiga la exposición ya ocurrida** |
+| 2026-09-05 21:45 | Claude Code | Commit `33ddb00` en rama `sesion/revision-final-20260905`: 45 archivos, 5405 inserciones. Verificado sin secretos ni backups |
+| 2026-09-05 21:45 | Claude Code | Todos los secretos consolidados en `.setenv.sh` (raíz, permisos 600, gitignored). Token retirado de `.git/config`; credential helper lee `GITHUB_TOKEN` del entorno |
+| 2026-09-05 21:45 | Claude Code | `gemma4:12b-mlx_baseline` COMPLETADO (40/40 lotes). Descarga de `gemma4:31b-mlx` reanudada; `gemma4:31b` ya estaba local |
+| 2026-09-05 21:45 | Claude Code | Suite de guardarraíles: 15/15 tests OK. `src/memory_stress_test.py` pospuesto para no competir por RAM con el benchmark |
 | 2026-09-04 14:00 | Claude Code | Ref git inválida `refs/remotes/origin/main 2` eliminada: rompía `git log --all` y causó 2 escaneos de seguridad con falso negativo |
 | 2026-09-03 16:38 | Claude Code | Inventario completo de resultados cloud: `gemma4:31b-cloud` y `minimax-m3:cloud` conservados en sus 2 corridas cada uno (N=15 y N=120). Detectado que ambas son de modo RAG legacy `entities`, no comparables con `kb_combined`. Ver `TODO-INFORME-FINAL.md §9.4-9.5` |
 | 2026-09-03 20:18 | Claude Desktop | Tarea 2.0: protocolo añadido a `AGENT.md`, `ANTIGRAVITY.md` y `GEMINI.md` de la raíz; §2.4 (documentos de la sesión) y §2.5 (cierre de formato tras los benchmarks) |

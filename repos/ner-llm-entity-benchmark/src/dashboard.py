@@ -85,7 +85,6 @@ st.sidebar.markdown("---")
 st.sidebar.markdown("""
 **Modelos bajo evaluación:**
 - `gemma4:31b-cloud` (31B class)
-- `minimax-m3:cloud` (100B class)
 - `gemma4:31b` (19 GB)
 - `sonct988/gemma4-26b` (16 GB) ← Q4 community quant
 - `gpt-oss:20b` (20B / 14 GB)
@@ -130,7 +129,6 @@ def load_md(path):
 
 # ─── Parameter registry (Billions of parameters) ──────────────────────────────
 PARAM_SIZES = {
-    "minimax-m3:cloud": 100.0,
     "llama3.1:8b":    8.0,
     "nemotron-mini:4b": 4.0,
     "gpt-oss:20b": 20.0,

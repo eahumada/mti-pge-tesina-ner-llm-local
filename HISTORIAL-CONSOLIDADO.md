@@ -219,9 +219,10 @@ riesgo asociado.
 - Diagnóstico inicial: cuerpo de **35 páginas** contra un límite de 25; resumen de **230 palabras**;
   ausencia de leyendas de tabla con el estilo institucional.
 - Estrategia autorizada por el autor: **mover + condensar**.
-- Resultado: cuerpo de **24 páginas**, resumen de **163 palabras**, **23 leyendas** de tabla con estilo
-  `table caption`, anexos **D, E, F y G** creados, dos páginas en blanco eliminadas y dos filas de datos
-  recuperadas.
+- Resultado (medición intermedia, superada ese mismo día por el cierre registrado en §9: cuerpo de
+  **20 páginas**, anexos desde la 21, 29 pp. totales): cuerpo de **24 páginas**, resumen de
+  **163 palabras**, **23 leyendas** de tabla con estilo `table caption`, anexos **D, E, F y G** creados,
+  dos páginas en blanco eliminadas y dos filas de datos recuperadas.
 - Verificación automatizada: ninguna tabla perdida (22 → 23, por el desdoblamiento de la tabla del
   benchmark general en versión resumida y versión completa) y ningún valor porcentual ausente.
 - Se añadió el **Anexo G — Declaración de Uso de Inteligencia Artificial**, redactado sobre la base del

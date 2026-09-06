@@ -24,7 +24,6 @@ echo "📊 Running full benchmark sweep — 15 models (including MiniMax & gpt-o
   --models \
     gemma4:12b-mlx \
     gemma4:31b-cloud \
-    minimax-m3:cloud \
     gemma4:31b-mlx \
     "sonct988/gemma4-26b-a4b-it-q4km-256k:latest" \
     gpt-oss:20b \

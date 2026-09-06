@@ -2,9 +2,11 @@
 
 > Documento de seguimiento del cierre del Informe Final (Hito 5).
 > **Política:** estrictamente aditivo. No se elimina contenido previo; los ítems completados se marcan,
-> no se borran. Ver `CLAUDE.md` (§Entregables) y `HISTORIAL-CONSOLIDADO.md`.
-> **Restricción institucional vigente:** cuerpo ≤ 25 páginas, excluyendo anexos. El margen actual es
-> de **1 página**, por lo que toda corrección debe ser neutra en extensión o reducirla.
+> no se borran. Ver `CLAUDE.md` (§Entregables Finales) y `HISTORIAL-CONSOLIDADO.md`.
+> **Restricción institucional vigente:** cuerpo ≤ 25 páginas, excluyendo anexos.
+> **Margen real: 5 páginas** — el cuerpo mide **20 pp.** (anexos desde la 21, 29 pp. totales), según la
+> verificación de `HISTORIAL-CONSOLIDADO.md §9`. *Corrección 2026-09-05: este documento afirmaba antes un
+> margen de 1 página basado en una medición de 24 pp. que quedó superada por la corrección de estilos.*
 
 **Última actualización:** 2026-09-03
 
@@ -14,7 +16,7 @@
 
 | # | Entregable | Ruta | Estado |
 |:--|:---|:---|:---|
-| 1 | Informe final con plantilla UTFSM/MTI (**canónico**) | `Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.docx` | ✅ Vigente — cuerpo 24 pp. + anexos |
+| 1 | Informe final con plantilla UTFSM/MTI (**canónico**) | `Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.docx` | ✅ Vigente — cuerpo **20 pp.** + anexos (29 pp. totales) |
 | 2 | Fuente Markdown del informe (**canónica**) | `doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.md` | ✅ Vigente |
 | 3 | DOCX del borrador Hito 5 | `doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.docx` | ✅ Vigente |
 | 4 | Informe standalone (sin plantilla) | `Informe_Final_Tesina_NER.docx` | ⚠️ **INCOMPLETO** — ver §3.1 |
@@ -41,9 +43,12 @@
       indistinguibles de un baseline en su metadata).
 
 ### 2.3 Nomenclatura y terminología
-- [x] Eliminación transversal del modelo `gemma4-12b-mlx-q8-64k`: su sufijo `q8` era **falso**
+- [x] Eliminación del modelo `gemma4-12b-mlx-q8-64k` de **documentación y configuración**: su sufijo `q8` era **falso**
       (el artefacto real es 4-bit NVFP4, 7.71 GB; un q8 real de 12B pesa 12.84 GB). Nombre canónico
-      adoptado: `gemma4:12b-mlx`. Cero ocurrencias del nombre viejo en todo el proyecto.
+      adoptado: `gemma4:12b-mlx`.
+      ⚠️ **Corrección 2026-09-05:** la eliminación cubrió documentación y configuración, **no los datos
+      experimentales**. El nombre retirado sigue en 14 archivos de `results/`, incluidas **30 filas** de
+      `results/benchmark_results.csv`. Ver §10.
 - [x] Terminología: «Comparación de Configuraciones de Prompt» como término principal, con
       «diseño factorial 2×2» y «estudio de ablación» como sinónimos glosados. Aplicado al `.md`.
       El abstract en inglés conserva *prompt ablation study*.
@@ -79,10 +84,10 @@
 - [ ] Aplicar los 55 hallazgos de gravedad media y los 34 de baja.
 
 ### 3.2 Benchmark N=120 completo
-- [ ] Corrida en curso: 9 modelos locales × 2 modos, `--rag-mode kb_combined`, `--num-workers 9`.
+- [ ] Corrida en curso: **7 modelos locales** × 2 modos = 1680 filas, `--rag-mode kb_combined`, `--num-workers 9`.
 - [ ] Fusionar con la corrida del 2026-09-01 y recalcular un único ANOVA/Tukey.
 - [ ] Actualizar §5.3.5 con el resultado consolidado.
-- [ ] ⚠️ **El estudio quedará con 14 modelos, no 16.** Los dos modelos cloud no son ejecutables:
+- [ ] ⚠️ **El estudio queda con 12 modelos** (ver §8, que corrige este apartado). Los dos cloud no son ejecutables:
       `gemma4:31b-cloud` devuelve HTTP 429 (cuota semanal agotada) y `minimax-m3:cloud` HTTP 402
       (requiere suscripción de pago). Verificado contra la API de Ollama. Recuperarlos exige plan de pago.
 
@@ -116,8 +121,8 @@
 
 | Documento | Contenido |
 |:---|:---|
-| [`FINDINGS.md`](./FINDINGS.md) | 14 hallazgos técnicos y documentales de la revisión final, con evidencia e impacto |
-| [`LEARNING.md`](./LEARNING.md) | 13 lecciones derivadas de esos hallazgos, cada una con su aplicación práctica |
+| [`FINDINGS.md`](./FINDINGS.md) | 25 hallazgos (F1–F25) técnicos y documentales, con evidencia e impacto |
+| [`LEARNING.md`](./LEARNING.md) | 22 lecciones (L1–L22) derivadas de esos hallazgos, con su aplicación práctica |
 | [`AUDITORIA_CONSISTENCIA_20260903.md`](./AUDITORIA_CONSISTENCIA_20260903.md) | 115 inconsistencias documentales verificadas adversarialmente |
 
 ---
@@ -209,7 +214,7 @@ datos experimentales del informe.
 
 ### 7.4 Verificación final de formato
 - [ ] Confirmar que el cuerpo del informe **no excede 25 páginas** excluyendo anexos tras todas las
-      correcciones. El margen antes de esta ronda era de **1 página** (24 pp.).
+      correcciones. **Margen disponible: 5 páginas** (cuerpo actual 20 pp.).
 - [ ] Verificar que no quedan páginas en blanco espurias ni tablas partidas.
 - [ ] Confirmar que la numeración multinivel sigue correcta (sin prefijos `1.1`, `1.1.49`).
 - [ ] Dejar copia del `.docx` canónico ya corregido **en la raíz** del proyecto.
@@ -328,3 +333,154 @@ sus condiciones RAG corresponden al modo **legacy `entities`** (diccionarios de 
       transversales, o etiquetar explícitamente que la condición RAG es de modo `entities`.
 - [ ] No incorporar las filas `_rag_enhanced` de estas corridas al ANOVA conjunto con la corrida
       `kb_combined`: mezclaría dos tratamientos distintos bajo una misma etiqueta.
+
+---
+
+## 10. 🔴 BLOQUEANTES antes de la defensa (detectados 2026-09-05)
+
+Requieren **decisión del autor**. Ninguno es corregible automáticamente: o exigen datos que ya no existen,
+o una fuente que solo tú puedes aportar.
+
+| # | Problema | Ubicación | Por qué bloquea |
+|:--|:---|:---|:---|
+| 1 | **F1 aritméticamente imposible** en 2 filas: `llama3.2:latest_rag` (0.8783 > cota 0.7646) y `llama3.1:8b_baseline` (0.7667 > cota 0.7333) | `BENCHMARKS.md`, tabla RAG Integration Study | F1 nunca puede superar (P+R)/2. Un revisor lo detecta con aritmética elemental. Los datos crudos no sobreviven ⇒ no recalculables |
+| 2 | **`gemma4:31b` y `gemma4:31b-mlx` con métricas byte-idénticas** (67.83/57.29/86.78/0.15/114.20) | Informe, Tabla 2 L375-376 | Dos runtimes distintos no producen resultados idénticos hasta el decimal. Además el 67.83% no tiene respaldo crudo; la única medición independiente da F1=0.6852 |
+| 3 | **Cita inventada pendiente**: marcador `[referencia KPMG 2024]` junto a cifras de mercado (USD 12.300 y 87.200 millones) | Informe §1.1, L65 | Sin la fuente real, las cifras no tienen respaldo. Fabricar la cita sería falsificación académica |
+| 4 | **Contradicción de hardware**: se declara ejecutar modelos de ~24.7 GB de VRAM sobre 16 GB de memoria unificada | Informe §2.4 (L125) y §3.6 (L210) | Físicamente contradictorio tal como está redactado |
+| 5 | **Tabla de eficiencia no reproducible**: VRAM y Tok/s de §5.5 no se derivan de ningún CSV | Informe §5.5, L471-473 | El CSV da 24.607 MB / 22.80 tok/s frente a 24.751 / 27.56 de la tabla |
+| 6 | **Tabla de ablación sin corrida de origen**: 0.7169 / 0.6640 / 0.6482 / 0.5874 solo existen en `BENCHMARKS.md` | `BENCHMARKS.md` L195-202 | No trazables a ningún resultado |
+| 7 | **Etiqueta `q8-64k` viva en los datos** que alimentan la Tabla 2 (30 filas del CSV) | `results/benchmark_results.csv` | Ver `FINDINGS.md §F26`. Recomendación: documentar la equivalencia en el informe |
+| 8 | **Discrepancia tabla vs crudo** en modelos cloud: 0.6754 vs 0.3973 (`gemma4:31b-cloud`), 0.6321 vs 0.2011 (`minimax-m3:cloud`) | `BENCHMARKS.md`, nota de trazabilidad | Requiere decidir cuál es la fuente válida |
+
+### Modelos evaluados sin declarar — ✅ RESUELTO (2026-09-05)
+`AGENTS.md §8.6` catalogaba como «Active» a `gliner:medium`, `gemini-3.1-flash-lite`, `gemini-3.5-flash` y
+`phi3.5`.
+- [x] **Decisión del autor: ninguno forma parte del estudio.** No están entre los 12 modelos evaluados.
+      Registrado como nota en `AGENTS.md §8.6`: figuran solo como soporte de la plataforma multi-proveedor
+      y **sus métricas no deben citarse como resultados de la tesina**.
+
+---
+
+## 11. Plan priorizado tras la verificación de datos (2026-09-05)
+
+### 11.0 Hallazgo que reordena las prioridades
+Las cifras bajas de los modelos cloud en los datos crudos **no miden el rendimiento del modelo**: miden una
+corrida contaminada por **fallos de cuota**. Evidencia:
+
+| Modelo | Extracciones fallidas | Recall = 0 | N efectiva |
+|:---|---:|---:|---:|
+| `gemma4:31b-cloud` | 6 / 15 | 6 / 15 | **9** |
+| `minimax-m3:cloud` | 9 / 15 | 10 / 15 | **6** |
+| `gemma4:31b-mlx` (local, control) | 0 / 15 | 0 / 15 | 15 |
+
+El log de esa corrida tiene **507 líneas con errores de cuota**. Excluyendo los fallos, `gemma4:31b-cloud`
+da **F1 = 0.6622**, muy próximo al 0.6754 de la tabla ⇒ **la tabla refleja el subconjunto exitoso**, no una
+cifra inventada. Su defecto real es **declarar N=15 ocultando que 6 fallaron**.
+
+> ⚠️ **No sustituir la tabla por los valores crudos.** Serían métricas contaminadas por fallos de
+> infraestructura presentadas como rendimiento del modelo.
+
+### 11.1 🔴 PRIORIDAD ALTA — Instrumentar la causa de fallo
+- [ ] `parse_method` no distingue un **fallo de cuota** (HTTP 429/402) de un **fallo de parseo del modelo**:
+      ambos quedan como `failed`. Añadir a cada fila el **código HTTP** y la **causa**, para que un fallo de
+      infraestructura no vuelva a confundirse con una limitación del modelo.
+- [ ] Registrar en el resumen agregado la **N efectiva** y la **tasa de fallo** por modelo.
+
+### 11.2 🔴 PRIORIDAD ALTA — Re-ejecutar los modelos cloud
+**Viable ahora.** Verificado el 2026-09-05:
+
+| Cuenta | Estado |
+|:---|:---|
+| `eahumada@gmail.com` | ❌ HTTP 429 — cuota semanal agotada |
+| `eduardo.ahumada@delmartg.com` | ✅ **operativa** |
+| `Eahumada@4useguros.com` | ✅ **operativa** |
+
+- [ ] **Requiere `ollama signin`** con una de las cuentas operativas, o arrancar `ollama serve` con
+      `OLLAMA_API_KEY` en su entorno. El daemon local es quien autentica contra la nube; las claves de
+      `.setenv.sh` no bastan para el proceso ya en marcha.
+      ⚠️ Reiniciar `ollama serve` **interrumpe el benchmark en curso** — hacerlo entre corridas.
+- [ ] Re-ejecutar `gemma4:31b-cloud` y `minimax-m3:cloud` sobre N=15 con el logging mejorado de §11.1.
+- [ ] Verificar que la tasa de fallo sea 0 antes de dar las cifras por buenas.
+
+### 11.3 🟠 Paralelismo: los cloud SÍ pueden correr con los locales
+Los modelos cloud **no consumen memoria local** — la inferencia ocurre en el servidor remoto. La
+restricción de ejecución serial (un modelo a la vez para que disponga de toda la RAM) **aplica solo a los
+modelos locales**.
+
+- [ ] Ejecutar los cloud **en paralelo** con la corrida local en curso, sin esperar a que termine.
+- [ ] Mantener la serialización estricta **entre modelos locales**.
+
+### 11.4 🟠 PRIORIDAD MEDIA — Declarar la N efectiva mientras tanto
+- [ ] Hasta tener la re-ejecución limpia, la tabla debe declarar junto a cada modelo cloud su **N efectiva**
+      y su **tasa de fallo por cuota**. Es honesto y no requiere datos nuevos.
+
+### 11.5 🟡 Filas sin respaldo alguno
+- [ ] Tabla «RAG Integration Study»: `llama3.2:latest_rag` (F1 0.8783) y `llama3.1:8b_baseline` (0.7667)
+      tienen F1 **aritméticamente imposibles**, y **ninguno de sus seis valores existe en dato alguno** del
+      proyecto (verificado sobre CSV, JSON y logs). No es que el CSV no sobreviva: no hay rastro.
+      → Retirar, o marcar como «prototipo temprano, cifras no verificables».
+- [ ] Tabla de ablación: sus 4 cifras (0.7169 / 0.6640 / 0.6482 / 0.5874) tampoco existen en datos.
+      Re-ejecutable con `gemma4:latest` (9.6 GB) sobre N=15, 4 configuraciones de prompt.
+
+### 11.6 ⬜ PRIORIDAD BAJA — Aparcado por decisión del autor
+- [ ] Cifras de mercado de §1.1 con el marcador `[referencia KPMG 2024]`. **Se aborda al final**, tras
+      completar todos los benchmarks.
+
+### 11.7 Orden de ejecución acordado
+1. `gemma4:31b` sobre N=15 — **en curso** (local, en solitario)
+2. Cloud en paralelo, en cuanto se resuelva el `signin`
+3. Reanudar el benchmark principal N=120 (local, en solitario) — pausado en 153/1680
+4. Ablación con `gemma4:latest` si se decide re-ejecutarla
+5. KPMG y cierre documental
+
+---
+
+## 12. Estado del trabajo en curso (2026-09-05, 23:05)
+
+### 12.1 Resultados de la sesión de ejecución
+
+| Tarea | Estado | Detalle |
+|:---|:---|:---|
+| Recuperar `gemma4:31b` (N=15) | 🔴 **INVIABLE en este hardware** | 19 GB sobre 16 GB de RAM. 0 respuestas en 26 min con 8 workers; **tampoco con 1 worker**. Swap saturado a 16 GB. Ver `FINDINGS.md §F36` |
+| Acceso a Ollama Cloud | ✅ **RESTAURADO** | Tras tu `signin`: `gemma4:31b-cloud` operativo. `minimax-m3:cloud` sigue en HTTP 402 (plan de pago) |
+| Benchmark principal N=120 | ⏸️ **PAUSADO, checkpoint íntegro** | 153/1680 filas · `gemma4:12b-mlx_baseline` 40/40, `_kb_rag` 11/40 |
+
+### 12.2 🔴 Decisión requerida — fila de `gemma4:31b` en la Tabla 2
+No es recuperable aquí. Tres salidas:
+
+| Opción | Consecuencia |
+|:---|:---|
+| **Retirar la fila** | Tabla íntegramente trazable. Se pierde la comparación GGUF vs MLX |
+| **Marcarla no verificable** | Se conserva, con nota de que su origen no consta en `results/` |
+| **Ejecutar en equipo con ≥32 GB** | Única vía de recuperar el dato real |
+
+> `gemma4:31b-cloud` es el mismo modelo en remoto y **sí funciona**, pero no sustituye a la fila local:
+> son runtimes distintos y esa comparación es justamente lo que la tabla mide.
+
+### 12.3 🔴 PRIORIDAD INMEDIATA — Re-ejecutar `gemma4:31b-cloud` limpio
+Desbloqueado por la reautenticación. Corrige la contaminación documentada en `FINDINGS.md §F35`
+(6 de 15 extracciones fallidas por cuota, N efectiva 9).
+
+- [ ] Ejecutar sobre N=15 (`data/kleptotrace.json`), protocolo `--rag-study --rag-mode entities`.
+- [ ] **Puede correr EN PARALELO** con el benchmark local: los cloud no consumen memoria local.
+- [ ] Verificar tasa de fallo **0** antes de dar las cifras por válidas.
+- [ ] Comparar con los valores actuales de la tabla (0.6754) y con el subconjunto exitoso (0.6622).
+
+### 12.4 Reglas operativas aprendidas (aplicar de aquí en adelante)
+1. **Modelos locales: estrictamente en serie**, uno a la vez con toda la RAM disponible.
+2. **Modelos cloud: en paralelo sin restricción** — no consumen memoria local.
+3. **Regla de admisión de modelos:** si `tamaño_modelo > RAM_física × 0.7`, no incluirlo en el plan de
+   evaluación de esta máquina. Con 16 GB, el techo práctico es **~11 GB**.
+   - Esto **excluye retroactivamente**: `gemma4:31b` (19 GB), `gemma4:31b-mlx` (19.4 GB),
+     `sonct988/…` (16 GB) y `gpt-oss:20b` (13 GB).
+   - `gemma4:12b-mlx` (7.7 GB) está dentro del límite, aunque su latencia de ~930 s ya refleja presión.
+4. **`ollama signin` NO reinicia el daemon** ⇒ puede hacerse sin interrumpir una corrida (verificado).
+5. **Diagnóstico de saturación:** `llama-server` con CPU baja (~30%) y swap alto significa que espera
+   disco, no que calcule.
+
+### 12.5 Orden de ejecución actualizado
+1. ~~`gemma4:31b` local~~ — **descartado por hardware**
+2. **`gemma4:31b-cloud` limpio** — puede empezar ya, en paralelo
+3. **Reanudar benchmark principal N=120** — local, en serie, desde 153/1680
+4. Ablación con `gemma4:latest` (9.6 GB, dentro del límite) si se decide re-ejecutarla
+5. KPMG y cierre documental

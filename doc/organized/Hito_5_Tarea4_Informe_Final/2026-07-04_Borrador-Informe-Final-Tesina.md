@@ -104,21 +104,21 @@ El informe se organiza así: §2 marco teórico y estado del arte; §3 sistema p
 
 El Reconocimiento de Entidades Nombradas (NER) es una subtarea fundamental del Procesamiento de Lenguaje Natural (PLN) que busca localizar y clasificar fragmentos de texto en categorías semánticas predefinidas. En el contexto de cumplimiento normativo, las categorías de interés son: **Personas** (PER), **Organizaciones** (ORG) y **Ubicaciones Geográficas** (LOC). Formalmente, NER es un problema de etiquetado de secuencias donde cada token recibe una etiqueta según el esquema IOB2 (Inside-Outside-Beginning).
 
-Los enfoques históricos para NER incluyen: (1) Modelos estadísticos de Campos Aleatorios Condicionales (CRF) [Smith et al., 2019]; (2) Modelos neurales BiLSTM-CRF; y (3) Modelos Transformer pre-entrenados como BERT [Devlin et al., 2019]. El estado del arte en benchmarks académicos (CoNLL-2003, FiNER-139) supera el 90% de F1 con modelos BERT fine-tuned, pero estos requieren grandes volúmenes de datos etiquetados específicos del dominio, inexistentes en español para el dominio de compliance financiero.
+Los enfoques históricos para NER incluyen: (1) Modelos estadísticos de Campos Aleatorios Condicionales (CRF) [10]; (2) Modelos neurales BiLSTM-CRF; y (3) Modelos Transformer pre-entrenados como BERT [2]. El estado del arte en benchmarks académicos (CoNLL-2003, FiNER-139) supera el 90% de F1 con modelos BERT fine-tuned, pero estos requieren grandes volúmenes de datos etiquetados específicos del dominio, inexistentes en español para el dominio de compliance financiero.
 
-El estado del arte en NER en español con Transformers alcanza 88–91% de F1 en benchmarks académicos controlados [García & López, 2021; Devlin et al., 2019]. Sin embargo, estos modelos requieren corpus etiquetados extensos en el dominio objetivo, inexistentes en español para el ámbito de cumplimiento financiero AML/KYC. Esto motiva el uso de LLMs generativos con capacidades zero-shot y few-shot, que permiten adaptación inmediata al dominio sin reentrenamiento.
+El estado del arte en NER en español con Transformers alcanza 88–91% de F1 en benchmarks académicos controlados [7], [2]. Sin embargo, estos modelos requieren corpus etiquetados extensos en el dominio objetivo, inexistentes en español para el ámbito de cumplimiento financiero AML/KYC. Esto motiva el uso de LLMs generativos con capacidades zero-shot y few-shot, que permiten adaptación inmediata al dominio sin reentrenamiento.
 
 ### 2.2 Modelos de Lenguaje Grande (LLMs) y Aprendizaje en Contexto
 
-La arquitectura Transformer [Vaswani et al., 2017], basada en el mecanismo de atención multi-cabeza, es la base de todos los modelos evaluados en este trabajo. Los LLMs modernos generativos (decoder-only Transformers) son entrenados en corpus masivos de texto con el objetivo de predicción del siguiente token. Su capacidad de adaptación a nuevas tareas sin entrenamiento explícito, denominada aprendizaje en contexto (in-context learning), es crítica para dominios especializados con datos etiquetados escasos.
+La arquitectura Transformer [4], basada en el mecanismo de atención multi-cabeza, es la base de todos los modelos evaluados en este trabajo. Los LLMs modernos generativos (decoder-only Transformers) son entrenados en corpus masivos de texto con el objetivo de predicción del siguiente token. Su capacidad de adaptación a nuevas tareas sin entrenamiento explícito, denominada aprendizaje en contexto (in-context learning), es crítica para dominios especializados con datos etiquetados escasos.
 
-El aprendizaje few-shot [Brown et al., 2020] permite incluir ejemplos demorativos (shots) directamente en el prompt para guiar la salida del modelo. Este trabajo evalúa sistemáticamente el impacto de 0 (zero-shot) y 3 (few-shot) ejemplos en español e inglés sobre la calidad de extracción NER en cumplimiento financiero.
+El aprendizaje few-shot [8] permite incluir ejemplos demorativos (shots) directamente en el prompt para guiar la salida del modelo. Este trabajo evalúa sistemáticamente el impacto de 0 (zero-shot) y 3 (few-shot) ejemplos en español e inglés sobre la calidad de extracción NER en cumplimiento financiero.
 
-BloombergGPT [Wu et al., 2023] evidencia el beneficio del pre-entrenamiento específico al dominio financiero (+15% F1 promedio vs. modelos generales). Sin embargo, su ejecución requiere infraestructura propietaria en la nube. Este trabajo demuestra que modelos de código abierto de escala media-grande (8B–31B parámetros) ejecutados localmente pueden aproximar este rendimiento sin comprometer la soberanía de datos.
+BloombergGPT [3] evidencia el beneficio del pre-entrenamiento específico al dominio financiero (+15% F1 promedio vs. modelos generales). Sin embargo, su ejecución requiere infraestructura propietaria en la nube. Este trabajo demuestra que modelos de código abierto de escala media-grande (8B–31B parámetros) ejecutados localmente pueden aproximar este rendimiento sin comprometer la soberanía de datos.
 
 ### 2.3 Generación Aumentada por Recuperación (RAG)
 
-La Generación Aumentada por Recuperación (RAG) [Lewis et al., 2020] optimiza la salida de un LLM fundamentando la generación en documentos recuperados dinámicamente. En este trabajo se adopta una variante de RAG de "contexto único": cada artículo periodístico actúa como la única fuente de contexto inyectada al LLM en el prompt del sistema, forzando al modelo a extraer entidades únicamente desde el texto presente, mitigando alucinaciones extrínsecas.
+La Generación Aumentada por Recuperación (RAG) [1] optimiza la salida de un LLM fundamentando la generación en documentos recuperados dinámicamente. En este trabajo se adopta una variante de RAG de "contexto único": cada artículo periodístico actúa como la única fuente de contexto inyectada al LLM en el prompt del sistema, forzando al modelo a extraer entidades únicamente desde el texto presente, mitigando alucinaciones extrínsecas.
 
 ### 2.4 Ejecución Soberana de LLMs con Ollama
 
@@ -130,10 +130,10 @@ La Tabla 1 posiciona este trabajo respecto a investigaciones recientes en NER pa
 
 | Trabajo | Dataset | Modelo | F1 | Privacidad | Idioma |
 |:---|:---|:---|:---:|:---:|:---|
-| BloombergGPT [Wu et al., 2023] | Bloomberg corpus | GPT-J + dominio | 85%+ | ❌ Cloud | Inglés |
-| FiNER-139 Benchmark [Alvarado et al., 2023] | SEC 10-K/10-Q | BERT fine-tuned | 91% | ❌ Cloud | Inglés |
-| García & López (2021) | CoNLL-ES | XLM-R | 88% | ✅ Local | Español |
-| Chang et al. (2024) | Docs bancarios | GPT-4 + RAG | 83% | ❌ Cloud | Inglés |
+| BloombergGPT [3] | Bloomberg corpus | GPT-J + dominio | 85%+ | ❌ Cloud | Inglés |
+| FiNER-139 Benchmark [15] | SEC 10-K/10-Q | BERT fine-tuned | 91% | ❌ Cloud | Inglés |
+| García & López [7] | CoNLL-ES | XLM-R | 88% | ✅ Local | Español |
+| Chang et al. [9] | Docs bancarios | GPT-4 + RAG | 83% | ❌ Cloud | Inglés |
 | **Este trabajo** | **Kleptotrace/CoNLL-2002 (AML), corpus sintético N=30** | **gemma4:31b local** | **79%** | **✅ 100% Local** | **Español** |
 
 El aporte original de este trabajo reside en: (1) evaluación comparativa de 12 modelos sobre corpus real de sanciones en español; (2) comparación de configuraciones de prompt entre idiomas (ES vs. EN); (3) sistema soberano reproducible sobre hardware comercial; y (4) validación estadística formal (ANOVA, Tukey HSD) sobre corpus N≥30.
@@ -252,7 +252,7 @@ El uso de datos sintéticos generados por LLM para pruebas de hipótesis es vál
 
 **b) Independencia de las observaciones:** Cada artículo generado es una muestra independiente — el desempeño del modelo en un artículo no afecta su desempeño en otro. El diseño experimental garantiza esta independencia al procesar cada artículo de forma aislada sin contexto de artículos previos.
 
-**c) Validez de constructo del corpus sintético:** La validez de los datos sintéticos como proxy del dominio real descansa en tres pilares: (1) la distribución temática del corpus sintético replica la del corpus real (Kleptotrace/CoNLL-2002); (2) las entidades provienen de una fuente oficial de sanciones reales (OpenSanctions); y (3) la capacidad del LLM para generar texto coherente con el dominio financiero ha sido validada empíricamente (el mismo modelo que genera los artículos es el que se evalúa, creando una condición de evaluación conservadora). Este enfoque es metodológicamente análogo al uso de paráfrasis automáticas para aumento de corpus en NLP, práctica ampliamente aceptada en la literatura [Brown et al., 2020; Bourne, 2024].
+**c) Validez de constructo del corpus sintético:** La validez de los datos sintéticos como proxy del dominio real descansa en tres pilares: (1) la distribución temática del corpus sintético replica la del corpus real (Kleptotrace/CoNLL-2002); (2) las entidades provienen de una fuente oficial de sanciones reales (OpenSanctions); y (3) la capacidad del LLM para generar texto coherente con el dominio financiero ha sido validada empíricamente (el mismo modelo que genera los artículos es el que se evalúa, creando una condición de evaluación conservadora). Este enfoque es metodológicamente análogo al uso de paráfrasis automáticas para aumento de corpus en NLP, práctica ampliamente aceptada en la literatura [8], [5].
 
 **d) Consistencia entre corpus:** Los F1-Scores observados en el corpus N=30 (gemma4:31b: 79.03%) son consistentes con la tendencia observada en el corpus real N=15 (gemma4:31b: 67.83%), sin saltos discontinuos que indicarían artefactos del aumento. La diferencia es atribuible a la menor complejidad promedio de los artículos breves del corpus sintético, lo que es esperado y documentado.
 
@@ -279,7 +279,7 @@ Se evaluaron cuatro configuraciones de prompt sobre el modelo gemma4:latest (9B)
 
 #### 4.3.1 ¿Qué es el Prompting Few-Shot?
 
-El **aprendizaje en contexto** (*in-context learning*) es la capacidad de los LLMs de adaptarse a una nueva tarea sin actualizar sus pesos, únicamente a partir de instrucciones y ejemplos incluidos en el texto del prompt. Esta capacidad, documentada por Brown et al. (2020) en el trabajo fundacional de GPT-3, distingue a los LLMs modernos de los modelos supervisados tradicionales.
+El **aprendizaje en contexto** (*in-context learning*) es la capacidad de los LLMs de adaptarse a una nueva tarea sin actualizar sus pesos, únicamente a partir de instrucciones y ejemplos incluidos en el texto del prompt. Esta capacidad, documentada por Brown et al. [8] en el trabajo fundacional de GPT-3, distingue a los LLMs modernos de los modelos supervisados tradicionales.
 
 El prompting **few-shot** (de pocos disparos) es una variante del aprendizaje en contexto que incluye un número reducido de ejemplos demorativos (*demonstrations*) directamente en el prompt, antes de presentar la tarea real. La estructura canónica de un prompt few-shot es:
 
@@ -372,10 +372,10 @@ La Tabla 2 presenta los resultados consolidados del benchmark completo agrupados
 
 | Modelo | Tipo | Parámetros | F1 | Precisión | Recall | Hallucination | Latencia (s) | Tok/s/B |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **gemma4:31b** | Local | 31B | **67.83%** | 57.29% | 86.78% | 0.15% | 114.20 | 0.37 |
+| **gemma4:31b** | Local | 31B | 67.83% | 57.29% | 86.78% | 0.15% | 114.20 | 0.37 |
 | gemma4:31b-mlx | Local | 31B | 67.83% | 57.29% | 86.78% | 0.15% | 114.20 | 0.89 |
 | gemma4:31b-cloud | Cloud | 31B | 66.29% | 55.43% | 84.12% | 0.00% | 35.80 | — |
-| gemma4:latest (ZS-ES) | Local | 9B | 69.81% | 62.59% | 82.70% | 0.19% | 22.67 | 6.30 |
+| gemma4:latest (ZS-ES) | Local | 9B | **69.81%** | 62.59% | 82.70% | 0.19% | 22.67 | 6.30 |
 | gemma4:latest (FS-ES) | Local | 9B | 69.76% | 61.67% | 84.55% | 1.80% | 44.47 | 6.30 |
 | gemini-3.1-flash-lite | Cloud | — | 65.47% | 54.10% | 84.69% | 0.00% | 1.69 | — |
 | llama3.2:latest | Local | 3B | 61.29% | 53.01% | 75.32% | 2.20% | 25.10 | 15.80 |
@@ -487,9 +487,9 @@ Durante el benchmark principal sobre N=120 artículos reales, se observó un fen
 | Modelo | Baseline F1 | RAG-Dict F1 | Delta |
 |:---|:---:|:---:|:---:|
 | `gemma4:31b-mlx` | **0.5983** | 0.5868 | −0.0115 |
-| `gemma4:latest` | 0.5446 | — | — |
-| `qwen2.5:14b` | 0.5189 | — | — |
-| `llama3.2:latest` | 0.3945 | — | — |
+| `gemma4:latest` | 0.5446 | 0.5257 | −0.0189 |
+| `qwen2.5:14b` | 0.5189 | 0.5071 | −0.0118 |
+| `llama3.2:latest` | 0.3945 | 0.4196 | +0.0251 |
 
 Las cifras anteriores provienen de la corrida `benchmark_balanced_120_20260824_173036` (RAG por diccionario, ago 2026), distinta de la corrida KB RAG del 1-sep citada en §5.3.5 y §5.6.5. Esta degradación motivó un protocolo de investigación formal documentado en `research/rag/2026-08-31_analisis_contenido_rag_base_conocimientos.md`. La auditoría reveló la causa raíz:
 
@@ -511,7 +511,7 @@ ChromaDB: Top-5 por coseno ──→ GRANJA LA SIERRA LTDA. (Org)
 "DO NOT extract unless they explicitly appear..."
          │
          ▼  Efecto en LLM
-Recall: 62.8% → 21.6%  ❌
+Recall: 62.8% → 21.6%  ❌ (sondeo N=5)
 ```
 
 #### 5.6.2 Arquitectura Propuesta: Base de Conocimientos Contextual
@@ -601,7 +601,7 @@ La base de conocimientos se organiza en **dos colecciones ChromaDB separadas** p
 
 #### 5.6.5 Resultados Empíricos del KB RAG
 
-**Mini-benchmark de validación (N=5 artículos, `llama3.2:latest`, 2026-09-01):**
+**Sondeo de validación funcional (N=5 artículos, `llama3.2:latest`, 2026-09-01; cifras no persistidas en `results/`):**
 
 | Condición | F1-Score | Precisión | Recall | Δ F1 vs Baseline |
 |:---|:---:|:---:|:---:|:---:|
@@ -652,7 +652,7 @@ En entornos de hardware restringido, donde solo es viable ejecutar modelos de 3�
 
 Esta evolución del sistema RAG aporta tres contribuciones metodológicas documentables:
 
-1. **Diagnóstico del Semantic Mismatch:** Identificación formal de un problema de diseño en la recuperación RAG para NER en vocabulario abierto, con evidencia empírica cuantitativa (Recall: 62.8% → 21.6%).
+1. **Diagnóstico del Semantic Mismatch:** Identificación formal de un problema de diseño en la recuperación RAG para NER en vocabulario abierto, con evidencia empírica cuantitativa (Recall: 62.8% → 21.6% en el sondeo N=5; 40.8% → 32.9% en el benchmark N=120).
 
 2. **Solución basada en tipología lingüística:** la base de conocimientos contextual transforma el problema de "buscar entidades por similitud" en el de "identificar el dominio del texto y aplicar reglas tipológicas", que es lo que los LLMs ejecutan con alta precisión.
 
@@ -671,7 +671,7 @@ Una meta aspiracional interna —no formalizada como hipótesis en §1.3— situ
 
 ### 6.2 Contribución de la Localización Lingüística
 
-La mejora de +7.4% de F1 producida exclusivamente por traducir el prompt al español (sin cambiar el modelo) es un hallazgo de alta relevancia práctica. Demuestra que los LLMs procesan con mayor fluidez la estructura sintáctica de noticias en español cuando reciben instrucciones en el mismo idioma, reduciendo la desambiguación tokenización cross-lingüística. Esta observación es consistente con los resultados de García & López (2021) para BERT en español.
+La mejora de +7.4% de F1 producida exclusivamente por traducir el prompt al español (sin cambiar el modelo) es un hallazgo de alta relevancia práctica. Demuestra que los LLMs procesan con mayor fluidez la estructura sintáctica de noticias en español cuando reciben instrucciones en el mismo idioma, reduciendo la desambiguación tokenización cross-lingüística. Esta observación es consistente con los resultados de García & López [7] para BERT en español.
 
 ### 6.3 Trade-off Tamaño de Modelo vs. Rendimiento
 
@@ -715,7 +715,7 @@ El experimento de KB RAG (§5.6) aporta una contribución metodológica a la rec
 
 1. **Expansión de la Base de Conocimientos KB RAG (Prioridad Alta):** Ampliar el catálogo de guías tipológicas (actualmente 5 dominios) a 10+ dominios específicos del ecosistema AML latinoamericano (noticias de la UAF chilena, resoluciones de la CMF, sanciones OFAC en español). Agregar 30–50 ejemplares anotados adicionales del corpus balanceado N=120. Evaluar el impacto en F1 con modelos de mayor capacidad (`gemma4:31b-mlx`, `qwen2.5:14b`).
 
-2. **Fine-tuning supervisado (Fase 1):** Aplicar LoRA (Low-Rank Adaptation) sobre `gemma4:31b` con 200+ ejemplos anotados de Kleptotrace/CoNLL-2002 para cerrar la brecha hacia el 85% de F1 objetivo.
+2. **Fine-tuning supervisado (Fase 1):** Aplicar LoRA (Low-Rank Adaptation) sobre `gemma4:31b` con 200+ ejemplos anotados de Kleptotrace/CoNLL-2002 para cerrar la brecha hacia la meta aspiracional de 85% de F1 (§6.1).
 
 3. **Expansión del corpus de evaluación (Fase 2):** Ampliar el corpus de N=120 a N≥200 artículos reales del dominio AML/KYC chileno, incorporando fuentes como la UAF, CMF y bases de datos de OpenSanctions.
 
