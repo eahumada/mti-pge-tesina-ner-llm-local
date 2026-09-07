@@ -438,3 +438,13 @@ factorial 2×2 reciba ese nombre en parte de la literatura de ML.
 
 > **Aplicación:** revisar toda mención antes de publicar; el término preferido del autor prevalece sobre la
 > convención de la literatura.
+
+### L38. Los logs deben llevar fecha/hora y conservarse
+**Regla (decisión del autor, 2026-09-07).** Todo log de corrida debe:
+1. Incluir en el **archivo** la **fecha y hora de inicio** (y zona), en una cabecera o en el nombre
+   (`run_YYYYmmdd_HHMMSS.log`).
+2. Ser **detallado** (modelos, corpus, N, modo, parámetros).
+3. **Conservarse** —idealmente en carpetas fechadas— y **commitearse** en el futuro (no descartarse).
+
+> **Aplicación:** el re-run N=30 ya usa `results/n30_rerun_REMOTO/run_<timestamp>.log` con cabecera fechada.
+> Extender la práctica a todas las corridas.

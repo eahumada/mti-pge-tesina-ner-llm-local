@@ -806,3 +806,26 @@ unificar. El valor del experimento es **documental y ya está capturado**: queda
 > **Regla operativa consolidada.** Un efecto solo se acepta si el signo del ΔF1 es **estable en todas las
 > condiciones**, el **mecanismo** lo corrobora (`recall=0`, latencia) y la muestra lo soporta (con N=15,
 > descartar |ΔF1| < 0.05). Reglas completas en `RECOMENDACIONES-EJECUCIONES-FUTURAS.md`.
+
+### F46. Mojibake en el ground truth del corpus N=120 deprime el recall de TODOS los modelos
+**Severidad: alta (sistémica).** Las entidades gold de `data/benchmark_balanced_120.json` tienen **mojibake**
+(UTF-8 leído como Latin-1): `Emiliano GarcÃ­a-Page`, `JosÃ© Bono`, `AdministraciÃ³n`, etc.
+
+**Evidencia (medida):**
+- **283 de 1406** entidades gold (20 %) contienen mojibake.
+- De ellas, **66 (4,7 % del gold total) son IRRECUPERABLES**: aun con extracción perfecta del modelo, el
+  `fuzz.ratio` contra el gold con mojibake queda **< 85** (umbral) y no casa. Ej.: gold `GarcÃ­a` vs
+  extraído `García` → ratio 77 → **NO MATCH**. Cadenas largas sí sobreviven (el mojibake es menor fracción).
+- **Afecta a TODOS los modelos por igual** → recall subestimado ~4,7 % de piso en todo el estudio N=120.
+- **`kleptotrace.json` (N=15) y `kleptotrace_augmented_30.json` (N=30): 0 mojibake** → P1, P4 y el re-run N=30
+  **no** están afectados. Solo el corpus N=120.
+
+**Causa raíz:** el JSON del corpus almacena los nombres con codificación corrupta (bytes UTF-8 reinterpretados
+como Latin-1 al generarse/guardarse).
+
+**Impacto y decisión.** Corregir el gold (`s.encode('latin-1').decode('utf-8')`) elevaría el recall real de
+todos los modelos N=120. Pero re-puntuar exige **re-inferir**: las extracciones crudas por registro no se
+persistieron (solo `tp/fp/fn`), así que el matching no se puede rehacer sobre datos guardados. Es, por tanto,
+una decisión de **re-ejecución del estudio N=120** con el gold corregido — a criterio del autor. Mientras no
+se corrija, todas las cifras de recall/F1 de N=120 llevan este sesgo a la baja, uniforme entre modelos (no
+altera el ranking relativo, sí los valores absolutos).
