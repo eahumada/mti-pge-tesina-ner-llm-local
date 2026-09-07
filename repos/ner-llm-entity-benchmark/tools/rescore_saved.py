@@ -54,6 +54,37 @@ def rescore_dir(d):
         with open(csvp, 'w', newline='') as f:
             w = csv.DictWriter(f, fieldnames=r[0].keys()); w.writeheader(); w.writerows(r)
         print(f'[ok] {d}: CSV re-puntuado ({changed} filas cambiadas, backup .bak_prescore)')
+    # (2) reescribir detailed_results.json: f1/precision/recall por fila desde metrics.overall (2026-09-07)
+    if isinstance(data, list) or (isinstance(data, dict) and 'results' in data):
+        for x in rows:
+            o = (x.get('metrics') or {}).get('overall') or {}
+            if o:
+                P, R, F = correct(o.get('tp', 0), o.get('fp', 0), o.get('fn', 0))
+                x['precision'], x['recall'], x['f1'] = P, R, F
+        shutil.copy(det, det + '.bak_prescore')
+        json.dump(data, open(det, 'w'), ensure_ascii=False, indent=2)
+        print(f'[ok] {d}: detailed_results.json re-puntuado ({len(rows)} filas)')
+
+    # (3) regenerar summary.json: f1/precision/recall = media por modelo desde el CSV corregido
+    sump = os.path.join(d, 'benchmark_summary.json')
+    if os.path.exists(sump) and os.path.exists(csvp):
+        try:
+            s = json.load(open(sump))
+            agg = collections.defaultdict(lambda: {'p': [], 'r': [], 'f': []})
+            for row in csv.DictReader(open(csvp)):
+                a = agg[row['model']]
+                a['p'].append(float(row['precision'])); a['r'].append(float(row['recall'])); a['f'].append(float(row['f1']))
+            for m, v in s.items():
+                if m in agg and agg[m]['f']:
+                    v['precision'] = statistics.mean(agg[m]['p'])
+                    v['recall'] = statistics.mean(agg[m]['r'])
+                    v['f1'] = statistics.mean(agg[m]['f'])
+            shutil.copy(sump, sump + '.bak_prescore')
+            json.dump(s, open(sump, 'w'), ensure_ascii=False, indent=2)
+            print(f'[ok] {d}: benchmark_summary.json regenerado (f1/p/r desde CSV)')
+        except Exception as e:
+            print(f'[warn] {d}: summary no regenerado: {e}')
+
     # resumen
     by = collections.defaultdict(list)
     for (m, rid), (P, R, F) in idx.items():

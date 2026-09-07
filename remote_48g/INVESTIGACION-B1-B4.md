@@ -19,8 +19,10 @@ El equipo de **48 GB de memoria unificada fue NECESARIO**, no un lujo. Los model
 violan `F1 ≤ (P+R)/2` y **no son recuperables**: provienen de prototipos sobre el sample de 20 registros cuyo
 CSV no se conservó. Búsqueda estricta de columna (`,0.8783` / `,0.7667`) → **cero filas** en cualquier CSV (las
 apariciones sueltas son substrings de latencias).
-- Existe `llama3.1:8b` real N=120 (`benchmark_n120_REMOTO`): **baseline 0.4959, kb_rag 0.5491**.
-- ⚠️ El informe cita 0.4876/0.5075 — **no coinciden** con el summary primario (0.4959/0.5491). Reconciliar cuál es la fuente oficial antes de reemplazar.
+- Existe `llama3.1:8b` real N=120 (`benchmark_n120_REMOTO`, CSV re-puntuado): **baseline 0.4876, kb_rag 0.5075**.
+- ✅ **Corregido (2026-09-07):** no hay reconciliación pendiente. El `benchmark_summary.json` que daba 0.4959/0.5491
+  era **pre-fix de scoring** (obsoleto); el valor correcto es **0.4876 / 0.5075** (CSV re-puntuado). Regla: hoy
+  `benchmark_results.csv` es la única fuente válida de P/R/F1 (ver `results/AVISO-SUMMARIES-OBSOLETOS.md`).
 - **No** existe corrida N=120 para `llama3.2:latest`.
 
 **Recomendación:** marcar ambas como NO VERIFICABLES; reemplazar `llama3.1:8b` por N=120 (tras reconciliar);
