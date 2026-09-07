@@ -199,6 +199,21 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.11 🟡 PENDIENTE — Quinta tanda: capítulos 2 y 3 consolidados + URL del repositorio
+- **Capítulo 2: de seis secciones a cuatro.** Se funden el planteamiento del problema con la revisión de
+  familias de técnicas (nueva §2.1) y las estrategias de recuperación con las alternativas de ejecución local
+  (nueva §2.3), con transición añadida entre ambas.
+- **Capítulo 3: de cuatro secciones a tres.** Arquitectura y orquestación se funden en §3.2.
+- ⚠️ **Referencias cruzadas renumeradas:** §2.2→§2.1 · §2.5→§2.3 · §3.3→§3.2 · §3.4→§3.3. Verificado que no
+  queda ninguna rota. **Al propagar, comprobar que las llamadas del `.docx` siguen el mismo mapa.**
+- **Anexo A:** añadida la **URL del repositorio** —`https://github.com/eahumada/mti-pge-tesina-ner-llm-local`—
+  con la nota de que cada corrida conserva su `run_config.json` y su `benchmark_results.csv`, de modo que las
+  cifras del informe se rehacen sin repetir la inferencia.
+- **Registro:** suavizadas doce construcciones rígidas (alternando «de modo que» con «así que», «resulta
+  insuficiente» → «no basta»…). Se alternan las formas cultas, no se eliminan.
+- **Cuerpo:** 10 937 palabras · 27 `###` · 3 `####` · 9 tablas · ≈**19,9 páginas**.
+- **Al propagar: medir y congelar `_v4`** (junto con la cuarta tanda de §2.10).
+
 ### 2.10 🟡 PENDIENTE — Cuarta tanda: prosa continua y consolidación
 - **Decisión del autor (18:45), tras leer el `.docx` de la `_v3`:** el texto debe leerse **como escrito de
   corrido** — menos encabezados, menos enumeraciones, registro algo menos formal y más breve.
@@ -865,3 +880,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 18:00 | Claude Code (equipo principal) | 🗑️ Eliminada por decisión del autor la tarea de acceso SSH a `eahumada@stream` (§3.1): retirados clave, `config` y script instalador; ninguno estaba versionado. ⚠️ **El script contenía una contraseña en texto plano** — credencial a considerar expuesta y a rotar |
 | 2026-09-07 21:10 | Claude Desktop | Tandas 2 y 3 propagadas a los tres `.docx`; `&nbsp;` corregido por espacio duro real; **cuerpo medido: 20 páginas de 25**; versión `_v3` congelada |
 | 2026-09-07 18:45 | Claude Code (equipo principal) | Cuarta tanda: prosa continua y consolidación. §3.1, §4.2, §5.4 y el ANOVA de §5.3.5 sin listas; **§4.3 consolidada de 4 subsecciones a 0** y §4.1.1/§4.1.2 fundidas, con ejemplos y *prompt* movidos al Anexo B; §4.5 integrada en §4.4. Cuerpo 11528→10958 palabras, `####` 7→3, tablas 10→9. Corregidas dos cifras obsoletas (Tukey 0,014→0,007; ANOVA N=30 0,141→0,2235) y §4.2, que omitía dos modelos de la Tabla 2. Encargo en §2.10 |
+| 2026-09-07 19:05 | Claude Code (equipo principal) | Quinta tanda: **capítulo 2 de 6 a 4 secciones** y **capítulo 3 de 4 a 3**, con referencias renumeradas (§2.2→§2.1, §2.5→§2.3, §3.3→§3.2, §3.4→§3.3) y 0 rotas. Añadida la **URL del repositorio** al Anexo A con la nota de reproducibilidad. Suavizadas 12 construcciones formales. Cuerpo 10 937 palabras, ≈19,9 páginas. Encargo en §2.11 |

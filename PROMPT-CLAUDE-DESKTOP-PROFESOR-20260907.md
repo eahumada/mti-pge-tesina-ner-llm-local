@@ -125,3 +125,25 @@ figuran en la Tabla 2.
 
 Estimación: unas 19,9 páginas de texto, frente a las 20 medidas en la `_v3`. Al propagar, **vuelve a medir** y
 congela una `_v4`.
+
+## Quinta tanda (2026-09-07 19:05): capítulos 2 y 3 consolidados y URL del repositorio
+
+Se aplica al marco conceptual y a la propuesta el mismo tratamiento de prosa continua que ya recibió el resto
+del documento. El **capítulo 2 pasa de seis secciones a cuatro**: se funden el planteamiento del problema con
+la revisión de familias de técnicas, y las estrategias de recuperación con las alternativas de ejecución
+local, añadiendo una transición entre ambas para que el salto no resulte brusco. El **capítulo 3 pasa de
+cuatro secciones a tres**, uniendo arquitectura y orquestación.
+
+⚠️ **Esto renumera referencias cruzadas**: §2.2→§2.1, §2.5→§2.3, §3.3→§3.2 y §3.4→§3.3. En el `.md` están ya
+corregidas y verificadas; al reconstruir, comprueba que las llamadas del `.docx` siguen el mismo mapa.
+
+El **Anexo A incorpora la URL del repositorio público**, `https://github.com/eahumada/mti-pge-tesina-ner-llm-local`,
+junto con la nota de que cada corrida conserva su `run_config.json` y su `benchmark_results.csv`. Es lo que
+sostiene la afirmación de replicabilidad que el profesor pedía, así que conviene que quede visible.
+
+Por último se suavizaron doce construcciones especialmente rígidas —alternando «de modo que» con «así que»,
+o sustituyendo «resulta insuficiente» por «no basta»—. La intención es que el texto suene a estudiante sin
+perder corrección académica: las formas cultas se alternan, no se eliminan.
+
+El cuerpo queda en 10 937 palabras y unas 19,9 páginas estimadas. Al propagar esta tanda junto con la cuarta,
+**mide de nuevo y congela la `_v4`**.
