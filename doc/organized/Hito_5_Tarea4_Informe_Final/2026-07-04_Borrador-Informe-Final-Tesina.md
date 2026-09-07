@@ -569,35 +569,26 @@ El prompt de sistema en español (few-shot) incluye: (1) instrucciones de rol (a
 
 **Ejemplo few-shot 1 (caso persona sancionada):**
 ```
-Texto: "El empresario ruso Roman Abramovich fue incluido en las listas de sanciones
-        de la Unión Europea por sus vínculos con el régimen del Kremlin a través de
-        su empresa Evraz PLC."
+Texto: "El empresario ruso Roman Abramovich fue incluido en las listas de sanciones de la Unión Europea por sus vínculos con el régimen del Kremlin a través de su empresa Evraz PLC."
 Respuesta: {"Persons": ["Roman Abramovich"], "Organizations": ["Evraz PLC"]}
 ```
 
 **Ejemplo few-shot 2 (caso organización sancionada):**
 ```
-Texto: "El Departamento del Tesoro de los Estados Unidos sancionó al banco Rossiya,
-        señalándolo como banco personal de altos funcionarios del gobierno ruso."
+Texto: "El Departamento del Tesoro de los Estados Unidos sancionó al banco Rossiya, señalándolo como banco personal de altos funcionarios del gobierno ruso."
 Respuesta: {"Persons": [], "Organizations": ["Banco Rossiya", "Departamento del Tesoro"]}
 ```
 
 **Ejemplo few-shot 3 (caso PEP complejo):**
 ```
-Texto: "Isabel dos Santos, hija del expresidente angoleño José Eduardo dos Santos,
-        figura en investigaciones de la empresa estatal Sonangol por presunto desvío
-        de fondos."
-Respuesta: {"Persons": ["Isabel dos Santos", "José Eduardo dos Santos"],
-             "Organizations": ["Sonangol"]}
+Texto: "Isabel dos Santos, hija del expresidente angoleño José Eduardo dos Santos, figura en investigaciones de la empresa estatal Sonangol por presunto desvío de fondos."
+Respuesta: {"Persons": ["Isabel dos Santos", "José Eduardo dos Santos"], "Organizations": ["Sonangol"]}
 ```
 
 **Prompt de generación del corpus sintético N=30** (§4.1.1), ejecutado sobre `gemma4:31b`:
 
 ```
-Eres un periodista de investigación financiera. Redacta un párrafo corto (2-4 oraciones) en español
-sobre la entidad "{entidad_PER}" vinculada a "{entidad_ORG}" en el contexto de [temática aleatoria].
-El texto debe ser fáctico, neutro y similiar en estilo a noticias de compliance financiero.
-Debe mencionar exactamente estas entidades y no otras personas u organizaciones adicionales.
+Eres un periodista de investigación financiera. Redacta un párrafo corto (2-4 oraciones) en español sobre la entidad "{entidad_PER}" vinculada a "{entidad_ORG}" en el contexto de [temática aleatoria]. El texto debe ser fáctico, neutro y similiar en estilo a noticias de compliance financiero. Debe mencionar exactamente estas entidades y no otras personas u organizaciones adicionales.
 ```
 
 ### Anexo C — Configuración del Entorno de Pruebas

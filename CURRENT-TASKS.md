@@ -244,6 +244,32 @@ Para **cada tarea** que ejecutes:
   (extensión, contenido, coherencia con la fuente y entregables), tomada de la plantilla, de las instrucciones
   institucionales y de los cuatro reparos del profesor. **Si algo no cuadra, avisar en lugar de recortar.**
 
+### 2.13 ✅ COMPLETADA — Anexo B, espacios en blanco y ajuste a 25 páginas exactas
+- **Cerrada:** 2026-09-07 22:45 por Claude Desktop. Petición del autor: corregir los prompts del Anexo B
+  (sin saltos de línea, cuerpo menor) y **reducir espacios en blanco en los anexos hasta las 25 páginas
+  exactas, sin sacrificar contenido**.
+- **Anexo B, corregido primero en el `.md`** (respaldo `.bak_pre_anexoB_20260907`): los tres ejemplos
+  *few-shot* y el prompt de generación del corpus N=30 tenían saltos de línea heredados del formato de ancho
+  fijo; ahora cada campo (`Texto:` / `Respuesta:`) ocupa una sola línea y el prompt de generación es un solo
+  párrafo. **Ni una palabra suprimida.**
+- **Cuerpo de letra:** el estilo `programcode` pasa a **7 pt** con interlineado exacto de 170, en los tres
+  documentos. Afecta a todos los bloques de código, no solo al Anexo B, y gana coherencia.
+- **Espacios en blanco:** compactado el espaciado de encabezados (`Heading 1` 480/240 → 300/160 · `Heading 2`
+  340/200 → 220/120 · `Heading 3` → 200/100) y de las leyendas de tabla (240/120 → 140/80). Es un cambio de
+  **estilo**, no de contenido: el `.md` no cambia y la compactación sobrevive a las reconstrucciones.
+- **📏 RESULTADO: 25 páginas exactas** — cuerpo **17**, anexos **8**. El objetivo se alcanzó **solo con la
+  compactación tipográfica**, de modo que **no hubo que consolidar ni recortar párrafos de los anexos**: su
+  texto queda íntegro. Si se quisiera más margen, la consolidación de párrafos sigue disponible como palanca.
+- **Corregido de paso:** el anidamiento de énfasis (`**… *cursiva* …**`) dejaba asteriscos sueltos en el
+  encabezado de los ejemplos del Anexo B; arreglado en el renderizador, no en el texto.
+- **Verificación completa superada:** cuerpo 17/25 · resumen 191/200 · nueve capítulos · anexos A–H con la
+  **G íntegra** · 19 tablas correlativas con leyenda · sin páginas en blanco · sin saltos de capítulo · sin
+  arte ASCII ni literales HTML · sin referencias rotas · contenido de los anexos verificado presente.
+- **`_v5` congelada como versión de entrega** (SHA-256 `41382e69d6d2`), sustituye a la `_v4`.
+- **Bitácora:** entrada aditiva «2026-09-07 22:45 — Anexo B, espacios en blanco y ajuste a 25 páginas
+  exactas · versión de entrega (_v5)» añadida a `research/rag/WORKLOG.md`, junto a las de §2.6, §2.8,
+  §2.9 y §2.12. Fase cerrada por completo.
+
 ### 2.11 🟡 PENDIENTE — Quinta tanda: capítulos 2 y 3 consolidados + URL del repositorio
 > 📎 *Agrupada en §2.12; se conserva como registro.*
 - **Capítulo 2: de seis secciones a cuatro.** Se funden el planteamiento del problema con la revisión de
@@ -933,3 +959,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 20:05 | Claude Code (equipo principal) | Encargo a Desktop completado con la **lista de verificación para cerrar la versión definitiva** (extensión, contenido, coherencia y entregables) y declarado que **la `_v4` es la versión de entrega** si la verificación sale limpia. Cerradas tres casillas del TODO ya cumplidas: salvedades de datos declaradas, cierre de formato hasta `_v3` y re-ejecución de `gpt-oss` |
 | 2026-09-07 20:20 | Claude Code (equipo principal) | Decisión del autor: **el número de versión de la entrega es indiferente**. Anotado en el encargo y en `VERSIONES.md` para que la numeración no bloquee la propagación. Verificado que el `.docx` de la raíz sigue siendo idéntico a la `_v3` (SHA `b172947f58c1`) y **no contiene aún las tandas cuarta y quinta** |
 | 2026-09-07 22:25 | Claude Desktop | §2.12 cerrada: tandas 4 y 5 propagadas, verificación final superada, **cuerpo 18 pp. de 25**, `_v4` congelada como **versión de entrega** (SHA `2bc915c7a511`) |
+| 2026-09-07 22:45 | Claude Desktop | §2.13: Anexo B corregido (prompts sin saltos, 7 pt), espacios en blanco reducidos, **25 páginas exactas** sin perder contenido, `_v5` congelada como entrega |

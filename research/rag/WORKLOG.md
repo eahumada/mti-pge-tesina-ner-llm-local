@@ -541,3 +541,32 @@ literales HTML, citas IEEE con sus veinte entradas y **ninguna referencia cruzad
 verificadas contra 39 secciones; el `§3.3` que persiste apunta al actual «Módulo de evaluación», no al antiguo—.
 
 **`_v4` congelada como versión de entrega**, SHA-256 `2bc915c7a511`, registrada en `VERSIONES.md`.
+
+### 2026-09-07 22:45 — Anexo B, espacios en blanco y ajuste a 25 páginas exactas · versión de entrega (_v5)
+
+**Anexo B corregido primero en el `.md`** (respaldo `.bak_pre_anexoB_20260907`). Los tres ejemplos *few-shot*
+y el prompt de generación del corpus N=30 arrastraban saltos de línea duros heredados del formato de ancho
+fijo, que en Word partían las frases a media palabra. Cada campo `Texto:` / `Respuesta:` queda en una sola
+línea y el prompt de generación en un solo párrafo, **sin suprimir ni una palabra**. En el `.docx`, los
+bloques `programcode` / `Source Code` bajan a **7 pt** (`w:sz`/`w:szCs` = 14) con interlineado exacto de 170,
+de modo que las líneas largas caben sin quebrarse.
+
+**Espacios en blanco reducidos a nivel de estilo**, no de contenido: `Heading 1` 480/240 → 300/160,
+`Heading 2` 340/200 → 220/120, `Heading 3` → 200/100 y `table caption` 240/120 → 140/80.
+
+**Resultado medido: 25 páginas exactas —cuerpo 17, anexos 8.** El objetivo se alcanzó solo con la
+compactación tipográfica, de modo que **no hubo que consolidar ni recortar párrafos de los anexos: su texto
+queda íntegro**, tal como pedía el encargo («sin sacrificar nada de contenido»).
+
+**Corrección adicional.** El anidamiento de énfasis del renderizador (`**Ejemplos *few-shot* de…**`) dejaba
+asteriscos sueltos en el título del Anexo B; se afinó la expresión regular *inline* a coincidencia no
+codiciosa y se limpian los marcadores interiores.
+
+**Verificación completa superada:** 25 páginas exactas, cuerpo 17/25, sin páginas en blanco, sin saltos de
+página al empezar capítulo, resumen de 191/200 palabras, nueve capítulos, anexos A–H con la **G íntegra**, 19
+tablas con leyenda y numeración correlativa, sin arte ASCII ni literales HTML, sin asteriscos sueltos y con
+el contenido de los anexos verificado por muestreo. Propagado a los tres `.docx`.
+
+**`_v5` congelada como versión de entrega** —sustituye a la `_v4`—, SHA-256
+`41382e69d6d2405d54c122e81f4867446376836f8ae678340e8dd1849c2acd1d`, en
+`doc/versions/informe_final/Informe_Final_Tesina_NER_v5.docx` y registrada en `VERSIONES.md`.
