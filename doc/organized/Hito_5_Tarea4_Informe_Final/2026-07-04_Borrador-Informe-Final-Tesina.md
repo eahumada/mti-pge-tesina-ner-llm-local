@@ -16,7 +16,7 @@ Las instituciones financieras sujetas a regulaciones AML/KYC deben vigilar grand
 
 Financial institutions operating under AML and KYC regulatory frameworks face the challenge of monitoring large volumes of unstructured news for risk entities (persons, organizations). Manual execution of this process is costly, slow, and unscalable, while cloud API usage exposes sensitive financial data to third parties, violating data sovereignty. This work designs, implements, and empirically evaluates a sovereign Named Entity Recognition (NER) system based on open-source Large Language Models (Gemma, Llama, DeepSeek families) executed 100% locally via Ollama on Apple Silicon M4 hardware.
 
-The system incorporates a multithreading pub/sub processing architecture with an adaptive concurrency controller (AIMD) and a Factory/Facade layer unifying four model providers. Experimental validation was performed on the real financial sanctions dataset Kleptotrace/CoNLL-2002 (N=15 expert-annotated articles) and a statistically significant corpus of 30 short articles (N=30). The prompt-variant analysis demonstrates that combining Spanish-language localization with few-shot examples yields a +11.1 F1-point improvement over the English zero-shot baseline, and the best evaluated model (gemma4:31b) achieves an F1-Score of 79.03% with 0.0% hallucination rate on the N=30 corpus. The system reduces manual review operational costs by 60–80% while guaranteeing total data privacy.
+The system incorporates a multithreading pub/sub processing architecture with an adaptive concurrency controller (AIMD) and a Factory/Facade layer unifying four model providers. Experimental validation was performed on the real financial sanctions dataset Kleptotrace/CoNLL-2002 (N=15 expert-annotated articles) and a statistically significant corpus of 30 short articles (N=30). The prompt-variant analysis demonstrates that combining Spanish-language localization with few-shot examples yields a +11.1 F1-point improvement over the English zero-shot baseline, and the best evaluated models reach an F1-Score of 80.57% on the domain corpus (N=30) with no failed extractions. The system reduces manual review operational costs by 60–80% while guaranteeing total data privacy.
 
 **Keywords:** Named Entity Recognition (NER), Large Language Models (LLM), Regulatory Compliance (AML/KYC), Data Sovereignty, Prompt Engineering.
 
@@ -270,7 +270,7 @@ El uso de datos sintéticos generados por LLM para pruebas de hipótesis es vál
 
 **c) Validez de constructo del corpus sintético:** La validez de los datos sintéticos como proxy del dominio real descansa en tres pilares: (1) la distribución temática del corpus sintético replica la del corpus real (Kleptotrace/CoNLL-2002); (2) las entidades provienen de una fuente oficial de sanciones reales (OpenSanctions); y (3) la capacidad del LLM para generar texto coherente con el dominio financiero ha sido validada empíricamente (el mismo modelo que genera los artículos es el que se evalúa, creando una condición de evaluación conservadora). Este enfoque es metodológicamente análogo al uso de paráfrasis automáticas para aumento de corpus en NLP, práctica ampliamente aceptada en la literatura [8], [5].
 
-**d) Consistencia entre corpus:** Los F1-Scores observados en el corpus N=30 (gemma4:31b: 79.03%) son consistentes con la tendencia observada en el corpus real N=15 (gemma4:31b: 69.12%), sin saltos discontinuos que indicarían artefactos del aumento. La diferencia es atribuible a la menor complejidad promedio de los artículos breves del corpus sintético, lo que es esperado y documentado.
+**d) Consistencia entre corpus:** Los F1-Scores observados en el corpus N=30 (gemma4:31b: 78.55%) son consistentes con la tendencia observada en el corpus real N=15 (gemma4:31b: 69.12%), sin saltos discontinuos que indicarían artefactos del aumento. La diferencia es atribuible a la menor complejidad promedio de los artículos breves del corpus sintético, lo que es esperado y documentado.
 
 #### 4.1.3 Extensión a Corpus Real N=120 (Dataset Conmutable)
 
@@ -430,33 +430,20 @@ La Tabla 2 presenta los resultados consolidados del benchmark completo agrupados
 
 > **Hallazgo 4:** ninguno de los dos factores basta por separado —la localización al español aporta +4.38 pp y los ejemplos *few-shot* en inglés restan 0.73 pp—, pero **su combinación alcanza +11.12 pp** sobre el baseline ZS-EN, con el mejor Recall del conjunto (86.87%). Los ejemplos solo resultan productivos redactados en el idioma del corpus.
 
-### 5.3 Validación Estadística sobre Corpus N=30
+### 5.3 Validación Estadística sobre el Corpus del Dominio (N=30)
 
-#### 5.3.1 Resultados del Benchmark Serial
+El primer experimento evalúa los dos modelos de mayor capacidad del estudio sobre el corpus sintético del dominio AML/KYC, compuesto por treinta artículos breves con anotación experta. Su propósito no es comparar el catálogo completo de modelos —eso corresponde al §5.1— sino establecer el techo de desempeño alcanzable en el dominio propio del problema y contrastarlo con corpus periodístico general.
 
-| Modelo | F1 | Precisión | Recall | Hallucination | Latencia (s) |
+| Modelo | F1 | Precisión | Recall | IC 95 % del F1 | Fallos |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| **gemma4:31b** | **79.03%** | 73.34% | 89.11% | **0.00%** | 160.23 |
-| gemma4:31b-mlx | 77.47% | 73.01% | 87.17% | 0.00% | 163.76 |
+| gemma4:31b-mlx | **80.57 %** | 74.17 % | **90.72 %** | [74.22 %, 86.92 %] | 0 |
+| gemma4:31b | 78.55 % | 73.34 % | 88.28 % | [72.59 %, 84.52 %] | 0 |
 
-#### 5.3.2 ANOVA de Una Vía (α = 0.05)
+Ambos modelos superan con holgura el umbral del 70 % fijado en la hipótesis, con exhaustividad cercana al 90 % y sin ninguna extracción fallida en los sesenta registros procesados. La variante MLX aventaja en dos puntos a la compilación estándar, diferencia que conviene no sobreinterpretar: el **ANOVA de una vía** arroja **F = 0,2235 con p = 0,6382**, de modo que no se rechaza la hipótesis nula y la diferencia entre ambos debe atribuirse a la variabilidad entre artículos y no a una superioridad real de una compilación sobre la otra. Los intervalos de confianza al 95 % se solapan ampliamente, lo que refuerza la misma lectura.
 
-- **F-Statistic:** 0.141
-- **p-Value:** 0.708 (p ≥ 0.05 → No se rechaza H₀)
-- **Conclusión:** No existe diferencia estadísticamente significativa en los F1-Scores entre los dos modelos evaluados sobre N=30.
+El **análisis de sensibilidad** completa la validación. Aplicando el criterio de longitud atípica —artículos por encima de 702 caracteres— no se identifica ningún registro fuera de rango, y el F1 filtrado coincide exactamente con el original en ambos modelos. El resultado no depende, por tanto, de unos pocos textos extremos.
 
-#### 5.3.3 Intervalos de Confianza al 95%
-
-| Modelo | N | F1 Media | IC 95% Inferior | IC 95% Superior | Desv. Est. |
-|:---|:---:|:---:|:---:|:---:|:---:|
-| gemma4:31b | 30 | 0.7903 | 0.7291 | 0.8515 | 0.1640 |
-| gemma4:31b-mlx | 30 | 0.7747 | 0.7162 | 0.8332 | 0.1566 |
-
-#### 5.3.4 Análisis de Sensibilidad (Outliers)
-
-- **Criterio de outlier:** Artículos con longitud > 702 caracteres.
-- **Registros outlier identificados:** 0
-- **F1 estable (no filtrado):** gemma4:31b = 0.7903 | gemma4:31b-mlx = 0.7747
+Conviene señalar una particularidad de procedencia. Una primera ejecución de este experimento, realizada en julio de 2026, reportó para `gemma4:31b` un F1 de 79,03 %. Aquella medición empleaba la convención de puntuación anterior a la corrección descrita en §4.4 y sus datos por registro se perdieron por sobrescritura, de modo que no podía recalcularse. La ejecución aquí reportada la reemplaza y, al mismo tiempo, la valida: **la precisión coincide hasta el cuarto decimal (73,34 %) y el F1 difiere en menos de medio punto**, lo que confirma que el defecto de puntuación apenas afectaba a este experimento —consecuencia esperable de una exhaustividad tan alta, que deja pocas extracciones vacías sobre las que el error pudiera actuar—.
 
 #### 5.3.5 Validación Estadística sobre Corpus Real N=120 (estudio completo)
 
@@ -500,7 +487,7 @@ Sobre el corpus real N=120 descrito en §4.1.3 se ejecutó el mismo protocolo (A
 
 **Interpretación.** El beneficio del KB RAG es **inversamente proporcional a la capacidad del modelo**: aporta de forma estadísticamente significativa en los dos modelos más débiles del estudio, es positivo pero no concluyente en la franja intermedia, y resulta nulo o adverso en los modelos de mayor capacidad (−0.53 pp y −0.18 pp en los dos de 31B), que ya siguen correctamente las instrucciones sin contexto adicional. El caso de `gpt-oss:20b` (−9.65 pp) es distinto y se discute en §6.
 
-**Lectura conjunta con el corpus N=30 (§5.3.1–5.3.4):** el mejor F1 local sobre N=120 (`gemma4:31b-mlx`: 59.25%) es menor que el de N=30 (`gemma4:31b`: 79.03%), lo esperable dado que los artículos reales de CoNLL-2002 ES son más largos y heterogéneos que los breves (~200 caracteres) del corpus sintético N=30, diseñado para el dominio AML/KYC. Se conservan ambos: N=30 como validación de mínima potencia (TLC, N≥30) sobre el dominio de sanciones del proyecto, y N=120 como validación sobre corpus real, con mayor potencia estadística y menor especificidad de dominio.
+**Lectura conjunta con el corpus N=30 (§5.3):** el mejor F1 local sobre N=120 (`gemma4:31b-mlx`: 59.25%) es menor que el de N=30 (`gemma4:31b`: 79.03%), lo esperable dado que los artículos reales de CoNLL-2002 ES son más largos y heterogéneos que los breves (~200 caracteres) del corpus sintético N=30, diseñado para el dominio AML/KYC. Se conservan ambos: N=30 como validación de mínima potencia (TLC, N≥30) sobre el dominio de sanciones del proyecto, y N=120 como validación sobre corpus real, con mayor potencia estadística y menor especificidad de dominio.
 
 ### 5.4 Taxonomía de Errores NER
 
@@ -683,7 +670,7 @@ La interpretación de estos resultados —por qué el contenido recuperado impor
 
 ### 6.1 Alcance de la hipótesis y factores que explican el desempeño
 
-La hipótesis fijaba un F1 igual o superior al 70 % como umbral de viabilidad. El umbral **se alcanza sobre el corpus del dominio** —`gemma4:31b` obtiene 79,03 % con intervalo de confianza al 95 % de [72,91 %, 85,15 %] y ninguna alucinación sobre N=30— y **no se alcanza sobre el corpus periodístico general**, cuyo mejor resultado local es 59,25 % (`gemma4:31b-mlx`) sobre N=120. La hipótesis queda por tanto **confirmada para el dominio específico de sanciones financieras y no confirmada para corpus periodísticos heterogéneos**. La brecha de unos veinte puntos no obedece a un fallo del sistema sino a la naturaleza del material: los artículos de CoNLL-2002 son más largos, mencionan más entidades por texto y mezclan dominios, mientras que el corpus AML está compuesto por textos breves y temáticamente homogéneos. Una meta interna más ambiciosa —85 % de F1, nunca formalizada como hipótesis— queda a 5,97 puntos sobre N=30, distancia abordable mediante ajuste fino supervisado, modelos de mayor capacidad o combinación de varios modelos locales.
+La hipótesis fijaba un F1 igual o superior al 70 % como umbral de viabilidad. El umbral **se alcanza sobre el corpus del dominio** —`gemma4:31b-mlx` obtiene 80,57 % con intervalo de confianza al 95 % de [74,22 %, 86,92 %] y ninguna extracción fallida sobre N=30— y **no se alcanza sobre el corpus periodístico general**, cuyo mejor resultado local es 59,25 % (`gemma4:31b-mlx`) sobre N=120. La hipótesis queda por tanto **confirmada para el dominio específico de sanciones financieras y no confirmada para corpus periodísticos heterogéneos**. La brecha de unos veinte puntos no obedece a un fallo del sistema sino a la naturaleza del material: los artículos de CoNLL-2002 son más largos, mencionan más entidades por texto y mezclan dominios, mientras que el corpus AML está compuesto por textos breves y temáticamente homogéneos. Una meta interna más ambiciosa —85 % de F1, nunca formalizada como hipótesis— queda a 4,43 puntos sobre N=30, distancia abordable mediante ajuste fino supervisado, modelos de mayor capacidad o combinación de varios modelos locales.
 
 Tres factores explican la distribución de resultados observada. El primero es **el idioma del prompt y de sus ejemplos**. Redactar ambos en español aporta 11,12 puntos de F1 sin cambiar de modelo, mejora que ninguno de los dos factores consigue por separado: traducir solo el prompt aporta 4,38 puntos y añadir ejemplos en inglés resta 0,73. La interacción respalda la interpretación de que el modelo procesa con mayor fluidez la estructura sintáctica de una noticia en español cuando la instrucción y las demostraciones comparten ese idioma, en línea con lo observado para codificadores en español [7] y con el sobrecoste de tokenización documentado para lenguas distintas del inglés [11].
 
@@ -706,7 +693,7 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 ### 7.1 Conclusiones
 
-1. **Viabilidad demostrada:** Es técnicamente viable implementar un sistema NER soberano para cumplimiento AML/KYC con modelos de lenguaje de código abierto ejecutados localmente sobre hardware Apple Silicon M4, alcanzando F1=79.03% con 0.0% de alucinaciones sobre el corpus AML N=30 (59.25% sobre el corpus real N=120).
+1. **Viabilidad demostrada:** Es técnicamente viable implementar un sistema NER soberano para cumplimiento AML/KYC con modelos de lenguaje de código abierto ejecutados localmente sobre hardware Apple Silicon M4, alcanzando F1=80.57% sin extracciones fallidas sobre el corpus AML N=30 (59.25% sobre el corpus real N=120).
 
 2. **Localización lingüística como factor crítico:** el idioma del prompt y los ejemplos *few-shot* **interactúan**: por separado aportan +4.38 pp y −0.73 pp de F1 respectivamente, pero combinados alcanzan **+11.12 pp**. Los ejemplos solo resultan productivos redactados en el idioma del corpus, lo que tiene implicaciones directas para despliegues en mercados hispanohablantes.
 
