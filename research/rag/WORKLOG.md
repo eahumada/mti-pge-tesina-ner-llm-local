@@ -508,3 +508,21 @@ ninguno de los tres documentos. Los bloques de código que permanecen son códig
 `LLMProvider`, los prompts de generación, los tres ejemplos *few-shot* y las invocaciones CLI.
 
 Cuerpo re-medido: **23 páginas de 25**, sin páginas en blanco.
+
+### 2026-09-07 21:10 — Segunda y tercera tanda propagadas · versión v3
+
+**Segunda tanda (datos).** Cerrada la re-ejecución de `gpt-oss:20b`: su fila de §5.3.5 pasa a 52,39 / 55,67 /
+**+3,28 pp** y sube al quinto puesto; el ANOVA conjunto queda en **F=38,2222, p=3,4453e-160**; el Tukey de
+`llama3.2` afina a p=0,007. El Anexo H se corrige en consecuencia: el delta de mojibake de `gpt-oss` pasa a
+**−0,0336** y el rango entre modelos a **9,4 puntos**.
+
+**Tercera tanda (condensación).** Anexos concentrados en resultados finales —3 064 palabras y 10 tablas— y
+§5.6 reescrita íntegramente en prosa, sin tablas. El cuerpo queda con **10 tablas**, las diez declaradas
+intocables. Total 20 tablas con numeración correlativa y llamadas del texto realineadas.
+
+**Corrección de forma.** El `&nbsp;` con el que se indentaba el árbol del Anexo A se veía literal en Word. Se
+sustituyó en el `.md` por **espacio duro real (U+00A0)** y se corrigió el renderizador, que lo descartaba al
+normalizar las celdas con `strip()`. La jerarquía vuelve a verse indentada y no queda ningún literal HTML.
+
+**Medición.** Cuerpo de **20 páginas de 25**, 28 totales, anexos desde la 21, cero páginas en blanco, cero
+arte ASCII. **Versión `_v3` congelada** (SHA-256 `b172947f58c1`) y registrada en `VERSIONES.md`.

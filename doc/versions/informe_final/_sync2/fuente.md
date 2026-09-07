@@ -440,13 +440,13 @@ Sobre el corpus real N=120 descrito en §4.1.3 se ejecutó el mismo protocolo (A
 | gemma4:31b-mlx | **59.25%** | 59.07% | −0.18 pp | no |
 | gemma4:12b-mlx | 56.18% | 58.46% | +2.28 pp | no |
 | gemma4:latest | 55.91% | 54.74% | −1.17 pp | no |
+| gpt-oss:20b | 52.39% | 55.67% | +3.28 pp | no |
 | qwen2.5:14b | 50.22% | 54.84% | +4.62 pp | no |
 | llama3.1:8b | 48.76% | 50.75% | +1.99 pp | no |
 | qwen3:8b | 48.21% | 51.46% | +3.25 pp | no |
 | gemma:latest | 44.00% | 51.36% | +7.36 pp | no |
-| gpt-oss:20b | 43.84% | 34.19% | −9.65 pp | no |
 | mistral-nemo:latest | 43.38% | 45.76% | +2.37 pp | no |
-| llama3.2:latest | 36.11% | 46.93% | **+10.82 pp** | **sí** (p=0.014) |
+| llama3.2:latest | 36.11% | 46.93% | **+10.82 pp** | **sí** (p=0.007) |
 | deepseek-r1:1.5b | 24.83% | 23.94% | −0.90 pp | no |
 | nemotron-mini:4b | 22.59% | 37.12% | **+14.52 pp** | **sí** (p<0.001) |
 
@@ -458,7 +458,7 @@ Sobre el corpus real N=120 descrito en §4.1.3 se ejecutó el mismo protocolo (A
 > un modelo que transcribe literalmente coincide con la referencia, mientras que uno que normaliza la
 > ortografía al español correcto **deja de coincidir**. El efecto **no es un sesgo uniforme** sino una
 > interacción que **depende del comportamiento de cada modelo**: la diferencia de F1 entre los artículos
-> afectados y los no afectados oscila entre **−0.070 y +0.091** según el modelo. Los corpus N=15 y N=30 están
+> afectados y los no afectados oscila entre **−0.070 y +0.025** según el modelo. Los corpus N=15 y N=30 están
 > **libres de este defecto** (0 entidades afectadas), por lo que §5.1, §5.2 y §5.3.1–5.3.4 no se ven
 > comprometidos. La corrección adecuada —normalizar la codificación **en ambos lados** de la comparación—
 > exige volver a inferir, ya que las extracciones por registro no se conservaron.
@@ -466,11 +466,11 @@ Sobre el corpus real N=120 descrito en §4.1.3 se ejecutó el mismo protocolo (A
 > **Dos salvedades de procedencia.** (i) La latencia de `gemma4:31b-cloud` **no mide inferencia**: quedó cuantizada por el `--request-delay` introducido para sortear el límite de peticiones del servicio (114 de sus 240 filas registran exactamente 1,02 s). Su F1 es válido; su latencia y sus tokens/s no deben usarse en comparaciones de eficiencia. (ii) Siete filas de `nemotron-mini:4b` tienen `latencia = 0` y `0 tokens/s` porque se re-extrajeron fuera del arnés de lotes tras un fallo de contexto; sus valores de precisión, *recall* y F1 son reales, pero su telemetría no existe.
 
 **ANOVA de una vía (α = 0.05), N=120 por grupo:**
-- **F-Statistic:** 36.3666  ·  **p-Value:** 1.2236 × 10⁻¹⁵² (p < 0.05 → se rechaza H₀)
+- **F-Statistic:** 38.2222  ·  **p-Value:** 3.4453 × 10⁻¹⁶⁰ (p < 0.05 → se rechaza H₀)
 - **Conclusión:** la diferencia de desempeño entre modelos/modos es estadísticamente significativa, con una potencia muy superior a la del corpus N=30 (F=0.141, no significativo).
-- **Tukey HSD (post-hoc):** 172 de 325 comparaciones por pares resultan significativas. Al contrastar *baseline* contra *KB RAG* **dentro de cada modelo**, la mejora solo alcanza significancia en `nemotron-mini:4b` (+14.52 pp, p<0.001) y `llama3.2:latest` (+10.82 pp, p=0.014); en los once modelos restantes la diferencia no supera la corrección por comparaciones múltiples.
+- **Tukey HSD (post-hoc):** 172 de 325 comparaciones por pares resultan significativas. Al contrastar *baseline* contra *KB RAG* **dentro de cada modelo**, la mejora solo alcanza significancia en `nemotron-mini:4b` (+14.52 pp, p<0.001) y `llama3.2:latest` (+10.82 pp, p=0.007); en los once modelos restantes la diferencia no supera la corrección por comparaciones múltiples.
 
-**Interpretación.** El beneficio del KB RAG es **inversamente proporcional a la capacidad del modelo**: aporta de forma estadísticamente significativa en los dos modelos más débiles del estudio, es positivo pero no concluyente en la franja intermedia, y resulta nulo o adverso en los modelos de mayor capacidad (−0.53 pp y −0.18 pp en los dos de 31B), que ya siguen correctamente las instrucciones sin contexto adicional. El caso de `gpt-oss:20b` (−9.65 pp) es distinto y se discute en §6.
+**Interpretación.** El beneficio del KB RAG es **inversamente proporcional a la capacidad del modelo**: aporta de forma estadísticamente significativa en los dos modelos más débiles del estudio, es positivo pero no concluyente en la franja intermedia, y resulta nulo o adverso en los modelos de mayor capacidad (−0.53 pp y −0.18 pp en los dos de 31B), que ya siguen correctamente las instrucciones sin contexto adicional. **Diez de los trece modelos obtienen una mejora**, aunque solo en dos alcance significancia estadística.
 
 **Lectura conjunta con el corpus N=30 (§5.3):** el mejor F1 local sobre N=120 (`gemma4:31b-mlx`: 59.25%) es menor que el de N=30 (`gemma4:31b-mlx`: 80.57%), lo esperable dado que los artículos reales de CoNLL-2002 ES son más largos y heterogéneos que los breves (~200 caracteres) del corpus sintético N=30, diseñado para el dominio AML/KYC. Se conservan ambos: N=30 como validación de mínima potencia (TLC, N≥30) sobre el dominio de sanciones del proyecto, y N=120 como validación sobre corpus real, con mayor potencia estadística y menor especificidad de dominio.
 
@@ -497,148 +497,15 @@ El análisis cualitativo de las extracciones identifica tres categorías de erro
 > El costo por artículo en el sistema soberano local se estima en USD 0.052, versus USD 8.75 en revisión manual, representando una reducción del **99.4%** en costo unitario.
 
 
-### 5.6 Optimización del Módulo RAG: De Diccionarios de Entidades a Base de Conocimientos Contextual
+### 5.6 De los diccionarios de entidades a la base de conocimientos contextual
 
-#### 5.6.1 Motivación: Comportamiento Contraintuitivo del RAG Basado en Diccionarios
+La primera versión del módulo de recuperación indexaba **nombres de entidades** —3 605 personas y 1 848 organizaciones— y anteponía al *prompt* los más próximos al artículo según similitud vectorial. El resultado fue el contrario del esperado: sobre el corpus N=120, siete de los quince modelos evaluados empeoraron al activarlo, y entre ellos los de mejor desempeño base.
 
-Durante el benchmark principal sobre N=120 artículos reales, se observó un fenómeno inesperado y mayoritario (7 de 15 modelos degradaron, entre ellos los de mayor F1 baseline; 8 mejoraron): **la activación del módulo RAG (`_rag_enhanced`) produjo una degradación del F1-Score respecto al modo `_baseline`**, en lugar de la mejora esperada.
+El diagnóstico apunta a un **desajuste semántico estructural**. La consulta es un artículo completo de varios centenares de palabras y los documentos indexados son cadenas nominales de dos o tres términos, de modo que la similitud coseno entre ambos carece de significado: para una noticia política española, el sistema recuperaba razones sociales colombianas sin relación alguna con el texto. A ello se sumaba la formulación restrictiva de la plantilla de inyección —«no extraigas entidades salvo que aparezcan explícitamente»—, que ante un contexto irrelevante inhibía la extracción en lugar de orientarla. Recuperar nombres, en definitiva, sugiere al modelo qué esperar y lo penaliza cuando lo sugerido no viene al caso.
 
-| Modelo | Baseline F1 | RAG-Dict F1 | Delta |
-|:---|:---:|:---:|:---:|
-| `gemma4:31b-mlx` | **0.5983** | 0.5868 | −0.0115 |
-| `gemma4:latest` | 0.5446 | 0.5257 | −0.0189 |
-| `qwen2.5:14b` | 0.5189 | 0.5071 | −0.0118 |
-| `llama3.2:latest` | 0.3945 | 0.4196 | +0.0251 |
+La segunda versión invierte la naturaleza de lo recuperado. En lugar de entidades, la base de conocimientos almacena **criterios**: guías tipológicas por dominio —sanciones financieras, política, deportes, empresas— que describen qué constituye una persona o una organización en cada contexto, junto con ejemplares anotados que fijan el formato de salida. La recuperación deja de responder a «qué entidades hay en este texto» para responder a «de qué dominio es este texto y qué reglas se le aplican», pregunta que un modelo de lenguaje resuelve con fiabilidad mucho mayor. El módulo expone cuatro modos seleccionables por línea de órdenes —recuperación por entidades, solo guías, solo ejemplares y la combinación de ambos—, de manera que la versión anterior permanece disponible como línea base y la comparación entre estrategias no exige modificar el código. El detalle de implementación, el catálogo de guías y los ejemplares figuran en el **Anexo D**.
 
-Las cifras anteriores provienen de la corrida `benchmark_balanced_120_20260824_173036` (RAG por diccionario, ago 2026), distinta de la corrida KB RAG del 1-sep citada en §5.3.5 y §5.6.5. Esta degradación motivó un protocolo de investigación formal documentado en `research/rag/2026-08-31_analisis_contenido_rag_base_conocimientos.md`. La auditoría reveló la causa raíz:
-
-**El Problema del Desajuste Semántico Estructural (*Semantic Mismatch*):**
-
-El sistema RAG original almacena cadenas nominales de entidades (`GRANJA LA SIERRA LTDA.`, `Reina Esperanza Ornelas Cintrón`) en ChromaDB. Al consultar la base vectorial usando el **texto completo del artículo** (300-800 palabras), el modelo de embeddings `all-MiniLM-L6-v2` recupera las 5 entidades con mayor **cercanía temática global** — no necesariamente presentes en el artículo. El prompt resultante incluía empresas agrícolas colombianas en artículos sobre política autonómica española, provocando que los LLMs suprimieran la extracción de entidades legítimas.
-
-
-| Paso | Acción | Resultado |
-|:---|:---|:---|
-| 1 | Noticia política española (500 palabras) | Texto de entrada |
-| 2 | Embedding `all-MiniLM-L6-v2` sobre el artículo completo | Vector de consulta |
-| 3 | ChromaDB: top-5 por similitud coseno | GRANJA LA SIERRA LTDA. (Org), ASES DE COMPETENCIA Y CIA. (Org) y tres organizaciones colombianas irrelevantes |
-| 4 | Inyección restrictiva en el prompt | «DO NOT extract unless they explicitly appear…» |
-| 5 | Efecto en el LLM | Recall 62.8 % → 21.6 % (sondeo N=5) |
-
-
-#### 5.6.2 Arquitectura, implementación y contenido de la base de conocimientos
-
-La solución implementada transforma el contenido de la base vectorial: en lugar de nombres de entidades, se almacenan **Guías Tipológicas de Dominio** y **Ejemplares Dinámicos Few-Shot**.
-
-
-| Paso | Acción | Resultado |
-|:---|:---|:---|
-| 1 | Noticia política española (500 palabras) | Texto de entrada |
-| 2 | Embedding `all-MiniLM-L6-v2` | Vector de consulta |
-| 3 | ChromaDB `ner_knowledge_base`: top-1 guía + top-1 ejemplar | Dominio recuperado: `politics_administrative` (ES) |
-| 4 | Inyección positiva del contexto de dominio | «[EXTRACTION GUIDANCE]» con las reglas del dominio |
-| 5 | Efecto en el LLM | F1 0.3521 → 0.5489 (+19.7 pp) · Recall 33.3 % → 59.5 % (+26.2 pp) |
-
-El contexto de dominio inyectado en el paso 4 contiene las siguientes reglas:
-
-| Regla | Contenido |
-|:---|:---|
-| Encabezado | `[DOMAIN CONTEXT: NOTICIAS POLÍTICAS EN ESPAÑOL]` |
-| 1. Personas | Extraer solo el nombre propio, sin cargos ni tratamientos |
-| 2. Organizaciones | Partidos (PSOE, PP), instituciones (Junta, Ministerio), organismos públicos |
-| 3. Desambiguación | Un apellido aislado («Bono») se resuelve por el contexto del artículo |
-
-
-El módulo `src/kb_rag_manager.py` (`KBRAGManager`) implementa cuatro modos de operación configurables:
-
-| Modo | Flag CLI | Descripción | Caso de Uso |
-|:---|:---:|:---|:---|
-| `entities` | `--rag-mode entities` | Legacy: diccionario de nombres (comportamiento original) | Compatibilidad hacia atrás |
-| `kb_guidelines` | `--rag-mode kb_guidelines` | Reglas tipológicas de desambiguación por dominio | Artículos de dominio conocido |
-| `kb_fewshot` | `--rag-mode kb_fewshot` | Ejemplo anotado semánticamente más similar | Transferencia de conocimiento |
-| `kb_combined` | `--rag-mode kb_combined` | Guía + ejemplo (recomendado) | **Mejor F1** |
-
-La base de conocimientos se organiza en **dos colecciones ChromaDB separadas** para garantizar compatibilidad con el sistema preexistente:
-
-- `ner_dictionaries`: Colección legacy (diccionarios de entidades, preservada)
-- `ner_knowledge_base`: Nueva colección (guías + ejemplares, 12 documentos)
-
-**Configurabilidad garantizada:** El sistema es activable/desactivable mediante flags CLI sin modificar código:
-
-```bash
-# Modo baseline (sin RAG)
-./venv/bin/python3 src/main.py --models gemma4:31b-mlx --data-file data/benchmark_balanced_120.json
-
-# Modo RAG legacy (diccionario de entidades)
-./venv/bin/python3 src/main.py --rag-study --rag-mode entities ...
-
-# Modo KB RAG (nueva implementación, recomendado)
-./venv/bin/python3 src/main.py --rag-study --rag-mode kb_combined ...
-```
-
-**Template de inyección diferenciado:** El módulo `ollama_provider.py` detecta automáticamente el tipo de contexto RAG y aplica el template apropiado:
-
-- **Entity-dict RAG (legacy):** Template restrictivo — `"DO NOT extract unless they explicitly appear..."` — previene alucinaciones de entidades ausentes.
-- **KB RAG (nuevo):** Template positivo — `"[EXTRACTION GUIDANCE] Apply these rules to the news text"` — instruye activamente al LLM sin suprimir su capacidad de extracción.
-
-**Guías Tipológicas (5 dominios):** Documentos JSON con reglas específicas de desambiguación NER:
-
-| Dominio | ID | Idioma | Keywords Clave |
-|:---|:---:|:---:|:---|
-| Política y Administración | `politics_es` | ES | PSOE, PP, junta, ministerio, portavoz |
-| Corporativo y Financiero | `corporate_financial_es` | ES | bolsa, fusión, consejo de administración |
-| AML y Sanciones | `aml_sanctions_en` | EN | OFAC, indictment, money laundering, IEEPA |
-| Judicial y Crimen | `judicial_crime_es` | ES | tribunal, fiscal, audiencia nacional |
-| Deportivo y Social | `sports_social_es` | ES | liga, federación, club |
-
-**Ejemplares Few-Shot (7 pares anotados):** Todos extraídos de `benchmark_balanced_120.json` (artículos reales anotados del corpus de evaluación). No se utilizaron datos sintéticos, preservando la integridad metodológica.
-
-| ID Ejemplar | Dominio | Fuente |
-|:---|:---:|:---:|
-| `ex_politics_es_001` | Política ES | `real_mixed_1` |
-| `ex_politics_es_002` | Política ES | `real_mixed_41` |
-| `ex_corporate_financial_es_001` | Corporativo ES | `real_mixed_21` |
-| `ex_judicial_es_001` | Judicial ES | `real_mixed_101` |
-| `ex_aml_sanctions_en_001` | AML/Sanciones EN | `real_mixed_59` |
-| `ex_aml_sanctions_en_002` | AML/Sanciones EN | `real_mixed_79` |
-| `ex_aml_sanctions_en_003` | AML/Sanciones EN | `real_mixed_27` |
-
-#### 5.6.3 Resultados empíricos
-
-**Sondeo de validación funcional (N=5 artículos, `llama3.2:latest`, 2026-09-01; cifras no persistidas en `results/`):**
-
-| Condición | F1-Score | Precisión | Recall | Δ F1 vs Baseline |
-|:---|:---:|:---:|:---:|:---:|
-| **Baseline (zero-shot)** | 0.3521 | 0.4250 | 0.3333 | — |
-| **KB Combined RAG** | **0.5489** | **0.5227** | **0.5954** | **+0.1968** |
-
-**Benchmark completo (N=120 artículos, 5 modelos, `--rag-mode kb_combined`, 2026-09-01):**
-
-| Modelo | Baseline F1 | KB RAG F1 | Δ F1 | Δ% | Δ Recall |
-|:---|:---:|:---:|:---:|:---:|:---:|
-| `gemma4:31b-mlx` | 0.5925 | 0.5907 | −0.0018 | −0.3% | +0.012 |
-| `gemma4:latest` | 0.5591 | 0.5558 | −0.0034 | −0.6% | −0.011 |
-| `gemma:latest` | 0.4734 | **0.5303** | **+0.0569** | **+12.0%** | **+0.117** |
-| `llama3.2:latest` | 0.3945 | **0.4943** | **+0.0999** | **+25.3%** | **+0.143** |
-| `qwen2.5:14b` | 0.5189 | **0.5651** | **+0.0462** | **+8.9%** | **+0.039** |
-| **Promedio** | 0.5077 | **0.5472** | **+0.0396** | **+9.1%** | **+0.060** |
-
-**Verificación de la recuperación semántica:**
-- Artículo político ES → Recupera guía `politics_administrative` (ES) ✅
-- Artículo AML EN → Recupera guía `aml_compliance` (EN) ✅
-- Artículo corporativo ES → Recupera guía `corporate_financial` (ES) ✅
-
-**Hallazgo clave — Efecto moderado por capacidad del modelo:**
-
-El beneficio del KB RAG resulta **inversamente proporcional a la capacidad del modelo**:
-
-- **Modelos grandes** (`gemma4:31b-mlx`, `gemma4:latest`, ≥9B parámetros): el KB RAG tiene efecto neutro (Δ ≈ 0). Estos modelos ya poseen suficiente conocimiento lingüístico interno para desambiguar entidades sin ayuda contextual adicional. La ganancia marginal en Recall del `gemma4:31b-mlx` (+1.2pp) indica que la guía tipológica sí ayuda en artículos frontera.
-
-- **Modelos pequeños/medianos** (`llama3.2:latest` 3B, `gemma:latest` 7B, `qwen2.5:14b` 14B): el KB RAG produce mejoras sustanciales (+25.3%, +12.0% y +8.9% respectivamente). Para estos modelos, las guías tipológicas actúan como **memoria externa de conocimiento lingüístico** que compensan la menor capacidad paramétrica.
-
-En entornos de hardware restringido, donde solo es viable ejecutar modelos de 3–14B, el KB RAG mejora el F1 sin costo computacional relevante.
-
-La interpretación de estos resultados —por qué el contenido recuperado importa más que el hecho de recuperar, y por qué el beneficio decrece con la capacidad del modelo— se desarrolla en §6.2.
+Los resultados de esta segunda versión sobre el corpus completo se recogen en la tabla de §5.3.5, que compara los trece modelos del estudio en ambos modos. Su lectura confirma que el cambio de estrategia revierte la degradación —diez de los trece modelos mejoran— y revela un patrón que la primera versión no permitía observar: el beneficio **decrece conforme aumenta la capacidad del modelo**, hasta anularse en los de mayor tamaño. La interpretación de ese patrón se desarrolla en §6.2.
 
 ## 6. DISCUSIÓN DE LOS RESULTADOS
 
@@ -679,7 +546,7 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 6. **El RAG contextual supera al RAG por diccionario:** La implementación de la Base de Conocimientos Contextual (KB RAG) demuestra que el reconocimiento de entidades mediante LLMs locales es un problema de **comprensión sintáctico-contextual**, no de búsqueda en bases de datos cerradas. En el estudio N=120 sobre 13 modelos, el KB RAG (`--rag-mode kb_combined`) mejoró el F1-Score de forma **estadísticamente significativa** (Tukey HSD) en los dos modelos más débiles —`nemotron-mini:4b` **+14.52 pp** (p<0.001) y `llama3.2:latest` **+10.82 pp** (p=0.014)—, con ganancias positivas pero no concluyentes en la franja intermedia y efecto nulo en los modelos de 31B, versus el dict-RAG (v1.0), que en un sondeo N=5 sobre el mismo modelo degradó el F1 hasta 0.2367 (−57.8% respecto de su propio baseline). Su efectividad está modulada por la capacidad paramétrica: beneficia sobre todo a los modelos de 3–14B, donde actúa como memoria externa de conocimiento lingüístico sin costo adicional de hardware. Este hallazgo tiene implicaciones directas para el diseño de sistemas RAG en dominio abierto con LLMs soberanos.
 
-7. **La codificación del corpus condiciona la medición, y no de forma neutra:** el corpus N=120 almacena los nombres con *mojibake* —`JosÃ© Bono` donde el nombre real es **José Bono**—, un defecto presente a la vez en las entidades de referencia (20,1 %) y en el texto de entrada (87 % de los artículos). Al ser **coherente entre ambos**, no introduce el sesgo uniforme que cabría suponer: **favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía**, con un efecto que oscila entre −0.070 y +0.091 de F1 según el modelo. La implicación metodológica excede a este trabajo: en una evaluación de NER, **un defecto de codificación no es ruido de fondo sino una variable que interactúa con el comportamiento del modelo**, y verificar la codificación de la entrada —no solo la de la referencia— debe formar parte del protocolo antes de dar por válida cualquier cifra. El detalle se desarrolla en el **Anexo H**.
+7. **La codificación del corpus condiciona la medición, y no de forma neutra:** el corpus N=120 almacena los nombres con *mojibake* —`JosÃ© Bono` donde el nombre real es **José Bono**—, un defecto presente a la vez en las entidades de referencia (20,1 %) y en el texto de entrada (87 % de los artículos). Al ser **coherente entre ambos**, no introduce el sesgo uniforme que cabría suponer: **favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía**, con un efecto que oscila entre −0.070 y +0.025 de F1 según el modelo. La implicación metodológica excede a este trabajo: en una evaluación de NER, **un defecto de codificación no es ruido de fondo sino una variable que interactúa con el comportamiento del modelo**, y verificar la codificación de la entrada —no solo la de la referencia— debe formar parte del protocolo antes de dar por válida cualquier cifra. El detalle se desarrolla en el **Anexo H**.
 
 
 ### 7.2 Trabajo Futuro
@@ -753,42 +620,42 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 |:---|:---|
 | `repos/ner-llm-entity-benchmark/` |  |
 | `src/` |  |
-| &nbsp;&nbsp;&nbsp;&nbsp;`main.py` | Orquestador principal (+--rag-mode CLI, v1.1) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`config.py` | Configuración global (+rag_mode field, v1.1) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`data_loader.py` | Carga y validación del corpus |
-| &nbsp;&nbsp;&nbsp;&nbsp;`llm_runner.py` | Runner LLM con parseo en cascada |
-| &nbsp;&nbsp;&nbsp;&nbsp;`evaluator.py` | Métricas F1 + taxonomía de errores |
-| &nbsp;&nbsp;&nbsp;&nbsp;`pub_sub.py` | Cola Pub/Sub multithreading |
-| &nbsp;&nbsp;&nbsp;&nbsp;`adaptive_workers.py` | Controlador AIMD |
-| &nbsp;&nbsp;&nbsp;&nbsp;`checkpoint.py` | Persistencia de estado |
-| &nbsp;&nbsp;&nbsp;&nbsp;`rag_manager.py` | RAGManager: Dict-RAG legacy (v1.0) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`kb_rag_manager.py` | KBRAGManager: KB RAG contextual (v1.1, NUEVO) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`dashboard.py` | Interfaz Streamlit (7 pestañas) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`statistics.py` | ANOVA + Tukey HSD + IC95 |
-| &nbsp;&nbsp;&nbsp;&nbsp;`providers/` |  |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`base.py` | LLMProvider ABC |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`factory.py` | LLMProviderFactory |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`ollama_provider.py` | Proveedor Ollama (+template KB RAG, v1.1) |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`openai_provider.py` | Proveedor OpenAI (cloud) |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`__init__.py` | Facade get_provider() |
+|     `main.py` | Orquestador principal (+--rag-mode CLI, v1.1) |
+|     `config.py` | Configuración global (+rag_mode field, v1.1) |
+|     `data_loader.py` | Carga y validación del corpus |
+|     `llm_runner.py` | Runner LLM con parseo en cascada |
+|     `evaluator.py` | Métricas F1 + taxonomía de errores |
+|     `pub_sub.py` | Cola Pub/Sub multithreading |
+|     `adaptive_workers.py` | Controlador AIMD |
+|     `checkpoint.py` | Persistencia de estado |
+|     `rag_manager.py` | RAGManager: Dict-RAG legacy (v1.0) |
+|     `kb_rag_manager.py` | KBRAGManager: KB RAG contextual (v1.1, NUEVO) |
+|     `dashboard.py` | Interfaz Streamlit (7 pestañas) |
+|     `statistics.py` | ANOVA + Tukey HSD + IC95 |
+|     `providers/` |  |
+|         `base.py` | LLMProvider ABC |
+|         `factory.py` | LLMProviderFactory |
+|         `ollama_provider.py` | Proveedor Ollama (+template KB RAG, v1.1) |
+|         `openai_provider.py` | Proveedor OpenAI (cloud) |
+|         `__init__.py` | Facade get_provider() |
 | `data/` |  |
-| &nbsp;&nbsp;&nbsp;&nbsp;`benchmark_balanced_120.json` | Corpus N=120 (Gold Standard real) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`dictionaries/` |  |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`persons.json` | Diccionario de personas (v1.0) |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`organizations.json` | Diccionario de organizaciones (v1.0) |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`augmented_persons.json` | Personas aumentadas (v1.0) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`knowledge_base/` | Base de Conocimientos KB RAG (v1.1, NUEVO) |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`domain_guidelines.json` | 5 dominios con reglas NER tipológicas |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`few_shot_exemplars.json` | 7 ejemplares anotados (artículos reales) |
+|     `benchmark_balanced_120.json` | Corpus N=120 (Gold Standard real) |
+|     `dictionaries/` |  |
+|         `persons.json` | Diccionario de personas (v1.0) |
+|         `organizations.json` | Diccionario de organizaciones (v1.0) |
+|         `augmented_persons.json` | Personas aumentadas (v1.0) |
+|     `knowledge_base/` | Base de Conocimientos KB RAG (v1.1, NUEVO) |
+|         `domain_guidelines.json` | 5 dominios con reglas NER tipológicas |
+|         `few_shot_exemplars.json` | 7 ejemplares anotados (artículos reales) |
 | `results/` | Salidas del benchmark |
-| &nbsp;&nbsp;&nbsp;&nbsp;`benchmark_results.csv` |  |
-| &nbsp;&nbsp;&nbsp;&nbsp;`statistical_report.md` |  |
-| &nbsp;&nbsp;&nbsp;&nbsp;`benchmark_balanced_120_<timestamp>/` | Resultados por ejecución |
+|     `benchmark_results.csv` |  |
+|     `statistical_report.md` |  |
+|     `benchmark_balanced_120_<timestamp>/` | Resultados por ejecución |
 | `research/` |  |
-| &nbsp;&nbsp;&nbsp;&nbsp;`rag/` |  |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`2026-08-31_analisis_contenido_rag_base_conocimientos.md` | Investigación RAG |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`TODO-RAG-20260901.md` | Tracking implementación |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`WORKLOG.md` | Bitácora de trabajo |
+|     `rag/` |  |
+|         `2026-08-31_analisis_contenido_rag_base_conocimientos.md` | Investigación RAG |
+|         `TODO-RAG-20260901.md` | Tracking implementación |
+|         `WORKLOG.md` | Bitácora de trabajo |
 | `SYSTEM_PROMPT.md` | Prompt del sistema (few-shot español) |
 | `SYSTEM_PROMPT_EN.md` | Prompt del sistema (inglés) |
 | `SYSTEM_PROMPT_ES.md` | Prompt del sistema (español) |
@@ -821,38 +688,7 @@ El prompt de sistema en español (few-shot) incluye: (1) instrucciones de rol (a
 Se documentan aquí los diagramas de flujo, tablas de configuración CLI y catálogos de datos referidos en §5.6, movidos desde el cuerpo del informe para cumplir el límite de extensión institucional. Toda la evidencia se conserva íntegra.
 
 
-#### D.1 Flujo RAG Original (Degradado)
-
-
-_Tabla 14. Flujo RAG Original (Degradado)_
-
-
-| Paso | Acción | Resultado |
-|---|---|---|
-| 1. Entrada | Noticia política española (500 palabras) | — |
-| 2. Embedding | all-MiniLM-L6-v2 | Vector de consulta |
-| 3. Recuperación | ChromaDB: Top-5 por coseno | GRANJA LA SIERRA LTDA. (Org); ASES DE COMPETENCIA Y CIA. (Org); [3 orgs colombianas irrelevantes] |
-| 4. Inyección en prompt | Restrictiva: "DO NOT extract unless they explicitly appear..." | — |
-| 5. Efecto en LLM | — | Recall: 62.8% → 21.6%  ❌ |
-
-
-#### D.2 Flujo KB RAG (Mejorado)
-
-
-_Tabla 15. Flujo KB RAG (Mejorado)_
-
-
-| Paso | Acción | Resultado |
-|---|---|---|
-| 1. Entrada | Noticia política española (500 palabras) | — |
-| 2. Embedding | all-MiniLM-L6-v2 | Vector de consulta |
-| 3. Recuperación | ChromaDB 'ner_knowledge_base': Top-1 guideline + Top-1 exemplar | Dominio recuperado: politics_administrative (ES) |
-| 4. Contexto inyectado | DOMAIN CONTEXT (ver detalle abajo) + ejemplo similar recuperado | — |
-| 5. Inyección en prompt | Positiva: "[EXTRACTION GUIDANCE]" | — |
-| 6. Efecto en LLM | — | F1: 0.3521 → 0.5489  ✅  (+19.7 pp) Recall: 33.3% → 59.5%  ✅  (+26.2 pp) |
-
-
-#### D.3 Implementación Técnica del Módulo KB RAG (src/kb_rag_manager.py)
+#### D.1 Implementación técnica del módulo KB RAG (src/kb_rag_manager.py)
 
 El módulo src/kb_rag_manager.py (KBRAGManager) implementa cuatro modos de operación configurables:
 
@@ -900,7 +736,7 @@ Universidad Técnica Federico Santa María — Valparaíso, Chile
 Julio 2026
 
 
-#### D.4 Catálogo de Guías Tipológicas y Ejemplares Few-Shot de la Base de Conocimientos
+#### D.2 Catálogo de guías tipológicas y ejemplares de la base de Conocimientos
 
 
 _Tabla 17. Guías Tipológicas de Dominio de la Base de Conocimientos_
@@ -929,23 +765,17 @@ _Tabla 18. Ejemplares Few-Shot de la Base de Conocimientos_
 | ex_aml_sanctions_en_003 | AML/Sanciones EN | real_mixed_27 |
 
 
-#### D.5 Análisis Comparativo Cronológico — RAG v1.0 vs. v1.1
+#### D.3 Reglas de la base de conocimientos contextual
 
 
-_Tabla 19. Comparación Cronológica RAG v1.0 vs. v1.1_
+_Tabla 23. Reglas de la Base de Conocimientos Contextual_
 
 
-| Aspecto | Sistema v1.0 (Dic 2025 – Ago 2026) | Sistema v1.1 (Sep 2026) |
-|---|---|---|
-| Contenido RAG | Diccionarios de nombres (3.605 personas, 1.848 orgs) | Guías tipológicas + ejemplares few-shot |
-| Colección ChromaDB | ner_dictionaries | + ner_knowledge_base (nueva, no reemplaza) |
-| Template de inyección | Restrictivo (“DO NOT extract unless…”) | Positivo (“Apply these rules to the text”) |
-| Modo de operación | Binario (RAG on/off) | Cuatro modos configurables por CLI |
-| F1-Score RAG (llama3.2) | 0.2367 en sondeo N=5 (−57.8% vs su propio baseline 0.5614) | 0.4943 (+25.3% vs baseline) |
-| F1-Score RAG (qwen2.5:14b) | — | 0.5651 (+8.9% vs baseline) |
-| Configurabilidad | No (hardcoded) | Sí (--rag-mode {entities,kb_guidelines,kb_fewshot,kb_combined}) |
-| Datos sintéticos | Sí (12.000 augmented_persons) | No (solo datos reales del corpus de evaluación) |
-
+| Regla | Contenido |
+|---|---|
+| 1. Personas | Extrae SOLO el nombre propio... |
+| 2. Organizaciones | Partidos (PSOE, PP), Junta... |
+| 3. Desambiguación | Un apellido solo ('Bono')... |
 
 ### Anexo E — Procedencia de los Datos del Benchmark General (N=15)
 
@@ -983,44 +813,6 @@ Paso 4 — Verificación del ground truth: Cada artículo generado fue revisado 
 Paso 5 — Control de calidad por diversidad: Se verificó que ningún artículo generado replicara literalmente oraciones de otro artículo del corpus (deduplicación por similitud coseno > 0.85). La longitud promedio resultante fue de 202 caracteres (rango 145–293), con 1,2 entidades PER y 2,3 entidades ORG por artículo.
 
 
-#### D.6 Degradación Observada — RAG por Diccionario (Baseline vs. RAG-Dict)
-
-
-_Tabla 21. Degradación Observada — RAG por Diccionario_
-
-
-| Modelo | Baseline F1 | RAG-Dict F1 | Delta |
-|---|---|---|---|
-| gemma4:latest | 0.5446 | 0.5257 | −0.0189 |
-| qwen2.5:14b | 0.5189 | 0.5071 | −0.0118 |
-| llama3.2:latest | 0.3945 | 0.4196 | +0.0251 |
-
-
-#### D.7 Mini-Benchmark de Validación Preliminar (N=5, llama3.2:latest)
-
-
-_Tabla 22. Mini-Benchmark de Validación Preliminar (N=5)_
-
-
-| Condición | F1-Score | Precisión | Recall | Δ F1 vs Baseline |
-|---|---|---|---|---|
-| Baseline (zero-shot) | 0.3521 | 0.4250 | 0.3333 | — |
-| KB Combined RAG | 0.5489 | 0.5227 | 0.5954 | +0.1968 |
-
-
-#### D.8 Reglas de la Base de Conocimientos Contextual
-
-
-_Tabla 23. Reglas de la Base de Conocimientos Contextual_
-
-
-| Regla | Contenido |
-|---|---|
-| 1. Personas | Extrae SOLO el nombre propio... |
-| 2. Organizaciones | Partidos (PSOE, PP), Junta... |
-| 3. Desambiguación | Un apellido solo ('Bono')... |
-
-
 ### Anexo G — Declaración de Uso de Inteligencia Artificial en la Elaboración de esta Tesina
 
 Este anexo declara, con propósito de transparencia académica, el alcance y los límites del uso de herramientas de inteligencia artificial (IA) generativa durante el desarrollo de esta tesina. La declaración se basa en el registro documental del proyecto: el historial de control de versiones (20 commits entre el 29 de junio y el 1 de septiembre de 2026), los registros de trabajo WORKLOG.md (raíz del repositorio y research/rag/), y los informes de investigación asociados.
@@ -1049,18 +841,9 @@ No se utilizó IA para producir, estimar o extrapolar datos experimentales, ni p
 
 ### Anexo H — Codificación del corpus: análisis del *mojibake* y su efecto sobre la medición
 
-#### H.1 Qué es el *mojibake*
+#### H.1 Naturaleza y alcance del defecto
 
-*Mojibake* (文字化け, «transformación de caracteres») designa el texto ilegible que resulta de **escribir una cadena con una codificación y leerla con otra**. En español afecta a las vocales acentuadas y a la «ñ», porque en UTF-8 no ocupan un byte sino dos.
-
-La letra «é» se codifica en UTF-8 como los bytes `0xC3 0xA9`. Si esos bytes se leen después como **Latin-1**, donde cada byte equivale a un carácter, se obtienen dos caracteres visibles en lugar de uno:
-
-| Byte | Interpretación Latin-1 |
-|:---:|:---:|
-| `0xC3` | `Ã` |
-| `0xA9` | `©` |
-
-De ahí que `José` aparezca almacenado como `JosÃ©`. La firma del defecto es la **`Ã` inicial**, presente en toda vocal acentuada y en la `ñ`:
+*Mojibake* (文字化け, «transformación de caracteres») designa el texto ilegible que resulta de escribir una cadena con una codificación y leerla con otra. En español afecta a las vocales acentuadas y a la «ñ», que en UTF-8 no ocupan un byte sino dos: la «é» se codifica como `0xC3 0xA9` y, leída como Latin-1 —donde cada byte es un carácter—, se descompone en `Ã` seguido de `©`. La firma del defecto es por tanto esa `Ã` inicial, común a toda vocal acentuada.
 
 | Forma almacenada (corrupta) | Forma real |
 |:---|:---|
@@ -1071,34 +854,22 @@ De ahí que `José` aparezca almacenado como `JosÃ©`. La firma del defecto es 
 
 La reparación consiste en deshacer el paso erróneo: `s.encode('latin-1').decode('utf-8')`.
 
-#### H.2 Alcance medido en el corpus N=120
+#### H.2 Alcance medido y consecuencia sobre la comparación
 
 | Comprobación sobre `data/benchmark_balanced_120.json` | Resultado |
 |:---|:---:|
 | Entidades de referencia totales | 1 406 |
 | Entidades con *mojibake* | **283 (20,1 %)** |
-| De ellas, **irrecuperables** en el cotejo difuso (umbral 85) | **66 (4,7 % del total)** |
+| De ellas, irrecuperables en el cotejo difuso (umbral 85) | **66 (4,7 % del total)** |
 | Artículos con *mojibake* en el campo `text` | **104 de 120 (87 %)** |
-| Artículos con *mojibake* en el campo `title` | 0 |
-| Entidades corruptas que aparecen **igual de corruptas** en el texto | **283 de 283** |
-| Entidades corruptas que aparecen **correctas** en el texto | **0** |
+| Entidades corruptas que aparecen igual de corruptas en el texto | **283 de 283** |
+| Entidades corruptas que aparecen correctas en el texto | **0** |
 
-Los corpus N=15 (`kleptotrace.json`, 212 entidades) y N=30 (`kleptotrace_augmented_30.json`, 105 entidades) están **libres del defecto**, por lo que los resultados de §5.1, §5.2 y §5.3.1–§5.3.4 no se ven comprometidos.
+Los corpus N=15 y N=30 están libres del defecto, por lo que §5.1, §5.2 y §5.3 no se ven comprometidos. El umbral de 85 explica que solo una parte resulte irrecuperable: en cadenas largas la corrupción es una fracción menor y la similitud se mantiene sobre el corte —`Emiliano GarcÃ­a-Page` obtiene 93—, mientras que en cadenas cortas lo hunde: `JosÃ© Bono` obtiene **84**, un punto por debajo.
 
-El umbral de 85 explica por qué solo una parte resulta irrecuperable: en cadenas largas la corrupción es una fracción menor del total y la similitud se mantiene por encima del corte —`Emiliano GarcÃ­a-Page` frente a su forma correcta obtiene 93—, mientras que en cadenas cortas la hunde: `JosÃ© Bono` frente a `José Bono` obtiene **84**, un punto por debajo del umbral.
+El dato determinante es que el defecto **alcanza también al texto de entrada**, y de forma coherente con la referencia. El corpus resulta así internamente consistente: un modelo que transcribe literalmente lo que lee coincide con la referencia y no sufre penalización, mientras que uno que normaliza la ortografía al español correcto deja de coincidir pese a haber acertado. El defecto no impone un suelo común a todos los modelos: **recompensa una conducta y castiga la contraria**, lo que invalida la suposición inicial de un sesgo uniforme que no alteraría el orden relativo.
 
-#### H.3 Por qué la conclusión inmediata era incorrecta
-
-La primera lectura del hallazgo fue que el defecto deprimía el *recall* de todos los modelos por igual, en torno a 4,7 puntos, sin alterar el orden relativo. Esa lectura **omitía comprobar la entrada**.
-
-Al estar el defecto **también en el texto que lee el modelo**, y de forma **coherente** con la referencia, el corpus es internamente consistente: el modelo lee `Emiliano GarcÃ­a-Page` y la referencia espera `Emiliano GarcÃ­a-Page`. En consecuencia:
-
-- un modelo que **transcribe literalmente** lo que ve **coincide** con la referencia y no sufre penalización;
-- un modelo que **normaliza la ortografía** al español correcto produce `Emiliano García-Page` y **deja de coincidir**, pese a haber acertado.
-
-El defecto no impone un suelo común: **recompensa una conducta y castiga la contraria**.
-
-#### H.4 Evidencia empírica del efecto diferencial
+#### H.3 Evidencia empírica del efecto diferencial
 
 Diferencia de F1 entre los 88 artículos afectados y los 31 no afectados, sobre los mismos registros para todos los modelos:
 
@@ -1109,19 +880,20 @@ Diferencia de F1 entre los 88 artículos afectados y los 31 no afectados, sobre 
 | `gemma4:31b-mlx` (baseline) | −0.0395 |
 | `llama3.1:8b` (KB RAG) | −0.0004 |
 | `mistral-nemo:latest` (KB RAG) | +0.0122 |
-| `gpt-oss:20b` (KB RAG) | **+0.0914** |
+| `deepseek-r1:1.5b` (baseline) | +0.0199 |
+| `gemma:latest` (KB RAG) | **+0.0249** |
 
-El rango entre extremos alcanza **16 puntos porcentuales**.
+El rango entre extremos alcanza **9,4 puntos porcentuales**.
 
-> **Cautela metodológica.** Los artículos afectados podrían ser además más largos o intrínsecamente más difíciles, lo que confundiría la magnitud absoluta de cada Δ. Sin embargo, la dificultad desplazaría a todos los modelos en la misma dirección; **la dispersión entre modelos sobre registros idénticos** es lo que acredita una interacción específica de cada modelo. La fila de `gpt-oss:20b` es la menos fiable, por estar sus cifras dominadas por un artefacto independiente del arnés de ejecución.
+> **Cautela metodológica.** Los artículos afectados podrían ser además más largos o intrínsecamente más difíciles, lo que confundiría la magnitud absoluta de cada Δ. Sin embargo, la dificultad desplazaría a todos los modelos en la misma dirección; **la dispersión entre modelos sobre registros idénticos** es lo que acredita una interacción específica de cada modelo. Una versión previa de esta tabla situaba a `gpt-oss:20b` en el extremo positivo con +0,091, y se advirtió entonces que esa fila era la menos fiable por estar dominada por un artefacto del arnés. Corregido el artefacto y repetida la medición, su valor real es **−0,034**, dentro del rango del resto. El episodio ilustra la necesidad de descartar defectos de ejecución antes de interpretar un valor extremo.
 
-#### H.5 Cómo debe repararse
+#### H.4 Cómo debe repararse
 
 Corregir únicamente la referencia **invertiría la injusticia en lugar de eliminarla**: pasaría a penalizar al modelo que transcribe con fidelidad. La reparación correcta es **normalizar ambos lados de la comparación** —aplicar la corrección de codificación a la entidad de referencia *y* a la extraída antes del cotejo difuso—, de modo que `JosÃ© Bono` y `José Bono` converjan a la misma forma y el resultado deje de depender de la representación de bytes.
 
 Esta corrección **no pudo aplicarse retroactivamente**: el cotejo se resuelve en tiempo de inferencia y de cada registro solo se conservaron los recuentos de aciertos y errores, no las entidades extraídas. Repuntuar sobre lo almacenado —como sí fue posible con la corrección de la convención de puntuación descrita en §4.4— resulta aquí inviable, y la corrección exigiría re-ejecutar el estudio completo. Se documenta por tanto como limitación (§5.3.5) y como línea de trabajo futuro (§7.2, punto 7).
 
-#### H.6 Implicaciones para la evaluación de sistemas NER
+#### H.5 Implicaciones para la evaluación de sistemas NER
 
 1. **Verificar la codificación de la entrada, no solo la de la referencia.** Un defecto presente en ambas no se comporta como el mismo defecto presente en una sola.
 2. **No presuponer que un defecto de datos sesga de forma uniforme.** Cuando el corpus es coherente en su corrupción, el sesgo depende de cómo trate cada modelo la normalización ortográfica, y puede alterar el orden relativo.

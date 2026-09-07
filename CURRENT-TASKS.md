@@ -199,7 +199,25 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
-### 2.9 🟡 PENDIENTE — Segunda y tercera tanda del informe
+### 2.9 ✅ COMPLETADA — Segunda y tercera tanda del informe
+- **Cerrada:** 2026-09-07 21:10 por Claude Desktop. Propagadas ambas tandas a los tres `.docx` reconstruyendo
+  el cuerpo desde el `.md` (renderizador propio, **sin pandoc**).
+- **📏 CONTEO MEDIDO: cuerpo de 20 páginas de 25** · 28 totales · anexos desde la 21 · **cero páginas en blanco**.
+  La estimación de ≈21 páginas era buena; la condensación restó 3 respecto de las 23 anteriores.
+- **Verificado en el render:** `gpt-oss:20b` 52,39/55,67/**+3,28** y quinto puesto · **F=38,2222,
+  p=3,4453e-160** · Tukey `llama3.2` **p=0,007** · Anexo H con el delta **−0,0336** y rango de **9,4 puntos**.
+- **Tablas: 20 en total, 10 en el cuerpo y 10 en los anexos**, exactamente las diez que §2.9 declara
+  intocables (§2.2, §2.6, §3.2, §4.3.1, §4.4, §5.1, §5.2, §5.3, §5.3.5 y §5.5). §5.6 quedó **sin tablas**,
+  en prosa. Numeración correlativa Tabla 1–20 y llamadas del texto realineadas.
+- **Corrección de forma pedida por el autor:** el `&nbsp;` que se veía literal en el Anexo A se sustituyó por
+  **espacio duro real (U+00A0)** en el `.md` (respaldo `.bak_pre_nbsp_20260907`), y se corrigió el
+  renderizador, que lo eliminaba al normalizar las celdas: la jerarquía del árbol vuelve a verse indentada.
+  **Cero literales HTML** en los tres documentos.
+- **Regla de diagramas respetada:** cero arte ASCII; los diagramas son tablas de Word. Los bloques de código
+  que permanecen son código real (interfaz `LLMProvider`, prompts, invocaciones CLI).
+- **🔒 Anexo G íntegro** y **Anexo H** presente, ambos con su letra.
+- **Versión congelada `_v3`** en `doc/versions/informe_final/` (SHA-256 `b172947f58c1`), registrada en
+  `VERSIONES.md`, y copia del canónico en la raíz.
 **Ambas están ya aplicadas en el `.md` canónico; falta propagarlas a los tres `.docx`.**
 
 **Segunda tanda — cifras de `gpt-oss:20b` (la corrida cerró).** Su fila de §5.3.5 pasa de 43,84/34,19/−9,65 a
@@ -827,3 +845,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 17:25 | Claude Code (equipo principal) | `gpt-oss` COMPLETO y verificado (0 failed, 238/240 `direct_json`): ΔRAG −0,097 → **+0,033**, era artefacto de truncamiento. **ANOVA rehecho: F=38,2222 · p=3,4453e-160**, 10 de 13 modelos con ΔRAG positivo. Actualizados §5.3.5, Tukey, y el **Anexo H** (delta de `gpt-oss` +0,0914 → −0,0336; rango 16 → 9,4 pp). Commiteada la tanda estructural de Claude Desktop: **cuerpo de 23 páginas de 25 medidas**, anexos A-H, Anexo G íntegro, 0 arte ASCII. Documentada la **regla de no usar arte ASCII** en `CLAUDE.md` y en el encargo. Abierta §2.9 para la segunda tanda |
 | 2026-09-07 18:15 | Claude Code (equipo principal) | Escrita §2.9 con la segunda tanda (cifras de `gpt-oss`) y la tercera (condensación: anexos 3581→3064 palabras y 16→10 tablas; §5.6 de 9 tablas a prosa; cuerpo 19→10 tablas). **Incidencia:** el intento anterior de crear §2.9 fue una operación nula —el ancla `### 2.8 🔴 PRIORITARIA` ya había sido renombrada por Claude Desktop— y se reportó como hecha sin verificarla. Corregido y verificado |
 | 2026-09-07 18:00 | Claude Code (equipo principal) | 🗑️ Eliminada por decisión del autor la tarea de acceso SSH a `eahumada@stream` (§3.1): retirados clave, `config` y script instalador; ninguno estaba versionado. ⚠️ **El script contenía una contraseña en texto plano** — credencial a considerar expuesta y a rotar |
+| 2026-09-07 21:10 | Claude Desktop | Tandas 2 y 3 propagadas a los tres `.docx`; `&nbsp;` corregido por espacio duro real; **cuerpo medido: 20 páginas de 25**; versión `_v3` congelada |

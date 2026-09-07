@@ -8,7 +8,7 @@ eahumada@gmail.com
 
 ## RESUMEN
 
-Las instituciones financieras sujetas a regulaciones AML/KYC deben vigilar grandes volúmenes de noticias no estructuradas en busca de entidades de riesgo. Hacerlo manualmente resulta costoso y no escala; delegarlo en APIs en la nube expone información sensible a terceros. Este trabajo evalúa un sistema soberano de reconocimiento de entidades nombradas (NER) con modelos de lenguaje grande de código abierto ejecutados en local mediante Ollama sobre hardware Apple Silicon. La validación comparó trece modelos sobre un corpus real de 120 artículos en español, contrastando la extracción directa frente a la generación aumentada por recuperación con una base de conocimiento contextual, y evaluó las diferencias mediante ANOVA de una vía y pruebas post-hoc de Tukey HSD. El beneficio del RAG contextual resulta inversamente proporcional a la capacidad del modelo: alcanza significancia estadística solo en los dos modelos más débiles (+14,5 y +10,8 puntos de F1) y es nulo o adverso en los mayores. Redactar el prompt en español e incorporar ejemplos *few-shot* aporta conjuntamente +11,1 puntos sobre el baseline en inglés, mejora que ninguno de los dos factores logra por separado. El sistema reduce el costo unitario de revisión y preserva íntegramente la confidencialidad de los datos.
+Las instituciones financieras sujetas a regulaciones AML/KYC deben vigilar grandes volúmenes de noticias no estructuradas en busca de entidades de riesgo. Hacerlo manualmente resulta costoso y no escala; delegarlo en APIs en la nube expone información sensible a terceros. Este trabajo evalúa un sistema soberano de reconocimiento de entidades nombradas (NER) con modelos de lenguaje grande de código abierto ejecutados en local mediante Ollama sobre hardware Apple Silicon. La validación comparó trece modelos sobre un corpus real de 120 artículos en español, contrastando la extracción directa frente a la generación aumentada por recuperación con base de conocimiento contextual, y evaluó las diferencias mediante ANOVA y pruebas post-hoc de Tukey HSD. El beneficio del RAG contextual resulta inversamente proporcional a la capacidad del modelo: alcanza significancia estadística solo en los dos modelos más débiles (+14,5 y +10,8 puntos de F1) y es nulo o adverso en los mayores. Redactar el prompt en español e incorporar ejemplos *few-shot* aporta conjuntamente +11,1 puntos sobre el baseline en inglés, mejora que ninguno de los dos factores logra por separado. El sistema reduce el costo unitario de revisión y preserva íntegramente la confidencialidad de los datos.
 
 **Palabras clave:** Reconocimiento de Entidades Nombradas (NER), Modelos de Lenguaje Grande (LLM), Cumplimiento Normativo (AML/KYC), Soberanía de Datos, Generación Aumentada por Recuperación (RAG).
 
@@ -363,7 +363,7 @@ El cotejo entre la entidad extraída y la de referencia es **difuso**, con un um
 
 ### 4.5 Infraestructura de Pruebas
 
-- **Hardware:** Apple Silicon (Metal/MPS), en dos configuraciones según el footprint del modelo: 16 GB de memoria unificada para modelos de hasta ~12B, y 48 GB de memoria unificada para los modelos de 31B y variantes MLX de gran tamaño (ver §3.6).
+- **Hardware:** Apple Silicon (Metal/MPS), en dos configuraciones según el footprint del modelo: 16 GB de memoria unificada para modelos de hasta ~12B, y 48 GB de memoria unificada para los modelos de 31B y variantes MLX de gran tamaño (ver §3.3).
 - **Software:** Python 3.14, Ollama 0.6+, scikit-learn 1.9, statsmodels 0.14, pandas 3.0, Streamlit 1.60.
 - **Reproducibilidad:** Checkpointing automático (`.checkpoint.json`) para reanudar benchmarks interrumpidos sin pérdida de datos.
 
@@ -459,7 +459,7 @@ Sobre el corpus real N=120 descrito en §4.1.3 se ejecutó el mismo protocolo (A
 > ortografía al español correcto **deja de coincidir**. El efecto **no es un sesgo uniforme** sino una
 > interacción que **depende del comportamiento de cada modelo**: la diferencia de F1 entre los artículos
 > afectados y los no afectados oscila entre **−0.070 y +0.025** según el modelo. Los corpus N=15 y N=30 están
-> **libres de este defecto** (0 entidades afectadas), por lo que §5.1, §5.2 y §5.3.1–5.3.4 no se ven
+> **libres de este defecto** (0 entidades afectadas), por lo que §5.1, §5.2 y §5.3 no se ven
 > comprometidos. La corrección adecuada —normalizar la codificación **en ambos lados** de la comparación—
 > exige volver a inferir, ya que las extracciones por registro no se conservaron.
 
@@ -544,7 +544,7 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 5. **Robustez arquitectural:** El controlador AIMD previene desbordamientos de VRAM y gestiona errores de rate-limiting de forma autónoma. El checkpointing garantiza recuperación sin pérdida de datos ante interrupciones.
 
-6. **El RAG contextual supera al RAG por diccionario:** La implementación de la Base de Conocimientos Contextual (KB RAG) demuestra que el reconocimiento de entidades mediante LLMs locales es un problema de **comprensión sintáctico-contextual**, no de búsqueda en bases de datos cerradas. En el estudio N=120 sobre 13 modelos, el KB RAG (`--rag-mode kb_combined`) mejoró el F1-Score de forma **estadísticamente significativa** (Tukey HSD) en los dos modelos más débiles —`nemotron-mini:4b` **+14.52 pp** (p<0.001) y `llama3.2:latest` **+10.82 pp** (p=0.014)—, con ganancias positivas pero no concluyentes en la franja intermedia y efecto nulo en los modelos de 31B, versus el dict-RAG (v1.0), que en un sondeo N=5 sobre el mismo modelo degradó el F1 hasta 0.2367 (−57.8% respecto de su propio baseline). Su efectividad está modulada por la capacidad paramétrica: beneficia sobre todo a los modelos de 3–14B, donde actúa como memoria externa de conocimiento lingüístico sin costo adicional de hardware. Este hallazgo tiene implicaciones directas para el diseño de sistemas RAG en dominio abierto con LLMs soberanos.
+6. **El RAG contextual supera al RAG por diccionario:** La implementación de la Base de Conocimientos Contextual (KB RAG) demuestra que el reconocimiento de entidades mediante LLMs locales es un problema de **comprensión sintáctico-contextual**, no de búsqueda en bases de datos cerradas. En el estudio N=120 sobre 13 modelos, el KB RAG (`--rag-mode kb_combined`) mejoró el F1-Score de forma **estadísticamente significativa** (Tukey HSD) en los dos modelos más débiles —`nemotron-mini:4b` **+14.52 pp** (p<0.001) y `llama3.2:latest` **+10.82 pp** (p=0.007)—, con ganancias positivas pero no concluyentes en la franja intermedia y efecto nulo en los modelos de 31B, versus el dict-RAG (v1.0), que en un sondeo N=5 sobre el mismo modelo degradó el F1 hasta 0.2367 (−57.8% respecto de su propio baseline). Su efectividad está modulada por la capacidad paramétrica: beneficia sobre todo a los modelos de 3–14B, donde actúa como memoria externa de conocimiento lingüístico sin costo adicional de hardware. Este hallazgo tiene implicaciones directas para el diseño de sistemas RAG en dominio abierto con LLMs soberanos.
 
 7. **La codificación del corpus condiciona la medición, y no de forma neutra:** el corpus N=120 almacena los nombres con *mojibake* —`JosÃ© Bono` donde el nombre real es **José Bono**—, un defecto presente a la vez en las entidades de referencia (20,1 %) y en el texto de entrada (87 % de los artículos). Al ser **coherente entre ambos**, no introduce el sesgo uniforme que cabría suponer: **favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía**, con un efecto que oscila entre −0.070 y +0.025 de F1 según el modelo. La implicación metodológica excede a este trabajo: en una evaluación de NER, **un defecto de codificación no es ruido de fondo sino una variable que interactúa con el comportamiento del modelo**, y verificar la codificación de la entrada —no solo la de la referencia— debe formar parte del protocolo antes de dar por válida cualquier cifra. El detalle se desarrolla en el **Anexo H**.
 
@@ -620,42 +620,42 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 |:---|:---|
 | `repos/ner-llm-entity-benchmark/` |  |
 | `src/` |  |
-| &nbsp;&nbsp;&nbsp;&nbsp;`main.py` | Orquestador principal (+--rag-mode CLI, v1.1) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`config.py` | Configuración global (+rag_mode field, v1.1) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`data_loader.py` | Carga y validación del corpus |
-| &nbsp;&nbsp;&nbsp;&nbsp;`llm_runner.py` | Runner LLM con parseo en cascada |
-| &nbsp;&nbsp;&nbsp;&nbsp;`evaluator.py` | Métricas F1 + taxonomía de errores |
-| &nbsp;&nbsp;&nbsp;&nbsp;`pub_sub.py` | Cola Pub/Sub multithreading |
-| &nbsp;&nbsp;&nbsp;&nbsp;`adaptive_workers.py` | Controlador AIMD |
-| &nbsp;&nbsp;&nbsp;&nbsp;`checkpoint.py` | Persistencia de estado |
-| &nbsp;&nbsp;&nbsp;&nbsp;`rag_manager.py` | RAGManager: Dict-RAG legacy (v1.0) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`kb_rag_manager.py` | KBRAGManager: KB RAG contextual (v1.1, NUEVO) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`dashboard.py` | Interfaz Streamlit (7 pestañas) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`statistics.py` | ANOVA + Tukey HSD + IC95 |
-| &nbsp;&nbsp;&nbsp;&nbsp;`providers/` |  |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`base.py` | LLMProvider ABC |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`factory.py` | LLMProviderFactory |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`ollama_provider.py` | Proveedor Ollama (+template KB RAG, v1.1) |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`openai_provider.py` | Proveedor OpenAI (cloud) |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`__init__.py` | Facade get_provider() |
+|     `main.py` | Orquestador principal (+--rag-mode CLI, v1.1) |
+|     `config.py` | Configuración global (+rag_mode field, v1.1) |
+|     `data_loader.py` | Carga y validación del corpus |
+|     `llm_runner.py` | Runner LLM con parseo en cascada |
+|     `evaluator.py` | Métricas F1 + taxonomía de errores |
+|     `pub_sub.py` | Cola Pub/Sub multithreading |
+|     `adaptive_workers.py` | Controlador AIMD |
+|     `checkpoint.py` | Persistencia de estado |
+|     `rag_manager.py` | RAGManager: Dict-RAG legacy (v1.0) |
+|     `kb_rag_manager.py` | KBRAGManager: KB RAG contextual (v1.1, NUEVO) |
+|     `dashboard.py` | Interfaz Streamlit (7 pestañas) |
+|     `statistics.py` | ANOVA + Tukey HSD + IC95 |
+|     `providers/` |  |
+|         `base.py` | LLMProvider ABC |
+|         `factory.py` | LLMProviderFactory |
+|         `ollama_provider.py` | Proveedor Ollama (+template KB RAG, v1.1) |
+|         `openai_provider.py` | Proveedor OpenAI (cloud) |
+|         `__init__.py` | Facade get_provider() |
 | `data/` |  |
-| &nbsp;&nbsp;&nbsp;&nbsp;`benchmark_balanced_120.json` | Corpus N=120 (Gold Standard real) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`dictionaries/` |  |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`persons.json` | Diccionario de personas (v1.0) |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`organizations.json` | Diccionario de organizaciones (v1.0) |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`augmented_persons.json` | Personas aumentadas (v1.0) |
-| &nbsp;&nbsp;&nbsp;&nbsp;`knowledge_base/` | Base de Conocimientos KB RAG (v1.1, NUEVO) |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`domain_guidelines.json` | 5 dominios con reglas NER tipológicas |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`few_shot_exemplars.json` | 7 ejemplares anotados (artículos reales) |
+|     `benchmark_balanced_120.json` | Corpus N=120 (Gold Standard real) |
+|     `dictionaries/` |  |
+|         `persons.json` | Diccionario de personas (v1.0) |
+|         `organizations.json` | Diccionario de organizaciones (v1.0) |
+|         `augmented_persons.json` | Personas aumentadas (v1.0) |
+|     `knowledge_base/` | Base de Conocimientos KB RAG (v1.1, NUEVO) |
+|         `domain_guidelines.json` | 5 dominios con reglas NER tipológicas |
+|         `few_shot_exemplars.json` | 7 ejemplares anotados (artículos reales) |
 | `results/` | Salidas del benchmark |
-| &nbsp;&nbsp;&nbsp;&nbsp;`benchmark_results.csv` |  |
-| &nbsp;&nbsp;&nbsp;&nbsp;`statistical_report.md` |  |
-| &nbsp;&nbsp;&nbsp;&nbsp;`benchmark_balanced_120_<timestamp>/` | Resultados por ejecución |
+|     `benchmark_results.csv` |  |
+|     `statistical_report.md` |  |
+|     `benchmark_balanced_120_<timestamp>/` | Resultados por ejecución |
 | `research/` |  |
-| &nbsp;&nbsp;&nbsp;&nbsp;`rag/` |  |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`2026-08-31_analisis_contenido_rag_base_conocimientos.md` | Investigación RAG |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`TODO-RAG-20260901.md` | Tracking implementación |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`WORKLOG.md` | Bitácora de trabajo |
+|     `rag/` |  |
+|         `2026-08-31_analisis_contenido_rag_base_conocimientos.md` | Investigación RAG |
+|         `TODO-RAG-20260901.md` | Tracking implementación |
+|         `WORKLOG.md` | Bitácora de trabajo |
 | `SYSTEM_PROMPT.md` | Prompt del sistema (few-shot español) |
 | `SYSTEM_PROMPT_EN.md` | Prompt del sistema (inglés) |
 | `SYSTEM_PROMPT_ES.md` | Prompt del sistema (español) |
