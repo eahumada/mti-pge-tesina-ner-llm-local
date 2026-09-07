@@ -31,7 +31,14 @@ Para **cada tarea** que ejecutes:
 
 ## 1. Claude Code
 
-### 1.0 ⏳ EN ESPERA — Resultados parciales del equipo remoto
+### 1.0 ✅ CERRADA — Resultados parciales del equipo remoto (cerrada 2026-09-07)
+> **Cierre (2026-09-07):** el remoto entregó **todo** lo encargado y declaró ejecución 100 % completa
+> (`remote_48g/REPORTE-FINAL.md`). El estudio tiene **14 modelos** con los 240 registros completos bajo una
+> sola convención de puntuación, y el ANOVA conjunto está en `results/ANALISIS_CONJUNTO_20260907/`
+> (F = 36.3696, p = 1.4321e-164). **Lo único que queda de esta tarea es la decisión de alcance del autor
+> (14 modelos o los 12 que declara el informe)**, y esperar el test `think=off` de §3.bis.10 antes de
+> congelar cifras.
+#### Contexto original — 1.0 EN ESPERA — Resultados parciales del equipo remoto
 - **Decisión del autor (2026-09-06):** esperar los resultados parciales del equipo de 48 GB antes de
   decidir el alcance final del estudio.
 - **La corrida local sigue viva como red de seguridad**, sin bloquear nada. Ver 1.1.
@@ -54,6 +61,18 @@ Para **cada tarea** que ejecutes:
 - **Aviso publicado:** `results/AVISO-SUMMARIES-OBSOLETOS.md` — el CSV es la única fuente válida; los
   `summary`/`statistical_report.md` por corrida y el campo `f1` de `detailed_results.json` son pre-fix.
 - **Enviado al remoto:** `CORRECCION-B1-SUMMARIES-20260907.md` (B1 invertido + summaries obsoletos).
+
+### 1.0.ter ✅ COMPLETADA — Cerrar el desfase de `summary`/`detailed` en las corridas legacy (2026-09-07 12:35)
+- **Origen:** el commit `17c17fc` del remoto extendió `tools/rescore_saved.py` para reescribir también
+  `detailed_results.json` y `benchmark_summary.json`, pero **solo lo aplicó a sus propias corridas**. Las tres
+  legacy quedaron con summary y detailed pre-fix pese a tener el CSV ya corregido en `3796218`.
+- **Hecho:** herramienta aplicada a las 3 legacy (`e7eb541`). **Precaución tomada:** el respaldo real pre-fix se
+  preservó como `.bak_prefix_ORIGINAL` **antes** de correrla, porque su `.bak_prescore` habría sobrescrito el
+  backup bueno con el CSV ya corregido.
+- **Verificado:** 0 grupos cambian respecto al re-puntaje de `3796218` (las «filas cambiadas» que reporta la
+  herramienta son el redondeo a 6 decimales). **`summary == CSV` en las 15 corridas del estudio.**
+- **Nota:** los `detailed_results.json` legacy están en `.gitignore` → corregidos en local, no versionados.
+- **ANOVA:** no requiere recálculo; los valores no se movieron.
 
 ### 1.1 🔒 CERRADA — Benchmark N=120 (7 modelos locales)
 > **Cerrada por decisión del autor (2026-09-06):** todo lo pendiente pasa al equipo remoto para no duplicar
@@ -173,6 +192,11 @@ Para **cada tarea** que ejecutes:
      trazables a `results/`, anexos A–G en orden.
   6. Congelar `_v2` (correcciones documentales), `_v3` (datos nuevos) y `_v4` (entrega) en
      `doc/versions/informe_final/`, registrando cada una en `VERSIONES.md`.
+- ⚠️ **Aviso de Claude Code (2026-09-07 12:45), no reescribe nada de esta entrada:** **no propagar todavía al
+  `.docx`.** El remoto está probando `think=off` en 5 modelos (§3.bis.10), 4 de ellos dentro del ANOVA. Si el
+  efecto se parece al de `qwen3` (+4,2 pp), la tabla de resultados y el ANOVA cambian y habría que repetir la
+  propagación. Además el `.md` canónico creció +18/−8 líneas con las correcciones B1-B4: **re-verificar el
+  límite de 25 páginas**.
 - **Advertencia:** el bloque de maquetación **no sobrevive** a una regeneración con pandoc. Si el `.docx`
   se regenera desde el Markdown, hay que repetirlo íntegro.
 
@@ -330,6 +354,28 @@ Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **Invest
   marcar inválidas las filas qwen3 de P3/limpia; publicar los `run_config.json` que faltan; revisar
   `qwen3:14b/32b/latest`; enumerar modelos con capacidad `thinking`; no tocar `real_mixed_64`.
 
+### 3.bis.10 ▶️ EN CURSO — Test `think=off` sobre 5 modelos + verificación de las entregas B1-B4
+- **Confirmado por el autor (2026-09-07):** el remoto está evaluando muestras de **5 modelos con
+  `thinking=off`**. Se corresponde con la modificación sin commitear de `src/providers/ollama_provider.py`
+  (`# TEST think-off 2026-09-07`): `gemma4:31b`, `gemma4:latest`, `deepseek-r1:1.5b`, `gpt-oss:20b` y
+  `sonct988/gemma4-26b-…`. **No tocar ese archivo desde otra sesión.**
+- **Por qué importa:** **cuatro de esos cinco están dentro del ANOVA conjunto** y el quinto (`gemma4:31b`)
+  alimenta la tabla §5.5. Si el efecto se parece al de `qwen3` (+4,2 pp, `recall=0` de 15 → 1), **habrá que
+  rehacer tabla y ANOVA**. Caso a vigilar: `gpt-oss:20b` es hoy el único ΔRAG muy negativo (−0.097); si corría
+  con thinking activo, esa cifra puede no estar midiendo el RAG.
+- **Entregas verificadas por el equipo principal:**
+  - `38b20da` (B1-B4 al `.md` canónico + `BENCHMARKS.md`): **B4 reproduce exacto** — `gemma4:31b-mlx`
+    24 607/22.80 y `llama3.2` 4 018/79.35 salen de `results/benchmark_results.csv` (N=15 canónico, 450 filas);
+    `gemma4:31b` 18 795/10.23 de `gemma4_31b_n15_REMOTO`. B1 adopta 0.4876/0.5075 ✅.
+  - `17c17fc` (rescore extendido): **`summary == CSV` sin discrepancias** en sus corridas.
+- **Dos avisos abiertos:**
+  1. El `.md` canónico creció **+18/−8 líneas** (sobre todo el párrafo de B3). **Re-verificar el límite de
+     25 páginas** al propagar al `.docx`.
+  2. `BENCHMARKS.md` rotula la resolución B1 como «decisión del autor, 2026-09-07». **El autor no tomó esa
+     decisión**: salió de `CORRECCION-B1-SUMMARIES-20260907.md`. El fondo es correcto; corregir la atribución.
+- **Sigue pendiente de `CORRECCION-QWEN3-THINKING-20260906.md §4.6-4.7`:** revisar `qwen3:14b/32b/latest` y
+  **enumerar todos los modelos del estudio con capacidad `thinking`**.
+
 ### 3.bis.5 Plantilla de reporte
 Al terminar cada tarea, sustituid su bloque por:
 
@@ -442,3 +488,5 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 12:05 | Claude Code (equipo principal) | Convención de scoring UNIFICADA: re-puntuadas las 3 corridas legacy (199 filas degeneradas) con `tools/rescore_saved.py`. Barrido global: 8 927 filas, 0 violaciones, 0 degeneradas, 0 perdidas. **ANOVA conjunto** `results/ANALISIS_CONJUNTO_20260907/`: 14 modelos × 2 modos, F=36.3696, p=1.4321e-164. Publicado `results/AVISO-SUMMARIES-OBSOLETOS.md`. Corrección al remoto: B1 invertido (llama3.1:8b es 0.4876/0.5075, no 0.4959/0.5491) en `CORRECCION-B1-SUMMARIES-20260907.md` |
 | 2026-09-07 00:30 | Equipo Remoto 48 GB (Claude Code) | Correcciones B1-B4 aplicadas al `.md` canónico + BENCHMARKS.md (backups .bak_B1B4/.bak_B1_20260907). B1: filas imposibles marcadas NO VERIFICABLES; llama3.1:8b oficial N=120 0.4876/0.5075. B2: cita RegTech → Verified Market Research 2022 (15.68→87.17 mil M, CAGR 23.92%; VMR verificado en web, no KPMG). B3: §2.4/§3.6/hardware reformulado a 16GB(≤12B)/48GB(31B). B4: tabla §5.5 reemplazada por valores CSV (gemma4:31b-mlx 22.80/24607). ⚠️ PENDIENTE Claude Desktop: propagar a .docx con docx_replace_terms.py y verificar 25pp |
 | 2026-09-07 01:00 | Equipo Remoto 48 GB (Claude Code) | Respuesta a CORRECCION-B1-SUMMARIES: B1 corregido (0.4876/0.5075, sin reconciliación). `rescore_saved.py` extendido (reescribe detailed_results.json f1/p/r + regenera summary.json); re-ejecutado en las 8 corridas. Detectado y corregido que el rescore revertía el patch de nemotron → `patch_nemotron_failed.py` ahora toca CSV+detailed (nemotron estable 0.2259). §4.7: enumerados modelos con thinking (5 corrieron ON sin re-evaluar: gemma4:31b, gemma4:latest, deepseek, gpt-oss, sonct988+cloud). qwen3:14b/32b no están en el estudio. Reporte: `remote_48g/RESPUESTA-CORRECCION-20260907.md` |
+| 2026-09-07 12:35 | Claude Code (equipo principal) | Aplicado el rescore extendido (`17c17fc`) a las 3 corridas legacy, que el remoto no cubrió (`e7eb541`). Backup real preservado como `.bak_prefix_ORIGINAL`. Verificado: 0 grupos cambian y `summary == CSV` en las 15 corridas. ANOVA sin recálculo |
+| 2026-09-07 12:40 | Claude Code (equipo principal) | Verificadas las entregas `38b20da` (B1-B4) y `17c17fc` (rescore extendido): las 3 filas de §5.5 reproducen exacto; B1 adopta 0.4876/0.5075. Dos avisos: el `.md` creció +18/−8 líneas (re-verificar 25 pp) y la atribución del B1 a «decisión del autor» es incorrecta. Registrado el test `think=off` de 5 modelos en §3.bis.10 |
