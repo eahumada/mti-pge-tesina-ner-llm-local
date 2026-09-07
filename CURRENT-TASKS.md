@@ -214,6 +214,8 @@ Para **cada tarea** que ejecutes:
 - **Intocables:** **Anexo G** y **Anexo H** íntegros · las **nueve tablas** del cuerpo (§5.1 y §5.3.5
   incluidas) · **nada de arte ASCII** · **sin pandoc** · corregir **siempre primero el `.md`**.
 - **Al terminar:** páginas medidas en §2, `_v4` congelada y copia del `.docx` canónico en la raíz.
+- 🔢 **El número de versión es indiferente** (decisión del autor): la entrega es la primera que supere la
+  verificación final, con la etiqueta que sea. Registrar SHA-256, páginas y la mención de entrega.
 - 🎓 **Esta propagación es la última prevista.** No quedan corridas ni cifras por llegar: si la verificación
   sale limpia, **la `_v4` es la versión de entrega**. El encargo incluye la **lista de verificación final**
   (extensión, contenido, coherencia con la fuente y entregables), tomada de la plantilla, de las instrucciones
@@ -906,3 +908,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 19:05 | Claude Code (equipo principal) | Quinta tanda: **capítulo 2 de 6 a 4 secciones** y **capítulo 3 de 4 a 3**, con referencias renumeradas (§2.2→§2.1, §2.5→§2.3, §3.3→§3.2, §3.4→§3.3) y 0 rotas. Añadida la **URL del repositorio** al Anexo A con la nota de reproducibilidad. Suavizadas 12 construcciones formales. Cuerpo 10 937 palabras, ≈19,9 páginas. Encargo en §2.11 |
 | 2026-09-07 19:45 | Claude Code (equipo principal) | ⚠️ **Incidencia:** el commit `95e7d40` truncó este documento de 883 a 225 líneas por un error mío (`s=s[:m.end()]+nota` en lugar de insertar). **Restaurado íntegro** desde `9dcb54d` y reaplicados los cambios. Encargo a Desktop reescrito como documento único y tareas agrupadas en **§2.12**, la única vigente; §2.7, §2.10 y §2.11 quedan como registro |
 | 2026-09-07 20:05 | Claude Code (equipo principal) | Encargo a Desktop completado con la **lista de verificación para cerrar la versión definitiva** (extensión, contenido, coherencia y entregables) y declarado que **la `_v4` es la versión de entrega** si la verificación sale limpia. Cerradas tres casillas del TODO ya cumplidas: salvedades de datos declaradas, cierre de formato hasta `_v3` y re-ejecución de `gpt-oss` |
+| 2026-09-07 20:20 | Claude Code (equipo principal) | Decisión del autor: **el número de versión de la entrega es indiferente**. Anotado en el encargo y en `VERSIONES.md` para que la numeración no bloquee la propagación. Verificado que el `.docx` de la raíz sigue siendo idéntico a la `_v3` (SHA `b172947f58c1`) y **no contiene aún las tandas cuarta y quinta** |

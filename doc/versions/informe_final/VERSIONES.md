@@ -37,3 +37,8 @@ se modifica nunca; cualquier cambio produce la versión siguiente.
 Anteriores al esquema `_vN`, se conservan como referencia histórica y no se renumeran:
 
 - `doc/organized/Hito_5_Tarea4_Informe_Final/Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.docx.bak_pre-cumplimiento-25pp`
+
+> **Nota (2026-09-07, decisión del autor):** el **número de versión de la entrega es indiferente**. La versión
+> de entrega será la primera que supere la verificación final descrita en
+> `PROMPT-CLAUDE-DESKTOP-PROFESOR-20260907.md`, con independencia de la etiqueta que reciba. Lo que debe
+> quedar registrado es su SHA-256, su conteo de páginas y la mención de que es la entrega.

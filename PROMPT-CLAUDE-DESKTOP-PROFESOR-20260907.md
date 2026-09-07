@@ -70,7 +70,11 @@ Declara el resultado en `CURRENT-TASKS.md` §2 **con el conteo de páginas medid
 ## Cómo cerrar la versión definitiva
 
 Esta propagación es la última prevista: no quedan corridas en ejecución ni cifras por llegar. Si al terminarla
-la verificación sale limpia, la `_v4` **es la versión de entrega** y así conviene declararla.
+la verificación sale limpia, **esa es la versión de entrega** y así conviene declararla.
+
+**El número de versión da igual** —decisión del autor—. Usa el que corresponda por orden (`_v4`) o cualquier
+otro; lo único importante es que quede registrada en `VERSIONES.md` con su SHA-256, su conteo de páginas y la
+mención explícita de que es la versión de entrega. No dejes que la numeración te frene.
 
 Antes de congelarla, comprueba una por una estas condiciones. Están tomadas de `plantilla_final-2026.docx`, de
 `tesinas-finales-2026.pdf` y de los cuatro reparos del profesor guía; si alguna falla, avísame en lugar de
