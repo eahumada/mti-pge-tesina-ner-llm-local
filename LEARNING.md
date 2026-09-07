@@ -347,8 +347,11 @@ extraía correctamente, pero su respuesta nunca llegaba al pipeline.
 
 Tres señales lo delataban, y ninguna estaba en el F1:
 
-1. **Precisión de 0,93 en un modelo «malo»** — sospechoso. Era el caso degenerado: con `tp=0` y `fp=0`, la
-   precisión se define como 1,0. **Un modelo que no extrae nada tiene precisión perfecta.**
+1. **Precisión de 0,93 en un modelo «malo»** — sospechoso. Era el caso degenerado: con el *scorer* de
+   entonces, con `tp=0` y `fp=0` la precisión se definía como 1,0. **Un modelo que no extraía nada tenía
+   precisión perfecta.** *(Corregido el 2026-09-06 en `src/evaluator.py`, commit `7a6c19f`: el default micro
+   es hoy 0,0 y solo vale 1,0 si `tp+fp+fn == 0`. La lección sigue vigente: la métrica agregada no distingue
+   el modelo malo del arnés roto.)*
 2. **`tokens_per_sec` × latencia ≈ 24 000 tokens generados**, más que modelos que sí funcionaban. El modelo
    estaba trabajando; los tokens iban a otro sitio.
 3. **Cero errores HTTP y cero reintentos** — no era la red.
@@ -468,7 +471,8 @@ uniforme**: recompensa una conducta del modelo y castiga la contraria.
 
 **Corolario sobre cómo repararlo.** Arreglar solo el gold invierte la injusticia en vez de eliminarla. Lo
 correcto es **normalizar ambos lados al comparar**: aplicar la reparación al gold *y* a la extracción antes del
-*fuzzy matching*, de modo que el resultado no dependa de la codificación.
+*fuzzy matching* —`rapidfuzz.fuzz.ratio` con umbral 85, una similitud de **caracteres** (Indel/Levenshtein sin
+sustituciones), no de tokens; ver `FINDINGS.md §F46`—, de modo que el resultado no dependa de la codificación.
 
 **Corolario sobre el alcance de un arreglo.** Si se corrige el gold para una sola re-corrida, ese modelo queda
 puntuado con una vara distinta de la del resto: es el mismo error que las dos convenciones de puntuación y los

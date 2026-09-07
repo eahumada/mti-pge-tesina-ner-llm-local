@@ -654,8 +654,10 @@ artículo que antes devolvía nada.
 
 **Corrección de la interpretación previa.** Se había concluido que era «un fallo de formato de salida, no
 de comprensión», y que la precisión de 0,93 mostraba que «cuando extrae algo acierta». **Ambas afirmaciones
-eran falsas.** La precisión de 0,93 es el **caso degenerado**: con `tp=0` y `fp=0` la precisión se define
-como 1,0. Un modelo que no extrae nada tiene precisión perfecta.
+eran falsas.** La precisión de 0,93 es el **caso degenerado**: con el *scorer* vigente en aquel momento, con
+`tp=0` y `fp=0` la precisión se definía como 1,0, de modo que un modelo que no extraía nada tenía precisión
+perfecta. *(Corregido el 2026-09-06 en `src/evaluator.py` —commit `7a6c19f`—: los defaults micro pasaron de
+1,0 a **0,0**, y solo se asigna 1,0 si `tp+fp+fn == 0`. La cifra de 0,93 procede de la puntuación anterior.)*
 
 ### F41. 🔴 El modo *thinking* de Qwen3 nunca llegó a activarse
 Descubierto al corregir F40. `think` es **parámetro de primer nivel** de `Client.chat()`, no una clave de
@@ -820,6 +822,16 @@ unificar. El valor del experimento es **documental y ya está capturado**: queda
 - **`kleptotrace.json` (N=15) y `kleptotrace_augmented_30.json` (N=30): 0 mojibake** → P1, P4 y el re-run N=30
   **no** están afectados. Solo el corpus N=120.
 
+> **Precisión sobre la métrica (2026-09-07, verificado contra `src/evaluator.py:35` y `:87`).** El umbral 85 se
+> aplica a `rapidfuzz.fuzz.ratio`, que **no** es una similitud de *tokens*: coincide exactamente con
+> `Indel.normalized_similarity × 100`. La distancia de Indel es una variante de Levenshtein que solo admite
+> **inserciones y supresiones** (no sustituciones), opera sobre **caracteres** y se normaliza como
+> `100 × (1 − d / (|a| + |b|))`; el evaluador compara ambas cadenas en minúsculas. De ahí que
+> `GarcÃ­a`/`García` dé **76,9** (< 85 → no casa) y `Emiliano GarcÃ­a-Page`/`Emiliano García-Page` dé **92,7**
+> (≥ 85 → casa): la penalización es proporcional a la longitud, que es justamente lo que explica el
+> «cadenas largas sí sobreviven» del punto anterior. Comprobado con `rapidfuzz 3.14.5` del `venv` del repo.
+> **Las cifras de este hallazgo no cambian.**
+
 **Causa raíz:** el JSON del corpus almacena los nombres con codificación corrupta (bytes UTF-8 reinterpretados
 como Latin-1 al generarse/guardarse).
 
@@ -891,6 +903,12 @@ Verificado de forma independiente: 283 de 1 406 entidades gold (20,1 %) y 66 irr
 Latin-1. **Si la doble codificación alcanzara al texto que se compara con el *ground truth*, y no solo al
 fichero de log, ningún nombre español con tilde casaría nunca — en todos los modelos del estudio.** Verificación
 encargada al equipo remoto.
+
+> **[Corrección 2026-09-07, contrastada con `src/evaluator.py`.]** La conjetura era correcta en su dirección pero
+> **no en su forma absoluta**: `fuzz.ratio` normaliza por la longitud total, así que el mojibake solo hunde por
+> debajo de 85 a las cadenas **cortas** (`GarcÃ­a`/`García` = 76,9; `JosÃ© Bono`/`José Bono` = 84,2), mientras
+> que las largas siguen casando (`Emiliano GarcÃ­a-Page`/`Emiliano García-Page` = 92,7). La medición de §F46
+> lo confirma: 283 entidades gold con mojibake, de las que **66** —no todas— resultan irrecuperables.
 
 ---
 

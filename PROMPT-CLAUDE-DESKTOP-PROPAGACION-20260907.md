@@ -13,8 +13,8 @@ Indel es una variante de Levenshtein que **solo admite inserciones y supresiones
 normaliza como `100 × (1 − d / (|a| + |b|))`. Opera sobre **caracteres, no sobre tokens**, y ambas cadenas se
 pasan a minúsculas antes de comparar.
 
-La diferencia no es terminológica. Si fuera por tokens, «Juan Pérez» y «Pérez Juan» darían 90 y casarían; con
-`ratio` dan **40** y no casan. Y «Banco Santander» frente a «Santander» da **75**, por debajo del umbral de 85,
+La diferencia no es terminológica. Si fuera por tokens, «Juan Pérez» y «Pérez Juan» darían 100 y casarían; con
+`ratio` dan **50** y no casan. Y «Banco Santander» frente a «Santander» da **75**, por debajo del umbral de 85,
 así que una extracción parcialmente correcta cuenta como error completo. Ambos efectos empujan las cifras **a la
 baja**, nunca al alza: el desempeño reportado es conservador, y eso ahora se dice explícitamente en el texto.
 

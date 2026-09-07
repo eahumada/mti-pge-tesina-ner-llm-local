@@ -204,7 +204,7 @@ Para **cada tarea** que ejecutes:
 - **Qué se corrigió:** el informe describía el emparejamiento como «similitud de tokens». **Es falso.** El
   evaluador usa `rapidfuzz.fuzz.ratio` ≡ `Indel.normalized_similarity × 100`: distancia de Indel —variante de
   Levenshtein sin sustituciones— normalizada como `100 × (1 − d / (|a| + |b|))`, sobre **caracteres** y en
-  minúsculas. Si fuera por tokens, «Juan Pérez» frente a «Pérez Juan» daría 90; da **40**.
+  minúsculas. Si fuera por tokens, «Juan Pérez» frente a «Pérez Juan» daría 100; da **50**.
 - **Consecuencia, ya declarada en el texto:** la métrica es sensible al orden y penaliza omisiones
   («Banco Santander» frente a «Santander» da 75, bajo el umbral 85), así que **sesga a la baja**. El desempeño
   reportado es conservador.

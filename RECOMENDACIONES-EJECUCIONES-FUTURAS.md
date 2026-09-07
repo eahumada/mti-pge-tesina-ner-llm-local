@@ -69,7 +69,8 @@ y `LEARNING.md §L39`.
 
 **R11 — Al repararlo, normalizar los DOS lados de la comparación.** Arreglar solo la referencia invierte la
 injusticia en vez de eliminarla. La reparación debe aplicarse al gold **y** a la entidad extraída antes del
-cotejo difuso, de modo que el resultado no dependa de la representación de bytes.
+cotejo difuso —`rapidfuzz.fuzz.ratio` con `fuzzy_threshold=85` (`src/evaluator.py`), que mide similitud de
+**caracteres**, no de tokens—, de modo que el resultado no dependa de la representación de bytes.
 
 **R12 — Una re-corrida aislada usa el mismo corpus y el mismo evaluador que las demás.** Corregir el corpus
 para un solo modelo lo mide con otra vara — el mismo error que mezclar convenciones de puntuación o regímenes
