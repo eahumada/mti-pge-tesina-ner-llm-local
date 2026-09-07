@@ -199,6 +199,32 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.9 🟡 PENDIENTE — Segunda y tercera tanda del informe
+**Ambas están ya aplicadas en el `.md` canónico; falta propagarlas a los tres `.docx`.**
+
+**Segunda tanda — cifras de `gpt-oss:20b` (la corrida cerró).** Su fila de §5.3.5 pasa de 43,84/34,19/−9,65 a
+**52,39/55,67/+3,28** y sube al quinto puesto · **ANOVA F=38,2222 · p=3,4453e-160** (antes 36,3666 /
+1,2236e-152) · Tukey de `llama3.2` p=0,014 → **0,007** · retirada la frase que remitía su caso al capítulo 6 ·
+**Anexo H corregido**: el delta de mojibake de `gpt-oss` pasa de +0,0914 a **−0,0336** y el rango entre
+modelos de 16 a **9,4 puntos**, con el mismo ajuste en §5.3.5 y en la conclusión 7.
+
+**Tercera tanda — condensación (decisión del autor).** Los anexos se concentran en resultados finales, sin
+conclusiones intermedias, reflexiones sobre el camino ni tablas de paso; y el cuerpo prioriza la prosa.
+- **Anexos:** 3 581 → **3 064 palabras**, 16 → **10 tablas**. Fuera los dos flujos del módulo RAG, el
+  comparativo cronológico entre versiones y el mini-benchmark preliminar N=5. La subsección `D.8`, que por un
+  error de numeración colgaba del Anexo F, vuelve al D. **Subsecciones de D y H renumeradas correlativamente.**
+- **§5.6 reescrita en prosa:** 1 206 palabras y 9 tablas → **411 y ninguna**. Sus tablas duplicaban el catálogo
+  del Anexo D y la comparativa de §5.3.5, y arrastraban **cifras anteriores al re-puntaje** más un sondeo N=5
+  que el propio texto reconocía como no persistido.
+- **Cuerpo:** 12 323 → **11 528 palabras**, 19 → **10 tablas**. Estimación ≈ 21 páginas, frente a las 23 medidas.
+
+**Tablas que permanecen y NO deben tocarse:** §2.2 familias de técnicas · §2.6 estado del arte · §3.2
+arquitectura por capas · §4.3.1 estructura del *prompt* · §4.4 métricas · **§5.1 comparativa con todos los
+modelos** · §5.2 variantes de *prompt* · §5.3 corpus del dominio · **§5.3.5 los trece modelos** · §5.5
+eficiencia en hardware.
+
+**Tras esta propagación ya se puede congelar versión** en `doc/versions/informe_final/` según `VERSIONES.md`.
+
 ### 2.8 ✅ TANDA ESTRUCTURAL COMPLETADA — Revisión pedida por el profesor guía (2026-09-07)
 - **Cerrada la tanda estructural:** 2026-09-07 19:50 por Claude Desktop (Cowork). **Sin congelar versión**,
   a la espera de la segunda tanda (cifras de `gpt-oss:20b`).
@@ -789,3 +815,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 20:05 | Claude Desktop | Diagramas de texto convertidos en tablas de Word en el `.md` y propagados a los tres `.docx` (§3.2, §4.3.1, flujos RAG de §5.6, árbol del Anexo A); cuerpo re-medido en 23 páginas |
 | 2026-09-07 17:02 | Equipo Remoto 48 GB (Claude Code) | gpt-oss re-run COMPLETO (num_predict 4096, thinking ON): 240/240, 0 failed, F1 baseline 0.5239 / kb_rag 0.5567 (vs oficial 0.4467/0.3419), recall0 11 (vs 76), ΔRAG +0.033 (era −0.097). Confirma truncación. `gptoss_rerun_REMOTO` = fuente de verdad; requiere re-fusionar ANOVA. Entregado en remote_48g/ |
 | 2026-09-07 17:25 | Claude Code (equipo principal) | `gpt-oss` COMPLETO y verificado (0 failed, 238/240 `direct_json`): ΔRAG −0,097 → **+0,033**, era artefacto de truncamiento. **ANOVA rehecho: F=38,2222 · p=3,4453e-160**, 10 de 13 modelos con ΔRAG positivo. Actualizados §5.3.5, Tukey, y el **Anexo H** (delta de `gpt-oss` +0,0914 → −0,0336; rango 16 → 9,4 pp). Commiteada la tanda estructural de Claude Desktop: **cuerpo de 23 páginas de 25 medidas**, anexos A-H, Anexo G íntegro, 0 arte ASCII. Documentada la **regla de no usar arte ASCII** en `CLAUDE.md` y en el encargo. Abierta §2.9 para la segunda tanda |
+| 2026-09-07 18:15 | Claude Code (equipo principal) | Escrita §2.9 con la segunda tanda (cifras de `gpt-oss`) y la tercera (condensación: anexos 3581→3064 palabras y 16→10 tablas; §5.6 de 9 tablas a prosa; cuerpo 19→10 tablas). **Incidencia:** el intento anterior de crear §2.9 fue una operación nula —el ancla `### 2.8 🔴 PRIORITARIA` ya había sido renombrada por Claude Desktop— y se reportó como hecha sin verificarla. Corregido y verificado |
