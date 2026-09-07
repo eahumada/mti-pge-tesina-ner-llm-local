@@ -74,7 +74,8 @@ descartaría las filas en cero, inflando la media. Nos costó un informe equivoc
 - **No re-ejecutar ninguna otra corrida.** El resto del estudio está cerrado y verificado.
 - **No tocar** `results/ANALISIS_CONJUNTO_20260907/` ni ninguna corrida N=120 o N=15.
 - **No borrar** `benchmark_augmented_30.log`: es el único registro del valor de julio y debe conservarse para
-  trazabilidad, gane o pierda la comparación.
+  trazabilidad, gane o pierda la comparación. **Está versionado desde el commit de este encargo** (antes lo
+  tapaba el patrón `*.log` del `.gitignore` y existía en una sola máquina), así que ya lo recibís con el `pull`.
 - **No ajustar el régimen de *thinking*** de ninguno de los dos modelos.
 
 ## Cuando terminéis
