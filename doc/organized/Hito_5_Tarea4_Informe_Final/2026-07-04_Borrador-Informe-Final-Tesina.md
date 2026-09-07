@@ -256,16 +256,17 @@ Los tres ejemplos empleados en la configuración few-shot en español cubren un 
 
 Los resultados del análisis de variantes de prompts revelan una **interacción entre los dos factores**: por separado, la localización al español aporta +4.38 pp de F1 y los ejemplos *few-shot* en inglés no aportan nada (−0.72 pp), pero **su combinación alcanza +10.40 pp** (FS-ES: 74.44% frente al 64.05% del baseline ZS-EN). Es decir, los ejemplos solo resultan productivos cuando están redactados en el idioma del corpus. La configuración FS-ES lidera además en Precisión (66.78%) y Recall (86.87%) sin penalización en alucinaciones (0.20%, idéntica a ZS-ES). Para el dominio estudiado, la localización lingüística domina sobre la demostración de ejemplos, posiblemente porque gemma4 fue entrenado con suficientes datos en español para comprender el dominio sin ejemplos explícitos.
 
-### 4.4 Métricas de Evaluación
+### 4.4 Métricas de evaluación
 
-| Métrica | Definición |
-|:---|:---|
-| **F1-Score** | Media armónica entre Precisión y Recall (métrica principal) |
-| **Precisión** | TP / (TP + FP) — Exactitud de las entidades extraídas |
-| **Recall** | TP / (TP + FN) — Cobertura de las entidades reales |
-| **Hallucination Rate** | Entidades extraídas que no aparecen en el texto del artículo / Total extraídas (alucinación extrínseca) |
-| **Latencia (s)** | Tiempo promedio por artículo en segundos |
-| **Índice Tok/s/B** | Tokens por segundo normalizados por cada mil millones (10⁹) de parámetros |
+Las cifras que recorren el capítulo siguiente descansan sobre un puñado de métricas cuyo significado conviene fijar, porque cada una responde a una pregunta distinta y ninguna basta por sí sola.
+
+Las tres primeras se construyen sobre el mismo recuento. Una entidad extraída que coincide con la anotación de referencia es un **verdadero positivo**; una que el modelo propone sin respaldo en la referencia es un **falso positivo**; y una que la referencia contiene pero el modelo no propuso es un **falso negativo**. Con ellos, la **precisión** —verdaderos positivos sobre el total de propuestas— responde a «de lo que el modelo afirmó, cuánto era cierto», y la **exhaustividad** o *recall* —verdaderos positivos sobre el total de la referencia— a «de lo que había que encontrar, cuánto encontró». Ambas se oponen: un modelo que solo propone lo que tiene clarísimo alcanza alta precisión y baja exhaustividad, y uno que propone cuanto se le ocurre, lo contrario.
+
+El **F1** las resume en una sola cifra mediante su media **armónica**, no aritmética, y esa elección no es un tecnicismo: la media armónica se desploma cuando una de las dos componentes es baja, mientras que la aritmética la disimularía. Un modelo con precisión del 100 % y exhaustividad del 2 % obtendría 51 puntos de media aritmética pero apenas 3,9 de F1. De ahí se sigue una propiedad que sirve como control de coherencia y que este trabajo utiliza para validar sus propios datos: **el F1 nunca puede superar la media aritmética de precisión y exhaustividad**, así que cualquier fila que la exceda delata un error de cálculo.
+
+Interesa además distinguir el error de la invención. La **tasa de alucinación** no compara con la referencia sino con el artículo: mide qué proporción de lo extraído no aparece en el texto de origen. Un modelo puede tener precisión baja por proponer entidades reales del artículo que la anotación no recoge —un error de cobertura de la referencia— sin haber inventado nada; y puede, al contrario, fabricar nombres plausibles procedentes de su memoria de entrenamiento. Las dos situaciones exigen respuestas distintas, y en un dominio de cumplimiento normativo la segunda es la grave.
+
+El coste se mide con dos indicadores complementarios. La **latencia** registra los segundos que tarda el sistema en procesar un artículo, pero no permite comparar modelos entre sí cuando las corridas usaron distinta concurrencia o distinto hardware, como ocurre en este estudio. El **índice Tok/s/B** sí lo permite: divide los tokens generados por segundo entre los miles de millones de parámetros del modelo, y expresa por tanto cuánto rendimiento se obtiene por unidad de capacidad instalada. Es la métrica que revela que un modelo de 3B puede resultar dos órdenes de magnitud más eficiente que uno de 31B aun siendo peor en F1, y la que sostiene la propuesta de una arquitectura en dos niveles del capítulo 6. Se completa con la **memoria de vídeo** ocupada, que determina qué modelos caben en cada máquina y que fue el factor limitante del estudio.
 
 El cotejo entre la entidad extraída y la de referencia es **difuso a nivel de caracteres** —distancia de Indel normalizada, descrita en §3.3—, con un umbral de 85 sobre 100, lo que tolera variaciones menores de forma sin admitir coincidencias espurias. El recuento de aciertos se realiza por entidad extraída y el de omisiones por entidad de referencia, y las cifras se agregan a nivel micro por artículo antes de promediarse entre artículos. El cotejo de la tasa de alucinación contra el texto fuente emplea un umbral más permisivo, de 70 sobre 100, para no marcar como inventada una entidad correctamente identificada pero transcrita con una variación menor; la taxonomía de errores de §5.4 usa un corte de 50.
 
@@ -398,7 +399,9 @@ El análisis cualitativo de las extracciones revela tres patrones de error recur
 > `tokens_per_sec`), salvo la fila de `gemma4:31b`, medida sobre
 > `results/gemma4_31b_n15_REMOTO/benchmark_results.csv` (equipo de 48 GB).
 
-> El costo por artículo en el sistema soberano local se estima en USD 0.052, versus USD 8.75 en revisión manual, representando una reducción del **99.4%** en costo unitario.
+El coste por artículo de la columna final merece una precisión, porque es idéntico en las tres filas y eso podría inducir a error: **no mide el coste de cómputo de cada modelo, sino el coste amortizado de la infraestructura**. Se compone de la amortización del equipo a un año, unos USD 0,050 por artículo procesado, más el consumo eléctrico, unos USD 0,002. Al tratarse de un coste de capital repartido entre el volumen procesado, no varía con el modelo elegido; lo que sí varía es cuántos artículos permite procesar ese mismo hardware en el mismo tiempo, y de eso da cuenta el índice Tok/s/B.
+
+Frente a esos USD 0,052, la revisión manual cuesta unos USD 8,75 por artículo, cifra que resulta de valorar el tiempo de un analista de cumplimiento en USD 35 por hora y estimar en quince minutos la revisión de cada noticia. La comparación arroja una reducción del **99,4 %** en coste unitario, si bien conviene leerla con cautela: el sistema automatizado no sustituye al analista, sino que le entrega una preselección que aún debe validar, de modo que el ahorro real depende de cuánto reduzca el volumen que llega a revisión humana.
 
 ### 5.6 De los diccionarios de entidades a la base de conocimientos contextual
 
