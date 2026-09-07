@@ -64,3 +64,33 @@ siguiente reconstrucción la deshace, como ya ocurrió con los diagramas y con e
 
 Declara el resultado en `CURRENT-TASKS.md` §2 **con el conteo de páginas medido**, congela la `_v4` en
 `doc/versions/informe_final/` según `VERSIONES.md` y deja la copia del `.docx` canónico en la raíz.
+
+---
+
+## Cómo cerrar la versión definitiva
+
+Esta propagación es la última prevista: no quedan corridas en ejecución ni cifras por llegar. Si al terminarla
+la verificación sale limpia, la `_v4` **es la versión de entrega** y así conviene declararla.
+
+Antes de congelarla, comprueba una por una estas condiciones. Están tomadas de `plantilla_final-2026.docx`, de
+`tesinas-finales-2026.pdf` y de los cuatro reparos del profesor guía; si alguna falla, avísame en lugar de
+resolverla por tu cuenta.
+
+**Extensión y formato.** Cuerpo de 25 páginas o menos sin contar anexos, sin tapas ni contratapas. Sin páginas
+en blanco ni saltos de página al empezar capítulo. Resumen de 200 palabras como máximo e introducción que no
+pase de tres páginas. Anexos empezando en página nueva, después de las referencias.
+
+**Contenido.** Los nueve capítulos presentes y en orden, del 1 al 9. Los ocho anexos, de la A a la H, con la
+**G íntegra**. Las nueve tablas del cuerpo, con leyenda encima y numeración correlativa, y las llamadas del
+texto apuntando al número correcto. Sin arte ASCII: los esquemas son tablas de Word.
+
+**Coherencia con la fuente.** Las referencias cruzadas siguiendo el mapa renumerado —§2.2→§2.1, §2.5→§2.3,
+§3.3→§3.2, §3.4→§3.3—. Las citas en formato IEEE, numeradas y con su entrada en la bibliografía. Y la URL del
+repositorio visible en el Anexo A.
+
+**Entregables.** Los tres `.docx` sincronizados entre sí y con el Markdown, la copia del `.docx` canónico en la
+raíz del proyecto —lo exige `CLAUDE.md`— y la `_v4` registrada en `VERSIONES.md` con su SHA-256, su conteo de
+páginas y la mención de que es la versión de entrega.
+
+Si algo no cuadra y la solución obliga a recortar texto, no lo recortes: dímelo. Los anexos no computan para el
+límite y tienen hasta 25 páginas propias, así que casi siempre hay sitio donde mover en lugar de suprimir.

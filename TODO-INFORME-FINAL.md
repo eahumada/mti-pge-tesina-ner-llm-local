@@ -607,10 +607,10 @@ un modelo.
 - [x] **Tabla 2 reconstruida (2026-09-07)** desde los CSV re-puntuados: retirados `gemini-3.1-flash-lite` y `nuextract:latest` (fuera del estudio), aplicar
       A1 (`gemma4:31b` → 0.6912) y resolver las dos filas con cifras idénticas (`gemma4:31b` y
       `gemma4:31b-mlx`, ambas 67.83 %).
-- [ ] **(Claude Desktop) Declarar las dos salvedades de datos:** la latencia de `gemma4:31b-cloud` no mide inferencia (está
+- [x] **HECHO (2026-09-07).** Las dos salvedades de datos quedan declaradas en §5.3.5 del informe: la latencia de `gemma4:31b-cloud` no mide inferencia (está
       cuantizada por el `--request-delay`) y las 7 filas de `nemotron-mini:4b` con telemetría en cero.
 - [x] **Renombrado terminológico global** aplicado (§13).
-- [ ] **(Claude Desktop) Cierre de formato del `.docx`** (§2.1-2.5) — encargo en `PROMPT-CLAUDE-DESKTOP-20260907.md`. Verificar el límite de
+- [x] **HECHO (2026-09-07).** Cierre de formato propagado a los tres `.docx` hasta la `_v3`; queda la propagación de las tandas cuarta y quinta (`CURRENT-TASKS §2.12`). Encargo original en `PROMPT-CLAUDE-DESKTOP-20260907.md`. Verificar el límite de
       **25 páginas**: las correcciones B1-B4 añadieron texto.
 
 ### 15.3 Decisión del autor aún abierta
@@ -674,7 +674,7 @@ ambos lados al comparar**, aplicando la reparación al gold *y* a la extracción
 
 #### Decisión del autor — `gpt-oss:20b`
 
-- [ ] **Re-ejecutar `gpt-oss:20b` completo con `num_predict=4096`** (thinking ON, **mismo corpus y mismo
+- [x] **HECHO (2026-09-07).** Re-ejecutado con `num_predict=4096`: 120+120, 0 `failed`, F1 0,5239/0,5567, ΔRAG de −0,097 a **+0,033**. ANOVA rehecho (F=38,2222). Enunciado original: re-ejecutar completo (thinking ON, **mismo corpus y mismo
       evaluador que los demás**, sin tocar el mojibake). El diagnóstico del remoto descartó el bucle de
       repetición y apunta al agotamiento del presupuesto de tokens: 10–40 s por registro al re-ejecutar frente
       a **838 s** en la corrida oficial. **ETA ~1–1,5 h.** El cambio queda **aislado a `gpt-oss`** y el estudio
