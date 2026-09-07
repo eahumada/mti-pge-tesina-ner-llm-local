@@ -8,13 +8,13 @@ eahumada@gmail.com
 
 ## RESUMEN
 
-Las instituciones sujetas a regulaciones AML/KYC deben vigilar grandes volúmenes de noticias no estructuradas buscando entidades de riesgo. Hacerlo manualmente no escala y delegarlo en APIs en la nube expone información sensible a terceros. Este trabajo diseña, implementa y evalúa un sistema soberano de reconocimiento de entidades nombradas (NER) con modelos de lenguaje grande de código abierto ejecutados en local mediante Ollama sobre Apple Silicon, sobre una arquitectura pub/sub multihilo con concurrencia adaptativa (AIMD) y capa Factory/Facade. La validación comparó trece modelos sobre 120 artículos reales en español y 30 del dominio; contrastó la extracción directa con la generación aumentada por recuperación (RAG) contextual y midió las diferencias con ANOVA y Tukey HSD. El beneficio del RAG resulta inversamente proporcional a la capacidad del modelo: solo es significativo en los dos más débiles (+14,5 y +10,8 puntos de F1) y es nulo o adverso en los mayores. Redactar el prompt en español e incorporar ejemplos *few-shot* aporta +11,1 puntos sobre el baseline en inglés, mejora que ninguno de ambos factores logra por separado. El mejor modelo alcanza 80,57 % de F1 sin extracciones fallidas en el corpus del dominio, reduce el costo unitario de revisión y preserva la confidencialidad.
+Las instituciones sujetas a regulaciones AML/KYC deben vigilar grandes volúmenes de noticias no estructuradas buscando entidades de riesgo. Hacerlo manualmente no escala y delegarlo en APIs en la nube expone información sensible a terceros. Este trabajo diseña, implementa y evalúa un sistema soberano de reconocimiento de entidades nombradas (NER) con modelos de lenguaje grande de código abierto ejecutados en local mediante Ollama sobre Apple Silicon, sobre una arquitectura pub/sub multihilo con concurrencia adaptativa (AIMD) y capa Factory/Facade. La validación comparó trece modelos sobre 120 artículos reales en español y 30 del dominio; contrastó la extracción directa con la generación aumentada por recuperación (RAG) contextual y midió las diferencias con ANOVA y Tukey HSD. El beneficio del RAG resulta inversamente proporcional a la capacidad del modelo: solo es significativo en los dos más débiles (+14,5 y +10,8 puntos de F1) y es nulo o adverso en los mayores. Redactar el prompt en español e incorporar ejemplos *few-shot* aporta +10,4 puntos sobre el baseline en inglés, mejora que ninguno de ambos factores logra por separado. El mejor modelo alcanza 80,57 % de F1 sin extracciones fallidas en el corpus del dominio, reduce el costo unitario de revisión y preserva la confidencialidad.
 
 **Palabras clave:** Reconocimiento de Entidades Nombradas (NER), Modelos de Lenguaje Grande (LLM), Cumplimiento Normativo (AML/KYC), Soberanía de Datos, Generación Aumentada por Recuperación (RAG).
 
 ## ABSTRACT
 
-Financial institutions subject to AML/KYC regulations must monitor large volumes of unstructured news for risk entities. Doing so manually does not scale, and delegating it to cloud APIs exposes sensitive information to third parties. This work designs, implements and evaluates a sovereign Named Entity Recognition (NER) system using open-source Large Language Models executed locally through Ollama on Apple Silicon hardware, on a multithreaded pub/sub architecture with adaptive concurrency control (AIMD) and a Factory/Facade layer. Validation compared thirteen models on 120 real Spanish-language articles and 30 domain ones; contrasted direct extraction with contextual retrieval-augmented generation (RAG) and measured the differences with ANOVA and Tukey HSD. The benefit of RAG is inversely proportional to model capacity: it is significant only in the two weakest models (+14.5 and +10.8 F1 points) and is null or adverse in the larger ones. Writing the prompt in Spanish and adding *few-shot* examples yields +11.1 points over the English baseline, an improvement neither factor achieves alone. The best model reaches 80.57 % F1 with no failed extractions on the domain corpus, lowers the unit cost of review and preserves confidentiality.
+Financial institutions subject to AML/KYC regulations must monitor large volumes of unstructured news for risk entities. Doing so manually does not scale, and delegating it to cloud APIs exposes sensitive information to third parties. This work designs, implements and evaluates a sovereign Named Entity Recognition (NER) system using open-source Large Language Models executed locally through Ollama on Apple Silicon hardware, on a multithreaded pub/sub architecture with adaptive concurrency control (AIMD) and a Factory/Facade layer. Validation compared thirteen models on 120 real Spanish-language articles and 30 domain ones; contrasted direct extraction with contextual retrieval-augmented generation (RAG) and measured the differences with ANOVA and Tukey HSD. The benefit of RAG is inversely proportional to model capacity: it is significant only in the two weakest models (+14.5 and +10.8 F1 points) and is null or adverse in the larger ones. Writing the prompt in Spanish and adding *few-shot* examples yields +10.4 points over the English baseline, an improvement neither factor achieves alone. The best model reaches 80.57 % F1 with no failed extractions on the domain corpus, lowers the unit cost of review and preserves confidentiality.
 
 **Keywords:** Named Entity Recognition (NER), Large Language Models (LLM), Regulatory Compliance (AML/KYC), Data Sovereignty, Retrieval-Augmented Generation (RAG).
 
@@ -29,7 +29,6 @@ Financial institutions subject to AML/KYC regulations must monitor large volumes
 7. [Conclusiones y Trabajo Futuro](#7-conclusiones-y-trabajo-futuro)
 8. [Referencias Bibliográficas](#8-referencias-bibliográficas)
 9. [Anexos](#9-anexos)
-
 
 ## 1. INTRODUCCIÓN
 
@@ -133,7 +132,17 @@ Decidida la estrategia de recuperación, queda el problema de dónde ejecutar el
 
 Entre los entornos de ejecución disponibles, **llama.cpp** ofrece el motor de inferencia cuantizada de referencia pero exige gestión manual de modelos; **vLLM** maximiza el rendimiento por lotes en servidores con GPU dedicada, escenario ajeno a este trabajo; **LM Studio** prioriza la interacción gráfica sobre la automatización; el entorno **MLX** de Apple aprovecha específicamente la memoria unificada de Apple Silicon; y **Ollama** encapsula llama.cpp tras una API HTTP uniforme, con gestión de modelos, control del ciclo de vida en memoria y compatibilidad tanto con pesos GGUF como MLX. Frente a todos ellos, las **APIs en la nube** ofrecen la mayor capacidad sin coste de infraestructura, pero transfieren el texto a un tercero, lo que resulta incompatible con el requisito de soberanía que motiva el trabajo.
 
-### 2.4 Estado del arte y criterios de selección
+### 2.4 Validación estadística de comparaciones múltiples
+
+Comparar el desempeño de varios modelos exige distinguir las diferencias reales de las que produce el azar, porque cada artículo del corpus tiene su propia dificultad y un modelo puede aventajar a otro por haberle tocado un reparto favorable. El instrumento habitual es el **análisis de varianza (ANOVA) de una vía**, que contrasta la hipótesis nula de que todos los grupos comparados proceden de la misma población. Su estadístico F compara la variabilidad *entre* grupos con la variabilidad *dentro* de cada uno: cuanto mayor es F, más difícil resulta atribuir las diferencias observadas a la variación interna. Un valor p pequeño permite rechazar esa hipótesis nula, pero el ANOVA solo indica que **alguna** diferencia existe, no cuál.
+
+Responder a esa segunda pregunta corresponde a las **pruebas post-hoc**, y aquí aparece un problema de fondo. Comparar todos los pares de un conjunto de veintiséis grupos supone 325 contrastes, y al 5 % de significancia cabría esperar unos dieciséis positivos por puro azar. La prueba de **Tukey HSD** —*Honestly Significant Difference*— corrige ese efecto controlando la tasa de error **por familia**: garantiza que la probabilidad de cometer algún falso positivo en el conjunto completo de comparaciones siga siendo del 5 %, no del 5 % en cada una. Lo consigue sustituyendo la distribución t por la del **rango estudentizado**, más ancha y por tanto más exigente. Es una prueba deliberadamente conservadora, y esa es su virtud: una diferencia que la supera resulta difícil de discutir.
+
+Dos instrumentos complementan la lectura. Los **intervalos de confianza al 95 %** expresan el margen dentro del cual cabe esperar el valor real de cada media, de modo que dos intervalos muy solapados advierten de una diferencia poco sólida aunque las medias difieran. Y el **análisis de sensibilidad** recalcula las métricas excluyendo las observaciones atípicas —en este trabajo, los artículos de longitud inusual—, para comprobar que ninguna conclusión depende de unos pocos casos extremos.
+
+Conviene retener una asimetría de interpretación: que una diferencia **no** alcance significancia no demuestra que no exista, solo que los datos disponibles no bastan para descartar el azar.
+
+### 2.5 Estado del arte y criterios de selección
 
 La Tabla 1 posiciona este trabajo respecto de investigaciones recientes en NER para dominios financieros y regulatorios.
 
@@ -159,12 +168,11 @@ El primero —prescindir de datos etiquetados— descarta las cuatro primeras fa
 
 El segundo criterio, la soberanía del dato, excluye las APIs comerciales: aventajan a los modelos abiertos en capacidad, pero transfieren el texto a un tercero. Se opta por ejecución íntegramente local y, entre los entornos revisados en §2.3, por Ollama. Pesaron tres razones: expone una API uniforme que permite intercambiar modelos sin tocar el código de orquestación, gestiona el ciclo de vida de los pesos en memoria —requisito imprescindible para encadenar modelos que no caben a la vez— y admite pesos GGUF y MLX, lo que habilita comparar ambas rutas de cuantización sobre el mismo arnés. Los modelos en la nube se conservan solo como línea base de comparación, no como parte de la solución.
 
-El tercer criterio, operar sobre hardware de consumo, obliga a cuantizar a 4 bits y a gestionar la memoria de forma explícita, según se detalla en §3.2. El cuarto, producir salida verificable, se traduce en exigir al modelo un objeto JSON de esquema fijo, validado al recibirlo y con una ruta de recuperación cuando el análisis sintáctico falla: es la contramedida directa al principal inconveniente de la familia elegida. El quinto, permitir la comparación empírica, exige que las variantes de *prompt* y de estrategia de recuperación se seleccionen por configuración y no modificando el código, así que cada corrida quede definida por un conjunto de parámetros reproducible.
+El tercer criterio, operar sobre hardware de consumo, obliga a cuantizar los pesos —a cuatro bits en la mayoría de los casos— y a gestionar la memoria de forma explícita, según se detalla en §3.2. El cuarto, producir salida verificable, se traduce en exigir al modelo un objeto JSON de esquema fijo, validado al recibirlo y con una ruta de recuperación cuando el análisis sintáctico falla: es la contramedida directa al principal inconveniente de la familia elegida. El quinto, permitir la comparación empírica, exige que las variantes de *prompt* y de estrategia de recuperación se seleccionen por configuración y no modificando el código, así que cada corrida quede definida por un conjunto de parámetros reproducible.
 
 ### 3.2 Arquitectura, proveedores y orquestación
 
 El sistema se organiza en cinco capas funcionales con responsabilidades separadas, así que cada una pueda evolucionar sin arrastrar a las demás.
-
 
 | Capa | Módulo(s) | Detalle técnico |
 |:---|:---|:---|
@@ -173,8 +181,6 @@ El sistema se organiza en cinco capas funcionales con responsabilidades separada
 | 3. Proveedores LLM | Factory / Facade | `OllamaProvider`, `OpenAIProvider`, `AnthropicProvider` |
 | 4. Evaluación | `evaluator.py` + `statistics.py` | F1 / Precisión / Recall / ANOVA / Tukey HSD |
 | 5. Visualización | `dashboard.py` (Streamlit) | Siete pestañas: métricas, alucinaciones, ANOVA, eficiencia |
-
-
 
 La **capa de datos** carga el corpus desde un fichero JSON y valida cada registro contra un esquema antes de admitirlo, garantizando que todo artículo procesado dispone de texto y de anotación de referencia. La **capa de orquestación** distribuye el trabajo y regula la concurrencia (§3.2). La **capa de proveedores** aísla la heterogeneidad de las APIs. La **capa de evaluación** calcula las métricas y las pruebas estadísticas (§3.3). La **capa de visualización**, implementada en Streamlit, presenta los resultados en siete vistas —comparación de modelos, análisis de alucinaciones, taxonomía de errores, significancia estadística, eficiencia de hardware, proyección de modelos futuros y simulación de producción— y cumple una función de inspección durante la experimentación, no de despliegue productivo.
 
@@ -190,22 +196,21 @@ class LLMProvider(ABC):
         ...
 ```
 
-
 La selección del proveedor se resuelve por el prefijo del identificador del modelo, así que añadir un motor nuevo no requiere modificar el orquestador. Esta indirección tuvo una consecuencia práctica relevante durante la experimentación: un modelo abierto cuyo nombre comenzaba por `gpt-` era enrutado erróneamente hacia la API comercial, fallo que se detectó y corrigió discriminando por la presencia de etiqueta de versión propia de los identificadores locales. El episodio ilustra que la abstracción por convención de nombres exige verificación explícita del enrutamiento efectivo.
 
 El núcleo de ejecución es un canal de publicación y suscripción con múltiples hilos. El productor publica lotes de artículos por modelo en una cola en memoria —con interfaz compatible con Redis para un eventual despliegue distribuido— y los consumidores los procesan en paralelo.
 
-El número de consumidores no es fijo, sino que lo regula un controlador **AIMD** (*Additive Increase, Multiplicative Decrease*), política tomada del control de congestión en redes. Mientras el sistema permanece estable —sin errores de limitación de tasa ni excepciones— durante una ventana de 600 segundos, el controlador **añade un consumidor cada 120 segundos** hasta un techo del 75 % del máximo configurado; ante el primer error de saturación **reduce los consumidores a la mitad**. Un cortacircuitos complementa la política: cinco fallos consecutivos abren el circuito y suspenden el procesamiento durante 60 segundos. La asimetría entre el aumento prudente y el recorte agresivo es deliberada, pues el coste de saturar un servicio de inferencia —reintentos, respuestas truncadas, penalización por cuota— excede con mucho al de infrautilizarlo. Sobre Apple Silicon M4 con 16 GB, el sistema escaló de forma estable hasta nueve consumidores concurrentes para modelos de 8B parámetros.
+El número de consumidores no es fijo: lo regula un controlador **AIMD** (*Additive Increase, Multiplicative Decrease*), política tomada del control de congestión en redes. Mientras el sistema permanece estable —sin errores de limitación de tasa ni excepciones— durante una ventana de 600 segundos, el controlador **añade un consumidor cada 120 segundos** hasta un techo del 75 % del máximo configurado; ante el primer error de saturación **reduce los consumidores a la mitad**. Un cortacircuitos complementa la política: cinco fallos consecutivos abren el circuito, que fija la concurrencia en un único consumidor y sondea la recuperación tras un enfriamiento de 300 segundos; un primer lote exitoso lo vuelve a cerrar. La asimetría entre el aumento prudente y el recorte agresivo es deliberada, pues el coste de saturar un servicio de inferencia —reintentos, respuestas truncadas, penalización por cuota— excede con mucho al de infrautilizarlo. El valor que el controlador recalcula se aplica al arrancar cada modelo o condición, mientras que el paralelismo interno de cada lote lo adopta de inmediato. Sobre el equipo de 48 GB —catorce núcleos, techo del controlador en nueve— el sistema escaló de forma estable hasta nueve consumidores concurrentes para el conjunto de modelos locales evaluados, de 1,5B a 31B; con lotes de tres registros, esos nueve consumidores equivalen a veintisiete extracciones simultáneas.
 
-La gestión de memoria merece atención propia porque condicionó el alcance del estudio. Al terminar cada modelo se libera explícitamente su ocupación de GPU invocando la API de generación con `keep_alive=0`. Ahora bien, ese parámetro evita retener varios modelos a la vez, **pero no reduce el footprint de uno solo**, y esa distinción resultó decisiva. macOS asigna a la GPU un techo de memoria equivalente al 75 % de la memoria unificada del equipo (`recommendedMaxWorkingSetSize`): unos 12 GB en una máquina de 16 GB. Los modelos de hasta ~12B cuantizados a 4 bits ocupan entre 7 y 9 GB y caben con holgura; los de 31B alcanzan un footprint operativo de ~24,7 GB —unos 18,7 GB de pesos más la caché de claves y valores y el sobrecoste de inferencia— y **no pueden cargarse en 16 GB ni siquiera de forma serial**. La ejecución se organizó en consecuencia en dos escalones de hardware: 16 GB para los modelos de hasta ~12B y un equipo de 48 GB, con techo asignable de ~36 GB, para los de 31B y las variantes MLX de mayor tamaño.
+La gestión de memoria merece atención propia porque condicionó el alcance del estudio. Al terminar cada modelo se libera explícitamente su ocupación de GPU invocando la API de generación con `keep_alive=0`. Ahora bien, ese parámetro evita retener varios modelos a la vez, **pero no reduce el footprint de uno solo**, y esa distinción resultó decisiva. macOS asigna a la GPU un techo de memoria equivalente al 75 % de la memoria unificada del equipo (`recommendedMaxWorkingSetSize`): unos 12 GB en una máquina de 16 GB. Los modelos GGUF de 7B a 12B ocupan entre 7 y 9 GB —y los compactos de 1,5B a 3B, entre 1,7 y 4 GB—, así que caben con holgura; la compilación MLX de 12B, en cambio, alcanza 15–16 GB y desborda ese techo. La compilación MLX de 31B llega a un footprint operativo de ~24,6 GB medidos sobre N=15 y hasta ~27 GB sobre N=120, mientras que la compilación GGUF se estabiliza en ~18,8 GB de pesos; ninguna de las dos **puede cargarse en 16 GB ni siquiera de forma serial**. La cuantización, además, no es homogénea: Q4_K_M en la mayoría de los pesos GGUF, Q4_0 en `mistral-nemo:latest`, MXFP4 en `gpt-oss:20b` y precisión mixta de cuatro bits en las compilaciones MLX, mientras que `gemma4:31b-cloud` corre en BF16 y por eso no compite en igualdad de condiciones de memoria. La ejecución se organizó en consecuencia en dos escalones de hardware, repartidos por footprint medido y no por número de parámetros: 16 GB para los modelos que se mantuvieron por debajo de ~12 GB —los GGUF de 1,5B a 12B— y un equipo de 48 GB, con techo asignable de ~36 GB, para el resto, esto es, los de 31B, las compilaciones MLX y `gpt-oss:20b`.
 
 ### 3.3 Módulo de evaluación
 
 La comparación entre lo extraído y la anotación de referencia no puede ser literal, porque una diferencia de puntuación o un artículo antepuesto invalidarían una extracción correcta. El evaluador emplea por ello **emparejamiento difuso a nivel de caracteres**, implementado con la función `ratio` de la biblioteca *rapidfuzz*, que normaliza la **distancia de Indel** —el número mínimo de inserciones y supresiones necesarias para transformar una cadena en la otra, variante de la distancia de Levenshtein que excluye las sustituciones— a una escala de 0 a 100 mediante la expresión `100 × (1 − d / (|a| + |b|))`. Ambas cadenas se pasan a minúsculas antes de compararlas, así que la coincidencia es insensible a mayúsculas. Se acepta como acierto toda similitud igual o superior a un umbral configurable, fijado en **85**.
 
-La elección del umbral es un compromiso: por debajo se admiten emparejamientos entre nombres distintos que comparten apellido; por encima se rechazan variantes legítimas. Conviene explicitar dos límites de esta métrica, porque condicionan la lectura de los resultados. Al operar sobre caracteres y no sobre palabras, **es sensible al orden**: «Juan Pérez» y «Pérez Juan» obtienen 50 sobre 100 y no casan, mientras que una métrica basada en tokens les daría 100. Y al normalizar por la longitud conjunta, **penaliza las omisiones proporcionalmente**: «Banco Santander» frente a «Santander» obtiene 75 y queda por debajo del umbral, de modo que una extracción parcialmente correcta cuenta como error. Ambos efectos empujan las cifras a la baja, nunca al alza, así que el desempeño reportado es conservador.
+La elección del umbral es un compromiso: por debajo se admiten emparejamientos entre nombres distintos que comparten apellido; por encima se rechazan variantes legítimas. Conviene explicitar dos límites de esta métrica, porque condicionan la lectura de los resultados. Al operar sobre caracteres y no sobre palabras, **es sensible al orden**: «Juan Pérez» y «Pérez Juan» obtienen 50 sobre 100 y no casan, mientras que una métrica basada en tokens les daría 100. Y al normalizar por la longitud conjunta, **penaliza las omisiones proporcionalmente**: «Banco Santander» frente a «Santander» obtiene 75 y queda por debajo del umbral, de modo que una extracción parcialmente correcta cuenta como error. Ambos efectos empujan las cifras a la baja. En sentido contrario opera el conteo de aciertos, que se realiza por entidad extraída: varias menciones que casan con una misma entidad de referencia suman cada una un acierto, lo que puede elevar la exhaustividad en un pequeño número de registros —entre el 2 % y el 6 % de ellos según la corrida—. El efecto neto observado es conservador.
 
-Sobre esa base se calculan precisión, exhaustividad y F1 por artículo, que después se promedian, y una **tasa de alucinación** que mide algo distinto de las anteriores: no compara con la anotación de referencia sino con el **texto de origen**. Una entidad se considera alucinada cuando no aparece literalmente en el artículo y, además, su mejor similitud contra las ventanas deslizantes del texto —del mismo número de palabras que la entidad— queda por debajo de **70**, umbral deliberadamente más laxo que el 85 del emparejamiento. La distinción importa: una entidad correctamente extraída del artículo pero ausente de la anotación de referencia cuenta como falso positivo, no como alucinación, porque el modelo no la invento. El módulo incorpora además la validación estadística: ANOVA de una vía para contrastar si las diferencias entre modelos y modos son significativas, pruebas post-hoc de Tukey HSD para identificar qué pares concretos difieren, intervalos de confianza al 95 % por grupo y un análisis de sensibilidad que recalcula las métricas excluyendo los artículos atípicamente largos, con el fin de comprobar que ningún resultado depende de unos pocos casos extremos.
+Sobre esa base se calculan precisión, exhaustividad y F1 por artículo, que después se promedian, y una **tasa de alucinación** que mide algo distinto de las anteriores: no compara con la anotación de referencia sino con el **texto de origen**. Una entidad se considera alucinada cuando no aparece literalmente en el artículo y, además, su mejor similitud contra las ventanas deslizantes del texto —del mismo número de palabras que la entidad— queda por debajo de **70**, umbral deliberadamente más laxo que el 85 del emparejamiento. La distinción importa: una entidad correctamente extraída del artículo pero ausente de la anotación de referencia cuenta como falso positivo, no como alucinación, porque el modelo no la inventó. El módulo incorpora además la validación estadística: ANOVA de una vía para contrastar si las diferencias entre modelos y modos son significativas, pruebas post-hoc de Tukey HSD para identificar qué pares concretos difieren, intervalos de confianza al 95 % por grupo y un análisis de sensibilidad que recalcula las métricas excluyendo los artículos atípicamente largos, con el fin de comprobar que ningún resultado depende de unos pocos casos extremos.
 
 ## 4. DISEÑO EXPERIMENTAL
 
@@ -249,7 +254,7 @@ Esos ejemplos cumplen tres funciones que conviene distinguir. Fijan el **formato
 
 Los tres ejemplos empleados en la configuración few-shot en español cubren un caso de persona sancionada, uno de organización y uno de mención ambigua; se reproducen íntegros en el Anexo B.
 
-Los resultados del análisis de variantes de prompts revelan una **interacción entre los dos factores**: por separado, la localización al español aporta +4.38 pp de F1 y los ejemplos *few-shot* en inglés no aportan nada (−0.73 pp), pero **su combinación alcanza +11.12 pp** (FS-ES: 74.44% frente al 64.05% del baseline ZS-EN). Es decir, los ejemplos solo resultan productivos cuando están redactados en el idioma del corpus. La configuración FS-ES lidera además en Precisión (66.78%) y Recall (86.87%) sin penalización en alucinaciones (0.20%, idéntica a ZS-ES). Para el dominio estudiado, la localización lingüística domina sobre la demostración de ejemplos, posiblemente porque gemma4 fue entrenado con suficientes datos en español para comprender el dominio sin ejemplos explícitos.
+Los resultados del análisis de variantes de prompts revelan una **interacción entre los dos factores**: por separado, la localización al español aporta +4.38 pp de F1 y los ejemplos *few-shot* en inglés no aportan nada (−0.72 pp), pero **su combinación alcanza +10.40 pp** (FS-ES: 74.44% frente al 64.05% del baseline ZS-EN). Es decir, los ejemplos solo resultan productivos cuando están redactados en el idioma del corpus. La configuración FS-ES lidera además en Precisión (66.78%) y Recall (86.87%) sin penalización en alucinaciones (0.20%, idéntica a ZS-ES). Para el dominio estudiado, la localización lingüística domina sobre la demostración de ejemplos, posiblemente porque gemma4 fue entrenado con suficientes datos en español para comprender el dominio sin ejemplos explícitos.
 
 ### 4.4 Métricas de Evaluación
 
@@ -258,11 +263,11 @@ Los resultados del análisis de variantes de prompts revelan una **interacción 
 | **F1-Score** | Media armónica entre Precisión y Recall (métrica principal) |
 | **Precisión** | TP / (TP + FP) — Exactitud de las entidades extraídas |
 | **Recall** | TP / (TP + FN) — Cobertura de las entidades reales |
-| **Hallucination Rate** | Entidades extraídas sin correspondencia en GT / Total extraídas |
+| **Hallucination Rate** | Entidades extraídas que no aparecen en el texto del artículo / Total extraídas (alucinación extrínseca) |
 | **Latencia (s)** | Tiempo promedio por artículo en segundos |
 | **Índice Tok/s/B** | Tokens por segundo normalizados por cada mil millones (10⁹) de parámetros |
 
-El cotejo entre la entidad extraída y la de referencia es **difuso a nivel de caracteres** —distancia de Indel normalizada, descrita en §3.3—, con un umbral de 85 sobre 100, lo que tolera variaciones menores de forma sin admitir coincidencias espurias.
+El cotejo entre la entidad extraída y la de referencia es **difuso a nivel de caracteres** —distancia de Indel normalizada, descrita en §3.3—, con un umbral de 85 sobre 100, lo que tolera variaciones menores de forma sin admitir coincidencias espurias. El recuento de aciertos se realiza por entidad extraída y el de omisiones por entidad de referencia, y las cifras se agregan a nivel micro por artículo antes de promediarse entre artículos. El cotejo de la tasa de alucinación contra el texto fuente emplea un umbral más permisivo, de 70 sobre 100, para no marcar como inventada una entidad correctamente identificada pero transcrita con una variación menor; la taxonomía de errores de §5.4 usa un corte de 50.
 
 **Convención ante la extracción vacía.** Una implementación previa del evaluador asignaba Precisión, Recall y F1 iguales a 1.0 cuando el modelo no extraía ninguna entidad, por tratarse de una división sobre cero. Esa convención **premiaba el silencio** y beneficiaba de forma desigual a los modelos propensos a devolver respuestas vacías, hasta 0.21 de F1 en el caso más extremo. La convención empleada en este trabajo asigna **0.0** en ese supuesto, y reserva el valor 1.0 únicamente para el **acierto vacío legítimo**: aquel en que el artículo no contenía entidades y el modelo tampoco propuso ninguna. Todas las corridas del estudio se re-puntuaron con esta convención a partir de los recuentos de aciertos y errores almacenados, **sin repetir la inferencia**, así que la totalidad de las cifras reportadas comparte un criterio único.
 
@@ -294,7 +299,11 @@ La Tabla 2 presenta los resultados consolidados del benchmark completo agrupados
 > (`gemma4_31b_n15_REMOTO`), las dos variantes de `gemma4:latest` (`ablacion_n15_REMOTO`) y `gemma4:31b-cloud`
 > (`cloud_n15_limpio_20260905`). Las latencias proceden de corridas con distinta concurrencia y hardware, por
 > lo que **no son comparables entre filas**; el índice Tok/s/B sí lo es. Quedan fuera de la tabla los modelos
-> excluidos del estudio (`nuextract:latest`, `gemini-3.1-flash-lite`, `minimax-m3`).
+> excluidos del estudio (`nuextract:latest`, `gemini-3.1-flash-lite`, `minimax-m3`). La columna «Parámetros» recoge
+> la denominación nominal de la etiqueta del modelo, que no siempre coincide con el recuento del manifiesto —1,8B en
+> `deepseek-r1:1.5b`, 4,2B en `nemotron-mini:4b`, 8,2B en `qwen3:8b`, 12,2B en `mistral-nemo`, 31,3B en `gemma4:31b`—,
+> y el índice Tok/s/B se calcula sobre la nominal. `gemma4:31b-cloud` corre además en BF16 sobre ~32,7B parámetros sin
+> cuantizar, así que su footprint no es comparable con el de las compilaciones locales.
 
 > **Hallazgo 1:** la familia `gemma4` copa las cinco primeras posiciones. `gemma4:latest` con prompt *few-shot* en español (74.44%) supera a los dos modelos de 31B, a un tercio de su tamaño.  
 > **Hallazgo 2:** `gemma4:31b` lidera en Recall entre los locales (86.80%) con una tasa de alucinación de 0.16%, y su contraparte cloud alcanza un Recall equivalente (86.88%).  
@@ -307,13 +316,15 @@ La Tabla 2 presenta los resultados consolidados del benchmark completo agrupados
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
 | Zero-shot Inglés (Baseline) | 64.05% | 57.69% | 77.17% | 0.20% | 157.90 | — |
 | Zero-shot Español | 68.43% | 60.68% | 83.49% | 0.20% | 159.90 | **+4.38 pp** |
-| Few-shot Inglés | 63.32% | 55.81% | 75.81% | 0.57% | 203.40 | −0.73 pp |
-| Few-shot Español | **74.44%** | **66.78%** | **86.87%** | 0.20% | 197.80 | **+11.12 pp** |
+| Few-shot Inglés | 63.32% | 55.81% | 75.81% | 0.57% | 203.40 | −0.72 pp |
+| Few-shot Español | **74.44%** | **66.78%** | **86.87%** | 0.20% | 197.80 | **+10.40 pp** |
 
 > Medido sobre `results/ablacion_n15_REMOTO/benchmark_results.csv` (N=15, modo `entities`), con el corrector
-> de puntuación aplicado.
+> de puntuación aplicado. El ANOVA de una vía sobre las cuatro configuraciones no alcanza significancia
+> (F = 1,1379; p = 0,3417) ni la alcanza ninguna comparación de Tukey, consecuencia de N=15: los deltas deben
+> leerse como una tendencia consistente y no como una diferencia demostrada.
 
-> **Hallazgo 4:** ninguno de los dos factores basta por separado —la localización al español aporta +4.38 pp y los ejemplos *few-shot* en inglés restan 0.73 pp—, pero **su combinación alcanza +11.12 pp** sobre el baseline ZS-EN, con el mejor Recall del conjunto (86.87%). Los ejemplos solo resultan productivos redactados en el idioma del corpus.
+> **Hallazgo 4:** ninguno de los dos factores basta por separado —la localización al español aporta +4.38 pp y los ejemplos *few-shot* en inglés restan 0.72 pp—, pero **su combinación alcanza +10.40 pp** sobre el baseline ZS-EN, con el mejor Recall del conjunto (86.87%). Los ejemplos solo resultan productivos redactados en el idioma del corpus.
 
 ### 5.3 Validación Estadística sobre el Corpus del Dominio (N=30)
 
@@ -336,7 +347,7 @@ Sobre el corpus real N=120 descrito en §4.1.3 se ejecutó el mismo protocolo (A
 
 | Modelo | F1 baseline | F1 KB RAG | Δ RAG | Δ significativo |
 |:---|:---:|:---:|:---:|:---:|
-| gemma4:31b-cloud | 62.38% | 61.85% | −0.53 pp | no |
+| gemma4:31b-cloud | 62.38% | 61.85% | −0.54 pp | no |
 | gemma4:31b-mlx | **59.25%** | 59.07% | −0.18 pp | no |
 | gemma4:12b-mlx | 56.18% | 58.46% | +2.28 pp | no |
 | gemma4:latest | 55.91% | 54.74% | −1.17 pp | no |
@@ -365,9 +376,9 @@ Sobre el corpus real N=120 descrito en §4.1.3 se ejecutó el mismo protocolo (A
 
 > **Dos salvedades de procedencia.** (i) La latencia de `gemma4:31b-cloud` **no mide inferencia**: quedó cuantizada por el `--request-delay` introducido para sortear el límite de peticiones del servicio (114 de sus 240 filas registran exactamente 1,02 s). Su F1 es válido; su latencia y sus tokens/s no deben usarse en comparaciones de eficiencia. (ii) Siete filas de `nemotron-mini:4b` tienen `latencia = 0` y `0 tokens/s` porque se re-extrajeron fuera del arnés de lotes tras un fallo de contexto; sus valores de precisión, *recall* y F1 son reales, pero su telemetría no existe.
 
-El ANOVA de una vía sobre los veintiséis grupos arroja **F = 38,2222** con **p = 3,4453 × 10⁻¹⁶⁰**, de modo que se rechaza la hipótesis nula: las diferencias de desempeño entre modelos y modos son estadísticamente significativas, con una potencia muy superior a la del corpus del dominio, donde la comparación entre las dos compilaciones de 31B no alcanzaba significancia. El post-hoc de Tukey identifica 172 comparaciones significativas de las 325 posibles; pero al contrastar cada modelo consigo mismo —extracción directa frente a KB RAG— la mejora solo supera la corrección por comparaciones múltiples en `nemotron-mini:4b`, con 14,52 puntos, y en `llama3.2:latest`, con 10,82.
+El ANOVA de una vía sobre los veintiséis grupos arroja **F = 38,2222** con **p = 3,4453 × 10⁻¹⁶⁰**, de modo que se rechaza la hipótesis nula: las diferencias de desempeño entre modelos y modos son estadísticamente significativas, con una potencia muy superior a la del corpus del dominio, donde la comparación entre las dos compilaciones de 31B no alcanzaba significancia. El post-hoc de Tukey identifica 158 comparaciones significativas de las 325 posibles; pero al contrastar cada modelo consigo mismo —extracción directa frente a KB RAG— la mejora solo supera la corrección por comparaciones múltiples en `nemotron-mini:4b`, con 14,52 puntos, y en `llama3.2:latest`, con 10,82. Conviene declarar una limitación del contraste: los veintiséis grupos evalúan los mismos 120 artículos, de modo que las observaciones están apareadas y un modelo de medidas repetidas sería el procedimiento estrictamente correcto. La homocedasticidad se verifica (Levene, p = 0,18) y, al ser el diseño pareado más potente que el independiente, la significancia obtenida por esta vía es conservadora.
 
-Ese resultado dibuja el hallazgo central del estudio: **el beneficio del KB RAG es inversamente proporcional a la capacidad del modelo**. Aporta de forma demostrable en los dos modelos más débiles, es positivo pero no concluyente en la franja intermedia y se anula o revierte en los de mayor capacidad —−0,53 y −0,18 puntos en los dos de 31B—, que ya siguen correctamente las instrucciones sin contexto adicional. Diez de los trece modelos mejoran, aunque solo dos lo hagan de manera estadísticamente sólida.
+Ese resultado dibuja el hallazgo central del estudio: **el beneficio del KB RAG es inversamente proporcional a la capacidad del modelo**. Aporta de forma demostrable en los dos modelos más débiles, es positivo pero no concluyente en la franja intermedia y se anula o revierte en los de mayor capacidad —−0,54 y −0,18 puntos en los dos de 31B—, que ya siguen correctamente las instrucciones sin contexto adicional. Nueve de los trece modelos mejoran, aunque solo dos lo hagan de manera estadísticamente sólida.
 
 **Lectura conjunta con el corpus N=30 (§5.3):** el mejor F1 local sobre N=120 (`gemma4:31b-mlx`: 59.25%) es menor que el de N=30 (`gemma4:31b-mlx`: 80.57%), lo esperable dado que los artículos reales de CoNLL-2002 ES son más largos y heterogéneos que los breves (~200 caracteres) del corpus sintético N=30, diseñado para el dominio AML/KYC. Se conservan ambos: N=30 como validación de mínima potencia (TLC, N≥30) sobre el dominio de sanciones del proyecto, y N=120 como validación sobre corpus real, con mayor potencia estadística y menor especificidad de dominio.
 
@@ -383,20 +394,21 @@ El análisis cualitativo de las extracciones revela tres patrones de error recur
 | gemma4:31b-mlx | 24,607 | 22.80 | 31 | 0.74 | $0.052 |
 | llama3.2 (3B) | 4,018 | 79.35 | 3 | 26.5 | $0.052 |
 
-> Valores medidos sobre `benchmark_results.csv` (subconjunto `_baseline`, N=15; columnas `vram_mb` y `tokens_per_sec`).
+> Valores medidos sobre `benchmark_results.csv` (subconjunto `_baseline`, N=15; columnas `vram_mb` y
+> `tokens_per_sec`), salvo la fila de `gemma4:31b`, medida sobre
+> `results/gemma4_31b_n15_REMOTO/benchmark_results.csv` (equipo de 48 GB).
 
 > El costo por artículo en el sistema soberano local se estima en USD 0.052, versus USD 8.75 en revisión manual, representando una reducción del **99.4%** en costo unitario.
 
-
 ### 5.6 De los diccionarios de entidades a la base de conocimientos contextual
 
-La primera versión del módulo de recuperación indexaba **nombres de entidades** —3 605 personas y 1 848 organizaciones— y anteponía al *prompt* los más próximos al artículo según similitud vectorial. El resultado fue el contrario del esperado: sobre el corpus N=120, siete de los quince modelos evaluados empeoraron al activarlo, y entre ellos los de mejor desempeño base.
+La primera versión del módulo de recuperación indexaba **nombres de entidades** —3 605 personas y 1 848 organizaciones de las listas de sanciones, más 12 000 nombres personales sintéticos de aumento: 17 453 documentos en total— y anteponía al *prompt* los más próximos al artículo según similitud vectorial. El resultado fue el contrario del esperado: sobre el corpus N=120, doce de los catorce modelos con par completo de resultados empeoraron al activarlo —los quince solicitados menos `gpt-oss:20b`, que no llegó a ejecutarse—, y entre ellos los de mejor desempeño base; solo mejoraron los dos servidos en la nube.
 
 El diagnóstico apunta a un **desajuste semántico estructural**. La consulta es un artículo completo de varios centenares de palabras y los documentos indexados son cadenas nominales de dos o tres términos, de modo que la similitud coseno entre ambos carece de significado: para una noticia política española, el sistema recuperaba razones sociales colombianas sin relación alguna con el texto. A ello se sumaba la formulación restrictiva de la plantilla de inyección —«no extraigas entidades salvo que aparezcan explícitamente»—, que ante un contexto irrelevante inhibía la extracción en lugar de orientarla. Recuperar nombres, en definitiva, sugiere al modelo qué esperar y lo penaliza cuando lo sugerido no viene al caso.
 
-La segunda versión invierte la naturaleza de lo recuperado. En lugar de entidades, la base de conocimientos almacena **criterios**: guías tipológicas por dominio —sanciones financieras, política, deportes, empresas— que describen qué constituye una persona o una organización en cada contexto, junto con ejemplares anotados que fijan el formato de salida. La recuperación deja de responder a «qué entidades hay en este texto» para responder a «de qué dominio es este texto y qué reglas se le aplican», pregunta que un modelo de lenguaje resuelve con fiabilidad mucho mayor. El módulo expone cuatro modos seleccionables por línea de órdenes —recuperación por entidades, solo guías, solo ejemplares y la combinación de ambos—, de manera que la versión anterior permanece disponible como línea base y la comparación entre estrategias no exige modificar el código. El detalle de implementación, el catálogo de guías y los ejemplares figuran en el **Anexo D**.
+La segunda versión invierte la naturaleza de lo recuperado. En lugar de entidades, la base de conocimientos almacena **criterios**: guías tipológicas por dominio —sanciones financieras, política, empresas, lo judicial y lo deportivo— que describen qué constituye una persona o una organización en cada contexto, junto con ejemplares anotados que fijan el formato de salida. La recuperación deja de responder a «qué entidades hay en este texto» para responder a «de qué dominio es este texto y qué reglas se le aplican», pregunta que un modelo de lenguaje resuelve con fiabilidad mucho mayor. El módulo expone cuatro modos seleccionables por línea de órdenes —recuperación por entidades, solo guías, solo ejemplares y la combinación de ambos—, de manera que la versión anterior permanece disponible como línea base y la comparación entre estrategias no exige modificar el código. El detalle de implementación, el catálogo de guías y los ejemplares figuran en el **Anexo D**.
 
-Los resultados de esta segunda versión sobre el corpus completo se recogen en la tabla de §5.3.5, que compara los trece modelos del estudio en ambos modos. Su lectura confirma que el cambio de estrategia revierte la degradación —diez de los trece modelos mejoran— y revela un patrón que la primera versión no permitía observar: el beneficio **decrece conforme aumenta la capacidad del modelo**, hasta anularse en los de mayor tamaño. La interpretación de ese patrón se desarrolla en §6.2.
+Los resultados de esta segunda versión sobre el corpus completo se recogen en la tabla de §5.3.5, que compara los trece modelos del estudio en ambos modos. Su lectura confirma que el cambio de estrategia revierte la degradación —nueve de los trece modelos mejoran— y revela un patrón que la primera versión no permitía observar: el beneficio **decrece conforme aumenta la capacidad del modelo**, hasta anularse en los de mayor tamaño. La interpretación de ese patrón se desarrolla en §6.2.
 
 ## 6. DISCUSIÓN DE LOS RESULTADOS
 
@@ -404,7 +416,7 @@ Los resultados de esta segunda versión sobre el corpus completo se recogen en l
 
 La hipótesis fijaba un F1 igual o superior al 70 % como umbral de viabilidad. El umbral **se alcanza sobre el corpus del dominio** —`gemma4:31b-mlx` obtiene 80,57 % con intervalo de confianza al 95 % de [74,22 %, 86,92 %] y ninguna extracción fallida sobre N=30— y **no se alcanza sobre el corpus periodístico general**, cuyo mejor resultado local es 59,25 % (`gemma4:31b-mlx`) sobre N=120. La hipótesis queda por tanto **confirmada para el dominio específico de sanciones financieras y no confirmada para corpus periodísticos heterogéneos**. La brecha de unos veinte puntos no obedece a un fallo del sistema sino a la naturaleza del material: los artículos de CoNLL-2002 son más largos, mencionan más entidades por texto y mezclan dominios, mientras que el corpus AML está compuesto por textos breves y temáticamente homogéneos. Una meta interna más ambiciosa —85 % de F1, nunca formalizada como hipótesis— queda a 4,43 puntos sobre N=30, distancia abordable mediante ajuste fino supervisado, modelos de mayor capacidad o combinación de varios modelos locales.
 
-Tres factores explican la distribución de resultados observada. El primero es **el idioma del prompt y de sus ejemplos**. Redactar ambos en español aporta 11,12 puntos de F1 sin cambiar de modelo, mejora que ninguno de los dos factores consigue por separado: traducir solo el prompt aporta 4,38 puntos y añadir ejemplos en inglés resta 0,73. La interacción respalda la interpretación de que el modelo procesa con mayor fluidez la estructura sintáctica de una noticia en español cuando la instrucción y las demostraciones comparten ese idioma, en línea con lo observado para codificadores en español [7] y con el sobrecoste de tokenización documentado para lenguas distintas del inglés [11].
+Tres factores explican la distribución de resultados observada. El primero es **el idioma del prompt y de sus ejemplos**. Redactar ambos en español aporta 10,40 puntos de F1 sin cambiar de modelo, mejora que ninguno de los dos factores consigue por separado: traducir solo el prompt aporta 4,38 puntos y añadir ejemplos en inglés resta 0,72. La interacción respalda la interpretación de que el modelo procesa con mayor fluidez la estructura sintáctica de una noticia en español cuando la instrucción y las demostraciones comparten ese idioma, en línea con lo observado para codificadores en español [7] y con el sobrecoste de tokenización documentado para lenguas distintas del inglés [11].
 
 El segundo factor es el **compromiso entre tamaño y eficiencia**. `llama3.2`, con 3 000 millones de parámetros, alcanza 63,19 % de F1 con un índice de eficiencia de 26,44 tokens por segundo y por cada mil millones de parámetros, frente a los 0,33 de `gemma4:31b`: una relación de ochenta a uno. Esa asimetría habilita una arquitectura operativa en dos niveles —un modelo compacto para el cribado masivo inicial y uno grande para la validación de los casos de alto riesgo regulatorio— que aprovecha el hecho de que el coste de un falso negativo en cribado es muy inferior al de un falso positivo confirmado.
 
@@ -422,12 +434,11 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 ## 7. CONCLUSIONES Y TRABAJO FUTURO
 
-
 ### 7.1 Conclusiones
 
 1. **Viabilidad demostrada:** Es técnicamente viable implementar un sistema NER soberano para cumplimiento AML/KYC con modelos de lenguaje de código abierto ejecutados localmente sobre hardware Apple Silicon M4, alcanzando F1=80.57% sin extracciones fallidas sobre el corpus AML N=30 (59.25% sobre el corpus real N=120).
 
-2. **Localización lingüística como factor crítico:** el idioma del prompt y los ejemplos *few-shot* **interactúan**: por separado aportan +4.38 pp y −0.73 pp de F1 respectivamente, pero combinados alcanzan **+11.12 pp**. Los ejemplos solo resultan productivos redactados en el idioma del corpus, lo que tiene implicaciones directas para despliegues en mercados hispanohablantes.
+2. **Localización lingüística como factor crítico:** el idioma del prompt y los ejemplos *few-shot* **interactúan**: por separado aportan +4.38 pp y −0.72 pp de F1 respectivamente, pero combinados alcanzan **+10.40 pp**. Los ejemplos solo resultan productivos redactados en el idioma del corpus, lo que tiene implicaciones directas para despliegues en mercados hispanohablantes.
 
 3. **Soberanía de datos sin costo de rendimiento:** El sistema local iguala o supera el rendimiento de la variante cloud (69.12% vs. 66.99% F1 sobre N=15) mientras garantiza privacidad total.
 
@@ -435,16 +446,15 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 5. **Robustez arquitectural:** El controlador AIMD previene desbordamientos de VRAM y gestiona errores de rate-limiting de forma autónoma. El checkpointing garantiza recuperación sin pérdida de datos ante interrupciones.
 
-6. **El RAG contextual supera al RAG por diccionario:** La implementación de la Base de Conocimientos Contextual (KB RAG) demuestra que el reconocimiento de entidades mediante LLMs locales es un problema de **comprensión sintáctico-contextual**, no de búsqueda en bases de datos cerradas. En el estudio N=120 sobre 13 modelos, el KB RAG (`--rag-mode kb_combined`) mejoró el F1-Score de forma **estadísticamente significativa** (Tukey HSD) en los dos modelos más débiles —`nemotron-mini:4b` **+14.52 pp** (p<0.001) y `llama3.2:latest` **+10.82 pp** (p=0.007)—, con ganancias positivas pero no concluyentes en la franja intermedia y efecto nulo en los modelos de 31B, versus el dict-RAG (v1.0), que en un sondeo N=5 sobre el mismo modelo degradó el F1 hasta 0.2367 (−57.8% respecto de su propio baseline). Su efectividad está modulada por la capacidad paramétrica: beneficia sobre todo a los modelos de 3–14B, donde actúa como memoria externa de conocimiento lingüístico sin costo adicional de hardware. Este hallazgo tiene implicaciones directas para el diseño de sistemas RAG en dominio abierto con LLMs soberanos.
+6. **El RAG contextual supera al RAG por diccionario:** La implementación de la Base de Conocimientos Contextual (KB RAG) demuestra que el reconocimiento de entidades mediante LLMs locales es un problema de **comprensión sintáctico-contextual**, no de búsqueda en bases de datos cerradas. En el estudio N=120 sobre 13 modelos, el KB RAG (`--rag-mode kb_combined`) mejoró el F1-Score de forma **estadísticamente significativa** (Tukey HSD) en los dos modelos más débiles —`nemotron-mini:4b` **+14.52 pp** (p<0.001) y `llama3.2:latest` **+10.82 pp** (p=0.007)—, con ganancias positivas pero no concluyentes en la franja intermedia y efecto nulo en los modelos de 31B, versus el dict-RAG (v1.0), que en un sondeo exploratorio N=5 sobre el mismo modelo, no persistido en `results/`, degradó el F1 hasta 0.2367 (−57.8% respecto de su propio baseline), degradación confirmada después en la corrida reproducible N=120, donde ese mismo modelo cae de 0.3611 a 0.3113. Su efectividad está modulada por la capacidad paramétrica: beneficia sobre todo a los modelos de 3–14B, donde actúa como memoria externa de conocimiento lingüístico sin costo adicional de hardware. Este hallazgo tiene implicaciones directas para el diseño de sistemas RAG en dominio abierto con LLMs soberanos.
 
 7. **La codificación del corpus condiciona la medición, y no de forma neutra:** el corpus N=120 almacena los nombres con *mojibake* —`JosÃ© Bono` donde el nombre real es **José Bono**—, un defecto presente a la vez en las entidades de referencia (20,1 %) y en el texto de entrada (87 % de los artículos). Al ser **coherente entre ambos**, no introduce el sesgo uniforme que cabría suponer: **favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía**, con un efecto que oscila entre −0.070 y +0.025 de F1 según el modelo. La implicación metodológica excede a este trabajo: en una evaluación de NER, **un defecto de codificación no es ruido de fondo sino una variable que interactúa con el comportamiento del modelo**, y verificar la codificación de la entrada —no solo la de la referencia— debe formar parte del protocolo antes de dar por válida cualquier cifra. El detalle se desarrolla en el **Anexo H**.
-
 
 ### 7.2 Trabajo Futuro
 
 1. **Expansión de la Base de Conocimientos KB RAG (Prioridad Alta):** Ampliar el catálogo de guías tipológicas (actualmente 5 dominios) a 10+ dominios específicos del ecosistema AML latinoamericano (noticias de la UAF chilena, resoluciones de la CMF, sanciones OFAC en español). Agregar 30–50 ejemplares anotados adicionales del corpus balanceado N=120. Evaluar el impacto en F1 con modelos de mayor capacidad (`gemma4:31b-mlx`, `qwen2.5:14b`).
 
-2. **Fine-tuning supervisado (Fase 1):** Aplicar LoRA (Low-Rank Adaptation) sobre `gemma4:31b` con 200+ ejemplos anotados de Kleptotrace/CoNLL-2002 para cerrar la brecha hacia la meta aspiracional de 85% de F1 (§6.1).
+2. **Fine-tuning supervisado (Fase 1):** Aplicar LoRA (*Low-Rank Adaptation*), técnica que ajusta un modelo a un dominio entrenando solo un pequeño conjunto de matrices añadidas y dejando intactos los pesos originales, lo que reduce drásticamente el coste del ajuste fino sobre `gemma4:31b` con 200+ ejemplos anotados de Kleptotrace/CoNLL-2002 para cerrar la brecha hacia la meta aspiracional de 85% de F1 (§6.1).
 
 3. **Expansión del corpus de evaluación (Fase 2):** Ampliar el corpus de N=120 a N≥200 artículos reales del dominio AML/KYC chileno, incorporando fuentes como la UAF, CMF y bases de datos de OpenSanctions.
 
@@ -454,8 +464,7 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 6. **Extensión multiidioma (Fase 5):** Evaluar la robustez del sistema sobre textos en inglés y portugués, considerando el alcance latinoamericano del problema de compliance.
 
-7. **Normalización de codificación del corpus y re-evaluación (Fase 6):** el corpus N=120 almacena los nombres con *mojibake* —`JosÃ© Bono` donde el nombre real es **José Bono**—, defecto presente tanto en las entidades de referencia (20,1 %) como en el texto de entrada (87 % de los artículos), y por tanto **coherente entre ambos**. Esto favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía, con un efecto que varía entre −0.070 y +0.091 de F1 según el modelo (§5.3.5). La línea de trabajo consiste en **normalizar la codificación en ambos lados de la comparación** —reparando la referencia y la extracción antes del cotejo difuso, de modo que el resultado deje de depender de la representación de bytes— y **re-ejecutar el estudio N=120** para obtener valores absolutos libres de esta interacción. No se abordó en este trabajo porque el cotejo se resuelve en tiempo de inferencia y las extracciones por registro no se conservaron, lo que obliga a repetir la inferencia completa.
-
+7. **Normalización de codificación del corpus y re-evaluación (Fase 6):** el corpus N=120 almacena los nombres con *mojibake* —`JosÃ© Bono` donde el nombre real es **José Bono**—, defecto presente tanto en las entidades de referencia (20,1 %) como en el texto de entrada (87 % de los artículos), y por tanto **coherente entre ambos**. Esto favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía, con un efecto que varía entre −0.070 y +0.025 de F1 según el modelo (§5.3.5). La línea de trabajo consiste en **normalizar la codificación en ambos lados de la comparación** —reparando la referencia y la extracción antes del cotejo difuso, de modo que el resultado deje de depender de la representación de bytes— y **re-ejecutar el estudio N=120** para obtener valores absolutos libres de esta interacción. No se abordó en este trabajo porque el cotejo se resuelve en tiempo de inferencia y las extracciones por registro no se conservaron, lo que obliga a repetir la inferencia completa.
 
 ## 8. REFERENCIAS BIBLIOGRÁFICAS
 
@@ -501,7 +510,6 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 [20] T. Dettmers et al., "QLoRA: Efficient Finetuning of Quantized LLMs," *Advances in Neural Information Processing Systems*, vol. 36, 2023.
 
-
 ## 9. ANEXOS
 
 ### Anexo A — Estructura del Repositorio de Código
@@ -510,8 +518,6 @@ El código, los corpus, los resultados por corrida y los documentos de trabajo e
 **https://github.com/eahumada/mti-pge-tesina-ner-llm-local**. Cada corrida conserva su `run_config.json` con
 los parámetros exactos y su `benchmark_results.csv` con las métricas por artículo, de modo que las cifras de
 este informe pueden rehacerse sin repetir la inferencia. La estructura del repositorio es la siguiente:
-
-
 
 | Ruta | Descripción |
 |:---|:---|
@@ -557,12 +563,9 @@ este informe pueden rehacerse sin repetir la inferencia. La estructura del repos
 | `SYSTEM_PROMPT_EN.md` | Prompt del sistema (inglés) |
 | `SYSTEM_PROMPT_ES.md` | Prompt del sistema (español) |
 
-
-
 ### Anexo B — Prompt del Sistema (Versión Few-Shot Español)
 
 El prompt de sistema en español (few-shot) incluye: (1) instrucciones de rol (analista de cumplimiento normativo), (2) formato de salida JSON estricto con tipos de entidades, (3) 3 ejemplos completos de artículo → extracción correcta, y (4) reglas de comportamiento ante ambigüedad (no alucinar, preferir omisión a invención).
-
 
 **Ejemplos *few-shot* de la configuración FS-ES** (§4.3):
 
@@ -599,23 +602,18 @@ Eres un periodista de investigación financiera. Redacta un párrafo corto (2-4 
 | Sistema Operativo | macOS 15.x (Sequoia) |
 | Python | 3.14.7 |
 | Ollama | 0.6+ |
-| Modelos descargados | gemma4:31b (19 GB), gemma4:12b (5 GB), llama3.2 (2 GB), deepseek-r1:1.5b (1.1 GB) |
+| Modelos descargados | gemma4:31b (19 GB), gemma4:12b-mlx (7,7 GB), llama3.2 (2 GB), deepseek-r1:1.5b (1.1 GB) |
 | Tiempo total de benchmark (N=30, 2 modelos) | ~29 minutos (serial) |
-
-
 
 ### Anexo D — Detalle Técnico de la Optimización del Módulo RAG Contextual (KB RAG)
 
 Se documentan aquí los diagramas de flujo, tablas de configuración CLI y catálogos de datos referidos en §5.6, movidos desde el cuerpo del informe para cumplir el límite de extensión institucional. Toda la evidencia se conserva íntegra.
 
-
 #### D.1 Implementación técnica del módulo KB RAG (src/kb_rag_manager.py)
 
-El módulo src/kb_rag_manager.py (KBRAGManager) implementa cuatro modos de operación configurables:
-
+El módulo src/kb_rag_manager.py (KBRAGManager) implementa cuatro modos de operación configurables; para el modo `entities` el orquestador conserva la clase original `RAGManager` de src/rag_manager.py, de modo que la línea base dict-RAG se ejecuta con el código previo sin modificar:
 
 _Tabla 12. Configuración CLI del Módulo KB RAG_
-
 
 | Modo | Flag CLI | Descripción | Caso de Uso |
 |---|---|---|---|
@@ -631,7 +629,6 @@ ner_dictionaries: Colección legacy (diccionarios de entidades, preservada)
 ner_knowledge_base: Nueva colección (guías + ejemplares, 12 documentos)
 
 Configurabilidad garantizada: El sistema es activable/desactivable mediante flags CLI sin modificar código:
-
 
 ```
 # Modo baseline (sin RAG)
@@ -650,25 +647,19 @@ Entity-dict RAG (legacy): Template restrictivo — "DO NOT extract unless they e
 
 KB RAG (nuevo): Template positivo — "[EXTRACTION GUIDANCE] Apply these rules to the news text" — instruye activamente al LLM sin suprimir su capacidad de extracción.
 
-
-
 #### D.2 Catálogo de guías tipológicas y ejemplares de la base de Conocimientos
 
-
 _Tabla 13. Guías Tipológicas de Dominio de la Base de Conocimientos_
-
 
 | Dominio | ID | Idioma | Keywords Clave |
 |---|---|---|---|
 | Política y Administración | politics_es | ES | PSOE, PP, junta, ministerio, portavoz |
 | Corporativo y Financiero | corporate_financial_es | ES | bolsa, fusión, consejo de administración |
-| AML y Sanciones | aml_sanctions_en | EN | OFAC, indictment, money laundering, IEEPA |
-| Judicial y Crimen | judicial_crime_es | ES | tribunal, fiscal, audiencia nacional |
-| Deportivo y Social | sports_social_es | ES | liga, federación, club |
-
+| AML y Sanciones | aml_sanctions_en | EN | OFAC, indictment, money laundering, kleptocracy |
+| Judicial y Crimen | judicial_crime_es | ES | tribunal, fiscal, audiencia, sentencia |
+| Deportivo y Social | sports_social_es | ES | liga, federación, torneo |
 
 _Tabla 14. Ejemplares Few-Shot de la Base de Conocimientos_
-
 
 | ID Ejemplar | Dominio | Fuente |
 |---|---|---|
@@ -680,12 +671,9 @@ _Tabla 14. Ejemplares Few-Shot de la Base de Conocimientos_
 | ex_aml_sanctions_en_002 | AML/Sanciones EN | real_mixed_79 |
 | ex_aml_sanctions_en_003 | AML/Sanciones EN | real_mixed_27 |
 
-
 #### D.3 Reglas de la base de conocimientos contextual
 
-
-_Tabla 15. Reglas de la Base de Conocimientos Contextual_
-
+_Tabla 15. Reglas de la guía tipológica del dominio político-administrativo (politics_es), a modo de ejemplo_
 
 | Regla | Contenido |
 |---|---|
@@ -695,9 +683,7 @@ _Tabla 15. Reglas de la Base de Conocimientos Contextual_
 
 ### Anexo E — Procedencia de los Datos del Benchmark General (N=15)
 
-
 _Tabla 16. Resultados Completos del Benchmark General (13 Configuraciones, N=15)_
-
 
 | Filas de la Tabla 5 | Corrida de origen |
 |---|---|
@@ -707,7 +693,6 @@ _Tabla 16. Resultados Completos del Benchmark General (13 Configuraciones, N=15)
 | Resto de configuraciones | results/benchmark_results.csv (N=15, modo entities) |
 | Excluidos del estudio | nuextract:latest, gemini-3.1-flash-lite, minimax-m3 |
 
-
 ### Anexo F — Metodología Detallada de Generación del Corpus Sintético N=30
 
 Paso 1 — Definición de la distribución temática: Se analizaron los 15 artículos reales de Kleptotrace/CoNLL-2002 e identificaron sus categorías temáticas recurrentes: (a) sanciones internacionales a personas y empresas, (b) investigaciones por lavado de activos, (c) vínculos con Personas Políticamente Expuestas (PEP), y (d) corrupción en empresas públicas. Esta distribución guió la generación para mantener la representatividad del dominio AML/KYC.
@@ -715,7 +700,6 @@ Paso 1 — Definición de la distribución temática: Se analizaron los 15 artí
 Paso 2 — Generación controlada por plantillas de entidad: Para cada artículo sintético se definió a priori un par {entidad_PER, entidad_ORG} que debía aparecer en el texto, actuando como ground truth objetivo. Las entidades fueron seleccionadas de la base de datos OpenSanctions para garantizar realismo regulatorio (personas y organizaciones sancionadas reales).
 
 Paso 3 — Instrucción al LLM generador: El modelo gemma4:31b recibió el siguiente prompt de generación:
-
 
 ```
 Eres un periodista de investigación financiera. Redacta un párrafo corto (2-4 oraciones) en español
@@ -728,11 +712,9 @@ Paso 4 — Verificación del ground truth: Cada artículo generado fue revisado 
 
 Paso 5 — Control de calidad por diversidad: Se verificó que ningún artículo generado replicara literalmente oraciones de otro artículo del corpus (deduplicación por similitud coseno > 0.85). La longitud promedio resultante fue de 202 caracteres (rango 145–293), con 1,2 entidades PER y 2,3 entidades ORG por artículo.
 
-
 ### Anexo G — Declaración de Uso de Inteligencia Artificial en la Elaboración de esta Tesina
 
 Este anexo declara, con propósito de transparencia académica, el alcance y los límites del uso de herramientas de inteligencia artificial (IA) generativa durante el desarrollo de esta tesina. La declaración se basa en el registro documental del proyecto: el historial de control de versiones (20 commits entre el 29 de junio y el 1 de septiembre de 2026), los registros de trabajo WORKLOG.md (raíz del repositorio y research/rag/), y los informes de investigación asociados.
-
 
 #### G.1 Trabajo realizado por el autor de la tesina
 
@@ -740,16 +722,13 @@ La totalidad de las decisiones intelectuales y metodológicas del trabajo corres
 
 El autor es asimismo responsable de la auditoría crítica de los artefactos producidos con apoyo de IA. Ejemplo documentado de esta supervisión es la detección del error de nomenclatura de cuantización en el identificador de un modelo (sufijo q8 sobre un modelo de precisión mixta NVFP4), verificada contra los manifiestos del registro de Ollama y corregida transversalmente en la documentación del proyecto.
 
-
 #### G.2 Apoyo de IA en la elaboración de artefactos de prueba
 
 Se utilizó IA generativa como instrumento en la construcción de artefactos de evaluación, siempre bajo especificación y verificación del autor. El corpus sintético N=30 (kleptotrace_augmented_30.json) fue generado mediante aumento de datos guiado por LLM: el autor definió a priori la distribución temática, los pares {entidad_PER, entidad_ORG} objetivo tomados de OpenSanctions y el prompt de generación (Anexo F); el modelo gemma4:31b produjo los textos; y cada artículo fue revisado manualmente para confirmar el ground truth, descartándose y regenerándose los que introducían entidades no anotadas. El corpus real N=120 (benchmark_balanced_120.json) no fue generado por IA: combina 15 artículos del corpus Kleptotrace con 105 artículos muestreados de CoNLL-2002 en español. Los ejemplares few-shot de la base de conocimientos contextual fueron extraídos de artículos reales anotados del propio corpus de evaluación, sin generación sintética.
 
-
 #### G.3 Apoyo de IA en implementación, documentación y formato
 
 Asistentes de programación basados en LLM se emplearon como apoyo en tareas de implementación y documentación, bajo revisión y prueba del autor: generación y refactorización de código del banco de pruebas y del módulo KB RAG a partir de decisiones arquitectónicas previamente definidas; escritura de scripts auxiliares de análisis de resultados; mantenimiento del registro cronológico de trabajo (WORKLOG.md); conversión y regeneración de documentos mediante pandoc; y tareas de formato del informe: transplante del contenido a la plantilla institucional UTFSM/MTI, conversión de diagramas en texto a tablas, numeración de secciones, leyendas de tablas, condensación editorial para cumplir el límite de extensión y reubicación de detalle técnico a los anexos, preservando íntegramente la evidencia. Ninguna de estas intervenciones introdujo resultados experimentales: las cifras reportadas provienen exclusivamente de las corridas registradas en el directorio results/ del repositorio.
-
 
 #### G.4 Límites y verificación
 
