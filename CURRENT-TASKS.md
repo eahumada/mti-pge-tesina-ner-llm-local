@@ -199,7 +199,43 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
-### 2.17 🔴 VIGENTE — Propagación con reglas permanentes de Word y PDF
+### 2.17 ✅ COMPLETADA — Propagación con reglas permanentes de Word y PDF
+> ✅ **Cerrada por Claude Desktop el 2026-09-08 00:40** (abierta 00:20). Los tres `.docx` reconstruidos desde el
+> `.md` canónico (106 701 bytes, 23:44), PDF exportado y `_v8` congelada como entrega.
+
+**Resultado medido sobre el PDF —no sobre el Word—:** **25 páginas exactas**. **Cuerpo 18 de 25** y **anexos 7
+de sus 25 propias**, con los anexos desde la página 19, inmediatamente después del capítulo 8 de referencias.
+Cero páginas en blanco, resumen y abstract completos en la página 1, nueve capítulos, ocho anexos de la A a la
+H con la **G íntegra**, 18 leyendas correlativas, las 20 entradas IEEE intactas, ninguna llamada `§` rota (todas
+verificadas contra las secciones existentes), sin arte ASCII, sin literales HTML, encabezado y pie en las 25
+páginas sin solaparse con el cuerpo (holguras mínimas 20,9 y 17,4 pt) y colofón único al final.
+
+**Cómo se llegó a las 25.** La reconstrucción con el `.md` nuevo daba **27 páginas** —§2.4, §4.4 en prosa, §3.3
+y §5.5 añaden material—. Se recortó **solo por estilo, sin tocar una palabra**: interlineado de `Normal`
+240 → 228; encabezados `Ttulo1` 300/160 → 220/110, `Ttulo2` 220/120 → 160/80, `Ttulo3` 200/100 → 140/70;
+leyendas 140/80 → 100/60; y filas de tabla (`Compact`) 200 → 184. **No hizo falta consolidar párrafos de los
+anexos ni suprimir contenido.**
+
+**Dos correcciones al renderizador**, hechas para que la reconstrucción respete las reglas permanentes:
+1. **`p1a` solo para el primer párrafo tras un título y `Normal` para el resto.** Antes emitía `p1a` para todos.
+   No es cosmético: en la plantilla `p1a` es `Normal` con `firstLine=0`, así que el primer párrafo va sin
+   sangrar y los siguientes con sangría de primera línea —la convención tipográfica que la plantilla codifica—.
+   Reparto resultante: 50 `p1a`, 96 `Normal`.
+2. **El estilo `abstract` se asigna por posición**, por el encabezado RESUMEN o ABSTRACT que precede, y no por
+   las primeras palabras del párrafo, que estaban escritas a mano en el código y dejaron de coincidir al
+   fundirse ambos textos. Resumen y abstract vuelven a llevar `abstract` (9 pt, sangrías de 567 twips).
+- **El renderizador queda versionado** en `doc/versions/informe_final/_tools/` (`render.py`, `render2.py`,
+  `post.py`, `comp2.py`). Hasta ahora vivía solo en la sesión, de modo que cada propagación lo rehacía.
+- **Sin pandoc.** El `.md` no necesitó corrección: llegaba ya consistente de la sesión de Claude Code, con el
+  `+10,40 pp` del análisis de variantes coincidiendo en cuerpo, resumen y abstract.
+- **Los otros dos `.docx`** se reconstruyeron con el mismo criterio y la compactación equivalente para sus
+  identificadores de estilo (`Heading 1-3`, `Body Text`, `Table Caption`). Paginan en 37 páginas porque no
+  usan los márgenes ni la caja de la plantilla institucional; el canónico es el que rige el límite.
+- **`_v8` congelada como entrega**: `.docx` `69aadfb11853` · `.pdf` `00554ca8125c`, ambos en
+  `doc/versions/informe_final/` y con copia en la raíz del proyecto.
+- **Los cuatro reparos del profesor siguen en pie** tras la compactación: sin bloques en blanco, sin saltos de
+  página al empezar capítulo, sin ficha del estudiante, con desarrollo suficiente y con el capítulo 2
+  comparando alternativas antes de que el 3 elija. Verificado en el PDF.
 - **Encargo:** [`PROMPT-CLAUDE-DESKTOP-PROPAGACION-20260907.md`](./PROMPT-CLAUDE-DESKTOP-PROPAGACION-20260907.md),
   sección «Instrucciones permanentes para Word y PDF». Registradas también en `CLAUDE.md`.
 - **Resumen y abstract:** fundidos, **sincronizados**, ≤200 palabras cada uno y **en la página inicial** del
@@ -1078,5 +1114,6 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 22:45 | Claude Desktop | §2.13: Anexo B corregido (prompts sin saltos, 7 pt), espacios en blanco reducidos, **25 páginas exactas** sin perder contenido, `_v5` congelada como entrega |
 | 2026-09-07 23:25 | Claude Desktop | §2.14: **PDF exportado** con LibreOffice — **25 páginas exactas**, formato íntegro. La exportación destapó tres defectos del `.docx` (leyendas duplicadas en los anexos D/E, colofón duplicado en el Anexo D y colofón varado con fecha «Julio 2026»); corregidos primero en el `.md` y propagados. `_v6` congelada como entrega |
 | 2026-09-08 00:05 | Claude Desktop | §2.15: **resumen y abstract fundidos** —el abstract estaba congelado desde julio y omitía el hallazgo central del RAG—. Sincronizados en 199 y 183 palabras, estilo `abstract` restituido, espaciado del encabezado compactado, ambos en la página inicial. `_v7` congelada |
+| 2026-09-08 00:40 | Claude Desktop | §2.17: propagación completa del `.md` nuevo (§2.4, §4.4 en prosa, §3.3 rapidfuzz, §5.5 coste estimado) a los tres `.docx` y al PDF. De 27 a **25 páginas exactas** solo por estilo; cuerpo 18/25 y anexos 7. Renderizador corregido (`p1a`/`Normal` y `abstract` por posición) y versionado en `_tools/`. `_v8` congelada |
 | 2026-09-07 20:35 | Claude Code (equipo principal) | 🔴 §2.16: corregida la descripción de la métrica de emparejamiento —era «similitud de tokens», es **distancia de Indel normalizada** (`fuzz.ratio`)— y declarados sus dos límites, que sesgan a la baja. Encargo de propagación a **Word y PDF** en `PROMPT-CLAUDE-DESKTOP-PROPAGACION-20260907.md`. Auditoría y dos subagentes en curso sobre el resto de enunciados técnicos. ⚠️ **Atribución:** mi commit `bdb3337` arrastró las versiones `_v6` y `_v7` de Claude Desktop bajo un mensaje que solo hablaba de la métrica; no se perdió nada, pero el historial las atribuye mal |
 | 2026-09-07 21:30 | Claude Code (equipo principal) | §2.17: registradas en `CLAUDE.md` y en el encargo las **reglas permanentes de Word y PDF** —resumen y abstract fundidos, sincronizados y en la primera página; recorte de espacios **por estilo** y nunca por contenido; 25 páginas exactas; Anexo B sin saltos duros; anexos consolidados sin perder contenido—. En el `.md`: §2.4 explica el aparato estadístico, §4.4 desarrolla las métricas y §5.5 deriva el coste **declarándolo estimación** |

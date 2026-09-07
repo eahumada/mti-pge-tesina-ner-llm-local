@@ -642,3 +642,40 @@ pie en las 25 sin solape (mínimos 21,2 y 19,1 pt), 19 leyendas correlativas, an
 
 **`_v7` congelada como versión de entrega** —sustituye a la `_v6`—: `.docx` SHA-256 `a8616ddb2c15` y `.pdf`
 `ecc2bd49f2cb`. Corregido primero el `.md` (respaldo `.bak_pre_resumen_20260907`) y propagado a los tres `.docx`.
+
+### 2026-09-08 00:40 — Propagación del desarrollo conceptual · versión de entrega (_v8)
+
+Encargo `PROMPT-CLAUDE-DESKTOP-PROPAGACION-20260907.md` y §2.17. Reconstruidos los tres `.docx` desde el `.md`
+canónico (106 701 bytes, 23:44), que llegaba ya consistente de la sesión de Claude Code: **§2.4** explica el
+aparato estadístico —ANOVA, Tukey HSD, intervalos de confianza, análisis de sensibilidad— que hasta ahora se
+usaba sin definirse, lo que desplaza el estado del arte a §2.5; **§4.4** desarrolla en prosa las métricas, con
+el porqué de la media armónica; **§3.3** corrige el emparejamiento difuso, que no es similitud de tokens sino
+**distancia de Indel normalizada** (`rapidfuzz.fuzz.ratio`); y **§5.5** declara el coste por artículo como
+estimación. Sin pandoc, y sin necesidad de tocar el `.md`.
+
+**De 27 a 25 páginas, solo por estilo.** El material nuevo llevaba el documento a 27. Se recortó `Normal`
+240 → 228, `Ttulo1` 300/160 → 220/110, `Ttulo2` 220/120 → 160/80, `Ttulo3` 200/100 → 140/70, leyendas
+140/80 → 100/60 y filas de tabla (`Compact`) 200 → 184. **No se suprimió ni consolidó una sola línea**, ni del
+cuerpo ni de los anexos: no hizo falta.
+
+**Dos correcciones al renderizador**, ambas para cumplir las reglas permanentes de Word:
+
+1. **`p1a` solo para el primer párrafo tras un título; `Normal` para el resto.** Emitía `p1a` para todos, y no
+   es cosmético: en la plantilla `p1a` es `Normal` con `firstLine=0`, de modo que el primer párrafo va sin
+   sangrar y los siguientes con sangría de primera línea. Reparto: 50 `p1a` y 96 `Normal`.
+2. **El estilo `abstract` se asigna por posición** —por el encabezado RESUMEN o ABSTRACT que precede— y no por
+   las primeras palabras del párrafo, que estaban escritas a mano en el código y dejaron de coincidir cuando se
+   fundieron ambos textos en la `_v7`. Resumen y abstract recuperan su `abstract` de plantilla.
+
+**El renderizador queda versionado** en `doc/versions/informe_final/_tools/` (`render.py`, `render2.py`,
+`post.py`, `comp2.py`). Vivía solo en la sesión, así que cada propagación lo reconstruía de memoria; ahora no.
+
+**Verificación sobre el PDF:** 25 páginas exactas · **cuerpo 18 de 25** y anexos 7 de sus 25 propias, desde la
+página 19 y justo tras el capítulo 8 de referencias · cero páginas en blanco · resumen y abstract completos en
+la página 1, con 199 y 183 palabras · nueve capítulos y ocho anexos A–H con la **G íntegra** · 18 leyendas
+correlativas · las 20 entradas IEEE intactas · **ninguna llamada `§` rota** · sin arte ASCII ni literales HTML ·
+encabezado y pie en las 25 páginas sin solaparse con el cuerpo (holguras mínimas 20,9 y 17,4 pt) · colofón
+único al cierre. Los cuatro reparos del profesor siguen en pie tras la compactación.
+
+**`_v8` congelada como versión de entrega**: `.docx` SHA-256 `69aadfb11853` y `.pdf` `00554ca8125c`, en
+`doc/versions/informe_final/` y con copia de ambos en la raíz del proyecto.

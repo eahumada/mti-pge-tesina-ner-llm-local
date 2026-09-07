@@ -1006,3 +1006,38 @@ la ausencia de datos con la puntuación máxima— sigue vigente en esta métric
 
 > **Regla operativa.** Al corregir una convención de puntuación, revisar **todas** las métricas del módulo, no
 > solo las que motivaron el cambio. Una corrección parcial deja el mismo defecto vivo en un rincón.
+
+---
+
+### F50. El sesgo del emparejamiento no es unidireccional, y el umbral de alucinación se descarta en silencio
+
+**Registrado:** 2026-09-07 21:50 (UTC−3) · Hallado por la auditoría automatizada de consistencia y
+**verificado de forma independiente** por el equipo principal.
+
+**1. El recuento de aciertos infla la exhaustividad en una fracción de registros.** El informe afirmaba que
+los dos límites conocidos del emparejamiento difuso —sensibilidad al orden y penalización de las omisiones—
+empujaban las cifras «a la baja, nunca al alza», y concluía que el desempeño reportado era conservador. **La
+segunda mitad de esa frase era falsa.** En `evaluator.py:84-94` el bucle recorre las entidades **extraídas** e
+incrementa un acierto por cada una que casa, mientras las omisiones se derivan de las entidades **de
+referencia** no cubiertas (`fn = len(gt_list) − len(matched_gts)`). Numerador y denominador no están en la
+misma unidad: dos menciones que casan con la misma entidad de referencia suman dos aciertos frente a una sola
+entidad cubierta.
+
+| Medición propia | Resultado |
+|:---|:---:|
+| Celdas por tipo de entidad con exhaustividad > 1,0 | **258 de 28 113 (0,9 %)** |
+| Registros afectados en `benchmark_n120_REMOTO` | **19 de 1 680 (1,1 %)** |
+
+El alcance es reducido y el efecto neto sigue siendo conservador, pero la afirmación absoluta no se sostenía y
+se ha acotado en §3.3 del informe.
+
+**2. El umbral de la tasa de alucinación no es configurable en la práctica.** `evaluate_single_record` recibe
+el umbral configurado —85— y lo propaga a las demás funciones, pero invoca
+`calculate_hallucination_rate(extracted, source_text)` **sin pasarlo** (`evaluator.py:302`), de modo que la
+métrica usa siempre su valor por defecto de **70** y el parámetro configurado se descarta en silencio. No es
+un error en los resultados —70 es un umbral razonable para detectar invención y así se documenta ahora en el
+informe—, pero sí una discrepancia entre lo que la configuración promete y lo que el código hace.
+
+> **Regla operativa.** Una afirmación sobre la *dirección* de un sesgo es más fuerte que una sobre su
+> magnitud, y por eso exige más evidencia. Antes de escribir «nunca al alza», hay que buscar activamente el
+> mecanismo que podría empujar en sentido contrario.
