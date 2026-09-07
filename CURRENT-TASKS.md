@@ -419,6 +419,24 @@ Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **Invest
 - **Pendiente vuestro:** evaluar `qwen3:14b/32b/latest`, **enumerar los modelos con capacidad `thinking`** y
   el censo de modelos con capacidad `thinking`.
 
+### 3.bis.12 🔴 REABIERTA — Re-ejecutar la corrida N=30 (única excepción al cierre)
+- **Encargo completo:** [`ENCARGO-REMOTO-N30-20260907.md`](./ENCARGO-REMOTO-N30-20260907.md)
+- **Decisión del autor (2026-09-07):** re-ejecutar. **Excepción explícita al cierre de benchmarks**; se reabre
+  la ejecución **solo para esta corrida**, ninguna otra.
+- **Motivo:** el F1 titular de N=30 (`gemma4:31b` 79.03 %) es **la única cifra del estudio aún calculada con el
+  *scorer* defectuoso**, y no se puede re-puntuar porque el dato por registro se perdió por sobrescritura.
+  Solo sobrevive el agregado en `benchmark_augmented_30.log`.
+- **Por qué al remoto:** los dos modelos pesan 19 GB en disco y ~24,7 GB operativos; no caben en los 16 GB
+  de la máquina de desarrollo.
+- **Qué:** `gemma4:31b` y `gemma4:31b-mlx` · corpus `data/kleptotrace_augmented_30.json` (verificado: 30
+  registros) · **baseline sin RAG** · `--batch-size 5 --seed 42` · `--results-dir results/n30_rerun_REMOTO`.
+  **Régimen de *thinking* sin cambios** (statu quo de `FINDINGS.md §F45`).
+- **ETA:** ~9 h en serie (5,1 h + 3,6 h, una GPU).
+- **Entregar:** el directorio completo, el **ANOVA entre los dos modelos** (reemplaza el F=0.141 de §5.3.2) y
+  el reporte con las verificaciones estándar.
+- **Prohibido:** re-ejecutar cualquier otra corrida, tocar `ANALISIS_CONJUNTO_20260907/` o las corridas
+  N=120/N=15, y borrar `benchmark_augmented_30.log`.
+
 ### 3.bis.5 Plantilla de reporte
 Al terminar cada tarea, sustituid su bloque por:
 
@@ -532,3 +550,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 13:20 | Claude Code (equipo principal) | 📌 HALLAZGO FINAL sobre *thinking*: verificado el experimento del remoto (§F44) y añadido `FINDINGS.md §F45`. `gpt-oss` ON congelado (deja de responder sin razonamiento) y `qwen3` OFF son los únicos casos sólidos; los otros 4 son ruido de N=15. **Decisión cerrada: no re-ejecutar.** Reglas para ejecuciones futuras en `RECOMENDACIONES-EJECUCIONES-FUTURAS.md` y anexo `TODO-INFORME-FINAL.md §14`. Instrucciones al remoto en §3.bis.11 |
 | 2026-09-07 13:50 | Claude Code (equipo principal) | 🔒 **CIERRE DE BENCHMARKS** (decisión del autor): se conservan los 13 modelos y se cierra la ejecución. Alcance final 13 modelos × 2 modos, F=36.3666, p=1.2236e-152. Integridad: 0 violaciones, 0 degeneradas, 0 failed, summary==CSV. Documento `CIERRE-BENCHMARKS-20260907.md` y `TODO-INFORME-FINAL.md §15`. Aviso: el «12» del informe es la Tabla 2 (N=15), no el estudio N=120 |
 | 2026-09-07 14:30 | Claude Code (equipo principal) | Aplicadas A1-A3 y la reconstrucción de la Tabla 2 al `.md` canónico; §5.2 con las cifras limpias (nueva lectura: interacción idioma × few-shot, +11.12 pp); §5.3.5 reescrita con los 13 modelos (F=36.3666, p=1.2236e-152, Tukey: RAG significativo solo en nemotron y llama3.2); renombrado terminológico ejecutado (§13 cerrado); aclarado 12 (Tabla 2) vs 13 (estudio N=120). Encargo a Claude Desktop en `PROMPT-CLAUDE-DESKTOP-20260907.md` y §2.6 |
+| 2026-09-07 14:55 | Claude Code (equipo principal) | 🔴 §3.bis REABIERTA solo para la corrida N=30 (decisión del autor): el F1 titular 79.03 % es la única cifra aún bajo el scorer defectuoso y su dato por registro se perdió. Encargo en `ENCARGO-REMOTO-N30-20260907.md` y §3.bis.12. ETA ~9 h. Ninguna otra corrida se reabre |

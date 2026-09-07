@@ -86,3 +86,18 @@ un modelo.
 `CORRECCION-QWEN3-THINKING-20260906.md §4.6-4.7`, útiles solo si el estudio se amplía en el futuro:
 evaluar `qwen3:14b/32b/latest` y **enumerar los modelos con capacidad `thinking`**. Las reglas para cualquier
 ejecución posterior están en `RECOMENDACIONES-EJECUCIONES-FUTURAS.md`.
+
+---
+
+## 6. Enmienda (2026-09-07) — una excepción al cierre
+
+**Decisión del autor:** se reabre la ejecución **para una sola corrida**, la de **N=30**.
+
+Motivo: el F1 titular de ese corpus (`gemma4:31b` 79.03 %) es **la única cifra del estudio todavía calculada
+con el *scorer* defectuoso**, y no admite re-puntaje porque su dato por registro se perdió por sobrescritura
+(solo sobrevive el agregado de `benchmark_augmented_30.log`). Sostiene §5.3.1–5.3.4 y la verificación de la
+hipótesis en §6.1, así que necesita respaldo verificable.
+
+Encargo: [`ENCARGO-REMOTO-N30-20260907.md`](./ENCARGO-REMOTO-N30-20260907.md) · seguimiento en
+`CURRENT-TASKS.md §3.bis.12`. **El resto del cierre sigue plenamente vigente:** ninguna otra corrida se
+reabre, y el estudio N=120 de 13 modelos queda como está.

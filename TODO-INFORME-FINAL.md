@@ -611,7 +611,12 @@ un modelo.
 
 ### 15.3 Decisión del autor aún abierta
 
-- [ ] **F1 titular de N=30 (79.03 %)** — aparece en el resumen, §4.1 y la conclusión 1. Está registrado que «el
+- [x] **DECIDIDO (2026-09-07): re-ejecutar la corrida N=30.** Encargo al equipo remoto en
+      `ENCARGO-REMOTO-N30-20260907.md` (§3.bis.12), ETA ~9 h. Cuando llegue el resultado se decidirá si
+      sustituye a 79.03 % en el cuerpo o si ambas cifras conviven con nota de procedencia.
+      **Hasta entonces no tocar la cifra en el informe.**
+
+- [ ] ~~F1 titular de N=30 (79.03 %)~~ *(superado por la decisión anterior)* — aparece en el resumen, §4.1 y la conclusión 1. Está registrado que «el
       nuevo resultado es el oficial y el de julio queda en el WORKLOG», pero **no existe una corrida N=30 limpia
       que lo reemplace**. Decidir entre mantenerlo con nota de procedencia o retirarlo. Nadie debe cambiarlo por
       iniciativa propia.
