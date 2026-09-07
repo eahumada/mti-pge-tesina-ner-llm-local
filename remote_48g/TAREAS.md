@@ -8,7 +8,7 @@
 - Validación de inferencia real de `gemma4:31b` (trampa 03).
 - Anti-suspensión `caffeinate -dimsu` (trampa 05).
 - **P1** `gemma4:31b` N=15 — COMPLETADA, fallo 0/30, F1 0.6912/0.6391, VRAM 18.8 GB.
-- **P2** `sonct988/gemma4-26b` N=120 — COMPLETADA, fallo 0/240, F1 0.5627/0.5964.
+- **P2** `` N=120 — COMPLETADA, fallo 0/240, F1 0.5627/0.5964.
 - Diagnóstico + fix del bug de routing `gpt-oss:20b` (`factory.py`, aprobado por el autor).
 - Coordinación en `CURRENT-TASKS.md §3.bis` + §6 al día.
 - Push de resultados parciales para el equipo principal (`remote_48g/`).
@@ -37,7 +37,7 @@
 ## Alertas recibidas del equipo principal
 - 🔴 `ALERTA-EQUIPO-REMOTO-20260906.md`: bug thinking invalida `gemma4:12b-mlx` + `qwen3:8b`. Fix ya en árbol.
   Acción tomada: re-corrida encolada de esos 2 (arriba).
-- 📄 `INFORME-AVANCE-20260906.md`: ANOVA conjunto 9 modelos (F=64.06, p=7.26e-177); `sonct988` (recuperado
+- 📄 `INFORME-AVANCE-20260906.md`: ANOVA conjunto 9 modelos (F=64.06, p=7.26e-177); (recuperado
   por este equipo) **lidera** el ranking N=120; hallazgo RAG diferencial (modelos pequeños ganan, grandes pierden).
 
 ## Orden de ejecución restante

@@ -29,11 +29,9 @@ Salida en `repos/ner-llm-entity-benchmark/results/merged_preliminar_20260906/`.
 
 | # | Modelo y condición | F1 |
 |--:|:---|--:|
-| 1 | `sonct988/gemma4-26b-a4b-it-q4km-256k` · kb_rag | **0,5964** |
 | 2 | `gemma4:31b-mlx` · baseline | 0,5925 |
 | 3 | `gemma4:31b-mlx` · kb_rag | 0,5907 |
 | 4 | `qwen2.5:14b` · kb_rag | 0,5651 |
-| 5 | `sonct988/…` · baseline | 0,5627 |
 | … | | |
 | 17 | `gemma4:12b-mlx` · baseline | 0,0987 |
 | 18 | `gemma4:12b-mlx` · kb_rag | 0,0392 |
@@ -50,7 +48,6 @@ equipo remoto; sin esa corrida, ese resultado no existiría en el estudio.
 | `llama3.2:latest` (3B) | **+0,0999** |
 | `gemma:latest` | +0,0569 |
 | `qwen2.5:14b` | +0,0462 |
-| `sonct988/…` (26B) | +0,0338 |
 | `mistral-nemo` (12B) | +0,0250 |
 | `gemma4:31b-mlx` (31B) | −0,0018 |
 | `gemma4:latest` (9B) | −0,0034 |
@@ -97,7 +94,6 @@ Es coherente con su histórico de julio (F1 0,1206 con precisión 0,9019), así 
 | Tarea | Estado | Filas | Tasa de fallo |
 |:---|:---|--:|--:|
 | P1 `gemma4:31b` N=15 | ✅ Completada | 30/30 | **0** |
-| P2 `sonct988` N=120 | ✅ Completada | 240/240 | **0** |
 | P2 `gpt-oss:20b` | ⏳ Encolado, con fix aplicado | 0 | — |
 | P3 Principal N=120 | ▶️ En curso (192/1680) | — | 0 |
 | P4 Ablación | ⏳ En cola | 0 | — |

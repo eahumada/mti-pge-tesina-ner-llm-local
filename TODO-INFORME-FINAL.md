@@ -156,7 +156,7 @@ Familias: **Gemma** (`gemma4:31b-mlx`, `gemma4:latest`, `gemma4:12b-mlx`, `gemma
 (`qwen3:8b`, `qwen2.5:14b`), **Llama** (`llama3.1:8b`, `llama3.2:latest`), **Mistral**
 (`mistral-nemo:latest`), **DeepSeek** (`deepseek-r1:1.5b`), **NVIDIA** (`nemotron-mini:4b`), además de
 `gpt-oss:20b`, `nuextract:latest` (especializado en extracción estructurada) y
-`sonct988/gemma4-26b-a4b-it-q4km-256k`.
+``.
 
 > ⚠️ Los modelos cloud (`gemma4:31b-cloud`, `minimax-m3:cloud`) quedaron **fuera del estudio**: HTTP 429
 > por cuota semanal agotada y HTTP 402 por requerir suscripción de pago. Ver `FINDINGS.md §F6`.
@@ -236,7 +236,6 @@ masivo (1 extracción cada 3 minutos, sin mejora al aumentar los workers de 2 a 
 
 | Modelo excluido | Tamaño | Motivo |
 |:---|---:|:---|
-| `sonct988/gemma4-26b-a4b-it-q4km-256k` | 16 GB | Igual a la RAM total del equipo |
 | `gpt-oss:20b` | 13 GB | Deja ~3 GB para SO, Ollama y KV cache |
 
 **Efecto:** proyección de cómputo de ~173 h a **~66 h**. Los dos concentraban el 85% del tiempo.
@@ -254,7 +253,7 @@ conjuntos de modelos son disjuntos sobre el mismo corpus. La fusión para el ANO
 ### 8.3 Redacción obligatoria en la tesina
 - [ ] Declarar la exclusión como **limitación de hardware**, no como decisión metodológica. Redacción
       sugerida para §7 (Limitaciones), neutra en extensión:
-      > «Dos modelos (`sonct988/gemma4-26b…` de 16 GB y `gpt-oss:20b` de 13 GB) quedaron fuera del barrido
+      > «Dos modelos (`…` de 16 GB y `gpt-oss:20b` de 13 GB) quedaron fuera del barrido
       > sobre N=120 por una restricción física del equipo de evaluación (16 GB de RAM), que forzaba
       > paginación a disco y multiplicaba por un orden de magnitud el tiempo de inferencia.»
 - [ ] Declarar también la exclusión de los **dos modelos cloud** por límites de cuenta (HTTP 429 y 402),
@@ -472,7 +471,7 @@ Desbloqueado por la reautenticación. Corrige la contaminación documentada en `
 3. **Regla de admisión de modelos:** si `tamaño_modelo > RAM_física × 0.7`, no incluirlo en el plan de
    evaluación de esta máquina. Con 16 GB, el techo práctico es **~11 GB**.
    - Esto **excluye retroactivamente**: `gemma4:31b` (19 GB), `gemma4:31b-mlx` (19.4 GB),
-     `sonct988/…` (16 GB) y `gpt-oss:20b` (13 GB).
+`gpt-oss:20b` (13 GB).
    - `gemma4:12b-mlx` (7.7 GB) está dentro del límite, aunque su latencia de ~930 s ya refleja presión.
 4. **`ollama signin` NO reinicia el daemon** ⇒ puede hacerse sin interrumpir una corrida (verificado).
 5. **Diagnóstico de saturación:** `llama-server` con CPU baja (~30%) y swap alto significa que espera
@@ -543,7 +542,6 @@ español de ese término.
 | `gpt-oss:20b` | **ON, congelado** | Sin razonamiento deja de responder (`recall=0` en 7/15 y 10/15). Su corrida oficial no se toca |
 | `qwen3:8b` | **OFF** | +4,2 pp sobre N=120, `recall=0` de 15 → 1, ~10× más rápido |
 | `gemma4:12b-mlx`, `gemma4:31b-mlx` | **OFF** | El razonamiento agotaba `num_predict` y vaciaba `content` |
-| `deepseek-r1:1.5b`, `sonct988/gemma4-26b`, `gemma4:31b`, `gemma4:latest` | **ON (statu quo)** | Deltas medidos = ruido de N=15 (`FINDINGS.md §F45`) |
 
 **Decisión aplicada:** **no** se re-ejecutan esos 4 modelos con `think=OFF`. Hacerlo introduciría un segundo
 eje de inconsistencia (unos modelos con razonamiento y otros sin él) apoyado en ruido muestral.
@@ -568,5 +566,5 @@ eje de inconsistencia (unos modelos con razonamiento y otros sin él) apoyado en
 - [ ] Evaluar `qwen3:14b`, `qwen3:32b` y `qwen3:latest` (siguen con thinking ON, sin medir).
 - [ ] **Enumerar todos los modelos del estudio con capacidad `thinking`** (`ollama show`): toda corrida
       anterior al fix `743054d` los ejecutó con el razonamiento **activo por defecto**.
-- [ ] Explicar la anomalía de `sonct988` (OFF más lento, ×0.3) antes de dar por buena su ventaja.
+
 - [ ] Si se amplía el estudio, medir el régimen **a N=120**, no a N=15.

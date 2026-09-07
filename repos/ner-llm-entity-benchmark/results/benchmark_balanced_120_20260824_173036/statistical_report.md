@@ -18,8 +18,6 @@
 | minimax-m3:cloud_rag_enhanced | 120 | 0.0883 | 0.0439 | 0.1327 | 0.2458 |
 | gemma4:31b-mlx_baseline | 120 | 0.5983 | 0.5645 | 0.6321 | 0.1869 |
 | gemma4:31b-mlx_rag_enhanced | 120 | 0.5868 | 0.5503 | 0.6234 | 0.2021 |
-| sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 120 | 0.5617 | 0.5262 | 0.5972 | 0.1964 |
-| sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 120 | 0.5620 | 0.5250 | 0.5990 | 0.2047 |
 | gemma4:latest_baseline | 120 | 0.5446 | 0.5072 | 0.5819 | 0.2066 |
 | gemma4:latest_rag_enhanced | 120 | 0.5257 | 0.4862 | 0.5652 | 0.2187 |
 | gemma:latest_baseline | 120 | 0.4734 | 0.4310 | 0.5157 | 0.2345 |
@@ -71,8 +69,6 @@
 | deepseek-r1:1.5b_baseline vs qwen2.5:14b_rag_enhanced | 0.1671 | 2.0000e-04 | ✅ Yes | [0.0427, 0.2916] |
 | deepseek-r1:1.5b_baseline vs qwen3:8b_baseline | 0.1083 | 2.1250e-01 | ❌ No | [-0.0162, 0.2327] |
 | deepseek-r1:1.5b_baseline vs qwen3:8b_rag_enhanced | 0.1084 | 2.1080e-01 | ❌ No | [-0.0161, 0.2328] |
-| deepseek-r1:1.5b_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.2217 | 0.0000e+00 | ✅ Yes | [0.0973, 0.3461] |
-| deepseek-r1:1.5b_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.2220 | 0.0000e+00 | ✅ Yes | [0.0975, 0.3464] |
 | deepseek-r1:1.5b_rag_enhanced vs gemma4-12b-mlx-q8-64k:latest_baseline | -0.0672 | 9.7510e-01 | ❌ No | [-0.1916, 0.0573] |
 | deepseek-r1:1.5b_rag_enhanced vs gemma4-12b-mlx-q8-64k:latest_rag_enhanced | -0.1688 | 2.0000e-04 | ✅ Yes | [-0.2932, -0.0444] |
 | deepseek-r1:1.5b_rag_enhanced vs gemma4:31b-cloud_baseline | -0.2121 | 0.0000e+00 | ✅ Yes | [-0.3365, -0.0877] |
@@ -99,8 +95,6 @@
 | deepseek-r1:1.5b_rag_enhanced vs qwen2.5:14b_rag_enhanced | 0.1556 | 1.1000e-03 | ✅ Yes | [0.0312, 0.2800] |
 | deepseek-r1:1.5b_rag_enhanced vs qwen3:8b_baseline | 0.0967 | 4.5050e-01 | ❌ No | [-0.0277, 0.2211] |
 | deepseek-r1:1.5b_rag_enhanced vs qwen3:8b_rag_enhanced | 0.0968 | 4.4790e-01 | ❌ No | [-0.0276, 0.2212] |
-| deepseek-r1:1.5b_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.2102 | 0.0000e+00 | ✅ Yes | [0.0857, 0.3346] |
-| deepseek-r1:1.5b_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.2104 | 0.0000e+00 | ✅ Yes | [0.0860, 0.3348] |
 | gemma4-12b-mlx-q8-64k:latest_baseline vs gemma4-12b-mlx-q8-64k:latest_rag_enhanced | -0.1017 | 3.3680e-01 | ❌ No | [-0.2261, 0.0228] |
 | gemma4-12b-mlx-q8-64k:latest_baseline vs gemma4:31b-cloud_baseline | -0.1449 | 4.6000e-03 | ✅ Yes | [-0.2694, -0.0205] |
 | gemma4-12b-mlx-q8-64k:latest_baseline vs gemma4:31b-cloud_rag_enhanced | -0.0992 | 3.9240e-01 | ❌ No | [-0.2236, 0.0253] |
@@ -126,8 +120,6 @@
 | gemma4-12b-mlx-q8-64k:latest_baseline vs qwen2.5:14b_rag_enhanced | 0.2227 | 0.0000e+00 | ✅ Yes | [0.0983, 0.3471] |
 | gemma4-12b-mlx-q8-64k:latest_baseline vs qwen3:8b_baseline | 0.1639 | 3.0000e-04 | ✅ Yes | [0.0394, 0.2883] |
 | gemma4-12b-mlx-q8-64k:latest_baseline vs qwen3:8b_rag_enhanced | 0.1640 | 3.0000e-04 | ✅ Yes | [0.0395, 0.2884] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.2773 | 0.0000e+00 | ✅ Yes | [0.1529, 0.4017] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.2776 | 0.0000e+00 | ✅ Yes | [0.1531, 0.4020] |
 | gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs gemma4:31b-cloud_baseline | -0.0433 | 1.0000e+00 | ❌ No | [-0.1677, 0.0811] |
 | gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs gemma4:31b-cloud_rag_enhanced | 0.0025 | 1.0000e+00 | ❌ No | [-0.1219, 0.1269] |
 | gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs gemma4:31b-mlx_baseline | 0.4155 | 0.0000e+00 | ✅ Yes | [0.2911, 0.5400] |
@@ -152,8 +144,6 @@
 | gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs qwen2.5:14b_rag_enhanced | 0.3244 | 0.0000e+00 | ✅ Yes | [0.2000, 0.4488] |
 | gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs qwen3:8b_baseline | 0.2655 | 0.0000e+00 | ✅ Yes | [0.1411, 0.3899] |
 | gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs qwen3:8b_rag_enhanced | 0.2656 | 0.0000e+00 | ✅ Yes | [0.1412, 0.3900] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.3790 | 0.0000e+00 | ✅ Yes | [0.2546, 0.5034] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.3792 | 0.0000e+00 | ✅ Yes | [0.2548, 0.5036] |
 | gemma4:31b-cloud_baseline vs gemma4:31b-cloud_rag_enhanced | 0.0458 | 1.0000e+00 | ❌ No | [-0.0786, 0.1702] |
 | gemma4:31b-cloud_baseline vs gemma4:31b-mlx_baseline | 0.4588 | 0.0000e+00 | ✅ Yes | [0.3344, 0.5832] |
 | gemma4:31b-cloud_baseline vs gemma4:31b-mlx_rag_enhanced | 0.4474 | 0.0000e+00 | ✅ Yes | [0.3229, 0.5718] |
@@ -177,8 +167,6 @@
 | gemma4:31b-cloud_baseline vs qwen2.5:14b_rag_enhanced | 0.3677 | 0.0000e+00 | ✅ Yes | [0.2432, 0.4921] |
 | gemma4:31b-cloud_baseline vs qwen3:8b_baseline | 0.3088 | 0.0000e+00 | ✅ Yes | [0.1844, 0.4332] |
 | gemma4:31b-cloud_baseline vs qwen3:8b_rag_enhanced | 0.3089 | 0.0000e+00 | ✅ Yes | [0.1845, 0.4333] |
-| gemma4:31b-cloud_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.4223 | 0.0000e+00 | ✅ Yes | [0.2978, 0.5467] |
-| gemma4:31b-cloud_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.4225 | 0.0000e+00 | ✅ Yes | [0.2981, 0.5469] |
 | gemma4:31b-cloud_rag_enhanced vs gemma4:31b-mlx_baseline | 0.4130 | 0.0000e+00 | ✅ Yes | [0.2886, 0.5375] |
 | gemma4:31b-cloud_rag_enhanced vs gemma4:31b-mlx_rag_enhanced | 0.4016 | 0.0000e+00 | ✅ Yes | [0.2772, 0.5260] |
 | gemma4:31b-cloud_rag_enhanced vs gemma4:latest_baseline | 0.3593 | 0.0000e+00 | ✅ Yes | [0.2349, 0.4838] |
@@ -201,8 +189,6 @@
 | gemma4:31b-cloud_rag_enhanced vs qwen2.5:14b_rag_enhanced | 0.3219 | 0.0000e+00 | ✅ Yes | [0.1975, 0.4463] |
 | gemma4:31b-cloud_rag_enhanced vs qwen3:8b_baseline | 0.2630 | 0.0000e+00 | ✅ Yes | [0.1386, 0.3874] |
 | gemma4:31b-cloud_rag_enhanced vs qwen3:8b_rag_enhanced | 0.2631 | 0.0000e+00 | ✅ Yes | [0.1387, 0.3875] |
-| gemma4:31b-cloud_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.3765 | 0.0000e+00 | ✅ Yes | [0.2521, 0.5009] |
-| gemma4:31b-cloud_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.3767 | 0.0000e+00 | ✅ Yes | [0.2523, 0.5011] |
 | gemma4:31b-mlx_baseline vs gemma4:31b-mlx_rag_enhanced | -0.0115 | 1.0000e+00 | ❌ No | [-0.1359, 0.1130] |
 | gemma4:31b-mlx_baseline vs gemma4:latest_baseline | -0.0537 | 9.9920e-01 | ❌ No | [-0.1781, 0.0707] |
 | gemma4:31b-mlx_baseline vs gemma4:latest_rag_enhanced | -0.0726 | 9.3720e-01 | ❌ No | [-0.1970, 0.0518] |
@@ -224,8 +210,6 @@
 | gemma4:31b-mlx_baseline vs qwen2.5:14b_rag_enhanced | -0.0912 | 5.8850e-01 | ❌ No | [-0.2156, 0.0333] |
 | gemma4:31b-mlx_baseline vs qwen3:8b_baseline | -0.1500 | 2.4000e-03 | ✅ Yes | [-0.2744, -0.0256] |
 | gemma4:31b-mlx_baseline vs qwen3:8b_rag_enhanced | -0.1499 | 2.4000e-03 | ✅ Yes | [-0.2743, -0.0255] |
-| gemma4:31b-mlx_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | -0.0366 | 1.0000e+00 | ❌ No | [-0.1610, 0.0879] |
-| gemma4:31b-mlx_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | -0.0363 | 1.0000e+00 | ❌ No | [-0.1607, 0.0881] |
 | gemma4:31b-mlx_rag_enhanced vs gemma4:latest_baseline | -0.0422 | 1.0000e+00 | ❌ No | [-0.1667, 0.0822] |
 | gemma4:31b-mlx_rag_enhanced vs gemma4:latest_rag_enhanced | -0.0611 | 9.9330e-01 | ❌ No | [-0.1855, 0.0633] |
 | gemma4:31b-mlx_rag_enhanced vs gemma:latest_baseline | -0.1135 | 1.3980e-01 | ❌ No | [-0.2379, 0.0110] |
@@ -246,8 +230,6 @@
 | gemma4:31b-mlx_rag_enhanced vs qwen2.5:14b_rag_enhanced | -0.0797 | 8.4190e-01 | ❌ No | [-0.2041, 0.0447] |
 | gemma4:31b-mlx_rag_enhanced vs qwen3:8b_baseline | -0.1386 | 1.0200e-02 | ✅ Yes | [-0.2630, -0.0141] |
 | gemma4:31b-mlx_rag_enhanced vs qwen3:8b_rag_enhanced | -0.1385 | 1.0400e-02 | ✅ Yes | [-0.2629, -0.0140] |
-| gemma4:31b-mlx_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | -0.0251 | 1.0000e+00 | ❌ No | [-0.1495, 0.0993] |
-| gemma4:31b-mlx_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | -0.0249 | 1.0000e+00 | ❌ No | [-0.1493, 0.0996] |
 | gemma4:latest_baseline vs gemma4:latest_rag_enhanced | -0.0189 | 1.0000e+00 | ❌ No | [-0.1433, 0.1055] |
 | gemma4:latest_baseline vs gemma:latest_baseline | -0.0712 | 9.4920e-01 | ❌ No | [-0.1956, 0.0532] |
 | gemma4:latest_baseline vs gemma:latest_rag_enhanced | -0.1187 | 8.7600e-02 | ❌ No | [-0.2431, 0.0057] |
@@ -267,8 +249,6 @@
 | gemma4:latest_baseline vs qwen2.5:14b_rag_enhanced | -0.0375 | 1.0000e+00 | ❌ No | [-0.1619, 0.0870] |
 | gemma4:latest_baseline vs qwen3:8b_baseline | -0.0963 | 4.5980e-01 | ❌ No | [-0.2207, 0.0281] |
 | gemma4:latest_baseline vs qwen3:8b_rag_enhanced | -0.0962 | 4.6240e-01 | ❌ No | [-0.2206, 0.0282] |
-| gemma4:latest_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.0171 | 1.0000e+00 | ❌ No | [-0.1073, 0.1416] |
-| gemma4:latest_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.0174 | 1.0000e+00 | ❌ No | [-0.1070, 0.1418] |
 | gemma4:latest_rag_enhanced vs gemma:latest_baseline | -0.0523 | 9.9950e-01 | ❌ No | [-0.1768, 0.0721] |
 | gemma4:latest_rag_enhanced vs gemma:latest_rag_enhanced | -0.0998 | 3.7720e-01 | ❌ No | [-0.2242, 0.0246] |
 | gemma4:latest_rag_enhanced vs llama3.1:8b_baseline | -0.0298 | 1.0000e+00 | ❌ No | [-0.1542, 0.0946] |
@@ -287,8 +267,6 @@
 | gemma4:latest_rag_enhanced vs qwen2.5:14b_rag_enhanced | -0.0186 | 1.0000e+00 | ❌ No | [-0.1430, 0.1058] |
 | gemma4:latest_rag_enhanced vs qwen3:8b_baseline | -0.0774 | 8.7800e-01 | ❌ No | [-0.2019, 0.0470] |
 | gemma4:latest_rag_enhanced vs qwen3:8b_rag_enhanced | -0.0773 | 8.7950e-01 | ❌ No | [-0.2018, 0.0471] |
-| gemma4:latest_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.0360 | 1.0000e+00 | ❌ No | [-0.0884, 0.1604] |
-| gemma4:latest_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.0363 | 1.0000e+00 | ❌ No | [-0.0882, 0.1607] |
 | gemma:latest_baseline vs gemma:latest_rag_enhanced | -0.0475 | 9.9990e-01 | ❌ No | [-0.1719, 0.0769] |
 | gemma:latest_baseline vs llama3.1:8b_baseline | 0.0226 | 1.0000e+00 | ❌ No | [-0.1018, 0.1470] |
 | gemma:latest_baseline vs llama3.1:8b_rag_enhanced | -0.0111 | 1.0000e+00 | ❌ No | [-0.1355, 0.1133] |
@@ -306,8 +284,6 @@
 | gemma:latest_baseline vs qwen2.5:14b_rag_enhanced | 0.0338 | 1.0000e+00 | ❌ No | [-0.0906, 0.1582] |
 | gemma:latest_baseline vs qwen3:8b_baseline | -0.0251 | 1.0000e+00 | ❌ No | [-0.1495, 0.0993] |
 | gemma:latest_baseline vs qwen3:8b_rag_enhanced | -0.0250 | 1.0000e+00 | ❌ No | [-0.1494, 0.0994] |
-| gemma:latest_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.0884 | 6.5740e-01 | ❌ No | [-0.0361, 0.2128] |
-| gemma:latest_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.0886 | 6.5160e-01 | ❌ No | [-0.0358, 0.2130] |
 | gemma:latest_rag_enhanced vs llama3.1:8b_baseline | 0.0700 | 9.5810e-01 | ❌ No | [-0.0544, 0.1945] |
 | gemma:latest_rag_enhanced vs llama3.1:8b_rag_enhanced | 0.0364 | 1.0000e+00 | ❌ No | [-0.0880, 0.1608] |
 | gemma:latest_rag_enhanced vs llama3.2:latest_baseline | -0.0314 | 1.0000e+00 | ❌ No | [-0.1559, 0.0930] |
@@ -324,8 +300,6 @@
 | gemma:latest_rag_enhanced vs qwen2.5:14b_rag_enhanced | 0.0812 | 8.1360e-01 | ❌ No | [-0.0432, 0.2057] |
 | gemma:latest_rag_enhanced vs qwen3:8b_baseline | 0.0224 | 1.0000e+00 | ❌ No | [-0.1020, 0.1468] |
 | gemma:latest_rag_enhanced vs qwen3:8b_rag_enhanced | 0.0225 | 1.0000e+00 | ❌ No | [-0.1019, 0.1469] |
-| gemma:latest_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.1358 | 1.4200e-02 | ✅ Yes | [0.0114, 0.2603] |
-| gemma:latest_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.1361 | 1.3800e-02 | ✅ Yes | [0.0117, 0.2605] |
 | llama3.1:8b_baseline vs llama3.1:8b_rag_enhanced | -0.0337 | 1.0000e+00 | ❌ No | [-0.1581, 0.0908] |
 | llama3.1:8b_baseline vs llama3.2:latest_baseline | -0.1015 | 3.4070e-01 | ❌ No | [-0.2259, 0.0229] |
 | llama3.1:8b_baseline vs llama3.2:latest_rag_enhanced | -0.0763 | 8.9420e-01 | ❌ No | [-0.2007, 0.0481] |
@@ -341,8 +315,6 @@
 | llama3.1:8b_baseline vs qwen2.5:14b_rag_enhanced | 0.0112 | 1.0000e+00 | ❌ No | [-0.1132, 0.1356] |
 | llama3.1:8b_baseline vs qwen3:8b_baseline | -0.0477 | 9.9990e-01 | ❌ No | [-0.1721, 0.0767] |
 | llama3.1:8b_baseline vs qwen3:8b_rag_enhanced | -0.0476 | 9.9990e-01 | ❌ No | [-0.1720, 0.0769] |
-| llama3.1:8b_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.0658 | 9.8100e-01 | ❌ No | [-0.0586, 0.1902] |
-| llama3.1:8b_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.0660 | 9.8010e-01 | ❌ No | [-0.0584, 0.1905] |
 | llama3.1:8b_rag_enhanced vs llama3.2:latest_baseline | -0.0678 | 9.7180e-01 | ❌ No | [-0.1922, 0.0566] |
 | llama3.1:8b_rag_enhanced vs llama3.2:latest_rag_enhanced | -0.0426 | 1.0000e+00 | ❌ No | [-0.1671, 0.0818] |
 | llama3.1:8b_rag_enhanced vs minimax-m3:cloud_baseline | -0.3785 | 0.0000e+00 | ✅ Yes | [-0.5030, -0.2541] |
@@ -357,8 +329,6 @@
 | llama3.1:8b_rag_enhanced vs qwen2.5:14b_rag_enhanced | 0.0449 | 1.0000e+00 | ❌ No | [-0.0796, 0.1693] |
 | llama3.1:8b_rag_enhanced vs qwen3:8b_baseline | -0.0140 | 1.0000e+00 | ❌ No | [-0.1384, 0.1104] |
 | llama3.1:8b_rag_enhanced vs qwen3:8b_rag_enhanced | -0.0139 | 1.0000e+00 | ❌ No | [-0.1383, 0.1105] |
-| llama3.1:8b_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.0995 | 3.8560e-01 | ❌ No | [-0.0250, 0.2239] |
-| llama3.1:8b_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.0997 | 3.8010e-01 | ❌ No | [-0.0247, 0.2241] |
 | llama3.2:latest_baseline vs llama3.2:latest_rag_enhanced | 0.0252 | 1.0000e+00 | ❌ No | [-0.0992, 0.1496] |
 | llama3.2:latest_baseline vs minimax-m3:cloud_baseline | -0.3107 | 0.0000e+00 | ✅ Yes | [-0.4351, -0.1863] |
 | llama3.2:latest_baseline vs minimax-m3:cloud_rag_enhanced | -0.3062 | 0.0000e+00 | ✅ Yes | [-0.4306, -0.1817] |
@@ -372,8 +342,6 @@
 | llama3.2:latest_baseline vs qwen2.5:14b_rag_enhanced | 0.1127 | 1.4930e-01 | ❌ No | [-0.0117, 0.2371] |
 | llama3.2:latest_baseline vs qwen3:8b_baseline | 0.0538 | 9.9920e-01 | ❌ No | [-0.0706, 0.1782] |
 | llama3.2:latest_baseline vs qwen3:8b_rag_enhanced | 0.0539 | 9.9910e-01 | ❌ No | [-0.0705, 0.1783] |
-| llama3.2:latest_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.1673 | 2.0000e-04 | ✅ Yes | [0.0429, 0.2917] |
-| llama3.2:latest_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.1675 | 2.0000e-04 | ✅ Yes | [0.0431, 0.2919] |
 | llama3.2:latest_rag_enhanced vs minimax-m3:cloud_baseline | -0.3359 | 0.0000e+00 | ✅ Yes | [-0.4603, -0.2115] |
 | llama3.2:latest_rag_enhanced vs minimax-m3:cloud_rag_enhanced | -0.3313 | 0.0000e+00 | ✅ Yes | [-0.4558, -0.2069] |
 | llama3.2:latest_rag_enhanced vs mistral-nemo:latest_baseline | 0.0309 | 1.0000e+00 | ❌ No | [-0.0935, 0.1553] |
@@ -386,8 +354,6 @@
 | llama3.2:latest_rag_enhanced vs qwen2.5:14b_rag_enhanced | 0.0875 | 6.7800e-01 | ❌ No | [-0.0369, 0.2119] |
 | llama3.2:latest_rag_enhanced vs qwen3:8b_baseline | 0.0286 | 1.0000e+00 | ❌ No | [-0.0958, 0.1531] |
 | llama3.2:latest_rag_enhanced vs qwen3:8b_rag_enhanced | 0.0287 | 1.0000e+00 | ❌ No | [-0.0957, 0.1532] |
-| llama3.2:latest_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.1421 | 6.6000e-03 | ✅ Yes | [0.0177, 0.2665] |
-| llama3.2:latest_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.1423 | 6.4000e-03 | ✅ Yes | [0.0179, 0.2668] |
 | minimax-m3:cloud_baseline vs minimax-m3:cloud_rag_enhanced | 0.0046 | 1.0000e+00 | ❌ No | [-0.1198, 0.1290] |
 | minimax-m3:cloud_baseline vs mistral-nemo:latest_baseline | 0.3668 | 0.0000e+00 | ✅ Yes | [0.2424, 0.4912] |
 | minimax-m3:cloud_baseline vs mistral-nemo:latest_rag_enhanced | 0.3098 | 0.0000e+00 | ✅ Yes | [0.1854, 0.4342] |
@@ -399,8 +365,6 @@
 | minimax-m3:cloud_baseline vs qwen2.5:14b_rag_enhanced | 0.4234 | 0.0000e+00 | ✅ Yes | [0.2990, 0.5478] |
 | minimax-m3:cloud_baseline vs qwen3:8b_baseline | 0.3645 | 0.0000e+00 | ✅ Yes | [0.2401, 0.4890] |
 | minimax-m3:cloud_baseline vs qwen3:8b_rag_enhanced | 0.3646 | 0.0000e+00 | ✅ Yes | [0.2402, 0.4891] |
-| minimax-m3:cloud_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.4780 | 0.0000e+00 | ✅ Yes | [0.3536, 0.6024] |
-| minimax-m3:cloud_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.4782 | 0.0000e+00 | ✅ Yes | [0.3538, 0.6027] |
 | minimax-m3:cloud_rag_enhanced vs mistral-nemo:latest_baseline | 0.3622 | 0.0000e+00 | ✅ Yes | [0.2378, 0.4866] |
 | minimax-m3:cloud_rag_enhanced vs mistral-nemo:latest_rag_enhanced | 0.3052 | 0.0000e+00 | ✅ Yes | [0.1808, 0.4297] |
 | minimax-m3:cloud_rag_enhanced vs nemotron-mini:4b_baseline | 0.2767 | 0.0000e+00 | ✅ Yes | [0.1523, 0.4011] |
@@ -411,8 +375,6 @@
 | minimax-m3:cloud_rag_enhanced vs qwen2.5:14b_rag_enhanced | 0.4188 | 0.0000e+00 | ✅ Yes | [0.2944, 0.5433] |
 | minimax-m3:cloud_rag_enhanced vs qwen3:8b_baseline | 0.3600 | 0.0000e+00 | ✅ Yes | [0.2355, 0.4844] |
 | minimax-m3:cloud_rag_enhanced vs qwen3:8b_rag_enhanced | 0.3601 | 0.0000e+00 | ✅ Yes | [0.2357, 0.4845] |
-| minimax-m3:cloud_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.4734 | 0.0000e+00 | ✅ Yes | [0.3490, 0.5979] |
-| minimax-m3:cloud_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.4737 | 0.0000e+00 | ✅ Yes | [0.3492, 0.5981] |
 | mistral-nemo:latest_baseline vs mistral-nemo:latest_rag_enhanced | -0.0570 | 9.9780e-01 | ❌ No | [-0.1814, 0.0674] |
 | mistral-nemo:latest_baseline vs nemotron-mini:4b_baseline | -0.0855 | 7.2400e-01 | ❌ No | [-0.2100, 0.0389] |
 | mistral-nemo:latest_baseline vs nemotron-mini:4b_rag_enhanced | 0.0199 | 1.0000e+00 | ❌ No | [-0.1045, 0.1443] |
@@ -422,8 +384,6 @@
 | mistral-nemo:latest_baseline vs qwen2.5:14b_rag_enhanced | 0.0566 | 9.9800e-01 | ❌ No | [-0.0678, 0.1810] |
 | mistral-nemo:latest_baseline vs qwen3:8b_baseline | -0.0023 | 1.0000e+00 | ❌ No | [-0.1267, 0.1222] |
 | mistral-nemo:latest_baseline vs qwen3:8b_rag_enhanced | -0.0021 | 1.0000e+00 | ❌ No | [-0.1266, 0.1223] |
-| mistral-nemo:latest_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.1112 | 1.6850e-01 | ❌ No | [-0.0132, 0.2356] |
-| mistral-nemo:latest_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.1114 | 1.6530e-01 | ❌ No | [-0.0130, 0.2359] |
 | mistral-nemo:latest_rag_enhanced vs nemotron-mini:4b_baseline | -0.0286 | 1.0000e+00 | ❌ No | [-0.1530, 0.0959] |
 | mistral-nemo:latest_rag_enhanced vs nemotron-mini:4b_rag_enhanced | 0.0769 | 8.8600e-01 | ❌ No | [-0.0475, 0.2013] |
 | mistral-nemo:latest_rag_enhanced vs nuextract:latest_baseline | 0.0519 | 9.9960e-01 | ❌ No | [-0.0725, 0.1764] |
@@ -432,8 +392,6 @@
 | mistral-nemo:latest_rag_enhanced vs qwen2.5:14b_rag_enhanced | 0.1136 | 1.3820e-01 | ❌ No | [-0.0108, 0.2380] |
 | mistral-nemo:latest_rag_enhanced vs qwen3:8b_baseline | 0.0547 | 9.9890e-01 | ❌ No | [-0.0697, 0.1791] |
 | mistral-nemo:latest_rag_enhanced vs qwen3:8b_rag_enhanced | 0.0548 | 9.9880e-01 | ❌ No | [-0.0696, 0.1792] |
-| mistral-nemo:latest_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.1682 | 2.0000e-04 | ✅ Yes | [0.0438, 0.2926] |
-| mistral-nemo:latest_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.1684 | 2.0000e-04 | ✅ Yes | [0.0440, 0.2928] |
 | nemotron-mini:4b_baseline vs nemotron-mini:4b_rag_enhanced | 0.1055 | 2.6110e-01 | ❌ No | [-0.0190, 0.2299] |
 | nemotron-mini:4b_baseline vs nuextract:latest_baseline | 0.0805 | 8.2760e-01 | ❌ No | [-0.0439, 0.2049] |
 | nemotron-mini:4b_baseline vs nuextract:latest_rag_enhanced | 0.1435 | 5.6000e-03 | ✅ Yes | [0.0191, 0.2679] |
@@ -441,44 +399,27 @@
 | nemotron-mini:4b_baseline vs qwen2.5:14b_rag_enhanced | 0.1421 | 6.6000e-03 | ✅ Yes | [0.0177, 0.2666] |
 | nemotron-mini:4b_baseline vs qwen3:8b_baseline | 0.0833 | 7.7310e-01 | ❌ No | [-0.0411, 0.2077] |
 | nemotron-mini:4b_baseline vs qwen3:8b_rag_enhanced | 0.0834 | 7.7090e-01 | ❌ No | [-0.0410, 0.2078] |
-| nemotron-mini:4b_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.1967 | 0.0000e+00 | ✅ Yes | [0.0723, 0.3212] |
-| nemotron-mini:4b_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.1970 | 0.0000e+00 | ✅ Yes | [0.0726, 0.3214] |
 | nemotron-mini:4b_rag_enhanced vs nuextract:latest_baseline | -0.0250 | 1.0000e+00 | ❌ No | [-0.1494, 0.0995] |
 | nemotron-mini:4b_rag_enhanced vs nuextract:latest_rag_enhanced | 0.0380 | 1.0000e+00 | ❌ No | [-0.0864, 0.1625] |
 | nemotron-mini:4b_rag_enhanced vs qwen2.5:14b_baseline | 0.0484 | 9.9990e-01 | ❌ No | [-0.0760, 0.1728] |
 | nemotron-mini:4b_rag_enhanced vs qwen2.5:14b_rag_enhanced | 0.0367 | 1.0000e+00 | ❌ No | [-0.0877, 0.1611] |
 | nemotron-mini:4b_rag_enhanced vs qwen3:8b_baseline | -0.0222 | 1.0000e+00 | ❌ No | [-0.1466, 0.1022] |
 | nemotron-mini:4b_rag_enhanced vs qwen3:8b_rag_enhanced | -0.0221 | 1.0000e+00 | ❌ No | [-0.1465, 0.1024] |
-| nemotron-mini:4b_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.0913 | 5.8510e-01 | ❌ No | [-0.0331, 0.2157] |
-| nemotron-mini:4b_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.0915 | 5.7910e-01 | ❌ No | [-0.0329, 0.2159] |
 | nuextract:latest_baseline vs nuextract:latest_rag_enhanced | 0.0630 | 9.8960e-01 | ❌ No | [-0.0614, 0.1874] |
 | nuextract:latest_baseline vs qwen2.5:14b_baseline | 0.0734 | 9.2920e-01 | ❌ No | [-0.0510, 0.1978] |
 | nuextract:latest_baseline vs qwen2.5:14b_rag_enhanced | 0.0617 | 9.9240e-01 | ❌ No | [-0.0628, 0.1861] |
 | nuextract:latest_baseline vs qwen3:8b_baseline | 0.0028 | 1.0000e+00 | ❌ No | [-0.1216, 0.1272] |
 | nuextract:latest_baseline vs qwen3:8b_rag_enhanced | 0.0029 | 1.0000e+00 | ❌ No | [-0.1215, 0.1273] |
-| nuextract:latest_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.1162 | 1.0960e-01 | ❌ No | [-0.0082, 0.2407] |
-| nuextract:latest_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.1165 | 1.0730e-01 | ❌ No | [-0.0079, 0.2409] |
 | nuextract:latest_rag_enhanced vs qwen2.5:14b_baseline | 0.0104 | 1.0000e+00 | ❌ No | [-0.1140, 0.1348] |
 | nuextract:latest_rag_enhanced vs qwen2.5:14b_rag_enhanced | -0.0013 | 1.0000e+00 | ❌ No | [-0.1258, 0.1231] |
 | nuextract:latest_rag_enhanced vs qwen3:8b_baseline | -0.0602 | 9.9470e-01 | ❌ No | [-0.1846, 0.0642] |
 | nuextract:latest_rag_enhanced vs qwen3:8b_rag_enhanced | -0.0601 | 9.9480e-01 | ❌ No | [-0.1845, 0.0643] |
-| nuextract:latest_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.0533 | 9.9930e-01 | ❌ No | [-0.0712, 0.1777] |
-| nuextract:latest_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.0535 | 9.9920e-01 | ❌ No | [-0.0709, 0.1779] |
 | qwen2.5:14b_baseline vs qwen2.5:14b_rag_enhanced | -0.0117 | 1.0000e+00 | ❌ No | [-0.1362, 0.1127] |
 | qwen2.5:14b_baseline vs qwen3:8b_baseline | -0.0706 | 9.5410e-01 | ❌ No | [-0.1950, 0.0538] |
 | qwen2.5:14b_baseline vs qwen3:8b_rag_enhanced | -0.0705 | 9.5490e-01 | ❌ No | [-0.1949, 0.0539] |
-| qwen2.5:14b_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.0429 | 1.0000e+00 | ❌ No | [-0.0816, 0.1673] |
-| qwen2.5:14b_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.0431 | 1.0000e+00 | ❌ No | [-0.0813, 0.1675] |
 | qwen2.5:14b_rag_enhanced vs qwen3:8b_baseline | -0.0589 | 9.9620e-01 | ❌ No | [-0.1833, 0.0655] |
 | qwen2.5:14b_rag_enhanced vs qwen3:8b_rag_enhanced | -0.0588 | 9.9630e-01 | ❌ No | [-0.1832, 0.0657] |
-| qwen2.5:14b_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.0546 | 9.9890e-01 | ❌ No | [-0.0698, 0.1790] |
-| qwen2.5:14b_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.0548 | 9.9880e-01 | ❌ No | [-0.0696, 0.1793] |
 | qwen3:8b_baseline vs qwen3:8b_rag_enhanced | 0.0001 | 1.0000e+00 | ❌ No | [-0.1243, 0.1245] |
-| qwen3:8b_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.1135 | 1.3980e-01 | ❌ No | [-0.0110, 0.2379] |
-| qwen3:8b_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.1137 | 1.3700e-01 | ❌ No | [-0.0107, 0.2381] |
-| qwen3:8b_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.1134 | 1.4100e-01 | ❌ No | [-0.0111, 0.2378] |
-| qwen3:8b_rag_enhanced vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.1136 | 1.3820e-01 | ❌ No | [-0.0108, 0.2380] |
-| sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline vs sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.0002 | 1.0000e+00 | ❌ No | [-0.1242, 0.1247] |
 
 ## 4. Sensitivity Analysis (Outlier Filtering)
 - **Difficulty Criteria:** Article length > 2610.3 characters.
@@ -514,5 +455,3 @@
 | qwen2.5:14b_rag_enhanced | 0.5071 | 0.4935 | -0.0136 | 📉 Decreased |
 | qwen3:8b_baseline | 0.4483 | 0.4336 | -0.0146 | 📉 Decreased |
 | qwen3:8b_rag_enhanced | 0.4484 | 0.4357 | -0.0127 | 📉 Decreased |
-| sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline | 0.5617 | 0.5528 | -0.0090 | 📉 Decreased |
-| sonct988/gemma4-26b-a4b-it-q4km-256k:latest_rag_enhanced | 0.5620 | 0.5606 | -0.0014 | 📉 Decreased |

@@ -212,7 +212,6 @@ Expected output: `Entities:` dict with `Persons`, `Organizations`, `Locations` a
 | `gemini-3.1-flash-lite` | Cloud (AI Studio) | ☁️ API Cloud | ✅ Active | *Name corrected 2026-09-03: was written `gemini-1.5-flash-lite`, a model that exists in no config and no run. `src/config.py:60` declares `gemini-3.1-flash-lite`; it is the model of run #4 (F1 0.6547).* |
 | `gemini-3.5-flash` | Cloud (AI Studio) | ☁️ API Cloud | ⚪ Declared, not run | *Added 2026-09-03: present in `src/config.py:60`, no catalogued run.* |
 | `gemma4:31b` | Local | ✅ Pulled (19 GB) | ✅ Active | |
-| `sonct988/gemma4-26b-a4b-it-q4km-256k:latest` | Local | ✅ Pulled (16 GB) | ✅ Active | |
 | `gpt-oss:20b` | Local | ✅ Pulled (13 GB) | ✅ Active | |
 | `gemma4:latest` | Local | ✅ Pulled (9.6 GB) | ✅ Active | |
 | `gemma:latest` | Local | ✅ Pulled (5.0 GB) | ✅ Active | |

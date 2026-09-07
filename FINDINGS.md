@@ -97,7 +97,7 @@ Verificado llamando directamente a la API de Ollama con la clave del proyecto:
 | `minimax-m3:cloud` | **402** | Requiere suscripción de pago; la API key no lo desbloquea |
 
 - **Impacto:** el estudio queda con **12 modelos** (5 de la corrida 2026-09-01 + 7 locales). *Corrección
-  2026-09-05: esta línea decía 14 antes de la exclusión de `sonct988` y `gpt-oss:20b` por RAM (ver F24).*
+  2026-09-05: esta línea decía 14 antes de la exclusión de `gpt-oss:20b` por RAM (ver F24).*
 
 ### F7. La conexión es un hotspot celular con Modo de Datos Reducidos
 `gateway 172.20.10.1` (rango de Hotspot Personal de iPhone) y la interfaz `en0` marcada como
@@ -251,7 +251,6 @@ Los hallazgos con impacto directo sobre las tareas de edición de documentos asi
 
 | Modelo | Tamaño | Relación con la RAM (16 GB) |
 |:---|---:|:---|
-| `sonct988/gemma4-26b-a4b-it-q4km-256k` | **16 GB** | Igual a la RAM total |
 | `gpt-oss:20b` | **13 GB** | Deja ~3 GB para SO, Ollama y KV cache |
 | `gemma4:31b` / `gemma4:31b-mlx` | **19 GB** | **Exceden la RAM física** |
 
@@ -263,7 +262,7 @@ average de 12.33.
 **Proyección con los 9 modelos locales:** ≈ **173 horas (7 días)**, de las cuales los tres modelos pesados
 concentraban el **85%**.
 
-### F24. Decisión: exclusión de `sonct988` y `gpt-oss:20b`
+### F24. Decisión: exclusión de `gpt-oss:20b`
 **Autorizada por el autor el 2026-09-03.** Se excluyen del estudio los dos modelos que no caben
 razonablemente en 16 GB de RAM.
 
@@ -733,8 +732,6 @@ retirar `minimax-m3` (F38, L28). Los datos crudos en `results/` permanecen intac
 | `deepseek-r1:1.5b` | kb_rag | 0.345 | 0.345 | ±0 | ×3.7 |
 | `gpt-oss:20b` | baseline | 0.419 | 0.301 | **−0.118** | ×1.6 |
 | `gpt-oss:20b` | kb_rag | 0.283 | 0.155 | **−0.128** | ×3.0 |
-| `sonct988/gemma4-26b` | baseline | 0.495 | 0.516 | +0.021 | ×0.3 |
-| `sonct988/gemma4-26b` | kb_rag | 0.529 | 0.539 | +0.010 | ×1.6 |
 | `gemma4:31b` | baseline (entities) | 0.691 | 0.662 | −0.029 | ×3.0 |
 | `gemma4:31b` | rag (entities) | 0.639 | 0.676 | +0.037 | ×4.4 |
 | `gemma4:latest` (variantes) | zs-en | 0.640 | 0.675 | +0.035 | ×5.6 |
@@ -745,7 +742,6 @@ retirar `minimax-m3` (F38, L28). Los datos crudos en `results/` permanecen intac
 **Hallazgo.** Apagar el *thinking* **no es una mejora universal**:
 - `qwen3:8b`: think OFF **sube** F1 (~+4 pp) y ~10× más rápido → OFF.
 - `deepseek-r1:1.5b`: think OFF **F1 idéntico**, ~3× más rápido → OFF por velocidad, calidad intacta.
-- `sonct988`: think OFF **marginalmente mejor** (+0.01/+0.02).
 - **`gpt-oss:20b`: think OFF EMPEORA fuerte (−0.12 F1). El thinking le AYUDA.**
 - `gemma4:31b`: neutro (base −0.03 / rag +0.04) pero **~3× más rápido** (613→203 s).
 - `gemma4:latest` (variantes): mayormente **mejor** (+0.02 a +0.07; solo fs-es −0.05) y **~6× más rápido** (158→28 s).
@@ -756,7 +752,7 @@ retirar `minimax-m3` (F38, L28). Los datos crudos en `results/` permanecen intac
 (`results/excluidos_n120_REMOTO`) no se re-ejecuta ni se toca.**
 
 **ETA real medido para re-correr con think=OFF los 4 beneficiados (latencias think-off reales):**
-`deepseek-r1:1.5b` ~0.3 h · `sonct988` ~0.25 h · `gemma4:31b` (N=15) ~0.4 h · `gemma4:latest` (variantes N=15)
+`deepseek-r1:1.5b` ~0.3 h · `gemma4:31b` (N=15) ~0.4 h · `gemma4:latest` (variantes N=15)
 ~0.15 h → **~1-1.5 h local serial en total** (gpt-oss NO se re-corre). Queda a decisión del autor si se aplica
 al estudio oficial (implicaría regenerar esas corridas con think=OFF y re-fusionar el ANOVA).
 
@@ -793,7 +789,7 @@ revertido.
 - **`gemma4:latest`** oscila entre **+0.066 (`fs-en`) y −0.051 (`fs-es`)**: el signo cambia entre condiciones
   del **mismo modelo**. Eso es ruido de N=15, no efecto.
 - **`gemma4:31b`** hace lo mismo: −0.029 en baseline, +0.037 en RAG.
-- **`sonct988/gemma4-26b`** presenta una anomalía sin explicar: con `think` apagado va **más lento**
+- **``** presenta una anomalía sin explicar: con `think` apagado va **más lento**
   (×0.3, de 7 s a 25 s), lo que **contradice el modelo causal** del hallazgo (el razonamiento genera tokens;
   no puede acelerar). Además una mediana de 7 s para un 26B es llamativamente rápida. Su +0.021 **no debe
   darse por bueno** hasta explicar ese dato.

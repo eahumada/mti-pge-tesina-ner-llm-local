@@ -20,7 +20,7 @@ $PY src/main.py \
   --data-file data/benchmark_balanced_120.json \
   --rag-study --rag-mode kb_combined \
   --results-dir results/excluidos_n120_REMOTO \
-  --models gpt-oss:20b "sonct988/gemma4-26b-a4b-it-q4km-256k:latest" \
+  --models gpt-oss:20b \
   --batch-size 3 --num-workers 6 \
   > results/excluidos_n120_REMOTO/run_console.log 2>&1
 log "=== P2 FIN (rc=$?) ==="

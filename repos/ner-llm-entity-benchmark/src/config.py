@@ -59,7 +59,7 @@ class BenchmarkConfig:
     models: list[str] = field(default_factory=lambda: [
         'gemini-3.1-flash-lite', 'gemini-3.5-flash',
         'gemma4:31b-cloud',
-        'gemma4:31b', 'sonct988/gemma4-26b-a4b-it-q4km-256k:latest',
+        'gemma4:31b',
         'gpt-oss:20b',
         'gemma4:latest', 'gemma:latest',
         'qwen3:8b', 'qwen2.5:14b', 'mistral-nemo:latest', 

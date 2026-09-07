@@ -35,7 +35,6 @@ La lista de modelos se define en `src/config.py` (campo `BenchmarkConfig.models`
 ```json
 {
   "models": [
-    "sonct988/gemma4-26b-a4b-it-q4km-256k:latest",
     "gemma4:31b-mlx",
     "gemini-3.1-flash-lite",
     "gemini-3.5-flash",
@@ -153,7 +152,6 @@ Tabla histórica. Su origen trazable es la corrida `klepto_N15__rag-entities__zs
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | gemma4:31b-cloud ⚠️ | 0.6754 | 0.5659 | 0.8613 | 0.00% | 4.99 | 0.200 |
 | gemma4:latest | 0.6676 | 0.6791 | 0.7852 | 0.00% | 29.57 | 0.034 |
-| sonct988/gemma4-26b-a4b-it-q4km-256k:latest | 0.6525 | 0.5341 | 0.8595 | 0.91% | 74.93 | 0.013 |
 | gemma4:31b-mlx ⚠️ | 0.6456 | 0.6149 | 0.8136 | 0.00% | 165.48 | 0.006 |
 | llama3.2:latest | 0.6319 | 0.6282 | 0.6799 | 2.31% | 27.42 | 0.036 |
 | gemma:latest | 0.6266 | 0.5847 | 0.7147 | 1.08% | 7.84 | 0.128 |

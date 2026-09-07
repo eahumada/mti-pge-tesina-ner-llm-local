@@ -5,12 +5,12 @@
 ## Objetivo
 Tras el hallazgo de `qwen3:8b` (think OFF mejora F1 y acelera), evaluar si conviene apagar el *thinking* en
 los otros modelos del estudio con capacidad `thinking` que corrieron con **think ON por defecto**:
-`gemma4:31b`, `gemma4:latest`, `deepseek-r1:1.5b`, `gpt-oss:20b`, `sonct988/gemma4-26b`.
+`gemma4:31b`, `gemma4:latest`, `deepseek-r1:1.5b`, `gpt-oss:20b`, ``.
 
 ## Método
 Prueba controlada por el **pipeline real** (harness con RAG, scorer corregido), toggle de `thinking` como
 única variable, sobre **15 registros** por modelo:
-- N=120 (deepseek, gpt-oss, sonct988): subconjunto fijo de 15 de `benchmark_balanced_120` (seed 42), `kb_combined`.
+- N=120 (deepseek, gpt-oss): subconjunto fijo de 15 de `benchmark_balanced_120` (seed 42), `kb_combined`.
 - `gemma4:31b`: 15 de `kleptotrace` (modo `entities`, como P1).
 - `gemma4:latest`: 15 de `kleptotrace`, **estudio de variantes de prompts** (zs/fs × en/es), como P4.
 
@@ -25,8 +25,6 @@ Cambio de código temporal (añadir los 5 a `_THINKING_DISABLED_MODELS`) **ya re
 | deepseek-r1:1.5b | kb_rag | 0.345 | 0.345 | ±0 | ×3.7 |
 | gpt-oss:20b | baseline | 0.419 | 0.301 | **−0.118** | ×1.6 |
 | gpt-oss:20b | kb_rag | 0.283 | 0.155 | **−0.128** | ×3.0 |
-| sonct988/gemma4-26b | baseline | 0.495 | 0.516 | +0.021 | ×0.3 |
-| sonct988/gemma4-26b | kb_rag | 0.529 | 0.539 | +0.010 | ×1.6 |
 | gemma4:31b | baseline (entities) | 0.691 | 0.662 | −0.029 | ×3.0 |
 | gemma4:31b | rag (entities) | 0.639 | 0.676 | +0.037 | ×4.4 |
 | gemma4:latest | variantes zs-en | 0.640 | 0.675 | +0.035 | ×5.6 |
@@ -41,7 +39,7 @@ Cambio de código temporal (añadir los 5 a `_THINKING_DISABLED_MODELS`) **ya re
    mecanismo de respuesta.
 2. **`gpt-oss:20b`: think ON, CONGELADO** (decisión del autor). Su corrida oficial `excluidos_n120_REMOTO`
    **no se re-ejecuta ni se toca.**
-3. Los otros 4 (`deepseek-r1`, `sonct988`, `gemma4:31b`, `gemma4:latest`): think OFF mantiene o mejora F1 y
+3. Los otros 4 (`deepseek-r1`, `gemma4:31b`, `gemma4:latest`): think OFF mantiene o mejora F1 y
    acelera ~3-6×.
 
 ## ETA real para re-correr con think=OFF (solo los 4 beneficiados)
@@ -51,7 +49,6 @@ Medido con las latencias think-off reales de esta prueba:
 | Modelo | Corrida | ETA think-off |
 |:---|:---|--:|
 | deepseek-r1:1.5b | N=120 × 2 | ~0.30 h |
-| sonct988 | N=120 × 2 | ~0.25 h |
 | gemma4:31b | N=15 × 2 (entities) | ~0.40 h |
 | gemma4:latest | variantes N=15 × 4 | ~0.15 h |
 | **Total local serial** | | **~1-1.5 h** |

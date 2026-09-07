@@ -86,7 +86,7 @@ st.sidebar.markdown("""
 **Modelos bajo evaluación:**
 - `gemma4:31b-cloud` (31B class)
 - `gemma4:31b` (19 GB)
-- `sonct988/gemma4-26b` (16 GB) ← Q4 community quant
+- `` (16 GB) ← Q4 community quant
 - `gpt-oss:20b` (20B / 14 GB)
 - `gemma4:latest` (8B / 9.6 GB)
 - `gemma:latest` (9B / 7.4 GB)
@@ -154,7 +154,7 @@ PARAM_SIZES = {
     "phi4:latest":  14.0,
     "phi4-mini:latest": 3.8,
     "nuextract:latest": 3.8,
-    "sonct988/gemma4-26b-a4b-it-q4km-256k:latest": 25.2,
+    : 25.2,
     # Ablation label mappings (use gemma4:latest base)
     "zs-en": 8.0, "zs-es": 8.0, "fs-en": 8.0, "fs-es": 8.0,
 }

@@ -76,7 +76,6 @@ absolutas sin esta nota.
 
 | Modelo | baseline | kb_rag | Fuente |
 |:---|--:|--:|:---|
-| `sonct988/gemma4-26b` | 0.5627 | **0.5964** | excluidos |
 | `gemma4:31b-cloud` | 0.6238 | 0.6185 | cloud |
 | `gemma4:12b-mlx` | 0.5618 | 0.5846 | afectados |
 | `qwen3:8b` (think=false) | 0.4821 | 0.5146 | qwen3_nothink |

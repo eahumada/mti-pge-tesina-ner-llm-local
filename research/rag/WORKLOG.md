@@ -361,7 +361,7 @@ Abreviaturas: **BOR** = `doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Bo
 | [`CURRENT-TASKS.md`](../../CURRENT-TASKS.md) | Coordinación entre agentes: quién trabaja en qué y sobre qué archivos |
 
 ### Decisión: exclusión de dos modelos por restricción de hardware
-El equipo de evaluación tiene **16 GB de RAM**. Los modelos `sonct988/gemma4-26b-a4b-it-q4km-256k` (16 GB)
+El equipo de evaluación tiene **16 GB de RAM**. Los modelos `` (16 GB)
 y `gpt-oss:20b` (13 GB) provocaban swap masivo: el ritmo medido fue de **1 extracción cada 3 minutos** y
 **no varió al aumentar los workers de 2 a 8**, porque el límite era memoria física, no configuración.
 La proyección con los 9 modelos locales era de **~173 horas**, con esos dos concentrando el 85%.

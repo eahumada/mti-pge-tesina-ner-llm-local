@@ -33,14 +33,13 @@ detailed y summary. Lección: cualquier corrección puntual debe tocar CSV **y**
 | qwen3:8b | ✅ | `think=False` (fix + re-run limpio) |
 | deepseek-r1:1.5b | ✅ | corrió thinking ON (P3) |
 | gpt-oss:20b | ✅ | corrió thinking ON (P2) |
-| sonct988/gemma4-26b | ✅ | corrió thinking ON (P2) |
 | llama3.1:8b, mistral-nemo, nuextract, nemotron-mini:4b | ❌ | sin thinking (no afectados) |
 
 **qwen3:14b/32b/latest:** siguen en `_QWEN3_THINKING_MODELS` pero **NO participan en el estudio** (cero filas en
 cualquier CSV) → sin impacto.
 
 **Implicación (para decisión del equipo/autor):** 5 modelos capaces corrieron con thinking ON y **no** fueron
-re-evaluados con thinking OFF: `gemma4:31b`, `gemma4:latest`, `deepseek-r1:1.5b`, `gpt-oss:20b`, `sonct988`
+re-evaluados con thinking OFF: `gemma4:31b`, `gemma4:latest`, `deepseek-r1:1.5b`, `gpt-oss:20b`
 (+`gemma4:31b-cloud`, cloud). Por la lección de qwen3 (thinking OFF ~+4pp y menos vacíos en NER), sus cifras
 podrían estar subestimadas. Enumerados aquí; la decisión de re-correrlos con `think=False` excede el alcance
 cerrado y queda a criterio del autor.

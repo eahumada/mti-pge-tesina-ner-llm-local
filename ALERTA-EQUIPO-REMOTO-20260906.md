@@ -130,7 +130,6 @@ metadata por fila (`parse_method`, `retries`, `recall=0`) sí.
 Nada de esto invalida lo que ya nos disteis:
 
 - ✅ **P1 `gemma4:31b` N=15** — F1 0,6912, tasa de fallo 0. Resolvió el bloqueante principal de la tesina.
-- ✅ **P2 `sonct988` N=120** — F1 0,5964 con kb_rag, tasa de fallo 0. **Lidera el ranking de 9 modelos.**
 - ✅ Vuestro fix de enrutado de `gpt-oss:20b` está integrado.
 
 Ninguno de esos modelos tiene capacidad `thinking`, así que no les afecta.

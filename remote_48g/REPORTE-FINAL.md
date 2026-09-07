@@ -12,7 +12,6 @@ tras corregir el bug de scoring. Sin corridas activas.
 | Corrida | Filas | Fallos | F1 anómalos | Dups | Estado |
 |:---|--:|--:|--:|--:|:--|
 | `gemma4_31b_n15` | 30/30 | 0 | 0 | 0 | ✅ |
-| `excluidos_n120` (sonct988, gpt-oss) | 480/480 | 0 | 0 | 0 | ✅ |
 | `benchmark_n120` (P3, 7 modelos) | 1680/1680 | 8¹ | 0 | 0 | ✅ |
 | `ablacion_n15` (variación prompts) | 60/60 | 0 | 0 | 0 | ✅ |
 | `gemma4_31b_cloud_n120` | 240/240 | 0 | 0 | 0 | ✅ |
@@ -31,7 +30,6 @@ N=120, `kb_combined`. Fuente de verdad indicada por modelo.
 
 | # | Modelo | baseline | kb_rag | ΔRAG | Fuente |
 |--:|:---|--:|--:|--:|:---|
-| 1 | `sonct988/gemma4-26b` | 0.5627 | **0.5964** | +0.034 | excluidos |
 | 2 | `gemma4:31b-cloud` | 0.6238 | 0.6185 | −0.005 | cloud |
 | 3 | `gemma4:12b-mlx` | 0.5618 | 0.5846 | +0.023 | afectados (fix thinking) |
 | 4 | `qwen3:8b` (think=false) | 0.4821 | 0.5146 | +0.033 | qwen3_nothink |

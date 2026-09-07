@@ -11,7 +11,6 @@ Consolidación de todas las corridas del encargo (`PROMPT-EQUIPO-REMOTO-48GB.md`
 | # | Tarea | Estado | Fallo |
 |--:|:---|:---|:--|
 | P1 | `gemma4:31b` N=15 (`entities`) | ✅ | 0/30 |
-| P2a | `sonct988/gemma4-26b` N=120 | ✅ | 0/240 |
 | P2b | `gpt-oss:20b` N=120 (fix routing) | ✅ | 0/240 |
 | P3 | principal N=120, 7 modelos | ✅ | 8/1680 (nemotron baseline) |
 | P4 | ablación de prompts | ✅ | 0/60 |
@@ -26,7 +25,6 @@ Consolidación de todas las corridas del encargo (`PROMPT-EQUIPO-REMOTO-48GB.md`
 
 | Modelo | baseline | kb_rag | Fuente | Nota |
 |:---|--:|--:|:---|:---|
-| `sonct988/gemma4-26b` | 0.5627 | **0.5964** | excluidos | recuperado por RAM; **lidera** |
 | `gemma4:31b-cloud` | 0.6238 | 0.6268 | cloud | 10º modelo; rate limit |
 | `gemma4:12b-mlx` | 0.5618 | 0.5929 | **afectados** | ✅ con fix thinking (P3 inválido: 0.27/0.11) |
 | `gpt-oss:20b` | 0.4467 | 0.3419 | excluidos | fix routing |

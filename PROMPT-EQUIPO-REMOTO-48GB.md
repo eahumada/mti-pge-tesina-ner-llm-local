@@ -64,13 +64,13 @@ Quedaron fuera del estudio por no caber en 16 GB. Con 48 GB son viables y **devo
 
 ```bash
 ollama pull gpt-oss:20b                                    # 13 GB
-ollama pull sonct988/gemma4-26b-a4b-it-q4km-256k:latest    # 16 GB
+ollama pull # 16 GB
 
 ./venv/bin/python src/main.py \
   --data-file data/benchmark_balanced_120.json \
   --rag-study --rag-mode kb_combined \
   --results-dir results/excluidos_n120_REMOTO \
-  --models gpt-oss:20b "sonct988/gemma4-26b-a4b-it-q4km-256k:latest" \
+  --models gpt-oss:20b \
   --batch-size 3 --num-workers 6
 ```
 

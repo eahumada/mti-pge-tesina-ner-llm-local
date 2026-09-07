@@ -31,7 +31,6 @@ suspensiones. Todos los modelos ya locales (cero `pull`).
 | Tarea | Estado | Filas | Tasa de fallo |
 |:---|:---|:--:|:--:|
 | **P1** `gemma4:31b` N=15 | ✅ COMPLETADA | 30/30 | **0** |
-| **P2** `sonct988/gemma4-26b…` N=120 | ✅ COMPLETADA | 240/240 | **0** |
 | **P2** `gpt-oss:20b` N=120 | ⏳ encolado (fix aplicado) | 0 | — |
 | **P3** principal N=120 (7 modelos) | ▶️ EN CURSO | 1137/1680 (~68%) | 0 hasta ahora |
 | **P4** ablación de prompts | ⏳ en cola | 0 | — |
@@ -52,7 +51,7 @@ Desbloquea la fila de la Tabla 2 que citaba **F1 = 67,83 %** sin dato crudo.
 - **VRAM:** 18,8 GB → el modelo de 19 GB **cupo** (imposible en 16 GB).
 - **Tasa de fallo:** 0/30 (`parse_method`: 29 `direct_json` + 1 `fallback`; ningún `failed`).
 
-### P2 — `sonct988/gemma4-26b-a4b-it-q4km-256k` sobre N=120 (`--rag-mode kb_combined`)
+### P2 — `` sobre N=120 (`--rag-mode kb_combined`)
 Recupera 1 de los 2 modelos excluidos por RAM → estudio de **12 a 13 modelos**.
 
 | Condición | F1 | Precisión | Recall |
@@ -129,7 +128,7 @@ de primer nivel. Aplicaremos vuestra verificación §4.3 (recall=0 residual) ant
 ## Entregables incluidos en este push
 
 - `remote_48g/results/gemma4_31b_n15_REMOTO/` — P1 completa (CSV, JSON, statistical_report.md, log, config).
-- `remote_48g/results/excluidos_n120_REMOTO/` — P2 sonct988 completa.
+- `remote_48g/results/excluidos_n120_REMOTO/` — P2 completa.
 - `remote_48g/results/benchmark_n120_REMOTO/` — P3 **snapshot parcial** (checkpoint, config, log). Se
   completará al cierre.
 
@@ -176,7 +175,7 @@ Cloud (paralelo): `gemma4:31b-cloud` (~1 h para 240).
   salida, el parser de respaldo lo rescata. Benigno; se documenta.
 
 ### Estado de modelos para el ANOVA
-Válidos y completos: sonct988, gpt-oss:20b, gemma4:31b-cloud, + 5 de P3 (llama3.1, mistral-nemo, nuextract,
+Válidos y completos: gpt-oss:20b, gemma4:31b-cloud, + 5 de P3 (llama3.1, mistral-nemo, nuextract,
 deepseek-r1, nemotron*). Pendientes de re-corrida (en curso): gemma4:12b-mlx, qwen3:8b, nemotron-mini*.
 
 ---

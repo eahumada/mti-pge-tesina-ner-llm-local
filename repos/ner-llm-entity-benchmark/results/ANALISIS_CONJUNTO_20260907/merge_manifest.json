@@ -46,10 +46,8 @@
     {
       "label": "05_excluidos",
       "csv_path": "/private/tmp/claude-501/-Users-eahumada-Documents-Personal-MTI-mti-pge-tesina-ner-llm-local/87e8505b-1ba9-4f7a-8204-01d63aa41522/scratchpad/anova_stage/05_excluidos/benchmark_results.csv",
-      "rows": 480,
+      "rows": 240,
       "models": [
-        "sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline",
-        "sonct988/gemma4-26b-a4b-it-q4km-256k:latest_kb_rag",
         "gpt-oss:20b_baseline",
         "gpt-oss:20b_kb_rag"
       ],
@@ -94,7 +92,7 @@
       "data_file": "data/benchmark_balanced_120.json"
     }
   ],
-  "merged_rows": 3360,
+  "merged_rows": 3120,
   "merged_groups": [
     "deepseek-r1:1.5b_baseline",
     "deepseek-r1:1.5b_kb_rag",
@@ -121,9 +119,7 @@
     "qwen2.5:14b_baseline",
     "qwen2.5:14b_kb_rag",
     "qwen3:8b_baseline",
-    "qwen3:8b_kb_rag",
-    "sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline",
-    "sonct988/gemma4-26b-a4b-it-q4km-256k:latest_kb_rag"
+    "qwen3:8b_kb_rag"
   ],
   "integrity": [
     {
@@ -184,22 +180,6 @@
     },
     {
       "model": "gemma4:31b-cloud_kb_rag",
-      "rows": 120,
-      "unique_records": 120,
-      "expected": 120,
-      "nan_f1": 0,
-      "status": "OK"
-    },
-    {
-      "model": "sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline",
-      "rows": 120,
-      "unique_records": 120,
-      "expected": 120,
-      "nan_f1": 0,
-      "status": "OK"
-    },
-    {
-      "model": "sonct988/gemma4-26b-a4b-it-q4km-256k:latest_kb_rag",
       "rows": 120,
       "unique_records": 120,
       "expected": 120,

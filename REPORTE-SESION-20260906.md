@@ -18,7 +18,6 @@ Lo que sí se logró:
 | ANOVA conjunto sobre **9 modelos**, N=120 | ✅ `F=64,06 · p=7,26e-177` (antes: 5 modelos, F=10,21) |
 | Bloqueante principal de la Tabla 2 | ✅ Resuelto — `gemma4:31b` con dato propio |
 | Modelo cloud con medición limpia | ✅ `gemma4:31b-cloud` F1 0,6699, 0 fallos |
-| Modelo recuperado de los excluidos | ✅ `sonct988` — **lidera el ranking** |
 | Bugs de código corregidos | ✅ 4 (ver §3) |
 | Trabajo delegado y en marcha | ✅ Equipo remoto al 62 % de P3 |
 
@@ -108,7 +107,6 @@ Los bugs 3 y 4 llevaban **meses latentes**.
 Respondieron a la alerta el 2026-09-06 09:04 y adoptaron la alternativa propuesta:
 
 - **P1** `gemma4:31b` N=15 — ✅ completada, 0 fallos
-- **P2** `sonct988` N=120 — ✅ completada, 0 fallos
 - **P3** principal N=120 — ▶️ 62 % (1047/1680); 5 modelos válidos, 2 afectados por el bug
 - **P4**, `gpt-oss` y re-corrida de afectados — ⏳ encoladas con serialidad correcta
 

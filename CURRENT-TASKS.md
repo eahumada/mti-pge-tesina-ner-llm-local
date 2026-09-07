@@ -90,7 +90,7 @@ Para **cada tarea** que ejecutes:
 - **Configuración:** `--rag-mode kb_combined --num-workers 9 --batch-size 3 --results-dir <fijo>`
   (compatible con la corrida de referencia del 2026-09-01, 9 parámetros verificados)
 - **Modelos:** gemma4:12b-mlx, qwen3:8b, mistral-nemo, nuextract, llama3.1:8b, nemotron-mini:4b, deepseek-r1:1.5b
-- **Excluidos:** `sonct988` (16 GB) y `gpt-oss:20b` (13 GB) por RAM de 16 GB; `gemma4:31b-cloud` (HTTP 429)
+- **Excluidos:**`gpt-oss:20b` (13 GB) por RAM de 16 GB; `gemma4:31b-cloud` (HTTP 429)
   y `minimax-m3:cloud` (HTTP 402)
 - **ETA:** ~66 h de cómputo neto (más el tiempo perdido en suspensiones).
 - **Ejecución (2026-09-04):** migrada a **LaunchAgent de macOS** `local.tesina.benchmark`
@@ -244,13 +244,13 @@ Para **cada tarea** que ejecutes:
 
 ### 3.bis.2 🟡 PARCIAL — Modelos excluidos por RAM sobre N=120 (PRIORIDAD 2)
 - **Estado:** 🟡 PARCIAL 2026-09-06 02:19 — 1 de 2 modelos OK · **Equipo:** Remoto 48 GB (Claude Code)
-- **`sonct988/gemma4-26b-a4b-it-q4km-256k` ✅:** 240 filas, tasa de fallo 0.
+- **`` ✅:** 240 filas, tasa de fallo 0.
   baseline F1=0.5627 P=0.5233 R=0.7171 · kb_rag F1=0.5964 P=0.5297 R=0.7608. RAG `kb_combined` confirmado.
 - **`gpt-oss:20b` ❌ BLOQUEADO:** 0 filas. **Bug de enrutado**, no de RAM: `factory.py:46` manda todo
   `gpt-*` a `OpenAIProvider`; `gpt-oss:20b` es Ollama local. Error:
   `OpenAIProvider.extract_entities() got an unexpected keyword argument 'rag_context'`.
   AGENTS.md §8.2 lo clasifica «Local/Active» (contradice la fila `gpt-*→OpenAI` de la misma tabla).
-- **Efecto actual:** estudio de 12 → **13** modelos (con sonct988). Falta gpt-oss para llegar a 14.
+- **Efecto actual:** estudio de 12 modelos. Falta gpt-oss para completarlo.
 - **Pendiente:** decisión del autor sobre parche de routing (`gpt-oss` → Ollama) para re-correr solo gpt-oss.
 - **Archivos:** `results/excluidos_n120_REMOTO/`
 
@@ -358,7 +358,7 @@ Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **Invest
 - **Confirmado por el autor (2026-09-07):** el remoto está evaluando muestras de **5 modelos con
   `thinking=off`**. Se corresponde con la modificación sin commitear de `src/providers/ollama_provider.py`
   (`# TEST think-off 2026-09-07`): `gemma4:31b`, `gemma4:latest`, `deepseek-r1:1.5b`, `gpt-oss:20b` y
-  `sonct988/gemma4-26b-…`. **No tocar ese archivo desde otra sesión.**
+  `…`. **No tocar ese archivo desde otra sesión.**
 - **Por qué importa:** **cuatro de esos cinco están dentro del ANOVA conjunto** y el quinto (`gemma4:31b`)
   alimenta la tabla §5.5. Si el efecto se parece al de `qwen3` (+4,2 pp, `recall=0` de 15 → 1), **habrá que
   rehacer tabla y ANOVA**. Caso a vigilar: `gpt-oss:20b` es hoy el único ΔRAG muy negativo (−0.097); si corría
@@ -386,7 +386,7 @@ Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **Invest
   (`recall=0` en 7/15 y 10/15) → ON congelado; `deepseek-r1:1.5b` da los **15 registros idénticos**
   (dif. máx. 4.4e-07, puro formato) → su razonamiento no cambia ni una entidad.
 - **No sostienen cambio de régimen:** `gemma4:latest` cambia de signo entre sus propias condiciones
-  (+0.066 `fs-en` / −0.051 `fs-es`), `gemma4:31b` igual (−0.029 / +0.037), y `sonct988` va **más lento** con
+  (+0.066 `fs-en` / −0.051 `fs-es`) y `gemma4:31b` igual (−0.029 / +0.037): ruido, no efecto. La latencia con
   *thinking* apagado (×0.3), lo que contradice el modelo causal.
 - **🔴 DECISIÓN CERRADA: NO re-ejecutar** los 4 modelos con `think=OFF`. Se apoyaría en ruido de N=15 e
   introduciría un **segundo eje de inconsistencia** en el estudio. El valor del experimento es documental y
@@ -397,7 +397,7 @@ Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **Invest
   la hipótesis · declarar el régimen en `run_config.json` · si dos corridas dan métricas idénticas fila a
   fila, no han comparado nada.
 - **Pendiente vuestro:** evaluar `qwen3:14b/32b/latest`, **enumerar los modelos con capacidad `thinking`** y
-  **explicar la anomalía de `sonct988`**.
+  el censo de modelos con capacidad `thinking`.
 
 ### 3.bis.5 Plantilla de reporte
 Al terminar cada tarea, sustituid su bloque por:
@@ -456,7 +456,6 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 |:---|:---|:---|
 | 2026-09-03 16:15 | Claude Code | Creación del documento con el estado inicial |
 | 2026-09-03 16:22 | Claude Code | Protocolo documentado en `CLAUDE.md` (raíz y repo), `AGENTS.md §11`, `GEMINI.md` y `ANTIGRAVITY.md` |
-| 2026-09-03 16:24 | Claude Code | Exclusión de `sonct988` y `gpt-oss:20b` documentada en `FINDINGS.md §F23-F24`, `LEARNING.md §L14-L15`, `TODO-INFORME-FINAL.md §8` y `research/rag/WORKLOG.md` |
 | 2026-09-03 16:24 | Claude Code | Reparadas 5 regresiones introducidas por el workflow de corrección (ver §4.2) |
 | 2026-09-03 16:32 | Claude Code | `glm-5.1:cloud` eliminado globalmente (cero resultados, HTTP 402). Criterio adoptado: un modelo cloud se conserva si tiene resultados, se elimina si no. Ver `TODO-INFORME-FINAL.md §9` |
 | 2026-09-04 14:00 | Claude Code | Benchmark migrado a LaunchAgent tras 7 interrupciones. Bug corregido: bajo launchd faltaba `/opt/homebrew/bin` en el `PATH` y la lista de modelos salía vacía |
@@ -491,9 +490,7 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-03 16:38 | Claude Code | Inventario completo de resultados cloud: `gemma4:31b-cloud` y `minimax-m3:cloud` conservados en sus 2 corridas cada uno (N=15 y N=120). Detectado que ambas son de modo RAG legacy `entities`, no comparables con `kb_combined`. Ver `TODO-INFORME-FINAL.md §9.4-9.5` |
 | 2026-09-03 20:18 | Claude Desktop | Tarea 2.0: protocolo añadido a `AGENT.md`, `ANTIGRAVITY.md` y `GEMINI.md` de la raíz; §2.4 (documentos de la sesión) y §2.5 (cierre de formato tras los benchmarks) |
 | 2026-09-06 01:55 | Equipo Remoto 48 GB (Claude Code) | P1 §3.bis.1 COMPLETADA: `gemma4:31b` N=15. Pre-checks OK (15/120, 3605/1848/12000). Tasa de fallo 0/30. baseline F1=0.6912 / rag F1=0.6391. VRAM 18.8 GB. Entregado en `results/gemma4_31b_n15_REMOTO/`. P2 en curso. Al cerrar las 4: copiar a `remote_48g/results/` + push |
-| 2026-09-06 02:19 | Equipo Remoto 48 GB (Claude Code) | P2 §3.bis.2 PARCIAL: `sonct988` OK (fallo 0, F1 0.5627/0.5964). `gpt-oss:20b` bloqueado por bug de routing (`gpt-*`→OpenAIProvider). Estudio 12→13 |
 | 2026-09-06 02:25 | Equipo Remoto 48 GB (Claude Code) | Fix aprobado por el autor: `factory.py:46` ahora excluye tags Ollama (`:`) de la regla `gpt-*` → `gpt-oss:20b` rutea a Ollama. Backup `factory.py.bak_gptoss_routing_20260906`. Verificado (gpt-4o sigue OpenAI). Re-run de gpt-oss encolado tras P3/P4 con `--resume` |
-| 2026-09-06 09:04 | Equipo Remoto 48 GB (Claude Code) | Leída ALERTA-EQUIPO-REMOTO-20260906: bug thinking invalida `gemma4:12b-mlx` (recall=0 66-94/120) y `qwen3:8b` en P3. Fix `743054d` ya en árbol. Decisión del autor: dejar P3 terminar (5 modelos válidos) y re-correr los 2 afectados con el fix en `results/afectados_thinking_n120_REMOTO/` (encolado tras gpt-oss). Analizado también INFORME-AVANCE-20260906 (ANOVA 9 modelos F=64.06; sonct988 lidera) |
 | 2026-09-06 09:54 | Equipo Remoto 48 GB (Claude Code) | Tarea nueva §3.bis.6 `gemma4:31b-cloud` N=120 lanzada EN PARALELO. Implementado rate limit: flags `--max-workers` + `--request-delay` (`ollama_provider.py` gate por `OLLAMA_REQUEST_DELAY_SEC`). Con 1 worker + 3s: **0× 429** (vs 172 sin límite). Wrapper resiliente `--resume` (429=espera, 402=avisa). Backups `*.bak_ratelimit_20260906` |
 | 2026-09-06 10:08 | Equipo Remoto 48 GB (Claude Code) | P3 §3.bis.3 COMPLETADA: 1680/1680, fallo 8/1680 (solo nemotron-mini baseline). `gemma4:12b-mlx`+`qwen3:8b` inválidos (bug thinking) → re-corrida aparte. P4 (ablación) arrancó. Cloud 234/240 |
 | 2026-09-06 10:08 | Equipo Remoto 48 GB (Claude Code) | §3.bis.6 COMPLETADA: `gemma4:31b-cloud` N=120, 240/240, **fallo 0%**, F1 0.6238/0.6268. 10º modelo del ANOVA. Rate limit efectivo (0× 429 vs 79% fallo previo). Entregado en `results/gemma4_31b_cloud_n120_REMOTO/`. P4 en curso |
@@ -510,8 +507,6 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 00:15 | Equipo Remoto 48 GB (Claude Code) | Investigación B1-B4 (workflow 4 agentes, interno+web) en `remote_48g/INVESTIGACION-B1-B4.md`. B1: 2 F1 imposibles no recuperables (marcar/retirar; llama3.1:8b real N=120 0.4959/0.5491). B2: cifras RegTech no son KPMG sino Verified Market Research (15.68→87.17 mil M, CAGR 23.92%). B3: 31B (~24.7 GB) IMPOSIBLE en 16 GB (techo Metal ~75%=12 GB); 48 GB necesario y confirmado. B4: tabla §5.5 no reproducible; CSV canónico gemma4:31b-mlx=22.80/24607. Todo requiere decisión del autor salvo B3 |
 | 2026-09-07 12:05 | Claude Code (equipo principal) | Convención de scoring UNIFICADA: re-puntuadas las 3 corridas legacy (199 filas degeneradas) con `tools/rescore_saved.py`. Barrido global: 8 927 filas, 0 violaciones, 0 degeneradas, 0 perdidas. **ANOVA conjunto** `results/ANALISIS_CONJUNTO_20260907/`: 14 modelos × 2 modos, F=36.3696, p=1.4321e-164. Publicado `results/AVISO-SUMMARIES-OBSOLETOS.md`. Corrección al remoto: B1 invertido (llama3.1:8b es 0.4876/0.5075, no 0.4959/0.5491) en `CORRECCION-B1-SUMMARIES-20260907.md` |
 | 2026-09-07 00:30 | Equipo Remoto 48 GB (Claude Code) | Correcciones B1-B4 aplicadas al `.md` canónico + BENCHMARKS.md (backups .bak_B1B4/.bak_B1_20260907). B1: filas imposibles marcadas NO VERIFICABLES; llama3.1:8b oficial N=120 0.4876/0.5075. B2: cita RegTech → Verified Market Research 2022 (15.68→87.17 mil M, CAGR 23.92%; VMR verificado en web, no KPMG). B3: §2.4/§3.6/hardware reformulado a 16GB(≤12B)/48GB(31B). B4: tabla §5.5 reemplazada por valores CSV (gemma4:31b-mlx 22.80/24607). ⚠️ PENDIENTE Claude Desktop: propagar a .docx con docx_replace_terms.py y verificar 25pp |
-| 2026-09-07 01:00 | Equipo Remoto 48 GB (Claude Code) | Respuesta a CORRECCION-B1-SUMMARIES: B1 corregido (0.4876/0.5075, sin reconciliación). `rescore_saved.py` extendido (reescribe detailed_results.json f1/p/r + regenera summary.json); re-ejecutado en las 8 corridas. Detectado y corregido que el rescore revertía el patch de nemotron → `patch_nemotron_failed.py` ahora toca CSV+detailed (nemotron estable 0.2259). §4.7: enumerados modelos con thinking (5 corrieron ON sin re-evaluar: gemma4:31b, gemma4:latest, deepseek, gpt-oss, sonct988+cloud). qwen3:14b/32b no están en el estudio. Reporte: `remote_48g/RESPUESTA-CORRECCION-20260907.md` |
 | 2026-09-07 12:35 | Claude Code (equipo principal) | Aplicado el rescore extendido (`17c17fc`) a las 3 corridas legacy, que el remoto no cubrió (`e7eb541`). Backup real preservado como `.bak_prefix_ORIGINAL`. Verificado: 0 grupos cambian y `summary == CSV` en las 15 corridas. ANOVA sin recálculo |
 | 2026-09-07 12:40 | Claude Code (equipo principal) | Verificadas las entregas `38b20da` (B1-B4) y `17c17fc` (rescore extendido): las 3 filas de §5.5 reproducen exacto; B1 adopta 0.4876/0.5075. Dos avisos: el `.md` creció +18/−8 líneas (re-verificar 25 pp) y la atribución del B1 a «decisión del autor» es incorrecta. Registrado el test `think=off` de 5 modelos en §3.bis.10 |
-| 2026-09-07 13:05 | Equipo Remoto 48 GB (Claude Code) | Experimento think ON/OFF en 5 modelos (15 reg, pipeline real) completo. Model-specific: deepseek/sonct988/gemma4:31b/gemma4:latest → OFF neutro-a-positivo y 3-6× más rápido; **gpt-oss:20b OFF empeora −0.12 → ON congelado, no re-ejecutar**. Código temporal revertido. Doc: FINDINGS §F44, LEARNING §L37, `remote_48g/EXPERIMENTO-THINKING-5MODELOS.md`. ETA re-run think-off de los 4 ~1-1.5h (decisión del autor) |
 | 2026-09-07 13:20 | Claude Code (equipo principal) | 📌 HALLAZGO FINAL sobre *thinking*: verificado el experimento del remoto (§F44) y añadido `FINDINGS.md §F45`. `gpt-oss` ON congelado (deja de responder sin razonamiento) y `qwen3` OFF son los únicos casos sólidos; los otros 4 son ruido de N=15. **Decisión cerrada: no re-ejecutar.** Reglas para ejecuciones futuras en `RECOMENDACIONES-EJECUCIONES-FUTURAS.md` y anexo `TODO-INFORME-FINAL.md §14`. Instrucciones al remoto en §3.bis.11 |

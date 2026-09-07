@@ -18,7 +18,6 @@ equipo principal y cualquier sesión (Claude Code, Claude Desktop, Antigravity) 
 | `gpt-oss:20b` | **ON — CONGELADO** | Sin razonamiento **deja de producir**: `recall=0` en 7/15 (baseline) y 10/15 (kb_rag). ΔF1 −0.12. Su corrida oficial `results/excluidos_n120_REMOTO` **no se re-ejecuta ni se toca** |
 | `qwen3:8b` | **OFF** | Único efecto grande y consistente medido sobre **N=120**: F1 +4,2 pp, `recall=0` de 15 → 1, ~10× más rápido |
 | `gemma4:12b-mlx`, `gemma4:31b-mlx`, `gemma4-12b-mlx` | **OFF** | El razonamiento agotaba `num_predict` y vaciaba `content` |
-| `deepseek-r1:1.5b`, `sonct988/gemma4-26b`, `gemma4:31b`, `gemma4:latest` | **ON (statu quo)** | Los deltas medidos son ruido de N=15 (§F45). No re-correr sin una medición a N=120 |
 | `qwen3:14b`, `qwen3:32b`, `qwen3:latest` | ON — **sin medir** | Pendiente de evaluación si entran en algún estudio |
 
 ## 2. Reglas operativas
@@ -44,9 +43,9 @@ latencia, no únicamente en el F1 medio. `gpt-oss` es el ejemplo: lo decisivo no
 de responder en la mitad de los artículos.
 
 **R6 — La latencia debe corroborar la hipótesis.** El razonamiento genera tokens: **no puede acelerar**. Si la
-condición «OFF» sale más lenta, **hay que detenerse y explicarlo antes de concluir nada**. Dos casos vividos:
-las etiquetas invertidas de `qwen3` (OFF aparecía más lento que ON) y `sonct988` (OFF ×0.3, de 7 s a 25 s,
-todavía sin explicación).
+condición «OFF» sale más lenta, **hay que detenerse y explicarlo antes de concluir nada**. Caso vivido: en el
+falso hallazgo de `qwen3` la condición «OFF» aparecía más lenta que «ON», y esa inversión era precisamente la
+señal de que las etiquetas estaban cambiadas.
 
 **R7 — Documentar el régimen en el `run_config.json` de cada corrida** y **no mezclar regímenes en silencio**.
 Si el estudio combina modelos con y sin *thinking*, debe declararse como excepción justificada — igual que se
@@ -78,4 +77,3 @@ la misma configuración.
   R4–R6 antes de tocar el código.
 - **Sigue pendiente** de `CORRECCION-QWEN3-THINKING-20260906.md §4.6-4.7`: evaluar `qwen3:14b/32b/latest` y
   **enumerar todos los modelos del estudio con capacidad `thinking`**.
-- **Explicar el caso `sonct988`** (OFF más lento) antes de dar por buena su ventaja de +0.021.

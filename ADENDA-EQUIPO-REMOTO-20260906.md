@@ -75,7 +75,6 @@ ya, solapado con cualquier otro.
 | Origen | Modelos |
 |:---|--:|
 | Corrida 2026-09-01 (equipo principal) | 5 |
-| `sonct988` — recuperado por vosotros | 1 |
 | P3, modelos no afectados | 5 |
 | Re-corrida de afectados | 2 |
 | `gpt-oss:20b` | 1 |
