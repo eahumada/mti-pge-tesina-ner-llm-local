@@ -1,0 +1,401 @@
+=== gpt-oss:20b re-run completo — INICIO 2026-09-07 14:39:19 -03 ===
+N=120 kb_combined · thinking ON · num_predict 4096 (evita truncacion) · batch3 workers6
+motivo: recall=0 oficial = artefacto de truncacion (ver DIAGNOSTICO-GPTOSS-20260907.md)
+2026-09-07 14:39:22,139 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-07 14:39:22,168 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-07 14:39:22,168 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-09-07 14:39:22,170 [INFO] ner_benchmark: Corpus loaded: 120 articles split into 40 batches.
+2026-09-07 14:39:22,170 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-07 14:39:22,266 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-07 14:39:22,275 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-07 14:39:22,275 [INFO] ner_benchmark: [RAG] Using Knowledge Base mode: 'kb_combined'
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b0-1788802762 for batch 0 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b1-1788802762 for batch 1 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b2-1788802762 for batch 2 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b3-1788802762 for batch 3 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b4-1788802762 for batch 4 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b5-1788802762 for batch 5 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b6-1788802762 for batch 6 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b7-1788802762 for batch 7 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b8-1788802762 for batch 8 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b9-1788802762 for batch 9 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b10-1788802762 for batch 10 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b11-1788802762 for batch 11 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b12-1788802762 for batch 12 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b13-1788802762 for batch 13 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b14-1788802762 for batch 14 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b15-1788802762 for batch 15 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b16-1788802762 for batch 16 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b17-1788802762 for batch 17 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b18-1788802762 for batch 18 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b19-1788802762 for batch 19 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b20-1788802762 for batch 20 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b21-1788802762 for batch 21 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b22-1788802762 for batch 22 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b23-1788802762 for batch 23 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b24-1788802762 for batch 24 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b25-1788802762 for batch 25 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b26-1788802762 for batch 26 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b27-1788802762 for batch 27 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b28-1788802762 for batch 28 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b29-1788802762 for batch 29 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b30-1788802762 for batch 30 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b31-1788802762 for batch 31 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b32-1788802762 for batch 32 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b33-1788802762 for batch 33 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b34-1788802762 for batch 34 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b35-1788802762 for batch 35 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b36-1788802762 for batch 36 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b37-1788802762 for batch 37 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b38-1788802762 for batch 38 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b39-1788802762 for batch 39 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b0-1788802762 for batch 0 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b1-1788802762 for batch 1 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b2-1788802762 for batch 2 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b3-1788802762 for batch 3 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b4-1788802762 for batch 4 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b5-1788802762 for batch 5 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b6-1788802762 for batch 6 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b7-1788802762 for batch 7 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b8-1788802762 for batch 8 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b9-1788802762 for batch 9 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b10-1788802762 for batch 10 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b11-1788802762 for batch 11 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b12-1788802762 for batch 12 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b13-1788802762 for batch 13 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b14-1788802762 for batch 14 to memory queue.
+2026-09-07 14:39:22,294 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b15-1788802762 for batch 15 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b16-1788802762 for batch 16 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b17-1788802762 for batch 17 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b18-1788802762 for batch 18 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b19-1788802762 for batch 19 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b20-1788802762 for batch 20 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b21-1788802762 for batch 21 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b22-1788802762 for batch 22 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b23-1788802762 for batch 23 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b24-1788802762 for batch 24 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b25-1788802762 for batch 25 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b26-1788802762 for batch 26 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b27-1788802762 for batch 27 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b28-1788802762 for batch 28 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b29-1788802762 for batch 29 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b30-1788802762 for batch 30 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b31-1788802762 for batch 31 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b32-1788802762 for batch 32 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b33-1788802762 for batch 33 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b34-1788802762 for batch 34 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b35-1788802762 for batch 35 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b36-1788802762 for batch 36 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b37-1788802762 for batch 37 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b38-1788802762 for batch 38 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b39-1788802762 for batch 39 to memory queue.
+2026-09-07 14:39:22,295 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=6 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-09-07 14:39:22,297 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-07 14:39:22,297 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-07 14:39:22,297 [INFO] ner_benchmark: [RAG] Worker phase — Knowledge Base mode: 'kb_combined'
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b0-1788802762 for batch 0 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b1-1788802762 for batch 1 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b2-1788802762 for batch 2 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b3-1788802762 for batch 3 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b4-1788802762 for batch 4 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b5-1788802762 for batch 5 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b6-1788802762 for batch 6 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b7-1788802762 for batch 7 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b8-1788802762 for batch 8 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b9-1788802762 for batch 9 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b10-1788802762 for batch 10 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b11-1788802762 for batch 11 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b12-1788802762 for batch 12 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b13-1788802762 for batch 13 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b14-1788802762 for batch 14 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b15-1788802762 for batch 15 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b16-1788802762 for batch 16 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b17-1788802762 for batch 17 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b18-1788802762 for batch 18 to memory queue.
+2026-09-07 14:39:22,313 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b19-1788802762 for batch 19 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b20-1788802762 for batch 20 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b21-1788802762 for batch 21 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b22-1788802762 for batch 22 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b23-1788802762 for batch 23 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b24-1788802762 for batch 24 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b25-1788802762 for batch 25 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b26-1788802762 for batch 26 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b27-1788802762 for batch 27 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b28-1788802762 for batch 28 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b29-1788802762 for batch 29 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b30-1788802762 for batch 30 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b31-1788802762 for batch 31 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b32-1788802762 for batch 32 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b33-1788802762 for batch 33 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b34-1788802762 for batch 34 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b35-1788802762 for batch 35 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b36-1788802762 for batch 36 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b37-1788802762 for batch 37 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b38-1788802762 for batch 38 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b39-1788802762 for batch 39 to memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark: Running RAG study 'gpt-oss:20b_baseline' with 6 workers...
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b0-1788802762 from memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b1-1788802762 from memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b2-1788802762 from memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b3-1788802762 from memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b4-1788802762 from memory queue.
+2026-09-07 14:39:22,314 [INFO] ner_benchmark: Processing batch 3 with 6 parallel workers...
+2026-09-07 14:39:22,314 [INFO] ner_benchmark: Processing batch 2 with 6 parallel workers...
+2026-09-07 14:39:22,314 [INFO] ner_benchmark: Processing batch 4 with 6 parallel workers...
+2026-09-07 14:39:22,314 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b5-1788802762 from memory queue.
+2026-09-07 14:39:22,315 [INFO] ner_benchmark: Processing batch 1 with 6 parallel workers...
+2026-09-07 14:39:22,315 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_5'...
+2026-09-07 14:39:22,315 [INFO] ner_benchmark: Processing batch 5 with 6 parallel workers...
+2026-09-07 14:39:22,315 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_4'...
+2026-09-07 14:39:22,315 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_8'...
+2026-09-07 14:39:22,315 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_7'...
+2026-09-07 14:39:22,315 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_9'...
+2026-09-07 14:39:22,315 [INFO] ner_benchmark: Processing batch 6 with 6 parallel workers...
+2026-09-07 14:39:22,315 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_6'...
+2026-09-07 14:39:22,315 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_1'...
+2026-09-07 14:39:22,316 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_11'...
+2026-09-07 14:39:22,315 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_10'...
+2026-09-07 14:39:22,316 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_12'...
+2026-09-07 14:39:22,316 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_13'...
+2026-09-07 14:39:22,316 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_15'...
+2026-09-07 14:39:22,316 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_14'...
+2026-09-07 14:39:22,316 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_16'...
+2026-09-07 14:39:22,316 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_17'...
+2026-09-07 14:39:22,316 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_18'...
+2026-09-07 14:39:22,316 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_2'...
+2026-09-07 14:39:22,317 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_3'...
+2026-09-07 14:39:22,318 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:39:22,318 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:39:22,319 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:39:22,319 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:39:22,319 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:39:22,319 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:39:22,319 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:39:22,319 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:39:22,319 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:39:22,320 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:39:22,320 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:39:22,320 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:39:22,321 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:39:22,321 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:39:22,321 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:39:22,321 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:39:22,322 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:39:22,322 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:39:59,017 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:39:59,057 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:40:16,783 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:40:17,183 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:40:38,698 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:40:38,813 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:41:07,138 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:41:07,504 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:41:24,550 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:41:24,657 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:41:47,226 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:41:47,310 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:42:18,963 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:42:18,985 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:42:19,003 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_baseline-b0-1788802762 in memory queue.
+2026-09-07 14:42:19,004 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b6-1788802762 from memory queue.
+2026-09-07 14:42:19,004 [INFO] ner_benchmark: Processing batch 7 with 6 parallel workers...
+2026-09-07 14:42:19,005 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_19'...
+2026-09-07 14:42:19,005 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:42:19,005 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_20'...
+2026-09-07 14:42:19,005 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_21'...
+2026-09-07 14:42:19,005 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:42:19,005 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:42:33,399 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:42:33,542 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:43:45,127 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:43:45,505 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:43:45,517 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_baseline-b1-1788802762 in memory queue.
+2026-09-07 14:43:45,518 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b7-1788802762 from memory queue.
+2026-09-07 14:43:45,518 [INFO] ner_benchmark: Processing batch 8 with 6 parallel workers...
+2026-09-07 14:43:45,518 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_22'...
+2026-09-07 14:43:45,518 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_23'...
+2026-09-07 14:43:45,518 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:43:45,518 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_24'...
+2026-09-07 14:43:45,518 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:43:45,518 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:44:14,431 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:44:14,651 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:45:17,800 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:45:18,124 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:45:40,598 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:45:40,775 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:45:52,736 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:45:52,783 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:46:10,680 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:46:11,008 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:46:11,024 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_baseline-b3-1788802762 in memory queue.
+2026-09-07 14:46:11,026 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b8-1788802762 from memory queue.
+2026-09-07 14:46:11,026 [INFO] ner_benchmark: Processing batch 9 with 6 parallel workers...
+2026-09-07 14:46:11,026 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_25'...
+2026-09-07 14:46:11,026 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_26'...
+2026-09-07 14:46:11,026 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_27'...
+2026-09-07 14:46:11,026 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:46:11,026 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:46:11,027 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:46:35,081 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:46:35,111 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:46:52,138 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:46:52,300 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:46:52,313 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_baseline-b5-1788802762 in memory queue.
+2026-09-07 14:46:52,314 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b9-1788802762 from memory queue.
+2026-09-07 14:46:52,315 [INFO] ner_benchmark: Processing batch 10 with 6 parallel workers...
+2026-09-07 14:46:52,315 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_28'...
+2026-09-07 14:46:52,315 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:46:52,315 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_29'...
+2026-09-07 14:46:52,315 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:46:52,315 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_30'...
+2026-09-07 14:46:52,316 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:47:12,821 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:47:12,965 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:47:12,984 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_baseline-b2-1788802762 in memory queue.
+2026-09-07 14:47:12,986 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b10-1788802762 from memory queue.
+2026-09-07 14:47:12,986 [INFO] ner_benchmark: Processing batch 11 with 6 parallel workers...
+2026-09-07 14:47:12,986 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_31'...
+2026-09-07 14:47:12,986 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:47:12,987 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_32'...
+2026-09-07 14:47:12,987 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:47:12,987 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_33'...
+2026-09-07 14:47:12,987 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:47:52,864 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:47:53,117 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:47:53,130 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_baseline-b4-1788802762 in memory queue.
+2026-09-07 14:47:53,131 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b11-1788802762 from memory queue.
+2026-09-07 14:47:53,132 [INFO] ner_benchmark: Processing batch 12 with 6 parallel workers...
+2026-09-07 14:47:53,132 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_34'...
+2026-09-07 14:47:53,132 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:47:53,132 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_35'...
+2026-09-07 14:47:53,132 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_36'...
+2026-09-07 14:47:53,132 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:47:53,132 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:48:22,820 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:48:22,949 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:48:51,515 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:48:51,613 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:49:30,681 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:49:30,845 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:49:30,862 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_baseline-b6-1788802762 in memory queue.
+2026-09-07 14:49:30,864 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 609s (≥600s) | workers 6 → 7 | ceiling=9 (75% of max=12)
+2026-09-07 14:49:30,864 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b12-1788802762 from memory queue.
+2026-09-07 14:49:30,864 [INFO] ner_benchmark: Processing batch 13 with 7 parallel workers...
+2026-09-07 14:49:30,864 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_37'...
+2026-09-07 14:49:30,865 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:49:30,865 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_38'...
+2026-09-07 14:49:30,865 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_39'...
+2026-09-07 14:49:30,865 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:49:30,865 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:49:38,549 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:49:39,017 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:49:46,661 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:49:47,058 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:50:25,113 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:50:25,437 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:50:25,450 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_baseline-b7-1788802762 in memory queue.
+2026-09-07 14:50:25,452 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b13-1788802762 from memory queue.
+2026-09-07 14:50:25,452 [INFO] ner_benchmark: Processing batch 14 with 7 parallel workers...
+2026-09-07 14:50:25,452 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_40'...
+2026-09-07 14:50:25,452 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_42'...
+2026-09-07 14:50:25,452 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:50:25,452 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_41'...
+2026-09-07 14:50:25,452 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:50:25,452 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:50:45,674 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:50:45,841 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:51:46,241 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:51:46,617 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:52:24,331 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:52:24,642 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:52:24,668 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_baseline-b8-1788802762 in memory queue.
+2026-09-07 14:52:24,671 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 782s (≥600s) | workers 7 → 8 | ceiling=9 (75% of max=12)
+2026-09-07 14:52:24,671 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b14-1788802762 from memory queue.
+2026-09-07 14:52:24,671 [INFO] ner_benchmark: Processing batch 15 with 8 parallel workers...
+2026-09-07 14:52:24,671 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_43'...
+2026-09-07 14:52:24,671 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_44'...
+2026-09-07 14:52:24,671 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:52:24,672 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_45'...
+2026-09-07 14:52:24,672 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:52:24,672 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:52:51,465 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:52:51,589 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:53:19,367 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:53:19,816 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:53:47,188 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:53:47,652 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:53:47,668 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_baseline-b9-1788802762 in memory queue.
+2026-09-07 14:53:47,671 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b15-1788802762 from memory queue.
+2026-09-07 14:53:47,671 [INFO] ner_benchmark: Processing batch 16 with 8 parallel workers...
+2026-09-07 14:53:47,671 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_46'...
+2026-09-07 14:53:47,672 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:53:47,672 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_47'...
+2026-09-07 14:53:47,672 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:53:47,672 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_48'...
+2026-09-07 14:53:47,672 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:53:57,164 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:53:57,232 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:54:19,785 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:54:20,044 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:54:46,408 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:54:46,829 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:54:46,851 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_baseline-b10-1788802762 in memory queue.
+2026-09-07 14:54:46,855 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 925s (≥600s) | workers 8 → 9 | ceiling=9 (75% of max=12)
+2026-09-07 14:54:46,855 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b16-1788802762 from memory queue.
+2026-09-07 14:54:46,856 [INFO] ner_benchmark: Processing batch 17 with 9 parallel workers...
+2026-09-07 14:54:46,856 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_49'...
+2026-09-07 14:54:46,856 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:54:46,856 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_50'...
+2026-09-07 14:54:46,856 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_51'...
+2026-09-07 14:54:46,856 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:54:46,856 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:55:01,291 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:55:01,409 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:56:00,334 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:56:00,735 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:56:45,468 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:56:45,800 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:56:45,818 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_baseline-b11-1788802762 in memory queue.
+2026-09-07 14:56:45,823 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b17-1788802762 from memory queue.
+2026-09-07 14:56:45,823 [INFO] ner_benchmark: Processing batch 18 with 9 parallel workers...
+2026-09-07 14:56:45,823 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_52'...
+2026-09-07 14:56:45,824 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_53'...
+2026-09-07 14:56:45,824 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_54'...
+2026-09-07 14:56:45,824 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:56:45,824 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:56:45,824 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:57:21,836 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:57:22,238 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:57:50,118 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:57:50,294 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:58:29,653 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:58:29,851 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:58:29,872 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_baseline-b12-1788802762 in memory queue.
+2026-09-07 14:58:29,876 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b18-1788802762 from memory queue.
+2026-09-07 14:58:29,876 [INFO] ner_benchmark: Processing batch 19 with 9 parallel workers...
+2026-09-07 14:58:29,876 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_55'...
+2026-09-07 14:58:29,876 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:58:29,877 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_56'...
+2026-09-07 14:58:29,877 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_57'...
+2026-09-07 14:58:29,877 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:58:29,877 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:58:59,010 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:58:59,433 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:59:19,211 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:59:19,229 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:59:40,977 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 14:59:41,492 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 14:59:41,524 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_baseline-b13-1788802762 in memory queue.
+2026-09-07 14:59:41,528 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b19-1788802762 from memory queue.
+2026-09-07 14:59:41,529 [INFO] ner_benchmark: Processing batch 20 with 9 parallel workers...
+2026-09-07 14:59:41,529 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_58'...
+2026-09-07 14:59:41,529 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:59:41,530 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_59'...
+2026-09-07 14:59:41,530 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record 'real_mixed_60'...
+2026-09-07 14:59:41,530 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 14:59:41,530 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-07 15:00:13,355 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 15:00:13,492 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-07 15:00:26,740 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 15:00:27,248 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
