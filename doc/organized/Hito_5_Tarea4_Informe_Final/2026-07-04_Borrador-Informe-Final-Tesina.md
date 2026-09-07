@@ -8,18 +8,15 @@ eahumada@gmail.com
 
 ## RESUMEN
 
-Las instituciones financieras sujetas a regulaciones AML/KYC deben vigilar grandes volúmenes de noticias no estructuradas en busca de entidades de riesgo. Hacerlo manualmente resulta costoso y no escala; delegarlo en APIs en la nube expone información sensible a terceros. Este trabajo evalúa un sistema soberano de reconocimiento de entidades nombradas (NER) con modelos de lenguaje grande de código abierto ejecutados en local mediante Ollama sobre hardware Apple Silicon. La validación comparó trece modelos sobre un corpus real de 120 artículos en español, contrastando la extracción directa frente a la generación aumentada por recuperación con base de conocimiento contextual, y evaluó las diferencias mediante ANOVA y pruebas post-hoc de Tukey HSD. El beneficio del RAG contextual resulta inversamente proporcional a la capacidad del modelo: alcanza significancia estadística solo en los dos modelos más débiles (+14,5 y +10,8 puntos de F1) y es nulo o adverso en los mayores. Redactar el prompt en español e incorporar ejemplos *few-shot* aporta conjuntamente +11,1 puntos sobre el baseline en inglés, mejora que ninguno de los dos factores logra por separado. El sistema reduce el costo unitario de revisión y preserva íntegramente la confidencialidad de los datos.
+Las instituciones sujetas a regulaciones AML/KYC deben vigilar grandes volúmenes de noticias no estructuradas buscando entidades de riesgo. Hacerlo manualmente no escala y delegarlo en APIs en la nube expone información sensible a terceros. Este trabajo diseña, implementa y evalúa un sistema soberano de reconocimiento de entidades nombradas (NER) con modelos de lenguaje grande de código abierto ejecutados en local mediante Ollama sobre Apple Silicon, sobre una arquitectura pub/sub multihilo con concurrencia adaptativa (AIMD) y capa Factory/Facade. La validación comparó trece modelos sobre 120 artículos reales en español y 30 del dominio; contrastó la extracción directa con la generación aumentada por recuperación (RAG) contextual y midió las diferencias con ANOVA y Tukey HSD. El beneficio del RAG resulta inversamente proporcional a la capacidad del modelo: solo es significativo en los dos más débiles (+14,5 y +10,8 puntos de F1) y es nulo o adverso en los mayores. Redactar el prompt en español e incorporar ejemplos *few-shot* aporta +11,1 puntos sobre el baseline en inglés, mejora que ninguno de ambos factores logra por separado. El mejor modelo alcanza 80,57 % de F1 sin extracciones fallidas en el corpus del dominio, reduce el costo unitario de revisión y preserva la confidencialidad.
 
 **Palabras clave:** Reconocimiento de Entidades Nombradas (NER), Modelos de Lenguaje Grande (LLM), Cumplimiento Normativo (AML/KYC), Soberanía de Datos, Generación Aumentada por Recuperación (RAG).
 
 ## ABSTRACT
 
-Financial institutions operating under AML and KYC regulatory frameworks face the challenge of monitoring large volumes of unstructured news for risk entities (persons, organizations). Manual execution of this process is costly, slow, and unscalable, while cloud API usage exposes sensitive financial data to third parties, violating data sovereignty. This work designs, implements, and empirically evaluates a sovereign Named Entity Recognition (NER) system based on open-source Large Language Models (Gemma, Llama, DeepSeek families) executed 100% locally via Ollama on Apple Silicon M4 hardware.
+Financial institutions subject to AML/KYC regulations must monitor large volumes of unstructured news for risk entities. Doing so manually does not scale, and delegating it to cloud APIs exposes sensitive information to third parties. This work designs, implements and evaluates a sovereign Named Entity Recognition (NER) system using open-source Large Language Models executed locally through Ollama on Apple Silicon hardware, on a multithreaded pub/sub architecture with adaptive concurrency control (AIMD) and a Factory/Facade layer. Validation compared thirteen models on 120 real Spanish-language articles and 30 domain ones; contrasted direct extraction with contextual retrieval-augmented generation (RAG) and measured the differences with ANOVA and Tukey HSD. The benefit of RAG is inversely proportional to model capacity: it is significant only in the two weakest models (+14.5 and +10.8 F1 points) and is null or adverse in the larger ones. Writing the prompt in Spanish and adding *few-shot* examples yields +11.1 points over the English baseline, an improvement neither factor achieves alone. The best model reaches 80.57 % F1 with no failed extractions on the domain corpus, lowers the unit cost of review and preserves confidentiality.
 
-The system incorporates a multithreading pub/sub processing architecture with an adaptive concurrency controller (AIMD) and a Factory/Facade layer unifying four model providers. Experimental validation was performed on the real financial sanctions dataset Kleptotrace/CoNLL-2002 (N=15 expert-annotated articles) and a statistically significant corpus of 30 short articles (N=30). The prompt-variant analysis demonstrates that combining Spanish-language localization with few-shot examples yields a +11.1 F1-point improvement over the English zero-shot baseline, and the best evaluated models reach an F1-Score of 80.57% on the domain corpus (N=30) with no failed extractions. The system reduces manual review operational costs by 60–80% while guaranteeing total data privacy.
-
-**Keywords:** Named Entity Recognition (NER), Large Language Models (LLM), Regulatory Compliance (AML/KYC), Data Sovereignty, Prompt Engineering.
-
+**Keywords:** Named Entity Recognition (NER), Large Language Models (LLM), Regulatory Compliance (AML/KYC), Data Sovereignty, Retrieval-Augmented Generation (RAG).
 
 ## ÍNDICE DE CONTENIDOS
 
@@ -204,7 +201,9 @@ La gestión de memoria merece atención propia porque condicionó el alcance del
 
 ### 3.3 Módulo de evaluación
 
-La comparación entre lo extraído y la anotación de referencia no puede ser literal, porque una diferencia de puntuación o un artículo antepuesto invalidarían una extracción correcta. El evaluador emplea por ello **emparejamiento difuso** por similitud de tokens, aceptando como acierto toda coincidencia por encima de un umbral configurable, fijado en 85 sobre 100. La elección del umbral es un compromiso: por debajo admite falsos emparejamientos entre nombres distintos que comparten apellido; por encima rechaza variantes legítimas.
+La comparación entre lo extraído y la anotación de referencia no puede ser literal, porque una diferencia de puntuación o un artículo antepuesto invalidarían una extracción correcta. El evaluador emplea por ello **emparejamiento difuso a nivel de caracteres**, implementado con la función `ratio` de la biblioteca *rapidfuzz*, que normaliza la **distancia de Indel** —el número mínimo de inserciones y supresiones necesarias para transformar una cadena en la otra, variante de la distancia de Levenshtein que excluye las sustituciones— a una escala de 0 a 100 mediante la expresión `100 × (1 − d / (|a| + |b|))`. Ambas cadenas se pasan a minúsculas antes de compararlas, así que la coincidencia es insensible a mayúsculas. Se acepta como acierto toda similitud igual o superior a un umbral configurable, fijado en **85**.
+
+La elección del umbral es un compromiso: por debajo se admiten emparejamientos entre nombres distintos que comparten apellido; por encima se rechazan variantes legítimas. Conviene explicitar dos límites de esta métrica, porque condicionan la lectura de los resultados. Al operar sobre caracteres y no sobre palabras, **es sensible al orden**: «Juan Pérez» y «Pérez Juan» obtienen 40 sobre 100 y no casan, mientras que una métrica basada en tokens les daría 90. Y al normalizar por la longitud conjunta, **penaliza las omisiones proporcionalmente**: «Banco Santander» frente a «Santander» obtiene 75 y queda por debajo del umbral, de modo que una extracción parcialmente correcta cuenta como error. Ambos efectos empujan las cifras a la baja, nunca al alza, así que el desempeño reportado es conservador.
 
 Sobre esa base se calculan precisión, exhaustividad y F1 por artículo, que después se promedian, y una **tasa de alucinación** definida como la proporción de entidades propuestas sin correspondencia alguna en la referencia. El módulo incorpora además la validación estadística: ANOVA de una vía para contrastar si las diferencias entre modelos y modos son significativas, pruebas post-hoc de Tukey HSD para identificar qué pares concretos difieren, intervalos de confianza al 95 % por grupo y un análisis de sensibilidad que recalcula las métricas excluyendo los artículos atípicamente largos, con el fin de comprobar que ningún resultado depende de unos pocos casos extremos.
 
@@ -263,7 +262,7 @@ Los resultados del análisis de variantes de prompts revelan una **interacción 
 | **Latencia (s)** | Tiempo promedio por artículo en segundos |
 | **Índice Tok/s/B** | Tokens por segundo normalizados por cada mil millones (10⁹) de parámetros |
 
-El cotejo entre la entidad extraída y la de referencia es **difuso**, con un umbral de similitud de 85 sobre 100, lo que tolera variaciones menores de forma sin admitir coincidencias espurias.
+El cotejo entre la entidad extraída y la de referencia es **difuso a nivel de caracteres** —distancia de Indel normalizada, descrita en §3.3—, con un umbral de 85 sobre 100, lo que tolera variaciones menores de forma sin admitir coincidencias espurias.
 
 **Convención ante la extracción vacía.** Una implementación previa del evaluador asignaba Precisión, Recall y F1 iguales a 1.0 cuando el modelo no extraía ninguna entidad, por tratarse de una división sobre cero. Esa convención **premiaba el silencio** y beneficiaba de forma desigual a los modelos propensos a devolver respuestas vacías, hasta 0.21 de F1 en el caso más extremo. La convención empleada en este trabajo asigna **0.0** en ese supuesto, y reserva el valor 1.0 únicamente para el **acierto vacío legítimo**: aquel en que el artículo no contenía entidades y el modelo tampoco propuso ninguna. Todas las corridas del estudio se re-puntuaron con esta convención a partir de los recuentos de aciertos y errores almacenados, **sin repetir la inferencia**, así que la totalidad de las cifras reportadas comparte un criterio único.
 
@@ -604,9 +603,6 @@ Eres un periodista de investigación financiera. Redacta un párrafo corto (2-4 
 | Tiempo total de benchmark (N=30, 2 modelos) | ~29 minutos (serial) |
 
 
-*Informe Final de Tesina — Magíster en Tecnologías de la Información (MTI)*  
-*Universidad Técnica Federico Santa María — Valparaíso, Chile*  
-*Julio 2026*
 
 ### Anexo D — Detalle Técnico de la Optimización del Módulo RAG Contextual (KB RAG)
 
@@ -618,7 +614,7 @@ Se documentan aquí los diagramas de flujo, tablas de configuración CLI y catá
 El módulo src/kb_rag_manager.py (KBRAGManager) implementa cuatro modos de operación configurables:
 
 
-_Tabla 16. Configuración CLI del Módulo KB RAG_
+_Tabla 12. Configuración CLI del Módulo KB RAG_
 
 
 | Modo | Flag CLI | Descripción | Caso de Uso |
@@ -654,17 +650,12 @@ Entity-dict RAG (legacy): Template restrictivo — "DO NOT extract unless they e
 
 KB RAG (nuevo): Template positivo — "[EXTRACTION GUIDANCE] Apply these rules to the news text" — instruye activamente al LLM sin suprimir su capacidad de extracción.
 
-Informe Final de Tesina — Magíster en Tecnologías de la Información (MTI)
-
-Universidad Técnica Federico Santa María — Valparaíso, Chile
-
-Julio 2026
 
 
 #### D.2 Catálogo de guías tipológicas y ejemplares de la base de Conocimientos
 
 
-_Tabla 17. Guías Tipológicas de Dominio de la Base de Conocimientos_
+_Tabla 13. Guías Tipológicas de Dominio de la Base de Conocimientos_
 
 
 | Dominio | ID | Idioma | Keywords Clave |
@@ -676,7 +667,7 @@ _Tabla 17. Guías Tipológicas de Dominio de la Base de Conocimientos_
 | Deportivo y Social | sports_social_es | ES | liga, federación, club |
 
 
-_Tabla 18. Ejemplares Few-Shot de la Base de Conocimientos_
+_Tabla 14. Ejemplares Few-Shot de la Base de Conocimientos_
 
 
 | ID Ejemplar | Dominio | Fuente |
@@ -693,7 +684,7 @@ _Tabla 18. Ejemplares Few-Shot de la Base de Conocimientos_
 #### D.3 Reglas de la base de conocimientos contextual
 
 
-_Tabla 23. Reglas de la Base de Conocimientos Contextual_
+_Tabla 15. Reglas de la Base de Conocimientos Contextual_
 
 
 | Regla | Contenido |
@@ -705,7 +696,7 @@ _Tabla 23. Reglas de la Base de Conocimientos Contextual_
 ### Anexo E — Procedencia de los Datos del Benchmark General (N=15)
 
 
-_Tabla 20. Resultados Completos del Benchmark General (13 Configuraciones, N=15)_
+_Tabla 16. Resultados Completos del Benchmark General (13 Configuraciones, N=15)_
 
 
 | Filas de la Tabla 5 | Corrida de origen |
@@ -825,3 +816,6 @@ Esta corrección **no pudo aplicarse retroactivamente**: el cotejo se resuelve e
 3. **Conservar las extracciones por registro, no solo las métricas agregadas.** Es la diferencia entre poder recalcular sobre lo guardado y tener que repetir toda la inferencia.
 4. **Aplicar toda corrección de forma uniforme.** Reparar el corpus para un solo modelo lo mediría con una vara distinta de la del resto e invalidaría la comparación.
 
+*Informe Final de Tesina — Magíster en Tecnologías de la Información (MTI)*  
+*Universidad Técnica Federico Santa María — Valparaíso, Chile*  
+*Septiembre de 2026*

@@ -570,3 +570,75 @@ el contenido de los anexos verificado por muestreo. Propagado a los tres `.docx`
 **`_v5` congelada como versión de entrega** —sustituye a la `_v4`—, SHA-256
 `41382e69d6d2405d54c122e81f4867446376836f8ae678340e8dd1849c2acd1d`, en
 `doc/versions/informe_final/Informe_Final_Tesina_NER_v5.docx` y registrada en `VERSIONES.md`.
+
+### 2026-09-07 23:25 — Exportación a PDF · la conversión como auditoría · versión de entrega (_v6)
+
+Petición del autor: **exportar el `.docx` a PDF** conservando las 25 páginas y el formato. Convertido con
+**LibreOffice headless** en el equipo del autor. Las fuentes quedan **incrustadas y subconjuntadas**
+—Liberation Serif y Nimbus Mono, métricamente compatibles con Times New Roman y Courier New—, así que la caja
+tipográfica no se descuadra y el recuento de páginas del PDF vale como recuento del documento.
+
+**La exportación funcionó como auditoría** y destapó tres defectos que el `.docx` arrastraba desde la
+extracción de los anexos D–G. Los tres se corrigieron **primero en el `.md`** (respaldo
+`.bak_pre_leyendas_20260907`) y luego en los tres `.docx`:
+
+1. **Leyendas duplicadas en los anexos D y E.** Cinco líneas `_Tabla N. Título_`, heredadas del `.docx`
+   original, se imprimían como párrafo normal —con los guiones bajos a la vista y numeración obsoleta: 16, 17,
+   18, 23, 20— **encima** de la leyenda real que genera el renderizador a partir del encabezado. Se corrigió
+   en el renderizador (`render.py` y `render2.py`): esa línea se **consume** como leyenda y se renumera, de
+   modo que el título descriptivo del `.md` sustituye al del encabezado. Las leyendas 12 a 16 pasan a ser
+   «Configuración CLI del Módulo KB RAG», «Guías Tipológicas de Dominio de la Base de Conocimientos»,
+   «Ejemplares Few-Shot de la Base de Conocimientos», «Reglas de la Base de Conocimientos Contextual» y
+   «Resultados Completos del Benchmark General (13 Configuraciones, N=15)».
+2. **Colofón duplicado dentro del Anexo D**: tres párrafos sueltos con el título de la tesina, la universidad
+   y la fecha, varados entre las tablas D.1 y D.2. Eliminados.
+3. **Colofón varado y con fecha obsoleta.** El colofón legítimo cerraba el Anexo C, no el documento, y decía
+   «Julio 2026». Movido al **final** y fechado en **septiembre de 2026**, la fecha de la entrega. Cabe en el
+   hueco de la página 25, así que no añade página.
+
+**Verificación del PDF superada:** **25 páginas exactas** · cero páginas en blanco · encabezado y pie en las
+25, con holgura mínima de 21,2 pt arriba y 17,8 pt abajo (**sin solape**) · los dos logotipos en línea en las
+25 · **19 leyendas correlativas** de la 1 a la 19, una sola vez cada una · anexos A–H con la G íntegra ·
+resumen de 191/200 palabras · sin arte ASCII, sin literales HTML y sin asteriscos ni guiones bajos sueltos ·
+colofón único al cierre. Verificado además por inspección visual de las páginas 1, 9, 19, 21 y 25.
+
+**`_v6` congelada como versión de entrega** —sustituye a la `_v5`, y es la primera que congela también el
+PDF—: `doc/versions/informe_final/Informe_Final_Tesina_NER_v6.docx` (SHA-256 `2543def700a8`) y
+`…_v6.pdf` (SHA-256 `c9b2071f385b`). El PDF de trabajo queda en la raíz del proyecto.
+
+### 2026-09-08 00:05 — Resumen y abstract fundidos y sincronizados · versión de entrega (_v7)
+
+El autor advirtió que resumen y abstract «difieren mucho». El historial lo explica: el núcleo del abstract
+data del commit `0b27b5c` (**27 de julio**) y desde entonces solo recibió un parche puntual, mientras el
+resumen se reescribió entero el 7 de septiembre (`c3ba8cb`). Describían dos versiones distintas del trabajo:
+el resumen, la validación final —120 artículos reales, trece modelos, RAG inversamente proporcional a la
+capacidad, ANOVA y Tukey—; el abstract, la de julio —N=15 y N=30, un párrafo de arquitectura y **ningún
+resultado de RAG**—.
+
+**Fundidos.** Ambos dicen ahora lo mismo y siguen el orden que exige `plantilla_final-2026.docx`: (1) contexto
+y problema, (2) propuesta y objetivos, (3) procedimiento y métodos de validación, (4) resultados e impacto.
+Del resumen se conserva la validación final; del abstract se recupera lo que solo él tenía —la arquitectura
+pub/sub multihilo con concurrencia adaptativa (AIMD) y capa Factory/Facade, y el 80,57 % de F1 sin
+extracciones fallidas—. **RESUMEN 199 palabras y ABSTRACT 183**, ambos bajo el límite de 200, un párrafo cada
+uno y siete oraciones paralelas. La quinta palabra clave se alinea: *Prompt Engineering* → **RAG**.
+
+**Dos precisiones de fondo.** El 80,57 % se declara **sobre el corpus del dominio**, no sobre el de 120
+artículos, donde el mejor local es 59,25 %. Y se retira la afirmación de «60–80 % de reducción de costos» que
+arrastraba el abstract: es el **objetivo 5**, no un resultado medido; queda «reduce el costo unitario de
+revisión», como en el resumen.
+
+**Fuentes restituidas.** El segundo párrafo del abstract llevaba el estilo `p1a` —10 pt, sin las sangrías de
+567 twips— mientras el primero llevaba `abstract`. Al fundirlos, el párrafo único vuelve al estilo `abstract`
+de la plantilla, el mismo del resumen; en los otros dos `.docx`, cuyos identificadores difieren, se iguala al
+estilo del resumen (`BodyText`). Comparados estilo a estilo contra la plantilla, los únicos apartamientos que
+quedan son los deliberados: `programcode` a 7 pt y el estilo `Compact`.
+
+**Espaciado compactado**, a nivel de estilo y no de texto: `abstract` `before` 600 → 160 en el documento
+canónico y `Heading 1` `after` 160 → 80 en los otros dos. Sobrevive a las reconstrucciones desde el `.md`.
+
+**Los dos bloques quedan en la página inicial** del Word y del PDF —verificado sobre el PDF—, con sitio de
+sobra para el arranque del índice. **Verificación superada:** 25 páginas exactas, cero en blanco, encabezado y
+pie en las 25 sin solape (mínimos 21,2 y 19,1 pt), 19 leyendas correlativas, anexos A–H, colofón único.
+
+**`_v7` congelada como versión de entrega** —sustituye a la `_v6`—: `.docx` SHA-256 `a8616ddb2c15` y `.pdf`
+`ecc2bd49f2cb`. Corregido primero el `.md` (respaldo `.bak_pre_resumen_20260907`) y propagado a los tres `.docx`.

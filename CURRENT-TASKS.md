@@ -244,6 +244,84 @@ Para **cada tarea** que ejecutes:
   (extensión, contenido, coherencia con la fuente y entregables), tomada de la plantilla, de las instrucciones
   institucionales y de los cuatro reparos del profesor. **Si algo no cuadra, avisar en lugar de recortar.**
 
+### 2.15 ✅ COMPLETADA — Resumen y abstract fundidos, sincronizados y compactados
+- **Cerrada:** 2026-09-08 00:05 por Claude Desktop. **Abierta:** 2026-09-07 23:40. Detectado al comparar ambos: **el abstract nunca se
+  reescribió**. Su núcleo data del commit `0b27b5c` (27 de julio) y solo recibió un parche puntual en
+  `f7c89e4`; el resumen se rehízo entero el 7 de septiembre (`c3ba8cb`). Describían dos versiones distintas
+  del trabajo: el resumen, la validación final (N=120, trece modelos, RAG inversamente proporcional a la
+  capacidad, ANOVA y Tukey); el abstract, la de julio (N=15 y N=30, arquitectura, sin ningún resultado de RAG).
+- **Encargo del autor:** *«Fundir ambos y corregir todo hacia atrás, reducir el espacio entre el título y el
+  párrafo de resumen y entre ABSTRACT y el párrafo de abstract, corregir las fuentes originales. Sincronizar
+  y mantener los dos en la página inicial del Word y del PDF.»*
+- **Restricción institucional** (`plantilla_final-2026.docx`): el resumen **no debe exceder 200 palabras** y
+  debe cubrir, en ese orden, (1) contexto y definición del problema, (2) propuesta y objetivos, (3)
+  procedimiento y métodos de validación, (4) resultados relevantes e impacto. Máximo 5 palabras clave.
+- **Defecto de forma hallado de paso:** el **segundo párrafo del abstract usaba el estilo `p1a`**, no
+  `abstract`, así que salía con cuerpo de texto normal (10 pt) y sin las sangrías de 567 twips, mientras el
+  primero sí llevaba `abstract` (9 pt, sangrado). Ese es el desajuste de fuente visible en la página 1.
+- **Espaciado:** el estilo `abstract` de la plantilla trae `before=600` (30 pt), que es el hueco entre el
+  encabezado y el párrafo. Se reduce, en el `.docx`, no en el texto.
+- **Texto fundido.** Ambos dicen ahora lo mismo y siguen el orden que exige la plantilla —(1) contexto y
+  problema, (2) propuesta y objetivos, (3) procedimiento y métodos, (4) resultados e impacto—. Del resumen se
+  conserva la validación final (120 artículos reales más 30 del dominio, trece modelos, RAG inversamente
+  proporcional a la capacidad, ANOVA y Tukey HSD, +11,1 puntos por español + *few-shot*); del abstract se
+  recupera lo que solo él tenía: la **arquitectura** (pub/sub multihilo, concurrencia adaptativa AIMD, capa
+  Factory/Facade) y el **80,57 % de F1 sin extracciones fallidas**. **RESUMEN 199 palabras · ABSTRACT 183**,
+  ambos por debajo del límite de 200, un párrafo cada uno y siete oraciones paralelas.
+- **Salvedad de precisión:** el 80,57 % se declara explícitamente **sobre el corpus del dominio**, no sobre el
+  de 120 artículos (donde el mejor local es 59,25 %). Se retira del abstract la afirmación de «60–80 % de
+  reducción de costos», que era el **objetivo** 5 y no un resultado medido; queda «reduce el costo unitario de
+  revisión», como en el resumen. La quinta palabra clave se alinea: *Prompt Engineering* → **RAG** en ambos.
+- **Fuentes restituidas.** El párrafo del abstract vuelve al estilo **`abstract`** de la plantilla (9 pt con
+  sangrías de 567 twips), el mismo del resumen: antes el segundo párrafo iba en `p1a` a 10 pt y sin sangrar.
+  En los otros dos `.docx`, cuyos identificadores de estilo difieren, se iguala al estilo del resumen
+  (`BodyText`). Ninguna otra fuente se aparta de `plantilla_final-2026.docx`: la comparación estilo a estilo
+  con la plantilla solo arroja `programcode` a 7 pt —cambio pedido para el Anexo B— y el estilo `Compact`.
+- **Espaciado aplicado:** estilo `abstract` `before` **600 → 160** en el documento canónico y `Heading 1`
+  `after` **160 → 80** en los otros dos. Es cambio de **estilo**: sobrevive a las reconstrucciones desde el `.md`.
+- **📄 Los dos quedan en la página inicial** del Word y del PDF, verificado sobre el PDF exportado; la
+  compactación deja incluso sitio para el arranque del índice.
+- **📏 Verificación superada:** 25 páginas exactas · cero en blanco · encabezado y pie en las 25 sin solape
+  (mínimos 21,2 y 19,1 pt) · 19 leyendas correlativas · anexos A–H · colofón único · resumen 199/200 y
+  abstract 183/200.
+- **`_v7` congelada** (`.docx` `a8616ddb2c15`, `.pdf` `ecc2bd49f2cb`), sustituye a la `_v6`. Los tres `.docx`
+  propagados; corregido primero el `.md` (respaldo `.bak_pre_resumen_20260907`).
+
+### 2.14 ✅ COMPLETADA — Exportación a PDF del informe final (25 páginas, formato íntegro)
+- **Cerrada:** 2026-09-07 23:25 por Claude Desktop. **Abierta:** 2026-09-07 23:05. Petición del autor: **exportar el `.docx` a PDF**,
+  asegurando que el resultado mantenga las **25 páginas exactas** y **conserve el formato** (encabezados con
+  imágenes en línea, pies, tablas con bordes, leyendas, `programcode` a 7 pt, anexos A–H).
+- **Método previsto:** LibreOffice headless en el equipo del autor sobre
+  `Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.docx` (la `_v5`), y verificación del PDF con
+  `pdfinfo` (recuento de páginas), `pdftotext -layout` (texto, orden y ausencia de solapes) y `pdftoppm`
+  (inspección visual de portada, cambios de capítulo y anexos).
+- ⚠️ **Criterio de aceptación:** 25 páginas exactas, cero páginas en blanco, encabezado y pie sin solaparse
+  con el cuerpo, las 19 tablas con borde y leyenda, y ninguna fuente sustituida que descuadre la caja.
+- **PDF generado:** `Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.pdf` en la raíz (699 KB,
+  SHA-256 `c9b2071f385b`). Carta 612×792 pt. Fuentes **incrustadas y subconjuntadas** (Liberation Serif y
+  Nimbus Mono, métricamente compatibles con Times New Roman y Courier New: la caja no se descuadra).
+- 🔎 **Tres defectos detectados por la exportación y corregidos** —el PDF sirvió de auditoría del `.docx`—:
+  1. **Leyendas duplicadas en los anexos D y E.** Cinco líneas `_Tabla N. Título_` heredadas de la extracción
+     de los anexos se imprimían como texto normal, con los guiones bajos a la vista y numeración obsoleta
+     (16, 17, 18, 23, 20), **encima** de la leyenda real generada por el renderizador. Corregido: el
+     renderizador (`render.py` y `render2.py`) ahora **consume** esa línea como leyenda y la renumera, de modo
+     que el título descriptivo del `.md` sustituye al que se tomaba del encabezado. Las leyendas 12 a 16 pasan
+     a ser «Configuración CLI del Módulo KB RAG», «Guías Tipológicas de Dominio…», «Ejemplares Few-Shot…»,
+     «Reglas de la Base de Conocimientos Contextual» y «Resultados Completos del Benchmark General…».
+  2. **Colofón duplicado dentro del Anexo D** (artefacto de la misma extracción): tres párrafos sueltos con el
+     título de la tesina, la universidad y la fecha, varados entre las tablas D.1 y D.2. Eliminados.
+  3. **Colofón varado entre anexos y con fecha obsoleta.** El colofón legítimo cerraba el Anexo C en lugar del
+     documento y decía «Julio 2026». Movido al **final del documento** y actualizado a **«Septiembre de
+     2026»**, que es la fecha de la entrega. Cabe en el hueco de la página 25: **no añade página**.
+- **📏 Verificación del PDF superada:** 25 páginas exactas · cero páginas en blanco · encabezado y pie en las
+  25 (holgura mínima 21,2 pt arriba y 17,8 pt abajo: **sin solape**) · los dos logotipos en línea en las 25 ·
+  19 leyendas correlativas de la 1 a la 19, una sola vez cada una · anexos A–H · resumen de 191/200 palabras ·
+  sin arte ASCII, sin literales HTML y sin asteriscos ni guiones bajos sueltos · colofón único al final.
+- **`_v6` congelada** (`doc/versions/informe_final/Informe_Final_Tesina_NER_v6.docx` + `.pdf`, SHA-256 del
+  `.docx` `2543def700a8`). Sustituye a la `_v5` como versión de entrega. Los tres `.docx` propagados.
+- **Corregido antes en el `.md` canónico** (respaldo `.bak_pre_leyendas_20260907`): leyendas renumeradas 12–16
+  y colofón único al final con la fecha de septiembre. El `.docx` sigue siendo reflejo del `.md`.
+
 ### 2.13 ✅ COMPLETADA — Anexo B, espacios en blanco y ajuste a 25 páginas exactas
 - **Cerrada:** 2026-09-07 22:45 por Claude Desktop. Petición del autor: corregir los prompts del Anexo B
   (sin saltos de línea, cuerpo menor) y **reducir espacios en blanco en los anexos hasta las 25 páginas
@@ -960,3 +1038,5 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 20:20 | Claude Code (equipo principal) | Decisión del autor: **el número de versión de la entrega es indiferente**. Anotado en el encargo y en `VERSIONES.md` para que la numeración no bloquee la propagación. Verificado que el `.docx` de la raíz sigue siendo idéntico a la `_v3` (SHA `b172947f58c1`) y **no contiene aún las tandas cuarta y quinta** |
 | 2026-09-07 22:25 | Claude Desktop | §2.12 cerrada: tandas 4 y 5 propagadas, verificación final superada, **cuerpo 18 pp. de 25**, `_v4` congelada como **versión de entrega** (SHA `2bc915c7a511`) |
 | 2026-09-07 22:45 | Claude Desktop | §2.13: Anexo B corregido (prompts sin saltos, 7 pt), espacios en blanco reducidos, **25 páginas exactas** sin perder contenido, `_v5` congelada como entrega |
+| 2026-09-07 23:25 | Claude Desktop | §2.14: **PDF exportado** con LibreOffice — **25 páginas exactas**, formato íntegro. La exportación destapó tres defectos del `.docx` (leyendas duplicadas en los anexos D/E, colofón duplicado en el Anexo D y colofón varado con fecha «Julio 2026»); corregidos primero en el `.md` y propagados. `_v6` congelada como entrega |
+| 2026-09-08 00:05 | Claude Desktop | §2.15: **resumen y abstract fundidos** —el abstract estaba congelado desde julio y omitía el hallazgo central del RAG—. Sincronizados en 199 y 183 palabras, estilo `abstract` restituido, espaciado del encabezado compactado, ambos en la página inicial. `_v7` congelada |
