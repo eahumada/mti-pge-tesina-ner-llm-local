@@ -1,149 +1,66 @@
-# Encargo para Claude Desktop — revisión del profesor guía y datos nuevos
+# Encargo vigente para Claude Desktop — informe final de tesina
 
-*Actualizado el 2026-09-07 a las 16:45. Sustituye a la versión anterior de este mismo archivo.*
+*Reescrito el 2026-09-07 a las 19:30. Sustituye por completo a las versiones anteriores de este archivo, que
+se habían ido apilando por tandas y eran difíciles de accionar. Aquí está solo lo que hay que hacer ahora.*
 
-El profesor guía devolvió el informe con cuatro reparos: demasiados bloques en blanco y saltos de página entre
-capítulos, la ficha del estudiante en la primera hoja, poco desarrollo general —«muchas secciones no son más
-que un título y un breve párrafo»— y un marco conceptual pobre que no compara alternativas antes de elegir
-una. Los cuatro están atendidos en el Markdown canónico,
-[`doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.md`](./doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.md).
-El respaldo previo está junto a él con sufijo `.bak_profesor_20260907`. Respecto de tu propagación anterior, el
-Markdown acumula **+212 / −165 líneas**.
+## Qué hay que hacer
 
-## Lo que cambió, y por qué conviene separarlo en dos tandas
+Propagar a los tres `.docx` los cambios que el Markdown canónico acumula desde la versión `_v3`, volver a
+medir la extensión y congelar una `_v4`. El Markdown es
+[`doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.md`](./doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.md)
+y hay respaldos con sufijo `.bak_prosa_20260907` y `.bak_cap23_20260907` por si necesitas ver el estado previo.
 
-Hay dos clases de cambio y no tienen la misma urgencia ni la misma estabilidad.
+## Qué cambió desde la `_v3`
 
-**Los cambios estructurales ya están firmes** y puedes propagarlos con confianza. Quité la ficha del estudiante
-y la sustituí por la cabecera que prescribe `plantilla_final-2026.docx` —título, autor, dirección institucional
-y correo—; eliminé los doce separadores que el `.docx` renderizaba como bloques en blanco; reduje el resumen de
-270 a 201 palabras, porque la plantilla fija un máximo de 200, y lo reescribí en el orden prescrito. Reescribí
-el capítulo 2 comparando cinco familias de técnicas, las variantes de RAG y los entornos de ejecución local, y
-lo cerré con cinco criterios de selección; el capítulo 3 abre ahora justificando cada decisión frente a esos
-criterios, que era la petición explícita del profesor. Consolidé el capítulo 3 de seis secciones a cuatro, el 6
-de cinco a dos y §5.6 de siete subsecciones a tres, desarrollé la introducción incorporando el enfoque de
-solución y la metodología de validación —que las instrucciones exigen y no figuraban— y reescribí §5.3, que
-eran cuatro apartados de entre 25 y 35 palabras, el ejemplo más literal del reparo del profesor.
+El profesor guía pedía un texto continuo, con más desarrollo y menos secciones que fueran «un título y un
+breve párrafo». Sobre esa indicación se han hecho dos pasadas.
 
-**Los cambios de datos aún no están cerrados.** La re-corrida del corpus N=30 sí llegó completa y verificada, y
-está incorporada: `gemma4:31b-mlx` 80,57 % y `gemma4:31b` 78,55 %, con ANOVA recalculado (F=0,2235, p=0,6382) y
-las cinco referencias a la cifra de julio actualizadas. Pero **la re-ejecución de `gpt-oss:20b` está a
-201 de 240 registros** y va a mover cifras: su F1 baseline ya subió de 0,4384 a **0,5239** confirmado, y cuando
-cierre el modo con RAG cambiarán la tabla de §5.3.5, el §6.1, el §6.2 y la sexta conclusión.
+La primera convirtió en prosa las secciones que iban en listas o en bloques marcados en negrita: la
+justificación de las decisiones de diseño, los modelos evaluados, la taxonomía de errores y los resultados del
+ANOVA. El bloque §4.3 se consolidó por completo —sus cuatro subsecciones desaparecen—, §4.1.1 y §4.1.2 se
+fundieron en una sola exposición, y la antigua §4.5 se integró al final de §4.4. Los tres ejemplos *few-shot* y
+el *prompt* de generación del corpus se trasladaron al Anexo B, que es su sitio natural.
 
-Mi recomendación es que **propagues ahora la tanda estructural**, que es la que responde al profesor y no
-depende de ningún dato pendiente, y que **no congeles todavía una versión como definitiva**. Habrá una segunda
-pasada, breve y acotada a cifras, en cuanto termine esa corrida —unas nueve o diez horas al ritmo actual—.
+La segunda aplicó el mismo criterio al marco conceptual y a la propuesta. **El capítulo 2 pasa de seis
+subsecciones a cuatro y el capítulo 3 de cuatro a tres.** Conviene subrayar que **los capítulos siguen siendo
+nueve y ninguno desaparece**: lo que se consolidó fue el nivel de subsección, no la estructura que exige la
+plantilla. Se añadió además al Anexo A la URL del repositorio público,
+`https://github.com/eahumada/mti-pge-tesina-ner-llm-local`, con la nota de que cada corrida conserva su
+`run_config.json` y su `benchmark_results.csv` —es lo que sostiene la replicabilidad que pedía el profesor—.
+Por último se suavizaron una docena de construcciones rígidas, alternando las formas cultas con otras más
+llanas, para que el texto suene a estudiante sin perder corrección académica.
 
-## Lo que necesito de ti
+## Lo que debes vigilar al reconstruir
 
-Propagar a los tres `.docx` con el procedimiento habitual, edición estructural del XML y **nunca pandoc**. Y,
-por encima de todo, **medir las páginas reales**: mis cifras son estimaciones sobre el texto y sitúan el cuerpo
-en unas 22,3 páginas, contra una restricción institucional de **25 páginas sin anexos** verificada en
-`tesinas-finales-2026.pdf`. Si al maquetar te pasas, **avísame antes de recortar**: prefiero decidir qué se
-comprime a que se pierda desarrollo recién añadido para atender al profesor. Ten presente que los **anexos no
-computan** y disponen de hasta 25 páginas propias, así que son el destino natural de lo que sobre en el cuerpo,
-nunca el sitio de donde quitar.
+**Las referencias cruzadas se renumeraron**: §2.2 pasó a §2.1, §2.5 a §2.3, §3.3 a §3.2 y §3.4 a §3.3. En el
+Markdown están ya corregidas y verificadas —cero referencias rotas—, pero comprueba que las llamadas del
+`.docx` siguen el mismo mapa. Es el fallo más probable de esta propagación.
+
+**Mide la extensión y avísame antes de recortar.** La estimación sobre el texto da unas 19,9 páginas de cuerpo,
+frente a las 20 que mediste en la `_v3`, así que debería haber margen sobre el límite de 25. Recuerda que los
+anexos no computan y disponen de hasta 25 páginas propias: si algo sobra en el cuerpo, su destino es el anexo,
+nunca la papelera.
 
 ## Lo intocable
 
-**El anexo de declaración de uso de inteligencia artificial se conserva íntegro.** Es el Anexo G del `.docx`
-canónico y no se toca, ni se resume, ni se suaviza, ni se reubica. Fue redactado sobre el historial real de
-commits y sobre ambos worklogs, y describe con honestidad qué se hizo con asistencia de IA y cómo se verificó.
-Esa honestidad es un valor del trabajo, no un trámite: si al recolocar anexos cambiara su letra, mantén la G
-para él y desplaza los demás. El mismo criterio vale para el **Anexo H**, que documenta el defecto de
-codificación del corpus y la corrección de una conclusión que habíamos publicado mal. Ambos existen para que un
-lector pueda auditar el trabajo, no para adornarlo.
+**El Anexo G, la declaración de uso de inteligencia artificial, se conserva íntegro**: no se resume, no se
+suaviza, no se reubica. Fue redactado sobre el historial real de commits y describe con honestidad qué se hizo
+con asistencia de IA y cómo se verificó; esa honestidad es un valor del trabajo. Si al recolocar anexos
+cambiara su letra, mantén la G para él y desplaza los demás. El mismo criterio vale para el **Anexo H**, que
+documenta el defecto de codificación del corpus y la corrección de una conclusión que habíamos publicado mal.
 
-Cuando termines, declara el resultado en `CURRENT-TASKS.md` §2 **con el conteo de páginas medido** y deja la
-copia del `.docx` canónico en la raíz. La congelación de versión en `doc/versions/informe_final/` déjala para
-después de la segunda tanda.
+**Las nueve tablas del cuerpo son deliberadas**: la comparativa de familias de técnicas (§2.1), el estado del
+arte (§2.4), la arquitectura por capas (§3.2), las métricas (§4.4), **la comparativa con todos los modelos
+(§5.1)**, las variantes de *prompt* (§5.2), el corpus del dominio (§5.3), **la tabla de los trece modelos
+(§5.3.5)** y la eficiencia en hardware (§5.5). No añadas ni quites.
 
-## Regla permanente: nada de arte ASCII
+**Nada de arte ASCII.** Los esquemas van como tabla de Word y los gráficos como imagen real; el monoespaciado
+se reserva al código. Y toda corrección se hace **primero en el `.md`**: si se arregla solo en el `.docx`, la
+siguiente reconstrucción la deshace, como ya ocurrió con los diagramas y con el `&nbsp;` del Anexo A.
 
-Ningún diagrama debe emitirse como bloque de texto monoespaciado. El arte ASCII se descuadra en Word, donde la
-tipografía es proporcional, y produce exactamente el tipo de defecto visual que el profesor señaló. **Todo
-esquema va como tabla de Word y todo gráfico como imagen real**, generada electrónicamente y legible, según
-pide la plantilla; el bloque monoespaciado queda reservado al **código fuente real**.
+**Sin pandoc**, como siempre: edición estructural sobre los estilos de la plantilla.
 
-La corrección debe hacerse **siempre primero en el `.md` canónico** y solo después reconstruir los `.docx`. Si
-se arregla únicamente en el documento de Word, la siguiente reconstrucción desde el Markdown vuelve a
-introducir el arte ASCII — que es precisamente lo que ocurrió el 2026-09-07 y obligó a repetir el trabajo.
-Esta regla queda también recogida en `CLAUDE.md`.
+## Al terminar
 
-## Tercera tanda (2026-09-07 18:00): condensación de anexos y reducción de tablas
-
-Decisión del autor: **los anexos se concentran en resultados finales**. Se han eliminado del `.md` las
-conclusiones intermedias, las reflexiones sobre el camino recorrido y las tablas de paso, y se ha reducido el
-peso de las tablas en el cuerpo a favor de la prosa.
-
-En los **anexos** desaparecen los dos diagramas de flujo del módulo RAG, el comparativo cronológico entre
-versiones y el mini-benchmark preliminar de cinco artículos; se conserva lo que permite replicar —
-implementación, catálogo y reglas—. La subsección `D.8`, que por un error de numeración colgaba del Anexo F,
-vuelve al D. El Anexo H se compacta fundiendo su explicación del defecto con la medición del alcance. Los
-anexos pasan de **3 581 a 3 064 palabras** y de **16 a 10 tablas**.
-
-En el **cuerpo**, §5.6 se reescribe íntegramente en prosa: pasa de 1 206 palabras y **nueve tablas a 411
-palabras y ninguna**. No es solo condensación —sus tablas duplicaban el catálogo del Anexo D y la tabla
-comparativa de §5.3.5, y arrastraban **cifras anteriores al re-puntaje** (`gemma:latest` 0,4734/0,5303 cuando
-lo correcto es 0,4400/0,5136) además de un sondeo de cinco artículos cuyas cifras el propio texto reconocía
-como no persistidas—. El cuerpo queda en **11 528 palabras y 10 tablas**, frente a 12 323 y 19.
-
-**Las tablas que permanecen son deliberadas y no deben tocarse:** la comparativa de familias de técnicas
-(§2.2), el estado del arte (§2.6), la arquitectura por capas (§3.2), la estructura del *prompt* (§4.3.1), las
-métricas (§4.4), **la tabla comparativa con todos los modelos (§5.1)**, las variantes de *prompt* (§5.2), el
-corpus del dominio (§5.3), **la tabla de los trece modelos (§5.3.5)** y la eficiencia en hardware (§5.5).
-
-Al reconstruir, ten en cuenta que las subsecciones de los anexos D y H se han renumerado de forma correlativa
-tras las supresiones. El cuerpo debería bajar de las 23 páginas medidas a unas 21, lo que da margen cómodo
-frente al límite de 25.
-
-## Cuarta tanda (2026-09-07 18:45): prosa continua y consolidación
-
-Decisión del autor tras leer el `.docx` de la `_v3`: **el texto debe leerse como escrito de corrido**, con
-menos encabezados y menos enumeraciones, y en un registro algo menos formal y más breve.
-
-Se han reescrito en prosa continua §3.1 —la justificación de las decisiones de diseño, que enumeraba los
-criterios C1 a C5 en bloques marcados en negrita—, §4.2 —los modelos evaluados, que iba en tres viñetas por
-categoría— y §5.4, la taxonomía de errores. El bloque §4.3 se consolida por completo: sus cuatro subsecciones
-desaparecen y su contenido pasa a prosa seguida, con los tres ejemplos *few-shot* trasladados al Anexo B.
-Igual tratamiento reciben §4.1.1 y §4.1.2, fundidas en una sola exposición con el *prompt* de generación
-también movido al Anexo B. La antigua §4.5, que eran tres viñetas de infraestructura, se integra al final de
-§4.4. Y el bloque de resultados del ANOVA en §5.3.5 deja de ser una lista de tres puntos para convertirse en
-dos párrafos.
-
-El cuerpo baja de **11 528 a 10 958 palabras**, los encabezados de cuarto nivel de siete a tres y las tablas
-del cuerpo de diez a nueve: **desaparece la de §4.3.1** —la estructura del *prompt* *few-shot*—, que en la
-lista de la tanda anterior figuraba entre las intocables. Esta instrucción es posterior y prevalece sobre
-aquella; **las nueve restantes siguen siendo intocables**, incluidas la comparativa con todos los modelos
-(§5.1) y la de los trece modelos (§5.3.5).
-
-Se corrigieron además dos cifras obsoletas encontradas al reescribir: la conclusión 6 conservaba el valor de
-Tukey anterior para `llama3.2` (p=0,014 en lugar de 0,007) y §5.3.5 citaba el ANOVA del corpus N=30 con el
-valor previo a su re-corrida (F=0,141 en lugar de 0,2235). Y §4.2 omitía `gemma:latest` y `qwen3:8b`, que sí
-figuran en la Tabla 2.
-
-Estimación: unas 19,9 páginas de texto, frente a las 20 medidas en la `_v3`. Al propagar, **vuelve a medir** y
-congela una `_v4`.
-
-## Quinta tanda (2026-09-07 19:05): capítulos 2 y 3 consolidados y URL del repositorio
-
-Se aplica al marco conceptual y a la propuesta el mismo tratamiento de prosa continua que ya recibió el resto
-del documento. El **capítulo 2 pasa de seis secciones a cuatro**: se funden el planteamiento del problema con
-la revisión de familias de técnicas, y las estrategias de recuperación con las alternativas de ejecución
-local, añadiendo una transición entre ambas para que el salto no resulte brusco. El **capítulo 3 pasa de
-cuatro secciones a tres**, uniendo arquitectura y orquestación.
-
-⚠️ **Esto renumera referencias cruzadas**: §2.2→§2.1, §2.5→§2.3, §3.3→§3.2 y §3.4→§3.3. En el `.md` están ya
-corregidas y verificadas; al reconstruir, comprueba que las llamadas del `.docx` siguen el mismo mapa.
-
-El **Anexo A incorpora la URL del repositorio público**, `https://github.com/eahumada/mti-pge-tesina-ner-llm-local`,
-junto con la nota de que cada corrida conserva su `run_config.json` y su `benchmark_results.csv`. Es lo que
-sostiene la afirmación de replicabilidad que el profesor pedía, así que conviene que quede visible.
-
-Por último se suavizaron doce construcciones especialmente rígidas —alternando «de modo que» con «así que»,
-o sustituyendo «resulta insuficiente» por «no basta»—. La intención es que el texto suene a estudiante sin
-perder corrección académica: las formas cultas se alternan, no se eliminan.
-
-El cuerpo queda en 10 937 palabras y unas 19,9 páginas estimadas. Al propagar esta tanda junto con la cuarta,
-**mide de nuevo y congela la `_v4`**.
+Declara el resultado en `CURRENT-TASKS.md` §2 **con el conteo de páginas medido**, congela la `_v4` en
+`doc/versions/informe_final/` según `VERSIONES.md` y deja la copia del `.docx` canónico en la raíz.
