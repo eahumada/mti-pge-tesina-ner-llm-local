@@ -24,13 +24,15 @@ se modifica nunca; cualquier cambio produce la versión siguiente.
 
 | `_v3` | 2026-09-07 21:10 | `b172947f58c1` | 20 pp. | 28 pp. | Respuesta al profesor guía y cierre de datos. **Estructural:** sin ficha del estudiante (cabecera de plantilla), **sin saltos de página entre capítulos**, sin bloques en blanco, capítulo 2 reescrito con criterios C1-C5, capítulos 3 y 6 y §5.6 consolidados, introducción y §5.3 desarrolladas, resumen a 201 palabras. **Datos:** re-corrida N=30 (80,57 %/78,55 %) y cierre de `gpt-oss:20b` (52,39/55,67/+3,28; ANOVA **F=38,2222**, p=3,4453e-160; Tukey `llama3.2` p=0,007), Anexo H corregido. **Condensación:** anexos a 3 064 palabras y 10 tablas, §5.6 en prosa. **Forma:** todos los diagramas como tablas de Word (cero arte ASCII) e indentación con espacio duro real (sin `&nbsp;` literal). Cuerpo reconstruido desde el `.md` con renderizador propio, sin pandoc. |
 
+| `_v4` | 2026-09-07 22:25 | `2bc915c7a511` | **18 pp.** | 27 pp. | 🎓 **VERSIÓN DE ENTREGA.** Cuarta y quinta tanda: prosa continua en §3.1, §4.2, §5.4 y el ANOVA de §5.3.5 · §4.3 consolidada (sus cuatro subsecciones desaparecen, ejemplos *few-shot* al Anexo B) · §4.1.1+§4.1.2 fundidas · §4.5 integrada en §4.4 · capítulo 2 de 6 a 4 secciones y capítulo 3 de 4 a 3 · URL del repositorio en el Anexo A · registro suavizado. **Verificación final superada:** cuerpo 18/25 pp., resumen 191/200 palabras, introducción 2/3 pp., nueve capítulos, anexos A–H con la **G íntegra**, 19 tablas con leyenda y numeración correlativa, sin saltos de capítulo, sin páginas en blanco, sin arte ASCII ni literales HTML, citas IEEE completas y **ninguna referencia cruzada rota** (16 verificadas contra 39 secciones). |
+
 ## Versiones previstas
 
 | Versión | Contenido previsto | Bloqueada por |
 |:---|:---|:---|
 | ~~`_v2`~~ | ✅ Publicada el 2026-09-07 (ver registro) | — |
 | ~~`_v3`~~ | ✅ Publicada el 2026-09-07 (ver registro) | — |
-| `_v4` | Versión de entrega, tras la revisión final del autor | `_v3` |
+| ~~`_v4`~~ | 🎓 **Publicada el 2026-09-07 como versión de entrega** (ver registro) | — |
 
 ## Respaldos previos al versionado
 

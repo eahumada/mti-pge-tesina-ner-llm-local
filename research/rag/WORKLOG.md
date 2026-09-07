@@ -526,3 +526,18 @@ normalizar las celdas con `strip()`. La jerarquía vuelve a verse indentada y no
 
 **Medición.** Cuerpo de **20 páginas de 25**, 28 totales, anexos desde la 21, cero páginas en blanco, cero
 arte ASCII. **Versión `_v3` congelada** (SHA-256 `b172947f58c1`) y registrada en `VERSIONES.md`.
+
+### 2026-09-07 22:25 — Cuarta y quinta tanda · versión de entrega (_v4)
+
+Propagadas a los tres `.docx` la prosa continua de §3.1, §4.2, §5.4 y el ANOVA de §5.3.5; la consolidación de
+§4.3 —cuyas cuatro subsecciones desaparecen, con los ejemplos *few-shot* trasladados al Anexo B—, la fusión de
+§4.1.1 con §4.1.2 y la integración de §4.5 en §4.4; el capítulo 2 de seis a cuatro secciones y el 3 de cuatro
+a tres; la URL del repositorio en el Anexo A y el registro suavizado.
+
+**Verificación final superada.** Cuerpo de **18 páginas de 25** (27 totales, anexos desde la 19), resumen de
+191 palabras, introducción de 2 páginas, nueve capítulos, anexos A–H con la G íntegra, 19 tablas con leyenda y
+numeración correlativa, sin saltos de página al empezar capítulo, sin páginas en blanco, sin arte ASCII ni
+literales HTML, citas IEEE con sus veinte entradas y **ninguna referencia cruzada rota** —16 llamadas
+verificadas contra 39 secciones; el `§3.3` que persiste apunta al actual «Módulo de evaluación», no al antiguo—.
+
+**`_v4` congelada como versión de entrega**, SHA-256 `2bc915c7a511`, registrada en `VERSIONES.md`.
