@@ -644,11 +644,12 @@ guardados, como sí se pudo con el bug del *scorer*.
 
 **Opciones:**
 
-- [ ] **(a) Declarar la limitación y no re-ejecutar (recomendada).** Ya está redactada en §5.3.5 del informe.
+- [x] ✅ **ELEGIDA (2026-09-07): declarar la limitación y no re-ejecutar.** Ya está redactada en §5.3.5 del informe.
       Es práctica estándar cuando el sesgo es conocido, acotado y uniforme. Coste: cero.
-- [ ] **(b) Corregir el gold y re-ejecutar el estudio N=120 completo.** Elevaría los valores absolutos ~4,7 pp.
+- [ ] ~~(b) Corregir el gold y re-ejecutar el estudio N=120 completo.~~ **Descartada** — pasa a trabajo futuro. Elevaría los valores absolutos ~4,7 pp.
       Coste: **~200 h de cómputo** —el estudio entero— y contradice el cierre de benchmarks.
-- [ ] **(c) Corregir el gold y re-ejecutar solo un subconjunto** para cuantificar el efecto real y citarlo como
+- [ ] ~~(c) Corregir el gold y re-ejecutar solo un subconjunto~~ **Descartada** — pasa a trabajo futuro.
+      Enunciado original: para cuantificar el efecto real y citarlo como
       corrección estimada, manteniendo las cifras actuales. Coste intermedio; aporta una medición en vez de una
       cota.
 
@@ -678,6 +679,26 @@ ambos lados al comparar**, aplicando la reparación al gold *y* a la extracción
       repetición y apunta al agotamiento del presupuesto de tokens: 10–40 s por registro al re-ejecutar frente
       a **838 s** en la corrida oficial. **ETA ~1–1,5 h.** El cambio queda **aislado a `gpt-oss`** y el estudio
       sigue siendo comparable. Encargo: adenda de `ENCARGO-REMOTO-GPTOSS-20260907.md`.
-- [ ] **Aparte y de alcance global:** decidir si se implementa la normalización de codificación en el
-      evaluador, lo que obligaría a re-ejecutar el estudio N=120 completo (~200 h). **No mezclar con lo
-      anterior.**
+- [x] ✅ **DECIDIDO (2026-09-07): la normalización de codificación pasa a TRABAJO FUTURO.** No se implementa
+      ni se re-ejecuta el estudio. Queda declarada como limitación en §5.3.5 y como línea de trabajo futuro en
+      **§7.2, punto 7** del informe.
+
+### 15.6 ✅ DECISIÓN DEL AUTOR (2026-09-07) — el mojibake se declara, no se corrige
+
+**Elegida la opción (a) de §15.4.** La normalización de codificación del corpus N=120 **no se aborda en este
+trabajo**: pasa a **trabajo futuro**. Fundamento: la corrección exige re-inferir el estudio completo (~200 h)
+porque el cotejo se resuelve en tiempo de inferencia y las extracciones por registro no se conservaron.
+
+**Qué queda escrito y dónde:**
+
+| Documento | Contenido |
+|:---|:---|
+| Informe §5.3.5 | **Limitación declarada**: qué es el mojibake, su alcance (20,1 % del gold y 87 % de los textos), su coherencia entre entrada y referencia, y que el efecto **depende del modelo** (−0.070 a +0.091) |
+| Informe **§7.2, punto 7** | **Línea de trabajo futuro (Fase 6)**: normalizar la codificación **en ambos lados** de la comparación y re-ejecutar el estudio N=120 |
+| `FINDINGS.md §F46`, **§F48** | Hallazgo y análisis completo |
+| `LEARNING.md §L39` | Regla general: un corpus corrupto de forma coherente penaliza a quien lo corrige |
+| `RECOMENDACIONES-EJECUCIONES-FUTURAS.md` | Regla operativa para corridas posteriores |
+
+**Consecuencia inmediata para Claude Desktop:** el `.md` canónico cambió después de su propagación —se añadió
+el punto 7 a §7.2—, de modo que hay que **propagar ese único punto a los tres `.docx`**. Es un párrafo; el
+cuerpo iba por 21 páginas de 25, así que la holgura es suficiente.

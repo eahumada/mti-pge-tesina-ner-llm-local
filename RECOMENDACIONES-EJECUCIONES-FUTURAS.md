@@ -55,6 +55,26 @@ hizo con la convención de puntuación.
 en la variable de interés. Si dos corridas dan métricas idénticas fila a fila, no han comparado nada: tenían
 la misma configuración.
 
+## 2.bis Codificación del corpus
+
+**R9 — Verificar la codificación del corpus antes de usarlo, en la entrada y en la referencia.** El corpus
+N=120 de este estudio almacena *mojibake*: guarda `JosÃ© Bono` donde el nombre real es **José Bono** (bytes
+UTF-8 reinterpretados como Latin-1). Comprobación: `s.encode('latin-1').decode('utf-8') != s`.
+
+**R10 — Un defecto de codificación coherente NO produce un sesgo uniforme.** Si el defecto está en el gold
+*y* en el texto de entrada —como aquí: 20,1 % de las entidades y 87 % de los artículos—, el corpus es
+internamente consistente: **premia al modelo que transcribe literalmente y penaliza al que normaliza la
+ortografía**. Medido, el efecto varía entre **−0.070 y +0.091** de F1 según el modelo. Ver `FINDINGS.md §F48`
+y `LEARNING.md §L39`.
+
+**R11 — Al repararlo, normalizar los DOS lados de la comparación.** Arreglar solo la referencia invierte la
+injusticia en vez de eliminarla. La reparación debe aplicarse al gold **y** a la entidad extraída antes del
+cotejo difuso, de modo que el resultado no dependa de la representación de bytes.
+
+**R12 — Una re-corrida aislada usa el mismo corpus y el mismo evaluador que las demás.** Corregir el corpus
+para un solo modelo lo mide con otra vara — el mismo error que mezclar convenciones de puntuación o regímenes
+de *thinking*.
+
 ## 3. Verificaciones obligatorias antes de aceptar cualquier cifra
 
 1. **Tasa de fallo por modelo:** `parse_method='failed'` y número de `recall=0`.

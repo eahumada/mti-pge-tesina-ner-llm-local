@@ -756,6 +756,8 @@ El experimento de KB RAG (§5.6) aporta una contribución metodológica a la rec
 
 6. **Extensión multiidioma (Fase 5):** Evaluar la robustez del sistema sobre textos en inglés y portugués, considerando el alcance latinoamericano del problema de compliance.
 
+7. **Normalización de codificación del corpus y re-evaluación (Fase 6):** el corpus N=120 almacena los nombres con *mojibake* —`JosÃ© Bono` donde el nombre real es **José Bono**—, defecto presente tanto en las entidades de referencia (20,1 %) como en el texto de entrada (87 % de los artículos), y por tanto **coherente entre ambos**. Esto favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía, con un efecto que varía entre −0.070 y +0.091 de F1 según el modelo (§5.3.5). La línea de trabajo consiste en **normalizar la codificación en ambos lados de la comparación** —reparando la referencia y la extracción antes del cotejo difuso, de modo que el resultado deje de depender de la representación de bytes— y **re-ejecutar el estudio N=120** para obtener valores absolutos libres de esta interacción. No se abordó en este trabajo porque el cotejo se resuelve en tiempo de inferencia y las extracciones por registro no se conservaron, lo que obliga a repetir la inferencia completa.
+
 ---
 
 ## 8. REFERENCIAS BIBLIOGRÁFICAS

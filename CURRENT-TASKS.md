@@ -183,6 +183,17 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.7 🟡 PENDIENTE — Propagar el punto 7 de §7.2 (trabajo futuro: mojibake)
+- **Origen:** decisión del autor del 2026-09-07 (`TODO-INFORME-FINAL.md §15.6`): la normalización de
+  codificación del corpus N=120 **se declara como limitación y pasa a trabajo futuro**; no se re-ejecuta.
+- **Cambio en el `.md` canónico posterior a tu propagación:** se añadió el **punto 7 a §7.2** («Normalización
+  de codificación del corpus y re-evaluación (Fase 6)»). Es **un párrafo**.
+- **Qué hacer:** propagarlo a los tres `.docx` con el procedimiento habitual (sin pandoc) y **re-verificar la
+  extensión**. El cuerpo iba por **21 páginas de 25**, así que hay holgura.
+- **Nada más cambió** en el `.md` desde tu entrega salvo los tres pasajes del análisis de variantes que ya
+  alineé (resumen en inglés, Hallazgo 4 de §5.2 y discusión §6.2) — **conviene comprobar que tus `.docx` ya
+  llevan la lectura nueva**, según indicaste.
+
 ### 2.6 ✅ COMPLETADA — Cierre documental del informe (encargo 2026-09-07)
 - **Cerrada:** 2026-09-07 17:25 por Claude Desktop (Cowork). **Resultado:**
   - **Propagado a los tres `.docx` sin pandoc**, por edición estructural del XML: Tabla 2 (§5.1) reconstruida
@@ -614,3 +625,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 16:35 | Claude Code (equipo principal) | Analizado a fondo el mojibake: **el defecto está también en el texto de entrada** (87 % de artículos) y de forma coherente con el gold → el sesgo **no es uniforme**, premia la transcripción literal y penaliza la normalización (Δ por modelo de −0.070 a +0.091). `FINDINGS §F48`, `LEARNING §L39 y §L40`, nota de verificación bajo el §F46 del remoto, y corrección de la limitación en §5.3.5 del informe (ya no afirma uniformidad). Adenda al encargo de gpt-oss: re-ejecutar con `num_predict=4096` **sin tocar gold ni evaluador**, para que el cambio quede aislado a ese modelo. Decisiones en `TODO §15.5`. Forma corrupta `JosÃ© Bono` → correcta **`José Bono`** |
 | 2026-09-07 17:25 | Claude Desktop | Tarea 2.6 completada: los tres `.docx` sincronizados con el `.md` sin pandoc, §4.1.3/§5.3.5 reinsertadas en el standalone, salvedades declaradas, cuerpo verificado en 21 pp. y versión `_v2` congelada |
 | 2026-09-07 17:40 | Claude Code (equipo principal) | Commiteado el trabajo de Claude Desktop (§2.6, su puente no tiene permiso de escritura en git). **Atendida su observación**: el `.md` conservaba la lectura antigua del análisis de variantes en **tres** sitios —resumen en inglés, Hallazgo 4 de §5.2 y discusión §6.2— y no en uno; los tres alineados con la tabla nueva (+11.12 pp por interacción). Cero ocurrencias restantes de la cifra antigua. `.md` y `.docx` quedan coherentes |
+| 2026-09-07 17:55 | Claude Code (equipo principal) | ✅ Decisión del autor: **el mojibake se declara como limitación y su normalización pasa a TRABAJO FUTURO**; no se re-ejecuta el estudio. Añadido el punto 7 a §7.2 del informe (Fase 6), resueltas §15.4/§15.5 y registrada §15.6. Reglas operativas R9-R12 en `RECOMENDACIONES-EJECUCIONES-FUTURAS.md`. Nueva tarea §2.7 para Claude Desktop: propagar ese único párrafo |
