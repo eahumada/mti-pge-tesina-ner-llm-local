@@ -487,7 +487,7 @@ Sobre el corpus real N=120 descrito en §4.1.3 se ejecutó el mismo protocolo (A
 
 **Interpretación.** El beneficio del KB RAG es **inversamente proporcional a la capacidad del modelo**: aporta de forma estadísticamente significativa en los dos modelos más débiles del estudio, es positivo pero no concluyente en la franja intermedia, y resulta nulo o adverso en los modelos de mayor capacidad (−0.53 pp y −0.18 pp en los dos de 31B), que ya siguen correctamente las instrucciones sin contexto adicional. El caso de `gpt-oss:20b` (−9.65 pp) es distinto y se discute en §6.
 
-**Lectura conjunta con el corpus N=30 (§5.3):** el mejor F1 local sobre N=120 (`gemma4:31b-mlx`: 59.25%) es menor que el de N=30 (`gemma4:31b`: 79.03%), lo esperable dado que los artículos reales de CoNLL-2002 ES son más largos y heterogéneos que los breves (~200 caracteres) del corpus sintético N=30, diseñado para el dominio AML/KYC. Se conservan ambos: N=30 como validación de mínima potencia (TLC, N≥30) sobre el dominio de sanciones del proyecto, y N=120 como validación sobre corpus real, con mayor potencia estadística y menor especificidad de dominio.
+**Lectura conjunta con el corpus N=30 (§5.3):** el mejor F1 local sobre N=120 (`gemma4:31b-mlx`: 59.25%) es menor que el de N=30 (`gemma4:31b-mlx`: 80.57%), lo esperable dado que los artículos reales de CoNLL-2002 ES son más largos y heterogéneos que los breves (~200 caracteres) del corpus sintético N=30, diseñado para el dominio AML/KYC. Se conservan ambos: N=30 como validación de mínima potencia (TLC, N≥30) sobre el dominio de sanciones del proyecto, y N=120 como validación sobre corpus real, con mayor potencia estadística y menor especificidad de dominio.
 
 ### 5.4 Taxonomía de Errores NER
 
