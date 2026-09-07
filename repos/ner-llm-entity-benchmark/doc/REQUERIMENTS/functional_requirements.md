@@ -18,12 +18,13 @@ This document outlines the functional requirements for the Sanctions Entity Extr
 
 ## 3. Evaluation & Matching
 - **FR3.1 Automated Comparison:** The system must programmatically compare LLM-extracted entities against the Ground Truth entities.
-- **FR3.2 Fuzzy String Matching:** The system must utilize fuzzy matching algorithms (e.g., Levenshtein distance, Jaro-Winkler) to account for minor spelling or transliteration variations when scoring matches.
+- **FR3.2 Fuzzy String Matching:** The system must utilize fuzzy string matching to account for minor spelling or transliteration variations when scoring matches. *Implementation (verified against `src/evaluator.py:29-38` and `:87`):* `rapidfuzz.fuzz.ratio`, i.e. the normalized **Indel** similarity × 100 — a Levenshtein variant that admits only insertions and deletions, no substitutions, scored as `100 × (1 − d / (|a| + |b|))`. It operates on **characters, not tokens**: `fuzz.ratio("juan pérez", "pérez juan")` returns **50** (measured with the project venv, rapidfuzz), well under the acceptance threshold, whereas a token-based comparison such as `fuzz.token_sort_ratio` would return 100. Both strings are lower-cased before comparison, and nothing else is normalized (no accent folding, no token reordering). The acceptance threshold is `fuzzy_threshold = 85` (`src/config.py:72`). Jaro-Winkler is **not** used.
 - **FR3.3 Metrics Calculation:** The system must calculate and store the following per model:
   - **Precision:** True Positives / (True Positives + False Positives).
   - **Recall (Exhaustividad):** True Positives / (True Positives + False Negatives).
   - **F1-Score:** Harmonic mean of Precision and Recall.
-  - **Hallucination Rate:** Proportion of extracted entities that are completely invented (not present in the text).
+  - **Hallucination Rate:** Proportion of extracted entities not found in the source text. *Implementation (`src/evaluator.py:152-197`):* an entity counts as hallucinated when it is not a literal substring of the whitespace-normalized, lower-cased text **and** the best `fuzz.ratio` against any sliding window of the text of the same word count stays below **70** — a threshold distinct from the 85 used for ground-truth matching.
+  - *Aggregation (verified against `src/evaluator.py:130-138` and `:361-363`):* Precision, Recall and F1 are computed **per record**, micro-averaged over the three entity types; the per-model figure written to `benchmark_summary.json` is the arithmetic **mean of the per-record values**, not a corpus-level micro F1.
 - **FR3.4 Statistical Validation:** The system must support generating data arrays compatible with statistical testing (ANOVA of one way, Tukey's post-hoc test) to validate the statistical significance of the models' performance differences against the manual baseline.
 
 ## 4. Reporting & Visualization

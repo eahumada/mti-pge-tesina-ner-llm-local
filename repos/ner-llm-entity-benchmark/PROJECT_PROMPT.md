@@ -25,13 +25,13 @@ The objective of this project is to build an automated batch-processing system t
   - The system iterates over the entire dataset in this manner until all batches are processed by all models.
 
 ### 3. Comparison & Evaluation
-- **Matching:** The entities extracted by the LLMs are parsed, normalized, and compared against the original ground-truth entities provided by the OpenSanctions dataset.
+- **Matching:** The entities extracted by the LLMs are parsed, normalized, and compared against the original ground-truth entities provided by the OpenSanctions dataset. *(As implemented, "normalized" means lower-casing both strings before comparison — `src/evaluator.py:87`; no accent folding, token sorting or word reordering is applied.)*
 - **Evaluation Metrics:**
   - **Precision:** The percentage of correctly extracted entities out of all entities extracted by the model.
   - **Recall:** The percentage of correctly extracted entities out of all actual ground-truth entities in the dataset.
   - **F1-Score:** The harmonic mean of precision and recall, providing a balanced measure of the model's accuracy.
 - **Suggested Additional Tools/Metrics:**
-  - **Fuzzy Matching:** Implement algorithms (like Levenshtein distance or Jaro-Winkler via libraries like `RapidFuzz`) to handle minor spelling variations or transliteration differences between the LLM output and the dataset.
+  - **Fuzzy Matching:** Implement fuzzy string comparison via `RapidFuzz` to handle minor spelling variations or transliteration differences between the LLM output and the dataset. *(As implemented: `rapidfuzz.fuzz.ratio` — normalized **Indel** similarity × 100, a Levenshtein variant with insertions and deletions only, `100 × (1 − d / (|a| + |b|))`, computed over **characters, not tokens**, with an acceptance threshold of 85. Jaro-Winkler was not used.)*
   - **Latency Tracking:** Measure the extraction time per record for each model to compare computational efficiency.
   - **Entity Type Accuracy:** Break down the F1-score by entity type (e.g., how well it detects 'Person' vs 'Organization').
 
@@ -59,4 +59,4 @@ The objective of this project is to build an automated batch-processing system t
 - **Pub/Sub System:** `Redis` (con `rq` o `celery`), o `ZeroMQ` para encolamiento local y escalabilidad.
 - **LLM Interface:** `ollama-python`, `langchain`, or direct API calls to local endpoints.
 - **Data Manipulation:** `pandas` for handling the dataset and calculating metrics.
-- **Evaluation Tools:** `scikit-learn` (for metric calculations), `rapidfuzz` (for string matching).
+- **Evaluation Tools:** `scikit-learn` (used only for Cohen's Kappa, `src/statistics.py:12`; Precision/Recall/F1 are computed directly in `src/evaluator.py`, and ANOVA/Tukey come from `scipy.stats` and `statsmodels`), `rapidfuzz` (for string matching).

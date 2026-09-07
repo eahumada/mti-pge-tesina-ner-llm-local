@@ -981,3 +981,28 @@ forma de re-puntuar sobre lo guardado, como sí se pudo con el bug del *scorer*.
 > **Regla operativa.** Antes de declarar que un defecto del corpus introduce un sesgo uniforme, **comprobar si
 > el defecto está también en la entrada**. Un corpus corrupto de forma coherente no penaliza a todos por igual:
 > penaliza a quien lo corrige.
+
+---
+
+### F49. Dos defectos residuales del evaluador, detectados en la auditoría de consistencia
+
+**Registrado:** 2026-09-07 21:00 (UTC−3) · Hallados por auditoría automatizada y **verificados contra el
+código** por el equipo principal. **Ninguno afecta a las cifras publicadas**, pero ambos requieren decisión.
+
+**1. El *recall* por tipo de entidad puede superar 1,0.** En `src/evaluator.py:97` se calcula
+`recall = tp / len(gt_list)`, donde `tp` cuenta las entidades **extraídas** que lograron emparejar, mientras
+que `fn` se deriva de `len(gt_list) - len(matched_gts)`. Si dos entidades extraídas emparejan con la **misma**
+entidad de referencia, `tp` vale 2 sobre una lista de referencia de 1, y el *recall* de ese tipo sale 2,0.
+
+> **Por qué no contamina los resultados.** Las cifras del estudio proceden del bloque `overall`
+> (`evaluator.py:131`), que sí calcula `tp / (tp + fn)` y es inmune al problema. El defecto afecta únicamente
+> al desglose por tipo de entidad, que no se reporta en el informe. Aun así, cualquier análisis futuro que use
+> `metrics.per_type` heredaría el error.
+
+**2. `oov_recall` conserva el valor por defecto 1,0** cuando no hay entidades fuera de vocabulario que medir
+(`evaluator.py:147`), mientras que el resto del *scoring* pasó a 0,0 en la corrección del 2026-09-06. Es un
+residuo de aquel arreglo: la misma convención que se consideró errónea para precisión y exhaustividad —premiar
+la ausencia de datos con la puntuación máxima— sigue vigente en esta métrica.
+
+> **Regla operativa.** Al corregir una convención de puntuación, revisar **todas** las métricas del módulo, no
+> solo las que motivaron el cambio. Una corrección parcial deja el mismo defecto vivo en un rincón.

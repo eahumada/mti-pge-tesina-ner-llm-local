@@ -68,7 +68,7 @@ La lista de modelos se define en `src/config.py` (campo `BenchmarkConfig.models`
 }
 ```
 
-*Feel free to add or remove model identifiers – they must match the names shown by `ollama list`. The configuration above tests the comprehensive list of all local/cloud models required for the baseline comparison. La lista canónica vive en `src/config.py:59` y en AGENTS.md §8.6; `run_benchmark.sh` lleva además su propia lista fija (líneas 25-40) que, al pasarse por `--models`, sobreescribe a `config.models`. Esta lista no coincide una a una con las filas de las tablas de resultados: cada tabla declara abajo su propio `run_id`, corpus, N y conjunto de modelos.*
+*Feel free to add or remove model identifiers – they must match the names shown by `ollama list`. The configuration above tests the comprehensive list of all local/cloud models required for the baseline comparison. La lista canónica vive en `src/config.py:59` y en AGENTS.md §8.6; `run_benchmark.sh` lleva además su propia lista fija (líneas **25-37**, **13 modelos** en el estado actual del script, tras retirar `minimax-m3:cloud` y `nuextract:latest`) que, al pasarse por `--models`, sobreescribe a `config.models`. (corregido 2026-09-07 contra el código: el rango 25-40 y el conteo anterior quedaron obsoletos). El bloque JSON de arriba tampoco reproduce literalmente `src/config.py:59-68` (17 nombres): incluye `gemma4:31b-mlx`, que no está en `config.py`, y omite `gemma4:31b` y `phi3.5` (sin tag). Los valores `batch_size: 3` y `data_file` corresponden a lo que pasa `run_benchmark.sh` por CLI, no a los valores por defecto del dataclass (`batch_size: 5`, `data_file: data/sample_sanctions.json`); `num_workers: 1` no coincide ni con el defecto del código (**2**, `src/config.py:70` y `src/main.py:729`) ni con la corrida de referencia #13, cuyo `run_config.json` registra **9**. Esta lista no coincide una a una con las filas de las tablas de resultados: cada tabla declara abajo su propio `run_id`, corpus, N y conjunto de modelos.*
 
 ## Available Ollama Models (as of this run)
 
@@ -84,9 +84,9 @@ phi3.5:latest                                  61819fb370a3    2.2 GB    3 weeks
 
 ## Running the Benchmark
 
-The repository ships a convenience script. **`./run_benchmark.sh` no lee la configuración de arriba**: encadena tres pasos con listas propias (`run_benchmark.sh:22-47`):
+The repository ships a convenience script. **`./run_benchmark.sh` no lee la configuración de arriba**: encadena tres pasos con listas propias (`run_benchmark.sh:22-44`):
 
-1. Barrido `--rag-study` sobre `data/benchmark_balanced_120.json` con 16 modelos fijos vía `--models` y `--batch-size 3` (el `echo` de la línea 21 dice "15 models"; son 16).
+1. Barrido `--rag-study` sobre `data/benchmark_balanced_120.json` con **13** modelos fijos vía `--models` (líneas 25-37) y `--batch-size 3` (el `echo` de la línea 21 dice "15 models"; son 13 en el script actual).
 2. Análisis de variantes de prompts: `--ablation` sobre `gemma4:latest`, mismo corpus y `--batch-size 3`.
 3. Simulación de flujo productivo: `src/simulate_production.py`.
 
@@ -240,7 +240,7 @@ Injecting vector-retrieved context from local organizational and personal dictio
 | llama3.1:8b_rag_enhanced | 0.7750 | 0.6667 | 1.0000 | 7.50% | 3.85 | 0.25 | 0.00 |
 | llama3.1:8b_rag_strict_prompt | 0.7500 | 0.6333 | 1.0000 | 4.16% | 3.23 | 0.30 | 0.00 |
 
-> ⚠️ **Consistencia aritmética.** El F1 de esta tabla es la media de los F1 por registro (`src/evaluator.py:357-359` promedia f1, precision y recall por separado), no un F1 derivado de la P y la R agregadas. Aun así, como `f1_i ≤ (p_i+r_i)/2` para todo registro, se cumple `mean(F1) ≤ (mean(P)+mean(R))/2`. Las dos filas marcadas ⚠️ violan esa cota: `llama3.2:latest_rag` (cota 0.7646 < 0.8783) y `llama3.1:8b_baseline` (cota 0.7334 < 0.7667). `llama3.1:8b_rag_enhanced` sí es consistente (cota 0.8334 ≥ 0.7750). Estas cifras corresponden a prototipos tempranos sobre el sample de 20 registros (`data/sample_sanctions.json`), cuyo CSV no sobrevive; no se pueden recalcular y quedan pendientes de decisión del autor. La tabla tampoco declara `run_id` ni figura en RUNS_INDEX.md.
+> ⚠️ **Consistencia aritmética.** El F1 de esta tabla es la media de los F1 por registro (`src/evaluator.py:361-363` promedia f1, precision y recall por separado; referencia de línea corregida 2026-09-07 tras el fix de scoring del 2026-09-06, que desplazó el bloque), no un F1 derivado de la P y la R agregadas. Aun así, como `f1_i ≤ (p_i+r_i)/2` para todo registro, se cumple `mean(F1) ≤ (mean(P)+mean(R))/2`. Las dos filas marcadas ⚠️ violan esa cota: `llama3.2:latest_rag` (cota 0.7646 < 0.8783) y `llama3.1:8b_baseline` (cota 0.7334 < 0.7667). `llama3.1:8b_rag_enhanced` sí es consistente (cota 0.8334 ≥ 0.7750). Estas cifras corresponden a prototipos tempranos sobre el sample de 20 registros (`data/sample_sanctions.json`), cuyo CSV no sobrevive; no se pueden recalcular y quedan pendientes de decisión del autor. La tabla tampoco declara `run_id` ni figura en RUNS_INDEX.md.
 
 > ✅ **Resolución (decisión del autor, 2026-09-07).** Las dos filas ⚠️ (`llama3.2:latest_rag` F1=0.8783 y
 > `llama3.1:8b_baseline` F1=0.7667) se declaran **NO VERIFICABLES** y no deben citarse como resultados

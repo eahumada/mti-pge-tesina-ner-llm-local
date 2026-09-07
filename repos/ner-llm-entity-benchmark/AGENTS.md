@@ -20,7 +20,7 @@ This project is an automated batch-processing system designed to evaluate the Na
 - **JSON Fallbacks:** Always implement regex fallbacks and automatic retries for LLM outputs, as JSON hallucination is an identified critical risk.
 
 ## 3. Workflow
-Always ensure that modifications align with the metrics targets: F1-Score > 85% and Hallucination Rate < 5%. Verify changes against the existing functional and non-functional requirements.
+Always ensure that modifications align with the metrics targets: F1-Score **≥ 85 %** and Hallucination Rate **≤ 5 %** — the acceptance check in `src/main.py:203-209` evaluates `best_f1 >= 0.85` and flags a warning only when `hallucination_rate > 0.05`. Verify changes against the existing functional and non-functional requirements.
 
 ## 4. Key Implementation Findings
 Below is a summary of findings and updates developed during the final integration phase:
@@ -88,7 +88,8 @@ src/config.py  →  BenchmarkConfig.models   (dataclass field, line ~59: models:
 > `BenchmarkConfig.__post_init__ → self.models = [...]`. `__post_init__` does **not** define the
 > model list: it only derives `results_dir` / `checkpoint_file` and calls `assert_not_results_root()`.
 >
-> ⚠️ **"No other file needs to be changed" is false.** `run_benchmark.sh` (lines 25-40) hardcodes its
+> ⚠️ **"No other file needs to be changed" is false.** `run_benchmark.sh` (lines **25-37**, 13 names in
+> the current script; range corrected 2026-09-07) hardcodes its
 > own model list and passes it via `--models`, which **overrides** `config.models`
 > (`src/main.py`: `if args.models: config.models = args.models`). Keep both in sync, or the sweep will
 > silently ignore your edit to `src/config.py`. The pipeline auto-routes each name to its provider.
@@ -103,9 +104,9 @@ src/config.py  →  BenchmarkConfig.models   (dataclass field, line ~59: models:
 | **Cloud (Ollama)** | name **contains** `-cloud` OR **contains** `minimax` (substring, any position) | ❌ No (served remotely) | ❌ No (skip VRAM ops) | ❌ **No** — served remotely, nothing to pull |
 | **NuExtract** | `nuextract`, `nuextract:*` | ✅ Yes | ✅ Yes | ✅ Yes |
 | **Qwen3 (thinking)** | `qwen3:*` | ✅ Yes | ✅ Yes | ✅ Yes |
-| **Gemini (Vertex/AI Studio)** | `gemini-*`, `vertexai:*` → `VertexAIProvider` | ❌ No (remote API) | ❌ No | ❌ No (needs `GEMINI_API_KEY`) |
-| **OpenAI** | `gpt-*`, `openai:*` → `OpenAIProvider` | ❌ No (remote API) | ❌ No | ❌ No (needs `OPENAI_API_KEY`) |
-| **Anthropic** | `claude-*`, `anthropic:*` → `AnthropicProvider` | ❌ No (remote API) | ❌ No | ❌ No (needs `ANTHROPIC_API_KEY`) |
+| **Gemini (Vertex/AI Studio)** | `gemini-*` → `VertexAIProvider` (there is no `vertexai:*` rule) | ❌ No (remote API) | ❌ No | ❌ No (needs `GEMINI_API_KEY`) |
+| **OpenAI** | `gpt-*` **without** an Ollama tag (no `:` in the name) → `OpenAIProvider`. `gpt-oss:20b` carries a tag and is therefore **local Ollama**, not OpenAI. There is no `openai:*` rule. | ❌ No (remote API) | ❌ No | ❌ No (needs `OPENAI_API_KEY`) |
+| **Anthropic** | `claude-*` → `AnthropicProvider` (there is no `anthropic:*` rule) | ❌ No (remote API) | ❌ No | ❌ No (needs `ANTHROPIC_API_KEY`) |
 | **GLiNER (encoder NER)** | `gliner:*`, `gliner_*`, `urchade/gliner*` → `GlinerProvider` | ✅ Yes (HF weights) | ✅ Yes | ❌ No (`pip install gliner`) |
 
 > ⚠️ **Corrected 2026-09-03 (two fixes).** (1) The cloud pattern is **substring containment**, not
@@ -113,7 +114,7 @@ src/config.py  →  BenchmarkConfig.models   (dataclass field, line ~59: models:
 > `key = model_name.lower(); return "-cloud" in key or "minimax" in key`. (2) The row previously
 > claimed cloud models need `ollama pull`, contradicting §8.3 step 1 — they do **not**.
 > The last four rows were missing entirely: without them `gemini-*` / `gpt-*` / `claude-*` /
-> `gliner:*` fall into "Local" here, while `src/providers/factory.py:45-49` routes them elsewhere.
+> `gliner:*` fall into "Local" here, while the routing table `src/providers/factory.py:44-53` routes them elsewhere (line range corrected 2026-09-07).
 
 The routing logic lives in `src/llm_runner.py` and `src/providers/factory.py`:
 - `is_cloud_model(name)` → detects cloud models
@@ -233,7 +234,9 @@ Expected output: `Entities:` dict with `Persons`, `Organizations`, `Locations` a
 Before quoting or reusing any run command, check it against the real argparse of `src/main.py`.
 The parser accepts exactly: `--models`, `--batch-size`, `--data-file`, `--resume`, `--results-dir`,
 `--generate-sample-data`, `--temperature`, `--max-tokens`, `--seed`, `--system-prompt-file`,
-`--compare-annotators`, `--ablation`, `--rag-study`, `--rag-mode`, `--num-workers`. There is **no**
+`--compare-annotators`, `--ablation`, `--rag-study`, `--rag-mode`, `--num-workers`, `--max-workers`
+(default `None`) and `--request-delay` (default `0.0`) — the last two were added later and were missing
+from this list until 2026-09-07 (`src/main.py:730-735`). There is **no**
 `--run-config` flag, and `results/<run_dir>/run_config.json` is an **output** artefact, never an input.
 
 | Trap | What actually happens |
@@ -309,11 +312,13 @@ get_provider(model_name)          ← Facade (public API)
       ▼
 LLMProviderFactory.create()       ← Factory (routing logic)
       │
-      ├── "gpt-*"      → OpenAIProvider
+      ├── "gpt-*" and no ":" → OpenAIProvider   ("gpt-oss:20b" has a tag → falls through to Ollama)
       ├── "claude-*"   → AnthropicProvider
       ├── "gemini-*"   → VertexAIProvider
-      ├── "gliner:*"   → GlinerProvider    ← zero-shot encoder NER
+      ├── "gliner:*" / "gliner_*" / "gliner" / "urchade/gliner" (substring) → GlinerProvider  ← encoder NER
       └── everything else → OllamaProvider   ← default
+
+(The model name is lower-cased before the prefix tests: `src/providers/factory.py:105`.)
 ```
 
 ### Supported providers
@@ -321,9 +326,9 @@ LLMProviderFactory.create()       ← Factory (routing logic)
 | Provider | Model patterns | Needs env var | Install |
 |----------|---------------|---------------|---------|
 | **Ollama** | any (default) | none | `ollama` (already installed) |
-| **OpenAI** | `gpt-*`, `openai:*` | `OPENAI_API_KEY` | `pip install openai` |
-| **Anthropic** | `claude-*`, `anthropic:*` | `ANTHROPIC_API_KEY` | `pip install anthropic` |
-| **Vertex AI / Gemini** | `gemini-*`, `vertexai:*` | `GEMINI_API_KEY` or `GOOGLE_API_KEY` | `pip install google-generativeai` |
+| **OpenAI** | `gpt-*` with no `:` tag (`gpt-oss:20b` → Ollama) | `OPENAI_API_KEY` | `pip install openai` |
+| **Anthropic** | `claude-*` | `ANTHROPIC_API_KEY` | `pip install anthropic` |
+| **Vertex AI / Gemini** | `gemini-*` | `GEMINI_API_KEY` or `GOOGLE_API_KEY` | `pip install google-generativeai` |
 | **GLiNER** | `gliner:*`, `gliner_*`, `urchade/gliner*` | none | `pip install gliner` (already installed) |
 
 ### Using the Facade
