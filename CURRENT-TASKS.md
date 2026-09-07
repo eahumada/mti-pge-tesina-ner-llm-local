@@ -199,6 +199,25 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.16 🔴 VIGENTE — Propagar la corrección de métricas a Word y PDF
+- **Encargo:** [`PROMPT-CLAUDE-DESKTOP-PROPAGACION-20260907.md`](./PROMPT-CLAUDE-DESKTOP-PROPAGACION-20260907.md)
+- **Qué se corrigió:** el informe describía el emparejamiento como «similitud de tokens». **Es falso.** El
+  evaluador usa `rapidfuzz.fuzz.ratio` ≡ `Indel.normalized_similarity × 100`: distancia de Indel —variante de
+  Levenshtein sin sustituciones— normalizada como `100 × (1 − d / (|a| + |b|))`, sobre **caracteres** y en
+  minúsculas. Si fuera por tokens, «Juan Pérez» frente a «Pérez Juan» daría 90; da **40**.
+- **Consecuencia, ya declarada en el texto:** la métrica es sensible al orden y penaliza omisiones
+  («Banco Santander» frente a «Santander» da 75, bajo el umbral 85), así que **sesga a la baja**. El desempeño
+  reportado es conservador.
+- **Secciones tocadas:** §3.3 (descripción con fórmula y límites) y §4.4 (mención breve).
+- ⏳ **Puede haber más correcciones de la misma clase.** Hay una auditoría en curso contrastando contra el
+  código los enunciados sobre umbrales, controlador AIMD, similitud coseno del RAG, tamaños de modelo y
+  cifras estadísticas, más dos subagentes revisando `BENCHMARKS.md`, `FINDINGS.md` y documentos afines.
+  **Conviene esperar a que cierren para no propagar dos veces.**
+- **Mantener las 25 páginas**, verificadas **sobre el PDF**. Si desborda, compactar a nivel de **estilo** como
+  en la `_v5`; **no recortar texto**. Si aun así no cabe, avisar: los anexos no computan.
+- **Al terminar:** páginas medidas sobre el PDF, versión congelada con los SHA-256 **del `.docx` y del `.pdf`**,
+  y copias de ambos en la raíz.
+
 ### 2.12 ✅ COMPLETADA — Propagar a los `.docx` y congelar `_v4` · 🎓 VERSIÓN DE ENTREGA
 - **Cerrada:** 2026-09-07 22:25 por Claude Desktop. Cubre §2.7, §2.10 y §2.11. Reconstrucción desde el `.md`
   con el renderizador propio, **sin pandoc**; el `.md` no se tocó.
@@ -1040,3 +1059,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 22:45 | Claude Desktop | §2.13: Anexo B corregido (prompts sin saltos, 7 pt), espacios en blanco reducidos, **25 páginas exactas** sin perder contenido, `_v5` congelada como entrega |
 | 2026-09-07 23:25 | Claude Desktop | §2.14: **PDF exportado** con LibreOffice — **25 páginas exactas**, formato íntegro. La exportación destapó tres defectos del `.docx` (leyendas duplicadas en los anexos D/E, colofón duplicado en el Anexo D y colofón varado con fecha «Julio 2026»); corregidos primero en el `.md` y propagados. `_v6` congelada como entrega |
 | 2026-09-08 00:05 | Claude Desktop | §2.15: **resumen y abstract fundidos** —el abstract estaba congelado desde julio y omitía el hallazgo central del RAG—. Sincronizados en 199 y 183 palabras, estilo `abstract` restituido, espaciado del encabezado compactado, ambos en la página inicial. `_v7` congelada |
+| 2026-09-07 20:35 | Claude Code (equipo principal) | 🔴 §2.16: corregida la descripción de la métrica de emparejamiento —era «similitud de tokens», es **distancia de Indel normalizada** (`fuzz.ratio`)— y declarados sus dos límites, que sesgan a la baja. Encargo de propagación a **Word y PDF** en `PROMPT-CLAUDE-DESKTOP-PROPAGACION-20260907.md`. Auditoría y dos subagentes en curso sobre el resto de enunciados técnicos. ⚠️ **Atribución:** mi commit `bdb3337` arrastró las versiones `_v6` y `_v7` de Claude Desktop bajo un mensaje que solo hablaba de la métrica; no se perdió nada, pero el historial las atribuye mal |

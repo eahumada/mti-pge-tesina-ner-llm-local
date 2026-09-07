@@ -1,0 +1,56 @@
+# Encargo para Claude Desktop — propagar la corrección de métricas a Word y PDF
+
+**Fecha:** 2026-09-07 · **De:** Claude Code (equipo principal)
+
+## Qué se corrigió y por qué importa
+
+El informe describía el emparejamiento entre la entidad extraída y la de referencia como **«similitud de
+tokens»**. Es incorrecto, y afecta a cómo un lector técnico interpreta todos los resultados.
+
+Verificado contra `repos/ner-llm-entity-benchmark/src/evaluator.py` y comprobado empíricamente: el evaluador usa
+`rapidfuzz.fuzz.ratio`, que coincide **exactamente** con `Indel.normalized_similarity × 100`. La distancia de
+Indel es una variante de Levenshtein que **solo admite inserciones y supresiones**, sin sustituciones, y se
+normaliza como `100 × (1 − d / (|a| + |b|))`. Opera sobre **caracteres, no sobre tokens**, y ambas cadenas se
+pasan a minúsculas antes de comparar.
+
+La diferencia no es terminológica. Si fuera por tokens, «Juan Pérez» y «Pérez Juan» darían 90 y casarían; con
+`ratio` dan **40** y no casan. Y «Banco Santander» frente a «Santander» da **75**, por debajo del umbral de 85,
+así que una extracción parcialmente correcta cuenta como error completo. Ambos efectos empujan las cifras **a la
+baja**, nunca al alza: el desempeño reportado es conservador, y eso ahora se dice explícitamente en el texto.
+
+Las secciones afectadas son **§3.3** (módulo de evaluación), donde está la descripción completa con la fórmula y
+los dos límites de la métrica, y **§4.4** (métricas), con la mención breve. Puede que haya más correcciones de
+la misma clase en camino: hay una auditoría en curso que contrasta contra el código todos los enunciados sobre
+umbrales, parámetros del controlador AIMD, similitud coseno del módulo RAG, tamaños de modelo y cifras
+estadísticas. Si aparecen, te las envío antes de que propagues.
+
+## Qué hay que hacer
+
+Propagar los cambios del Markdown canónico a **los tres `.docx` y al PDF**, y congelar una versión nueva. El
+PDF es ahora parte de la entrega, así que la verificación debe hacerse **sobre el PDF**, que es donde se ve la
+paginación real.
+
+**Mantén las 25 páginas.** La `_v7` las cumple, y la corrección de §3.3 añade unas ocho líneas. Si el documento
+se desborda, compacta a nivel de **estilo** —espaciados, interlineado—, como ya hiciste con acierto en la `_v5`,
+y **no recortes texto**. Si aun así no cabe, avísame antes de suprimir nada: los anexos no computan para el
+límite y disponen de sus propias 25 páginas, de modo que casi siempre hay sitio donde mover en lugar de quitar.
+
+## Lo que no cambia
+
+Sin pandoc. Corregir **siempre primero el `.md`**. Nada de arte ASCII: esquemas como tabla de Word y gráficos
+como imagen real. **Anexo G y Anexo H íntegros.** Nueve capítulos y ocho anexos de la A a la H. Citas IEEE sin
+crear ni eliminar entradas. Resumen de 200 palabras como máximo e introducción de 3 páginas como máximo.
+
+## Al terminar
+
+Declara el resultado en `CURRENT-TASKS.md` §2 con el **conteo de páginas medido sobre el PDF**, congela la
+versión en `doc/versions/informe_final/` registrando en `VERSIONES.md` los SHA-256 **del `.docx` y del `.pdf`**,
+y deja las copias de ambos en la raíz del proyecto.
+
+---
+
+## Nota de atribución
+
+Mi commit `bdb3337` arrastró, por un `git add -A` demasiado amplio, tus versiones **`_v6` y `_v7`** —las
+primeras que incluyen PDF— bajo un mensaje que solo hablaba de la corrección de la métrica. No se perdió nada,
+pero el historial atribuye mal ese trabajo. Queda constancia aquí y en el registro de `CURRENT-TASKS`.
