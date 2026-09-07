@@ -40,6 +40,21 @@ Para **cada tarea** que ejecutes:
   los artículos de N=120 son mucho más largos y la máquina pagina.
 - **Qué se espera del remoto:** la tarea de prioridad 3 del encargo es exactamente esta corrida.
 
+### 1.0.bis ✅ COMPLETADA — Unificar convención de scoring y recalcular ANOVA (2026-09-07 11:45→12:05)
+- **Autorizado por el autor:** «hacer pull y realizar todo lo recomendado».
+- **Archivos:** `results/benchmark_balanced_120_*` (re-puntaje), `CORRECCION-B1-SUMMARIES-20260907.md` (nuevo),
+  `results/ANALISIS_CONJUNTO_*` (salida del ANOVA). **No toca** ningún fichero del equipo remoto.
+- **Pasos:** (1) re-puntuar las 3 corridas legacy con `tools/rescore_saved.py` (deja `.bak_prescore`);
+  (2) avisar al remoto de que B1 estaba invertido y de que los `benchmark_summary.json` /
+  `statistical_report.md` de las 8 corridas son anteriores al re-puntaje; (3) ANOVA conjunto con
+  `src/merge_and_analyze.py` sobre los CSV (única fuente válida).
+- **Resultado:** legacy re-puntuadas (backups `.bak_prescore`). Barrido global: **8 927 filas, 0 violaciones
+  `F1 ≤ (P+R)/2`, 0 degeneradas, 0 filas perdidas.** ANOVA conjunto en `results/ANALISIS_CONJUNTO_20260907/`:
+  **14 modelos × 2 modos = 28 grupos, 3 360 filas, F = 36.3696, p = 1.4321e-164**.
+- **Aviso publicado:** `results/AVISO-SUMMARIES-OBSOLETOS.md` — el CSV es la única fuente válida; los
+  `summary`/`statistical_report.md` por corrida y el campo `f1` de `detailed_results.json` son pre-fix.
+- **Enviado al remoto:** `CORRECCION-B1-SUMMARIES-20260907.md` (B1 invertido + summaries obsoletos).
+
 ### 1.1 🔒 CERRADA — Benchmark N=120 (7 modelos locales)
 > **Cerrada por decisión del autor (2026-09-06):** todo lo pendiente pasa al equipo remoto para no duplicar
 > esfuerzo. La máquina local queda libre. Sus grupos completos y válidos (`mistral-nemo`) siguen siendo
@@ -424,3 +439,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-06 18:25 | Equipo Remoto 48 GB (Claude Code) | nemotron 7 vacíos RESUELTOS: no era longitud/thinking/concurrencia/seed/framing sino artefacto del contexto batch (SystemMonitor). Re-extraídos vía OllamaProvider (params idénticos) con `tools/patch_nemotron_failed.py`, puntuados y parcheados en el CSV (backup .bak_prepatch). nemotron baseline 0.2150→0.2259, **0 failed en todas las corridas**. `data/nemotron_failed_subset.json` creado |
 | 2026-09-06 18:35 | Equipo Remoto 48 GB (Claude Code) | Reporte de decisiones de redacción pendientes del autor en `remote_48g/DECISIONES-PENDIENTES-AUTOR.md`: A) sustituciones con dato limpio (Tabla 2 gemma4:31b 0.6912, variantes de prompt fs-es 0.7444, cloud 0.6238/0.6185); B) criterio/fuente (F1 legacy imposibles, cita KPMG, hardware §2.4, eficiencia §5.5). Ejecución 100% cerrada |
 | 2026-09-07 00:15 | Equipo Remoto 48 GB (Claude Code) | Investigación B1-B4 (workflow 4 agentes, interno+web) en `remote_48g/INVESTIGACION-B1-B4.md`. B1: 2 F1 imposibles no recuperables (marcar/retirar; llama3.1:8b real N=120 0.4959/0.5491). B2: cifras RegTech no son KPMG sino Verified Market Research (15.68→87.17 mil M, CAGR 23.92%). B3: 31B (~24.7 GB) IMPOSIBLE en 16 GB (techo Metal ~75%=12 GB); 48 GB necesario y confirmado. B4: tabla §5.5 no reproducible; CSV canónico gemma4:31b-mlx=22.80/24607. Todo requiere decisión del autor salvo B3 |
+| 2026-09-07 12:05 | Claude Code (equipo principal) | Convención de scoring UNIFICADA: re-puntuadas las 3 corridas legacy (199 filas degeneradas) con `tools/rescore_saved.py`. Barrido global: 8 927 filas, 0 violaciones, 0 degeneradas, 0 perdidas. **ANOVA conjunto** `results/ANALISIS_CONJUNTO_20260907/`: 14 modelos × 2 modos, F=36.3696, p=1.4321e-164. Publicado `results/AVISO-SUMMARIES-OBSOLETOS.md`. Corrección al remoto: B1 invertido (llama3.1:8b es 0.4876/0.5075, no 0.4959/0.5491) en `CORRECCION-B1-SUMMARIES-20260907.md` |

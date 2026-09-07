@@ -1,0 +1,365 @@
+{
+  "corpus": "data/benchmark_balanced_120.json",
+  "expected_n_per_group": 120,
+  "num_sources": 7,
+  "sources": [
+    {
+      "label": "01_qwen3_nothink",
+      "csv_path": "/private/tmp/claude-501/-Users-eahumada-Documents-Personal-MTI-mti-pge-tesina-ner-llm-local/87e8505b-1ba9-4f7a-8204-01d63aa41522/scratchpad/anova_stage/01_qwen3_nothink/benchmark_results.csv",
+      "rows": 240,
+      "models": [
+        "qwen3:8b_baseline",
+        "qwen3:8b_kb_rag"
+      ],
+      "data_file": "data/benchmark_balanced_120.json"
+    },
+    {
+      "label": "02_gemma4_12b_mlx",
+      "csv_path": "/private/tmp/claude-501/-Users-eahumada-Documents-Personal-MTI-mti-pge-tesina-ner-llm-local/87e8505b-1ba9-4f7a-8204-01d63aa41522/scratchpad/anova_stage/02_gemma4_12b_mlx/benchmark_results.csv",
+      "rows": 240,
+      "models": [
+        "gemma4:12b-mlx_baseline",
+        "gemma4:12b-mlx_kb_rag"
+      ],
+      "data_file": "data/benchmark_balanced_120.json"
+    },
+    {
+      "label": "03_nemotron_rerun",
+      "csv_path": "/private/tmp/claude-501/-Users-eahumada-Documents-Personal-MTI-mti-pge-tesina-ner-llm-local/87e8505b-1ba9-4f7a-8204-01d63aa41522/scratchpad/anova_stage/03_nemotron_rerun/benchmark_results.csv",
+      "rows": 240,
+      "models": [
+        "nemotron-mini:4b_baseline",
+        "nemotron-mini:4b_kb_rag"
+      ],
+      "data_file": "data/benchmark_balanced_120.json"
+    },
+    {
+      "label": "04_cloud",
+      "csv_path": "/private/tmp/claude-501/-Users-eahumada-Documents-Personal-MTI-mti-pge-tesina-ner-llm-local/87e8505b-1ba9-4f7a-8204-01d63aa41522/scratchpad/anova_stage/04_cloud/benchmark_results.csv",
+      "rows": 240,
+      "models": [
+        "gemma4:31b-cloud_baseline",
+        "gemma4:31b-cloud_kb_rag"
+      ],
+      "data_file": "data/benchmark_balanced_120.json"
+    },
+    {
+      "label": "05_excluidos",
+      "csv_path": "/private/tmp/claude-501/-Users-eahumada-Documents-Personal-MTI-mti-pge-tesina-ner-llm-local/87e8505b-1ba9-4f7a-8204-01d63aa41522/scratchpad/anova_stage/05_excluidos/benchmark_results.csv",
+      "rows": 480,
+      "models": [
+        "sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline",
+        "sonct988/gemma4-26b-a4b-it-q4km-256k:latest_kb_rag",
+        "gpt-oss:20b_baseline",
+        "gpt-oss:20b_kb_rag"
+      ],
+      "data_file": "data/benchmark_balanced_120.json"
+    },
+    {
+      "label": "06_P3",
+      "csv_path": "/private/tmp/claude-501/-Users-eahumada-Documents-Personal-MTI-mti-pge-tesina-ner-llm-local/87e8505b-1ba9-4f7a-8204-01d63aa41522/scratchpad/anova_stage/06_P3/benchmark_results.csv",
+      "rows": 1440,
+      "models": [
+        "gemma4:12b-mlx_baseline",
+        "gemma4:12b-mlx_kb_rag",
+        "qwen3:8b_baseline",
+        "qwen3:8b_kb_rag",
+        "mistral-nemo:latest_baseline",
+        "mistral-nemo:latest_kb_rag",
+        "llama3.1:8b_baseline",
+        "llama3.1:8b_kb_rag",
+        "nemotron-mini:4b_baseline",
+        "nemotron-mini:4b_kb_rag",
+        "deepseek-r1:1.5b_baseline",
+        "deepseek-r1:1.5b_kb_rag"
+      ],
+      "data_file": "data/benchmark_balanced_120.json"
+    },
+    {
+      "label": "07_legacy_kbrag",
+      "csv_path": "/private/tmp/claude-501/-Users-eahumada-Documents-Personal-MTI-mti-pge-tesina-ner-llm-local/87e8505b-1ba9-4f7a-8204-01d63aa41522/scratchpad/anova_stage/07_legacy_kbrag/benchmark_results.csv",
+      "rows": 1200,
+      "models": [
+        "llama3.2:latest_baseline",
+        "llama3.2:latest_kb_rag",
+        "gemma4:latest_baseline",
+        "gemma4:latest_kb_rag",
+        "gemma4:31b-mlx_baseline",
+        "gemma4:31b-mlx_kb_rag",
+        "qwen2.5:14b_baseline",
+        "qwen2.5:14b_kb_rag",
+        "gemma:latest_baseline",
+        "gemma:latest_kb_rag"
+      ],
+      "data_file": "data/benchmark_balanced_120.json"
+    }
+  ],
+  "merged_rows": 3360,
+  "merged_groups": [
+    "deepseek-r1:1.5b_baseline",
+    "deepseek-r1:1.5b_kb_rag",
+    "gemma4:12b-mlx_baseline",
+    "gemma4:12b-mlx_kb_rag",
+    "gemma4:31b-cloud_baseline",
+    "gemma4:31b-cloud_kb_rag",
+    "gemma4:31b-mlx_baseline",
+    "gemma4:31b-mlx_kb_rag",
+    "gemma4:latest_baseline",
+    "gemma4:latest_kb_rag",
+    "gemma:latest_baseline",
+    "gemma:latest_kb_rag",
+    "gpt-oss:20b_baseline",
+    "gpt-oss:20b_kb_rag",
+    "llama3.1:8b_baseline",
+    "llama3.1:8b_kb_rag",
+    "llama3.2:latest_baseline",
+    "llama3.2:latest_kb_rag",
+    "mistral-nemo:latest_baseline",
+    "mistral-nemo:latest_kb_rag",
+    "nemotron-mini:4b_baseline",
+    "nemotron-mini:4b_kb_rag",
+    "qwen2.5:14b_baseline",
+    "qwen2.5:14b_kb_rag",
+    "qwen3:8b_baseline",
+    "qwen3:8b_kb_rag",
+    "sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline",
+    "sonct988/gemma4-26b-a4b-it-q4km-256k:latest_kb_rag"
+  ],
+  "integrity": [
+    {
+      "model": "qwen3:8b_baseline",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "qwen3:8b_kb_rag",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "gemma4:12b-mlx_baseline",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "gemma4:12b-mlx_kb_rag",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "nemotron-mini:4b_baseline",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "nemotron-mini:4b_kb_rag",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "gemma4:31b-cloud_baseline",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "gemma4:31b-cloud_kb_rag",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "sonct988/gemma4-26b-a4b-it-q4km-256k:latest_baseline",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "sonct988/gemma4-26b-a4b-it-q4km-256k:latest_kb_rag",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "gpt-oss:20b_baseline",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "gpt-oss:20b_kb_rag",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "mistral-nemo:latest_baseline",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "mistral-nemo:latest_kb_rag",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "llama3.1:8b_baseline",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "llama3.1:8b_kb_rag",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "deepseek-r1:1.5b_baseline",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "deepseek-r1:1.5b_kb_rag",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "llama3.2:latest_baseline",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "llama3.2:latest_kb_rag",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "gemma4:latest_baseline",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "gemma4:latest_kb_rag",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "gemma4:31b-mlx_baseline",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "gemma4:31b-mlx_kb_rag",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "qwen2.5:14b_baseline",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "qwen2.5:14b_kb_rag",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "gemma:latest_baseline",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "gemma:latest_kb_rag",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    }
+  ],
+  "duplicate_notes": [
+    "DUPLICADO: 'gemma4:12b-mlx_baseline' aparece en '02_gemma4_12b_mlx' y en '06_P3'. Se conservan las filas de '02_gemma4_12b_mlx' (--on-duplicate=first).",
+    "DUPLICADO: 'gemma4:12b-mlx_kb_rag' aparece en '02_gemma4_12b_mlx' y en '06_P3'. Se conservan las filas de '02_gemma4_12b_mlx' (--on-duplicate=first).",
+    "DUPLICADO: 'qwen3:8b_baseline' aparece en '01_qwen3_nothink' y en '06_P3'. Se conservan las filas de '01_qwen3_nothink' (--on-duplicate=first).",
+    "DUPLICADO: 'qwen3:8b_kb_rag' aparece en '01_qwen3_nothink' y en '06_P3'. Se conservan las filas de '01_qwen3_nothink' (--on-duplicate=first).",
+    "DUPLICADO: 'nemotron-mini:4b_baseline' aparece en '03_nemotron_rerun' y en '06_P3'. Se conservan las filas de '03_nemotron_rerun' (--on-duplicate=first).",
+    "DUPLICADO: 'nemotron-mini:4b_kb_rag' aparece en '03_nemotron_rerun' y en '06_P3'. Se conservan las filas de '03_nemotron_rerun' (--on-duplicate=first)."
+  ],
+  "corpus_problems": [],
+  "integrity_problems": [],
+  "on_duplicate_policy": "first"
+}
