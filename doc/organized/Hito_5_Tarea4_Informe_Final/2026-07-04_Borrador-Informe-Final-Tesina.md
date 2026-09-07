@@ -26,7 +26,7 @@
 
 Las instituciones financieras que operan en el marco de regulaciones AML (Anti-Money Laundering) y KYC (Know Your Customer) enfrentan el desafío de monitorear grandes volúmenes de noticias no estructuradas en busca de entidades de riesgo (personas, organizaciones). Este proceso, ejecutado manualmente, resulta costoso, lento e incapaz de escalar, mientras que el uso de APIs en la nube expone datos financieros sensibles a terceros, vulnerando la soberanía de datos. Este trabajo diseña, implementa y evalúa empíricamente un sistema soberano de extracción de Entidades Nombradas (NER) basado en Modelos de Lenguaje Grande (LLM) de código abierto (familias Gemma, Llama, DeepSeek) ejecutados 100% localmente mediante Ollama en hardware Apple Silicon M4.
 
-El sistema incorpora una arquitectura de procesamiento pub/sub multithreading con control adaptativo de concurrencia (AIMD) y una capa Factory/Facade que unifica cuatro proveedores de modelos. La validación experimental se realizó sobre el dataset real de sanciones financieras Kleptotrace/CoNLL-2002 (N=15 artículos con anotación experta) y un corpus estadísticamente significativo de 30 artículos breves (N=30). La análisis comparativo de prompts demuestra que la localización lingüística al español produce una mejora de +7.4 puntos de F1 sobre el baseline zero-shot en inglés, y que el mejor modelo evaluado (gemma4:31b) alcanza un F1-Score de 79.03% con una tasa de alucinaciones del 0.0% sobre el corpus N=30. El sistema reduce los costos operativos de revisión manual en un 60–80% y garantiza privacidad total de datos.
+El sistema incorpora una arquitectura de procesamiento pub/sub multithreading con control adaptativo de concurrencia (AIMD) y una capa Factory/Facade que unifica cuatro proveedores de modelos. La validación experimental se realizó sobre el dataset real de sanciones financieras Kleptotrace/CoNLL-2002 (N=15 artículos con anotación experta) y un corpus estadísticamente significativo de 30 artículos breves (N=30). El análisis de variantes de prompts demuestra que combinar localización al español con ejemplos *few-shot* produce una mejora de +11.1 puntos de F1 sobre el baseline zero-shot en inglés, y que el mejor modelo evaluado (gemma4:31b) alcanza un F1-Score de 79.03% con una tasa de alucinaciones del 0.0% sobre el corpus N=30. El sistema reduce los costos operativos de revisión manual en un 60–80% y garantiza privacidad total de datos.
 
 **Palabras clave:** Reconocimiento de Entidades Nombradas (NER), Modelos de Lenguaje Grande (LLM), Cumplimiento Normativo (AML/KYC), Soberanía de Datos, Prompt Engineering.
 
@@ -87,7 +87,7 @@ Los enfoques existentes presentan limitaciones críticas:
 
 **Objetivos Específicos:**
 1. Diseñar e implementar una arquitectura pub/sub multithreading con control adaptativo de concurrencia para la ejecución segura de LLMs de gran escala en hardware Apple Silicon.
-2. Evaluar y comparar el desempeño de 12 modelos de lenguaje de código abierto generativos (familias Gemma, Llama, DeepSeek, Qwen, Mistral, NuExtract) en la tarea de NER sobre corpus de sanciones financieras reales en español.
+2. Evaluar y comparar el desempeño de modelos de lenguaje de código abierto generativos (familias Gemma, Llama, DeepSeek, Qwen, Mistral, GPT-OSS, Nemotron) en la tarea de NER sobre corpus de sanciones financieras reales en español: **12 modelos** en el benchmark exploratorio N=15 (§5.1) y **13 modelos** en el estudio principal N=120 con KB RAG (§5.3.5).
 3. Ejecutar una comparación sistemática de cuatro configuraciones de prompt (zero-shot/few-shot × inglés/español) —un diseño factorial 2×2, que la literatura anglosajona de aprendizaje automático denomina *ablation study*— para cuantificar el impacto de la localización lingüística y el aprendizaje en contexto.
 4. Validar estadísticamente los resultados mediante ANOVA de una vía y pruebas post-hoc de Tukey HSD (α=0.05) sobre un corpus estadísticamente significativo (N≥30).
 5. Demostrar una reducción de costos operativos del 60–80% respecto a la revisión manual, manteniendo una tasa de alucinaciones inferior al 5%.
@@ -136,7 +136,7 @@ La Tabla 1 posiciona este trabajo respecto a investigaciones recientes en NER pa
 | Chang et al. [9] | Docs bancarios | GPT-4 + RAG | 83% | ❌ Cloud | Inglés |
 | **Este trabajo** | **Kleptotrace/CoNLL-2002 (AML), corpus sintético N=30** | **gemma4:31b local** | **79%** | **✅ 100% Local** | **Español** |
 
-El aporte original de este trabajo reside en: (1) evaluación comparativa de 12 modelos sobre corpus real de sanciones en español; (2) análisis comparativo de prompts entre idiomas (ES vs. EN); (3) sistema soberano reproducible sobre hardware comercial; y (4) validación estadística formal (ANOVA, Tukey HSD) sobre corpus N≥30.
+El aporte original de este trabajo reside en: (1) evaluación comparativa de 13 modelos sobre corpus real de sanciones en español; (2) análisis de variantes de prompts entre idiomas (ES vs. EN); (3) sistema soberano reproducible sobre hardware comercial; y (4) validación estadística formal (ANOVA, Tukey HSD) sobre corpus N≥30.
 
 ---
 
@@ -254,7 +254,7 @@ El uso de datos sintéticos generados por LLM para pruebas de hipótesis es vál
 
 **c) Validez de constructo del corpus sintético:** La validez de los datos sintéticos como proxy del dominio real descansa en tres pilares: (1) la distribución temática del corpus sintético replica la del corpus real (Kleptotrace/CoNLL-2002); (2) las entidades provienen de una fuente oficial de sanciones reales (OpenSanctions); y (3) la capacidad del LLM para generar texto coherente con el dominio financiero ha sido validada empíricamente (el mismo modelo que genera los artículos es el que se evalúa, creando una condición de evaluación conservadora). Este enfoque es metodológicamente análogo al uso de paráfrasis automáticas para aumento de corpus en NLP, práctica ampliamente aceptada en la literatura [8], [5].
 
-**d) Consistencia entre corpus:** Los F1-Scores observados en el corpus N=30 (gemma4:31b: 79.03%) son consistentes con la tendencia observada en el corpus real N=15 (gemma4:31b: 67.83%), sin saltos discontinuos que indicarían artefactos del aumento. La diferencia es atribuible a la menor complejidad promedio de los artículos breves del corpus sintético, lo que es esperado y documentado.
+**d) Consistencia entre corpus:** Los F1-Scores observados en el corpus N=30 (gemma4:31b: 79.03%) son consistentes con la tendencia observada en el corpus real N=15 (gemma4:31b: 69.12%), sin saltos discontinuos que indicarían artefactos del aumento. La diferencia es atribuible a la menor complejidad promedio de los artículos breves del corpus sintético, lo que es esperado y documentado.
 
 #### 4.1.3 Extensión a Corpus Real N=120 (Dataset Conmutable)
 
@@ -264,12 +264,12 @@ El corpus sintético N=30 no fue descartado ni reemplazado: el flag `--data-file
 
 ### 4.2 Modelos Evaluados
 
-Se evaluaron 12 modelos LLM generativos, reportados en la Tabla 2 (§5.1) en 13 configuraciones (`gemma4:latest` aparece en dos: ZS-ES y FS-ES), en tres categorías:
+El trabajo comprende **dos conjuntos de evaluación distintos**, que no deben confundirse: el benchmark exploratorio de la Tabla 2 (§5.1), con **12 modelos en 13 configuraciones** sobre N=15 en modo `entities` (`gemma4:latest` aparece dos veces: ZS-ES y FS-ES), y el estudio principal (§5.3.5), con **13 modelos** sobre N=120 en modo `kb_combined`. El segundo incorpora `gemma4:12b-mlx` y `gpt-oss:20b`, que no disponen de corrida N=15. Los modelos de la Tabla 2 se agrupan en tres categorías:
 - **Modelos locales grandes (≥8B):** gemma4:31b, gemma4:31b-mlx, gemma4:latest (9B), llama3.1:8b, qwen2.5:14b, mistral-nemo:latest (12B). gemma4:12b se descargó pero no figura en el benchmark reportado.
 - **Modelos locales compactos (<8B):** llama3.2:latest (3B), nuextract:latest (3.8B), nemotron-mini:4b, deepseek-r1:1.5b.
 - **Modelos cloud/híbridos:** gemma4:31b-cloud, gemini-3.1-flash-lite.
 
-### 4.3 Análisis Comparativo de Prompts
+### 4.3 Análisis de Variantes de Prompts
 
 Se evaluaron cuatro configuraciones de prompt sobre el modelo gemma4:latest (9B). El diseño cruza dos factores —idioma (inglés/español) y estrategia de demostración (sin ejemplos/con ejemplos)—, por lo que constituye un **diseño factorial 2×2**, procedimiento que la literatura anglosajona de aprendizaje automático denomina *ablation study*:
 1. **Zero-shot inglés (ZS-EN):** Prompt de sistema en inglés sin ejemplos.
@@ -343,7 +343,7 @@ Los tres ejemplos cubren deliberadamente: (a) extracción limpia de un solo suje
 
 #### 4.3.4 Impacto Empírico del Few-Shot en este Estudio
 
-Los resultados de la análisis comparativo de prompts muestran que la localización al español (+7.4% F1) tuvo mayor impacto que la adición de ejemplos few-shot (+4.97% F1 en inglés). La configuración ZS-ES produjo prácticamente el mismo F1 que FS-ES (69.81% vs. 69.76%), aunque con una reducción de 1.85 puntos de Recall a cambio de eliminar el riesgo de alucinaciones inducidas por ejemplos (FS-ES: hallucination rate 1.80% vs. ZS-ES: 0.19%). Para el dominio estudiado, la localización lingüística domina sobre la demostración de ejemplos, posiblemente porque gemma4 fue entrenado con suficientes datos en español para comprender el dominio sin ejemplos explícitos.
+Los resultados del análisis de variantes de prompts revelan una **interacción entre los dos factores**: por separado, la localización al español aporta +4.38 pp de F1 y los ejemplos *few-shot* en inglés no aportan nada (−0.73 pp), pero **su combinación alcanza +11.12 pp** (FS-ES: 74.44% frente al 64.05% del baseline ZS-EN). Es decir, los ejemplos solo resultan productivos cuando están redactados en el idioma del corpus. La configuración FS-ES lidera además en Precisión (66.78%) y Recall (86.87%) sin penalización en alucinaciones (0.20%, idéntica a ZS-ES). Para el dominio estudiado, la localización lingüística domina sobre la demostración de ejemplos, posiblemente porque gemma4 fue entrenado con suficientes datos en español para comprender el dominio sin ejemplos explícitos.
 
 ### 4.4 Métricas de Evaluación
 
@@ -372,32 +372,42 @@ La Tabla 2 presenta los resultados consolidados del benchmark completo agrupados
 
 | Modelo | Tipo | Parámetros | F1 | Precisión | Recall | Hallucination | Latencia (s) | Tok/s/B |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **gemma4:31b** | Local | 31B | 67.83% | 57.29% | 86.78% | 0.15% | 114.20 | 0.37 |
-| gemma4:31b-mlx | Local | 31B | 67.83% | 57.29% | 86.78% | 0.15% | 114.20 | 0.89 |
-| gemma4:31b-cloud | Cloud | 31B | 66.29% | 55.43% | 84.12% | 0.00% | 35.80 | — |
-| gemma4:latest (ZS-ES) | Local | 9B | **69.81%** | 62.59% | 82.70% | 0.19% | 22.67 | 6.30 |
-| gemma4:latest (FS-ES) | Local | 9B | 69.76% | 61.67% | 84.55% | 1.80% | 44.47 | 6.30 |
-| gemini-3.1-flash-lite | Cloud | — | 65.47% | 54.10% | 84.69% | 0.00% | 1.69 | — |
-| llama3.2:latest | Local | 3B | 61.29% | 53.01% | 75.32% | 2.20% | 25.10 | 15.80 |
-| llama3.1:8b | Local | 8B | 59.61% | 53.04% | 73.58% | 3.62% | 47.67 | 4.73 |
-| qwen2.5:14b | Local | 14B | 58.74% | 51.12% | 71.40% | 3.90% | 58.20 | 4.15 |
-| mistral-nemo:latest | Local | 12B | 57.12% | 49.80% | 69.11% | 4.10% | 52.40 | 4.36 |
-| nuextract:latest | Local | 3.8B | 54.20% | 46.10% | 68.20% | 4.30% | 21.30 | 12.10 |
-| nemotron-mini:4b | Local | 4B | 42.81% | 45.74% | 35.08% | 7.62% | 145.47 | 1.41 |
-| deepseek-r1:1.5b | Local | 1.5B | 31.28% | 35.12% | 28.90% | 8.13% | 38.40 | 25.60 |
+| gemma4:latest (FS-ES) | Local | 9B | **74.44%** | 66.78% | **86.87%** | 0.20% | 197.80 | 5.33 |
+| **gemma4:31b** | Local | 31B | 69.12% | 58.83% | 86.80% | 0.16% | 613.50 | 0.33 |
+| gemma4:31b-mlx | Local | 31B | 68.52% | 58.31% | 86.76% | 0.00% | 428.80 | 0.74 |
+| gemma4:latest (ZS-ES) | Local | 9B | 68.43% | 60.68% | 83.49% | 0.20% | 159.90 | 5.33 |
+| gemma4:31b-cloud | Cloud | 31B | 66.99% | 55.46% | 86.88% | 0.00% | 4.30 | — |
+| llama3.2:latest | Local | 3B | 63.19% | 62.82% | 67.99% | 2.31% | 21.60 | 26.44 |
+| gemma:latest | Local | 7B | 62.66% | 58.47% | 71.47% | 1.08% | 36.20 | 5.17 |
+| qwen2.5:14b | Local | 14B | 61.06% | 57.60% | 71.76% | 0.87% | 76.40 | 1.57 |
+| llama3.1:8b | Local | 8B | 60.72% | 53.70% | 75.80% | 3.39% | 53.50 | 5.03 |
+| qwen3:8b | Local | 8B | 53.65% | 46.75% | 65.61% | 0.00% | 282.00 | 4.56 |
+| mistral-nemo:latest | Local | 12B | 53.07% | 58.13% | 56.00% | 0.83% | 53.10 | 2.36 |
+| nemotron-mini:4b | Local | 4B | 35.33% | 44.37% | 34.92% | 2.62% | 22.20 | 17.08 |
+| deepseek-r1:1.5b | Local | 1.5B | 27.65% | 39.49% | 25.77% | 1.35% | 41.10 | 86.20 |
 
-> **Hallazgo 1:** `gemma4:31b` local lideró en Recall (86.78%) con la menor tasa de alucinaciones del grupo local (0.15%), superando también en Recall a su contraparte cloud (84.12%).  
-> **Hallazgo 2:** `deepseek-r1:1.5b` debe descartarse para producción: hallucination rate de 8.13% y Recall de sólo 28.90%.  
-> **Hallazgo 3:** El índice de eficiencia de hardware (Tok/s/B) favorece modelos compactos como `llama3.2` (15.80 Tok/s/B) para escenarios de screening masivo, mientras que `gemma4:31b` (0.37 Tok/s/B) se justifica para análisis de alto riesgo.
+> Cifras medidas sobre `results/benchmark_results.csv` (N=15, modo `entities`), salvo `gemma4:31b`
+> (`gemma4_31b_n15_REMOTO`), las dos variantes de `gemma4:latest` (`ablacion_n15_REMOTO`) y `gemma4:31b-cloud`
+> (`cloud_n15_limpio_20260905`). Las latencias proceden de corridas con distinta concurrencia y hardware, por
+> lo que **no son comparables entre filas**; el índice Tok/s/B sí lo es. Quedan fuera de la tabla los modelos
+> excluidos del estudio (`nuextract:latest`, `gemini-3.1-flash-lite`, `minimax-m3`).
 
-### 5.2 Análisis Comparativo de Prompts (gemma4:latest, N=15)
+> **Hallazgo 1:** la familia `gemma4` copa las cinco primeras posiciones. `gemma4:latest` con prompt *few-shot* en español (74.44%) supera a los dos modelos de 31B, a un tercio de su tamaño.  
+> **Hallazgo 2:** `gemma4:31b` lidera en Recall entre los locales (86.80%) con una tasa de alucinación de 0.16%, y su contraparte cloud alcanza un Recall equivalente (86.88%).  
+> **Hallazgo 3:** `deepseek-r1:1.5b` debe descartarse para producción: F1 de 27.65% y Recall de sólo 25.77%.  
+> **Hallazgo 4:** el índice de eficiencia de hardware (Tok/s/B) favorece a los modelos compactos —`deepseek-r1:1.5b` (86.20) y `llama3.2` (26.44)— para *screening* masivo, mientras que `gemma4:31b` (0.33) se justifica para análisis de alto riesgo.
+
+### 5.2 Análisis de Variantes de Prompts (gemma4:latest, N=15)
 
 | Configuración | F1 | Precisión | Recall | Hallucination | Latencia (s) | Δ vs. Baseline |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
-| Zero-shot Inglés (Baseline) | 62.41% | 72.26% | 72.42% | 0.00% | 23.75 | — |
-| Zero-shot Español | 69.81% | 62.59% | 82.70% | 0.19% | 22.67 | **+7.40%** |
-| Few-shot Inglés | 67.38% | 66.83% | 80.07% | 0.00% | 65.50 | +4.97% |
-| Few-shot Español | **69.76%** | 61.67% | **84.55%** | 1.80% | 44.47 | **+7.35%** |
+| Zero-shot Inglés (Baseline) | 64.05% | 57.69% | 77.17% | 0.20% | 157.90 | — |
+| Zero-shot Español | 68.43% | 60.68% | 83.49% | 0.20% | 159.90 | **+4.38 pp** |
+| Few-shot Inglés | 63.32% | 55.81% | 75.81% | 0.57% | 203.40 | −0.73 pp |
+| Few-shot Español | **74.44%** | **66.78%** | **86.87%** | 0.20% | 197.80 | **+11.12 pp** |
+
+> Medido sobre `results/ablacion_n15_REMOTO/benchmark_results.csv` (N=15, modo `entities`), con el corrector
+> de puntuación aplicado.
 
 > **Hallazgo 4:** La localización al español fue el factor de mayor impacto, produciendo +7.4% de F1 sobre el baseline ZS-EN, principalmente por una mejora del +10.28% en Recall. La inyección de ejemplos few-shot incrementó el Recall máximo pero no mejoró significativamente sobre el ZS-ES.
 
@@ -429,30 +439,34 @@ La Tabla 2 presenta los resultados consolidados del benchmark completo agrupados
 - **Registros outlier identificados:** 0
 - **F1 estable (no filtrado):** gemma4:31b = 0.7903 | gemma4:31b-mlx = 0.7747
 
-#### 5.3.5 Validación Estadística Complementaria sobre Corpus Real N=120
+#### 5.3.5 Validación Estadística sobre Corpus Real N=120 (estudio completo)
 
-Como extensión de la validación anterior (N=30, sintético), se ejecutó el mismo protocolo de validación estadística (ANOVA de una vía + Tukey HSD) sobre el corpus real N=120 descrito en §4.1.3 (`data/benchmark_balanced_120.json`, 1 de septiembre de 2026, resultados en `results/benchmark_balanced_120_20260901_140421/`). Por restricciones de tiempo de cómputo no se re-evaluaron los 12 modelos completos sino un subconjunto de 5 modelos locales de distinto tamaño (3B–31B; `gemma:latest` no figura en el benchmark N=15 de §5.1), cada uno en modo *baseline* y *KB RAG*, ambos con N=120 observaciones (no N=15 ni N=30):
+Sobre el corpus real N=120 descrito en §4.1.3 se ejecutó el mismo protocolo (ANOVA de una vía + Tukey HSD) para el **estudio completo de 13 modelos**, cada uno en modo *baseline* y *KB RAG*, con N=120 observaciones por grupo (26 grupos, 3 120 observaciones). Resultados consolidados en `results/ANALISIS_CONJUNTO_20260907/`.
 
-| Modelo | Modo | F1 | Precisión | Recall | Hallucination | Latencia (s) |
-|:---|:---|:---:|:---:|:---:|:---:|:---:|
-| gemma4:31b-mlx | baseline | 59.25% | 53.73% | 75.69% | 0.49% | 1066.2 |
-| gemma4:31b-mlx | KB RAG | 59.07% | 55.01% | 76.92% | 0.41% | 1408.5 |
-| gemma4:latest | baseline | 55.91% | 52.91% | 67.20% | 0.85% | 98.0 |
-| gemma4:latest | KB RAG | 55.58% | 52.12% | 66.09% | 0.53% | 489.6 |
-| qwen2.5:14b | baseline | 51.89% | 50.29% | 57.35% | 1.32% | 159.4 |
-| qwen2.5:14b | KB RAG | 56.51% | 55.48% | 61.24% | 0.72% | 173.8 |
-| gemma:latest | baseline | 47.34% | 49.83% | 48.31% | 0.84% | 93.6 |
-| gemma:latest | KB RAG | 53.03% | 52.31% | 59.95% | 5.96% | 103.4 |
-| llama3.2:latest | baseline | 39.45% | 40.18% | 40.81% | 2.74% | 5.2 |
-| llama3.2:latest | KB RAG | 49.43% | 48.92% | 55.14% | 3.83% | 5.9 |
+| Modelo | F1 baseline | F1 KB RAG | Δ RAG | Δ significativo |
+|:---|:---:|:---:|:---:|:---:|
+| gemma4:31b-cloud | 62.38% | 61.85% | −0.53 pp | no |
+| gemma4:31b-mlx | **59.25%** | 59.07% | −0.18 pp | no |
+| gemma4:12b-mlx | 56.18% | 58.46% | +2.28 pp | no |
+| gemma4:latest | 55.91% | 54.74% | −1.17 pp | no |
+| qwen2.5:14b | 50.22% | 54.84% | +4.62 pp | no |
+| llama3.1:8b | 48.76% | 50.75% | +1.99 pp | no |
+| qwen3:8b | 48.21% | 51.46% | +3.25 pp | no |
+| gemma:latest | 44.00% | 51.36% | +7.36 pp | no |
+| gpt-oss:20b | 43.84% | 34.19% | −9.65 pp | no |
+| mistral-nemo:latest | 43.38% | 45.76% | +2.37 pp | no |
+| llama3.2:latest | 36.11% | 46.93% | **+10.82 pp** | **sí** (p=0.014) |
+| deepseek-r1:1.5b | 24.83% | 23.94% | −0.90 pp | no |
+| nemotron-mini:4b | 22.59% | 37.12% | **+14.52 pp** | **sí** (p<0.001) |
 
 **ANOVA de una vía (α = 0.05), N=120 por grupo:**
-- **F-Statistic:** 10.2096
-- **p-Value:** 2.873 × 10⁻¹⁵ (p < 0.05 → se rechaza H₀)
-- **Conclusión:** Sobre el corpus real N=120 la diferencia de desempeño entre modelos/modos es estadísticamente significativa, con una potencia estadística sustancialmente mayor a la del corpus N=30 (F=0.141, no significativo entre los dos modelos comparados en esa corrida).
-- **Tukey HSD (post-hoc):** confirma diferencias significativas entre `gemma4:31b-mlx` y los modelos de menor capacidad (`gemma:latest`, `llama3.2:latest`), mientras que las diferencias entre `gemma4:31b-mlx`, `gemma4:latest` y `qwen2.5:14b` no alcanzan significancia (p ajustado > 0.05), consistente con una meseta de rendimiento entre los modelos de 9B a 31B.
+- **F-Statistic:** 36.3666  ·  **p-Value:** 1.2236 × 10⁻¹⁵² (p < 0.05 → se rechaza H₀)
+- **Conclusión:** la diferencia de desempeño entre modelos/modos es estadísticamente significativa, con una potencia muy superior a la del corpus N=30 (F=0.141, no significativo).
+- **Tukey HSD (post-hoc):** 172 de 325 comparaciones por pares resultan significativas. Al contrastar *baseline* contra *KB RAG* **dentro de cada modelo**, la mejora solo alcanza significancia en `nemotron-mini:4b` (+14.52 pp, p<0.001) y `llama3.2:latest` (+10.82 pp, p=0.014); en los once modelos restantes la diferencia no supera la corrección por comparaciones múltiples.
 
-**Lectura conjunta con el corpus N=30 (§5.3.1–5.3.4):** el mejor F1 sobre N=120 (`gemma4:31b-mlx`: 59.25%) es menor que el de N=30 (`gemma4:31b`: 79.03%), lo esperable dado que los artículos reales de CoNLL-2002 ES son más largos y heterogéneos que los breves (~200 caracteres) del corpus sintético N=30, diseñado para el dominio AML/KYC. Se conservan ambos: N=30 como validación de mínima potencia (TLC, N≥30) sobre el dominio de sanciones del proyecto, y N=120 como validación complementaria sobre corpus real, con mayor potencia estadística y menor especificidad de dominio. Los 8 modelos restantes de §5.1 quedan pendientes de re-evaluación sobre N=120 (§7.2).
+**Interpretación.** El beneficio del KB RAG es **inversamente proporcional a la capacidad del modelo**: aporta de forma estadísticamente significativa en los dos modelos más débiles del estudio, es positivo pero no concluyente en la franja intermedia, y resulta nulo o adverso en los modelos de mayor capacidad (−0.53 pp y −0.18 pp en los dos de 31B), que ya siguen correctamente las instrucciones sin contexto adicional. El caso de `gpt-oss:20b` (−9.65 pp) es distinto y se discute en §6.
+
+**Lectura conjunta con el corpus N=30 (§5.3.1–5.3.4):** el mejor F1 local sobre N=120 (`gemma4:31b-mlx`: 59.25%) es menor que el de N=30 (`gemma4:31b`: 79.03%), lo esperable dado que los artículos reales de CoNLL-2002 ES son más largos y heterogéneos que los breves (~200 caracteres) del corpus sintético N=30, diseñado para el dominio AML/KYC. Se conservan ambos: N=30 como validación de mínima potencia (TLC, N≥30) sobre el dominio de sanciones del proyecto, y N=120 como validación sobre corpus real, con mayor potencia estadística y menor especificidad de dominio.
 
 ### 5.4 Taxonomía de Errores NER
 
@@ -702,15 +716,15 @@ El experimento de KB RAG (§5.6) aporta una contribución metodológica a la rec
 
 1. **Viabilidad demostrada:** Es técnicamente viable implementar un sistema NER soberano para cumplimiento AML/KYC con modelos de lenguaje de código abierto ejecutados localmente sobre hardware Apple Silicon M4, alcanzando F1=79.03% con 0.0% de alucinaciones sobre el corpus AML N=30 (59.25% sobre el corpus real N=120).
 
-2. **Localización lingüística como factor crítico:** La localización del prompt al español produce la mayor ganancia unitaria de rendimiento (+7.4% F1), superando el impacto de los ejemplos few-shot. Esto tiene implicaciones directas para despliegues en mercados hispanohablantes.
+2. **Localización lingüística como factor crítico:** el idioma del prompt y los ejemplos *few-shot* **interactúan**: por separado aportan +4.38 pp y −0.73 pp de F1 respectivamente, pero combinados alcanzan **+11.12 pp**. Los ejemplos solo resultan productivos redactados en el idioma del corpus, lo que tiene implicaciones directas para despliegues en mercados hispanohablantes.
 
-3. **Soberanía de datos sin costo de rendimiento:** El sistema local iguala o supera el rendimiento de la variante cloud (67.83% vs. 66.29% F1) mientras garantiza privacidad total.
+3. **Soberanía de datos sin costo de rendimiento:** El sistema local iguala o supera el rendimiento de la variante cloud (69.12% vs. 66.99% F1 sobre N=15) mientras garantiza privacidad total.
 
 4. **Reducción de costos operativos:** El costo unitario del sistema soberano ($0.052/artículo) versus revisión manual ($8.75/artículo) representa una reducción del 99.4% en el costo unitario directo (60–80% del costo operativo total, que incluye la supervisión humana), con potencial de procesamiento de cientos de artículos diarios sin personal analista dedicado.
 
 5. **Robustez arquitectural:** El controlador AIMD previene desbordamientos de VRAM y gestiona errores de rate-limiting de forma autónoma. El checkpointing garantiza recuperación sin pérdida de datos ante interrupciones.
 
-6. **El RAG contextual supera al RAG por diccionario:** La implementación de la Base de Conocimientos Contextual (KB RAG) demuestra que el reconocimiento de entidades mediante LLMs locales es un problema de **comprensión sintáctico-contextual**, no de búsqueda en bases de datos cerradas. En el benchmark N=120, el KB RAG (`--rag-mode kb_combined`) mejoró el F1-Score en **+25.3%** para `llama3.2` y **+8.9%** para `qwen2.5:14b`, versus el dict-RAG (v1.0), que en un sondeo N=5 sobre el mismo modelo degradó el F1 hasta 0.2367 (−57.8% respecto de su propio baseline). Su efectividad está modulada por la capacidad paramétrica: beneficia sobre todo a los modelos de 3–14B, donde actúa como memoria externa de conocimiento lingüístico sin costo adicional de hardware. Este hallazgo tiene implicaciones directas para el diseño de sistemas RAG en dominio abierto con LLMs soberanos.
+6. **El RAG contextual supera al RAG por diccionario:** La implementación de la Base de Conocimientos Contextual (KB RAG) demuestra que el reconocimiento de entidades mediante LLMs locales es un problema de **comprensión sintáctico-contextual**, no de búsqueda en bases de datos cerradas. En el estudio N=120 sobre 13 modelos, el KB RAG (`--rag-mode kb_combined`) mejoró el F1-Score de forma **estadísticamente significativa** (Tukey HSD) en los dos modelos más débiles —`nemotron-mini:4b` **+14.52 pp** (p<0.001) y `llama3.2:latest` **+10.82 pp** (p=0.014)—, con ganancias positivas pero no concluyentes en la franja intermedia y efecto nulo en los modelos de 31B, versus el dict-RAG (v1.0), que en un sondeo N=5 sobre el mismo modelo degradó el F1 hasta 0.2367 (−57.8% respecto de su propio baseline). Su efectividad está modulada por la capacidad paramétrica: beneficia sobre todo a los modelos de 3–14B, donde actúa como memoria externa de conocimiento lingüístico sin costo adicional de hardware. Este hallazgo tiene implicaciones directas para el diseño de sistemas RAG en dominio abierto con LLMs soberanos.
 
 
 ### 7.2 Trabajo Futuro

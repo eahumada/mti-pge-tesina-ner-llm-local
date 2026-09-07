@@ -486,7 +486,14 @@ Desbloqueado por la reautenticación. Corrige la contaminación documentada en `
 
 ---
 
-## 13. ⏳ DIFERIDO — Renombrar el término a «Test de Variación de los Prompts»
+## 13. ✅ EJECUTADO (2026-09-07) — Renombrado a «Análisis de Variantes de Prompts»
+
+> **Cierre 2026-09-07.** La condición de disparo (datos completos) se cumplió con el cierre de benchmarks.
+> Aplicado en el informe canónico (§4.3, §5.2, resumen y conclusión 2), en `BENCHMARKS.md` y en `RUNS_INDEX.md`.
+> **No se tocaron** el flag `--ablation`, la clave `ablation` de `run_config.json`, los nombres de directorio
+> (`ablacion_n15_REMOTO`) ni los registros históricos, según lo previsto en este mismo apartado.
+
+### Detalle original del diferimiento
 
 **Decisión del autor (2026-09-06).** Se aceptan **dos formulaciones**, ambas válidas:
 
@@ -592,12 +599,19 @@ un modelo.
 
 ### 15.2 Pendiente documental (ninguna ejecución)
 
-- [ ] Aprobar las sustituciones **A1-A3** (`remote_48g/DECISIONES-PENDIENTES-AUTOR.md`).
-- [ ] **Tabla 2:** retirar o marcar `gemini-3.1-flash-lite` y `nuextract:latest` (fuera del estudio), aplicar
+- [x] **A1-A3 aplicadas (2026-09-07)** — sustituciones (`remote_48g/DECISIONES-PENDIENTES-AUTOR.md`).
+- [x] **Tabla 2 reconstruida (2026-09-07)** desde los CSV re-puntuados: retirados `gemini-3.1-flash-lite` y `nuextract:latest` (fuera del estudio), aplicar
       A1 (`gemma4:31b` → 0.6912) y resolver las dos filas con cifras idénticas (`gemma4:31b` y
       `gemma4:31b-mlx`, ambas 67.83 %).
-- [ ] **Declarar las dos salvedades de datos:** la latencia de `gemma4:31b-cloud` no mide inferencia (está
+- [ ] **(Claude Desktop) Declarar las dos salvedades de datos:** la latencia de `gemma4:31b-cloud` no mide inferencia (está
       cuantizada por el `--request-delay`) y las 7 filas de `nemotron-mini:4b` con telemetría en cero.
-- [ ] **Renombrado terminológico global** (§13): la condición de disparo **ya se cumple**.
-- [ ] **Cierre de formato del `.docx`** (Claude Desktop §2.1-2.5), ahora desbloqueado. Verificar el límite de
+- [x] **Renombrado terminológico global** aplicado (§13).
+- [ ] **(Claude Desktop) Cierre de formato del `.docx`** (§2.1-2.5) — encargo en `PROMPT-CLAUDE-DESKTOP-20260907.md`. Verificar el límite de
       **25 páginas**: las correcciones B1-B4 añadieron texto.
+
+### 15.3 Decisión del autor aún abierta
+
+- [ ] **F1 titular de N=30 (79.03 %)** — aparece en el resumen, §4.1 y la conclusión 1. Está registrado que «el
+      nuevo resultado es el oficial y el de julio queda en el WORKLOG», pero **no existe una corrida N=30 limpia
+      que lo reemplace**. Decidir entre mantenerlo con nota de procedencia o retirarlo. Nadie debe cambiarlo por
+      iniciativa propia.

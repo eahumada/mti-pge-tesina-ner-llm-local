@@ -177,6 +177,20 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.6 🟢 DESBLOQUEADA — Cierre documental del informe (encargo 2026-09-07)
+- **Encargo en prosa:** [`PROMPT-CLAUDE-DESKTOP-20260907.md`](./PROMPT-CLAUDE-DESKTOP-20260907.md)
+- **Contexto:** benchmarks cerrados (`CIERRE-BENCHMARKS-20260907.md`). **Ya no hay datos por generar.**
+- **Ya aplicado por Claude Code en el `.md` canónico** (no rehacer): Tabla 2 §5.1 reconstruida desde los CSV
+  re-puntuados · §5.2 con las mediciones limpias y la nueva lectura de **interacción** entre idioma y
+  *few-shot* · §5.3.5 reescrita con los 13 modelos (F=36.3666, p=1.2236e-152) · renombrado terminológico ·
+  aclaración de que el «12» es la Tabla 2 y el «13» el estudio N=120.
+- **Pendiente de Claude Desktop:** propagar a los tres `.docx` (**sin pandoc**, con `tools/docx_replace_terms.py`)
+  · **verificar el límite de 25 páginas** (el `.md` creció +66/−52) · reinsertar §4.1.3 y §5.3.5 en
+  `Informe_Final_Tesina_NER.docx` tomando la **versión nueva** de §5.3.5 · declarar las dos salvedades de datos
+  (latencia del cloud y 7 filas de nemotron) · congelar versiones y dejar copia del canónico en la raíz.
+- **No decidir por cuenta propia:** el F1 titular de N=30 (79.03 %) requiere criterio del autor
+  (`TODO-INFORME-FINAL.md §15.3`).
+
 ### 2.5 PENDIENTE — Cierre de formato, una vez terminados los benchmarks
 - **Estado:** ⬜ PENDIENTE · **Bloqueada por:** tareas 1.1 (benchmark de 7 modelos) y 1.2 (N=30)
 - **Procedimiento completo:** `PROMPT-PENDIENTE-INFORME-FINAL.md` §4 (pasos D-0 a D-9) y §5 (prompt)
@@ -517,3 +531,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 12:40 | Claude Code (equipo principal) | Verificadas las entregas `38b20da` (B1-B4) y `17c17fc` (rescore extendido): las 3 filas de §5.5 reproducen exacto; B1 adopta 0.4876/0.5075. Dos avisos: el `.md` creció +18/−8 líneas (re-verificar 25 pp) y la atribución del B1 a «decisión del autor» es incorrecta. Registrado el test `think=off` de 5 modelos en §3.bis.10 |
 | 2026-09-07 13:20 | Claude Code (equipo principal) | 📌 HALLAZGO FINAL sobre *thinking*: verificado el experimento del remoto (§F44) y añadido `FINDINGS.md §F45`. `gpt-oss` ON congelado (deja de responder sin razonamiento) y `qwen3` OFF son los únicos casos sólidos; los otros 4 son ruido de N=15. **Decisión cerrada: no re-ejecutar.** Reglas para ejecuciones futuras en `RECOMENDACIONES-EJECUCIONES-FUTURAS.md` y anexo `TODO-INFORME-FINAL.md §14`. Instrucciones al remoto en §3.bis.11 |
 | 2026-09-07 13:50 | Claude Code (equipo principal) | 🔒 **CIERRE DE BENCHMARKS** (decisión del autor): se conservan los 13 modelos y se cierra la ejecución. Alcance final 13 modelos × 2 modos, F=36.3666, p=1.2236e-152. Integridad: 0 violaciones, 0 degeneradas, 0 failed, summary==CSV. Documento `CIERRE-BENCHMARKS-20260907.md` y `TODO-INFORME-FINAL.md §15`. Aviso: el «12» del informe es la Tabla 2 (N=15), no el estudio N=120 |
+| 2026-09-07 14:30 | Claude Code (equipo principal) | Aplicadas A1-A3 y la reconstrucción de la Tabla 2 al `.md` canónico; §5.2 con las cifras limpias (nueva lectura: interacción idioma × few-shot, +11.12 pp); §5.3.5 reescrita con los 13 modelos (F=36.3666, p=1.2236e-152, Tukey: RAG significativo solo en nemotron y llama3.2); renombrado terminológico ejecutado (§13 cerrado); aclarado 12 (Tabla 2) vs 13 (estudio N=120). Encargo a Claude Desktop en `PROMPT-CLAUDE-DESKTOP-20260907.md` y §2.6 |

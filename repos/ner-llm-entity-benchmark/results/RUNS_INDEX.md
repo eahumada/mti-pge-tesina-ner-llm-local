@@ -23,7 +23,7 @@
 | Corridas con evidencia **solo en log** (resultados perdidos por sobrescritura) | **6** |
 | Corpus efectivamente ejecutados | `kleptotrace.json` (N=15), `kleptotrace_augmented_30.json` (N=30), `benchmark_balanced_120.json` (N=120) |
 | Modos ejecutados | `baseline`, `rag_study` legacy (`entities`), `rag_study` KB (`kb_combined`), `ablation` (4 prompts) |
-| Combinaciones **nunca ejecutadas** | N=30 con RAG, N=30 con análisis comparativo de prompts, N=120 con `kb_guidelines` / `kb_fewshot`, análisis comparativo de prompts cruzado con RAG |
+| Combinaciones **nunca ejecutadas** | N=30 con RAG, N=30 con análisis de variantes de prompts, N=120 con `kb_guidelines` / `kb_fewshot`, análisis de variantes de prompts cruzado con RAG |
 
 **Hallazgo crítico:** el resultado titular de la tesina (`gemma4:31b`, **F1 = 79.03 %**, 0 % de
 alucinaciones, corpus **N=30**) proviene de la corrida `2026-07-01 17:27` cuyos archivos de
@@ -38,8 +38,8 @@ justificación principal del esquema de versionado propuesto en §4.
 Leyenda de **Modo**: `baseline` = sin RAG · `rag-entities` = `--rag-study` con `rag_mode=entities`
 (dict-RAG legacy; condiciones `*_baseline` + `*_rag_enhanced`) · `rag-kb-<modo>` = `--rag-study`
 con base de conocimientos (condiciones `*_baseline` + `*_kb_rag`) · `ablation` = `--ablation`,
-que ejecuta la **Análisis Comparativo de Prompts** (término principal del proyecto;
-sinónimos glosados: *análisis comparativo de prompts*, *diseño factorial 2x2*) recorriendo los 4 prompts sobre
+que ejecuta la **Análisis de Variantes de Prompts** (término principal del proyecto;
+sinónimos glosados: *análisis de variantes de prompts*, *diseño factorial 2x2*) recorriendo los 4 prompts sobre
 1 modelo. `ablation` se conserva como etiqueta corta porque es el nombre del flag CLI y del campo
 `BenchmarkConfig.ablation`; los identificadores de código no se renombran.
 
@@ -90,8 +90,8 @@ Leyenda de **Prompt**: `zs-en` = `SYSTEM_PROMPT.md` · `zs-es` = `SYSTEM_PROMPT_
 
 **Brecha principal para el requisito del autor** ("poder hacer pruebas con N=30 y N=120, con y sin
 RAG, y para los distintos shots"): el corpus **N=30 solo tiene una corrida baseline zs-en, y sus
-resultados no se conservan**. Toda la columna RAG y la de Análisis Comparativo de Prompts
-(análisis comparativo de prompts) están vacías para N=30.
+resultados no se conservan**. Toda la columna RAG y la de Análisis de Variantes de Prompts
+(análisis de variantes de prompts) están vacías para N=30.
 
 ---
 
