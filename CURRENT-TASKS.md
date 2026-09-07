@@ -183,7 +183,35 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
-### 2.6 🟢 DESBLOQUEADA — Cierre documental del informe (encargo 2026-09-07)
+### 2.6 ✅ COMPLETADA — Cierre documental del informe (encargo 2026-09-07)
+- **Cerrada:** 2026-09-07 17:25 por Claude Desktop (Cowork). **Resultado:**
+  - **Propagado a los tres `.docx` sin pandoc**, por edición estructural del XML: Tabla 2 (§5.1) reconstruida
+    con las 13 configuraciones y las cifras nuevas · §5.2 con las mediciones limpias, su nota de procedencia y
+    la lectura de **interacción** idioma × *few-shot* · **§5.3.5 reescrita** con el estudio completo de 13
+    modelos (F=36.3666, p=1.2236e-152, Tukey) · tablas de eficiencia (§5.5), dict-RAG, Tabla 1, métricas y
+    Anexo C actualizadas · terminología «Análisis de Variantes de Prompts» · citas IEEE numeradas y
+    **referencia [12] repuesta** · §6.1–§6.5 y las seis conclusiones alineadas con los datos nuevos.
+  - **§4.1.3 y §5.3.5 reinsertadas en `Informe_Final_Tesina_NER.docx`** (tarea 2.1 cerrada), tomando la
+    **versión nueva** de §5.3.5.
+  - **Las dos salvedades de datos quedan declaradas en el texto** de los tres documentos, junto a la
+    limitación de *mojibake* del corpus N=120.
+  - **Anexo E** reconvertido en tabla de procedencia (la tabla completa vive ahora en §5.1, sin duplicarla).
+  - **Extensión verificada: cuerpo de 21 páginas de 25** en el canónico, sin páginas en blanco. No hizo falta
+    comprimir prosa ni tocar filas de datos.
+  - **Versión congelada `_v2` (2026-09-07)** en `doc/versions/informe_final/`, registrada en `VERSIONES.md`
+    con su SHA-256, y **fila «Versión del documento» con la fecha añadida a la ficha** del informe.
+  - **No decidido por cuenta propia:** el F1 titular de N=30 (79.03 %) se mantiene tal cual, a la espera del
+    criterio del autor (`TODO-INFORME-FINAL.md §15.3`).
+- ⚠️ **Discrepancia detectada en la fuente, no corregida por mí:** en el `.md` canónico, el «Hallazgo 4» de
+  §5.2 conserva la lectura antigua («la localización al español fue el factor de mayor impacto, +7.4 % de F1»),
+  que contradice la tabla nueva y el párrafo de interacción de esa misma sección. En los `.docx` propagué la
+  lectura nueva. Conviene alinear el `.md`.
+- 📄 Dos archivos temporales de sincronización quedaron en `_to_delete/` (`md_20260903.md`, `md_20260907.md`):
+  el puente no tiene permiso de borrado.
+- **Tomada por:** Claude Desktop (Cowork) · **Inicio:** 2026-09-07 17:15
+- **Archivos que voy a tocar:** los tres `.docx` de la tesina, `doc/versions/informe_final/**`,
+  `VERSIONES.md`, y las entradas §2.6 y §6 de este documento. **No toco** el `.md` canónico ni
+  `results/**`.
 - **Encargo en prosa:** [`PROMPT-CLAUDE-DESKTOP-20260907.md`](./PROMPT-CLAUDE-DESKTOP-20260907.md)
 - **Contexto:** benchmarks cerrados (`CIERRE-BENCHMARKS-20260907.md`). **Ya no hay datos por generar.**
 - **Ya aplicado por Claude Code en el `.md` canónico** (no rehacer): Tabla 2 §5.1 reconstruida desde los CSV
@@ -584,3 +612,5 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 15:50 | Claude Code (equipo principal) | Tareas locales de cierre: salvedades de procedencia añadidas a §5.3.5 del informe (latencia del cloud y telemetría de nemotron), `FINDINGS.md §F46` (gpt-oss: degeneración por repetición, no incapacidad), `RUNS_INDEX.md` con las 12 corridas del cierre y el análisis conjunto, entrada de sesión en `research/rag/WORKLOG.md`, casillas superadas marcadas en TODO y §1.2 cerrada (los 31B están descargados pero no caben en 16 GB) |
 | 2026-09-07 14:35 | Equipo Remoto 48 GB (Claude Code) | §3.bis GPTOSS diagnóstico COMPLETO: bucle de repetición NO reproducido (0/5), repeat_penalty irrelevante. Las 5 filas recall=0 recuperan output válido al re-ejecutar → artefacto de corrida (posible truncación por thinking), no del modelo. Mojibake (F46) contribuye y afecta a TODO el N=120. Recomendación: re-ejecutar gpt-oss completo con thinking ON + num_predict 4096 + parser tolerante + gold sin mojibake; ETA ~1-1.5h. Decisión del autor. Reporte: `remote_48g/DIAGNOSTICO-GPTOSS-20260907.md` + raw en `results/diag_gptoss.json` |
 | 2026-09-07 16:35 | Claude Code (equipo principal) | Analizado a fondo el mojibake: **el defecto está también en el texto de entrada** (87 % de artículos) y de forma coherente con el gold → el sesgo **no es uniforme**, premia la transcripción literal y penaliza la normalización (Δ por modelo de −0.070 a +0.091). `FINDINGS §F48`, `LEARNING §L39 y §L40`, nota de verificación bajo el §F46 del remoto, y corrección de la limitación en §5.3.5 del informe (ya no afirma uniformidad). Adenda al encargo de gpt-oss: re-ejecutar con `num_predict=4096` **sin tocar gold ni evaluador**, para que el cambio quede aislado a ese modelo. Decisiones en `TODO §15.5`. Forma corrupta `JosÃ© Bono` → correcta **`José Bono`** |
+| 2026-09-07 17:25 | Claude Desktop | Tarea 2.6 completada: los tres `.docx` sincronizados con el `.md` sin pandoc, §4.1.3/§5.3.5 reinsertadas en el standalone, salvedades declaradas, cuerpo verificado en 21 pp. y versión `_v2` congelada |
+| 2026-09-07 17:40 | Claude Code (equipo principal) | Commiteado el trabajo de Claude Desktop (§2.6, su puente no tiene permiso de escritura en git). **Atendida su observación**: el `.md` conservaba la lectura antigua del análisis de variantes en **tres** sitios —resumen en inglés, Hallazgo 4 de §5.2 y discusión §6.2— y no en uno; los tres alineados con la tabla nueva (+11.12 pp por interacción). Cero ocurrencias restantes de la cifra antigua. `.md` y `.docx` quedan coherentes |

@@ -434,3 +434,34 @@ la de los aciertos.
 
 **Trazabilidad.** Se versionó `benchmark_augmented_30.log`, único registro superviviente del F1 titular de
 julio, que el patrón `*.log` del `.gitignore` mantenía fuera del repositorio y existía en una sola máquina.
+
+---
+
+## 2026-09-07 (Claude Desktop): propagación del cierre de benchmarks a los tres DOCX
+
+Ejecutado el encargo `PROMPT-CLAUDE-DESKTOP-20260907.md` (tarea 2.6 de `CURRENT-TASKS.md`).
+
+**Método.** Sincronización por delta: se extrajo el Markdown canónico en su estado del 2026-09-03
+(`git show e20fd50`) y en el actual, se alinearon ambos con `difflib` y se aplicaron los 72 bloques de
+cambio a los `.docx` por **edición estructural del XML, sin pandoc**, conservando numeración multinivel,
+estilos de fila, leyendas y saltos de página.
+
+**Aplicado.** Tabla 2 (§5.1) reconstruida — 12 modelos en 13 configuraciones, con la nota de procedencia de
+cada corrida y los cuatro hallazgos nuevos. §5.2 con las mediciones limpias y la lectura de interacción
+(ZS-ES +4.38 pp, FS-EN −0.73 pp, FS-ES +11.12 pp). §5.3.5 reescrita al estudio completo de 13 modelos
+(F=36.3666, p=1.2236e-152; Tukey: solo `nemotron-mini:4b` +14.52 pp y `llama3.2:latest` +10.82 pp alcanzan
+significancia), con la limitación de *mojibake* del corpus N=120 y las dos salvedades de procedencia
+(latencia de `gemma4:31b-cloud` cuantizada por `--request-delay`; siete filas de `nemotron-mini:4b` sin
+telemetría). Tablas de eficiencia, dict-RAG, trabajos relacionados, métricas y Anexo C actualizadas.
+Terminología «Análisis de Variantes de Prompts». Citas IEEE numeradas y referencia [12] repuesta.
+§4.1.3 y §5.3.5 reinsertadas en `Informe_Final_Tesina_NER.docx`. Anexo E reconvertido en tabla de
+procedencia. Fila «Versión del documento — v2, 7 de septiembre de 2026» añadida a la ficha.
+
+**Verificación.** Cuerpo del canónico: **21 páginas de 25**; sin páginas en blanco; los tres documentos
+contienen las cifras nuevas. Versión `_v2` congelada en `doc/versions/informe_final/` con su SHA-256.
+
+**No decidido:** el F1 titular de N=30 (79.03 %) permanece sin cambios, pendiente del criterio del autor
+(`TODO-INFORME-FINAL.md §15.3`).
+
+**Observación para el `.md` canónico:** el «Hallazgo 4» de §5.2 conserva la lectura antigua (+7.4 % por
+localización), que contradice la tabla nueva y el párrafo de interacción de la misma sección.
