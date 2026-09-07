@@ -651,3 +651,33 @@ guardados, como sí se pudo con el bug del *scorer*.
 - [ ] **(c) Corregir el gold y re-ejecutar solo un subconjunto** para cuantificar el efecto real y citarlo como
       corrección estimada, manteniendo las cifras actuales. Coste intermedio; aporta una medición en vez de una
       cota.
+
+### 15.5 Corrección de §15.4 y decisiones sobre `gpt-oss` (2026-09-07 16:35)
+
+**§15.4 quedó mal planteada** y se corrige aquí de forma aditiva. Decía que el mojibake produce «un sesgo
+uniforme de ~4,7 pp que no altera el ranking». **Faltaba comprobar la entrada:** el mojibake está también en
+el **texto** de los artículos (87 %), y de forma **coherente** con el gold — las 283 entidades corruptas
+aparecen **tal cual** en el texto, ninguna corregida (`FINDINGS.md §F48`).
+
+Por tanto el corpus es internamente consistente y **el efecto no es uniforme**: premia al modelo que transcribe
+literalmente y penaliza al que normaliza la ortografía. Medido, el Δ entre registros con y sin mojibake va de
+**−0.070 a +0.091** según el modelo — **sí podría alterar el ranking**. La opción (a) de §15.4 sigue siendo
+viable, pero su justificación ya no es «el sesgo es uniforme» sino «el sesgo está declarado y acotado».
+
+**Terminología obligatoria:** la forma **corrupta** es `JosÃ© Bono`; la **correcta** es **`José Bono`**.
+Escribirlo siempre en ese orden.
+
+**Cómo se repara bien:** no basta con arreglar el gold —eso invertiría la injusticia—. Hay que **normalizar
+ambos lados al comparar**, aplicando la reparación al gold *y* a la extracción antes del *fuzzy matching*
+(~10 líneas en `src/evaluator.py`). Exige re-inferir: las extracciones por registro no se conservaron.
+
+#### Decisión del autor — `gpt-oss:20b`
+
+- [ ] **Re-ejecutar `gpt-oss:20b` completo con `num_predict=4096`** (thinking ON, **mismo corpus y mismo
+      evaluador que los demás**, sin tocar el mojibake). El diagnóstico del remoto descartó el bucle de
+      repetición y apunta al agotamiento del presupuesto de tokens: 10–40 s por registro al re-ejecutar frente
+      a **838 s** en la corrida oficial. **ETA ~1–1,5 h.** El cambio queda **aislado a `gpt-oss`** y el estudio
+      sigue siendo comparable. Encargo: adenda de `ENCARGO-REMOTO-GPTOSS-20260907.md`.
+- [ ] **Aparte y de alcance global:** decidir si se implementa la normalización de codificación en el
+      evaluador, lo que obligaría a re-ejecutar el estudio N=120 completo (~200 h). **No mezclar con lo
+      anterior.**

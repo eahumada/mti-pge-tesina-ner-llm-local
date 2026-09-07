@@ -448,3 +448,43 @@ factorial 2×2 reciba ese nombre en parte de la literatura de ML.
 
 > **Aplicación:** el re-run N=30 ya usa `results/n30_rerun_REMOTO/run_<timestamp>.log` con cabecera fechada.
 > Extender la práctica a todas las corridas.
+
+### L39. Un corpus corrupto de forma coherente no sesga a todos por igual: penaliza a quien lo corrige
+**Registrado:** 2026-09-07 16:35 (UTC−3) · Ver `FINDINGS.md §F46` y **§F48**.
+
+Se encontró mojibake en las entidades de referencia del corpus N=120 —`JosÃ© Bono` guardado donde el nombre
+real es **`José Bono`**— y la lectura inmediata fue: «afecta a todos los modelos por igual, deprime el recall
+un 4,7 % y no altera el ranking». **Las dos mitades de esa frase eran falsas.**
+
+Faltaba una comprobación: **mirar si el defecto estaba también en la entrada**. Lo estaba —87 % de los textos—
+y de forma **coherente**: las 283 entidades corruptas del gold aparecen **tal cual** en el texto, ninguna
+aparece corregida. El corpus es internamente consistente, así que **el modelo que transcribe literalmente
+acierta** y **el que normaliza a español correcto falla**. Medido: el Δ entre registros con y sin mojibake va
+de **−0.0695** a **+0.0914** según el modelo, un rango de ~16 puntos.
+
+**La regla.** Antes de aceptar que un defecto del corpus produce un sesgo uniforme, verificar si el defecto
+alcanza a la entrada y no solo a la referencia. Si alcanza a ambas y de forma coherente, el sesgo **no es
+uniforme**: recompensa una conducta del modelo y castiga la contraria.
+
+**Corolario sobre cómo repararlo.** Arreglar solo el gold invierte la injusticia en vez de eliminarla. Lo
+correcto es **normalizar ambos lados al comparar**: aplicar la reparación al gold *y* a la extracción antes del
+*fuzzy matching*, de modo que el resultado no dependa de la codificación.
+
+**Corolario sobre el alcance de un arreglo.** Si se corrige el gold para una sola re-corrida, ese modelo queda
+puntuado con una vara distinta de la del resto: es el mismo error que las dos convenciones de puntuación y los
+dos regímenes de *thinking* que ya costó unificar. **Una re-corrida aislada debe usar exactamente el mismo
+corpus y el mismo evaluador que las demás.**
+
+> **Aplicación:** la re-ejecución de `gpt-oss:20b` se hace con `num_predict` ampliado pero **sin tocar el gold
+> ni el evaluador**, para que el único cambio sea el que se quiere aislar.
+
+### L40. Dos agentes pueden asignar el mismo identificador a hallazgos distintos
+**Registrado:** 2026-09-07 16:35 (UTC−3).
+
+El equipo remoto publicó `FINDINGS.md §F46` (mojibake) a las 14:01 y el equipo principal registró un hallazgo
+**distinto** con el mismo número (degeneración de `gpt-oss`) poco después, sin haber hecho `pull` entre medias.
+La colisión se detectó al integrar y se resolvió renumerando el segundo a **§F47**, con nota explícita.
+
+**La regla.** Antes de asignar un identificador correlativo en un documento compartido —hallazgo, aprendizaje,
+tarea— hacer `pull` y releer el fichero. Si aparece una colisión, **renumera el que llegó después y deja
+constancia**; nunca reutilices el número ni renumeres el ajeno.

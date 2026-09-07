@@ -823,6 +823,13 @@ unificar. El valor del experimento es **documental y ya está capturado**: queda
 **Causa raíz:** el JSON del corpus almacena los nombres con codificación corrupta (bytes UTF-8 reinterpretados
 como Latin-1 al generarse/guardarse).
 
+> **Verificación del equipo principal (2026-09-07 16:35).** Confirmadas las cifras: 1 406 entidades gold,
+> 283 con mojibake (20,1 %), 66 irrecuperables a umbral 85 (4,7 %); `kleptotrace.json` y
+> `kleptotrace_augmented_30.json` limpios. **Matizado el alcance en §F48:** el mojibake está también en el
+> texto de entrada (87 % de los artículos) y de forma coherente con el gold, de modo que **el sesgo no es
+> uniforme entre modelos** —premia la transcripción literal y penaliza la normalización— y **sí podría alterar
+> el ranking**. La estimación de «~4,7 % de piso uniforme» queda sustituida por la de §F48.
+
 **Impacto y decisión.** Corregir el gold (`s.encode('latin-1').decode('utf-8')`) elevaría el recall real de
 todos los modelos N=120. Pero re-puntuar exige **re-inferir**: las extracciones crudas por registro no se
 persistieron (solo `tp/fp/fn`), así que el matching no se puede rehacer sobre datos guardados. Es, por tanto,
@@ -884,3 +891,75 @@ Verificado de forma independiente: 283 de 1 406 entidades gold (20,1 %) y 66 irr
 Latin-1. **Si la doble codificación alcanzara al texto que se compara con el *ground truth*, y no solo al
 fichero de log, ningún nombre español con tilde casaría nunca — en todos los modelos del estudio.** Verificación
 encargada al equipo remoto.
+
+---
+
+### F48. El mojibake es *consistente* entre texto y gold: no hay sesgo uniforme, hay un sesgo que depende del modelo
+
+**Registrado:** 2026-09-07 16:35 (UTC−3) · **Autor:** equipo principal · **Amplía y corrige el alcance de §F46.**
+
+**Qué es el mojibake aquí.** El corpus almacena bytes UTF-8 reinterpretados como Latin-1. La cadena guardada es
+la **corrupta**; la forma **correcta** es la que se obtiene al repararla:
+
+| Forma **corrupta** (la que está en el fichero) | Forma **correcta** (la real) |
+|:---|:---|
+| `JosÃ© Bono` | **`José Bono`** |
+| `Emiliano GarcÃ­a-Page` | **`Emiliano García-Page`** |
+| `MarÃ­a MuÃ±oz` | **`María Muñoz`** |
+| `AdministraciÃ³n` | **`Administración`** |
+
+Reparación: `s.encode('latin-1').decode('utf-8')`. **La dirección importa:** `JosÃ© Bono` es el dato dañado y
+`José Bono` es el nombre real. En cualquier texto del proyecto debe escribirse en ese orden para no invertir el
+sentido.
+
+**Lo que §F46 no midió: el texto de entrada también está corrupto.**
+
+| Comprobación (medida sobre `data/benchmark_balanced_120.json`) | Resultado |
+|:---|:---|
+| Registros con mojibake en el campo `text` | **104 de 120 (87 %)** |
+| Registros con mojibake en `title` | 0 |
+| Entidades gold corruptas que aparecen **tal cual** en el texto | **283 de 283** |
+| Entidades gold corruptas que aparecen **corregidas** en el texto | **0** |
+
+**Consecuencia — el corpus es internamente coherente.** El modelo *lee* `Emiliano GarcÃ­a-Page` y el gold
+*espera* `Emiliano GarcÃ­a-Page`. Un modelo que **copia literalmente casa igual**; el que **normaliza** el texto
+a español correcto produce `Emiliano García-Page` y **falla la comparación**. El mojibake no impone un suelo
+uniforme: **premia la transcripción literal y penaliza la normalización ortográfica**.
+
+**Evidencia de que el efecto no es uniforme.** F1 medio sobre los 88 registros con mojibake frente a los 31 sin
+él, por modelo (mismos registros para todos):
+
+| Modelo | Δ (con mojibake − sin) |
+|:---|--:|
+| `gemma4:latest_baseline` | **−0.0695** |
+| `gemma4:12b-mlx_baseline` | −0.0422 |
+| `gemma4:31b-mlx_baseline` | −0.0395 |
+| `llama3.1:8b_kb_rag` | −0.0004 |
+| `mistral-nemo:latest_kb_rag` | +0.0122 |
+| `gpt-oss:20b_kb_rag` | **+0.0914** |
+
+**Un rango de ~16 puntos entre modelos.** Si el efecto fuera un suelo uniforme, todos los modelos se
+desplazarían por igual sobre los mismos registros. No lo hacen.
+
+> **Cautela metodológica.** Los registros con mojibake podrían ser además más largos o difíciles, lo que
+> confundiría la magnitud absoluta de cada Δ. Pero la **dispersión entre modelos sobre los mismos registros**
+> no se explica por la dificultad: esa es la evidencia de que la interacción es específica de cada modelo.
+> La fila de `gpt-oss` es la menos fiable, porque sus cifras están dominadas por el artefacto de §F47.
+
+**Corrección a lo publicado.** El informe declaraba en §5.3.5 que el sesgo era «uniforme entre modelos» y que
+«no altera el orden relativo». **Eso no está respaldado** y se ha corregido: el efecto es específico de cada
+modelo y **podría alterar el ranking**.
+
+**Cómo se arregla bien.** No basta con reparar el gold: eso invertiría la injusticia, penalizando al modelo que
+copia literalmente. La solución correcta es **normalizar ambos lados en el momento de comparar** —aplicar la
+reparación al gold **y** a la entidad extraída antes del *fuzzy matching*—, con lo que `JosÃ© Bono` y
+`José Bono` convergen a la misma forma y el resultado deja de depender de la codificación. Son ~10 líneas en
+`src/evaluator.py`.
+
+**Por qué no se puede aplicar retroactivamente.** El *matching* ocurre en tiempo de inferencia y **las
+extracciones crudas por registro no se persistieron** (solo `tp/fp/fn` y un `error_taxonomy` parcial). No hay
+forma de re-puntuar sobre lo guardado, como sí se pudo con el bug del *scorer*. Requiere re-inferir.
+
+> **Regla operativa.** Antes de declarar que un defecto del corpus introduce un sesgo uniforme, **comprobar si
+> el defecto está también en la entrada**. Un corpus corrupto de forma coherente no penaliza a todos por igual:
+> penaliza a quien lo corrige.

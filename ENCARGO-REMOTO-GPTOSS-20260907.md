@@ -100,3 +100,57 @@ re-ejecución completa de `gpt-oss:20b`. Con las verificaciones de siempre — t
 protocolo, `F1 ≤ (P+R)/2`— y **promediando con `if x.get('k') is not None`**, nunca `if x.get('k')`.
 
 Declaradlo en `CURRENT-TASKS.md` §3.bis y avisad por *push*.
+
+---
+
+## Adenda (2026-09-07 16:35) — resultado del diagnóstico y cómo acotar el arreglo a `gpt-oss`
+
+Vuestro `DIAGNOSTICO-GPTOSS-20260907.md` **descarta mi hipótesis**: el bucle de repetición **no se reproduce**
+(0 de 5) y `repeat_penalty` es irrelevante. Las cinco filas recuperan **JSON limpio y cerrado**. Bien visto.
+
+Lo que sí destaca de vuestros datos es **la latencia**: **10–40 s por registro al re-ejecutar frente a 838 s**
+en la corrida oficial. Un factor de 20–80×. Eso apunta a vuestra propia explicación —el razonamiento agotando
+`num_predict=2048` antes de emitir la respuesta, con truncado y caída a *fallback*— que es **exactamente el
+patrón de §F40-F41** con `gemma4:12b-mlx`, salvo que aquí el *thinking* no puede apagarse.
+
+### Cómo re-ejecutar sin contaminar el resto del estudio
+
+**Ejecutad `gpt-oss:20b` completo (N=120 × 2 modos) cambiando UNA sola cosa: `num_predict` a 4096.**
+
+- **thinking ON**, sin tocar (decisión firme, §F44-F45).
+- **Mismo corpus, sin reparar el mojibake.**
+- **Mismo evaluador, sin normalización de codificación.**
+
+> **Por qué es importante no arreglar el gold en esta corrida.** Si `gpt-oss` se puntúa contra un gold
+> corregido y los otros doce modelos contra el gold corrupto, queda medido **con otra vara** — el mismo error
+> que las dos convenciones de puntuación y los dos regímenes de *thinking* que ya costó unificar. El mojibake
+> es un problema **de todo el estudio** (§F46, §F48) y su corrección es una decisión aparte del autor. Aquí el
+> objetivo es aislar **un** cambio: el presupuesto de tokens.
+
+### Qué comprobar en la entrega
+
+Además de las verificaciones de siempre: **cuántas filas alcanzan el tope de `num_predict`** (si con 4096
+siguen truncando, el problema es otro), la **tasa de `fallback`** comparada con las 67 de la corrida oficial, y
+el conteo de `recall=0` frente a los 76 actuales. Si el artefacto desaparece, la cifra de `gpt-oss` en el
+estudio se sustituye por la nueva; si persiste, hay que reabrir el diagnóstico.
+
+**ETA vuestra:** ~1–1,5 h. **No parchear filas sueltas**, sigue vigente.
+
+### Sobre el mojibake — matiz importante que cambia el diagnóstico (§F48)
+
+Verificamos vuestro §F46 y las cifras son correctas, pero **falta un dato que cambia la conclusión**: el
+mojibake **no está solo en el gold, también en el texto de entrada** (87 % de los artículos), y de forma
+**coherente** — las 283 entidades corruptas del gold aparecen **tal cual** en el texto, ninguna aparece
+corregida.
+
+Es decir: el modelo lee `Emiliano GarcÃ­a-Page` y el gold espera `Emiliano GarcÃ­a-Page`. **Quien copia
+literalmente acierta; quien normaliza a español correcto falla.** No es un suelo uniforme del 4,7 %: medido por
+modelo, el Δ entre registros con y sin mojibake va de **−0.070 a +0.091**.
+
+**Consecuencia para la reparación:** arreglar solo el gold **invertiría** la injusticia en lugar de eliminarla.
+Lo correcto sería **normalizar ambos lados al comparar** (reparar gold *y* extracción antes del *fuzzy
+matching*, ~10 líneas en `src/evaluator.py`). **No lo implementéis todavía**: es una decisión de alcance del
+autor, registrada en `TODO-INFORME-FINAL.md §15.4`.
+
+**Nota terminológica para todos los documentos:** la forma corrupta es `JosÃ© Bono` y la correcta es
+**`José Bono`**. Escribirlo siempre en ese orden; invertirlo confunde el dato dañado con el real.

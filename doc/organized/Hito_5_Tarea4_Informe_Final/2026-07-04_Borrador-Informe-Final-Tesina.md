@@ -459,14 +459,18 @@ Sobre el corpus real N=120 descrito en §4.1.3 se ejecutó el mismo protocolo (A
 | deepseek-r1:1.5b | 24.83% | 23.94% | −0.90 pp | no |
 | nemotron-mini:4b | 22.59% | 37.12% | **+14.52 pp** | **sí** (p<0.001) |
 
-> **Limitación del corpus N=120 — sesgo uniforme del *recall*.** Las entidades de referencia de
-> `data/benchmark_balanced_120.json` presentan **mojibake** (UTF-8 interpretado como Latin-1): `JosÃ© Bono`
-> por `José Bono`. Afecta a **283 de 1 406 entidades (20,1 %)**, de las cuales **66 (4,7 % del total) resultan
-> irrecuperables** porque su similitud con la forma correcta cae por debajo del umbral de coincidencia difusa
-> (85). En consecuencia, **las cifras de *recall* y F1 de esta tabla están subestimadas en torno a 4,7 puntos
-> porcentuales**. El sesgo es **uniforme entre modelos**, de modo que **no altera el orden relativo ni las
-> conclusiones comparativas**, sí los valores absolutos. Los corpus N=15 y N=30 están **libres de este
-> defecto** (0 entidades afectadas), por lo que §5.1, §5.2 y §5.3.1–5.3.4 no se ven comprometidos.
+> **Limitación del corpus N=120 — codificación defectuosa de los nombres.** El corpus
+> `data/benchmark_balanced_120.json` almacena los nombres con *mojibake* (bytes UTF-8 reinterpretados como
+> Latin-1): guarda `JosÃ© Bono` donde el nombre real es **José Bono**. Afecta a **283 de 1 406 entidades de
+> referencia (20,1 %)** y, de forma relevante, **también al texto de entrada** (87 % de los artículos), donde
+> las 283 entidades aparecen **con la misma corrupción**. El corpus es por tanto **internamente coherente**:
+> un modelo que transcribe literalmente coincide con la referencia, mientras que uno que normaliza la
+> ortografía al español correcto **deja de coincidir**. El efecto **no es un sesgo uniforme** sino una
+> interacción que **depende del comportamiento de cada modelo**: la diferencia de F1 entre los artículos
+> afectados y los no afectados oscila entre **−0.070 y +0.091** según el modelo. Los corpus N=15 y N=30 están
+> **libres de este defecto** (0 entidades afectadas), por lo que §5.1, §5.2 y §5.3.1–5.3.4 no se ven
+> comprometidos. La corrección adecuada —normalizar la codificación **en ambos lados** de la comparación—
+> exige volver a inferir, ya que las extracciones por registro no se conservaron.
 
 > **Dos salvedades de procedencia.** (i) La latencia de `gemma4:31b-cloud` **no mide inferencia**: quedó cuantizada por el `--request-delay` introducido para sortear el límite de peticiones del servicio (114 de sus 240 filas registran exactamente 1,02 s). Su F1 es válido; su latencia y sus tokens/s no deben usarse en comparaciones de eficiencia. (ii) Siete filas de `nemotron-mini:4b` tienen `latencia = 0` y `0 tokens/s` porque se re-extrajeron fuera del arnés de lotes tras un fallo de contexto; sus valores de precisión, *recall* y F1 son reales, pero su telemetría no existe.
 
