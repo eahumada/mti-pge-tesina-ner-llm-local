@@ -199,7 +199,53 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
-### 2.8 🔴 PRIORITARIA — Revisión pedida por el profesor guía (2026-09-07)
+### 2.8 ✅ TANDA ESTRUCTURAL COMPLETADA — Revisión pedida por el profesor guía (2026-09-07)
+- **Cerrada la tanda estructural:** 2026-09-07 19:50 por Claude Desktop (Cowork). **Sin congelar versión**,
+  a la espera de la segunda tanda (cifras de `gpt-oss:20b`).
+- **📏 CONTEO MEDIDO (no estimado):** **cuerpo de 23 páginas de 25**; anexos desde la 24; 33 páginas totales.
+  Los anexos ocupan 10 páginas de las 25 propias. **No hubo que recortar nada.** La estimación previa de
+  22,3 páginas era buena.
+- **Método:** el `.md` reescribía capítulos enteros (+212/−165 líneas), así que en vez de parchear párrafos
+  **reconstruí el cuerpo del `.docx` desde el `.md`** con un renderizador propio sobre los estilos de la
+  plantilla. **No es pandoc**: conserva `styles.xml`, encabezados, pies, márgenes y `sectPr`, y reaplica la
+  numeración literal con `numId=0`, las leyendas sobre cada tabla, los anchos de columna proporcionales y la
+  separación de los hallazgos en párrafos propios. Las referencias cruzadas «la Tabla N» se realinearon con la
+  numeración real de las leyendas.
+- **Los cuatro reparos del profesor, atendidos en los tres `.docx`:** sin ficha del estudiante (la portada es
+  ahora título, autor, dirección institucional y correo, como prescribe la plantilla) · **sin saltos de página
+  entre capítulos**, texto continuo · sin bloques en blanco (verificado: **cero páginas casi vacías**) ·
+  capítulos 2, 3 y 6 y §5.6 con la redacción desarrollada que ya estaba en el `.md`.
+- **Datos incorporados:** re-corrida N=30 (`gemma4:31b-mlx` 80,57 %, `gemma4:31b` 78,55 %; ANOVA F=0,2235,
+  p=0,6382) y todo lo pendiente de la tarea **2.7** (mojibake): §4.4, conclusión 7, §7.2 punto 7 y el
+  **Anexo H** completo. **La 2.7 queda cubierta por esta entrega.**
+- **🔒 Anexo G íntegro**, con su letra G, sin resumir ni suavizar. El Anexo H va después, como pedía el encargo.
+- **El `.docx` es ahora reflejo exacto del `.md`.** Para lograrlo, y siguiendo la instrucción del autor, llevé
+  primero al `.md` los **anexos D, E, F y G**, que hasta ahora vivían solo en el `.docx` (respaldo previo en
+  `…Borrador-Informe-Final-Tesina.md.bak_pre_anexosDEFG_20260907`). Los anexos quedan A–H en orden.
+- **Respaldo del `.docx` anterior:** `doc/organized/Hito_5_Tarea4_Informe_Final/
+  Informe_Final_Tesina_NER_plantilla.docx.bak_pre_profesor_20260907`.
+- **Corrección posterior (2026-09-07 20:05) — diagramas como tablas de Word.** Al reconstruir desde el `.md`
+  los diagramas de texto habían vuelto a emitirse como bloques `programcode`, contra la regla del proyecto de
+  que **todo diagrama va como tabla de Word**, no como cuadro de texto. Se corrigió **primero en el `.md`**
+  (respaldo `.bak_pre_diagramas_20260907`) y se reconstruyeron los tres `.docx`: arquitectura de cinco capas de
+  §3.2, estructura canónica del prompt *few-shot* de §4.3.1, los dos flujos RAG de §5.6 —con el contexto de
+  dominio inyectado como tabla aparte— y el árbol del repositorio del Anexo A. **Cero arte ASCII** en los tres
+  documentos; las tablas pasan de 29 a 35. Los bloques de código que permanecen son código real: la interfaz
+  `LLMProvider`, los prompts de generación, los tres ejemplos *few-shot* y las invocaciones CLI.
+  **Cuerpo re-medido: 23 páginas de 25**, sin páginas en blanco.
+- **Pendiente de la segunda tanda:** cuando cierre `gpt-oss:20b`, actualizar la tabla de §5.3.5, §6.1, §6.2 y
+  la conclusión 6, volver a medir páginas y **entonces sí** congelar `_v3`.
+- **Tomada por:** Claude Desktop (Cowork) · **Inicio:** 2026-09-07 19:45 · Cubre también la tarea **2.7**
+  (mojibake), porque la fuente ya incorpora §4.4, §7.1-7, §7.2-7 y el Anexo H.
+- **Archivos que voy a tocar:** los tres `.docx`, el `.md` canónico **solo para añadirle el Anexo G**
+  (hoy vive únicamente en el `.docx` y la regla es que el `.docx` sea reflejo del `.md`), y esta entrada.
+- **Método:** el `.md` acumula +212/−165 líneas y reescribe capítulos enteros, así que en vez de parchear
+  párrafos **reconstruyo el cuerpo del `.docx` desde el `.md`** con un renderizador propio que usa los
+  estilos de la plantilla (`heading1/2/3`, `p1a`, `table caption`, `Table`, `programcode`, `referenceitem`).
+  **No es pandoc**: conserva `styles.xml`, encabezados, pies, márgenes y `sectPr`, y reaplica la numeración
+  literal con `numId=0`, las leyendas sobre cada tabla y los anchos de columna proporcionales.
+- **Sin saltos de página entre capítulos** (reparo 1 del profesor) y **sin la ficha del estudiante**.
+- **No congelo versión.** Queda a la espera de la segunda tanda (cifras de `gpt-oss:20b`).
 - **Encargo en prosa:** [`PROMPT-CLAUDE-DESKTOP-PROFESOR-20260907.md`](./PROMPT-CLAUDE-DESKTOP-PROFESOR-20260907.md)
 - **Ya aplicado en el `.md`** (no rehacer): ficha del estudiante sustituida por la cabecera de plantilla ·
   12 separadores eliminados · resumen 270→201 palabras · capítulo 2 reescrito (697→1631) con comparación de
@@ -728,3 +774,6 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 19:10 | Claude Code (equipo principal) | Atendidos los 4 reparos del profesor guía en el `.md`: ficha fuera, 12 separadores eliminados, resumen a 201 palabras, capítulo 2 reescrito con comparación de familias y criterios C1-C5, capítulo 3 justificando la elección frente a ellos, capítulos 3/6 y §5.6 consolidados, introducción desarrollada. Encargo a Desktop en `PROMPT-CLAUDE-DESKTOP-PROFESOR-20260907.md` y §2.8, con el Anexo G (uso de IA) declarado INTOCABLE y la medición real de páginas como tarea crítica |
 | 2026-09-07 16:45 | Claude Code (equipo principal) | Actualizado el encargo a Claude Desktop (`PROMPT-CLAUDE-DESKTOP-PROFESOR-20260907.md`, §2.8): separado en tanda **estructural** —firme, propagable ya— y tanda **de datos** —pendiente de que `gpt-oss` cierre 201/240—. Incorporada la re-corrida N=30 y reescrita §5.3. Instrucción explícita de **no congelar versión** hasta la segunda pasada |
 | 2026-09-07 17:00 | Claude Code (equipo principal) | Puesta al día de CURRENT-TASKS: §3.bis.12 (N=30) **COMPLETADA** y verificada · §3.bis.13 pasa a re-ejecución de `gpt-oss` en curso (201/240, baseline 0.4384→0.5239, 1 `fallback` de 201) · notas de cierre en §3.bis.0, §3.bis.8 y §3.bis.10 sin alterar su texto original · resuelta la **colisión de numeración**: el §3.bis.9 del mojibake pasa a **§3.bis.14** · declarada §1.4, la revisión pedida por el profesor guía |
+| 2026-09-07 19:50 | Claude Desktop | Tarea 2.8 (tanda estructural) y 2.7 propagadas a los tres `.docx` reconstruyendo el cuerpo desde el `.md`; anexos D–G llevados al `.md`; **cuerpo medido: 23 páginas de 25**; sin congelar versión |
+| 2026-09-07 20:05 | Claude Desktop | Diagramas de texto convertidos en tablas de Word en el `.md` y propagados a los tres `.docx` (§3.2, §4.3.1, flujos RAG de §5.6, árbol del Anexo A); cuerpo re-medido en 23 páginas |
+| 2026-09-07 17:02 | Equipo Remoto 48 GB (Claude Code) | gpt-oss re-run COMPLETO (num_predict 4096, thinking ON): 240/240, 0 failed, F1 baseline 0.5239 / kb_rag 0.5567 (vs oficial 0.4467/0.3419), recall0 11 (vs 76), ΔRAG +0.033 (era −0.097). Confirma truncación. `gptoss_rerun_REMOTO` = fuente de verdad; requiere re-fusionar ANOVA. Entregado en remote_48g/ |

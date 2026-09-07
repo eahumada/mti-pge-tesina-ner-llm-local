@@ -54,3 +54,20 @@ truncar, vs 838s de los fallos oficiales) → **~1-1.5 h**. Mucho menor que el e
 
 ## Verificaciones
 Promediado con `if x.get('k') is not None`. Raw íntegro en `results/diag_gptoss.json` (3+ ejemplos completos).
+
+---
+
+## ✅ RE-EJECUCIÓN COMPLETA (num_predict 4096, thinking ON) — confirma el diagnóstico
+
+`results/gptoss_rerun_REMOTO/` — 240/240, **0 failed** (238 direct_json + 2 fallback).
+
+| Condición | Oficial (contaminada) | Re-run 4096 | Δ | recall=0 |
+|:---|--:|--:|--:|--:|
+| baseline | 0.4467 | **0.5239** | +0.077 | 27 → **6** |
+| kb_rag | 0.3419 | **0.5567** | **+0.215** | 49 → **5** |
+| ΔRAG | −0.097 (anómalo) | **+0.033** (normal) | — | — |
+
+**Conclusión.** El recall=0 oficial (76 filas, 32 %) era **truncación por thinking** con `num_predict 2048`;
+subiendo a 4096 desaparece (11 residuales) y gpt-oss recupera su rendimiento real. **`gptoss_rerun_REMOTO` es
+la fuente de verdad**; la corrida oficial `excluidos_n120_REMOTO` queda superada para gpt-oss. Requiere
+re-fusionar el ANOVA con esta corrida.
