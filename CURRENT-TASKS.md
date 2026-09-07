@@ -199,6 +199,24 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.10 🟡 PENDIENTE — Cuarta tanda: prosa continua y consolidación
+- **Decisión del autor (18:45), tras leer el `.docx` de la `_v3`:** el texto debe leerse **como escrito de
+  corrido** — menos encabezados, menos enumeraciones, registro algo menos formal y más breve.
+- **Aplicado en el `.md`:** §3.1 (los criterios C1-C5 iban en bloques en negrita), §4.2 (tres viñetas por
+  categoría de modelo) y §5.4 reescritas en prosa · **§4.3 consolidada: sus cuatro subsecciones desaparecen**,
+  con los tres ejemplos *few-shot* movidos al Anexo B · §4.1.1 y §4.1.2 fundidas, con el *prompt* de
+  generación también al Anexo B · §4.5 integrada al final de §4.4 · el ANOVA de §5.3.5 deja de ser lista y
+  pasa a dos párrafos.
+- **Cuerpo:** 11 528 → **10 958 palabras** · encabezados `####` 7 → 3 · tablas del cuerpo 10 → **9**.
+- ⚠️ **Cambio respecto de §2.9:** desaparece la tabla de §4.3.1 (estructura del *prompt*), que allí figuraba
+  como intocable. **Esta instrucción es posterior y prevalece.** Las **nueve restantes siguen intocables**,
+  incluidas la comparativa con todos los modelos (§5.1) y la de los trece modelos (§5.3.5).
+- **Cifras obsoletas corregidas al reescribir:** conclusión 6 con el Tukey anterior de `llama3.2`
+  (p=0,014 → **0,007**) y §5.3.5 citando el ANOVA de N=30 previo a su re-corrida (F=0,141 → **0,2235**).
+  Además §4.2 omitía `gemma:latest` y `qwen3:8b`, que sí figuran en la Tabla 2.
+- **Al propagar: volver a medir y congelar `_v4`.** Estimación ≈**19,9 páginas** de texto (medidas en `_v3`: 20).
+- **Detalle completo:** `PROMPT-CLAUDE-DESKTOP-PROFESOR-20260907.md`, sección «Cuarta tanda».
+
 ### 2.9 ✅ COMPLETADA — Segunda y tercera tanda del informe
 - **Cerrada:** 2026-09-07 21:10 por Claude Desktop. Propagadas ambas tandas a los tres `.docx` reconstruyendo
   el cuerpo desde el `.md` (renderizador propio, **sin pandoc**).
@@ -846,3 +864,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 18:15 | Claude Code (equipo principal) | Escrita §2.9 con la segunda tanda (cifras de `gpt-oss`) y la tercera (condensación: anexos 3581→3064 palabras y 16→10 tablas; §5.6 de 9 tablas a prosa; cuerpo 19→10 tablas). **Incidencia:** el intento anterior de crear §2.9 fue una operación nula —el ancla `### 2.8 🔴 PRIORITARIA` ya había sido renombrada por Claude Desktop— y se reportó como hecha sin verificarla. Corregido y verificado |
 | 2026-09-07 18:00 | Claude Code (equipo principal) | 🗑️ Eliminada por decisión del autor la tarea de acceso SSH a `eahumada@stream` (§3.1): retirados clave, `config` y script instalador; ninguno estaba versionado. ⚠️ **El script contenía una contraseña en texto plano** — credencial a considerar expuesta y a rotar |
 | 2026-09-07 21:10 | Claude Desktop | Tandas 2 y 3 propagadas a los tres `.docx`; `&nbsp;` corregido por espacio duro real; **cuerpo medido: 20 páginas de 25**; versión `_v3` congelada |
+| 2026-09-07 18:45 | Claude Code (equipo principal) | Cuarta tanda: prosa continua y consolidación. §3.1, §4.2, §5.4 y el ANOVA de §5.3.5 sin listas; **§4.3 consolidada de 4 subsecciones a 0** y §4.1.1/§4.1.2 fundidas, con ejemplos y *prompt* movidos al Anexo B; §4.5 integrada en §4.4. Cuerpo 11528→10958 palabras, `####` 7→3, tablas 10→9. Corregidas dos cifras obsoletas (Tukey 0,014→0,007; ANOVA N=30 0,141→0,2235) y §4.2, que omitía dos modelos de la Tabla 2. Encargo en §2.10 |
