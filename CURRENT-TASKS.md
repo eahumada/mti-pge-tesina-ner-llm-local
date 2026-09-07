@@ -382,11 +382,20 @@ eficiencia en hardware.
 
 ## 3. Antigravity
 
-### 3.1 ⏸️ EN ESPERA — Configuración acceso SSH passwordless a eahumada@stream
-- **Estado:** ⏸️ EN ESPERA (2026-09-07 17:32)
-- **Tarea:** Configurar clave SSH y acceso sin contraseña hacia `eahumada@stream` desde este equipo.
-- **Archivos afectados:** `~/.ssh/id_ed25519`, `~/.ssh/id_ed25519.pub`, `~/.ssh/config` (externos al repo) y `CURRENT-TASKS.md`.
-- **Progreso:** Clave ED25519 generada (`~/.ssh/id_ed25519.pub`), `~/.ssh/config` configurado y script de instalación automática creado (`~/.ssh/install_key_to_stream.sh`). Se verificó que el host `stream` (`stream.local` / `192.168.50.135`) se encuentra apagado o inaccesible en la red local (`Host is down`). Listo para completar la copia en cuanto se encienda la máquina.
+### 3.1 Sin tareas activas
+- **Estado:** ⬜ SIN ASIGNACIÓN
+- **Instrucciones aplicables:** `repos/ner-llm-entity-benchmark/ANTIGRAVITY.md` → `AGENTS.md`
+- Si se le asignan tareas, declararlas aquí antes de empezar.
+
+> 🗑️ **Tarea de acceso SSH a `eahumada@stream`: ELIMINADA por decisión del autor (2026-09-07 18:00).**
+> Se retiraron `~/.ssh/id_ed25519`, su clave pública, `~/.ssh/config` y el script de instalación. Ninguno de
+> esos ficheros estaba versionado; el directorio `~/.ssh/agent`, anterior y ajeno a la tarea, no se tocó.
+>
+> ⚠️ **Incidencia de seguridad detectada al eliminar:** el script `install_key_to_stream.sh` contenía una
+> **contraseña en texto plano** para el equipo de destino. El fichero ya no existe, pero **la credencial debe
+> considerarse expuesta y conviene rotarla**: pudo quedar en el historial del intérprete de órdenes o en
+> copias de seguridad del sistema. **No generar credenciales en claro dentro de scripts**; usar
+> `.setenv.sh`, que está fuera del control de versiones, o el llavero del sistema.
 
 ---
 
@@ -817,3 +826,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 17:02 | Equipo Remoto 48 GB (Claude Code) | gpt-oss re-run COMPLETO (num_predict 4096, thinking ON): 240/240, 0 failed, F1 baseline 0.5239 / kb_rag 0.5567 (vs oficial 0.4467/0.3419), recall0 11 (vs 76), ΔRAG +0.033 (era −0.097). Confirma truncación. `gptoss_rerun_REMOTO` = fuente de verdad; requiere re-fusionar ANOVA. Entregado en remote_48g/ |
 | 2026-09-07 17:25 | Claude Code (equipo principal) | `gpt-oss` COMPLETO y verificado (0 failed, 238/240 `direct_json`): ΔRAG −0,097 → **+0,033**, era artefacto de truncamiento. **ANOVA rehecho: F=38,2222 · p=3,4453e-160**, 10 de 13 modelos con ΔRAG positivo. Actualizados §5.3.5, Tukey, y el **Anexo H** (delta de `gpt-oss` +0,0914 → −0,0336; rango 16 → 9,4 pp). Commiteada la tanda estructural de Claude Desktop: **cuerpo de 23 páginas de 25 medidas**, anexos A-H, Anexo G íntegro, 0 arte ASCII. Documentada la **regla de no usar arte ASCII** en `CLAUDE.md` y en el encargo. Abierta §2.9 para la segunda tanda |
 | 2026-09-07 18:15 | Claude Code (equipo principal) | Escrita §2.9 con la segunda tanda (cifras de `gpt-oss`) y la tercera (condensación: anexos 3581→3064 palabras y 16→10 tablas; §5.6 de 9 tablas a prosa; cuerpo 19→10 tablas). **Incidencia:** el intento anterior de crear §2.9 fue una operación nula —el ancla `### 2.8 🔴 PRIORITARIA` ya había sido renombrada por Claude Desktop— y se reportó como hecha sin verificarla. Corregido y verificado |
+| 2026-09-07 18:00 | Claude Code (equipo principal) | 🗑️ Eliminada por decisión del autor la tarea de acceso SSH a `eahumada@stream` (§3.1): retirados clave, `config` y script instalador; ninguno estaba versionado. ⚠️ **El script contenía una contraseña en texto plano** — credencial a considerar expuesta y a rotar |
