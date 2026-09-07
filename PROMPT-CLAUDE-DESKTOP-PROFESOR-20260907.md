@@ -70,3 +70,30 @@ La corrección debe hacerse **siempre primero en el `.md` canónico** y solo des
 se arregla únicamente en el documento de Word, la siguiente reconstrucción desde el Markdown vuelve a
 introducir el arte ASCII — que es precisamente lo que ocurrió el 2026-09-07 y obligó a repetir el trabajo.
 Esta regla queda también recogida en `CLAUDE.md`.
+
+## Tercera tanda (2026-09-07 18:00): condensación de anexos y reducción de tablas
+
+Decisión del autor: **los anexos se concentran en resultados finales**. Se han eliminado del `.md` las
+conclusiones intermedias, las reflexiones sobre el camino recorrido y las tablas de paso, y se ha reducido el
+peso de las tablas en el cuerpo a favor de la prosa.
+
+En los **anexos** desaparecen los dos diagramas de flujo del módulo RAG, el comparativo cronológico entre
+versiones y el mini-benchmark preliminar de cinco artículos; se conserva lo que permite replicar —
+implementación, catálogo y reglas—. La subsección `D.8`, que por un error de numeración colgaba del Anexo F,
+vuelve al D. El Anexo H se compacta fundiendo su explicación del defecto con la medición del alcance. Los
+anexos pasan de **3 581 a 3 064 palabras** y de **16 a 10 tablas**.
+
+En el **cuerpo**, §5.6 se reescribe íntegramente en prosa: pasa de 1 206 palabras y **nueve tablas a 411
+palabras y ninguna**. No es solo condensación —sus tablas duplicaban el catálogo del Anexo D y la tabla
+comparativa de §5.3.5, y arrastraban **cifras anteriores al re-puntaje** (`gemma:latest` 0,4734/0,5303 cuando
+lo correcto es 0,4400/0,5136) además de un sondeo de cinco artículos cuyas cifras el propio texto reconocía
+como no persistidas—. El cuerpo queda en **11 528 palabras y 10 tablas**, frente a 12 323 y 19.
+
+**Las tablas que permanecen son deliberadas y no deben tocarse:** la comparativa de familias de técnicas
+(§2.2), el estado del arte (§2.6), la arquitectura por capas (§3.2), la estructura del *prompt* (§4.3.1), las
+métricas (§4.4), **la tabla comparativa con todos los modelos (§5.1)**, las variantes de *prompt* (§5.2), el
+corpus del dominio (§5.3), **la tabla de los trece modelos (§5.3.5)** y la eficiencia en hardware (§5.5).
+
+Al reconstruir, ten en cuenta que las subsecciones de los anexos D y H se han renumerado de forma correlativa
+tras las supresiones. El cuerpo debería bajar de las 23 páginas medidas a unas 21, lo que da margen cómodo
+frente al límite de 25.
