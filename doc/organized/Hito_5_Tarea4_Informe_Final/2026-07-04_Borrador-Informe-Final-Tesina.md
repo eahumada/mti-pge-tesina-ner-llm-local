@@ -62,7 +62,7 @@ The system incorporates a multithreading pub/sub processing architecture with an
 
 Las instituciones financieras operan bajo un marco regulatorio estricto que les obliga a identificar y gestionar entidades de riesgo en tiempo real. Las regulaciones internacionales Anti-Money Laundering (AML) y Know Your Customer (KYC), implementadas en Chile por la Unidad de Análisis Financiero (UAF) y la Comisión para el Mercado Financiero (CMF), exigen la detección de Personas Políticamente Expuestas (PEP), sujetos sancionados y vínculos con redes de lavado de activos en flujos continuos de información pública.
 
-El proceso actual en instituciones como Austranet implica la revisión manual de cientos de artículos periodísticos diarios por analistas especializados, un proceso con un costo promedio estimado de USD 8.75 por artículo analizado. A nivel global, el mercado de RegTech alcanza los USD 12.300 millones en 2024, proyectándose a USD 87.200 millones en 2028, evidenciando la urgencia de soluciones automatizadas y escalables [referencia KPMG 2024].
+El proceso actual en instituciones como Austranet implica la revisión manual de cientos de artículos periodísticos diarios por analistas especializados, un proceso con un costo promedio estimado de USD 8.75 por artículo analizado. A nivel global, según Verified Market Research el mercado de RegTech se valoró en USD 15,68 mil millones en 2020 y se proyecta que alcance USD 87,17 mil millones hacia 2028, con una CAGR del 23,92 % durante 2021-2028, evidenciando la urgencia de soluciones automatizadas y escalables (Verified Market Research, 2022).
 
 ### 1.2 Planteamiento del Problema
 
@@ -122,7 +122,7 @@ La Generación Aumentada por Recuperación (RAG) [1] optimiza la salida de un LL
 
 ### 2.4 Ejecución Soberana de LLMs con Ollama
 
-Ollama es una plataforma de código abierto que permite ejecutar LLMs de gran escala localmente mediante cuantización (GGUF, Q4_K_M) optimizada para Apple Silicon Metal (MPS) y arquitecturas x86 con CUDA. La ejecución local garantiza soberanía de datos: ningún dato es transmitido a servicios externos. En este trabajo, Ollama gestiona la carga dinámica de pesos en VRAM (hasta 24.7 GB para gemma4:31b-mlx) y la liberación explícita de memoria GPU al completar cada modelo (keep_alive=0).
+Ollama es una plataforma de código abierto que permite ejecutar LLMs de gran escala localmente mediante cuantización (GGUF, Q4_K_M) optimizada para Apple Silicon Metal (MPS) y arquitecturas x86 con CUDA. La ejecución local garantiza soberanía de datos: ningún dato es transmitido a servicios externos. En este trabajo, Ollama gestiona la carga dinámica de pesos en VRAM y la liberación explícita de memoria GPU al completar cada modelo (keep_alive=0). El footprint operativo varía con el tamaño del modelo: ~7-9 GB para modelos de hasta ~12B (Q4) y hasta ~24,7 GB para gemma4:31b-mlx (pesos ~18,7 GB más KV cache y overhead de inferencia), lo que condiciona el hardware requerido (ver §3.6).
 
 ### 2.5 Estado del Arte Relacionado
 
@@ -207,7 +207,7 @@ La interfaz de visualización implementada en `dashboard.py` (Streamlit) present
 
 ### 3.6 Gestión de VRAM en Apple Silicon
 
-Para garantizar la ejecución serial de modelos de gran escala (≥8B) sin desbordamiento de VRAM, se implementó la liberación explícita de pesos de GPU al finalizar cada modelo mediante una llamada a la API de generación de Ollama con `keep_alive=0`. Esto permite ejecutar secuencialmente modelos de hasta 31B parámetros (≈24.7 GB de VRAM) en hardware con 16 GB de memoria unificada.
+Para garantizar la ejecución serial de modelos de gran escala sin desbordamiento de VRAM, se implementó la liberación explícita de pesos de GPU al finalizar cada modelo mediante una llamada a la API de generación de Ollama con `keep_alive=0`. La ejecución se organizó en dos escalones de hardware según el footprint de memoria. Los modelos de hasta ~12B parámetros (Q4) se ejecutaron en un equipo M4 con **16 GB de memoria unificada**: su footprint operativo (~7-9 GB) queda por debajo del techo de VRAM que macOS/Metal asigna a la GPU, equivalente a ~75 % de la memoria unificada (`recommendedMaxWorkingSetSize`), es decir ~12 GB en un equipo de 16 GB. Los modelos de 31B parámetros (p. ej. gemma4:31b, Q4_K_M/MLX), con footprint operativo ~24,7 GB (pesos ~18,7 GB más KV cache y overhead), **exceden ese techo y no pueden cargarse en 16 GB ni siquiera de forma serial** con `keep_alive=0` —este parámetro evita retener varios modelos a la vez, pero no reduce el footprint de uno solo—; se ejecutaron en un equipo con **48 GB de memoria unificada**, cuyo techo de VRAM asignable (~36 GB) aloja el modelo con holgura para el KV cache y el sistema operativo.
 
 ---
 
@@ -358,7 +358,7 @@ Los resultados de la análisis comparativo de prompts muestran que la localizaci
 
 ### 4.5 Infraestructura de Pruebas
 
-- **Hardware:** Apple MacBook Pro M4 Max, 16 GB memoria unificada (Metal/MPS).
+- **Hardware:** Apple Silicon (Metal/MPS), en dos configuraciones según el footprint del modelo: 16 GB de memoria unificada para modelos de hasta ~12B, y 48 GB de memoria unificada para los modelos de 31B y variantes MLX de gran tamaño (ver §3.6).
 - **Software:** Python 3.14, Ollama 0.6+, scikit-learn 1.9, statsmodels 0.14, pandas 3.0, Streamlit 1.60.
 - **Reproducibilidad:** Checkpointing automático (`.checkpoint.json`) para reanudar benchmarks interrumpidos sin pérdida de datos.
 
@@ -468,9 +468,11 @@ El análisis cualitativo de las extracciones identifica tres categorías de erro
 
 | Modelo | VRAM (MB) | Tok/s | Parámetros (B) | Índice Tok/s/B | Costo/Artículo |
 |:---|:---:|:---:|:---:|:---:|:---:|
-| gemma4:31b | 18,803 | 11.37 | 31 | 0.37 | $0.052 |
-| gemma4:31b-mlx | 24,751 | 27.56 | 31 | 0.89 | $0.052 |
-| llama3.2 (3B) | ~3,000 | 47.5 | 3 | 15.8 | $0.052 |
+| gemma4:31b | 18,795 | 10.23 | 31 | 0.33 | $0.052 |
+| gemma4:31b-mlx | 24,607 | 22.80 | 31 | 0.74 | $0.052 |
+| llama3.2 (3B) | 4,018 | 79.35 | 3 | 26.5 | $0.052 |
+
+> Valores medidos sobre `benchmark_results.csv` (subconjunto `_baseline`, N=15; columnas `vram_mb` y `tokens_per_sec`).
 
 > El costo por artículo en el sistema soberano local se estima en USD 0.052, versus USD 8.75 en revisión manual, representando una reducción del **99.4%** en costo unitario.
 
@@ -831,7 +833,7 @@ El prompt de sistema en español (few-shot) incluye: (1) instrucciones de rol (a
 | Componente | Especificación |
 |:---|:---|
 | Hardware | Apple MacBook Pro, chip M4 Max |
-| Memoria Unificada | 16 GB Metal (MPS) |
+| Memoria Unificada | 16 GB (modelos ≤~12B) / 48 GB (31B y MLX grandes) Metal (MPS) |
 | Sistema Operativo | macOS 15.x (Sequoia) |
 | Python | 3.14.7 |
 | Ollama | 0.6+ |

@@ -243,3 +243,11 @@ Injecting vector-retrieved context from local organizational and personal dictio
 | llama3.1:8b_rag_strict_prompt | 0.7500 | 0.6333 | 1.0000 | 4.16% | 3.23 | 0.30 | 0.00 |
 
 > ⚠️ **Consistencia aritmética.** El F1 de esta tabla es la media de los F1 por registro (`src/evaluator.py:357-359` promedia f1, precision y recall por separado), no un F1 derivado de la P y la R agregadas. Aun así, como `f1_i ≤ (p_i+r_i)/2` para todo registro, se cumple `mean(F1) ≤ (mean(P)+mean(R))/2`. Las dos filas marcadas ⚠️ violan esa cota: `llama3.2:latest_rag` (cota 0.7646 < 0.8783) y `llama3.1:8b_baseline` (cota 0.7334 < 0.7667). `llama3.1:8b_rag_enhanced` sí es consistente (cota 0.8334 ≥ 0.7750). Estas cifras corresponden a prototipos tempranos sobre el sample de 20 registros (`data/sample_sanctions.json`), cuyo CSV no sobrevive; no se pueden recalcular y quedan pendientes de decisión del autor. La tabla tampoco declara `run_id` ni figura en RUNS_INDEX.md.
+
+> ✅ **Resolución (decisión del autor, 2026-09-07).** Las dos filas ⚠️ (`llama3.2:latest_rag` F1=0.8783 y
+> `llama3.1:8b_baseline` F1=0.7667) se declaran **NO VERIFICABLES** y no deben citarse como resultados
+> (prototipo N=20, CSV no conservado, F1 aritméticamente imposible; verificado: cero coincidencias como valor de
+> columna en cualquier CSV). **Fuente oficial de `llama3.1:8b`:** corrida N=120 re-puntuada
+> (`results/benchmark_n120_REMOTO`, post-fix de scoring): **baseline F1=0.4876 (P=0.4737, R=0.5491) · kb_rag
+> F1=0.5075 (P=0.5085, R=0.5523)**. Para `llama3.2:latest` **no existe** corrida N=120; sus cifras de prototipo
+> se retiran del cuerpo de resultados. Se conservan las filas por política aditiva, marcadas como no verificables.
