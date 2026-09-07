@@ -183,6 +183,20 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.8 🔴 PRIORITARIA — Revisión pedida por el profesor guía (2026-09-07)
+- **Encargo en prosa:** [`PROMPT-CLAUDE-DESKTOP-PROFESOR-20260907.md`](./PROMPT-CLAUDE-DESKTOP-PROFESOR-20260907.md)
+- **Ya aplicado en el `.md`** (no rehacer): ficha del estudiante sustituida por la cabecera de plantilla ·
+  12 separadores eliminados · resumen 270→201 palabras · capítulo 2 reescrito (697→1631) con comparación de
+  familias de técnicas y criterios C1-C5 · capítulo 3 consolidado 6→4 secciones abriendo con la justificación
+  frente a esos criterios · capítulo 6 consolidado 5→2 · §5.6 consolidada 7→3 · introducción desarrollada
+  645→1117 palabras con enfoque de solución y metodología de validación.
+- **Lo crítico:** **medir las páginas reales**. Cuerpo ≈ 21,9 páginas de texto; límite **25 sin anexos**
+  (verificado en `tesinas-finales-2026.pdf`). Los **anexos no computan** y tienen hasta 25 páginas propias.
+  **Si se excede, avisar antes de recortar.**
+- **🔒 INTOCABLE:** el **Anexo G, declaración de uso de IA**, se conserva **íntegro** — no se resume, no se
+  suaviza, no se reubica. Si al recolocar anexos cambiara su letra, se mantiene la G para él y se desplazan
+  los demás. Igual criterio para el **Anexo H** (defecto de codificación).
+
 ### 2.7 🟡 PENDIENTE — Propagar los cambios de la codificación (mojibake) a los `.docx`
 - **Ampliada 2026-09-07 18:10.** Lo que hay que propagar es ahora **cuatro cambios**, no uno:
   1. **§7.2, punto 7** — nueva línea de trabajo futuro (Fase 6): normalización de codificación.
@@ -655,3 +669,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 14:43 | Equipo Remoto 48 GB (Claude Code) | N30 re-run COMPLETADO (0 failed, direct_json): gemma4:31b F1=0.7855 (P0.733 R0.883), gemma4:31b-mlx F1=0.8057. Reemplaza el titular 79.03% con scorer corregido y dato por registro. gpt-oss re-run arrancó (tras N30). L39+zip: estudio completo archivado en `remote_48g/estudio_completo_20260907.zip` (versionado, no gitignored) para evitar re-inferir en el futuro |
 | 2026-09-07 15:01 | Equipo Remoto 48 GB (Claude Code) | gpt-oss re-run EN CURSO 42/240, **0 failed, recall0=2** (vs 76 en la oficial) — el num_predict 4096 confirma que el recall=0 era truncación por thinking, no bucle. Snapshot parcial en remote_48g/ |
 | 2026-09-07 18:10 | Claude Code (equipo principal) | Hallazgo de codificación elevado al informe: **conclusión 7** en §7.1 y **Anexo H** completo (H.1-H.6: qué es el mojibake a nivel de bytes, alcance medido, por qué la lectura inicial era incorrecta, evidencia diferencial por modelo, cómo repararlo y cuatro implicaciones para evaluar NER). Detectado de paso que la **corrección de la convención de puntuación no estaba documentada** en el informe pese a afectar a todas las cifras: añadida a §4.4 junto con el umbral de cotejo difuso. §2.7 ampliada a cuatro cambios |
+| 2026-09-07 19:10 | Claude Code (equipo principal) | Atendidos los 4 reparos del profesor guía en el `.md`: ficha fuera, 12 separadores eliminados, resumen a 201 palabras, capítulo 2 reescrito con comparación de familias y criterios C1-C5, capítulo 3 justificando la elección frente a ellos, capítulos 3/6 y §5.6 consolidados, introducción desarrollada. Encargo a Desktop en `PROMPT-CLAUDE-DESKTOP-PROFESOR-20260907.md` y §2.8, con el Anexo G (uso de IA) declarado INTOCABLE y la medición real de páginas como tarea crítica |

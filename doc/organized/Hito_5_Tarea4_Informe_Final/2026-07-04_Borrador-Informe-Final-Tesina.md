@@ -44,13 +44,11 @@ El proceso actual en instituciones como Austranet implica la revisión manual de
 
 ### 1.2 Planteamiento del Problema
 
-El problema central es de naturaleza técnico-operativa: la extracción automatizada de entidades nombradas (personas, organizaciones) desde noticias no estructuradas en español con alta precisión semántica, en contextos de ambigüedad regulatoria, sin exponer datos confidenciales a servicios externos en la nube.
+El problema es de naturaleza técnico-operativa: extraer automáticamente entidades nombradas —personas y organizaciones— desde noticias no estructuradas en español, con precisión suficiente para sostener una decisión de cumplimiento, en un dominio donde la ambigüedad referencial es la norma y sin que el texto abandone la infraestructura de la institución.
 
-Los enfoques existentes presentan limitaciones críticas:
-- **Revisión manual:** altamente precisa pero no escalable ni rentable.
-- **Sistemas basados en reglas (regex, CRF):** frágiles ante variaciones léxicas en español.
-- **APIs en la nube (OpenAI, Google Cloud NLP):** violan la soberanía de datos y presentan costos prohibitivos en batch.
-- **Modelos supervisados (BERT-NER):** requieren miles de ejemplos etiquetados en dominio específico, inexistentes en español para compliance.
+Ninguna de las alternativas disponibles satisface simultáneamente esas condiciones. La **revisión manual** ofrece la máxima precisión, pero su coste crece linealmente con el volumen y no escala ante un flujo continuo de noticias. Los **sistemas basados en reglas y expresiones regulares** resultan frágiles ante la variación morfológica del español, donde un mismo nombre admite múltiples formas según la posición, la partícula y la acentuación. Las **APIs comerciales en la nube** aportan la capacidad necesaria, pero transfieren texto que puede contener información de clientes a un tercero, lo que en una entidad regulada obliga a suscribir acuerdos de tratamiento de datos y amplía la superficie de exposición; su coste, además, se vuelve prohibitivo al procesar por lotes. Los **modelos supervisados** del tipo BERT-NER alcanzan el mejor desempeño publicado, pero requieren miles de ejemplos etiquetados en el dominio objetivo, inexistentes en español para cumplimiento financiero.
+
+La brecha que este trabajo aborda se sitúa precisamente en esa intersección vacía: obtener un desempeño aprovechable **sin datos etiquetados del dominio y sin ceder los datos a un tercero**.
 
 ### 1.3 Hipótesis de Trabajo
 
@@ -70,10 +68,15 @@ Los enfoques existentes presentan limitaciones críticas:
 4. Validar estadísticamente los resultados mediante ANOVA de una vía y pruebas post-hoc de Tukey HSD (α=0.05) sobre un corpus estadísticamente significativo (N≥30).
 5. Demostrar una reducción de costos operativos del 60–80% respecto a la revisión manual, manteniendo una tasa de alucinaciones inferior al 5%.
 
-### 1.5 Estructura del Documento
+### 1.5 Enfoque de Solución y Metodología de Validación
 
-El informe se organiza así: §2 marco teórico y estado del arte; §3 sistema propuesto; §4 diseño experimental; §5 resultados; §6 discusión de los hallazgos; §7 conclusiones y trabajo futuro; §8 referencias; §9 anexos técnicos.
+La solución adoptada consiste en operar modelos de lenguaje generativos de código abierto **enteramente sobre infraestructura propia**, describiendo la tarea de extracción en el propio *prompt* en lugar de ajustar los pesos del modelo. Esta elección resuelve de raíz las dos restricciones del problema —no exige corpus etiquetado y no expone el texto—, a cambio de asumir dos inconvenientes que el sistema debe gestionar: una salida no estructurada por construcción, que se fuerza a un esquema verificable, y un riesgo de alucinación que debe medirse explícitamente. El capítulo 2 revisa las alternativas disponibles y el capítulo 3 justifica cada decisión frente a ellas.
 
+La validación sigue una estrategia empírica en tres etapas. Primero se establece una **línea base comparativa** ejecutando el conjunto de modelos candidatos sobre un corpus anotado, con el fin de acotar el espacio de opciones viables. Después se aísla el efecto de las variables de *prompt* mediante un diseño factorial que cruza idioma y presencia de ejemplos, evaluando las cuatro combinaciones sobre el mismo modelo y corpus. Finalmente se contrasta la extracción directa frente a la aumentada por recuperación sobre un corpus ampliado, y se determina mediante **ANOVA de una vía y pruebas post-hoc de Tukey HSD** si las diferencias observadas son estadísticamente significativas o atribuibles a la variabilidad entre artículos. Todas las corridas quedan definidas por un fichero de configuración reproducible, de modo que cualquier resultado del informe pueda rehacerse a partir de los artefactos publicados.
+
+### 1.6 Estructura del Documento
+
+El capítulo 2 revisa las familias de técnicas aplicables al problema —desde los sistemas basados en reglas hasta los modelos generativos—, las estrategias de aumento por recuperación y las alternativas de ejecución local, y cierra fijando los criterios de selección. El capítulo 3 describe el sistema propuesto y justifica cada decisión de diseño frente a esos criterios. El capítulo 4 detalla el diseño experimental: corpus, modelos, configuraciones de *prompt*, métricas e infraestructura. El capítulo 5 presenta los resultados de los tres experimentos y el capítulo 6 los discute, con especial atención a la contribución metodológica sobre qué información conviene recuperar. El capítulo 7 recoge las conclusiones y las líneas de trabajo futuro. Los anexos reúnen el material de reproducción: estructura del repositorio, *prompts* completos, configuración del entorno y el análisis detallado del defecto de codificación del corpus.
 
 ## 2. MARCO TEÓRICO Y ESTADO DEL ARTE
 
@@ -524,8 +527,6 @@ El análisis cualitativo de las extracciones identifica tres categorías de erro
 
 ### 5.6 Optimización del Módulo RAG: De Diccionarios de Entidades a Base de Conocimientos Contextual
 
-> **Nota Cronológica:** Esta sección documenta un ciclo iterativo de investigación e implementación realizado entre el **31 de agosto y el 1 de septiembre de 2026**, posterior a la entrega del benchmark principal (Sección 5.3). Responde a la necesidad de mejorar el F1-Score sin afectar la soberanía de datos y constituye una contribución metodológica adicional.
-
 #### 5.6.1 Motivación: Comportamiento Contraintuitivo del RAG Basado en Diccionarios
 
 Durante el benchmark principal sobre N=120 artículos reales, se observó un fenómeno inesperado y mayoritario (7 de 15 modelos degradaron, entre ellos los de mayor F1 baseline; 8 mejoraron): **la activación del módulo RAG (`_rag_enhanced`) produjo una degradación del F1-Score respecto al modo `_baseline`**, en lugar de la mejora esperada.
@@ -560,7 +561,7 @@ ChromaDB: Top-5 por coseno ──→ GRANJA LA SIERRA LTDA. (Org)
 Recall: 62.8% → 21.6%  ❌ (sondeo N=5)
 ```
 
-#### 5.6.2 Arquitectura Propuesta: Base de Conocimientos Contextual
+#### 5.6.2 Arquitectura, implementación y contenido de la base de conocimientos
 
 La solución implementada transforma el contenido de la base vectorial: en lugar de nombres de entidades, se almacenan **Guías Tipológicas de Dominio** y **Ejemplares Dinámicos Few-Shot**.
 
@@ -586,8 +587,6 @@ ChromaDB 'ner_knowledge_base': Top-1 guideline + Top-1 exemplar
 F1: 0.3521 → 0.5489  ✅  (+19.7 pp)
 Recall: 33.3% → 59.5%  ✅  (+26.2 pp)
 ```
-
-#### 5.6.3 Implementación Técnica
 
 El módulo `src/kb_rag_manager.py` (`KBRAGManager`) implementa cuatro modos de operación configurables:
 
@@ -621,8 +620,6 @@ La base de conocimientos se organiza en **dos colecciones ChromaDB separadas** p
 - **Entity-dict RAG (legacy):** Template restrictivo — `"DO NOT extract unless they explicitly appear..."` — previene alucinaciones de entidades ausentes.
 - **KB RAG (nuevo):** Template positivo — `"[EXTRACTION GUIDANCE] Apply these rules to the news text"` — instruye activamente al LLM sin suprimir su capacidad de extracción.
 
-#### 5.6.4 Datos de la Base de Conocimientos
-
 **Guías Tipológicas (5 dominios):** Documentos JSON con reglas específicas de desambiguación NER:
 
 | Dominio | ID | Idioma | Keywords Clave |
@@ -645,7 +642,7 @@ La base de conocimientos se organiza en **dos colecciones ChromaDB separadas** p
 | `ex_aml_sanctions_en_002` | AML/Sanciones EN | `real_mixed_79` |
 | `ex_aml_sanctions_en_003` | AML/Sanciones EN | `real_mixed_27` |
 
-#### 5.6.5 Resultados Empíricos del KB RAG
+#### 5.6.3 Resultados empíricos
 
 **Sondeo de validación funcional (N=5 artículos, `llama3.2:latest`, 2026-09-01; cifras no persistidas en `results/`):**
 
@@ -680,30 +677,7 @@ El beneficio del KB RAG resulta **inversamente proporcional a la capacidad del m
 
 En entornos de hardware restringido, donde solo es viable ejecutar modelos de 3–14B, el KB RAG mejora el F1 sin costo computacional relevante.
 
-#### 5.6.6 Análisis Comparativo Cronológico
-
-| Aspecto | Sistema v1.0 (Dic 2025 – Ago 2026) | Sistema v1.1 (Sep 2026) |
-|:---|:---|:---|
-| **Contenido RAG** | Diccionarios de nombres (3.605 personas, 1.848 orgs) | Guías tipológicas + ejemplares few-shot |
-| **Colección ChromaDB** | `ner_dictionaries` | + `ner_knowledge_base` (nueva, no reemplaza) |
-| **Template de inyección** | Restrictivo ("DO NOT extract unless...") | Positivo ("Apply these rules to the text") |
-| **Modo de operación** | Binario (RAG on/off) | Cuatro modos configurables por CLI |
-| **F1-Score RAG (`llama3.2`)** | 0.2367 en sondeo N=5 (−57.8% vs su propio baseline 0.5614) | **0.4943 (+25.3% vs baseline, N=120)** |
-| **F1-Score RAG (`qwen2.5:14b`)** | — | **0.5651 (+8.9% vs baseline)** |
-| **Configurabilidad** | No (hardcoded) | Sí (`--rag-mode {entities,kb_guidelines,kb_fewshot,kb_combined}`) |
-| **Datos sintéticos** | Sí (12.000 augmented_persons) | No (solo datos reales del corpus de evaluación) |
-
-
-#### 5.6.7 Justificación Metodológica
-
-Esta evolución del sistema RAG aporta tres contribuciones metodológicas documentables:
-
-1. **Diagnóstico del Semantic Mismatch:** Identificación formal de un problema de diseño en la recuperación RAG para NER en vocabulario abierto, con evidencia empírica cuantitativa (Recall: 62.8% → 21.6% en el sondeo N=5; 40.8% → 32.9% en el benchmark N=120).
-
-2. **Solución basada en tipología lingüística:** la base de conocimientos contextual transforma el problema de "buscar entidades por similitud" en el de "identificar el dominio del texto y aplicar reglas tipológicas", que es lo que los LLMs ejecutan con alta precisión.
-
-3. **Configurabilidad como principio de diseño:** La implementación con flags CLI permite mantener la línea base en producción mientras se experimenta con el nuevo modo, habilitando reversión instantánea sin modificar código.
-
+La interpretación de estos resultados —por qué el contenido recuperado importa más que el hecho de recuperar, y por qué el beneficio decrece con la capacidad del modelo— se desarrolla en §6.2.
 
 ## 6. DISCUSIÓN DE LOS RESULTADOS
 
