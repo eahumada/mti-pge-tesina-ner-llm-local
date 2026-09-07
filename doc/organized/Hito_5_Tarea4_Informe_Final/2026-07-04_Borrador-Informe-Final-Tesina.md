@@ -72,7 +72,7 @@ La brecha que este trabajo aborda se sitúa precisamente en esa intersección va
 
 La solución adoptada consiste en operar modelos de lenguaje generativos de código abierto **enteramente sobre infraestructura propia**, describiendo la tarea de extracción en el propio *prompt* en lugar de ajustar los pesos del modelo. Esta elección resuelve de raíz las dos restricciones del problema —no exige corpus etiquetado y no expone el texto—, a cambio de asumir dos inconvenientes que el sistema debe gestionar: una salida no estructurada por construcción, que se fuerza a un esquema verificable, y un riesgo de alucinación que debe medirse explícitamente. El capítulo 2 revisa las alternativas disponibles y el capítulo 3 justifica cada decisión frente a ellas.
 
-La validación sigue una estrategia empírica en tres etapas. Primero se establece una **línea base comparativa** ejecutando el conjunto de modelos candidatos sobre un corpus anotado, con el fin de acotar el espacio de opciones viables. Después se aísla el efecto de las variables de *prompt* mediante un diseño factorial que cruza idioma y presencia de ejemplos, evaluando las cuatro combinaciones sobre el mismo modelo y corpus. Finalmente se contrasta la extracción directa frente a la aumentada por recuperación sobre un corpus ampliado, y se determina mediante **ANOVA de una vía y pruebas post-hoc de Tukey HSD** si las diferencias observadas son estadísticamente significativas o atribuibles a la variabilidad entre artículos. Todas las corridas quedan definidas por un fichero de configuración reproducible, de modo que cualquier resultado del informe pueda rehacerse a partir de los artefactos publicados.
+La validación sigue una estrategia empírica en tres etapas. Primero se establece una **línea base comparativa** ejecutando el conjunto de modelos candidatos sobre un corpus anotado, con el fin de acotar el espacio de opciones viables. Después se aísla el efecto de las variables de *prompt* mediante un diseño factorial que cruza idioma y presencia de ejemplos, evaluando las cuatro combinaciones sobre el mismo modelo y corpus. Finalmente se contrasta la extracción directa frente a la aumentada por recuperación sobre un corpus ampliado, y se determina mediante **ANOVA de una vía y pruebas post-hoc de Tukey HSD** si las diferencias observadas son estadísticamente significativas o atribuibles a la variabilidad entre artículos. Todas las corridas quedan definidas por un fichero de configuración reproducible, así que cualquier resultado del informe pueda rehacerse a partir de los artefactos publicados.
 
 ### 1.6 Estructura del Documento
 
@@ -82,15 +82,13 @@ El capítulo 2 revisa las familias de técnicas aplicables al problema —desde 
 
 Este capítulo revisa las familias de técnicas disponibles para resolver el problema planteado y establece los criterios con los que, en el capítulo 3, se selecciona una de ellas. El recorrido no pretende ser exhaustivo sino comparativo: interesa entender qué exige cada alternativa, qué garantiza y en qué condiciones deja de ser aplicable al caso de estudio, caracterizado por la ausencia de corpus etiquetados en español para el dominio de cumplimiento y por la obligación de no exponer los datos a terceros.
 
-### 2.1 El problema del reconocimiento de entidades nombradas
+### 2.1 El problema y las familias de técnicas disponibles
 
 El Reconocimiento de Entidades Nombradas (NER) es una subtarea del Procesamiento de Lenguaje Natural que consiste en localizar fragmentos de texto y clasificarlos en categorías semánticas predefinidas. En cumplimiento normativo las categorías relevantes son **Personas** (PER), **Organizaciones** (ORG) y **Ubicaciones** (LOC), pues son las que permiten cotejar una noticia contra listas de sanciones y de personas expuestas políticamente [19].
 
 Formalmente se plantea como un problema de etiquetado de secuencias: dado un texto segmentado en tokens, se asigna a cada uno una etiqueta según el esquema IOB2, que distingue el inicio de una entidad (*Beginning*), su continuación (*Inside*) y el texto ajeno a toda entidad (*Outside*). Esta formulación, heredada de la tarea compartida CoNLL-2002 [12], es la que fija el criterio de evaluación: una entidad se considera correctamente extraída solo si coinciden a la vez sus límites y su categoría.
 
 La dificultad del dominio no proviene de la definición de la tarea sino de tres rasgos del material periodístico financiero. Primero, la **ambigüedad referencial**: un mismo token puede designar una persona o una organización según el contexto —«Santander» es tanto un apellido como un banco y una ciudad—. Segundo, la **variación morfológica del español**, con nombres compuestos, partículas («de», «del», «y») y tildes que fragmentan la coincidencia exacta. Tercero, la **escasez de datos etiquetados**: no existe un corpus público en español anotado para el dominio AML/KYC, lo que descarta de entrada cualquier técnica que dependa de un volumen sustancial de ejemplos supervisados.
-
-### 2.2 Familias de técnicas para NER
 
 Las aproximaciones al problema pueden ordenarse por el tipo de conocimiento que requieren y por el coste de adaptarlas a un dominio nuevo.
 
@@ -114,7 +112,7 @@ Los **modelos de lenguaje grande generativos** (Transformers *decoder-only*) inv
 
 La última fila es la única compatible con la restricción de datos del proyecto, y por eso concentra el resto de la revisión.
 
-### 2.3 Aprendizaje en contexto y diseño de prompts
+### 2.2 Aprendizaje en contexto y diseño de prompts
 
 La arquitectura Transformer [4], sostenida sobre el mecanismo de atención multi-cabeza, es la base común de todos los modelos evaluados. Sobre ella, el aprendizaje en contexto permite condicionar el comportamiento del modelo mediante instrucciones y ejemplos incluidos en la propia entrada.
 
@@ -122,7 +120,7 @@ Se distinguen dos regímenes. En **zero-shot** el *prompt* contiene únicamente 
 
 Un factor específico del castellano es el **coste de tokenización**: los modelos entrenados mayoritariamente en inglés segmentan el español en más tokens por palabra, lo que encarece la inferencia y reduce el contexto útil [11]. Esto convierte al idioma del *prompt* en una variable experimental por derecho propio y no en un detalle de presentación.
 
-### 2.4 Estrategias de aumento por recuperación
+### 2.3 Aumento por recuperación y ejecución local
 
 La Generación Aumentada por Recuperación (RAG) [1] fundamenta la generación en información recuperada en tiempo de consulta, en lugar de confiarla exclusivamente a los pesos del modelo. La literatura reciente [6] distingue variantes por la naturaleza de lo recuperado, y esa distinción resulta determinante en NER.
 
@@ -134,13 +132,11 @@ Una tercera configuración, adoptada por trabajos aplicados al ámbito financier
 
 La elección entre ellas no es neutra: la primera optimiza el *recall* sobre lo conocido y la segunda la precisión del criterio, y sus efectos pueden ser opuestos según la capacidad del modelo receptor. El capítulo 5 contrasta empíricamente ambas.
 
-### 2.5 Alternativas de ejecución local y cuantización
-
-Ejecutar modelos de escala media-grande sobre hardware de consumo exige **cuantización**: reducir la precisión numérica de los pesos para bajar el consumo de memoria, típicamente a 4 bits en formatos como GGUF con esquema Q4_K_M, con una pérdida de calidad reducida frente al ahorro obtenido [20]. Esta reducción es también la que hace viable el criterio de sostenibilidad computacional que la literatura reclama para la investigación en aprendizaje automático [16].
+Decidida la estrategia de recuperación, queda el problema de dónde ejecutar el modelo. Hacerlo sobre hardware de consumo exige **cuantización**: reducir la precisión numérica de los pesos para bajar el consumo de memoria, típicamente a 4 bits en formatos como GGUF con esquema Q4_K_M, con una pérdida de calidad reducida frente al ahorro obtenido [20]. Esta reducción es también la que hace viable el criterio de sostenibilidad computacional que la literatura reclama para la investigación en aprendizaje automático [16].
 
 Entre los entornos de ejecución disponibles, **llama.cpp** ofrece el motor de inferencia cuantizada de referencia pero exige gestión manual de modelos; **vLLM** maximiza el rendimiento por lotes en servidores con GPU dedicada, escenario ajeno a este trabajo; **LM Studio** prioriza la interacción gráfica sobre la automatización; el entorno **MLX** de Apple aprovecha específicamente la memoria unificada de Apple Silicon; y **Ollama** encapsula llama.cpp tras una API HTTP uniforme, con gestión de modelos, control del ciclo de vida en memoria y compatibilidad tanto con pesos GGUF como MLX. Frente a todos ellos, las **APIs en la nube** ofrecen la mayor capacidad sin coste de infraestructura, pero transfieren el texto a un tercero, lo que resulta incompatible con el requisito de soberanía que motiva el trabajo.
 
-### 2.6 Estado del arte y criterios de selección
+### 2.4 Estado del arte y criterios de selección
 
 La Tabla 1 posiciona este trabajo respecto de investigaciones recientes en NER para dominios financieros y regulatorios.
 
@@ -162,15 +158,15 @@ La revisión anterior deja fijados los criterios con los que el capítulo 3 just
 
 Los cinco criterios con que cerró el capítulo anterior determinan, cada uno, una decisión concreta. Conviene explicitar el razonamiento antes de describir la implementación.
 
-El primero —prescindir de datos etiquetados— descarta las cuatro primeras familias de la tabla comparativa del §2.2. Los CRF, las arquitecturas BiLSTM-CRF y el ajuste fino de codificadores Transformer ofrecen mejor F1 publicado, pero todos exigen un corpus anotado del dominio que en español no existe para cumplimiento financiero. Se adopta por tanto un modelo generativo operado mediante aprendizaje en contexto, la única familia que permite adaptación inmediata sin reentrenamiento; su contrapartida —salida no estructurada y riesgo de alucinación— se asume y se aborda más abajo.
+El primero —prescindir de datos etiquetados— descarta las cuatro primeras familias de la tabla comparativa del §2.1. Los CRF, las arquitecturas BiLSTM-CRF y el ajuste fino de codificadores Transformer ofrecen mejor F1 publicado, pero todos exigen un corpus anotado del dominio que en español no existe para cumplimiento financiero. Se adopta por tanto un modelo generativo operado mediante aprendizaje en contexto, la única familia que permite adaptación inmediata sin reentrenamiento; su contrapartida —salida no estructurada y riesgo de alucinación— se asume y se aborda más abajo.
 
-El segundo criterio, la soberanía del dato, excluye las APIs comerciales: aventajan a los modelos abiertos en capacidad, pero transfieren el texto a un tercero. Se opta por ejecución íntegramente local y, entre los entornos revisados en §2.5, por Ollama. Pesaron tres razones: expone una API uniforme que permite intercambiar modelos sin tocar el código de orquestación, gestiona el ciclo de vida de los pesos en memoria —requisito imprescindible para encadenar modelos que no caben a la vez— y admite pesos GGUF y MLX, lo que habilita comparar ambas rutas de cuantización sobre el mismo arnés. Los modelos en la nube se conservan solo como línea base de comparación, no como parte de la solución.
+El segundo criterio, la soberanía del dato, excluye las APIs comerciales: aventajan a los modelos abiertos en capacidad, pero transfieren el texto a un tercero. Se opta por ejecución íntegramente local y, entre los entornos revisados en §2.3, por Ollama. Pesaron tres razones: expone una API uniforme que permite intercambiar modelos sin tocar el código de orquestación, gestiona el ciclo de vida de los pesos en memoria —requisito imprescindible para encadenar modelos que no caben a la vez— y admite pesos GGUF y MLX, lo que habilita comparar ambas rutas de cuantización sobre el mismo arnés. Los modelos en la nube se conservan solo como línea base de comparación, no como parte de la solución.
 
-El tercer criterio, operar sobre hardware de consumo, obliga a cuantizar a 4 bits y a gestionar la memoria de forma explícita, según se detalla en §3.3. El cuarto, producir salida verificable, se traduce en exigir al modelo un objeto JSON de esquema fijo, validado al recibirlo y con una ruta de recuperación cuando el análisis sintáctico falla: es la contramedida directa al principal inconveniente de la familia elegida. El quinto, permitir la comparación empírica, exige que las variantes de *prompt* y de estrategia de recuperación se seleccionen por configuración y no modificando el código, de modo que cada corrida quede definida por un conjunto de parámetros reproducible.
+El tercer criterio, operar sobre hardware de consumo, obliga a cuantizar a 4 bits y a gestionar la memoria de forma explícita, según se detalla en §3.2. El cuarto, producir salida verificable, se traduce en exigir al modelo un objeto JSON de esquema fijo, validado al recibirlo y con una ruta de recuperación cuando el análisis sintáctico falla: es la contramedida directa al principal inconveniente de la familia elegida. El quinto, permitir la comparación empírica, exige que las variantes de *prompt* y de estrategia de recuperación se seleccionen por configuración y no modificando el código, así que cada corrida quede definida por un conjunto de parámetros reproducible.
 
-### 3.2 Arquitectura general y capa de proveedores
+### 3.2 Arquitectura, proveedores y orquestación
 
-El sistema se organiza en cinco capas funcionales con responsabilidades separadas, de manera que cada una pueda evolucionar sin arrastrar a las demás.
+El sistema se organiza en cinco capas funcionales con responsabilidades separadas, así que cada una pueda evolucionar sin arrastrar a las demás.
 
 
 | Capa | Módulo(s) | Detalle técnico |
@@ -183,7 +179,7 @@ El sistema se organiza en cinco capas funcionales con responsabilidades separada
 
 
 
-La **capa de datos** carga el corpus desde un fichero JSON y valida cada registro contra un esquema antes de admitirlo, garantizando que todo artículo procesado dispone de texto y de anotación de referencia. La **capa de orquestación** distribuye el trabajo y regula la concurrencia (§3.3). La **capa de proveedores** aísla la heterogeneidad de las APIs. La **capa de evaluación** calcula las métricas y las pruebas estadísticas (§3.4). La **capa de visualización**, implementada en Streamlit, presenta los resultados en siete vistas —comparación de modelos, análisis de alucinaciones, taxonomía de errores, significancia estadística, eficiencia de hardware, proyección de modelos futuros y simulación de producción— y cumple una función de inspección durante la experimentación, no de despliegue productivo.
+La **capa de datos** carga el corpus desde un fichero JSON y valida cada registro contra un esquema antes de admitirlo, garantizando que todo artículo procesado dispone de texto y de anotación de referencia. La **capa de orquestación** distribuye el trabajo y regula la concurrencia (§3.2). La **capa de proveedores** aísla la heterogeneidad de las APIs. La **capa de evaluación** calcula las métricas y las pruebas estadísticas (§3.3). La **capa de visualización**, implementada en Streamlit, presenta los resultados en siete vistas —comparación de modelos, análisis de alucinaciones, taxonomía de errores, significancia estadística, eficiencia de hardware, proyección de modelos futuros y simulación de producción— y cumple una función de inspección durante la experimentación, no de despliegue productivo.
 
 La capa de proveedores es la que materializa el criterio C2 sin encerrar el trabajo en un único motor. Aplica los patrones *Factory* y *Facade* tras una interfaz común:
 
@@ -198,9 +194,7 @@ class LLMProvider(ABC):
 ```
 
 
-La selección del proveedor se resuelve por el prefijo del identificador del modelo, de modo que añadir un motor nuevo no requiere modificar el orquestador. Esta indirección tuvo una consecuencia práctica relevante durante la experimentación: un modelo abierto cuyo nombre comenzaba por `gpt-` era enrutado erróneamente hacia la API comercial, fallo que se detectó y corrigió discriminando por la presencia de etiqueta de versión propia de los identificadores locales. El episodio ilustra que la abstracción por convención de nombres exige verificación explícita del enrutamiento efectivo.
-
-### 3.3 Orquestación, concurrencia adaptativa y gestión de memoria
+La selección del proveedor se resuelve por el prefijo del identificador del modelo, así que añadir un motor nuevo no requiere modificar el orquestador. Esta indirección tuvo una consecuencia práctica relevante durante la experimentación: un modelo abierto cuyo nombre comenzaba por `gpt-` era enrutado erróneamente hacia la API comercial, fallo que se detectó y corrigió discriminando por la presencia de etiqueta de versión propia de los identificadores locales. El episodio ilustra que la abstracción por convención de nombres exige verificación explícita del enrutamiento efectivo.
 
 El núcleo de ejecución es un canal de publicación y suscripción con múltiples hilos. El productor publica lotes de artículos por modelo en una cola en memoria —con interfaz compatible con Redis para un eventual despliegue distribuido— y los consumidores los procesan en paralelo.
 
@@ -208,7 +202,7 @@ El número de consumidores no es fijo, sino que lo regula un controlador **AIMD*
 
 La gestión de memoria merece atención propia porque condicionó el alcance del estudio. Al terminar cada modelo se libera explícitamente su ocupación de GPU invocando la API de generación con `keep_alive=0`. Ahora bien, ese parámetro evita retener varios modelos a la vez, **pero no reduce el footprint de uno solo**, y esa distinción resultó decisiva. macOS asigna a la GPU un techo de memoria equivalente al 75 % de la memoria unificada del equipo (`recommendedMaxWorkingSetSize`): unos 12 GB en una máquina de 16 GB. Los modelos de hasta ~12B cuantizados a 4 bits ocupan entre 7 y 9 GB y caben con holgura; los de 31B alcanzan un footprint operativo de ~24,7 GB —unos 18,7 GB de pesos más la caché de claves y valores y el sobrecoste de inferencia— y **no pueden cargarse en 16 GB ni siquiera de forma serial**. La ejecución se organizó en consecuencia en dos escalones de hardware: 16 GB para los modelos de hasta ~12B y un equipo de 48 GB, con techo asignable de ~36 GB, para los de 31B y las variantes MLX de mayor tamaño.
 
-### 3.4 Módulo de evaluación
+### 3.3 Módulo de evaluación
 
 La comparación entre lo extraído y la anotación de referencia no puede ser literal, porque una diferencia de puntuación o un artículo antepuesto invalidarían una extracción correcta. El evaluador emplea por ello **emparejamiento difuso** por similitud de tokens, aceptando como acierto toda coincidencia por encima de un umbral configurable, fijado en 85 sobre 100. La elección del umbral es un compromiso: por debajo admite falsos emparejamientos entre nombres distintos que comparten apellido; por encima rechaza variantes legítimas.
 
@@ -228,7 +222,7 @@ Se utilizaron dos corpus complementarios:
 
 #### 4.1.1 Generación y validez del corpus sintético N=30
 
-Los quince artículos del corpus real resultan insuficientes para aplicar pruebas paramétricas con potencia adecuada, de modo que se construyó un corpus complementario de treinta textos breves siguiendo un procedimiento en cinco fases.
+Los quince artículos del corpus real resultan insuficientes para aplicar pruebas paramétricas con potencia adecuada, así que se construyó un corpus complementario de treinta textos breves siguiendo un procedimiento en cinco fases.
 
 Se partió de analizar los quince artículos reales para identificar sus temáticas recurrentes —sanciones financieras, corrupción política, blanqueo de capitales y litigios corporativos— y reproducir esa distribución en el corpus generado. Para cada artículo se fijó de antemano un par de entidades, una persona y una organización, que actuaba como anotación de referencia conocida antes de existir el texto; este orden es el que garantiza que la referencia no se derive de la salida del modelo. Un modelo `gemma4:31b` redactó entonces cada párrafo a partir de esas entidades, con instrucción explícita de no introducir ninguna otra (el *prompt* completo figura en el Anexo B). Cada texto se revisó manualmente para confirmar que las entidades objetivo aparecían y que no se habían colado otras, y por último se comprobó por similitud coseno que ningún artículo replicara oraciones de otro.
 
@@ -242,17 +236,17 @@ El corpus sintético N=30 no fue descartado ni reemplazado: el flag `--data-file
 
 ### 4.2 Modelos evaluados
 
-El trabajo comprende dos conjuntos de evaluación que conviene no confundir. El benchmark exploratorio de la Tabla 2 (§5.1) cubre doce modelos en trece configuraciones sobre N=15 en modo `entities` —`gemma4:latest` aparece dos veces, en sus variantes ZS-ES y FS-ES—, mientras que el estudio principal (§5.3.5) evalúa trece modelos sobre N=120 en modo `kb_combined`. El segundo incorpora `gemma4:12b-mlx` y `gpt-oss:20b`, que no disponen de corrida sobre el corpus reducido.
+El trabajo comprende dos conjuntos de evaluación que no hay que confundir. El benchmark exploratorio de la Tabla 2 (§5.1) cubre doce modelos en trece configuraciones sobre N=15 en modo `entities` —`gemma4:latest` aparece dos veces, en sus variantes ZS-ES y FS-ES—, mientras que el estudio principal (§5.3.5) evalúa trece modelos sobre N=120 en modo `kb_combined`. El segundo incorpora `gemma4:12b-mlx` y `gpt-oss:20b`, que no disponen de corrida sobre el corpus reducido.
 
 Los modelos de la Tabla 2 se reparten en tres grupos. Entre los locales de ocho mil millones de parámetros o más figuran `gemma4:31b` y su compilación MLX, `gemma4:latest` (9B), `qwen2.5:14b`, `mistral-nemo:latest` (12B), `llama3.1:8b` y `qwen3:8b`. El tramo compacto, por debajo de 8B, lo componen `gemma:latest` (7B), `nemotron-mini:4b`, `llama3.2:latest` (3B) y `deepseek-r1:1.5b`. Completa el cuadro `gemma4:31b-cloud`, incluido únicamente como referencia externa frente a la ejecución local.
 
 ### 4.3 Análisis de variantes de prompts
 
-Sobre `gemma4:latest` se evaluaron cuatro configuraciones de *prompt* que cruzan dos factores —idioma, inglés o español, y estrategia de demostración, con ejemplos o sin ellos—, lo que constituye un diseño factorial 2×2, procedimiento que la literatura anglosajona denomina *ablation study*. Las cuatro celdas son zero-shot en inglés, que actúa como referencia, zero-shot en español, few-shot en inglés y few-shot en español, empleando en los dos últimos tres ejemplos del dominio de cumplimiento.
+Sobre `gemma4:latest` se evaluaron cuatro configuraciones de *prompt* que cruzan dos factores —idioma, inglés o español, y estrategia de demostración, con ejemplos o sin ellos—, lo que es un diseño factorial 2×2, procedimiento que la literatura anglosajona denomina *ablation study*. Las cuatro celdas son zero-shot en inglés, que actúa como referencia, zero-shot en español, few-shot en inglés y few-shot en español, empleando en los dos últimos tres ejemplos del dominio de cumplimiento.
 
-El aprendizaje en contexto es la capacidad de un modelo de adaptarse a una tarea nueva sin actualizar sus pesos, solo a partir de lo que recibe en el *prompt*; Brown et al. [8] la documentaron en el trabajo fundacional de GPT-3 y es lo que separa a estos modelos de los supervisados tradicionales. En su variante *few-shot* el *prompt* antepone a la tarea real un puñado de ejemplos resueltos, cada uno con su entrada y la salida esperada, de modo que el modelo infiere el patrón antes de enfrentarse al caso que importa. En la variante *zero-shot* no hay ejemplos y el modelo debe deducir formato y criterio solo de la instrucción.
+El aprendizaje en contexto es la capacidad de un modelo de adaptarse a una tarea nueva sin actualizar sus pesos, solo a partir de lo que recibe en el *prompt*; Brown et al. [8] la documentaron en el trabajo fundacional de GPT-3 y es lo que separa a estos modelos de los supervisados tradicionales. En su variante *few-shot* el *prompt* antepone a la tarea real un puñado de ejemplos resueltos, cada uno con su entrada y la salida esperada, así que el modelo infiere el patrón antes de enfrentarse al caso que importa. En la variante *zero-shot* no hay ejemplos y el modelo debe deducir formato y criterio solo de la instrucción.
 
-Esos ejemplos cumplen tres funciones que conviene distinguir. Fijan el **formato de salida**, mostrando qué estructura JSON se espera con sus campos y tipos; sin ese anclaje los modelos varían la forma de la respuesta entre artículos y complican el análisis automático. Calibran el **umbral semántico**, delimitando qué menciones cuentan como entidad —personas nombradas y no cargos genéricos como «el presidente», organizaciones con nombre propio y no referencias como «la empresa»—, criterio que resulta difícil de especificar de forma exhaustiva en prosa pero que dos o tres ejemplos contrastivos transmiten sin ambigüedad. Y **adaptan al dominio**: funcionan como un micro-corpus en memoria de trabajo que inclina la distribución de probabilidad del modelo hacia la terminología regulatoria en lugar del lenguaje general.
+Esos ejemplos cumplen tres funciones que conviene distinguir. Fijan el **formato de salida**, mostrando qué estructura JSON se espera con sus campos y tipos; sin ese anclaje los modelos varían la forma de la respuesta entre artículos y complican el análisis automático. Calibran el **umbral semántico**, delimitando qué menciones cuentan como entidad —personas nombradas y no cargos genéricos como «el presidente», organizaciones con nombre propio y no referencias como «la empresa»—, criterio que es difícil de especificar de forma exhaustiva en prosa pero que dos o tres ejemplos contrastivos transmiten sin ambigüedad. Y **adaptan al dominio**: funcionan como un micro-corpus en memoria de trabajo que inclina la distribución de probabilidad del modelo hacia la terminología regulatoria en lugar del lenguaje general.
 
 Los tres ejemplos empleados en la configuración few-shot en español cubren un caso de persona sancionada, uno de organización y uno de mención ambigua; se reproducen íntegros en el Anexo B.
 
@@ -271,9 +265,9 @@ Los resultados del análisis de variantes de prompts revelan una **interacción 
 
 El cotejo entre la entidad extraída y la de referencia es **difuso**, con un umbral de similitud de 85 sobre 100, lo que tolera variaciones menores de forma sin admitir coincidencias espurias.
 
-**Convención ante la extracción vacía.** Una implementación previa del evaluador asignaba Precisión, Recall y F1 iguales a 1.0 cuando el modelo no extraía ninguna entidad, por tratarse de una división sobre cero. Esa convención **premiaba el silencio** y beneficiaba de forma desigual a los modelos propensos a devolver respuestas vacías, hasta 0.21 de F1 en el caso más extremo. La convención empleada en este trabajo asigna **0.0** en ese supuesto, y reserva el valor 1.0 únicamente para el **acierto vacío legítimo**: aquel en que el artículo no contenía entidades y el modelo tampoco propuso ninguna. Todas las corridas del estudio se re-puntuaron con esta convención a partir de los recuentos de aciertos y errores almacenados, **sin repetir la inferencia**, de modo que la totalidad de las cifras reportadas comparte un criterio único.
+**Convención ante la extracción vacía.** Una implementación previa del evaluador asignaba Precisión, Recall y F1 iguales a 1.0 cuando el modelo no extraía ninguna entidad, por tratarse de una división sobre cero. Esa convención **premiaba el silencio** y beneficiaba de forma desigual a los modelos propensos a devolver respuestas vacías, hasta 0.21 de F1 en el caso más extremo. La convención empleada en este trabajo asigna **0.0** en ese supuesto, y reserva el valor 1.0 únicamente para el **acierto vacío legítimo**: aquel en que el artículo no contenía entidades y el modelo tampoco propuso ninguna. Todas las corridas del estudio se re-puntuaron con esta convención a partir de los recuentos de aciertos y errores almacenados, **sin repetir la inferencia**, así que la totalidad de las cifras reportadas comparte un criterio único.
 
-Las pruebas se ejecutaron sobre Apple Silicon con aceleración Metal, en dos configuraciones según el footprint del modelo: 16 GB de memoria unificada para los de hasta ~12B y 48 GB para los de 31B y las variantes MLX mayores. El entorno de software combina Python 3.14, Ollama 0.6, scikit-learn, statsmodels, pandas y Streamlit. Cada corrida guarda un punto de control automático, de modo que una ejecución interrumpida se reanuda sin perder trabajo, lo que resultó decisivo en barridos de varias decenas de horas.
+Las pruebas se ejecutaron sobre Apple Silicon con aceleración Metal, en dos configuraciones según el footprint del modelo: 16 GB de memoria unificada para los de hasta ~12B y 48 GB para los de 31B y las variantes MLX mayores. El entorno de software combina Python 3.14, Ollama 0.6, scikit-learn, statsmodels, pandas y Streamlit. Cada corrida guarda un punto de control automático, así que una ejecución interrumpida se reanuda sin perder trabajo, lo que resultó decisivo en barridos de varias decenas de horas.
 
 ## 5. RESULTADOS EXPERIMENTALES
 
@@ -335,7 +329,7 @@ Ambos modelos superan con holgura el umbral del 70 % fijado en la hipótesis, co
 
 El **análisis de sensibilidad** completa la validación. Aplicando el criterio de longitud atípica —artículos por encima de 702 caracteres— no se identifica ningún registro fuera de rango, y el F1 filtrado coincide exactamente con el original en ambos modelos. El resultado no depende, por tanto, de unos pocos textos extremos.
 
-Conviene señalar una particularidad de procedencia. Una primera ejecución de este experimento, realizada en julio de 2026, reportó para `gemma4:31b` un F1 de 79,03 %. Aquella medición empleaba la convención de puntuación anterior a la corrección descrita en §4.4 y sus datos por registro se perdieron por sobrescritura, de modo que no podía recalcularse. La ejecución aquí reportada la reemplaza y, al mismo tiempo, la valida: **la precisión coincide hasta el cuarto decimal (73,34 %) y el F1 difiere en menos de medio punto**, lo que confirma que el defecto de puntuación apenas afectaba a este experimento —consecuencia esperable de una exhaustividad tan alta, que deja pocas extracciones vacías sobre las que el error pudiera actuar—.
+Vale la pena señalar una particularidad de procedencia. Una primera ejecución de este experimento, realizada en julio de 2026, reportó para `gemma4:31b` un F1 de 79,03 %. Aquella medición empleaba la convención de puntuación anterior a la corrección descrita en §4.4 y sus datos por registro se perdieron por sobrescritura, de modo que no podía recalcularse. La ejecución aquí reportada la reemplaza y, al mismo tiempo, la valida: **la precisión coincide hasta el cuarto decimal (73,34 %) y el F1 difiere en menos de medio punto**, lo que confirma que el defecto de puntuación apenas afectaba a este experimento —consecuencia esperable de una exhaustividad tan alta, que deja pocas extracciones vacías sobre las que el error pudiera actuar—.
 
 #### 5.3.5 Validación Estadística sobre Corpus Real N=120 (estudio completo)
 
@@ -512,6 +506,12 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 ## 9. ANEXOS
 
 ### Anexo A — Estructura del Repositorio de Código
+
+El código, los corpus, los resultados por corrida y los documentos de trabajo están publicados en
+**https://github.com/eahumada/mti-pge-tesina-ner-llm-local**. Cada corrida conserva su `run_config.json` con
+los parámetros exactos y su `benchmark_results.csv` con las métricas por artículo, de modo que las cifras de
+este informe pueden rehacerse sin repetir la inferencia. La estructura del repositorio es la siguiente:
+
 
 
 | Ruta | Descripción |
