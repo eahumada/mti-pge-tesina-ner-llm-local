@@ -183,7 +183,18 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
-### 2.7 🟡 PENDIENTE — Propagar el punto 7 de §7.2 (trabajo futuro: mojibake)
+### 2.7 🟡 PENDIENTE — Propagar los cambios de la codificación (mojibake) a los `.docx`
+- **Ampliada 2026-09-07 18:10.** Lo que hay que propagar es ahora **cuatro cambios**, no uno:
+  1. **§7.2, punto 7** — nueva línea de trabajo futuro (Fase 6): normalización de codificación.
+  2. **§7.1, conclusión 7** — nueva conclusión sobre la codificación del corpus.
+  3. **§4.4** — dos párrafos nuevos: el umbral de cotejo difuso (85) y la **convención ante la extracción
+     vacía**, que documenta por primera vez en el informe la corrección del evaluador aplicada a todo el estudio.
+  4. **Anexo H** — nuevo, «Codificación del corpus: análisis del *mojibake* y su efecto sobre la medición»
+     (secciones H.1 a H.6). **Va después del Anexo G**, que es el último del `.docx`.
+- **Extensión:** los tres primeros van al cuerpo (≈ media página en total) y el Anexo H **no computa** para el
+  límite de 25 páginas. El cuerpo iba por **21 de 25**. Re-verificar igualmente.
+- **Comprobar además** que los `.docx` llevan la lectura nueva del análisis de variantes en los tres pasajes
+  alineados (resumen en inglés, Hallazgo 4 de §5.2 y discusión §6.2).
 - **Origen:** decisión del autor del 2026-09-07 (`TODO-INFORME-FINAL.md §15.6`): la normalización de
   codificación del corpus N=120 **se declara como limitación y pasa a trabajo futuro**; no se re-ejecuta.
 - **Cambio en el `.md` canónico posterior a tu propagación:** se añadió el **punto 7 a §7.2** («Normalización
@@ -643,3 +654,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 14:12 | Equipo Remoto 48 GB (Claude Code) | §3.bis.9 registrada como TAREA FUTURA del equipo remoto 48 GB: corregir mojibake del gold N=120 (F46) y RE-INFERIR el estudio + re-fusionar ANOVA (las extracciones crudas no se persistieron). Requiere 48 GB por los 31B. N30 en curso; gpt-oss re-run encolado |
 | 2026-09-07 14:43 | Equipo Remoto 48 GB (Claude Code) | N30 re-run COMPLETADO (0 failed, direct_json): gemma4:31b F1=0.7855 (P0.733 R0.883), gemma4:31b-mlx F1=0.8057. Reemplaza el titular 79.03% con scorer corregido y dato por registro. gpt-oss re-run arrancó (tras N30). L39+zip: estudio completo archivado en `remote_48g/estudio_completo_20260907.zip` (versionado, no gitignored) para evitar re-inferir en el futuro |
 | 2026-09-07 15:01 | Equipo Remoto 48 GB (Claude Code) | gpt-oss re-run EN CURSO 42/240, **0 failed, recall0=2** (vs 76 en la oficial) — el num_predict 4096 confirma que el recall=0 era truncación por thinking, no bucle. Snapshot parcial en remote_48g/ |
+| 2026-09-07 18:10 | Claude Code (equipo principal) | Hallazgo de codificación elevado al informe: **conclusión 7** en §7.1 y **Anexo H** completo (H.1-H.6: qué es el mojibake a nivel de bytes, alcance medido, por qué la lectura inicial era incorrecta, evidencia diferencial por modelo, cómo repararlo y cuatro implicaciones para evaluar NER). Detectado de paso que la **corrección de la convención de puntuación no estaba documentada** en el informe pese a afectar a todas las cifras: añadida a §4.4 junto con el umbral de cotejo difuso. §2.7 ampliada a cuatro cambios |

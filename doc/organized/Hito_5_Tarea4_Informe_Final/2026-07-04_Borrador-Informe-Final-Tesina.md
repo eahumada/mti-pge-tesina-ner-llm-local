@@ -356,6 +356,10 @@ Los resultados del análisis de variantes de prompts revelan una **interacción 
 | **Latencia (s)** | Tiempo promedio por artículo en segundos |
 | **Índice Tok/s/B** | Tokens por segundo normalizados por cada mil millones (10⁹) de parámetros |
 
+El cotejo entre la entidad extraída y la de referencia es **difuso**, con un umbral de similitud de 85 sobre 100, lo que tolera variaciones menores de forma sin admitir coincidencias espurias.
+
+**Convención ante la extracción vacía.** Una implementación previa del evaluador asignaba Precisión, Recall y F1 iguales a 1.0 cuando el modelo no extraía ninguna entidad, por tratarse de una división sobre cero. Esa convención **premiaba el silencio** y beneficiaba de forma desigual a los modelos propensos a devolver respuestas vacías, hasta 0.21 de F1 en el caso más extremo. La convención empleada en este trabajo asigna **0.0** en ese supuesto, y reserva el valor 1.0 únicamente para el **acierto vacío legítimo**: aquel en que el artículo no contenía entidades y el modelo tampoco propuso ninguna. Todas las corridas del estudio se re-puntuaron con esta convención a partir de los recuentos de aciertos y errores almacenados, **sin repetir la inferencia**, de modo que la totalidad de las cifras reportadas comparte un criterio único.
+
 ### 4.5 Infraestructura de Pruebas
 
 - **Hardware:** Apple Silicon (Metal/MPS), en dos configuraciones según el footprint del modelo: 16 GB de memoria unificada para modelos de hasta ~12B, y 48 GB de memoria unificada para los modelos de 31B y variantes MLX de gran tamaño (ver §3.6).
@@ -741,6 +745,8 @@ El experimento de KB RAG (§5.6) aporta una contribución metodológica a la rec
 
 6. **El RAG contextual supera al RAG por diccionario:** La implementación de la Base de Conocimientos Contextual (KB RAG) demuestra que el reconocimiento de entidades mediante LLMs locales es un problema de **comprensión sintáctico-contextual**, no de búsqueda en bases de datos cerradas. En el estudio N=120 sobre 13 modelos, el KB RAG (`--rag-mode kb_combined`) mejoró el F1-Score de forma **estadísticamente significativa** (Tukey HSD) en los dos modelos más débiles —`nemotron-mini:4b` **+14.52 pp** (p<0.001) y `llama3.2:latest` **+10.82 pp** (p=0.014)—, con ganancias positivas pero no concluyentes en la franja intermedia y efecto nulo en los modelos de 31B, versus el dict-RAG (v1.0), que en un sondeo N=5 sobre el mismo modelo degradó el F1 hasta 0.2367 (−57.8% respecto de su propio baseline). Su efectividad está modulada por la capacidad paramétrica: beneficia sobre todo a los modelos de 3–14B, donde actúa como memoria externa de conocimiento lingüístico sin costo adicional de hardware. Este hallazgo tiene implicaciones directas para el diseño de sistemas RAG en dominio abierto con LLMs soberanos.
 
+7. **La codificación del corpus condiciona la medición, y no de forma neutra:** el corpus N=120 almacena los nombres con *mojibake* —`JosÃ© Bono` donde el nombre real es **José Bono**—, un defecto presente a la vez en las entidades de referencia (20,1 %) y en el texto de entrada (87 % de los artículos). Al ser **coherente entre ambos**, no introduce el sesgo uniforme que cabría suponer: **favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía**, con un efecto que oscila entre −0.070 y +0.091 de F1 según el modelo. La implicación metodológica excede a este trabajo: en una evaluación de NER, **un defecto de codificación no es ruido de fondo sino una variable que interactúa con el comportamiento del modelo**, y verificar la codificación de la entrada —no solo la de la referencia— debe formar parte del protocolo antes de dar por válida cualquier cifra. El detalle se desarrolla en el **Anexo H**.
+
 
 ### 7.2 Trabajo Futuro
 
@@ -876,3 +882,85 @@ El prompt de sistema en español (few-shot) incluye: (1) instrucciones de rol (a
 *Informe Final de Tesina — Magíster en Tecnologías de la Información (MTI)*  
 *Universidad Técnica Federico Santa María — Valparaíso, Chile*  
 *Julio 2026*
+
+### Anexo H — Codificación del corpus: análisis del *mojibake* y su efecto sobre la medición
+
+#### H.1 Qué es el *mojibake*
+
+*Mojibake* (文字化け, «transformación de caracteres») designa el texto ilegible que resulta de **escribir una cadena con una codificación y leerla con otra**. En español afecta a las vocales acentuadas y a la «ñ», porque en UTF-8 no ocupan un byte sino dos.
+
+La letra «é» se codifica en UTF-8 como los bytes `0xC3 0xA9`. Si esos bytes se leen después como **Latin-1**, donde cada byte equivale a un carácter, se obtienen dos caracteres visibles en lugar de uno:
+
+| Byte | Interpretación Latin-1 |
+|:---:|:---:|
+| `0xC3` | `Ã` |
+| `0xA9` | `©` |
+
+De ahí que `José` aparezca almacenado como `JosÃ©`. La firma del defecto es la **`Ã` inicial**, presente en toda vocal acentuada y en la `ñ`:
+
+| Forma almacenada (corrupta) | Forma real |
+|:---|:---|
+| `JosÃ© Bono` | José Bono |
+| `Emiliano GarcÃ­a-Page` | Emiliano García-Page |
+| `MarÃ­a MuÃ±oz` | María Muñoz |
+| `AdministraciÃ³n` | Administración |
+
+La reparación consiste en deshacer el paso erróneo: `s.encode('latin-1').decode('utf-8')`.
+
+#### H.2 Alcance medido en el corpus N=120
+
+| Comprobación sobre `data/benchmark_balanced_120.json` | Resultado |
+|:---|:---:|
+| Entidades de referencia totales | 1 406 |
+| Entidades con *mojibake* | **283 (20,1 %)** |
+| De ellas, **irrecuperables** en el cotejo difuso (umbral 85) | **66 (4,7 % del total)** |
+| Artículos con *mojibake* en el campo `text` | **104 de 120 (87 %)** |
+| Artículos con *mojibake* en el campo `title` | 0 |
+| Entidades corruptas que aparecen **igual de corruptas** en el texto | **283 de 283** |
+| Entidades corruptas que aparecen **correctas** en el texto | **0** |
+
+Los corpus N=15 (`kleptotrace.json`, 212 entidades) y N=30 (`kleptotrace_augmented_30.json`, 105 entidades) están **libres del defecto**, por lo que los resultados de §5.1, §5.2 y §5.3.1–§5.3.4 no se ven comprometidos.
+
+El umbral de 85 explica por qué solo una parte resulta irrecuperable: en cadenas largas la corrupción es una fracción menor del total y la similitud se mantiene por encima del corte —`Emiliano GarcÃ­a-Page` frente a su forma correcta obtiene 93—, mientras que en cadenas cortas la hunde: `JosÃ© Bono` frente a `José Bono` obtiene **84**, un punto por debajo del umbral.
+
+#### H.3 Por qué la conclusión inmediata era incorrecta
+
+La primera lectura del hallazgo fue que el defecto deprimía el *recall* de todos los modelos por igual, en torno a 4,7 puntos, sin alterar el orden relativo. Esa lectura **omitía comprobar la entrada**.
+
+Al estar el defecto **también en el texto que lee el modelo**, y de forma **coherente** con la referencia, el corpus es internamente consistente: el modelo lee `Emiliano GarcÃ­a-Page` y la referencia espera `Emiliano GarcÃ­a-Page`. En consecuencia:
+
+- un modelo que **transcribe literalmente** lo que ve **coincide** con la referencia y no sufre penalización;
+- un modelo que **normaliza la ortografía** al español correcto produce `Emiliano García-Page` y **deja de coincidir**, pese a haber acertado.
+
+El defecto no impone un suelo común: **recompensa una conducta y castiga la contraria**.
+
+#### H.4 Evidencia empírica del efecto diferencial
+
+Diferencia de F1 entre los 88 artículos afectados y los 31 no afectados, sobre los mismos registros para todos los modelos:
+
+| Modelo | Δ F1 (con *mojibake* − sin) |
+|:---|--:|
+| `gemma4:latest` (baseline) | **−0.0695** |
+| `gemma4:12b-mlx` (baseline) | −0.0422 |
+| `gemma4:31b-mlx` (baseline) | −0.0395 |
+| `llama3.1:8b` (KB RAG) | −0.0004 |
+| `mistral-nemo:latest` (KB RAG) | +0.0122 |
+| `gpt-oss:20b` (KB RAG) | **+0.0914** |
+
+El rango entre extremos alcanza **16 puntos porcentuales**.
+
+> **Cautela metodológica.** Los artículos afectados podrían ser además más largos o intrínsecamente más difíciles, lo que confundiría la magnitud absoluta de cada Δ. Sin embargo, la dificultad desplazaría a todos los modelos en la misma dirección; **la dispersión entre modelos sobre registros idénticos** es lo que acredita una interacción específica de cada modelo. La fila de `gpt-oss:20b` es la menos fiable, por estar sus cifras dominadas por un artefacto independiente del arnés de ejecución.
+
+#### H.5 Cómo debe repararse
+
+Corregir únicamente la referencia **invertiría la injusticia en lugar de eliminarla**: pasaría a penalizar al modelo que transcribe con fidelidad. La reparación correcta es **normalizar ambos lados de la comparación** —aplicar la corrección de codificación a la entidad de referencia *y* a la extraída antes del cotejo difuso—, de modo que `JosÃ© Bono` y `José Bono` converjan a la misma forma y el resultado deje de depender de la representación de bytes.
+
+Esta corrección **no pudo aplicarse retroactivamente**: el cotejo se resuelve en tiempo de inferencia y de cada registro solo se conservaron los recuentos de aciertos y errores, no las entidades extraídas. Repuntuar sobre lo almacenado —como sí fue posible con la corrección de la convención de puntuación descrita en §4.4— resulta aquí inviable, y la corrección exigiría re-ejecutar el estudio completo. Se documenta por tanto como limitación (§5.3.5) y como línea de trabajo futuro (§7.2, punto 7).
+
+#### H.6 Implicaciones para la evaluación de sistemas NER
+
+1. **Verificar la codificación de la entrada, no solo la de la referencia.** Un defecto presente en ambas no se comporta como el mismo defecto presente en una sola.
+2. **No presuponer que un defecto de datos sesga de forma uniforme.** Cuando el corpus es coherente en su corrupción, el sesgo depende de cómo trate cada modelo la normalización ortográfica, y puede alterar el orden relativo.
+3. **Conservar las extracciones por registro, no solo las métricas agregadas.** Es la diferencia entre poder recalcular sobre lo guardado y tener que repetir toda la inferencia.
+4. **Aplicar toda corrección de forma uniforme.** Reparar el corpus para un solo modelo lo mediría con una vara distinta de la del resto e invalidaría la comparación.
+
