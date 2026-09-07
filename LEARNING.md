@@ -488,3 +488,17 @@ La colisión se detectó al integrar y se resolvió renumerando el segundo a **�
 **La regla.** Antes de asignar un identificador correlativo en un documento compartido —hallazgo, aprendizaje,
 tarea— hacer `pull` y releer el fichero. Si aparece una colisión, **renumera el que llegó después y deja
 constancia**; nunca reutilices el número ni renumeres el ajeno.
+
+### L39. Persistir los estudios completos (zip versionado) y las extracciones crudas
+**Contexto.** El corpus N=120 tuvo que catalogarse para re-inferir por el mojibake (F46) porque **las
+extracciones crudas por registro no se persistieron** (solo `tp/fp/fn`), y `results/` está gitignored, así
+que ni los CSV sobrevivían en git. La corrida N=30 de julio se perdió directamente por sobrescritura.
+
+**Regla (decisión del autor, 2026-09-07).**
+1. **Guardar cada estudio completo como `.zip` versionado en el repo** (NO gitignored): CSV, detailed, summary,
+   statistical_report y logs fechados.
+2. **Persistir las extracciones crudas por registro** (el JSON extraído del modelo), no solo las métricas
+   agregadas: permite re-puntuar ante cualquier corrección (scorer, gold/mojibake) **sin re-inferir**.
+
+> **Aplicación:** al cierre de cada estudio, empaquetar `results/<estudio>/` en
+> `remote_48g/estudio_<fecha>.zip` y commitearlo. Ver `FINDINGS.md §F46`.

@@ -1,0 +1,29 @@
+=== N30 re-run — INICIO 2026-09-07 13:59:28 -03 ===
+modelos: gemma4:31b (thinking ON) + gemma4:31b-mlx (thinking OFF)
+corpus: data/kleptotrace_augmented_30.json (30 reg) · baseline sin RAG · batch 5 · seed 42
+encargo: ENCARGO-REMOTO-N30-20260907.md
+2026-09-07 13:59:31,514 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-07 13:59:31,551 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-07 13:59:31,551 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-09-07 13:59:31,551 [INFO] ner_benchmark: Corpus loaded: 30 articles split into 6 batches.
+2026-09-07 13:59:31,552 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-07 13:59:31,570 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=2 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-09-07 13:59:31,583 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-b0-1788800371 for batch 0 to memory queue.
+2026-09-07 13:59:31,583 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-b1-1788800371 for batch 1 to memory queue.
+2026-09-07 13:59:31,583 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-b2-1788800371 for batch 2 to memory queue.
+2026-09-07 13:59:31,583 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-b3-1788800371 for batch 3 to memory queue.
+2026-09-07 13:59:31,583 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-b4-1788800371 for batch 4 to memory queue.
+2026-09-07 13:59:31,583 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-b5-1788800371 for batch 5 to memory queue.
+2026-09-07 13:59:31,583 [INFO] ner_benchmark: Running model 'gemma4:31b' with 2 workers (AIMD adaptive, circuit=CLOSED)...
+2026-09-07 13:59:31,583 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-b0-1788800371 from memory queue.
+2026-09-07 13:59:31,583 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-b1-1788800371 from memory queue.
+2026-09-07 13:59:31,584 [INFO] ner_benchmark: Processing batch 2 with 2 parallel workers...
+2026-09-07 13:59:31,584 [INFO] ner_benchmark: Processing batch 1 with 2 parallel workers...
+2026-09-07 13:59:31,584 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '7'...
+2026-09-07 13:59:31,584 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '1'...
+2026-09-07 13:59:31,584 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '6'...
+2026-09-07 13:59:31,584 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '2'...
+2026-09-07 13:59:31,584 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-07 13:59:31,584 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-07 13:59:31,584 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-07 13:59:31,585 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
