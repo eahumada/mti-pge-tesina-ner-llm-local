@@ -504,6 +504,19 @@ Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **Invest
   se confirma causa corregible, lo correcto es re-ejecutar `gpt-oss:20b` completo — **y esa decisión la toma
   el autor**.
 
+### 3.bis.9 🔮 TAREA FUTURA — corregir mojibake del gold N=120 y re-inferir el estudio
+- **Estado:** ⬜ FUTURA · **Asignada al:** Equipo Remoto 48 GB (NVRAM unificada) · **Decisión del autor (2026-09-07)**
+- **Motivo:** el ground truth de `data/benchmark_balanced_120.json` tiene **mojibake** (UTF-8 leído como
+  Latin-1): 283/1406 entidades (20 %), **66 (4.7 %) irrecuperables** → recall subestimado en **todos** los
+  modelos del N=120 por igual (ver `FINDINGS.md §F46`). `kleptotrace` (N=15) y `augmented_30` (N=30) **limpios**.
+- **Por qué es futura y pesada:** corregir el gold (`encode('latin-1').decode('utf-8')`) **exige RE-INFERIR**
+  todo el N=120 — las extracciones crudas por registro no se persistieron (solo `tp/fp/fn`), así que el
+  matching no se puede rehacer sobre datos guardados. Implica re-correr los ~14 modelos N=120 y **re-fusionar
+  el ANOVA conjunto**.
+- **Pasos:** (1) de-mojibake del corpus gold; (2) re-run N=120 de todos los modelos (con sus regímenes de
+  thinking ya decididos); (3) re-puntuar y re-fusionar ANOVA; (4) actualizar §5.3.5/§5.6.5/Anexo E del informe.
+- **Requiere 48 GB** por los modelos 31B (~24.7 GB, no caben en 16 GB).
+
 ### 3.bis.5 Plantilla de reporte
 Al terminar cada tarea, sustituid su bloque por:
 
@@ -627,3 +640,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 17:40 | Claude Code (equipo principal) | Commiteado el trabajo de Claude Desktop (§2.6, su puente no tiene permiso de escritura en git). **Atendida su observación**: el `.md` conservaba la lectura antigua del análisis de variantes en **tres** sitios —resumen en inglés, Hallazgo 4 de §5.2 y discusión §6.2— y no en uno; los tres alineados con la tabla nueva (+11.12 pp por interacción). Cero ocurrencias restantes de la cifra antigua. `.md` y `.docx` quedan coherentes |
 | 2026-09-07 17:55 | Claude Code (equipo principal) | ✅ Decisión del autor: **el mojibake se declara como limitación y su normalización pasa a TRABAJO FUTURO**; no se re-ejecuta el estudio. Añadido el punto 7 a §7.2 del informe (Fase 6), resueltas §15.4/§15.5 y registrada §15.6. Reglas operativas R9-R12 en `RECOMENDACIONES-EJECUCIONES-FUTURAS.md`. Nueva tarea §2.7 para Claude Desktop: propagar ese único párrafo |
 | 2026-09-07 14:08 | Equipo Remoto 48 GB (Claude Code) | Decisiones del autor: (1) gpt-oss re-run completo APROBADO — encolado tras N30 (`gptoss_rerun_REMOTO`, N=120 kb_combined, thinking ON, num_predict 4096 para evitar truncación). (2) Corrección de mojibake N=120 (F46) = TAREA FUTURA (exige re-inferir). Orden: N30 (en curso) → gpt-oss re-run. Logs fechados (L38) |
+| 2026-09-07 14:12 | Equipo Remoto 48 GB (Claude Code) | §3.bis.9 registrada como TAREA FUTURA del equipo remoto 48 GB: corregir mojibake del gold N=120 (F46) y RE-INFERIR el estudio + re-fusionar ANOVA (las extracciones crudas no se persistieron). Requiere 48 GB por los 31B. N30 en curso; gpt-oss re-run encolado |
