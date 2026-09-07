@@ -376,6 +376,29 @@ Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **Invest
 - **Sigue pendiente de `CORRECCION-QWEN3-THINKING-20260906.md §4.6-4.7`:** revisar `qwen3:14b/32b/latest` y
   **enumerar todos los modelos del estudio con capacidad `thinking`**.
 
+### 3.bis.11 📌 HALLAZGO FINAL — Política de *thinking* y reglas para ejecuciones futuras
+- **Documento canónico:** [`RECOMENDACIONES-EJECUCIONES-FUTURAS.md`](./RECOMENDACIONES-EJECUCIONES-FUTURAS.md)
+  · **Evidencia:** `FINDINGS.md §F44` (vuestro experimento) y **§F45** (verificación del equipo principal)
+  · **Anexo de tareas futuras:** `TODO-INFORME-FINAL.md §14`.
+- **Vuestro experimento queda verificado:** las 12 filas reproducen exactamente desde los CSV, 0 `failed`,
+  0 violaciones aritméticas. Método correcto.
+- **Se refuerzan dos resultados:** `gpt-oss:20b` no razona peor sin *thinking*, **deja de responder**
+  (`recall=0` en 7/15 y 10/15) → ON congelado; `deepseek-r1:1.5b` da los **15 registros idénticos**
+  (dif. máx. 4.4e-07, puro formato) → su razonamiento no cambia ni una entidad.
+- **No sostienen cambio de régimen:** `gemma4:latest` cambia de signo entre sus propias condiciones
+  (+0.066 `fs-en` / −0.051 `fs-es`), `gemma4:31b` igual (−0.029 / +0.037), y `sonct988` va **más lento** con
+  *thinking* apagado (×0.3), lo que contradice el modelo causal.
+- **🔴 DECISIÓN CERRADA: NO re-ejecutar** los 4 modelos con `think=OFF`. Se apoyaría en ruido de N=15 e
+  introduciría un **segundo eje de inconsistencia** en el estudio. El valor del experimento es documental y
+  ya está capturado.
+- **Para el futuro (aplicar siempre):** no generalizar entre modelos · `think` es kwarg de primer nivel,
+  nunca dentro de `options` · medir con el pipeline real antes de cambiar · exigir signo estable en todas las
+  condiciones y |ΔF1| ≥ 0.05 con N=15 · exigir mecanismo (`recall=0`, latencia) · la latencia debe corroborar
+  la hipótesis · declarar el régimen en `run_config.json` · si dos corridas dan métricas idénticas fila a
+  fila, no han comparado nada.
+- **Pendiente vuestro:** evaluar `qwen3:14b/32b/latest`, **enumerar los modelos con capacidad `thinking`** y
+  **explicar la anomalía de `sonct988`**.
+
 ### 3.bis.5 Plantilla de reporte
 Al terminar cada tarea, sustituid su bloque por:
 
@@ -491,3 +514,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 12:35 | Claude Code (equipo principal) | Aplicado el rescore extendido (`17c17fc`) a las 3 corridas legacy, que el remoto no cubrió (`e7eb541`). Backup real preservado como `.bak_prefix_ORIGINAL`. Verificado: 0 grupos cambian y `summary == CSV` en las 15 corridas. ANOVA sin recálculo |
 | 2026-09-07 12:40 | Claude Code (equipo principal) | Verificadas las entregas `38b20da` (B1-B4) y `17c17fc` (rescore extendido): las 3 filas de §5.5 reproducen exacto; B1 adopta 0.4876/0.5075. Dos avisos: el `.md` creció +18/−8 líneas (re-verificar 25 pp) y la atribución del B1 a «decisión del autor» es incorrecta. Registrado el test `think=off` de 5 modelos en §3.bis.10 |
 | 2026-09-07 13:05 | Equipo Remoto 48 GB (Claude Code) | Experimento think ON/OFF en 5 modelos (15 reg, pipeline real) completo. Model-specific: deepseek/sonct988/gemma4:31b/gemma4:latest → OFF neutro-a-positivo y 3-6× más rápido; **gpt-oss:20b OFF empeora −0.12 → ON congelado, no re-ejecutar**. Código temporal revertido. Doc: FINDINGS §F44, LEARNING §L37, `remote_48g/EXPERIMENTO-THINKING-5MODELOS.md`. ETA re-run think-off de los 4 ~1-1.5h (decisión del autor) |
+| 2026-09-07 13:20 | Claude Code (equipo principal) | 📌 HALLAZGO FINAL sobre *thinking*: verificado el experimento del remoto (§F44) y añadido `FINDINGS.md §F45`. `gpt-oss` ON congelado (deja de responder sin razonamiento) y `qwen3` OFF son los únicos casos sólidos; los otros 4 son ruido de N=15. **Decisión cerrada: no re-ejecutar.** Reglas para ejecuciones futuras en `RECOMENDACIONES-EJECUCIONES-FUTURAS.md` y anexo `TODO-INFORME-FINAL.md §14`. Instrucciones al remoto en §3.bis.11 |

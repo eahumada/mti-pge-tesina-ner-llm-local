@@ -765,3 +765,48 @@ al estudio oficial (implicaría regenerar esas corridas con think=OFF y re-fusio
 > es ≥0 (o nulo con ganancia de velocidad). Modelos donde el razonamiento es parte del mecanismo de respuesta
 > (p. ej. `gpt-oss:20b`) **pierden calidad** al desactivarlo. Ver `LEARNING.md §L37` (terminología) y el
 > reporte `remote_48g/` de la prueba think ON/OFF.
+
+---
+
+### F45. Verificación del experimento *thinking* — el efecto es real en dos modelos y ruido en los otros cuatro
+
+**Estado:** HALLAZGO FINAL. Cierra la línea de investigación sobre *thinking* abierta en §F40-F41 y §F44.
+**Método:** verificación fila a fila de `results/test_nothink/` contra las corridas oficiales, con los
+criterios de `RECOMENDACIONES-EJECUCIONES-FUTURAS.md §3`.
+
+**Lo verificado del experimento del equipo remoto (§F44):** las 12 filas de su tabla **reproducen
+exactamente** desde los CSV; **0 `failed` y 0 violaciones de `F1 ≤ (P+R)/2`** en las cinco corridas. El
+método es correcto: pipeline real, scorer corregido, `thinking` como única variable, cambio de código
+revertido.
+
+**Dos resultados se refuerzan al mirar el mecanismo:**
+
+- **`gpt-oss:20b`** — lo decisivo no es el ΔF1 de −0.12, sino **por qué**: con el razonamiento apagado
+  **deja de producir**. `recall=0` en **7/15** del baseline y **10/15** del kb_rag. No razona peor: no
+  responde. La decisión de congelarlo en ON queda respaldada por el mecanismo, no solo por la media.
+- **`deepseek-r1:1.5b`** — el «±0» es más fuerte de lo que sugiere la media: comparados registro a registro,
+  **los 15 son idénticos** (diferencia máxima `4.4e-07`, puro formato: 6 decimales del CSV re-puntuado frente
+  a precisión completa del test). Su razonamiento **no altera ni una entidad** y cuesta 2,8×.
+
+**Tres resultados NO sostienen un cambio de régimen:**
+
+- **`gemma4:latest`** oscila entre **+0.066 (`fs-en`) y −0.051 (`fs-es`)**: el signo cambia entre condiciones
+  del **mismo modelo**. Eso es ruido de N=15, no efecto.
+- **`gemma4:31b`** hace lo mismo: −0.029 en baseline, +0.037 en RAG.
+- **`sonct988/gemma4-26b`** presenta una anomalía sin explicar: con `think` apagado va **más lento**
+  (×0.3, de 7 s a 25 s), lo que **contradice el modelo causal** del hallazgo (el razonamiento genera tokens;
+  no puede acelerar). Además una mediana de 7 s para un 26B es llamativamente rápida. Su +0.021 **no debe
+  darse por bueno** hasta explicar ese dato.
+
+**Contraste con el único caso sólido.** `qwen3:8b` se decidió sobre **N=120**, con **+4,2 pp** y `recall=0`
+cayendo de **15 a 1**. Aquí no hay nada de esa magnitud ni de esa consistencia.
+
+**Recomendación (aplicada): NO re-ejecutar el estudio oficial de los 4 modelos.** Además de apoyarse en
+ruido, re-correr 4 y dejar `gpt-oss` en ON **mezclaría dos regímenes de *thinking*** en el estudio — un
+segundo eje de inconsistencia, de la misma clase que las dos convenciones de puntuación que ya costó
+unificar. El valor del experimento es **documental y ya está capturado**: queda evidenciado por qué
+`gpt-oss:20b` conserva el razonamiento y por qué `qwen3:8b` no.
+
+> **Regla operativa consolidada.** Un efecto solo se acepta si el signo del ΔF1 es **estable en todas las
+> condiciones**, el **mecanismo** lo corrobora (`recall=0`, latencia) y la muestra lo soporta (con N=15,
+> descartar |ΔF1| < 0.05). Reglas completas en `RECOMENDACIONES-EJECUCIONES-FUTURAS.md`.

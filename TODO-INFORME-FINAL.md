@@ -527,3 +527,46 @@ español de ese término.
 ### Condición de disparo
 - [ ] Ejecutar **solo cuando** el equipo remoto haya cerrado todas sus tareas y el ANOVA definitivo esté
       calculado. Antes de eso, cualquier cambio global habría que repetirlo.
+
+---
+
+## 14. Anexo — Tareas futuras y reglas para ejecuciones posteriores (2026-09-07)
+
+> **Naturaleza:** este anexo **no lista trabajo pendiente del informe**. Recoge las reglas con las que se
+> ejecutarán los benchmarks de aquí en adelante, derivadas de hallazgos ya cerrados. Documento canónico:
+> [`RECOMENDACIONES-EJECUCIONES-FUTURAS.md`](./RECOMENDACIONES-EJECUCIONES-FUTURAS.md).
+
+### 14.1 Régimen de *thinking* — decidido y cerrado
+
+| Modelo | Régimen | Fundamento |
+|:---|:---|:---|
+| `gpt-oss:20b` | **ON, congelado** | Sin razonamiento deja de responder (`recall=0` en 7/15 y 10/15). Su corrida oficial no se toca |
+| `qwen3:8b` | **OFF** | +4,2 pp sobre N=120, `recall=0` de 15 → 1, ~10× más rápido |
+| `gemma4:12b-mlx`, `gemma4:31b-mlx` | **OFF** | El razonamiento agotaba `num_predict` y vaciaba `content` |
+| `deepseek-r1:1.5b`, `sonct988/gemma4-26b`, `gemma4:31b`, `gemma4:latest` | **ON (statu quo)** | Deltas medidos = ruido de N=15 (`FINDINGS.md §F45`) |
+
+**Decisión aplicada:** **no** se re-ejecutan esos 4 modelos con `think=OFF`. Hacerlo introduciría un segundo
+eje de inconsistencia (unos modelos con razonamiento y otros sin él) apoyado en ruido muestral.
+
+### 14.2 Reglas para futuras ejecuciones
+
+1. **No generalizar** el ajuste de *thinking* entre modelos: el efecto es específico de cada uno.
+2. **`think` es kwarg de primer nivel** de `Client.chat()`, nunca dentro de `options`: Ollama descarta en
+   silencio las claves desconocidas y el modelo corre con su **valor por defecto (ON)**.
+3. **Medir antes de cambiar**, con el pipeline real y `thinking` como única variable.
+4. **Umbral:** aceptar solo si el ΔF1 es ≥ 0 **en todas las condiciones** y el signo es **estable**. Con
+   N=15, descartar |ΔF1| < 0.05.
+5. **Exigir mecanismo:** conteo de `recall=0` y latencia, no solo la media de F1.
+6. **La latencia debe corroborar la hipótesis:** el razonamiento no puede acelerar. Si «OFF» sale más lento,
+   detenerse y explicarlo.
+7. **Declarar el régimen** en el `run_config.json` y no mezclar regímenes en silencio.
+8. **Comparar solo lo comparable:** si dos corridas dan métricas idénticas fila a fila, tenían la misma
+   configuración y no han comparado nada.
+
+### 14.3 Pendiente para el equipo remoto (cuando se retome)
+
+- [ ] Evaluar `qwen3:14b`, `qwen3:32b` y `qwen3:latest` (siguen con thinking ON, sin medir).
+- [ ] **Enumerar todos los modelos del estudio con capacidad `thinking`** (`ollama show`): toda corrida
+      anterior al fix `743054d` los ejecutó con el razonamiento **activo por defecto**.
+- [ ] Explicar la anomalía de `sonct988` (OFF más lento, ×0.3) antes de dar por buena su ventaja.
+- [ ] Si se amplía el estudio, medir el régimen **a N=120**, no a N=15.
