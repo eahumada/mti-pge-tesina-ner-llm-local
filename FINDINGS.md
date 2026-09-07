@@ -735,15 +735,30 @@ retirar `minimax-m3` (F38, L28). Los datos crudos en `results/` permanecen intac
 | `gpt-oss:20b` | kb_rag | 0.283 | 0.155 | **−0.128** | ×3.0 |
 | `sonct988/gemma4-26b` | baseline | 0.495 | 0.516 | +0.021 | ×0.3 |
 | `sonct988/gemma4-26b` | kb_rag | 0.529 | 0.539 | +0.010 | ×1.6 |
+| `gemma4:31b` | baseline (entities) | 0.691 | 0.662 | −0.029 | ×3.0 |
+| `gemma4:31b` | rag (entities) | 0.639 | 0.676 | +0.037 | ×4.4 |
+| `gemma4:latest` (variantes) | zs-en | 0.640 | 0.675 | +0.035 | ×5.6 |
+| `gemma4:latest` (variantes) | zs-es | 0.684 | 0.704 | +0.020 | ×6.2 |
+| `gemma4:latest` (variantes) | fs-en | 0.633 | 0.699 | +0.066 | ×6.0 |
+| `gemma4:latest` (variantes) | fs-es | 0.744 | 0.694 | −0.051 | ×5.7 |
 
 **Hallazgo.** Apagar el *thinking* **no es una mejora universal**:
 - `qwen3:8b`: think OFF **sube** F1 (~+4 pp) y ~10× más rápido → OFF.
 - `deepseek-r1:1.5b`: think OFF **F1 idéntico**, ~3× más rápido → OFF por velocidad, calidad intacta.
 - `sonct988`: think OFF **marginalmente mejor** (+0.01/+0.02).
 - **`gpt-oss:20b`: think OFF EMPEORA fuerte (−0.12 F1). El thinking le AYUDA.**
+- `gemma4:31b`: neutro (base −0.03 / rag +0.04) pero **~3× más rápido** (613→203 s).
+- `gemma4:latest` (variantes): mayormente **mejor** (+0.02 a +0.07; solo fs-es −0.05) y **~6× más rápido** (158→28 s).
+
+**Síntesis:** think OFF es **neutro-a-positivo y mucho más rápido en 4 de 5**; solo `gpt-oss:20b` pierde calidad.
 
 **Decisión del autor (firme):** **`gpt-oss:20b` se deja con think ON, congelado; su corrida oficial
 (`results/excluidos_n120_REMOTO`) no se re-ejecuta ni se toca.**
+
+**ETA real medido para re-correr con think=OFF los 4 beneficiados (latencias think-off reales):**
+`deepseek-r1:1.5b` ~0.3 h · `sonct988` ~0.25 h · `gemma4:31b` (N=15) ~0.4 h · `gemma4:latest` (variantes N=15)
+~0.15 h → **~1-1.5 h local serial en total** (gpt-oss NO se re-corre). Queda a decisión del autor si se aplica
+al estudio oficial (implicaría regenerar esas corridas con think=OFF y re-fusionar el ANOVA).
 
 > **Regla operativa.** No generalizar el ajuste de *thinking* entre modelos. Antes de apagarlo en un modelo
 > con capacidad `thinking`, medir F1 ON vs OFF en una muestra con el pipeline real; sólo apagarlo si el ΔF1
