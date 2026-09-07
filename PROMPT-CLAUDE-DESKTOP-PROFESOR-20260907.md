@@ -97,3 +97,31 @@ corpus del dominio (§5.3), **la tabla de los trece modelos (§5.3.5)** y la efi
 Al reconstruir, ten en cuenta que las subsecciones de los anexos D y H se han renumerado de forma correlativa
 tras las supresiones. El cuerpo debería bajar de las 23 páginas medidas a unas 21, lo que da margen cómodo
 frente al límite de 25.
+
+## Cuarta tanda (2026-09-07 18:45): prosa continua y consolidación
+
+Decisión del autor tras leer el `.docx` de la `_v3`: **el texto debe leerse como escrito de corrido**, con
+menos encabezados y menos enumeraciones, y en un registro algo menos formal y más breve.
+
+Se han reescrito en prosa continua §3.1 —la justificación de las decisiones de diseño, que enumeraba los
+criterios C1 a C5 en bloques marcados en negrita—, §4.2 —los modelos evaluados, que iba en tres viñetas por
+categoría— y §5.4, la taxonomía de errores. El bloque §4.3 se consolida por completo: sus cuatro subsecciones
+desaparecen y su contenido pasa a prosa seguida, con los tres ejemplos *few-shot* trasladados al Anexo B.
+Igual tratamiento reciben §4.1.1 y §4.1.2, fundidas en una sola exposición con el *prompt* de generación
+también movido al Anexo B. La antigua §4.5, que eran tres viñetas de infraestructura, se integra al final de
+§4.4. Y el bloque de resultados del ANOVA en §5.3.5 deja de ser una lista de tres puntos para convertirse en
+dos párrafos.
+
+El cuerpo baja de **11 528 a 10 958 palabras**, los encabezados de cuarto nivel de siete a tres y las tablas
+del cuerpo de diez a nueve: **desaparece la de §4.3.1** —la estructura del *prompt* *few-shot*—, que en la
+lista de la tanda anterior figuraba entre las intocables. Esta instrucción es posterior y prevalece sobre
+aquella; **las nueve restantes siguen siendo intocables**, incluidas la comparativa con todos los modelos
+(§5.1) y la de los trece modelos (§5.3.5).
+
+Se corrigieron además dos cifras obsoletas encontradas al reescribir: la conclusión 6 conservaba el valor de
+Tukey anterior para `llama3.2` (p=0,014 en lugar de 0,007) y §5.3.5 citaba el ANOVA del corpus N=30 con el
+valor previo a su re-corrida (F=0,141 en lugar de 0,2235). Y §4.2 omitía `gemma:latest` y `qwen3:8b`, que sí
+figuran en la Tabla 2.
+
+Estimación: unas 19,9 páginas de texto, frente a las 20 medidas en la `_v3`. Al propagar, **vuelve a medir** y
+congela una `_v4`.

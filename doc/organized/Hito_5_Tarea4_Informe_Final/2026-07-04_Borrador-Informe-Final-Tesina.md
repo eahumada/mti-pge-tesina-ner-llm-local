@@ -160,17 +160,13 @@ La revisión anterior deja fijados los criterios con los que el capítulo 3 just
 
 ### 3.1 Justificación de las decisiones de diseño
 
-El capítulo anterior cerró con cinco criterios derivados de la revisión. Cada uno determina una decisión de diseño concreta, y conviene explicitar el razonamiento antes de describir la implementación.
+Los cinco criterios con que cerró el capítulo anterior determinan, cada uno, una decisión concreta. Conviene explicitar el razonamiento antes de describir la implementación.
 
-El criterio **C1 —prescindir de datos etiquetados—** descarta las cuatro primeras familias de la Tabla comparativa del §2.2. Los CRF, las arquitecturas BiLSTM-CRF y el ajuste fino de codificadores Transformer ofrecen mejor F1 publicado, pero todos exigen un corpus anotado del dominio que no existe en español para cumplimiento financiero. Se adopta por tanto un **modelo de lenguaje generativo operado mediante aprendizaje en contexto**, única familia que permite adaptación inmediata sin reentrenamiento. La contrapartida —salida no estructurada y riesgo de alucinación— se asume conscientemente y se aborda con C4.
+El primero —prescindir de datos etiquetados— descarta las cuatro primeras familias de la tabla comparativa del §2.2. Los CRF, las arquitecturas BiLSTM-CRF y el ajuste fino de codificadores Transformer ofrecen mejor F1 publicado, pero todos exigen un corpus anotado del dominio que en español no existe para cumplimiento financiero. Se adopta por tanto un modelo generativo operado mediante aprendizaje en contexto, la única familia que permite adaptación inmediata sin reentrenamiento; su contrapartida —salida no estructurada y riesgo de alucinación— se asume y se aborda más abajo.
 
-El criterio **C2 —soberanía del dato—** excluye las APIs comerciales, que aventajan a los modelos abiertos en capacidad pero transfieren el texto a un tercero. Se opta por **ejecución íntegramente local**. Entre los entornos revisados en §2.5 se selecciona **Ollama**, por tres razones: expone una API HTTP uniforme que permite intercambiar modelos sin tocar el código de orquestación; gestiona el ciclo de vida de los pesos en memoria, requisito imprescindible para encadenar modelos que no caben simultáneamente; y admite tanto pesos GGUF como MLX, lo que habilita comparar ambas rutas de cuantización sobre el mismo arnés. Los modelos en la nube se conservan únicamente como **línea base de comparación**, no como parte de la solución propuesta.
+El segundo criterio, la soberanía del dato, excluye las APIs comerciales: aventajan a los modelos abiertos en capacidad, pero transfieren el texto a un tercero. Se opta por ejecución íntegramente local y, entre los entornos revisados en §2.5, por Ollama. Pesaron tres razones: expone una API uniforme que permite intercambiar modelos sin tocar el código de orquestación, gestiona el ciclo de vida de los pesos en memoria —requisito imprescindible para encadenar modelos que no caben a la vez— y admite pesos GGUF y MLX, lo que habilita comparar ambas rutas de cuantización sobre el mismo arnés. Los modelos en la nube se conservan solo como línea base de comparación, no como parte de la solución.
 
-El criterio **C3 —hardware de consumo—** obliga a cuantización de 4 bits (GGUF Q4_K_M) y a una gestión explícita de la memoria, descrita en §3.3.
-
-El criterio **C4 —salida verificable—** se traduce en exigir al modelo un objeto JSON con un esquema fijo, validado en recepción, con una ruta de recuperación cuando el análisis sintáctico falla. Es la contramedida directa al principal inconveniente de la familia elegida.
-
-El criterio **C5 —comparación empírica—** exige que las variantes de *prompt* y de estrategia de recuperación sean intercambiables por configuración y no por modificación del código, de modo que cada corrida quede definida por un conjunto de parámetros reproducible.
+El tercer criterio, operar sobre hardware de consumo, obliga a cuantizar a 4 bits y a gestionar la memoria de forma explícita, según se detalla en §3.3. El cuarto, producir salida verificable, se traduce en exigir al modelo un objeto JSON de esquema fijo, validado al recibirlo y con una ruta de recuperación cuando el análisis sintáctico falla: es la contramedida directa al principal inconveniente de la familia elegida. El quinto, permitir la comparación empírica, exige que las variantes de *prompt* y de estrategia de recuperación se seleccionen por configuración y no modificando el código, de modo que cada corrida quede definida por un conjunto de parámetros reproducible.
 
 ### 3.2 Arquitectura general y capa de proveedores
 
@@ -230,38 +226,13 @@ Se utilizaron dos corpus complementarios:
 **Corpus 2 — Kleptotrace/CoNLL-2002 Augmented (N=30, Corpus de Validación Estadística):**  
 30 artículos breves generados mediante un método de aumento sintético guiado por LLM para alcanzar el umbral estadístico mínimo requerido por pruebas paramétricas. Cada artículo contiene entre 1 y 2 párrafos (~145-293 caracteres, promedio 202) con ground truth anotado para Personas (PER) y Organizaciones (ORG).
 
-#### 4.1.1 Método de Generación Sintética del Corpus N=30
+#### 4.1.1 Generación y validez del corpus sintético N=30
 
-Dado que el corpus real Kleptotrace/CoNLL-2002 cuenta con solo 15 artículos (N=15), resulta insuficiente para la aplicación de pruebas estadísticas paramétricas con potencia adecuada. Para subsanar esto se aplicó un método de **aumento de datos guiado por LLM** (LLM-guided data augmentation), consistente en los siguientes pasos:
+Los quince artículos del corpus real resultan insuficientes para aplicar pruebas paramétricas con potencia adecuada, de modo que se construyó un corpus complementario de treinta textos breves siguiendo un procedimiento en cinco fases.
 
-**Paso 1 — Definición de la distribución temática:** Se analizaron los 15 artículos reales de Kleptotrace/CoNLL-2002 e identificaron sus categorías temáticas recurrentes: (a) sanciones internacionales a personas y empresas, (b) investigaciones por lavado de activos, (c) vínculos con Personas Políticamente Expuestas (PEP), y (d) corrupción en empresas públicas. Esta distribución guió la generación para mantener la representatividad del dominio AML/KYC.
+Se partió de analizar los quince artículos reales para identificar sus temáticas recurrentes —sanciones financieras, corrupción política, blanqueo de capitales y litigios corporativos— y reproducir esa distribución en el corpus generado. Para cada artículo se fijó de antemano un par de entidades, una persona y una organización, que actuaba como anotación de referencia conocida antes de existir el texto; este orden es el que garantiza que la referencia no se derive de la salida del modelo. Un modelo `gemma4:31b` redactó entonces cada párrafo a partir de esas entidades, con instrucción explícita de no introducir ninguna otra (el *prompt* completo figura en el Anexo B). Cada texto se revisó manualmente para confirmar que las entidades objetivo aparecían y que no se habían colado otras, y por último se comprobó por similitud coseno que ningún artículo replicara oraciones de otro.
 
-**Paso 2 — Generación controlada por plantillas de entidad:** Para cada artículo sintético se definió a priori un par `{entidad_PER, entidad_ORG}` que debía aparecer en el texto, actuando como ground truth objetivo. Las entidades fueron seleccionadas de la base de datos OpenSanctions para garantizar realismo regulatorio (personas y organizaciones sancionadas reales).
-
-**Paso 3 — Instrucción al LLM generador:** El modelo `gemma4:31b` recibió el siguiente prompt de generación:
-
-```
-Eres un periodista de investigación financiera. Redacta un párrafo corto (2-4 oraciones) en español
-sobre la entidad "{entidad_PER}" vinculada a "{entidad_ORG}" en el contexto de [temática aleatoria].
-El texto debe ser fáctico, neutro y similiar en estilo a noticias de compliance financiero.
-Debe mencionar exactamente estas entidades y no otras personas u organizaciones adicionales.
-```
-
-**Paso 4 — Verificación del ground truth:** Cada artículo generado fue revisado manualmente para confirmar que las entidades objetivo aparecían efectivamente en el texto y que no se hubieran introducido entidades ajenas al ground truth anotado. Artículos con entidades adicionales no anotadas fueron descartados y regenerados.
-
-**Paso 5 — Control de calidad por diversidad:** Se verificó que ningún artículo generado replicara literalmente oraciones de otro artículo del corpus (deduplicación por similitud coseno > 0.85). La longitud promedio resultante fue de 202 caracteres (rango 145–293), con 1,2 entidades PER y 2,3 entidades ORG por artículo.
-
-#### 4.1.2 Validez Estadística del Corpus Sintético
-
-El uso de datos sintéticos generados por LLM para pruebas de hipótesis es válido bajo las siguientes condiciones, todas cumplidas en este estudio:
-
-**a) Teorema del Límite Central (TLC):** El TLC establece que, para N ≥ 30 observaciones independientes, la distribución de la media muestral se aproxima a una distribución normal independientemente de la distribución poblacional subyacente. Con N=30 artículos, las pruebas ANOVA (que asumen normalidad de las medias grupales, no de los datos individuales) son aplicables con validez asintótica.
-
-**b) Independencia de las observaciones:** Cada artículo generado es una muestra independiente — el desempeño del modelo en un artículo no afecta su desempeño en otro. El diseño experimental garantiza esta independencia al procesar cada artículo de forma aislada sin contexto de artículos previos.
-
-**c) Validez de constructo del corpus sintético:** La validez de los datos sintéticos como proxy del dominio real descansa en tres pilares: (1) la distribución temática del corpus sintético replica la del corpus real (Kleptotrace/CoNLL-2002); (2) las entidades provienen de una fuente oficial de sanciones reales (OpenSanctions); y (3) la capacidad del LLM para generar texto coherente con el dominio financiero ha sido validada empíricamente (el mismo modelo que genera los artículos es el que se evalúa, creando una condición de evaluación conservadora). Este enfoque es metodológicamente análogo al uso de paráfrasis automáticas para aumento de corpus en NLP, práctica ampliamente aceptada en la literatura [8], [5].
-
-**d) Consistencia entre corpus:** Los F1-Scores observados en el corpus N=30 (gemma4:31b: 78.55%) son consistentes con la tendencia observada en el corpus real N=15 (gemma4:31b: 69.12%), sin saltos discontinuos que indicarían artefactos del aumento. La diferencia es atribuible a la menor complejidad promedio de los artículos breves del corpus sintético, lo que es esperado y documentado.
+El uso de textos sintéticos para contrastar hipótesis es defendible aquí por cuatro razones. La primera es de potencia estadística: el teorema del límite central asegura que, a partir de treinta observaciones independientes, la media muestral se aproxima a una distribución normal, lo que habilita las pruebas paramétricas que el corpus de quince no soportaba. La segunda es la independencia efectiva entre observaciones, pues el desempeño del modelo en un artículo no condiciona el de los demás. La tercera es la validez de constructo: la distribución temática replica la del corpus real, las entidades proceden de listas públicas de sanciones y el estilo redaccional imita el de las noticias de cumplimiento. La cuarta es la consistencia observada entre ambos corpus —`gemma4:31b` obtiene 78,55 % sobre N=30 y 69,12 % sobre N=15—, sin saltos que delatarían un artefacto del procedimiento de generación; la diferencia se explica por la menor complejidad de los textos breves.
 
 #### 4.1.3 Extensión a Corpus Real N=120 (Dataset Conmutable)
 
@@ -269,80 +240,21 @@ Tras la validación sobre el corpus sintético N=30 (§4.1.1–4.1.2), y como pa
 
 El corpus sintético N=30 no fue descartado ni reemplazado: el flag `--data-file` de `src/main.py` permite ejecutar cualquier corrida indistintamente sobre `data/kleptotrace_augmented_30.json` (N=30, sintético) o `data/benchmark_balanced_120.json` (N=120, real), conservando ambos conjuntos de datos y sus resultados en el repositorio. Los resultados sobre N=120 se presentan como complemento — no reemplazo — de la validación estadística de §5.3.
 
-### 4.2 Modelos Evaluados
+### 4.2 Modelos evaluados
 
-El trabajo comprende **dos conjuntos de evaluación distintos**, que no deben confundirse: el benchmark exploratorio de la Tabla 2 (§5.1), con **12 modelos en 13 configuraciones** sobre N=15 en modo `entities` (`gemma4:latest` aparece dos veces: ZS-ES y FS-ES), y el estudio principal (§5.3.5), con **13 modelos** sobre N=120 en modo `kb_combined`. El segundo incorpora `gemma4:12b-mlx` y `gpt-oss:20b`, que no disponen de corrida N=15. Los modelos de la Tabla 2 se agrupan en tres categorías:
-- **Modelos locales grandes (≥8B):** gemma4:31b, gemma4:31b-mlx, gemma4:latest (9B), llama3.1:8b, qwen2.5:14b, mistral-nemo:latest (12B). gemma4:12b se descargó pero no figura en el benchmark reportado.
-- **Modelos locales compactos (<8B):** llama3.2:latest (3B), nuextract:latest (3.8B), nemotron-mini:4b, deepseek-r1:1.5b.
-- **Modelos cloud/híbridos:** gemma4:31b-cloud, gemini-3.1-flash-lite.
+El trabajo comprende dos conjuntos de evaluación que conviene no confundir. El benchmark exploratorio de la Tabla 2 (§5.1) cubre doce modelos en trece configuraciones sobre N=15 en modo `entities` —`gemma4:latest` aparece dos veces, en sus variantes ZS-ES y FS-ES—, mientras que el estudio principal (§5.3.5) evalúa trece modelos sobre N=120 en modo `kb_combined`. El segundo incorpora `gemma4:12b-mlx` y `gpt-oss:20b`, que no disponen de corrida sobre el corpus reducido.
 
-### 4.3 Análisis de Variantes de Prompts
+Los modelos de la Tabla 2 se reparten en tres grupos. Entre los locales de ocho mil millones de parámetros o más figuran `gemma4:31b` y su compilación MLX, `gemma4:latest` (9B), `qwen2.5:14b`, `mistral-nemo:latest` (12B), `llama3.1:8b` y `qwen3:8b`. El tramo compacto, por debajo de 8B, lo componen `gemma:latest` (7B), `nemotron-mini:4b`, `llama3.2:latest` (3B) y `deepseek-r1:1.5b`. Completa el cuadro `gemma4:31b-cloud`, incluido únicamente como referencia externa frente a la ejecución local.
 
-Se evaluaron cuatro configuraciones de prompt sobre el modelo gemma4:latest (9B). El diseño cruza dos factores —idioma (inglés/español) y estrategia de demostración (sin ejemplos/con ejemplos)—, por lo que constituye un **diseño factorial 2×2**, procedimiento que la literatura anglosajona de aprendizaje automático denomina *ablation study*:
-1. **Zero-shot inglés (ZS-EN):** Prompt de sistema en inglés sin ejemplos.
-2. **Zero-shot español (ZS-ES):** Prompt de sistema traducido al español, sin ejemplos.
-3. **Few-shot inglés (FS-EN):** Prompt en inglés con 3 ejemplos del dominio compliance.
-4. **Few-shot español (FS-ES):** Prompt en español con 3 ejemplos del dominio compliance.
+### 4.3 Análisis de variantes de prompts
 
-#### 4.3.1 ¿Qué es el Prompting Few-Shot?
+Sobre `gemma4:latest` se evaluaron cuatro configuraciones de *prompt* que cruzan dos factores —idioma, inglés o español, y estrategia de demostración, con ejemplos o sin ellos—, lo que constituye un diseño factorial 2×2, procedimiento que la literatura anglosajona denomina *ablation study*. Las cuatro celdas son zero-shot en inglés, que actúa como referencia, zero-shot en español, few-shot en inglés y few-shot en español, empleando en los dos últimos tres ejemplos del dominio de cumplimiento.
 
-El **aprendizaje en contexto** (*in-context learning*) es la capacidad de los LLMs de adaptarse a una nueva tarea sin actualizar sus pesos, únicamente a partir de instrucciones y ejemplos incluidos en el texto del prompt. Esta capacidad, documentada por Brown et al. [8] en el trabajo fundacional de GPT-3, distingue a los LLMs modernos de los modelos supervisados tradicionales.
+El aprendizaje en contexto es la capacidad de un modelo de adaptarse a una tarea nueva sin actualizar sus pesos, solo a partir de lo que recibe en el *prompt*; Brown et al. [8] la documentaron en el trabajo fundacional de GPT-3 y es lo que separa a estos modelos de los supervisados tradicionales. En su variante *few-shot* el *prompt* antepone a la tarea real un puñado de ejemplos resueltos, cada uno con su entrada y la salida esperada, de modo que el modelo infiere el patrón antes de enfrentarse al caso que importa. En la variante *zero-shot* no hay ejemplos y el modelo debe deducir formato y criterio solo de la instrucción.
 
-El prompting **few-shot** (de pocos disparos) es una variante del aprendizaje en contexto que incluye un número reducido de ejemplos demorativos (*demonstrations*) directamente en el prompt, antes de presentar la tarea real. La estructura canónica de un prompt few-shot es:
+Esos ejemplos cumplen tres funciones que conviene distinguir. Fijan el **formato de salida**, mostrando qué estructura JSON se espera con sus campos y tipos; sin ese anclaje los modelos varían la forma de la respuesta entre artículos y complican el análisis automático. Calibran el **umbral semántico**, delimitando qué menciones cuentan como entidad —personas nombradas y no cargos genéricos como «el presidente», organizaciones con nombre propio y no referencias como «la empresa»—, criterio que resulta difícil de especificar de forma exhaustiva en prosa pero que dos o tres ejemplos contrastivos transmiten sin ambigüedad. Y **adaptan al dominio**: funcionan como un micro-corpus en memoria de trabajo que inclina la distribución de probabilidad del modelo hacia la terminología regulatoria en lugar del lenguaje general.
 
-
-| Posición en el prompt | Contenido |
-|:---|:---|
-| 1 | Instrucción de sistema |
-| 2 | Ejemplo 1: entrada → salida esperada |
-| 3 | Ejemplo 2: entrada → salida esperada |
-| 4 | Ejemplo 3: entrada → salida esperada |
-| 5 | Tarea real: entrada (el modelo genera la salida) |
-
-
-En contraposición, el prompting **zero-shot** no incluye ejemplos: el modelo debe inferir el formato y la estrategia de extracción únicamente desde la instrucción de sistema.
-
-#### 4.3.2 Mecanismo Cognitivo del Few-Shot Prompting en LLMs
-
-Los ejemplos few-shot cumplen tres funciones cognitivas en el LLM:
-
-1. **Especificación del formato de salida:** Muestran al modelo exactamente qué estructura JSON se espera (cuáles campos, con qué nombres, qué tipos de valores). Sin este anclaje, los LLMs tienden a variar el formato de respuesta entre artículos, dificultando el parseo programático.
-
-2. **Calibración del umbral semántico:** Los ejemplos delimitan qué *tipo* de mención califica como entidad: por ejemplo, solo personas nombradas individualmente (no cargos genéricos como "el presidente"), y solo organizaciones con nombre propio (no referencias como "la empresa"). Este criterio no puede especificarse exhautivamente en texto descriptivo, pero se transmite implícitamente mediante 2-3 ejemplos contrastivos.
-
-3. **Adaptación al dominio:** En un dominio especializado como AML/KYC, los ejemplos funcionan como un micro-corpus de fine-tuning en memoria de trabajo: el modelo ajusta la distribución de probabilidad de sus respuestas para seguir el patrón observado en los ejemplos, favoreciendo terminología y categorías del dominio regulatorio sobre el lenguaje general.
-
-#### 4.3.3 Prompts Utilizados en este Estudio
-
-En este trabajo se diseñaron prompts específicos para el dominio de cumplimiento normativo AML/KYC. Los tres ejemplos few-shot utilizados en la configuración FS-ES tienen la siguiente estructura:
-
-**Ejemplo few-shot 1 (caso persona sancionada):**
-```
-Texto: "El empresario ruso Roman Abramovich fue incluido en las listas de sanciones
-        de la Unión Europea por sus vínculos con el régimen del Kremlin a través de
-        su empresa Evraz PLC."
-Respuesta: {"Persons": ["Roman Abramovich"], "Organizations": ["Evraz PLC"]}
-```
-
-**Ejemplo few-shot 2 (caso organización sancionada):**
-```
-Texto: "El Departamento del Tesoro de los Estados Unidos sancionó al banco Rossiya,
-        señalándolo como banco personal de altos funcionarios del gobierno ruso."
-Respuesta: {"Persons": [], "Organizations": ["Banco Rossiya", "Departamento del Tesoro"]}
-```
-
-**Ejemplo few-shot 3 (caso PEP complejo):**
-```
-Texto: "Isabel dos Santos, hija del expresidente angoleño José Eduardo dos Santos,
-        figura en investigaciones de la empresa estatal Sonangol por presunto desvío
-        de fondos."
-Respuesta: {"Persons": ["Isabel dos Santos", "José Eduardo dos Santos"],
-             "Organizations": ["Sonangol"]}
-```
-
-Los tres ejemplos cubren deliberadamente: (a) extracción limpia de un solo sujeto, (b) caso sin personas nombradas con múltiples organizaciones, y (c) caso con múltiples personas en relación familiar y una organización ambigua. Esta diversidad de casos entrena al modelo a manejar la variabilidad del corpus real.
-
-#### 4.3.4 Impacto Empírico del Few-Shot en este Estudio
+Los tres ejemplos empleados en la configuración few-shot en español cubren un caso de persona sancionada, uno de organización y uno de mención ambigua; se reproducen íntegros en el Anexo B.
 
 Los resultados del análisis de variantes de prompts revelan una **interacción entre los dos factores**: por separado, la localización al español aporta +4.38 pp de F1 y los ejemplos *few-shot* en inglés no aportan nada (−0.73 pp), pero **su combinación alcanza +11.12 pp** (FS-ES: 74.44% frente al 64.05% del baseline ZS-EN). Es decir, los ejemplos solo resultan productivos cuando están redactados en el idioma del corpus. La configuración FS-ES lidera además en Precisión (66.78%) y Recall (86.87%) sin penalización en alucinaciones (0.20%, idéntica a ZS-ES). Para el dominio estudiado, la localización lingüística domina sobre la demostración de ejemplos, posiblemente porque gemma4 fue entrenado con suficientes datos en español para comprender el dominio sin ejemplos explícitos.
 
@@ -361,12 +273,7 @@ El cotejo entre la entidad extraída y la de referencia es **difuso**, con un um
 
 **Convención ante la extracción vacía.** Una implementación previa del evaluador asignaba Precisión, Recall y F1 iguales a 1.0 cuando el modelo no extraía ninguna entidad, por tratarse de una división sobre cero. Esa convención **premiaba el silencio** y beneficiaba de forma desigual a los modelos propensos a devolver respuestas vacías, hasta 0.21 de F1 en el caso más extremo. La convención empleada en este trabajo asigna **0.0** en ese supuesto, y reserva el valor 1.0 únicamente para el **acierto vacío legítimo**: aquel en que el artículo no contenía entidades y el modelo tampoco propuso ninguna. Todas las corridas del estudio se re-puntuaron con esta convención a partir de los recuentos de aciertos y errores almacenados, **sin repetir la inferencia**, de modo que la totalidad de las cifras reportadas comparte un criterio único.
 
-### 4.5 Infraestructura de Pruebas
-
-- **Hardware:** Apple Silicon (Metal/MPS), en dos configuraciones según el footprint del modelo: 16 GB de memoria unificada para modelos de hasta ~12B, y 48 GB de memoria unificada para los modelos de 31B y variantes MLX de gran tamaño (ver §3.3).
-- **Software:** Python 3.14, Ollama 0.6+, scikit-learn 1.9, statsmodels 0.14, pandas 3.0, Streamlit 1.60.
-- **Reproducibilidad:** Checkpointing automático (`.checkpoint.json`) para reanudar benchmarks interrumpidos sin pérdida de datos.
-
+Las pruebas se ejecutaron sobre Apple Silicon con aceleración Metal, en dos configuraciones según el footprint del modelo: 16 GB de memoria unificada para los de hasta ~12B y 48 GB para los de 31B y las variantes MLX mayores. El entorno de software combina Python 3.14, Ollama 0.6, scikit-learn, statsmodels, pandas y Streamlit. Cada corrida guarda un punto de control automático, de modo que una ejecución interrumpida se reanuda sin perder trabajo, lo que resultó decisivo en barridos de varias decenas de horas.
 
 ## 5. RESULTADOS EXPERIMENTALES
 
@@ -465,24 +372,15 @@ Sobre el corpus real N=120 descrito en §4.1.3 se ejecutó el mismo protocolo (A
 
 > **Dos salvedades de procedencia.** (i) La latencia de `gemma4:31b-cloud` **no mide inferencia**: quedó cuantizada por el `--request-delay` introducido para sortear el límite de peticiones del servicio (114 de sus 240 filas registran exactamente 1,02 s). Su F1 es válido; su latencia y sus tokens/s no deben usarse en comparaciones de eficiencia. (ii) Siete filas de `nemotron-mini:4b` tienen `latencia = 0` y `0 tokens/s` porque se re-extrajeron fuera del arnés de lotes tras un fallo de contexto; sus valores de precisión, *recall* y F1 son reales, pero su telemetría no existe.
 
-**ANOVA de una vía (α = 0.05), N=120 por grupo:**
-- **F-Statistic:** 38.2222  ·  **p-Value:** 3.4453 × 10⁻¹⁶⁰ (p < 0.05 → se rechaza H₀)
-- **Conclusión:** la diferencia de desempeño entre modelos/modos es estadísticamente significativa, con una potencia muy superior a la del corpus N=30 (F=0.141, no significativo).
-- **Tukey HSD (post-hoc):** 172 de 325 comparaciones por pares resultan significativas. Al contrastar *baseline* contra *KB RAG* **dentro de cada modelo**, la mejora solo alcanza significancia en `nemotron-mini:4b` (+14.52 pp, p<0.001) y `llama3.2:latest` (+10.82 pp, p=0.007); en los once modelos restantes la diferencia no supera la corrección por comparaciones múltiples.
+El ANOVA de una vía sobre los veintiséis grupos arroja **F = 38,2222** con **p = 3,4453 × 10⁻¹⁶⁰**, de modo que se rechaza la hipótesis nula: las diferencias de desempeño entre modelos y modos son estadísticamente significativas, con una potencia muy superior a la del corpus del dominio, donde la comparación entre las dos compilaciones de 31B no alcanzaba significancia. El post-hoc de Tukey identifica 172 comparaciones significativas de las 325 posibles; pero al contrastar cada modelo consigo mismo —extracción directa frente a KB RAG— la mejora solo supera la corrección por comparaciones múltiples en `nemotron-mini:4b`, con 14,52 puntos, y en `llama3.2:latest`, con 10,82.
 
-**Interpretación.** El beneficio del KB RAG es **inversamente proporcional a la capacidad del modelo**: aporta de forma estadísticamente significativa en los dos modelos más débiles del estudio, es positivo pero no concluyente en la franja intermedia, y resulta nulo o adverso en los modelos de mayor capacidad (−0.53 pp y −0.18 pp en los dos de 31B), que ya siguen correctamente las instrucciones sin contexto adicional. **Diez de los trece modelos obtienen una mejora**, aunque solo en dos alcance significancia estadística.
+Ese resultado dibuja el hallazgo central del estudio: **el beneficio del KB RAG es inversamente proporcional a la capacidad del modelo**. Aporta de forma demostrable en los dos modelos más débiles, es positivo pero no concluyente en la franja intermedia y se anula o revierte en los de mayor capacidad —−0,53 y −0,18 puntos en los dos de 31B—, que ya siguen correctamente las instrucciones sin contexto adicional. Diez de los trece modelos mejoran, aunque solo dos lo hagan de manera estadísticamente sólida.
 
 **Lectura conjunta con el corpus N=30 (§5.3):** el mejor F1 local sobre N=120 (`gemma4:31b-mlx`: 59.25%) es menor que el de N=30 (`gemma4:31b-mlx`: 80.57%), lo esperable dado que los artículos reales de CoNLL-2002 ES son más largos y heterogéneos que los breves (~200 caracteres) del corpus sintético N=30, diseñado para el dominio AML/KYC. Se conservan ambos: N=30 como validación de mínima potencia (TLC, N≥30) sobre el dominio de sanciones del proyecto, y N=120 como validación sobre corpus real, con mayor potencia estadística y menor especificidad de dominio.
 
-### 5.4 Taxonomía de Errores NER
+### 5.4 Taxonomía de errores
 
-El análisis cualitativo de las extracciones identifica tres categorías de error recurrentes:
-
-1. **Boundary Errors (Errores de Límite):** El modelo incorpora preposiciones o aposiciones descriptivas dentro del span de la entidad. Ejemplo: extrae `"Isabel dos Santos, hija del expresidente"` en lugar de `"Isabel dos Santos"`.
-
-2. **Type Confusion (Confusión de Tipo):** El modelo clasifica una organización como localización. Ejemplo: `"Sonangol"` (empresa petrolera estatal angoleña) clasificada como LOC en lugar de ORG.
-
-3. **Extrinsic Hallucinations (Alucinaciones Extrínsecas):** El modelo genera entidades de su memoria paramétrica que no están presentes en el texto. Mitigadas efectivamente al 0.0% en N=30 mediante delimitadores estrictos de JSON.
+El análisis cualitativo de las extracciones revela tres patrones de error recurrentes. Los **errores de límite** son los más frecuentes: el modelo incorpora al nombre preposiciones o aposiciones descriptivas, y extrae «Isabel dos Santos, hija del expresidente» donde la referencia registra solo «Isabel dos Santos». El cotejo difuso descrito en §4.4 absorbe buena parte de estos casos, que rara vez alteran la identificación de la entidad. La **confusión de tipo** aparece cuando una organización se clasifica como localización —«Sonangol», la petrolera estatal angoleña, etiquetada como lugar—, error más costoso porque desplaza la entidad de la categoría en que un analista de cumplimiento la buscaría. Las **alucinaciones extrínsecas**, en las que el modelo propone entidades procedentes de su memoria paramétrica y ausentes del texto, resultaron ser el problema menos extendido: la instrucción de restringir la extracción al artículo presente las mantiene por debajo del 1 % en los modelos de mayor capacidad, aunque superan el 13 % en `deepseek-r1:1.5b`.
 
 ### 5.5 Análisis de Eficiencia en Hardware Soberano
 
@@ -665,6 +563,42 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 ### Anexo B — Prompt del Sistema (Versión Few-Shot Español)
 
 El prompt de sistema en español (few-shot) incluye: (1) instrucciones de rol (analista de cumplimiento normativo), (2) formato de salida JSON estricto con tipos de entidades, (3) 3 ejemplos completos de artículo → extracción correcta, y (4) reglas de comportamiento ante ambigüedad (no alucinar, preferir omisión a invención).
+
+
+**Ejemplos *few-shot* de la configuración FS-ES** (§4.3):
+
+**Ejemplo few-shot 1 (caso persona sancionada):**
+```
+Texto: "El empresario ruso Roman Abramovich fue incluido en las listas de sanciones
+        de la Unión Europea por sus vínculos con el régimen del Kremlin a través de
+        su empresa Evraz PLC."
+Respuesta: {"Persons": ["Roman Abramovich"], "Organizations": ["Evraz PLC"]}
+```
+
+**Ejemplo few-shot 2 (caso organización sancionada):**
+```
+Texto: "El Departamento del Tesoro de los Estados Unidos sancionó al banco Rossiya,
+        señalándolo como banco personal de altos funcionarios del gobierno ruso."
+Respuesta: {"Persons": [], "Organizations": ["Banco Rossiya", "Departamento del Tesoro"]}
+```
+
+**Ejemplo few-shot 3 (caso PEP complejo):**
+```
+Texto: "Isabel dos Santos, hija del expresidente angoleño José Eduardo dos Santos,
+        figura en investigaciones de la empresa estatal Sonangol por presunto desvío
+        de fondos."
+Respuesta: {"Persons": ["Isabel dos Santos", "José Eduardo dos Santos"],
+             "Organizations": ["Sonangol"]}
+```
+
+**Prompt de generación del corpus sintético N=30** (§4.1.1), ejecutado sobre `gemma4:31b`:
+
+```
+Eres un periodista de investigación financiera. Redacta un párrafo corto (2-4 oraciones) en español
+sobre la entidad "{entidad_PER}" vinculada a "{entidad_ORG}" en el contexto de [temática aleatoria].
+El texto debe ser fáctico, neutro y similiar en estilo a noticias de compliance financiero.
+Debe mencionar exactamente estas entidades y no otras personas u organizaciones adicionales.
+```
 
 ### Anexo C — Configuración del Entorno de Pruebas
 
