@@ -1,36 +1,16 @@
-# INFORME FINAL DE TESINA
+# Clasificación y Extracción de Entidades Nombradas (NER) en Noticias de Cumplimiento Normativo Corporativo Mediante Modelos de Lenguaje Grande Ejecutados Localmente con Soberanía de Datos
 
-**UNIVERSIDAD TÉCNICA FEDERICO SANTA MARÍA**  
-**DEPARTAMENTO DE INFORMÁTICA**  
-**Magíster en Tecnologías de la Información (MTI)**  
+**Eduardo Mauricio Ahumada Gallardo**
 
----
+Austranet — Departamento de Informática, Universidad Técnica Federico Santa María, Valparaíso, Chile
 
-**Clasificación y Extracción de Entidades Nombradas (NER) en Noticias de Cumplimiento Normativo Corporativo Mediante Modelos de Lenguaje Grande Ejecutados Localmente con Soberanía de Datos**
-
----
-
-| | |
-|:---|:---|
-| **Autor** | Eduardo Mauricio Ahumada Gallardo |
-| **RUT** | 12.814.696-2 |
-| **Correo** | eahumada@gmail.com |
-| **Profesor Guía** | José Luis Martí Lara |
-| **Organización Vinculada** | Austranet |
-| **Programa** | Magíster en Tecnologías de la Información — Año de Ingreso 2013 |
-| **Fecha de Entrega** | Julio 2026 |
-
----
+eahumada@gmail.com
 
 ## RESUMEN
 
-Las instituciones financieras que operan en el marco de regulaciones AML (Anti-Money Laundering) y KYC (Know Your Customer) enfrentan el desafío de monitorear grandes volúmenes de noticias no estructuradas en busca de entidades de riesgo (personas, organizaciones). Este proceso, ejecutado manualmente, resulta costoso, lento e incapaz de escalar, mientras que el uso de APIs en la nube expone datos financieros sensibles a terceros, vulnerando la soberanía de datos. Este trabajo diseña, implementa y evalúa empíricamente un sistema soberano de extracción de Entidades Nombradas (NER) basado en Modelos de Lenguaje Grande (LLM) de código abierto (familias Gemma, Llama, DeepSeek) ejecutados 100% localmente mediante Ollama en hardware Apple Silicon M4.
+Las instituciones financieras sujetas a regulaciones AML/KYC deben vigilar grandes volúmenes de noticias no estructuradas en busca de entidades de riesgo. Hacerlo manualmente resulta costoso y no escala; delegarlo en APIs en la nube expone información sensible a terceros. Este trabajo evalúa un sistema soberano de reconocimiento de entidades nombradas (NER) con modelos de lenguaje grande de código abierto ejecutados en local mediante Ollama sobre hardware Apple Silicon. La validación comparó trece modelos sobre un corpus real de 120 artículos en español, contrastando la extracción directa frente a la generación aumentada por recuperación con una base de conocimiento contextual, y evaluó las diferencias mediante ANOVA de una vía y pruebas post-hoc de Tukey HSD. El beneficio del RAG contextual resulta inversamente proporcional a la capacidad del modelo: alcanza significancia estadística solo en los dos modelos más débiles (+14,5 y +10,8 puntos de F1) y es nulo o adverso en los mayores. Redactar el prompt en español e incorporar ejemplos *few-shot* aporta conjuntamente +11,1 puntos sobre el baseline en inglés, mejora que ninguno de los dos factores logra por separado. El sistema reduce el costo unitario de revisión y preserva íntegramente la confidencialidad de los datos.
 
-El sistema incorpora una arquitectura de procesamiento pub/sub multithreading con control adaptativo de concurrencia (AIMD) y una capa Factory/Facade que unifica cuatro proveedores de modelos. La validación experimental se realizó sobre el dataset real de sanciones financieras Kleptotrace/CoNLL-2002 (N=15 artículos con anotación experta) y un corpus estadísticamente significativo de 30 artículos breves (N=30). El análisis de variantes de prompts demuestra que combinar localización al español con ejemplos *few-shot* produce una mejora de +11.1 puntos de F1 sobre el baseline zero-shot en inglés, y que el mejor modelo evaluado (gemma4:31b) alcanza un F1-Score de 79.03% con una tasa de alucinaciones del 0.0% sobre el corpus N=30. El sistema reduce los costos operativos de revisión manual en un 60–80% y garantiza privacidad total de datos.
-
-**Palabras clave:** Reconocimiento de Entidades Nombradas (NER), Modelos de Lenguaje Grande (LLM), Cumplimiento Normativo (AML/KYC), Soberanía de Datos, Prompt Engineering.
-
----
+**Palabras clave:** Reconocimiento de Entidades Nombradas (NER), Modelos de Lenguaje Grande (LLM), Cumplimiento Normativo (AML/KYC), Soberanía de Datos, Generación Aumentada por Recuperación (RAG).
 
 ## ABSTRACT
 
@@ -40,7 +20,6 @@ The system incorporates a multithreading pub/sub processing architecture with an
 
 **Keywords:** Named Entity Recognition (NER), Large Language Models (LLM), Regulatory Compliance (AML/KYC), Data Sovereignty, Prompt Engineering.
 
----
 
 ## ÍNDICE DE CONTENIDOS
 
@@ -54,7 +33,6 @@ The system incorporates a multithreading pub/sub processing architecture with an
 8. [Referencias Bibliográficas](#8-referencias-bibliográficas)
 9. [Anexos](#9-anexos)
 
----
 
 ## 1. INTRODUCCIÓN
 
@@ -96,37 +74,72 @@ Los enfoques existentes presentan limitaciones críticas:
 
 El informe se organiza así: §2 marco teórico y estado del arte; §3 sistema propuesto; §4 diseño experimental; §5 resultados; §6 discusión de los hallazgos; §7 conclusiones y trabajo futuro; §8 referencias; §9 anexos técnicos.
 
----
 
 ## 2. MARCO TEÓRICO Y ESTADO DEL ARTE
 
-### 2.1 Reconocimiento de Entidades Nombradas (NER)
+Este capítulo revisa las familias de técnicas disponibles para resolver el problema planteado y establece los criterios con los que, en el capítulo 3, se selecciona una de ellas. El recorrido no pretende ser exhaustivo sino comparativo: interesa entender qué exige cada alternativa, qué garantiza y en qué condiciones deja de ser aplicable al caso de estudio, caracterizado por la ausencia de corpus etiquetados en español para el dominio de cumplimiento y por la obligación de no exponer los datos a terceros.
 
-El Reconocimiento de Entidades Nombradas (NER) es una subtarea fundamental del Procesamiento de Lenguaje Natural (PLN) que busca localizar y clasificar fragmentos de texto en categorías semánticas predefinidas. En el contexto de cumplimiento normativo, las categorías de interés son: **Personas** (PER), **Organizaciones** (ORG) y **Ubicaciones Geográficas** (LOC). Formalmente, NER es un problema de etiquetado de secuencias donde cada token recibe una etiqueta según el esquema IOB2 (Inside-Outside-Beginning).
+### 2.1 El problema del reconocimiento de entidades nombradas
 
-Los enfoques históricos para NER incluyen: (1) Modelos estadísticos de Campos Aleatorios Condicionales (CRF) [10]; (2) Modelos neurales BiLSTM-CRF; y (3) Modelos Transformer pre-entrenados como BERT [2]. El estado del arte en benchmarks académicos (CoNLL-2003, FiNER-139) supera el 90% de F1 con modelos BERT fine-tuned, pero estos requieren grandes volúmenes de datos etiquetados específicos del dominio, inexistentes en español para el dominio de compliance financiero.
+El Reconocimiento de Entidades Nombradas (NER) es una subtarea del Procesamiento de Lenguaje Natural que consiste en localizar fragmentos de texto y clasificarlos en categorías semánticas predefinidas. En cumplimiento normativo las categorías relevantes son **Personas** (PER), **Organizaciones** (ORG) y **Ubicaciones** (LOC), pues son las que permiten cotejar una noticia contra listas de sanciones y de personas expuestas políticamente [19].
 
-El estado del arte en NER en español con Transformers alcanza 88–91% de F1 en benchmarks académicos controlados [7], [2]. Sin embargo, estos modelos requieren corpus etiquetados extensos en el dominio objetivo, inexistentes en español para el ámbito de cumplimiento financiero AML/KYC. Esto motiva el uso de LLMs generativos con capacidades zero-shot y few-shot, que permiten adaptación inmediata al dominio sin reentrenamiento.
+Formalmente se plantea como un problema de etiquetado de secuencias: dado un texto segmentado en tokens, se asigna a cada uno una etiqueta según el esquema IOB2, que distingue el inicio de una entidad (*Beginning*), su continuación (*Inside*) y el texto ajeno a toda entidad (*Outside*). Esta formulación, heredada de la tarea compartida CoNLL-2002 [12], es la que fija el criterio de evaluación: una entidad se considera correctamente extraída solo si coinciden a la vez sus límites y su categoría.
 
-### 2.2 Modelos de Lenguaje Grande (LLMs) y Aprendizaje en Contexto
+La dificultad del dominio no proviene de la definición de la tarea sino de tres rasgos del material periodístico financiero. Primero, la **ambigüedad referencial**: un mismo token puede designar una persona o una organización según el contexto —«Santander» es tanto un apellido como un banco y una ciudad—. Segundo, la **variación morfológica del español**, con nombres compuestos, partículas («de», «del», «y») y tildes que fragmentan la coincidencia exacta. Tercero, la **escasez de datos etiquetados**: no existe un corpus público en español anotado para el dominio AML/KYC, lo que descarta de entrada cualquier técnica que dependa de un volumen sustancial de ejemplos supervisados.
 
-La arquitectura Transformer [4], basada en el mecanismo de atención multi-cabeza, es la base de todos los modelos evaluados en este trabajo. Los LLMs modernos generativos (decoder-only Transformers) son entrenados en corpus masivos de texto con el objetivo de predicción del siguiente token. Su capacidad de adaptación a nuevas tareas sin entrenamiento explícito, denominada aprendizaje en contexto (in-context learning), es crítica para dominios especializados con datos etiquetados escasos.
+### 2.2 Familias de técnicas para NER
 
-El aprendizaje few-shot [8] permite incluir ejemplos demorativos (shots) directamente en el prompt para guiar la salida del modelo. Este trabajo evalúa sistemáticamente el impacto de 0 (zero-shot) y 3 (few-shot) ejemplos en español e inglés sobre la calidad de extracción NER en cumplimiento financiero.
+Las aproximaciones al problema pueden ordenarse por el tipo de conocimiento que requieren y por el coste de adaptarlas a un dominio nuevo.
 
-BloombergGPT [3] evidencia el beneficio del pre-entrenamiento específico al dominio financiero (+15% F1 promedio vs. modelos generales). Sin embargo, su ejecución requiere infraestructura propietaria en la nube. Este trabajo demuestra que modelos de código abierto de escala media-grande (8B–31B parámetros) ejecutados localmente pueden aproximar este rendimiento sin comprometer la soberanía de datos.
+Los **sistemas basados en reglas y diccionarios** (*gazetteers*) identifican entidades por coincidencia contra catálogos y por patrones léxicos escritos a mano. Son transparentes, deterministas y no requieren entrenamiento, pero su cobertura se limita a lo enumerado: fracasan ante nombres nuevos, que es precisamente el caso de interés en la detección temprana de riesgo.
 
-### 2.3 Generación Aumentada por Recuperación (RAG)
+Los **Campos Aleatorios Condicionales (CRF)** [17], [10] modelan la secuencia de etiquetas como un campo probabilístico condicionado al texto, capturando dependencias entre etiquetas contiguas. Superan a las reglas en generalización, pero dependen de ingeniería manual de rasgos y de un corpus anotado del orden de miles de oraciones.
 
-La Generación Aumentada por Recuperación (RAG) [1] optimiza la salida de un LLM fundamentando la generación en documentos recuperados dinámicamente. En este trabajo se adopta una variante de RAG de "contexto único": cada artículo periodístico actúa como la única fuente de contexto inyectada al LLM en el prompt del sistema, forzando al modelo a extraer entidades únicamente desde el texto presente, mitigando alucinaciones extrínsecas.
+Las **arquitecturas neuronales BiLSTM-CRF** sustituyen los rasgos manuales por representaciones aprendidas, eliminando gran parte del trabajo de ingeniería a cambio de un requisito de datos aún mayor.
 
-### 2.4 Ejecución Soberana de LLMs con Ollama
+Los **codificadores Transformer pre-entrenados** —BERT [2] y sus variantes multilingües como XLM-R— constituyen el estado del arte académico. Partiendo de un modelo pre-entrenado, un ajuste fino sobre el dominio alcanza entre 88 % y 91 % de F1 en español [7], [15]. Su limitación en este caso no es de capacidad sino de insumos: el ajuste fino exige el corpus etiquetado que aquí no existe, y construirlo supondría un esfuerzo de anotación experta fuera del alcance del trabajo.
 
-Ollama es una plataforma de código abierto que permite ejecutar LLMs de gran escala localmente mediante cuantización (GGUF, Q4_K_M) optimizada para Apple Silicon Metal (MPS) y arquitecturas x86 con CUDA. La ejecución local garantiza soberanía de datos: ningún dato es transmitido a servicios externos. En este trabajo, Ollama gestiona la carga dinámica de pesos en VRAM y la liberación explícita de memoria GPU al completar cada modelo (keep_alive=0). El footprint operativo varía con el tamaño del modelo: ~7-9 GB para modelos de hasta ~12B (Q4) y hasta ~24,7 GB para gemma4:31b-mlx (pesos ~18,7 GB más KV cache y overhead de inferencia), lo que condiciona el hardware requerido (ver §3.6).
+Los **modelos de lenguaje grande generativos** (Transformers *decoder-only*) invierten el planteamiento: en lugar de ajustar los pesos al dominio, se describe la tarea en el propio *prompt*. Su capacidad de **aprendizaje en contexto** [8] permite adaptación inmediata sin reentrenamiento, a costa de una salida no estructurada por construcción —que hay que forzar a un formato verificable— y de un riesgo de alucinación inexistente en las familias anteriores.
 
-### 2.5 Estado del Arte Relacionado
+| Familia | Datos etiquetados requeridos | Adaptación a dominio nuevo | Riesgo principal |
+|:---|:---|:---|:---|
+| Reglas y diccionarios | Ninguno | Inmediata pero de cobertura cerrada | No detecta entidades no catalogadas |
+| CRF | Miles de oraciones | Reentrenamiento e ingeniería de rasgos | Coste de anotación |
+| BiLSTM-CRF | Decenas de miles | Reentrenamiento | Coste de anotación |
+| Transformer con ajuste fino | Miles, del dominio | Ajuste fino | Coste de anotación; el mejor F1 publicado |
+| LLM generativo en contexto | Ninguno | Inmediata mediante *prompt* | Alucinación y salida no estructurada |
 
-La Tabla 1 posiciona este trabajo respecto a investigaciones recientes en NER para dominios financieros y regulatorios:
+La última fila es la única compatible con la restricción de datos del proyecto, y por eso concentra el resto de la revisión.
+
+### 2.3 Aprendizaje en contexto y diseño de prompts
+
+La arquitectura Transformer [4], sostenida sobre el mecanismo de atención multi-cabeza, es la base común de todos los modelos evaluados. Sobre ella, el aprendizaje en contexto permite condicionar el comportamiento del modelo mediante instrucciones y ejemplos incluidos en la propia entrada.
+
+Se distinguen dos regímenes. En **zero-shot** el *prompt* contiene únicamente la descripción de la tarea y el formato de salida esperado. En **few-shot** [8] se añaden ejemplos resueltos que fijan el patrón de respuesta; la literatura documenta que el número, el orden y el equilibrio de esos ejemplos alteran el resultado de forma no trivial, y que un conjunto mal calibrado puede degradar el desempeño respecto del zero-shot [14]. Existen además estrategias de razonamiento explícito, como *chain-of-thought* [13], concebidas para tareas que requieren inferencia en varios pasos; su pertinencia en extracción de entidades es dudosa a priori, ya que la tarea es de identificación y no de deducción, extremo que este trabajo somete a comprobación empírica.
+
+Un factor específico del castellano es el **coste de tokenización**: los modelos entrenados mayoritariamente en inglés segmentan el español en más tokens por palabra, lo que encarece la inferencia y reduce el contexto útil [11]. Esto convierte al idioma del *prompt* en una variable experimental por derecho propio y no en un detalle de presentación.
+
+### 2.4 Estrategias de aumento por recuperación
+
+La Generación Aumentada por Recuperación (RAG) [1] fundamenta la generación en información recuperada en tiempo de consulta, en lugar de confiarla exclusivamente a los pesos del modelo. La literatura reciente [6] distingue variantes por la naturaleza de lo recuperado, y esa distinción resulta determinante en NER.
+
+Una primera variante es el **RAG por diccionario**: se indexan catálogos de nombres conocidos y se inyectan en el *prompt* los más similares al texto. Aporta cobertura sobre entidades ya catalogadas, pero introduce un sesgo de reconocimiento —el modelo tiende a proponer lo que se le ha sugerido— y no ayuda ante nombres ausentes del catálogo.
+
+Una segunda variante es el **RAG contextual o de conocimiento**, en el que lo recuperado no son entidades sino **criterios**: guías tipológicas, definiciones de categoría y ejemplos anotados del dominio. No indica al modelo *qué* entidades esperar, sino *cómo* decidir si un fragmento lo es.
+
+Una tercera configuración, adoptada por trabajos aplicados al ámbito financiero [9], [5], emplea el propio documento como **contexto único**, restringiendo la extracción al texto presente y mitigando la alucinación extrínseca.
+
+La elección entre ellas no es neutra: la primera optimiza el *recall* sobre lo conocido y la segunda la precisión del criterio, y sus efectos pueden ser opuestos según la capacidad del modelo receptor. El capítulo 5 contrasta empíricamente ambas.
+
+### 2.5 Alternativas de ejecución local y cuantización
+
+Ejecutar modelos de escala media-grande sobre hardware de consumo exige **cuantización**: reducir la precisión numérica de los pesos para bajar el consumo de memoria, típicamente a 4 bits en formatos como GGUF con esquema Q4_K_M, con una pérdida de calidad reducida frente al ahorro obtenido [20]. Esta reducción es también la que hace viable el criterio de sostenibilidad computacional que la literatura reclama para la investigación en aprendizaje automático [16].
+
+Entre los entornos de ejecución disponibles, **llama.cpp** ofrece el motor de inferencia cuantizada de referencia pero exige gestión manual de modelos; **vLLM** maximiza el rendimiento por lotes en servidores con GPU dedicada, escenario ajeno a este trabajo; **LM Studio** prioriza la interacción gráfica sobre la automatización; el entorno **MLX** de Apple aprovecha específicamente la memoria unificada de Apple Silicon; y **Ollama** encapsula llama.cpp tras una API HTTP uniforme, con gestión de modelos, control del ciclo de vida en memoria y compatibilidad tanto con pesos GGUF como MLX. Frente a todos ellos, las **APIs en la nube** ofrecen la mayor capacidad sin coste de infraestructura, pero transfieren el texto a un tercero, lo que resulta incompatible con el requisito de soberanía que motiva el trabajo.
+
+### 2.6 Estado del arte y criterios de selección
+
+La Tabla 1 posiciona este trabajo respecto de investigaciones recientes en NER para dominios financieros y regulatorios.
 
 | Trabajo | Dataset | Modelo | F1 | Privacidad | Idioma |
 |:---|:---|:---|:---:|:---:|:---|
@@ -136,15 +149,29 @@ La Tabla 1 posiciona este trabajo respecto a investigaciones recientes en NER pa
 | Chang et al. [9] | Docs bancarios | GPT-4 + RAG | 83% | ❌ Cloud | Inglés |
 | **Este trabajo** | **Kleptotrace/CoNLL-2002 (AML), corpus sintético N=30** | **gemma4:31b local** | **79%** | **✅ 100% Local** | **Español** |
 
-El aporte original de este trabajo reside en: (1) evaluación comparativa de 13 modelos sobre corpus real de sanciones en español; (2) análisis de variantes de prompts entre idiomas (ES vs. EN); (3) sistema soberano reproducible sobre hardware comercial; y (4) validación estadística formal (ANOVA, Tukey HSD) sobre corpus N≥30.
+De la comparación se desprende una brecha: los trabajos que alcanzan el mejor F1 lo hacen sobre corpus en inglés y con infraestructura en la nube, mientras que los que preservan la privacidad no abordan el dominio de cumplimiento en español. Este trabajo se sitúa en esa intersección.
 
----
+La revisión anterior deja fijados los criterios con los que el capítulo 3 justifica cada decisión de diseño: **(C1) prescindir de datos etiquetados**, por no existir corpus del dominio en español; **(C2) preservar la soberanía del dato**, lo que excluye toda API externa; **(C3) operar sobre hardware de consumo**, lo que obliga a cuantización y a gestión explícita de memoria; **(C4) producir salida verificable**, dado que el modelo elegido genera texto libre; y **(C5) permitir comparación empírica entre variantes**, tanto de *prompt* como de estrategia de recuperación.
 
 ## 3. DESCRIPCIÓN DEL SISTEMA PROPUESTO
 
-### 3.1 Arquitectura General
+### 3.1 Justificación de las decisiones de diseño
 
-El sistema se estructura en cinco capas funcionales:
+El capítulo anterior cerró con cinco criterios derivados de la revisión. Cada uno determina una decisión de diseño concreta, y conviene explicitar el razonamiento antes de describir la implementación.
+
+El criterio **C1 —prescindir de datos etiquetados—** descarta las cuatro primeras familias de la Tabla comparativa del §2.2. Los CRF, las arquitecturas BiLSTM-CRF y el ajuste fino de codificadores Transformer ofrecen mejor F1 publicado, pero todos exigen un corpus anotado del dominio que no existe en español para cumplimiento financiero. Se adopta por tanto un **modelo de lenguaje generativo operado mediante aprendizaje en contexto**, única familia que permite adaptación inmediata sin reentrenamiento. La contrapartida —salida no estructurada y riesgo de alucinación— se asume conscientemente y se aborda con C4.
+
+El criterio **C2 —soberanía del dato—** excluye las APIs comerciales, que aventajan a los modelos abiertos en capacidad pero transfieren el texto a un tercero. Se opta por **ejecución íntegramente local**. Entre los entornos revisados en §2.5 se selecciona **Ollama**, por tres razones: expone una API HTTP uniforme que permite intercambiar modelos sin tocar el código de orquestación; gestiona el ciclo de vida de los pesos en memoria, requisito imprescindible para encadenar modelos que no caben simultáneamente; y admite tanto pesos GGUF como MLX, lo que habilita comparar ambas rutas de cuantización sobre el mismo arnés. Los modelos en la nube se conservan únicamente como **línea base de comparación**, no como parte de la solución propuesta.
+
+El criterio **C3 —hardware de consumo—** obliga a cuantización de 4 bits (GGUF Q4_K_M) y a una gestión explícita de la memoria, descrita en §3.3.
+
+El criterio **C4 —salida verificable—** se traduce en exigir al modelo un objeto JSON con un esquema fijo, validado en recepción, con una ruta de recuperación cuando el análisis sintáctico falla. Es la contramedida directa al principal inconveniente de la familia elegida.
+
+El criterio **C5 —comparación empírica—** exige que las variantes de *prompt* y de estrategia de recuperación sean intercambiables por configuración y no por modificación del código, de modo que cada corrida quede definida por un conjunto de parámetros reproducible.
+
+### 3.2 Arquitectura general y capa de proveedores
+
+El sistema se organiza en cinco capas funcionales con responsabilidades separadas, de manera que cada una pueda evolucionar sin arrastrar a las demás.
 
 ```
 ┌──────────────────────────────────────────────────────┐
@@ -165,20 +192,10 @@ El sistema se estructura en cinco capas funcionales:
 └──────────────────────────────────────────────────────┘
 ```
 
-### 3.2 Pipeline Pub/Sub y Control Adaptativo AIMD
 
-El núcleo del sistema es un pipeline pub/sub multithreading implementado en `pub_sub.py`. El productor publica las tareas de procesamiento (lotes de artículos por modelo) en una cola en memoria (Redis-ready). Los consumidores (workers) consumen tareas de forma paralela, con un número de workers dinámicamente ajustado por el controlador AIMD (`adaptive_workers.py`).
+La **capa de datos** carga el corpus desde un fichero JSON y valida cada registro contra un esquema antes de admitirlo, garantizando que todo artículo procesado dispone de texto y de anotación de referencia. La **capa de orquestación** distribuye el trabajo y regula la concurrencia (§3.3). La **capa de proveedores** aísla la heterogeneidad de las APIs. La **capa de evaluación** calcula las métricas y las pruebas estadísticas (§3.4). La **capa de visualización**, implementada en Streamlit, presenta los resultados en siete vistas —comparación de modelos, análisis de alucinaciones, taxonomía de errores, significancia estadística, eficiencia de hardware, proyección de modelos futuros y simulación de producción— y cumple una función de inspección durante la experimentación, no de despliegue productivo.
 
-El controlador AIMD (Additive Increase Multiplicative Decrease) implementa la siguiente política:
-- **Aumento aditivo:** Si el sistema permanece estable (sin errores HTTP 429 ni excepciones) durante una ventana de 600 segundos, incrementa los workers en +1 cada 120 segundos, hasta un techo del 75% del máximo.
-- **Decremento multiplicativo:** Ante cualquier error de rate-limiting, reduce los workers a la mitad.
-- **Circuit breaker:** Si se detectan 5 fallos consecutivos, el circuito se abre (OPEN) y suspende el procesamiento durante 60 segundos.
-
-En pruebas sobre hardware Apple Silicon M4 (16 GB Metal), el sistema escaló de forma estable hasta 9 workers concurrentes para modelos de 8B parámetros.
-
-### 3.3 Capa Factory/Facade de Proveedores LLM
-
-La capa de proveedores implementa el patrón Factory + Facade, abstrayendo la heterogeneidad de las APIs de los diferentes modelos detrás de una interfaz uniforme (`LLMProvider`):
+La capa de proveedores es la que materializa el criterio C2 sin encerrar el trabajo en un único motor. Aplica los patrones *Factory* y *Facade* tras una interfaz común:
 
 ```python
 class LLMProvider(ABC):
@@ -190,26 +207,22 @@ class LLMProvider(ABC):
         ...
 ```
 
-Los proveedores implementados son: `OllamaProvider` (modelos locales vía API REST), `OpenAIProvider`, `AnthropicProvider` y `VertexAIProvider`. La detección automática del proveedor se realiza por prefijo del nombre del modelo (`gpt-*` → OpenAI, `claude-*` → Anthropic, `gemini-*` → Vertex AI, resto → Ollama).
 
-### 3.4 Módulo de Evaluación Estadística
+La selección del proveedor se resuelve por el prefijo del identificador del modelo, de modo que añadir un motor nuevo no requiere modificar el orquestador. Esta indirección tuvo una consecuencia práctica relevante durante la experimentación: un modelo abierto cuyo nombre comenzaba por `gpt-` era enrutado erróneamente hacia la API comercial, fallo que se detectó y corrigió discriminando por la presencia de etiqueta de versión propia de los identificadores locales. El episodio ilustra que la abstracción por convención de nombres exige verificación explícita del enrutamiento efectivo.
 
-El evaluador (`evaluator.py`) implementa:
-- **Emparejamiento difuso (Fuzzy Matching):** Las entidades extraídas se comparan con el ground truth usando similitud de tokens, aceptando como correctas las coincidencias parciales por encima de un umbral configurable (default: 0.85).
-- **Métricas por registro:** Precisión, Recall, F1-Score calculados por artículo y promediados.
-- **Tasa de alucinaciones:** Proporción de entidades extraídas que no tienen correspondencia alguna en el ground truth (`hallucinated / total_extracted`).
-- **Análisis estadístico:** ANOVA de una vía (scipy.stats.f_oneway) y pruebas Tukey HSD post-hoc (statsmodels) con α=0.05 y cálculo de intervalos de confianza del 95%.
-- **Análisis de sensibilidad:** Filtrado de outliers por longitud de artículo (> media + σ) y recálculo de métricas.
+### 3.3 Orquestación, concurrencia adaptativa y gestión de memoria
 
-### 3.5 Dashboard Streamlit
+El núcleo de ejecución es un canal de publicación y suscripción con múltiples hilos. El productor publica lotes de artículos por modelo en una cola en memoria —con interfaz compatible con Redis para un eventual despliegue distribuido— y los consumidores los procesan en paralelo.
 
-La interfaz de visualización implementada en `dashboard.py` (Streamlit) presenta 7 pestañas: (1) Comparación de modelos, (2) Análisis de alucinaciones, (3) Errores por entidad (taxonomía), (4) Significancia estadística (ANOVA), (5) Eficiencia de hardware (Índice Tok/s/B), (6) Hipótesis de modelos futuros, y (7) Simulación de producción.
+El número de consumidores no es fijo, sino que lo regula un controlador **AIMD** (*Additive Increase, Multiplicative Decrease*), política tomada del control de congestión en redes. Mientras el sistema permanece estable —sin errores de limitación de tasa ni excepciones— durante una ventana de 600 segundos, el controlador **añade un consumidor cada 120 segundos** hasta un techo del 75 % del máximo configurado; ante el primer error de saturación **reduce los consumidores a la mitad**. Un cortacircuitos complementa la política: cinco fallos consecutivos abren el circuito y suspenden el procesamiento durante 60 segundos. La asimetría entre el aumento prudente y el recorte agresivo es deliberada, pues el coste de saturar un servicio de inferencia —reintentos, respuestas truncadas, penalización por cuota— excede con mucho al de infrautilizarlo. Sobre Apple Silicon M4 con 16 GB, el sistema escaló de forma estable hasta nueve consumidores concurrentes para modelos de 8B parámetros.
 
-### 3.6 Gestión de VRAM en Apple Silicon
+La gestión de memoria merece atención propia porque condicionó el alcance del estudio. Al terminar cada modelo se libera explícitamente su ocupación de GPU invocando la API de generación con `keep_alive=0`. Ahora bien, ese parámetro evita retener varios modelos a la vez, **pero no reduce el footprint de uno solo**, y esa distinción resultó decisiva. macOS asigna a la GPU un techo de memoria equivalente al 75 % de la memoria unificada del equipo (`recommendedMaxWorkingSetSize`): unos 12 GB en una máquina de 16 GB. Los modelos de hasta ~12B cuantizados a 4 bits ocupan entre 7 y 9 GB y caben con holgura; los de 31B alcanzan un footprint operativo de ~24,7 GB —unos 18,7 GB de pesos más la caché de claves y valores y el sobrecoste de inferencia— y **no pueden cargarse en 16 GB ni siquiera de forma serial**. La ejecución se organizó en consecuencia en dos escalones de hardware: 16 GB para los modelos de hasta ~12B y un equipo de 48 GB, con techo asignable de ~36 GB, para los de 31B y las variantes MLX de mayor tamaño.
 
-Para garantizar la ejecución serial de modelos de gran escala sin desbordamiento de VRAM, se implementó la liberación explícita de pesos de GPU al finalizar cada modelo mediante una llamada a la API de generación de Ollama con `keep_alive=0`. La ejecución se organizó en dos escalones de hardware según el footprint de memoria. Los modelos de hasta ~12B parámetros (Q4) se ejecutaron en un equipo M4 con **16 GB de memoria unificada**: su footprint operativo (~7-9 GB) queda por debajo del techo de VRAM que macOS/Metal asigna a la GPU, equivalente a ~75 % de la memoria unificada (`recommendedMaxWorkingSetSize`), es decir ~12 GB en un equipo de 16 GB. Los modelos de 31B parámetros (p. ej. gemma4:31b, Q4_K_M/MLX), con footprint operativo ~24,7 GB (pesos ~18,7 GB más KV cache y overhead), **exceden ese techo y no pueden cargarse en 16 GB ni siquiera de forma serial** con `keep_alive=0` —este parámetro evita retener varios modelos a la vez, pero no reduce el footprint de uno solo—; se ejecutaron en un equipo con **48 GB de memoria unificada**, cuyo techo de VRAM asignable (~36 GB) aloja el modelo con holgura para el KV cache y el sistema operativo.
+### 3.4 Módulo de evaluación
 
----
+La comparación entre lo extraído y la anotación de referencia no puede ser literal, porque una diferencia de puntuación o un artículo antepuesto invalidarían una extracción correcta. El evaluador emplea por ello **emparejamiento difuso** por similitud de tokens, aceptando como acierto toda coincidencia por encima de un umbral configurable, fijado en 85 sobre 100. La elección del umbral es un compromiso: por debajo admite falsos emparejamientos entre nombres distintos que comparten apellido; por encima rechaza variantes legítimas.
+
+Sobre esa base se calculan precisión, exhaustividad y F1 por artículo, que después se promedian, y una **tasa de alucinación** definida como la proporción de entidades propuestas sin correspondencia alguna en la referencia. El módulo incorpora además la validación estadística: ANOVA de una vía para contrastar si las diferencias entre modelos y modos son significativas, pruebas post-hoc de Tukey HSD para identificar qué pares concretos difieren, intervalos de confianza al 95 % por grupo y un análisis de sensibilidad que recalcula las métricas excluyendo los artículos atípicamente largos, con el fin de comprobar que ningún resultado depende de unos pocos casos extremos.
 
 ## 4. DISEÑO EXPERIMENTAL
 
@@ -366,7 +379,6 @@ El cotejo entre la entidad extraída y la de referencia es **difuso**, con un um
 - **Software:** Python 3.14, Ollama 0.6+, scikit-learn 1.9, statsmodels 0.14, pandas 3.0, Streamlit 1.60.
 - **Reproducibilidad:** Checkpointing automático (`.checkpoint.json`) para reanudar benchmarks interrumpidos sin pérdida de datos.
 
----
 
 ## 5. RESULTADOS EXPERIMENTALES
 
@@ -509,7 +521,6 @@ El análisis cualitativo de las extracciones identifica tres categorías de erro
 
 > El costo por artículo en el sistema soberano local se estima en USD 0.052, versus USD 8.75 en revisión manual, representando una reducción del **99.4%** en costo unitario.
 
----
 
 ### 5.6 Optimización del Módulo RAG: De Diccionarios de Entidades a Base de Conocimientos Contextual
 
@@ -693,40 +704,28 @@ Esta evolución del sistema RAG aporta tres contribuciones metodológicas docume
 
 3. **Configurabilidad como principio de diseño:** La implementación con flags CLI permite mantener la línea base en producción mientras se experimenta con el nuevo modo, habilitando reversión instantánea sin modificar código.
 
----
 
-## 6. DISCUSIÓN
+## 6. DISCUSIÓN DE LOS RESULTADOS
 
+### 6.1 Alcance de la hipótesis y factores que explican el desempeño
 
-### 6.1 Verificación de la Hipótesis
+La hipótesis fijaba un F1 igual o superior al 70 % como umbral de viabilidad. El umbral **se alcanza sobre el corpus del dominio** —`gemma4:31b` obtiene 79,03 % con intervalo de confianza al 95 % de [72,91 %, 85,15 %] y ninguna alucinación sobre N=30— y **no se alcanza sobre el corpus periodístico general**, cuyo mejor resultado local es 59,25 % (`gemma4:31b-mlx`) sobre N=120. La hipótesis queda por tanto **confirmada para el dominio específico de sanciones financieras y no confirmada para corpus periodísticos heterogéneos**. La brecha de unos veinte puntos no obedece a un fallo del sistema sino a la naturaleza del material: los artículos de CoNLL-2002 son más largos, mencionan más entidades por texto y mezclan dominios, mientras que el corpus AML está compuesto por textos breves y temáticamente homogéneos. Una meta interna más ambiciosa —85 % de F1, nunca formalizada como hipótesis— queda a 5,97 puntos sobre N=30, distancia abordable mediante ajuste fino supervisado, modelos de mayor capacidad o combinación de varios modelos locales.
 
-La hipótesis planteaba un F1-Score ≥ 70% como umbral de viabilidad. El umbral se alcanza sobre el corpus sintético AML/KYC N=30 (`gemma4:31b`: **79.03%**, IC 95% [72.91%, 85.15%], 0.0% de alucinaciones), pero **no** sobre el corpus real heterogéneo N=120 (§5.3.5), cuyo mejor resultado es **59.25%** (`gemma4:31b-mlx`). Queda por tanto **confirmada para el dominio específico de sanciones financieras y no confirmada para corpus periodísticos generales**; la brecha de ~20 puntos responde a la mayor longitud y heterogeneidad de los artículos de CoNLL-2002 ES.
+Tres factores explican la distribución de resultados observada. El primero es **el idioma del prompt y de sus ejemplos**. Redactar ambos en español aporta 11,12 puntos de F1 sin cambiar de modelo, mejora que ninguno de los dos factores consigue por separado: traducir solo el prompt aporta 4,38 puntos y añadir ejemplos en inglés resta 0,73. La interacción respalda la interpretación de que el modelo procesa con mayor fluidez la estructura sintáctica de una noticia en español cuando la instrucción y las demostraciones comparten ese idioma, en línea con lo observado para codificadores en español [7] y con el sobrecoste de tokenización documentado para lenguas distintas del inglés [11].
 
-Una meta aspiracional interna —no formalizada como hipótesis en §1.3— situaba el objetivo en F1 ≥ 85%. La brecha (5.97 pp sobre N=30; 25.75 sobre N=120) es una oportunidad de optimización —no un fracaso del sistema— abordable mediante: (1) fine-tuning supervisado con ≥200 ejemplos del dominio; (2) modelos de mayor capacidad (127B+); y (3) ensemble entre modelos locales.
+El segundo factor es el **compromiso entre tamaño y eficiencia**. `llama3.2`, con 3 000 millones de parámetros, alcanza 63,19 % de F1 con un índice de eficiencia de 26,44 tokens por segundo y por cada mil millones de parámetros, frente a los 0,33 de `gemma4:31b`: una relación de ochenta a uno. Esa asimetría habilita una arquitectura operativa en dos niveles —un modelo compacto para el cribado masivo inicial y uno grande para la validación de los casos de alto riesgo regulatorio— que aprovecha el hecho de que el coste de un falso negativo en cribado es muy inferior al de un falso positivo confirmado.
 
-### 6.2 Contribución de la Localización Lingüística
+El tercer factor es la **equivalencia entre ejecución local y en la nube**. La variante alojada del mismo modelo obtiene 66,99 % de F1 sobre N=15 frente al 69,12 % de su contraparte local, de modo que la soberanía del dato no se paga con rendimiento. Para una entidad regulada esto tiene consecuencias directas: elimina la necesidad de suscribir acuerdos de tratamiento de datos con un proveedor externo y reduce la superficie de exposición de información de clientes.
 
-La mejora de +11.12 pp de F1 obtenida al redactar en español tanto el prompt como sus ejemplos (sin cambiar el modelo) es un hallazgo de alta relevancia práctica; traducir solo el prompt aporta +4.38 pp, y añadir ejemplos en inglés no aporta nada (−0.73 pp). Demuestra que los LLMs procesan con mayor fluidez la estructura sintáctica de noticias en español cuando reciben instrucciones en el mismo idioma, reduciendo la desambiguación tokenización cross-lingüística. Esta observación es consistente con los resultados de García & López [7] para BERT en español.
+### 6.2 Contribución metodológica: qué recuperar importa más que recuperar
 
-### 6.3 Trade-off Tamaño de Modelo vs. Rendimiento
+El resultado de mayor alcance metodológico no es el desempeño de ningún modelo concreto sino la comparación entre dos formas de aumentar la generación con información recuperada.
 
-El modelo compacto `llama3.2` (3B parámetros) logra un F1 de 61.29% con una latencia 4.5× menor que `gemma4:31b` y un índice de eficiencia de hardware de 15.80 Tok/s/B, unas 43 veces superior al de `gemma4:31b` (0.37). Esta distribución permite una configuración en dos niveles: `llama3.2` para screening masivo inicial a bajo costo computacional, y `gemma4:31b` para validación de alto riesgo regulatorio donde el F1 máximo y la mínima tasa de alucinaciones son críticos.
+La primera versión del módulo recuperaba **nombres de entidades** desde diccionarios y los inyectaba en el prompt. Lejos de mejorar la extracción, la degradó. La segunda versión recuperaba **criterios**: guías tipológicas del dominio, definiciones de categoría y un ejemplar anotado. Sobre el corpus N=120 esta variante mejoró el desempeño, pero **no de manera uniforme**, y ahí reside el hallazgo: su efectividad está **modulada por la capacidad del modelo receptor**. Las pruebas post-hoc de Tukey muestran que la mejora alcanza significancia estadística únicamente en los dos modelos más débiles del estudio —`nemotron-mini:4b` con 14,52 puntos y `llama3.2:latest` con 10,82—, resulta positiva pero no concluyente en la franja intermedia y es nula o adversa en los modelos de 31B.
 
-### 6.4 Implicaciones para Soberanía de Datos
+La explicación más plausible es de **redundancia de conocimiento**: los modelos de mayor capacidad ya han internalizado durante el preentrenamiento las reglas de desambiguación que la base de conocimiento les ofrece, de modo que el contexto adicional no aporta y sí consume ventana de atención; los modelos pequeños, en cambio, lo aprovechan como compensación de un conocimiento lingüístico que sus pesos no contienen.
 
-El sistema logra un rendimiento competitivo respecto a la alternativa cloud (`gemma4:31b-cloud`: F1=66.29%) mientras mantiene privacidad absoluta de datos. Para organizaciones reguladas (bancos, aseguradoras, FinTechs), esta equivalencia de rendimiento con soberanía total tiene implicancias regulatorias y competitivas directas: elimina la obligación de suscribir acuerdos de procesamiento de datos (DPA) con proveedores cloud y reduce la superficie de ataque de exfiltración de datos de clientes.
-
-### 6.5 RAG Contextual vs. RAG por Diccionario: Una Contribución Metodológica
-
-El experimento de KB RAG (§5.6) aporta una contribución metodológica a la recuperación aumentada para NER: el benchmark N=120 muestra que su efectividad está **modulada por la capacidad paramétrica del modelo**:
-
-**Hipótesis explicativa — Redundancia de Conocimiento:** los modelos de mayor capacidad (`gemma4:31b-mlx`, `gemma4:latest`) ya internalizan las reglas tipológicas de desambiguación NER en el preentrenamiento sobre texto en español, por lo que las guías de la KB les resultan redundantes; los de menor capacidad (`llama3.2:latest`, `qwen2.5:14b`) las aprovechan como compensación del conocimiento lingüístico ausente de sus pesos (+25.3% y +8.9% F1).
-
-**Implicación práctica:** cuando el hardware impide usar modelos >30B, el KB RAG es una estrategia de bajo costo y alto retorno: acerca el F1 de los modelos de 3–14B al de modelos mayores sin costo de hardware adicional.
-
-**Contraste con RAG léxico (v1.0):** el hallazgo aclara por qué el dict-RAG degradó el rendimiento: el problema no está en el concepto de RAG sino en la **naturaleza del contenido recuperado**. Recuperar nombres de entidades genera confusión semántica e inhibe la extracción; recuperar guías tipológicas y ejemplos anotados orienta al modelo sin coartar su capacidad generativa.
-
----
+De ahí se sigue tanto la explicación del fracaso de la primera versión como una recomendación práctica. El problema del RAG por diccionario no estaba en el concepto de recuperación sino en **la naturaleza de lo recuperado**: sugerir nombres induce al modelo a proponerlos, generando falsos positivos e inhibiendo su capacidad de identificar entidades ausentes del catálogo; sugerir criterios lo orienta sin coartarlo. Y en el plano aplicado, cuando el hardware disponible impide ejecutar modelos de gran tamaño, el RAG contextual constituye una estrategia de bajo coste que acerca el desempeño de un modelo pequeño al de uno considerablemente mayor sin inversión adicional en infraestructura.
 
 ## 7. CONCLUSIONES Y TRABAJO FUTURO
 
@@ -764,7 +763,6 @@ El experimento de KB RAG (§5.6) aporta una contribución metodológica a la rec
 
 7. **Normalización de codificación del corpus y re-evaluación (Fase 6):** el corpus N=120 almacena los nombres con *mojibake* —`JosÃ© Bono` donde el nombre real es **José Bono**—, defecto presente tanto en las entidades de referencia (20,1 %) como en el texto de entrada (87 % de los artículos), y por tanto **coherente entre ambos**. Esto favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía, con un efecto que varía entre −0.070 y +0.091 de F1 según el modelo (§5.3.5). La línea de trabajo consiste en **normalizar la codificación en ambos lados de la comparación** —reparando la referencia y la extracción antes del cotejo difuso, de modo que el resultado deje de depender de la representación de bytes— y **re-ejecutar el estudio N=120** para obtener valores absolutos libres de esta interacción. No se abordó en este trabajo porque el cotejo se resuelve en tiempo de inferencia y las extracciones por registro no se conservaron, lo que obliga a repetir la inferencia completa.
 
----
 
 ## 8. REFERENCIAS BIBLIOGRÁFICAS
 
@@ -810,7 +808,6 @@ El experimento de KB RAG (§5.6) aporta una contribución metodológica a la rec
 
 [20] T. Dettmers et al., "QLoRA: Efficient Finetuning of Quantized LLMs," *Advances in Neural Information Processing Systems*, vol. 36, 2023.
 
----
 
 ## 9. ANEXOS
 
@@ -877,7 +874,6 @@ El prompt de sistema en español (few-shot) incluye: (1) instrucciones de rol (a
 | Modelos descargados | gemma4:31b (19 GB), gemma4:12b (5 GB), llama3.2 (2 GB), deepseek-r1:1.5b (1.1 GB) |
 | Tiempo total de benchmark (N=30, 2 modelos) | ~29 minutos (serial) |
 
----
 
 *Informe Final de Tesina — Magíster en Tecnologías de la Información (MTI)*  
 *Universidad Técnica Federico Santa María — Valparaíso, Chile*  
