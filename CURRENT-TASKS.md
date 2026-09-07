@@ -595,7 +595,18 @@ Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **Invest
 - **Prohibido:** re-ejecutar cualquier otra corrida, tocar `ANALISIS_CONJUNTO_20260907/` o las corridas
   N=120/N=15, y borrar `benchmark_augmented_30.log`.
 
-### 3.bis.13 ▶️ EN CURSO — Re-ejecución de `gpt-oss:20b` (diagnóstico ya cerrado)
+### 3.bis.13 ✅ COMPLETADA — Re-ejecución de `gpt-oss:20b` (2026-09-07)
+- **Entregada y verificada:** 120+120, **0 `failed`**, **238 de 240 filas en `direct_json`** (antes 67
+  `fallback`), 0 violaciones aritméticas. **F1 0,5239 / 0,5567** frente a 0,4384 / 0,3419 originales.
+- **ΔRAG pasa de −0,097 a +0,033:** desaparece el único descenso grande del estudio, que era un **artefacto
+  del arnés** —truncamiento por `num_predict`— y no una conducta del modelo.
+- **ANOVA conjunto rehecho:** `results/ANALISIS_CONJUNTO_20260907/` → **F=38,2222 · p=3,4453e-160**
+  (antes 36,3666 / 1,2236e-152). **10 de 13 modelos** con ΔRAG positivo.
+- **Efecto colateral en el Anexo H:** el delta de mojibake de `gpt-oss` pasa de **+0,0914 a −0,0336**; el
+  rango entre modelos baja de 16 a **9,4 puntos**. La cautela que se había dejado escrita sobre esa fila
+  resultó acertada.
+
+#### Detalle original del encargo
 - **Diagnóstico COMPLETADO** (`remote_48g/DIAGNOSTICO-GPTOSS-20260907.md`): descartó el bucle de repetición
   (0/5) y apuntó al agotamiento de `num_predict`. **La hipótesis del equipo principal era incorrecta**; la
   causa real es truncamiento por presupuesto de tokens.
@@ -777,3 +788,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 19:50 | Claude Desktop | Tarea 2.8 (tanda estructural) y 2.7 propagadas a los tres `.docx` reconstruyendo el cuerpo desde el `.md`; anexos D–G llevados al `.md`; **cuerpo medido: 23 páginas de 25**; sin congelar versión |
 | 2026-09-07 20:05 | Claude Desktop | Diagramas de texto convertidos en tablas de Word en el `.md` y propagados a los tres `.docx` (§3.2, §4.3.1, flujos RAG de §5.6, árbol del Anexo A); cuerpo re-medido en 23 páginas |
 | 2026-09-07 17:02 | Equipo Remoto 48 GB (Claude Code) | gpt-oss re-run COMPLETO (num_predict 4096, thinking ON): 240/240, 0 failed, F1 baseline 0.5239 / kb_rag 0.5567 (vs oficial 0.4467/0.3419), recall0 11 (vs 76), ΔRAG +0.033 (era −0.097). Confirma truncación. `gptoss_rerun_REMOTO` = fuente de verdad; requiere re-fusionar ANOVA. Entregado en remote_48g/ |
+| 2026-09-07 17:25 | Claude Code (equipo principal) | `gpt-oss` COMPLETO y verificado (0 failed, 238/240 `direct_json`): ΔRAG −0,097 → **+0,033**, era artefacto de truncamiento. **ANOVA rehecho: F=38,2222 · p=3,4453e-160**, 10 de 13 modelos con ΔRAG positivo. Actualizados §5.3.5, Tukey, y el **Anexo H** (delta de `gpt-oss` +0,0914 → −0,0336; rango 16 → 9,4 pp). Commiteada la tanda estructural de Claude Desktop: **cuerpo de 23 páginas de 25 medidas**, anexos A-H, Anexo G íntegro, 0 arte ASCII. Documentada la **regla de no usar arte ASCII** en `CLAUDE.md` y en el encargo. Abierta §2.9 para la segunda tanda |

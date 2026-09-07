@@ -58,3 +58,15 @@ lector pueda auditar el trabajo, no para adornarlo.
 Cuando termines, declara el resultado en `CURRENT-TASKS.md` §2 **con el conteo de páginas medido** y deja la
 copia del `.docx` canónico en la raíz. La congelación de versión en `doc/versions/informe_final/` déjala para
 después de la segunda tanda.
+
+## Regla permanente: nada de arte ASCII
+
+Ningún diagrama debe emitirse como bloque de texto monoespaciado. El arte ASCII se descuadra en Word, donde la
+tipografía es proporcional, y produce exactamente el tipo de defecto visual que el profesor señaló. **Todo
+esquema va como tabla de Word y todo gráfico como imagen real**, generada electrónicamente y legible, según
+pide la plantilla; el bloque monoespaciado queda reservado al **código fuente real**.
+
+La corrección debe hacerse **siempre primero en el `.md` canónico** y solo después reconstruir los `.docx`. Si
+se arregla únicamente en el documento de Word, la siguiente reconstrucción desde el Markdown vuelve a
+introducir el arte ASCII — que es precisamente lo que ocurrió el 2026-09-07 y obligó a repetir el trabajo.
+Esta regla queda también recogida en `CLAUDE.md`.

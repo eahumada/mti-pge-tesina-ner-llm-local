@@ -25,6 +25,12 @@ cualquier corrección se aplica primero al Markdown canónico y luego se propaga
 - Debe existir siempre una copia del `.docx` canónico **en la raíz** del proyecto.
 - **Restricción institucional:** el cuerpo del informe no puede exceder **25 páginas**, excluyendo anexos.
   Toda corrección debe ser neutra en extensión o reducirla; verificar el conteo tras cada cambio.
+- **Nada de arte ASCII en los documentos.** Un diagrama dibujado con caracteres (`┌─┐`, `│`, `└┘`) se
+  descuadra en Word, porque la tipografía es proporcional y no monoespaciada. Todo esquema va como **tabla de
+  Word**, y todo gráfico como **imagen real** —generada electrónicamente, legible y a 300 puntos/cm como pide
+  la plantilla—. Los bloques de código monoespaciado solo se reservan para **código real**. La regla aplica
+  tanto al `.md` canónico como a los `.docx`: si el diagrama se corrige solo en el `.docx`, la siguiente
+  reconstrucción desde el Markdown lo reintroduce.
 - Los `.docx` **no deben regenerarse desde el Markdown con pandoc**: contienen correcciones manuales de
   numeración multinivel (`numId=0`), estilos de fila y saltos de página que una regeneración destruiría.
   Para cambios de texto usar `tools/docx_replace_terms.py`, que edita el XML preservando el formato.

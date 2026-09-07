@@ -440,13 +440,13 @@ Sobre el corpus real N=120 descrito en §4.1.3 se ejecutó el mismo protocolo (A
 | gemma4:31b-mlx | **59.25%** | 59.07% | −0.18 pp | no |
 | gemma4:12b-mlx | 56.18% | 58.46% | +2.28 pp | no |
 | gemma4:latest | 55.91% | 54.74% | −1.17 pp | no |
+| gpt-oss:20b | 52.39% | 55.67% | +3.28 pp | no |
 | qwen2.5:14b | 50.22% | 54.84% | +4.62 pp | no |
 | llama3.1:8b | 48.76% | 50.75% | +1.99 pp | no |
 | qwen3:8b | 48.21% | 51.46% | +3.25 pp | no |
 | gemma:latest | 44.00% | 51.36% | +7.36 pp | no |
-| gpt-oss:20b | 43.84% | 34.19% | −9.65 pp | no |
 | mistral-nemo:latest | 43.38% | 45.76% | +2.37 pp | no |
-| llama3.2:latest | 36.11% | 46.93% | **+10.82 pp** | **sí** (p=0.014) |
+| llama3.2:latest | 36.11% | 46.93% | **+10.82 pp** | **sí** (p=0.007) |
 | deepseek-r1:1.5b | 24.83% | 23.94% | −0.90 pp | no |
 | nemotron-mini:4b | 22.59% | 37.12% | **+14.52 pp** | **sí** (p<0.001) |
 
@@ -458,7 +458,7 @@ Sobre el corpus real N=120 descrito en §4.1.3 se ejecutó el mismo protocolo (A
 > un modelo que transcribe literalmente coincide con la referencia, mientras que uno que normaliza la
 > ortografía al español correcto **deja de coincidir**. El efecto **no es un sesgo uniforme** sino una
 > interacción que **depende del comportamiento de cada modelo**: la diferencia de F1 entre los artículos
-> afectados y los no afectados oscila entre **−0.070 y +0.091** según el modelo. Los corpus N=15 y N=30 están
+> afectados y los no afectados oscila entre **−0.070 y +0.025** según el modelo. Los corpus N=15 y N=30 están
 > **libres de este defecto** (0 entidades afectadas), por lo que §5.1, §5.2 y §5.3.1–5.3.4 no se ven
 > comprometidos. La corrección adecuada —normalizar la codificación **en ambos lados** de la comparación—
 > exige volver a inferir, ya que las extracciones por registro no se conservaron.
@@ -466,11 +466,11 @@ Sobre el corpus real N=120 descrito en §4.1.3 se ejecutó el mismo protocolo (A
 > **Dos salvedades de procedencia.** (i) La latencia de `gemma4:31b-cloud` **no mide inferencia**: quedó cuantizada por el `--request-delay` introducido para sortear el límite de peticiones del servicio (114 de sus 240 filas registran exactamente 1,02 s). Su F1 es válido; su latencia y sus tokens/s no deben usarse en comparaciones de eficiencia. (ii) Siete filas de `nemotron-mini:4b` tienen `latencia = 0` y `0 tokens/s` porque se re-extrajeron fuera del arnés de lotes tras un fallo de contexto; sus valores de precisión, *recall* y F1 son reales, pero su telemetría no existe.
 
 **ANOVA de una vía (α = 0.05), N=120 por grupo:**
-- **F-Statistic:** 36.3666  ·  **p-Value:** 1.2236 × 10⁻¹⁵² (p < 0.05 → se rechaza H₀)
+- **F-Statistic:** 38.2222  ·  **p-Value:** 3.4453 × 10⁻¹⁶⁰ (p < 0.05 → se rechaza H₀)
 - **Conclusión:** la diferencia de desempeño entre modelos/modos es estadísticamente significativa, con una potencia muy superior a la del corpus N=30 (F=0.141, no significativo).
-- **Tukey HSD (post-hoc):** 172 de 325 comparaciones por pares resultan significativas. Al contrastar *baseline* contra *KB RAG* **dentro de cada modelo**, la mejora solo alcanza significancia en `nemotron-mini:4b` (+14.52 pp, p<0.001) y `llama3.2:latest` (+10.82 pp, p=0.014); en los once modelos restantes la diferencia no supera la corrección por comparaciones múltiples.
+- **Tukey HSD (post-hoc):** 172 de 325 comparaciones por pares resultan significativas. Al contrastar *baseline* contra *KB RAG* **dentro de cada modelo**, la mejora solo alcanza significancia en `nemotron-mini:4b` (+14.52 pp, p<0.001) y `llama3.2:latest` (+10.82 pp, p=0.007); en los once modelos restantes la diferencia no supera la corrección por comparaciones múltiples.
 
-**Interpretación.** El beneficio del KB RAG es **inversamente proporcional a la capacidad del modelo**: aporta de forma estadísticamente significativa en los dos modelos más débiles del estudio, es positivo pero no concluyente en la franja intermedia, y resulta nulo o adverso en los modelos de mayor capacidad (−0.53 pp y −0.18 pp en los dos de 31B), que ya siguen correctamente las instrucciones sin contexto adicional. El caso de `gpt-oss:20b` (−9.65 pp) es distinto y se discute en §6.
+**Interpretación.** El beneficio del KB RAG es **inversamente proporcional a la capacidad del modelo**: aporta de forma estadísticamente significativa en los dos modelos más débiles del estudio, es positivo pero no concluyente en la franja intermedia, y resulta nulo o adverso en los modelos de mayor capacidad (−0.53 pp y −0.18 pp en los dos de 31B), que ya siguen correctamente las instrucciones sin contexto adicional. **Diez de los trece modelos obtienen una mejora**, aunque solo en dos alcance significancia estadística.
 
 **Lectura conjunta con el corpus N=30 (§5.3):** el mejor F1 local sobre N=120 (`gemma4:31b-mlx`: 59.25%) es menor que el de N=30 (`gemma4:31b-mlx`: 80.57%), lo esperable dado que los artículos reales de CoNLL-2002 ES son más largos y heterogéneos que los breves (~200 caracteres) del corpus sintético N=30, diseñado para el dominio AML/KYC. Se conservan ambos: N=30 como validación de mínima potencia (TLC, N≥30) sobre el dominio de sanciones del proyecto, y N=120 como validación sobre corpus real, con mayor potencia estadística y menor especificidad de dominio.
 
@@ -679,7 +679,7 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 6. **El RAG contextual supera al RAG por diccionario:** La implementación de la Base de Conocimientos Contextual (KB RAG) demuestra que el reconocimiento de entidades mediante LLMs locales es un problema de **comprensión sintáctico-contextual**, no de búsqueda en bases de datos cerradas. En el estudio N=120 sobre 13 modelos, el KB RAG (`--rag-mode kb_combined`) mejoró el F1-Score de forma **estadísticamente significativa** (Tukey HSD) en los dos modelos más débiles —`nemotron-mini:4b` **+14.52 pp** (p<0.001) y `llama3.2:latest` **+10.82 pp** (p=0.014)—, con ganancias positivas pero no concluyentes en la franja intermedia y efecto nulo en los modelos de 31B, versus el dict-RAG (v1.0), que en un sondeo N=5 sobre el mismo modelo degradó el F1 hasta 0.2367 (−57.8% respecto de su propio baseline). Su efectividad está modulada por la capacidad paramétrica: beneficia sobre todo a los modelos de 3–14B, donde actúa como memoria externa de conocimiento lingüístico sin costo adicional de hardware. Este hallazgo tiene implicaciones directas para el diseño de sistemas RAG en dominio abierto con LLMs soberanos.
 
-7. **La codificación del corpus condiciona la medición, y no de forma neutra:** el corpus N=120 almacena los nombres con *mojibake* —`JosÃ© Bono` donde el nombre real es **José Bono**—, un defecto presente a la vez en las entidades de referencia (20,1 %) y en el texto de entrada (87 % de los artículos). Al ser **coherente entre ambos**, no introduce el sesgo uniforme que cabría suponer: **favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía**, con un efecto que oscila entre −0.070 y +0.091 de F1 según el modelo. La implicación metodológica excede a este trabajo: en una evaluación de NER, **un defecto de codificación no es ruido de fondo sino una variable que interactúa con el comportamiento del modelo**, y verificar la codificación de la entrada —no solo la de la referencia— debe formar parte del protocolo antes de dar por válida cualquier cifra. El detalle se desarrolla en el **Anexo H**.
+7. **La codificación del corpus condiciona la medición, y no de forma neutra:** el corpus N=120 almacena los nombres con *mojibake* —`JosÃ© Bono` donde el nombre real es **José Bono**—, un defecto presente a la vez en las entidades de referencia (20,1 %) y en el texto de entrada (87 % de los artículos). Al ser **coherente entre ambos**, no introduce el sesgo uniforme que cabría suponer: **favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía**, con un efecto que oscila entre −0.070 y +0.025 de F1 según el modelo. La implicación metodológica excede a este trabajo: en una evaluación de NER, **un defecto de codificación no es ruido de fondo sino una variable que interactúa con el comportamiento del modelo**, y verificar la codificación de la entrada —no solo la de la referencia— debe formar parte del protocolo antes de dar por válida cualquier cifra. El detalle se desarrolla en el **Anexo H**.
 
 
 ### 7.2 Trabajo Futuro
@@ -1109,11 +1109,12 @@ Diferencia de F1 entre los 88 artículos afectados y los 31 no afectados, sobre 
 | `gemma4:31b-mlx` (baseline) | −0.0395 |
 | `llama3.1:8b` (KB RAG) | −0.0004 |
 | `mistral-nemo:latest` (KB RAG) | +0.0122 |
-| `gpt-oss:20b` (KB RAG) | **+0.0914** |
+| `deepseek-r1:1.5b` (baseline) | +0.0199 |
+| `gemma:latest` (KB RAG) | **+0.0249** |
 
-El rango entre extremos alcanza **16 puntos porcentuales**.
+El rango entre extremos alcanza **9,4 puntos porcentuales**.
 
-> **Cautela metodológica.** Los artículos afectados podrían ser además más largos o intrínsecamente más difíciles, lo que confundiría la magnitud absoluta de cada Δ. Sin embargo, la dificultad desplazaría a todos los modelos en la misma dirección; **la dispersión entre modelos sobre registros idénticos** es lo que acredita una interacción específica de cada modelo. La fila de `gpt-oss:20b` es la menos fiable, por estar sus cifras dominadas por un artefacto independiente del arnés de ejecución.
+> **Cautela metodológica.** Los artículos afectados podrían ser además más largos o intrínsecamente más difíciles, lo que confundiría la magnitud absoluta de cada Δ. Sin embargo, la dificultad desplazaría a todos los modelos en la misma dirección; **la dispersión entre modelos sobre registros idénticos** es lo que acredita una interacción específica de cada modelo. Una versión previa de esta tabla situaba a `gpt-oss:20b` en el extremo positivo con +0,091, y se advirtió entonces que esa fila era la menos fiable por estar dominada por un artefacto del arnés. Corregido el artefacto y repetida la medición, su valor real es **−0,034**, dentro del rango del resto. El episodio ilustra la necesidad de descartar defectos de ejecución antes de interpretar un valor extremo.
 
 #### H.5 Cómo debe repararse
 

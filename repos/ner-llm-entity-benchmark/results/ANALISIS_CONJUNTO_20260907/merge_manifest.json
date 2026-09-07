@@ -1,8 +1,18 @@
 {
   "corpus": "data/benchmark_balanced_120.json",
   "expected_n_per_group": 120,
-  "num_sources": 7,
+  "num_sources": 8,
   "sources": [
+    {
+      "label": "00_gptoss_rerun",
+      "csv_path": "/private/tmp/claude-501/-Users-eahumada-Documents-Personal-MTI-mti-pge-tesina-ner-llm-local/87e8505b-1ba9-4f7a-8204-01d63aa41522/scratchpad/anova_stage/00_gptoss_rerun/benchmark_results.csv",
+      "rows": 240,
+      "models": [
+        "gpt-oss:20b_baseline",
+        "gpt-oss:20b_kb_rag"
+      ],
+      "data_file": "data/benchmark_balanced_120.json"
+    },
     {
       "label": "01_qwen3_nothink",
       "csv_path": "/private/tmp/claude-501/-Users-eahumada-Documents-Personal-MTI-mti-pge-tesina-ner-llm-local/87e8505b-1ba9-4f7a-8204-01d63aa41522/scratchpad/anova_stage/01_qwen3_nothink/benchmark_results.csv",
@@ -123,6 +133,22 @@
   ],
   "integrity": [
     {
+      "model": "gpt-oss:20b_baseline",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
+      "model": "gpt-oss:20b_kb_rag",
+      "rows": 120,
+      "unique_records": 120,
+      "expected": 120,
+      "nan_f1": 0,
+      "status": "OK"
+    },
+    {
       "model": "qwen3:8b_baseline",
       "rows": 120,
       "unique_records": 120,
@@ -180,22 +206,6 @@
     },
     {
       "model": "gemma4:31b-cloud_kb_rag",
-      "rows": 120,
-      "unique_records": 120,
-      "expected": 120,
-      "nan_f1": 0,
-      "status": "OK"
-    },
-    {
-      "model": "gpt-oss:20b_baseline",
-      "rows": 120,
-      "unique_records": 120,
-      "expected": 120,
-      "nan_f1": 0,
-      "status": "OK"
-    },
-    {
-      "model": "gpt-oss:20b_kb_rag",
       "rows": 120,
       "unique_records": 120,
       "expected": 120,
@@ -332,6 +342,8 @@
     }
   ],
   "duplicate_notes": [
+    "DUPLICADO: 'gpt-oss:20b_baseline' aparece en '00_gptoss_rerun' y en '05_excluidos'. Se conservan las filas de '00_gptoss_rerun' (--on-duplicate=first).",
+    "DUPLICADO: 'gpt-oss:20b_kb_rag' aparece en '00_gptoss_rerun' y en '05_excluidos'. Se conservan las filas de '00_gptoss_rerun' (--on-duplicate=first).",
     "DUPLICADO: 'gemma4:12b-mlx_baseline' aparece en '02_gemma4_12b_mlx' y en '06_P3'. Se conservan las filas de '02_gemma4_12b_mlx' (--on-duplicate=first).",
     "DUPLICADO: 'gemma4:12b-mlx_kb_rag' aparece en '02_gemma4_12b_mlx' y en '06_P3'. Se conservan las filas de '02_gemma4_12b_mlx' (--on-duplicate=first).",
     "DUPLICADO: 'qwen3:8b_baseline' aparece en '01_qwen3_nothink' y en '06_P3'. Se conservan las filas de '01_qwen3_nothink' (--on-duplicate=first).",
