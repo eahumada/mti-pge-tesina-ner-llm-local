@@ -437,6 +437,28 @@ Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **Invest
 - **Prohibido:** re-ejecutar cualquier otra corrida, tocar `ANALISIS_CONJUNTO_20260907/` o las corridas
   N=120/N=15, y borrar `benchmark_augmented_30.log`.
 
+### 3.bis.13 🔬 REABIERTA — Diagnosticar `gpt-oss:20b` y rescatar los datos de N=30
+- **Encargo completo:** [`ENCARGO-REMOTO-GPTOSS-20260907.md`](./ENCARGO-REMOTO-GPTOSS-20260907.md)
+- **Parte A — antes de re-ejecutar N=30:** buscar en la máquina remota si sobreviven los datos por registro
+  de la corrida sobre `data/kleptotrace_augmented_30.json`. En la de desarrollo se perdieron por
+  sobrescritura, **pero puede que allí no**. Si aparecen, se re-puntúan con `tools/rescore_saved.py`
+  **sin re-inferir** y nos ahorramos las 9 h de §3.bis.12.
+- **Parte B — `gpt-oss:20b`:** 76 filas con `recall=0` (27 baseline + 49 kb_rag). **67 son `fallback`** y el
+  log registra **69 × «Failed to parse JSON from raw response»**. **45 de las 49 de kb_rag** quedan en
+  `tp=0, fp=0`. **No es rechazo de infraestructura:** latencia mediana 838 s frente a 854 s de los aciertos,
+  con volumen de tokens equivalente — el modelo trabaja y produce salida.
+- **Hipótesis:** **degeneración por repetición**. Las dos respuestas crudas legibles del log extraen entidades
+  correctas y luego entran en bucle (`way, way, way…` / `[Note: This [Note: This…`), dejando el JSON sin
+  cerrar. El log trunca, así que **no sabemos en qué proporción de los 69 ocurre**: eso es lo que deben medir.
+- **Qué ejecutar:** 10 registros que fallaron (5 + 5), guardando la respuesta cruda íntegra, en dos
+  condiciones: tal cual, y con `repeat_penalty` >1.1 (1.15–1.3). **~2,5 h.**
+- **Extra crítico:** verificar el **mojibake** (`CorÃ­n Tellado` en el log). Si la doble codificación afecta al
+  texto comparado con el *ground truth* y no solo al fichero de log, **ningún nombre español con tilde casaría
+  nunca, en todos los modelos**.
+- **Prohibido:** parchear solo las filas que fallan (sesgaría la media al alza; es el 32 % de la corrida). Si
+  se confirma causa corregible, lo correcto es re-ejecutar `gpt-oss:20b` completo — **y esa decisión la toma
+  el autor**.
+
 ### 3.bis.5 Plantilla de reporte
 Al terminar cada tarea, sustituid su bloque por:
 
@@ -551,3 +573,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 13:50 | Claude Code (equipo principal) | 🔒 **CIERRE DE BENCHMARKS** (decisión del autor): se conservan los 13 modelos y se cierra la ejecución. Alcance final 13 modelos × 2 modos, F=36.3666, p=1.2236e-152. Integridad: 0 violaciones, 0 degeneradas, 0 failed, summary==CSV. Documento `CIERRE-BENCHMARKS-20260907.md` y `TODO-INFORME-FINAL.md §15`. Aviso: el «12» del informe es la Tabla 2 (N=15), no el estudio N=120 |
 | 2026-09-07 14:30 | Claude Code (equipo principal) | Aplicadas A1-A3 y la reconstrucción de la Tabla 2 al `.md` canónico; §5.2 con las cifras limpias (nueva lectura: interacción idioma × few-shot, +11.12 pp); §5.3.5 reescrita con los 13 modelos (F=36.3666, p=1.2236e-152, Tukey: RAG significativo solo en nemotron y llama3.2); renombrado terminológico ejecutado (§13 cerrado); aclarado 12 (Tabla 2) vs 13 (estudio N=120). Encargo a Claude Desktop en `PROMPT-CLAUDE-DESKTOP-20260907.md` y §2.6 |
 | 2026-09-07 14:55 | Claude Code (equipo principal) | 🔴 §3.bis REABIERTA solo para la corrida N=30 (decisión del autor): el F1 titular 79.03 % es la única cifra aún bajo el scorer defectuoso y su dato por registro se perdió. Encargo en `ENCARGO-REMOTO-N30-20260907.md` y §3.bis.12. ETA ~9 h. Ninguna otra corrida se reabre |
+| 2026-09-07 15:25 | Claude Code (equipo principal) | 🔬 §3.bis.13: diagnóstico de `gpt-oss:20b` encargado al remoto. Los 76 `recall=0` NO son rechazo de infraestructura: 67 son `fallback`, 69 avisos de parseo JSON fallido y latencia normal. Hipótesis: degeneración por repetición que deja el JSON sin cerrar (2 muestras del log lo muestran). Se pide además buscar allí los datos perdidos de N=30 y verificar el mojibake, que podría afectar a todos los modelos. Encargo: `ENCARGO-REMOTO-GPTOSS-20260907.md` |

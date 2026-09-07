@@ -98,6 +98,7 @@ con el *scorer* defectuoso**, y no admite re-puntaje porque su dato por registro
 (solo sobrevive el agregado de `benchmark_augmented_30.log`). Sostiene §5.3.1–5.3.4 y la verificación de la
 hipótesis en §6.1, así que necesita respaldo verificable.
 
-Encargo: [`ENCARGO-REMOTO-N30-20260907.md`](./ENCARGO-REMOTO-N30-20260907.md) · seguimiento en
-`CURRENT-TASKS.md §3.bis.12`. **El resto del cierre sigue plenamente vigente:** ninguna otra corrida se
+Encargos: [`ENCARGO-REMOTO-N30-20260907.md`](./ENCARGO-REMOTO-N30-20260907.md) (§3.bis.12) y
+[`ENCARGO-REMOTO-GPTOSS-20260907.md`](./ENCARGO-REMOTO-GPTOSS-20260907.md) (§3.bis.13, diagnóstico de
+`gpt-oss:20b` — **10 registros, no una corrida completa** — y búsqueda de los datos perdidos de N=30). **El resto del cierre sigue plenamente vigente:** ninguna otra corrida se
 reabre, y el estudio N=120 de 13 modelos queda como está.
