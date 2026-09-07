@@ -190,7 +190,13 @@ Para **cada tarea** que ejecutes:
   familias de técnicas y criterios C1-C5 · capítulo 3 consolidado 6→4 secciones abriendo con la justificación
   frente a esos criterios · capítulo 6 consolidado 5→2 · §5.6 consolidada 7→3 · introducción desarrollada
   645→1117 palabras con enfoque de solución y metodología de validación.
-- **Lo crítico:** **medir las páginas reales**. Cuerpo ≈ 21,9 páginas de texto; límite **25 sin anexos**
+- **Actualizado 16:45.** Dos tandas: la **estructural** (respuesta al profesor) está firme y puede propagarse ya;
+  la **de datos** no, porque `gpt-oss:20b` va por 201/240 y su F1 baseline ya subió de 0.4384 a **0.5239**. Al
+  cerrar moverá la tabla de §5.3.5, §6.1, §6.2 y la conclusión 6 → **habrá una segunda pasada breve**.
+  **No congelar versión como definitiva todavía.**
+- **Incorporado además:** re-corrida N=30 completa (`gemma4:31b-mlx` 80,57 % · `gemma4:31b` 78,55 %; ANOVA
+  F=0,2235 p=0,6382) y §5.3 reescrita de cuatro apartados de 25-35 palabras a 382 en prosa.
+- **Lo crítico:** **medir las páginas reales**. Cuerpo ≈ 22,3 páginas de texto; límite **25 sin anexos**
   (verificado en `tesinas-finales-2026.pdf`). Los **anexos no computan** y tienen hasta 25 páginas propias.
   **Si se excede, avisar antes de recortar.**
 - **🔒 INTOCABLE:** el **Anexo G, declaración de uso de IA**, se conserva **íntegro** — no se resume, no se
@@ -670,3 +676,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 15:01 | Equipo Remoto 48 GB (Claude Code) | gpt-oss re-run EN CURSO 42/240, **0 failed, recall0=2** (vs 76 en la oficial) — el num_predict 4096 confirma que el recall=0 era truncación por thinking, no bucle. Snapshot parcial en remote_48g/ |
 | 2026-09-07 18:10 | Claude Code (equipo principal) | Hallazgo de codificación elevado al informe: **conclusión 7** en §7.1 y **Anexo H** completo (H.1-H.6: qué es el mojibake a nivel de bytes, alcance medido, por qué la lectura inicial era incorrecta, evidencia diferencial por modelo, cómo repararlo y cuatro implicaciones para evaluar NER). Detectado de paso que la **corrección de la convención de puntuación no estaba documentada** en el informe pese a afectar a todas las cifras: añadida a §4.4 junto con el umbral de cotejo difuso. §2.7 ampliada a cuatro cambios |
 | 2026-09-07 19:10 | Claude Code (equipo principal) | Atendidos los 4 reparos del profesor guía en el `.md`: ficha fuera, 12 separadores eliminados, resumen a 201 palabras, capítulo 2 reescrito con comparación de familias y criterios C1-C5, capítulo 3 justificando la elección frente a ellos, capítulos 3/6 y §5.6 consolidados, introducción desarrollada. Encargo a Desktop en `PROMPT-CLAUDE-DESKTOP-PROFESOR-20260907.md` y §2.8, con el Anexo G (uso de IA) declarado INTOCABLE y la medición real de páginas como tarea crítica |
+| 2026-09-07 16:45 | Claude Code (equipo principal) | Actualizado el encargo a Claude Desktop (`PROMPT-CLAUDE-DESKTOP-PROFESOR-20260907.md`, §2.8): separado en tanda **estructural** —firme, propagable ya— y tanda **de datos** —pendiente de que `gpt-oss` cierre 201/240—. Incorporada la re-corrida N=30 y reescrita §5.3. Instrucción explícita de **no congelar versión** hasta la segunda pasada |
