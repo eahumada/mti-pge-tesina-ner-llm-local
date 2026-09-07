@@ -248,3 +248,29 @@ Prioridad descendente. **No ejecutar mientras haya descargas de modelos en curso
 > limitación 1 de arriba, salvo retroactivamente para #9 y #12).
 > **Pendiente**: nomenclatura de directorios (§4.1), `dataset_sha256`, `models_skipped` y
 > `results/runs_index.json` (§4.2 y reglas 2-4 de §4.3).
+
+---
+
+## Corridas del cierre (2026-09-06 / 2026-09-07)
+
+Añadido de forma aditiva al cerrarse el estudio. El catálogo anterior llegaba hasta la corrida #13.
+
+| Directorio | N | Modo RAG | Contenido |
+|:---|:---:|:---|:---|
+| `benchmark_n120_REMOTO` | 120 | `kb_combined` | Corrida principal del equipo remoto (P3), 7 modelos |
+| `excluidos_n120_REMOTO` | 120 | `kb_combined` | `gpt-oss:20b` (recuperado tras el fix de routing) |
+| `afectados_thinking_n120_REMOTO` | 120 | `kb_combined` | Re-corrida limpia de `gemma4:12b-mlx` tras el fix de *thinking* |
+| `qwen3_nothink_n120_REMOTO` | 120 | `kb_combined` | `qwen3:8b` con `think=false` — **fuente oficial** del modelo |
+| `nemotron_rerun_n120_REMOTO` | 120 | `kb_combined` | `nemotron-mini:4b`, 0 `failed` |
+| `nemotron_fix7_REMOTO` | 7 | `kb_combined` | Parcheo de las 7 filas vacías (telemetría en cero, ver informe §5.3.5) |
+| `gemma4_31b_cloud_n120_REMOTO` | 120 | `kb_combined` | `gemma4:31b-cloud` limpio, sin contaminación de cuota |
+| `gemma4_31b_n15_REMOTO` | 15 | `entities` | `gemma4:31b` — fuente de su fila en la Tabla 2 |
+| `cloud_n15_limpio_20260905` | 15 | `entities` | `gemma4:31b-cloud` — fuente de su fila en la Tabla 2 |
+| `ablacion_n15_REMOTO` | 15 | `entities` | **Análisis de Variantes de Prompts** — fuente de §5.2 |
+| `test_nothink/` | 15 | mixto | Experimento *thinking* ON/OFF de 4 modelos (`FINDINGS.md §F44-F45`) |
+| **`ANALISIS_CONJUNTO_20260907`** | 120 | `kb_combined` | **Análisis conjunto definitivo: 13 modelos × 2 modos, F=36.3666, p=1.2236e-152.** Generado con `src/merge_and_analyze.py` |
+
+> **Fuente válida de P/R/F1: `benchmark_results.csv`.** Todas las corridas se re-puntuaron tras corregir el bug
+> del *scorer* (`F1=1.0` en extracción vacía). Ver `results/AVISO-SUMMARIES-OBSOLETOS.md`.
+>
+> **Alcance final del estudio: 13 modelos** — ver `CIERRE-BENCHMARKS-20260907.md`.

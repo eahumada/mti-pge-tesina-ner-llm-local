@@ -101,7 +101,13 @@ Para **cada tarea** que ejecutes:
   imposibles (9548 s y 15860 s). Media con anómalas 1245 s vs 747 s sin ellas. Requiere `sudo pmset -a
   disablesleep 1` o filtrar los outliers y documentarlo.
 
-### 1.2 PAUSADA — Descarga de modelos 31B para recuperar N=30
+### 1.2 🔒 CERRADA — Descarga de modelos 31B para recuperar N=30 (cerrada 2026-09-07)
+> **Cierre:** la descarga **se completó** — `gemma4:31b` y `gemma4:31b-mlx` están presentes localmente (19 GB
+> cada uno). Pero **no pueden ejecutarse aquí**: su footprint operativo (~24,7 GB) excede el techo de VRAM de
+> una máquina de 16 GB. La re-ejecución de N=30 pasa por tanto al equipo remoto (§3.bis.12). Esta tarea deja
+> de tener objeto local.
+
+#### Contexto original — 1.2 PAUSADA
 - **Estado:** ⏸️ PAUSADA 2026-09-03 16:05 (liberar RAM e I/O para el benchmark; `ollama` reanuda parciales)
 - **Pendiente:** `gemma4:31b` (19 GB), `gemma4:31b-mlx` (19.4 GB)
 - **Reanudar cuando:** termine la tarea 1.1
@@ -575,3 +581,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 14:55 | Claude Code (equipo principal) | 🔴 §3.bis REABIERTA solo para la corrida N=30 (decisión del autor): el F1 titular 79.03 % es la única cifra aún bajo el scorer defectuoso y su dato por registro se perdió. Encargo en `ENCARGO-REMOTO-N30-20260907.md` y §3.bis.12. ETA ~9 h. Ninguna otra corrida se reabre |
 | 2026-09-07 15:25 | Claude Code (equipo principal) | 🔬 §3.bis.13: diagnóstico de `gpt-oss:20b` encargado al remoto. Los 76 `recall=0` NO son rechazo de infraestructura: 67 son `fallback`, 69 avisos de parseo JSON fallido y latencia normal. Hipótesis: degeneración por repetición que deja el JSON sin cerrar (2 muestras del log lo muestran). Se pide además buscar allí los datos perdidos de N=30 y verificar el mojibake, que podría afectar a todos los modelos. Encargo: `ENCARGO-REMOTO-GPTOSS-20260907.md` |
 | 2026-09-07 14:00 | Equipo Remoto 48 GB (Claude Code) | Encargos nuevos recibidos (N30 + GPTOSS). Parte A: NO sobreviven datos N=30 por registro → re-run necesario. 🔴 F46: mojibake en gold N=120 (283/1406 con mojibake, 66=4.7% irrecuperables → recall subestimado en TODOS los modelos; kleptotrace/N30 limpios). GPT-OSS es PRIORITARIO (autor): diagnóstico en curso (bucle de repetición + repeat_penalty + mojibake). N30 pausado (reanudable) hasta cerrar gpt-oss. L38: logs con fecha/hora. Push tras gpt-oss para actualizar tesina |
+| 2026-09-07 15:50 | Claude Code (equipo principal) | Tareas locales de cierre: salvedades de procedencia añadidas a §5.3.5 del informe (latencia del cloud y telemetría de nemotron), `FINDINGS.md §F46` (gpt-oss: degeneración por repetición, no incapacidad), `RUNS_INDEX.md` con las 12 corridas del cierre y el análisis conjunto, entrada de sesión en `research/rag/WORKLOG.md`, casillas superadas marcadas en TODO y §1.2 cerrada (los 31B están descargados pero no caben en 16 GB) |

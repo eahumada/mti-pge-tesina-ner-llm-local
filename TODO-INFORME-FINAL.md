@@ -414,15 +414,19 @@ modelos locales**.
       y su **tasa de fallo por cuota**. Es honesto y no requiere datos nuevos.
 
 ### 11.5 🟡 Filas sin respaldo alguno
-- [ ] Tabla «RAG Integration Study»: `llama3.2:latest_rag` (F1 0.8783) y `llama3.1:8b_baseline` (0.7667)
+- [x] **RESUELTO 2026-09-07.** Tabla «RAG Integration Study»: `llama3.2:latest_rag` (F1 0.8783) y `llama3.1:8b_baseline` (0.7667)
+      quedan marcadas **NO VERIFICABLES** en `BENCHMARKS.md` (se conservan por política aditiva); la fuente oficial de
+      `llama3.1:8b` es la corrida N=120 re-puntuada (0.4876 / 0.5075). Original:
       tienen F1 **aritméticamente imposibles**, y **ninguno de sus seis valores existe en dato alguno** del
       proyecto (verificado sobre CSV, JSON y logs). No es que el CSV no sobreviva: no hay rastro.
       → Retirar, o marcar como «prototipo temprano, cifras no verificables».
-- [ ] Tabla de configuraciones de prompt: sus 4 cifras (0.7169 / 0.6640 / 0.6482 / 0.5874) tampoco existen en datos.
+- [x] **RESUELTO 2026-09-07.** Tabla de variantes de prompts sustituida por `ablacion_n15_REMOTO` (zs-en 0.6405 · zs-es 0.6843 ·
+      fs-en 0.6332 · fs-es 0.7444). Original: sus 4 cifras (0.7169 / 0.6640 / 0.6482 / 0.5874) no existían en datos.
       Re-ejecutable con `gemma4:latest` (9.6 GB) sobre N=15, 4 configuraciones de prompt.
 
 ### 11.6 ⬜ PRIORIDAD BAJA — Aparcado por decisión del autor
-- [ ] Cifras de mercado de §1.1 con el marcador `[referencia KPMG 2024]`. **Se aborda al final**, tras
+- [x] **RESUELTO 2026-09-07** (B2): sustituida por Verified Market Research (15,68 mil M 2020 → 87,17 mil M 2028, CAGR 23,92 %).
+      La atribución a KPMG no se sostenía: 12.300 → 87.200 M en cuatro años implica una CAGR del ~63 %. Original: tras
       completar todos los benchmarks.
 
 ### 11.7 Orden de ejecución acordado
@@ -460,10 +464,10 @@ No es recuperable aquí. Tres salidas:
 Desbloqueado por la reautenticación. Corrige la contaminación documentada en `FINDINGS.md §F35`
 (6 de 15 extracciones fallidas por cuota, N efectiva 9).
 
-- [ ] Ejecutar sobre N=15 (`data/kleptotrace.json`), protocolo `--rag-study --rag-mode entities`.
+- [x] **HECHO** — `results/cloud_n15_limpio_20260905` (baseline 0.6699 / rag 0.6850, 0 fallos). Alimenta la fila de la Tabla 2 (66.99 %).
 - [ ] **Puede correr EN PARALELO** con el benchmark local: los cloud no consumen memoria local.
-- [ ] Verificar tasa de fallo **0** antes de dar las cifras por válidas.
-- [ ] Comparar con los valores actuales de la tabla (0.6754) y con el subconjunto exitoso (0.6622).
+- [x] **Verificado**: 0 fallos.
+- [x] **Comparado**: la Tabla 2 usa ahora 66.99 % (N=15 limpio) y el estudio N=120 usa 0.6238 / 0.6185.
 
 ### 12.4 Reglas operativas aprendidas (aplicar de aquí en adelante)
 1. **Modelos locales: estrictamente en serie**, uno a la vez con toda la RAM disponible.
@@ -531,7 +535,7 @@ español de ese término.
 | **Los `.docx`** | Propagar con `tools/docx_replace_terms.py` (edición quirúrgica; **no** regenerar con pandoc) |
 
 ### Condición de disparo
-- [ ] Ejecutar **solo cuando** el equipo remoto haya cerrado todas sus tareas y el ANOVA definitivo esté
+- [x] **EJECUTADO 2026-09-07** (ver §13, cerrado). Condición original: solo cuando el remoto cerrara sus tareas y el ANOVA definitivo estuviera
       calculado. Antes de eso, cualquier cambio global habría que repetirlo.
 
 ---

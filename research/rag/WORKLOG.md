@@ -394,3 +394,43 @@ detectó **5 regresiones**, todas reparadas: borrado de la entrada `glm-5.1:clou
 aditiva, restaurada con nota), un fragmento de código Python sintácticamente inválido, la reaparición del
 nombre de modelo retirado, una autocontradicción entre `AGENTS.md §8.3` y `§8.4`, y un consejo de `--resume`
 inoperante por omitir `--results-dir`.
+
+---
+
+## 2026-09-07 — Cierre del estudio: convención de puntuación única, ANOVA definitivo y correcciones al informe
+
+**Objetivo.** Cerrar la fase experimental y dejar el informe consistente con los datos.
+
+**Integridad de datos.** Se descubrió que el re-puntaje del bug de *scoring* (`F1=1.0` en extracción vacía)
+había cubierto solo las corridas del equipo remoto: las tres corridas *legacy* y la corrida canónica N=15
+seguían con la convención antigua, de modo que el estudio **mezclaba dos formas de puntuar**. Se re-puntuaron
+todas con `tools/rescore_saved.py`. Estado final: **8 927 filas, 0 violaciones de `F1 ≤ (P+R)/2`, 0 filas
+degeneradas, 0 filas perdidas**, y `summary == CSV` en las quince corridas. Se detectó además que la
+herramienta solo reescribía el CSV, dejando obsoletos los `benchmark_summary.json` y `statistical_report.md`;
+el equipo remoto la extendió y se publicó `results/AVISO-SUMMARIES-OBSOLETOS.md`.
+
+**Alcance.** Se eliminó del estudio, por decisión del autor, la cuantización *custom* de espacio de usuario
+`sonct988/gemma4-26b` —ni citable ni reproducible—, sin dejarla como referencia histórica. El estudio queda en
+**13 modelos**.
+
+**Análisis conjunto definitivo.** `results/ANALISIS_CONJUNTO_20260907/`: 13 modelos × 2 modos, 3 120
+observaciones, **F = 36.3666, p = 1.2236e-152**. El post-hoc de Tukey aporta el matiz que faltaba: la mejora
+del KB RAG **solo alcanza significancia estadística en los dos modelos más débiles** —`nemotron-mini:4b`
+(+14.52 pp, p<0.001) y `llama3.2:latest` (+10.82 pp, p=0.014)—, mientras que en los once restantes no supera
+la corrección por comparaciones múltiples.
+
+**Correcciones al informe.** Se reconstruyó la Tabla 2 (§5.1) entera desde los CSV re-puntuados —cada fila es
+ahora reproducible—, retirando los modelos fuera del estudio y separando las dos filas de 31B que arrastraban
+cifras idénticas por un error de copia. Se sustituyó §5.2 por las mediciones limpias, lo que **cambió la
+conclusión**: idioma y *few-shot* **interactúan** (+4.38 pp y −0.73 pp por separado, **+11.12 pp** combinados).
+Se reescribió §5.3.5 con el estudio completo y se aplicó el renombrado terminológico a «Análisis de Variantes
+de Prompts».
+
+**Hallazgos.** `FINDINGS.md §F45` cierra la línea del modo *thinking* (efecto específico de cada modelo:
+`gpt-oss:20b` deja de responder sin él, `deepseek-r1:1.5b` da extracción idéntica y solo cuesta tiempo; los
+demás son ruido de N=15). `§F46` documenta que los 76 `recall=0` de `gpt-oss:20b` **no son incapacidad del
+modelo sino degeneración por repetición** que deja el JSON sin cerrar, con la latencia de los fallos igual a
+la de los aciertos.
+
+**Trazabilidad.** Se versionó `benchmark_augmented_30.log`, único registro superviviente del F1 titular de
+julio, que el patrón `*.log` del `.gitignore` mantenía fuera del repositorio y existía en una sola máquina.

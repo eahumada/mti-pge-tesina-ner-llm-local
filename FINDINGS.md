@@ -829,3 +829,51 @@ persistieron (solo `tp/fp/fn`), así que el matching no se puede rehacer sobre d
 una decisión de **re-ejecución del estudio N=120** con el gold corregido — a criterio del autor. Mientras no
 se corrija, todas las cifras de recall/F1 de N=120 llevan este sesgo a la baja, uniforme entre modelos (no
 altera el ranking relativo, sí los valores absolutos).
+
+---
+
+### F46. Los fallos de `gpt-oss:20b` son degeneración por repetición, no incapacidad del modelo
+
+**Estado:** diagnóstico encargado al equipo remoto (`ENCARGO-REMOTO-GPTOSS-20260907.md`, `CURRENT-TASKS §3.bis.13`).
+
+`gpt-oss:20b` acumula **76 filas con `recall=0`** de 240 (27/120 en baseline, 49/120 en kb_rag) y es el único
+modelo del estudio con un ΔRAG fuertemente negativo (**−0.097**). La lectura inmediata —«el RAG le perjudica»—
+**no se sostiene** al cruzar `parse_method` con la latencia:
+
+| Indicio | Dato |
+|:---|:---|
+| `parse_method` de los fallos | **67 de 76 son `fallback`** |
+| Avisos del arnés | **69 × «Failed to parse JSON from raw response»** |
+| Extracción resultante | **45 de las 49 de kb_rag** en `tp=0, fp=0` (vacía del todo) |
+| Latencia | fallos **838 s** vs aciertos **854 s** (mediana), volumen de tokens equivalente |
+
+La latencia normal y el volumen de tokens **descartan el rechazo de infraestructura**: el modelo trabaja y
+produce salida. Es el otro caso de la regla —*latencia alta con contenido inservible = el arnés pierde la
+respuesta*—, la misma familia que §F40-F41.
+
+**Mecanismo observado.** Las dos respuestas crudas que el log conserva legibles muestran la misma forma: el
+modelo **extrae entidades correctas** y después **entra en un bucle de repetición** que deja el JSON sin cerrar.
+
+```
+{"Persons": ["Chirac", "Aznar", "José María Aznar", way, way, way, way, …
+{"Persons": ["Corín Tellado", "Miguel de Cervantes", "Luis Sepúlveda", …  [Note: This  [Note: This  …
+```
+
+El parser falla, cae al *fallback*, y el *fallback* devuelve vacío — **descartando entidades que estaban bien
+extraídas**.
+
+> **Límite de esta evidencia:** el log **trunca** las respuestas, de modo que solo hay **dos muestras
+> legibles**. No se puede afirmar en qué proporción de los 69 casos ocurre. Medirlo es el objeto del encargo.
+
+**Vías de corrección, por orden de preferencia:** (1) un **parser tolerante** que rescate el prefijo válido de
+un JSON sin cerrar —recuperaría entidades **sin volver a inferir**, como hizo el re-puntaje con el bug de
+*scoring*—; (2) `repeat_penalty` por encima del 1.1 por defecto.
+
+> **Regla operativa.** Un ΔRAG anómalo **no es un resultado hasta descartar el arnés**. Antes de interpretarlo,
+> cruzar `parse_method` con la latencia: si los fallos tardan lo mismo que los aciertos, el modelo respondió y
+> el problema está en la lectura, no en la extracción.
+
+**Corolario pendiente — posible mojibake.** El log muestra `CorÃ­n Tellado` y `José MarÃ­a`: UTF-8 leído como
+Latin-1. **Si la doble codificación alcanzara al texto que se compara con el *ground truth*, y no solo al
+fichero de log, ningún nombre español con tilde casaría nunca — en todos los modelos del estudio.** Verificación
+encargada al equipo remoto.

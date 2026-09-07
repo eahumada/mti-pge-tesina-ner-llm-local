@@ -459,6 +459,8 @@ Sobre el corpus real N=120 descrito en §4.1.3 se ejecutó el mismo protocolo (A
 | deepseek-r1:1.5b | 24.83% | 23.94% | −0.90 pp | no |
 | nemotron-mini:4b | 22.59% | 37.12% | **+14.52 pp** | **sí** (p<0.001) |
 
+> **Dos salvedades de procedencia.** (i) La latencia de `gemma4:31b-cloud` **no mide inferencia**: quedó cuantizada por el `--request-delay` introducido para sortear el límite de peticiones del servicio (114 de sus 240 filas registran exactamente 1,02 s). Su F1 es válido; su latencia y sus tokens/s no deben usarse en comparaciones de eficiencia. (ii) Siete filas de `nemotron-mini:4b` tienen `latencia = 0` y `0 tokens/s` porque se re-extrajeron fuera del arnés de lotes tras un fallo de contexto; sus valores de precisión, *recall* y F1 son reales, pero su telemetría no existe.
+
 **ANOVA de una vía (α = 0.05), N=120 por grupo:**
 - **F-Statistic:** 36.3666  ·  **p-Value:** 1.2236 × 10⁻¹⁵² (p < 0.05 → se rechaza H₀)
 - **Conclusión:** la diferencia de desempeño entre modelos/modos es estadísticamente significativa, con una potencia muy superior a la del corpus N=30 (F=0.141, no significativo).
