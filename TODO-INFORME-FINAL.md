@@ -624,3 +624,30 @@ un modelo.
       nuevo resultado es el oficial y el de julio queda en el WORKLOG», pero **no existe una corrida N=30 limpia
       que lo reemplace**. Decidir entre mantenerlo con nota de procedencia o retirarlo. Nadie debe cambiarlo por
       iniciativa propia.
+
+### 15.4 🔴 Decisión del autor — mojibake en el gold del corpus N=120
+
+Hallazgo del equipo remoto (`FINDINGS.md §F46`), **verificado de forma independiente** por el equipo principal:
+las entidades de referencia de `data/benchmark_balanced_120.json` tienen **mojibake** (UTF-8 leído como
+Latin-1). **283 de 1 406 (20,1 %)** están afectadas y **66 (4,7 %) son irrecuperables** al umbral de
+coincidencia difusa 85, de modo que **el *recall* y el F1 de todo el estudio N=120 están subestimados en torno
+a 4,7 pp**.
+
+**Lo importante:** el sesgo es **uniforme entre modelos**. No altera el ranking ni las conclusiones
+comparativas — solo los valores absolutos. Los corpus **N=15 y N=30 están limpios**, así que la Tabla 2, §5.2,
+§5.3.1–5.3.4 y la re-corrida N=30 **no** están afectados.
+
+**Por qué no se puede arreglar sin re-ejecutar:** corregir el gold es trivial
+(`s.encode('latin-1').decode('utf-8')`), pero el *matching* se resuelve en tiempo de inferencia y **las
+extracciones crudas por registro no se persistieron** (solo `tp/fp/fn`). No hay forma de re-puntuar sobre datos
+guardados, como sí se pudo con el bug del *scorer*.
+
+**Opciones:**
+
+- [ ] **(a) Declarar la limitación y no re-ejecutar (recomendada).** Ya está redactada en §5.3.5 del informe.
+      Es práctica estándar cuando el sesgo es conocido, acotado y uniforme. Coste: cero.
+- [ ] **(b) Corregir el gold y re-ejecutar el estudio N=120 completo.** Elevaría los valores absolutos ~4,7 pp.
+      Coste: **~200 h de cómputo** —el estudio entero— y contradice el cierre de benchmarks.
+- [ ] **(c) Corregir el gold y re-ejecutar solo un subconjunto** para cuantificar el efecto real y citarlo como
+      corrección estimada, manteniendo las cifras actuales. Coste intermedio; aporta una medición en vez de una
+      cota.

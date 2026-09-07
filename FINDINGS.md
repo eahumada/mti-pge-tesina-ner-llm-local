@@ -832,7 +832,10 @@ altera el ranking relativo, sí los valores absolutos).
 
 ---
 
-### F46. Los fallos de `gpt-oss:20b` son degeneración por repetición, no incapacidad del modelo
+### F47. Los fallos de `gpt-oss:20b` son degeneración por repetición, no incapacidad del modelo
+
+> **Nota de numeración (2026-09-07):** este hallazgo se registró como «F46» y se renumeró a **F47** al
+> detectarse que el equipo remoto había publicado su propio §F46 (mojibake en el gold) minutos antes.
 
 **Estado:** diagnóstico encargado al equipo remoto (`ENCARGO-REMOTO-GPTOSS-20260907.md`, `CURRENT-TASKS §3.bis.13`).
 
@@ -873,7 +876,11 @@ un JSON sin cerrar —recuperaría entidades **sin volver a inferir**, como hizo
 > cruzar `parse_method` con la latencia: si los fallos tardan lo mismo que los aciertos, el modelo respondió y
 > el problema está en la lectura, no en la extracción.
 
-**Corolario pendiente — posible mojibake.** El log muestra `CorÃ­n Tellado` y `José MarÃ­a`: UTF-8 leído como
+**Corolario — RESUELTO por el equipo remoto (§F46).** La sospecha era correcta y el alcance mayor: el mojibake
+no está en el fichero de log sino **en el *ground truth* del corpus N=120**, y afecta a todos los modelos.
+Verificado de forma independiente: 283 de 1 406 entidades gold (20,1 %) y 66 irrecuperables (4,7 %). Detalle en §F46.
+
+**Nota original —** El log muestra `CorÃ­n Tellado` y `José MarÃ­a`: UTF-8 leído como
 Latin-1. **Si la doble codificación alcanzara al texto que se compara con el *ground truth*, y no solo al
 fichero de log, ningún nombre español con tilde casaría nunca — en todos los modelos del estudio.** Verificación
 encargada al equipo remoto.

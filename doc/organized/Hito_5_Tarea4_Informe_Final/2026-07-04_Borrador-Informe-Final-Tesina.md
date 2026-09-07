@@ -459,6 +459,15 @@ Sobre el corpus real N=120 descrito en §4.1.3 se ejecutó el mismo protocolo (A
 | deepseek-r1:1.5b | 24.83% | 23.94% | −0.90 pp | no |
 | nemotron-mini:4b | 22.59% | 37.12% | **+14.52 pp** | **sí** (p<0.001) |
 
+> **Limitación del corpus N=120 — sesgo uniforme del *recall*.** Las entidades de referencia de
+> `data/benchmark_balanced_120.json` presentan **mojibake** (UTF-8 interpretado como Latin-1): `JosÃ© Bono`
+> por `José Bono`. Afecta a **283 de 1 406 entidades (20,1 %)**, de las cuales **66 (4,7 % del total) resultan
+> irrecuperables** porque su similitud con la forma correcta cae por debajo del umbral de coincidencia difusa
+> (85). En consecuencia, **las cifras de *recall* y F1 de esta tabla están subestimadas en torno a 4,7 puntos
+> porcentuales**. El sesgo es **uniforme entre modelos**, de modo que **no altera el orden relativo ni las
+> conclusiones comparativas**, sí los valores absolutos. Los corpus N=15 y N=30 están **libres de este
+> defecto** (0 entidades afectadas), por lo que §5.1, §5.2 y §5.3.1–5.3.4 no se ven comprometidos.
+
 > **Dos salvedades de procedencia.** (i) La latencia de `gemma4:31b-cloud` **no mide inferencia**: quedó cuantizada por el `--request-delay` introducido para sortear el límite de peticiones del servicio (114 de sus 240 filas registran exactamente 1,02 s). Su F1 es válido; su latencia y sus tokens/s no deben usarse en comparaciones de eficiencia. (ii) Siete filas de `nemotron-mini:4b` tienen `latencia = 0` y `0 tokens/s` porque se re-extrajeron fuera del arnés de lotes tras un fallo de contexto; sus valores de precisión, *recall* y F1 son reales, pero su telemetría no existe.
 
 **ANOVA de una vía (α = 0.05), N=120 por grupo:**
