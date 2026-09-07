@@ -382,10 +382,11 @@ eficiencia en hardware.
 
 ## 3. Antigravity
 
-### 3.1 Sin tareas activas
-- **Estado:** ⬜ SIN ASIGNACIÓN
-- **Instrucciones aplicables:** `repos/ner-llm-entity-benchmark/ANTIGRAVITY.md` → `AGENTS.md`
-- Si se le asignan tareas, declararlas aquí antes de empezar.
+### 3.1 ⏸️ EN ESPERA — Configuración acceso SSH passwordless a eahumada@stream
+- **Estado:** ⏸️ EN ESPERA (2026-09-07 17:32)
+- **Tarea:** Configurar clave SSH y acceso sin contraseña hacia `eahumada@stream` desde este equipo.
+- **Archivos afectados:** `~/.ssh/id_ed25519`, `~/.ssh/id_ed25519.pub`, `~/.ssh/config` (externos al repo) y `CURRENT-TASKS.md`.
+- **Progreso:** Clave ED25519 generada (`~/.ssh/id_ed25519.pub`), `~/.ssh/config` configurado y script de instalación automática creado (`~/.ssh/install_key_to_stream.sh`). Se verificó que el host `stream` (`stream.local` / `192.168.50.135`) se encuentra apagado o inaccesible en la red local (`Host is down`). Listo para completar la copia en cuanto se encienda la máquina.
 
 ---
 
