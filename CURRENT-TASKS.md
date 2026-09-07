@@ -213,6 +213,12 @@ Para **cada tarea** que ejecutes:
 
 ## 3.bis Equipo Remoto (48 GB RAM)
 
+> 🔒 **FASE DE EJECUCIÓN CERRADA (2026-09-07, decisión del autor).** Se conservan los **13 modelos actuales**
+> y **no se lanzan más corridas**. Documento de cierre: [`CIERRE-BENCHMARKS-20260907.md`](./CIERRE-BENCHMARKS-20260907.md).
+> Alcance final: 13 modelos × 2 modos, F = 36.3666, p = 1.2236e-152. Todo lo que queda es documental.
+> Las tareas de §3.bis quedan **cerradas**; solo siguen vivos los dos encargos documentales de
+> `CORRECCION-QWEN3-THINKING-20260906.md §4.6-4.7`, útiles únicamente si el estudio se amplía en el futuro.
+
 > **Encargo completo:** [`PROMPT-EQUIPO-REMOTO-48GB.md`](./PROMPT-EQUIPO-REMOTO-48GB.md)
 > **Motivo:** la máquina de desarrollo tiene 16 GB y varios modelos no caben (ver `FINDINGS.md §F36`).
 > **Protocolo:** el equipo remoto debe **leer este documento antes de empezar**, escribir su entrada al
@@ -510,3 +516,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 12:35 | Claude Code (equipo principal) | Aplicado el rescore extendido (`17c17fc`) a las 3 corridas legacy, que el remoto no cubrió (`e7eb541`). Backup real preservado como `.bak_prefix_ORIGINAL`. Verificado: 0 grupos cambian y `summary == CSV` en las 15 corridas. ANOVA sin recálculo |
 | 2026-09-07 12:40 | Claude Code (equipo principal) | Verificadas las entregas `38b20da` (B1-B4) y `17c17fc` (rescore extendido): las 3 filas de §5.5 reproducen exacto; B1 adopta 0.4876/0.5075. Dos avisos: el `.md` creció +18/−8 líneas (re-verificar 25 pp) y la atribución del B1 a «decisión del autor» es incorrecta. Registrado el test `think=off` de 5 modelos en §3.bis.10 |
 | 2026-09-07 13:20 | Claude Code (equipo principal) | 📌 HALLAZGO FINAL sobre *thinking*: verificado el experimento del remoto (§F44) y añadido `FINDINGS.md §F45`. `gpt-oss` ON congelado (deja de responder sin razonamiento) y `qwen3` OFF son los únicos casos sólidos; los otros 4 son ruido de N=15. **Decisión cerrada: no re-ejecutar.** Reglas para ejecuciones futuras en `RECOMENDACIONES-EJECUCIONES-FUTURAS.md` y anexo `TODO-INFORME-FINAL.md §14`. Instrucciones al remoto en §3.bis.11 |
+| 2026-09-07 13:50 | Claude Code (equipo principal) | 🔒 **CIERRE DE BENCHMARKS** (decisión del autor): se conservan los 13 modelos y se cierra la ejecución. Alcance final 13 modelos × 2 modos, F=36.3666, p=1.2236e-152. Integridad: 0 violaciones, 0 degeneradas, 0 failed, summary==CSV. Documento `CIERRE-BENCHMARKS-20260907.md` y `TODO-INFORME-FINAL.md §15`. Aviso: el «12» del informe es la Tabla 2 (N=15), no el estudio N=120 |

@@ -568,3 +568,36 @@ eje de inconsistencia (unos modelos con razonamiento y otros sin él) apoyado en
       anterior al fix `743054d` los ejecutó con el razonamiento **activo por defecto**.
 
 - [ ] Si se amplía el estudio, medir el régimen **a N=120**, no a N=15.
+
+---
+
+## 15. 🔒 CIERRE DE BENCHMARKS (2026-09-07)
+
+**Decisión del autor:** se conservan los **13 modelos actuales** y **se cierra la fase de ejecución**. No se
+lanzan más corridas. Documento de cierre: [`CIERRE-BENCHMARKS-20260907.md`](./CIERRE-BENCHMARKS-20260907.md).
+
+- **Alcance definitivo del estudio N=120:** **13 modelos × 2 modos**, F = 36.3666, p = 1.2236e-152
+  (`results/ANALISIS_CONJUNTO_20260907/`).
+- **Integridad:** convención de puntuación única · 0 violaciones de `F1 ≤ (P+R)/2` · 0 filas degeneradas ·
+  0 `failed` · `summary` == `CSV` en todas las corridas.
+- **`sonct988/gemma4-26b` eliminado del estudio** (commit `33fbe7d`): cuantización *custom* de un usuario, no
+  citable ni reproducible. Sin rastro en el árbol de trabajo.
+
+### 15.1 ⚠️ El «12» del informe y el «13» del ANOVA no son el mismo conjunto
+
+Los 12 modelos que declaran §1.4, §3.2 y §5.1 corresponden a la **Tabla 2 (N=15, modo `entities`,
+12 modelos en 13 configuraciones)**. El estudio N=120 con KB RAG tiene **13 modelos**. Son conjuntos
+distintos y hay que decirlo en el texto: un revisor que lea «12» y luego vea un ANOVA de 13 asumirá que falta
+un modelo.
+
+### 15.2 Pendiente documental (ninguna ejecución)
+
+- [ ] Aprobar las sustituciones **A1-A3** (`remote_48g/DECISIONES-PENDIENTES-AUTOR.md`).
+- [ ] **Tabla 2:** retirar o marcar `gemini-3.1-flash-lite` y `nuextract:latest` (fuera del estudio), aplicar
+      A1 (`gemma4:31b` → 0.6912) y resolver las dos filas con cifras idénticas (`gemma4:31b` y
+      `gemma4:31b-mlx`, ambas 67.83 %).
+- [ ] **Declarar las dos salvedades de datos:** la latencia de `gemma4:31b-cloud` no mide inferencia (está
+      cuantizada por el `--request-delay`) y las 7 filas de `nemotron-mini:4b` con telemetría en cero.
+- [ ] **Renombrado terminológico global** (§13): la condición de disparo **ya se cumple**.
+- [ ] **Cierre de formato del `.docx`** (Claude Desktop §2.1-2.5), ahora desbloqueado. Verificar el límite de
+      **25 páginas**: las correcciones B1-B4 añadieron texto.
