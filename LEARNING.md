@@ -427,3 +427,14 @@ funciona, la otra un fallo encubierto.
 > **Aplicación:** una tasa de eventos no es un diagnóstico. Antes de equiparar dos síntomas por su
 > frecuencia, comprobad **qué consecuencia tiene cada uno sobre el resultado**. Aquí bastaba cruzar
 > `parse_method` con `recall` — dos columnas que ya estaban en los datos.
+
+### L37. Terminología: «variantes de prompts», nunca «ablación»
+**Contexto.** El estudio que cruza idioma (inglés/español) × estrategia (zero-shot/few-shot) sobre
+`gemma4:latest` se denominó en borradores «estudio de ablación». El autor fijó el término correcto.
+
+**Regla.** En informes, reportes, código y documentación usar **«Test de Variación de los prompts»** o
+**«Análisis de Variantes de Prompts»**. **No** usar «ablación» ni «estudio de ablación», aunque el diseño
+factorial 2×2 reciba ese nombre en parte de la literatura de ML.
+
+> **Aplicación:** revisar toda mención antes de publicar; el término preferido del autor prevalece sobre la
+> convención de la literatura.

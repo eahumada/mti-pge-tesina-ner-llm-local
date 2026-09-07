@@ -723,3 +723,30 @@ retirar `minimax-m3` (F38, L28). Los datos crudos en `results/` permanecen intac
 > **Nota de método.** La alerta que originó esta revisión fue **engañosa**: se señaló la tasa de fallback
 > como anomalía equiparable a la de `gemma4:12b-mlx`, sin comprobar antes el indicador que de verdad
 > discrimina —si el respaldo rescata contenido—. Ver `LEARNING.md §L36`.
+
+### F44. El efecto del modo *thinking* es específico de cada modelo, no uniforme
+**Evidencia (prueba controlada, 15 registros, mismo pipeline con RAG, scorer corregido, think ON vs OFF):**
+
+| Modelo | Cond | F1 ON | F1 OFF | ΔF1 | Veloc. OFF |
+|:---|:---|--:|--:|--:|--:|
+| `deepseek-r1:1.5b` | baseline | 0.294 | 0.294 | ±0 | ×2.8 |
+| `deepseek-r1:1.5b` | kb_rag | 0.345 | 0.345 | ±0 | ×3.7 |
+| `gpt-oss:20b` | baseline | 0.419 | 0.301 | **−0.118** | ×1.6 |
+| `gpt-oss:20b` | kb_rag | 0.283 | 0.155 | **−0.128** | ×3.0 |
+| `sonct988/gemma4-26b` | baseline | 0.495 | 0.516 | +0.021 | ×0.3 |
+| `sonct988/gemma4-26b` | kb_rag | 0.529 | 0.539 | +0.010 | ×1.6 |
+
+**Hallazgo.** Apagar el *thinking* **no es una mejora universal**:
+- `qwen3:8b`: think OFF **sube** F1 (~+4 pp) y ~10× más rápido → OFF.
+- `deepseek-r1:1.5b`: think OFF **F1 idéntico**, ~3× más rápido → OFF por velocidad, calidad intacta.
+- `sonct988`: think OFF **marginalmente mejor** (+0.01/+0.02).
+- **`gpt-oss:20b`: think OFF EMPEORA fuerte (−0.12 F1). El thinking le AYUDA.**
+
+**Decisión del autor (firme):** **`gpt-oss:20b` se deja con think ON, congelado; su corrida oficial
+(`results/excluidos_n120_REMOTO`) no se re-ejecuta ni se toca.**
+
+> **Regla operativa.** No generalizar el ajuste de *thinking* entre modelos. Antes de apagarlo en un modelo
+> con capacidad `thinking`, medir F1 ON vs OFF en una muestra con el pipeline real; sólo apagarlo si el ΔF1
+> es ≥0 (o nulo con ganancia de velocidad). Modelos donde el razonamiento es parte del mecanismo de respuesta
+> (p. ej. `gpt-oss:20b`) **pierden calidad** al desactivarlo. Ver `LEARNING.md §L37` (terminología) y el
+> reporte `remote_48g/` de la prueba think ON/OFF.
