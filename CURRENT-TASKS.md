@@ -74,6 +74,22 @@ Para **cada tarea** que ejecutes:
 - **Nota:** los `detailed_results.json` legacy están en `.gitignore` → corregidos en local, no versionados.
 - **ANOVA:** no requiere recálculo; los valores no se movieron.
 
+### 1.4 ▶️ EN CURSO — Revisión del informe pedida por el profesor guía (2026-09-07)
+- **Origen:** correo del profesor guía con cuatro reparos: bloques en blanco y saltos de página, ficha del
+  estudiante en portada, poco desarrollo general y marco conceptual pobre sin comparación de alternativas.
+- **Hecho en el `.md` canónico:** cabecera conforme a plantilla (ficha fuera) · 12 separadores eliminados ·
+  resumen 270→201 palabras (límite 200) · capítulo 2 reescrito 697→1631 con 5 familias de técnicas comparadas
+  y criterios **C1-C5** · capítulo 3 consolidado 6→4 secciones abriendo con la justificación frente a esos
+  criterios · capítulo 6 consolidado 5→2 · §5.6 consolidada 7→3 · introducción 645→1117 con enfoque de
+  solución y metodología de validación · §5.3 reescrita 125→382 palabras con los datos nuevos de N=30.
+- **Verificación de los reparos:** 1, 2 y 4 ✅ cumplidos; el 3 **parcialmente** — quedan secciones cortas
+  (§4.5 con 76 palabras, §5.5 con 92, §5.4 con 104).
+- **Extensión:** cuerpo ≈ **22,3 páginas de texto** frente al límite de **25 sin anexos**
+  (`tesinas-finales-2026.pdf`). **Los anexos no computan** y tienen hasta 25 páginas propias.
+- **Fuente de las reglas:** `plantilla_final-2026.docx` (resumen ≤200 palabras, cabecera, estilos) y
+  `tesinas-finales-2026.pdf` (25 páginas, introducción ≤3). Calibrado contra las tesinas de ejemplo del MTI.
+- **Handoff:** `PROMPT-CLAUDE-DESKTOP-PROFESOR-20260907.md` y §2.8.
+
 ### 1.1 🔒 CERRADA — Benchmark N=120 (7 modelos locales)
 > **Cerrada por decisión del autor (2026-09-06):** todo lo pendiente pasa al equipo remoto para no duplicar
 > esfuerzo. La máquina local queda libre. Sus grupos completos y válidos (`mistral-nemo`) siguen siendo
@@ -315,6 +331,9 @@ Para **cada tarea** que ejecutes:
 > iniciar cada tarea, actualizarla al terminar y **volver a leerlo** por si otro agente escribió mientras.
 
 ### 3.bis.0 🔴 URGENTE — Re-corrida de `gemma4:12b-mlx` (SUBIR DE PRIORIDAD)
+> ✅ **Cerrada (nota de Claude Code, 2026-09-07 17:00; no se altera el texto original).** Completada el
+> 2026-09-06: 120+120, 0 `failed`, F1 **0,5618 / 0,5846**. Es la fuente oficial del modelo en el estudio.
+
 - **Estado:** 🔴 PEDIDO · **Encargo:** [`URGENTE-REMOTO-RECORRIDA-20260906.md`](./URGENTE-REMOTO-RECORRIDA-20260906.md)
 - **Por qué sube:** es el **único modelo del barrido cuyos datos hay que descartar íntegros**, y bloquea el
   ANOVA definitivo. Estaba encolado tras P4 y `gpt-oss`; se pide adelantarlo.
@@ -431,6 +450,10 @@ Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **Invest
 > rechazo de infraestructura (latencia 0) de que el arnés pierda la respuesta (latencia alta, `content` vacío).
 
 ### 3.bis.8 ▶️ EN CURSO — re-corridas de modelos afectados por bug thinking
+> ✅ **Cerrada (nota de Claude Code, 2026-09-07 17:00; no se altera el texto original).** Ambas re-corridas
+> terminaron: `gemma4:12b-mlx` limpio y `qwen3:8b` sustituido por la corrida `think=false`
+> (`qwen3_nothink_n120_REMOTO`, F1 0,4821 / 0,5146), que es la fuente oficial.
+
 - **`gemma4:12b-mlx` ✅ LIMPIO:** `results/afectados_thinking_n120_REMOTO/` — 120+120, 0 failed,
   F1 0.5618/0.5929 (reemplaza P3 inválido 0.27/0.11).
 - **`qwen3:8b` ▶️ RE-CORRIDA LIMPIA:** `results/qwen3_clean_n120_REMOTO/` (dir fresco, sin reinicios, workers 6).
@@ -451,6 +474,10 @@ Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **Invest
   `qwen3:14b/32b/latest`; enumerar modelos con capacidad `thinking`; no tocar `real_mixed_64`.
 
 ### 3.bis.10 ▶️ EN CURSO — Test `think=off` sobre 5 modelos + verificación de las entregas B1-B4
+> ✅ **Cerrada (nota de Claude Code, 2026-09-07 17:00).** El experimento concluyó y su resultado está en
+> `FINDINGS.md §F44` y **§F45**: efecto específico de cada modelo, `gpt-oss` se congela con thinking ON y los
+> otros cuatro no se re-ejecutan por ser ruido de N=15.
+
 - **Confirmado por el autor (2026-09-07):** el remoto está evaluando muestras de **5 modelos con
   `thinking=off`**. Se corresponde con la modificación sin commitear de `src/providers/ollama_provider.py`
   (`# TEST think-off 2026-09-07`): `gemma4:31b`, `gemma4:latest`, `deepseek-r1:1.5b`, `gpt-oss:20b` y
@@ -495,7 +522,16 @@ Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **Invest
 - **Pendiente vuestro:** evaluar `qwen3:14b/32b/latest`, **enumerar los modelos con capacidad `thinking`** y
   el censo de modelos con capacidad `thinking`.
 
-### 3.bis.12 🔴 REABIERTA — Re-ejecutar la corrida N=30 (única excepción al cierre)
+### 3.bis.12 ✅ COMPLETADA — Re-ejecutar la corrida N=30 (2026-09-07)
+- **Entregada y verificada:** `results/n30_rerun_REMOTO/` — protocolo correcto, **30/30 registros únicos por
+  modelo, 0 `failed`, 0 `recall=0`, 0 violaciones aritméticas**. `gemma4:31b-mlx` **80,57 %** (P 74,17 · R 90,72)
+  y `gemma4:31b` **78,55 %** (P 73,34 · R 88,28). ANOVA recalculado **F=0,2235 · p=0,6382** (misma conclusión
+  que el F=0,141 previo: diferencia no significativa). Sensibilidad: 0 registros atípicos.
+- **Resuelve la duda de fondo:** frente al 79,03 % de julio, **la precisión coincide hasta el cuarto decimal**
+  y el F1 difiere en <0,5 pp → la cifra de julio queda **validada además de reemplazada**.
+- **Incorporado al informe:** §5.3 reescrita; cinco referencias a 79,03 % actualizadas.
+
+#### Detalle original del encargo
 - **Encargo completo:** [`ENCARGO-REMOTO-N30-20260907.md`](./ENCARGO-REMOTO-N30-20260907.md)
 - **Decisión del autor (2026-09-07):** re-ejecutar. **Excepción explícita al cierre de benchmarks**; se reabre
   la ejecución **solo para esta corrida**, ninguna otra.
@@ -513,7 +549,18 @@ Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **Invest
 - **Prohibido:** re-ejecutar cualquier otra corrida, tocar `ANALISIS_CONJUNTO_20260907/` o las corridas
   N=120/N=15, y borrar `benchmark_augmented_30.log`.
 
-### 3.bis.13 🔬 REABIERTA — Diagnosticar `gpt-oss:20b` y rescatar los datos de N=30
+### 3.bis.13 ▶️ EN CURSO — Re-ejecución de `gpt-oss:20b` (diagnóstico ya cerrado)
+- **Diagnóstico COMPLETADO** (`remote_48g/DIAGNOSTICO-GPTOSS-20260907.md`): descartó el bucle de repetición
+  (0/5) y apuntó al agotamiento de `num_predict`. **La hipótesis del equipo principal era incorrecta**; la
+  causa real es truncamiento por presupuesto de tokens.
+- **Re-ejecución con `num_predict=4096` — 201/240 al 2026-09-07 16:30.** Verificado: **baseline 120/120 con
+  F1 0,5239** (antes 0,4384), `recall=0` **6** (antes 27), **200 de 201 filas en `direct_json`** frente a 67
+  `fallback` en la corrida original, **0 avisos de truncado**. El arreglo funciona.
+- **`kb_rag` 81/120 — cifra provisional, NO citar** (lección de `qwen3`: 0,5147 parcial → 0,4904 completo).
+- **Al cerrar:** rehacer el ANOVA conjunto y actualizar tabla de §5.3.5, §6.1, §6.2 y conclusión 6 del informe.
+- **Parte A del encargo (rescate de N=30 en la máquina remota):** superada — la re-corrida se completó igualmente.
+
+#### Detalle original del encargo
 - **Encargo completo:** [`ENCARGO-REMOTO-GPTOSS-20260907.md`](./ENCARGO-REMOTO-GPTOSS-20260907.md)
 - **Parte A — antes de re-ejecutar N=30:** buscar en la máquina remota si sobreviven los datos por registro
   de la corrida sobre `data/kleptotrace_augmented_30.json`. En la de desarrollo se perdieron por
@@ -535,7 +582,10 @@ Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **Invest
   se confirma causa corregible, lo correcto es re-ejecutar `gpt-oss:20b` completo — **y esa decisión la toma
   el autor**.
 
-### 3.bis.9 🔮 TAREA FUTURA — corregir mojibake del gold N=120 y re-inferir el estudio
+### 3.bis.14 🔮 TAREA FUTURA — corregir mojibake del gold N=120 y re-inferir el estudio
+> **Nota (Claude Code, 2026-09-07 17:00):** esta entrada se registró como «§3.bis.9», número ya ocupado por la
+> corrección del hallazgo qwen3. Se renumera a **§3.bis.14** por ser posterior; no se altera su contenido.
+> Matiz importante añadido después: el sesgo **no es uniforme** entre modelos (ver `FINDINGS.md §F48`).
 - **Estado:** ⬜ FUTURA · **Asignada al:** Equipo Remoto 48 GB (NVRAM unificada) · **Decisión del autor (2026-09-07)**
 - **Motivo:** el ground truth de `data/benchmark_balanced_120.json` tiene **mojibake** (UTF-8 leído como
   Latin-1): 283/1406 entidades (20 %), **66 (4.7 %) irrecuperables** → recall subestimado en **todos** los
@@ -677,3 +727,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 18:10 | Claude Code (equipo principal) | Hallazgo de codificación elevado al informe: **conclusión 7** en §7.1 y **Anexo H** completo (H.1-H.6: qué es el mojibake a nivel de bytes, alcance medido, por qué la lectura inicial era incorrecta, evidencia diferencial por modelo, cómo repararlo y cuatro implicaciones para evaluar NER). Detectado de paso que la **corrección de la convención de puntuación no estaba documentada** en el informe pese a afectar a todas las cifras: añadida a §4.4 junto con el umbral de cotejo difuso. §2.7 ampliada a cuatro cambios |
 | 2026-09-07 19:10 | Claude Code (equipo principal) | Atendidos los 4 reparos del profesor guía en el `.md`: ficha fuera, 12 separadores eliminados, resumen a 201 palabras, capítulo 2 reescrito con comparación de familias y criterios C1-C5, capítulo 3 justificando la elección frente a ellos, capítulos 3/6 y §5.6 consolidados, introducción desarrollada. Encargo a Desktop en `PROMPT-CLAUDE-DESKTOP-PROFESOR-20260907.md` y §2.8, con el Anexo G (uso de IA) declarado INTOCABLE y la medición real de páginas como tarea crítica |
 | 2026-09-07 16:45 | Claude Code (equipo principal) | Actualizado el encargo a Claude Desktop (`PROMPT-CLAUDE-DESKTOP-PROFESOR-20260907.md`, §2.8): separado en tanda **estructural** —firme, propagable ya— y tanda **de datos** —pendiente de que `gpt-oss` cierre 201/240—. Incorporada la re-corrida N=30 y reescrita §5.3. Instrucción explícita de **no congelar versión** hasta la segunda pasada |
+| 2026-09-07 17:00 | Claude Code (equipo principal) | Puesta al día de CURRENT-TASKS: §3.bis.12 (N=30) **COMPLETADA** y verificada · §3.bis.13 pasa a re-ejecución de `gpt-oss` en curso (201/240, baseline 0.4384→0.5239, 1 `fallback` de 201) · notas de cierre en §3.bis.0, §3.bis.8 y §3.bis.10 sin alterar su texto original · resuelta la **colisión de numeración**: el §3.bis.9 del mojibake pasa a **§3.bis.14** · declarada §1.4, la revisión pedida por el profesor guía |
