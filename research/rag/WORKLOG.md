@@ -465,3 +465,46 @@ contienen las cifras nuevas. Versión `_v2` congelada en `doc/versions/informe_f
 
 **Observación para el `.md` canónico:** el «Hallazgo 4» de §5.2 conserva la lectura antigua (+7.4 % por
 localización), que contradice la tabla nueva y el párrafo de interacción de la misma sección.
+
+---
+
+## 2026-09-07 (Claude Desktop): tanda estructural — respuesta al profesor guía
+
+Ejecutado el encargo `PROMPT-CLAUDE-DESKTOP-PROFESOR-20260907.md` (tarea 2.8, que además cubre la 2.7).
+
+**Método.** El `.md` canónico acumulaba +212/−165 líneas y reescribía capítulos completos, de modo que el
+parcheo párrafo a párrafo dejaba de ser fiable. Se **reconstruyó el cuerpo del `.docx` desde el `.md`** con un
+renderizador propio que emite sobre los estilos de la plantilla (`heading1/2/3`, `p1a`, `table caption`,
+`Table`, `programcode`, `referenceitem`, `author`, `address`, `e-mail`). **No se usó pandoc**: se conservan
+`styles.xml`, encabezados, pies, márgenes y `sectPr`, y se reaplican la numeración literal con `numId=0`, las
+leyendas sobre cada tabla, los anchos de columna proporcionales al contenido y la separación de los hallazgos
+en párrafos independientes. Las referencias cruzadas «la Tabla N» se realinearon con la numeración real.
+
+**Previo indispensable.** Para que el `.docx` sea reflejo del `.md`, se llevaron primero al `.md` los anexos
+**D, E, F y G**, que vivían solo en el `.docx` (respaldo: `.bak_pre_anexosDEFG_20260907`). Los anexos quedan
+A–H en orden, con la **G íntegra** —declaración de uso de IA— y la H de codificación después.
+
+**Resultado medido.** Cuerpo de **23 páginas** contra el límite de 25; anexos desde la 24; 33 páginas totales;
+**cero páginas en blanco**. Los cuatro reparos del profesor quedan atendidos en los tres `.docx`: sin ficha del
+estudiante, sin saltos de página entre capítulos, sin bloques en blanco y con los capítulos 2, 3 y 6 y §5.6
+desarrollados. Incorporadas también la re-corrida N=30 y todo el bloque de codificación (§4.4, conclusión 7,
+§7.2 punto 7 y Anexo H).
+
+**No se congeló versión**, según la instrucción: queda pendiente la segunda tanda, acotada a cifras, cuando
+cierre la re-ejecución de `gpt-oss:20b` (afectará a §5.3.5, §6.1, §6.2 y la conclusión 6).
+
+### 2026-09-07 20:05 — Diagramas de texto convertidos en tablas de Word
+
+Al reconstruir el `.docx` desde el `.md`, los diagramas de texto volvieron a emitirse como bloques
+`programcode`, contra la regla del proyecto: **un diagrama va como tabla de Word**, nunca como cuadro de
+texto, porque el arte ASCII se descuadra con tipografía proporcional. Se corrigió **primero en el `.md`**
+(respaldo `.bak_pre_diagramas_20260907`) y luego se reconstruyeron los tres `.docx`.
+
+Convertidos: la arquitectura de cinco capas de §3.2 (Capa / Módulo / Detalle técnico), la estructura canónica
+del prompt *few-shot* de §4.3.1 (Posición / Contenido), los dos flujos RAG de §5.6 (Paso / Acción / Resultado),
+con el contexto de dominio inyectado como tabla aparte (Regla / Contenido), y el árbol del repositorio del
+Anexo A (Ruta / Descripción, con la jerarquía indentada). Las tablas pasan de 29 a 35 y no queda arte ASCII en
+ninguno de los tres documentos. Los bloques de código que permanecen son código real: la interfaz
+`LLMProvider`, los prompts de generación, los tres ejemplos *few-shot* y las invocaciones CLI.
+
+Cuerpo re-medido: **23 páginas de 25**, sin páginas en blanco.
