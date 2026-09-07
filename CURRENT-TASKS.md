@@ -199,6 +199,25 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.17 🔴 VIGENTE — Propagación con reglas permanentes de Word y PDF
+- **Encargo:** [`PROMPT-CLAUDE-DESKTOP-PROPAGACION-20260907.md`](./PROMPT-CLAUDE-DESKTOP-PROPAGACION-20260907.md),
+  sección «Instrucciones permanentes para Word y PDF». Registradas también en `CLAUDE.md`.
+- **Resumen y abstract:** fundidos, **sincronizados**, ≤200 palabras cada uno y **en la página inicial** del
+  `.docx` y del PDF. Espacio entre título y párrafo reducido **por estilo** (`abstract`, `before`), no
+  borrando líneas. Toda corrección de fondo entra en ambos **en la misma pasada**.
+- **Fuentes originales:** cada bloque con su estilo de plantilla —`abstract`, `heading1-4`, `p1a` solo para el
+  primer párrafo tras título, `table caption`, `programcode`—. Si al reconstruir un bloque pierde el estilo,
+  restituirlo antes de congelar.
+- **25 páginas exactas**, recortando **por estilo** (espaciados, interlineado, código hasta 7 pt).
+  **No suprimir texto** sin autorización. Los anexos no computan.
+- **Anexo B:** *prompts* sin saltos de línea duros y con cuerpo reducido; corregir **primero en el `.md`**.
+- **Anexos:** recortar espacios y consolidar párrafos **sin sacrificar contenido** — es material de replicación.
+- **Nuevo en el `.md` (ya aplicado):** §2.4 explica ANOVA, Tukey HSD, intervalos de confianza y análisis de
+  sensibilidad, que se usaban sin definir; §4.4 desarrolla precisión, exhaustividad, F1 —con el porqué de la
+  media armónica—, tasa de alucinación, latencia y Tok/s/B; y §5.5 **deriva el coste por artículo y lo declara
+  estimación**, no medición.
+- **Los cuatro reparos del profesor siguen vigentes**: ninguna compactación puede deshacerlos.
+
 ### 2.16 🔴 VIGENTE — Propagar la corrección de métricas a Word y PDF
 - **Encargo:** [`PROMPT-CLAUDE-DESKTOP-PROPAGACION-20260907.md`](./PROMPT-CLAUDE-DESKTOP-PROPAGACION-20260907.md)
 - **Qué se corrigió:** el informe describía el emparejamiento como «similitud de tokens». **Es falso.** El
@@ -1060,3 +1079,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 23:25 | Claude Desktop | §2.14: **PDF exportado** con LibreOffice — **25 páginas exactas**, formato íntegro. La exportación destapó tres defectos del `.docx` (leyendas duplicadas en los anexos D/E, colofón duplicado en el Anexo D y colofón varado con fecha «Julio 2026»); corregidos primero en el `.md` y propagados. `_v6` congelada como entrega |
 | 2026-09-08 00:05 | Claude Desktop | §2.15: **resumen y abstract fundidos** —el abstract estaba congelado desde julio y omitía el hallazgo central del RAG—. Sincronizados en 199 y 183 palabras, estilo `abstract` restituido, espaciado del encabezado compactado, ambos en la página inicial. `_v7` congelada |
 | 2026-09-07 20:35 | Claude Code (equipo principal) | 🔴 §2.16: corregida la descripción de la métrica de emparejamiento —era «similitud de tokens», es **distancia de Indel normalizada** (`fuzz.ratio`)— y declarados sus dos límites, que sesgan a la baja. Encargo de propagación a **Word y PDF** en `PROMPT-CLAUDE-DESKTOP-PROPAGACION-20260907.md`. Auditoría y dos subagentes en curso sobre el resto de enunciados técnicos. ⚠️ **Atribución:** mi commit `bdb3337` arrastró las versiones `_v6` y `_v7` de Claude Desktop bajo un mensaje que solo hablaba de la métrica; no se perdió nada, pero el historial las atribuye mal |
+| 2026-09-07 21:30 | Claude Code (equipo principal) | §2.17: registradas en `CLAUDE.md` y en el encargo las **reglas permanentes de Word y PDF** —resumen y abstract fundidos, sincronizados y en la primera página; recorte de espacios **por estilo** y nunca por contenido; 25 páginas exactas; Anexo B sin saltos duros; anexos consolidados sin perder contenido—. En el `.md`: §2.4 explica el aparato estadístico, §4.4 desarrolla las métricas y §5.5 deriva el coste **declarándolo estimación** |

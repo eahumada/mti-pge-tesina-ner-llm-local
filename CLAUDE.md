@@ -25,6 +25,20 @@ cualquier corrección se aplica primero al Markdown canónico y luego se propaga
 - Debe existir siempre una copia del `.docx` canónico **en la raíz** del proyecto.
 - **Restricción institucional:** el cuerpo del informe no puede exceder **25 páginas**, excluyendo anexos.
   Toda corrección debe ser neutra en extensión o reducirla; verificar el conteo tras cada cambio.
+- **Resumen y abstract van fundidos, sincronizados y en la primera página.** Deben decir exactamente lo mismo
+  en ambos idiomas, seguir el orden que fija la plantilla —contexto y problema, propuesta y objetivos, método
+  de validación, resultados e impacto— y no exceder las **200 palabras** cada uno. Toda corrección de fondo en
+  uno se replica en el otro **en el mismo commit**; si divergen, el documento deja de ser coherente para un
+  lector que compare ambas versiones. En el `.docx` y en el PDF los dos bloques han de caber en la **página
+  inicial**, con el espacio entre el título y su párrafo reducido a nivel de estilo.
+- **Los espacios en blanco se recortan por estilo, nunca por contenido.** Ante un desbordamiento de página, se
+  ajustan los espaciados de `Heading`, `abstract` y `table caption`, el interlineado y el cuerpo de letra de
+  los bloques de código —hasta 7 pt si hace falta—, y solo entonces se considera tocar el texto. Suprimir
+  párrafos para ganar espacio requiere autorización expresa del autor.
+- **Las cifras económicas son estimaciones y deben declararse como tales.** El coste por artículo del sistema
+  local no mide cómputo sino infraestructura amortizada, y no varía entre modelos; el de la revisión manual
+  procede de valorar el tiempo de un analista. Ninguno es una medición, y presentarlos sin ese matiz es
+  atacable en la defensa.
 - **Nada de arte ASCII en los documentos.** Un diagrama dibujado con caracteres (`┌─┐`, `│`, `└┘`) se
   descuadra en Word, porque la tipografía es proporcional y no monoespaciada. Todo esquema va como **tabla de
   Word**, y todo gráfico como **imagen real** —generada electrónicamente, legible y a 300 puntos/cm como pide

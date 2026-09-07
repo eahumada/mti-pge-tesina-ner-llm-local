@@ -54,3 +54,39 @@ y deja las copias de ambos en la raíz del proyecto.
 Mi commit `bdb3337` arrastró, por un `git add -A` demasiado amplio, tus versiones **`_v6` y `_v7`** —las
 primeras que incluyen PDF— bajo un mensaje que solo hablaba de la corrección de la métrica. No se perdió nada,
 pero el historial atribuye mal ese trabajo. Queda constancia aquí y en el registro de `CURRENT-TASKS`.
+
+---
+
+## Instrucciones permanentes para Word y PDF
+
+Estas reglas quedan registradas también en `CLAUDE.md` y rigen para toda propagación futura, no solo para esta.
+
+**Resumen y abstract.** Van **fundidos, sincronizados y en la página inicial**, tanto del `.docx` como del PDF.
+Deben decir exactamente lo mismo en ambos idiomas y no pasar de **200 palabras** cada uno. El espacio entre el
+título y su párrafo se reduce **a nivel de estilo** —el espaciado `before` del estilo `abstract`—, nunca
+eliminando líneas del texto. Si una corrección de fondo entra en uno, entra en el otro en la misma pasada.
+
+**Fuentes originales.** Cada bloque debe llevar el estilo que le corresponde de la plantilla: `abstract` para
+resumen y abstract —no `p1a`, que trae otro cuerpo y otras sangrías—, `heading1` a `heading4` para los títulos,
+`p1a` solo para el primer párrafo tras un título, `Normal` para el resto, `table caption` para las leyendas y
+`programcode` para el código. Si al reconstruir un bloque pierde su estilo, restitúyelo antes de congelar.
+
+**Espacios en blanco y paginación.** El objetivo son **25 páginas exactas**. Se alcanza recortando **por
+estilo**: espaciados de `Heading 1`, `Heading 2`, `Heading 3`, `abstract` y `table caption`, interlineado, y
+cuerpo de letra de los bloques de código, que pueden bajar a 7 pt. **No se suprime texto para ganar espacio**
+sin autorización expresa. Los anexos no computan para el límite de 25 páginas del cuerpo.
+
+**Anexo B.** Los *prompts* no deben arrastrar saltos de línea duros del formato de ancho fijo: en Word parten
+las frases a media palabra. Cada campo va en una sola línea y con cuerpo de letra reducido, y la corrección se
+hace **primero en el `.md`** para que la siguiente reconstrucción no la deshaga.
+
+**Anexos.** Se recortan sus espacios en blanco y se consolidan párrafos, **sin sacrificar contenido**: son el
+material que permite replicar el trabajo, que es justo lo que el profesor guía pide conservar.
+
+**PDF.** Es parte de la entrega. La verificación de paginación se hace **sobre el PDF**, no sobre el `.docx`, y
+en `VERSIONES.md` se registran los SHA-256 de ambos.
+
+**Los cuatro reparos del profesor guía siguen vigentes** en cada propagación: sin bloques en blanco ni saltos
+de página al empezar capítulo, sin ficha del estudiante, con desarrollo suficiente en cada sección y con un
+marco conceptual que compara alternativas antes de que el capítulo 3 elija entre ellas. Ninguna compactación
+puede deshacerlos.
