@@ -39,6 +39,12 @@ cualquier corrección se aplica primero al Markdown canónico y luego se propaga
   local no mide cómputo sino infraestructura amortizada, y no varía entre modelos; el de la revisión manual
   procede de valorar el tiempo de un analista. Ninguno es una medición, y presentarlos sin ese matiz es
   atacable en la defensa.
+- **Sobriedad tipográfica en el cuerpo del texto.** El guion largo y la negrita se reservan para lo excepcional.
+  Un inciso se marca con comas o paréntesis, no con guiones largos; y la negrita se limita a los términos que
+  se definen por primera vez y a las cifras que la tabla no recoge, nunca a frases enteras ni a la conclusión
+  de un párrafo. Un texto con una negrita por párrafo deja de destacar nada y delata redacción asistida. Como
+  referencia, el cuerpo del informe pasó de 113 guiones largos y 164 negritas a 19 y 108 sin perder una sola
+  palabra. La regla rige en el `.md`, que es la fuente, y por tanto en el `.docx` y el PDF que derivan de él.
 - **Nada de arte ASCII en los documentos.** Un diagrama dibujado con caracteres (`┌─┐`, `│`, `└┘`) se
   descuadra en Word, porque la tipografía es proporcional y no monoespaciada. Todo esquema va como **tabla de
   Word**, y todo gráfico como **imagen real** —generada electrónicamente, legible y a 300 puntos/cm como pide

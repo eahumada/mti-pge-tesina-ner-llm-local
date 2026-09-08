@@ -90,3 +90,12 @@ en `VERSIONES.md` se registran los SHA-256 de ambos.
 de página al empezar capítulo, sin ficha del estudiante, con desarrollo suficiente en cada sección y con un
 marco conceptual que compara alternativas antes de que el capítulo 3 elija entre ellas. Ninguna compactación
 puede deshacerlos.
+
+**Sobriedad tipográfica.** En el cuerpo de las descripciones, el guion largo y la negrita quedan reservados
+para lo excepcional. Los incisos se marcan con comas o paréntesis, no con guiones largos, y la negrita se
+limita a los términos que se definen por primera vez y a las cifras que la tabla no recoge; nunca a frases
+enteras ni a la conclusión de un párrafo. Una negrita por párrafo no destaca nada y delata redacción asistida.
+El Markdown ya viene depurado —el cuerpo pasó de 113 guiones largos y 164 negritas a 19 y 108, sin perder una
+palabra—, así que al reconstruir **no reintroduzcas resaltes**: si un bloque pierde su estilo y lo restituyes,
+restituye el estilo, no el énfasis. Esta regla no alcanza a las tablas, donde la negrita sigue marcando el
+mejor valor de cada columna, ni a los encabezados.
