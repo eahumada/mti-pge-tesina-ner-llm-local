@@ -39,6 +39,15 @@ cualquier corrección se aplica primero al Markdown canónico y luego se propaga
   local no mide cómputo sino infraestructura amortizada, y no varía entre modelos; el de la revisión manual
   procede de valorar el tiempo de un analista. Ninguno es una medición, y presentarlos sin ese matiz es
   atacable en la defensa.
+- **Sin emojis ni marcas de agua en los entregables.** El informe —su Markdown canónico, los tres `.docx` y el
+  PDF— no lleva emojis ni pictogramas en ninguna parte: ni en el texto, ni en los encabezados, ni dentro de las
+  tablas, donde a veces se cuelan como indicadores de estado (`✅`, `❌`, `⚠️`). Se sustituyen por palabras: «sí»,
+  «no», «parcial». Tampoco lleva marcas de agua, sellos de borrador ni fondos: el documento se entrega limpio,
+  con el encabezado y el pie que define `plantilla_final-2026.docx` y nada más. Al reconstruir el `.docx` hay
+  que comprobar que el proceso no ha introducido ninguno de los dos.
+  *Esta regla alcanza solo a los entregables.* Los documentos de coordinación y de trabajo —`CURRENT-TASKS.md`,
+  `FINDINGS.md`, `LEARNING.md` y los encargos— sí usan emojis como marcadores de estado, y ahí son útiles: no
+  se retiran.
 - **Sobriedad tipográfica en el cuerpo del texto.** El guion largo y la negrita se reservan para lo excepcional.
   Un inciso se marca con comas o paréntesis, no con guiones largos; y la negrita se limita a los términos que
   se definen por primera vez y a las cifras que la tabla no recoge, nunca a frases enteras ni a la conclusión
@@ -48,6 +57,12 @@ cualquier corrección se aplica primero al Markdown canónico y luego se propaga
   el `.docx` y el PDF: quien los produce cuenta guiones y resaltes del cuerpo del documento generado y los
   compara con los de la fuente, porque el renderizador no debe añadir énfasis al restituir estilos ni al
   aplicar la plantilla.
+- **Ni emojis ni marcas de agua.** Los documentos del proyecto, empezando por el informe y sus derivados, no
+  llevan emojis ni pictogramas decorativos, ni en el cuerpo ni en las tablas: donde un símbolo hace de valor
+  (una marca de verificación por «Local», una cruz por «Cloud») se escribe la palabra, que es lo que un
+  tribunal lee y lo que sobrevive a cualquier tipografía. Tampoco se añaden marcas de agua, sellos de borrador
+  ni leyendas superpuestas de ninguna clase. Las flechas tipográficas (`→`) usadas para describir un flujo no
+  son emojis y pueden quedarse. La regla rige en el `.md`, que es la fuente, y por tanto en el `.docx` y el PDF.
 - **Nada de arte ASCII en los documentos.** Un diagrama dibujado con caracteres (`┌─┐`, `│`, `└┘`) se
   descuadra en Word, porque la tipografía es proporcional y no monoespaciada. Todo esquema va como **tabla de
   Word**, y todo gráfico como **imagen real** —generada electrónicamente, legible y a 300 puntos/cm como pide

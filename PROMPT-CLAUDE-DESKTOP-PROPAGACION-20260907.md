@@ -106,3 +106,20 @@ encabezados, y compáralos con el Markdown de partida. El renderizador no debe *
 —ni al restituir un estilo perdido, ni al convertir un bloque, ni al aplicar la plantilla—, y si el conteo del
 documento generado supera al de la fuente, algo lo está introduciendo y hay que corregirlo antes de congelar.
 Deja el resultado del conteo en tu reporte de `CURRENT-TASKS.md`, junto al de páginas.
+
+**Ni emojis ni marcas de agua.** El informe y sus derivados no llevan emojis ni pictogramas decorativos, ni en
+el cuerpo ni en las tablas. Donde un símbolo hacía de valor se escribe la palabra: la tabla del estado del arte
+decía «✅ Local» y «❌ Cloud», y ahora dice «Local» y «Cloud», que es lo que se lee en la defensa y lo que
+sobrevive a cualquier tipografía. Tampoco se añaden marcas de agua, sellos de borrador ni leyendas superpuestas.
+Las flechas tipográficas (`→`) que describen un flujo no son emojis y se conservan. Al reconstruir, **no
+reintroducir ninguno de los dos**.
+
+**Sin emojis ni marcas de agua — verifícalo en cada generación.** El informe no lleva pictogramas en ninguna
+parte: ni en el texto, ni en los encabezados, ni dentro de las tablas, que es donde suelen colarse como
+indicadores de estado (`✅`, `❌`, `⚠️`). Si aparece alguno, se sustituye por su palabra: «sí», «no», «parcial».
+Tampoco lleva marcas de agua, sellos de borrador ni fondos de página: el documento se entrega limpio, con el
+encabezado y el pie que define la plantilla y nada más. Ahora mismo la fuente está limpia —cero emojis en el
+Markdown y ninguna marca de agua en el `.docx`—, así que tu trabajo es **no introducirlos**: comprueba el
+documento generado antes de congelar, porque una plantilla o un paso de conversión pueden añadir un sello sin
+que nadie lo pida. Ojo con no confundir esto con los documentos de coordinación, que sí usan emojis como
+marcadores de estado y deben conservarlos.

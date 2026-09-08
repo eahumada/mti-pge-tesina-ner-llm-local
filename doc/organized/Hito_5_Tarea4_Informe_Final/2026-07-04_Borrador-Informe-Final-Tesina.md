@@ -148,11 +148,11 @@ La Tabla 1 posiciona este trabajo respecto de investigaciones recientes en NER p
 
 | Trabajo | Dataset | Modelo | F1 | Privacidad | Idioma |
 |:---|:---|:---|:---:|:---:|:---|
-| BloombergGPT [3] | Bloomberg corpus | GPT-J + dominio | 85%+ | ❌ Cloud | Inglés |
-| FiNER-139 Benchmark [15] | SEC 10-K/10-Q | BERT fine-tuned | 91% | ❌ Cloud | Inglés |
-| García & López [7] | CoNLL-ES | XLM-R | 88% | ✅ Local | Español |
-| Chang et al. [9] | Docs bancarios | GPT-4 + RAG | 83% | ❌ Cloud | Inglés |
-| **Este trabajo** | **Kleptotrace/CoNLL-2002 (AML), corpus sintético N=30** | **gemma4:31b local** | **79%** | **✅ 100% Local** | **Español** |
+| BloombergGPT [3] | Bloomberg corpus | GPT-J + dominio | 85%+ | Cloud | Inglés |
+| FiNER-139 Benchmark [15] | SEC 10-K/10-Q | BERT fine-tuned | 91% | Cloud | Inglés |
+| García & López [7] | CoNLL-ES | XLM-R | 88% | Local | Español |
+| Chang et al. [9] | Docs bancarios | GPT-4 + RAG | 83% | Cloud | Inglés |
+| **Este trabajo** | **Kleptotrace/CoNLL-2002 (AML), corpus sintético N=30** | **gemma4:31b local** | **79%** | **100% Local** | **Español** |
 
 De la comparación se desprende una brecha: los trabajos que alcanzan el mejor F1 lo hacen sobre corpus en inglés y con infraestructura en la nube, mientras que los que preservan la privacidad no abordan el dominio de cumplimiento en español. Este trabajo se sitúa en esa intersección.
 
