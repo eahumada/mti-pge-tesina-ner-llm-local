@@ -702,3 +702,43 @@ porque el cotejo se resuelve en tiempo de inferencia y las extracciones por regi
 **Consecuencia inmediata para Claude Desktop:** el `.md` canónico cambió después de su propagación —se añadió
 el punto 7 a §7.2—, de modo que hay que **propagar ese único punto a los tres `.docx`**. Es un párrafo; el
 cuerpo iba por 21 páginas de 25, así que la holgura es suficiente.
+
+---
+
+## Figuras del informe (Claude Code, 2026-09-08)
+
+El informe no tenía ninguna figura pese a que la plantilla define los estilos `figurecaption` e `image` y a
+que la norma institucional regula expresamente su leyenda («Figuras: Leyenda se posiciona en parte inferior,
+centrada»). Se añaden dos, generadas electrónicamente a 300 ppp por
+`tools/generar_figuras_informe.py`, en escala de grises legible al imprimir y sin arte ASCII:
+
+| Figura | Ubicación | Contenido | Fuente de los datos |
+|:---|:---|:---|:---|
+| Figura 1 | §4.4 | Composición de los falsos positivos: 19 178 de 28 404 (67,5 %) son localizaciones | §4.4 del propio informe |
+| Figura 2 | §5.3.1 | (a) desplazamiento del F1 de los trece modelos al añadir KB RAG; (b) la mejora frente al F1 de partida | Tabla 7 |
+
+**Regla de mantenimiento.** El script **no recalcula** las cifras desde los CSV: las toma escritas de las
+tablas ya publicadas, de modo que figura y tabla no puedan divergir. Si la Tabla 7 cambia, hay que cambiar
+también `TABLA7` en el script y regenerar. Los ficheros PNG **no llevan número en el nombre**, porque la
+numeración depende del orden de aparición en el documento y ya se desincronizó una vez.
+
+**Pendiente para quien maquete el `.docx`:** insertar ambas imágenes con el estilo `image`, la leyenda
+debajo y centrada con `figurecaption`, y **re-verificar el límite de 25 páginas** (ver abajo).
+
+### Recuento de páginas: estado y estimación
+
+Medido sobre el PDF entregado al profesor guía
+(`doc/versions/enviados/2026-09-08_...ENVIADO-AL-PROFESOR-GUIA.pdf`): **31 páginas en total**, el Anexo A
+empieza en la 21, luego el **cuerpo ocupa 20 páginas** sobre un máximo de 25. La densidad medida es de
+**684 palabras por página**.
+
+Desde ese PDF el `.md` canónico ha crecido de 19 549 a 21 578 palabras (+2 029, unas **3 páginas**) y se le
+añaden **dos figuras** (~0,8 páginas). La estimación del cuerpo queda por tanto en **~24 páginas**, dentro
+del límite pero **sin holgura**. No es una medición: hay que confirmarla sobre el PDF regenerado antes de
+volver a entregar.
+
+**Corrección de un supuesto erróneo.** En una nota anterior de esta sesión se amplió la introducción bajo la
+idea de que la plantilla pedía «tres o cuatro páginas». La norma dice lo contrario: «se recomienda que la
+Introducción contenga **a lo más** 3 páginas». La ampliación se conserva porque atiende el reparo del
+profesor guía sobre el poco desarrollo y porque el capítulo queda en 1 457 palabras, unas **2,1 páginas**,
+por debajo de ese máximo; pero la introducción **no debe crecer más**.
