@@ -1817,3 +1817,37 @@ ahora coincidan **es la comprobación de que la cadena entera aplica la misma co
 faltaba: la exclusión estaba en un extremo y se perdía en el otro.
 
 Se hizo en un directorio de trabajo aparte; el consolidado publicado no se ha tocado.
+
+---
+
+## §F67 — El detalle por registro estaba ignorado en git, y es lo único que permite recalcular sin re-inferir
+
+**Fecha:** 2026-09-08. Encontrado al revisar por qué las seis corridas de la re-corrida no traían
+`detailed_results.json`.
+
+El `.gitignore` del repositorio del benchmark ignoraba `results/**/detailed_results.json`. Ese fichero es el
+**detalle por registro** de cada corrida: lo que el modelo extrajo, lo que decía la referencia y el veredicto
+por entidad. No es un agregado, es lo que permite **recalcular una métrica sin volver a inferir**.
+
+**El coste ya se pagó tres veces.** El propio informe declara en tres lugares distintos que unos datos por
+registro se perdieron y por eso una cifra no se pudo recalcular: la ejecución de julio de `gemma4:31b`
+(«sus datos por registro se perdieron por sobrescritura»), la corrección del *mojibake* («las extracciones
+por registro no se conservaron», que obliga a re-inferir para corregirlo) y la métrica restringida del
+Anexo I, que solo pudo recalcularse porque el desglose por tipo sí estaba almacenado.
+
+**Y bloquea la verificación independiente.** `tools/verificar_corrida.py`, la herramienta con la que el
+equipo de 48 GB declara VÁLIDA cada corrida, **lee `detailed_results.json`**: sus comprobaciones §5.1
+(categoría que puntúa contra el vacío) y §5.2 (`recall > 1`) son por registro. Sin ese fichero commiteado,
+una corrida entregada **no puede re-verificarla nadie más**: solo queda el agregado. Es lo que me obligó
+a comprobar el criterio de `§F53` por otra vía, sumando la matriz de confusión.
+
+**Es el mismo defecto que el de los registros de ejecución**, y por la misma causa: un fichero ignorado no
+tiene respaldo. `CLAUDE.md` ya lo dejó escrito el 2026-09-08 para los `benchmark.log`, y la regla no se
+extendió al detalle por registro.
+
+**Corrección aplicada.** Retiradas las dos reglas del `.gitignore` y versionados los **23 ficheros
+existentes**, unos 16 MB. Comprobado antes que **ninguno contiene modelos excluidos**, que era la razón
+legítima para no versionarlos. Las otras diez reglas del fichero no se tocaron.
+
+**Pendiente del equipo de 48 GB:** commitear los `detailed_results.json` de las seis corridas de
+`recorrida_20260908/`, que ahora ya no están bloqueados por `.gitignore`.

@@ -1,0 +1,2908 @@
+[
+  {
+    "batch_idx": 0,
+    "record_id": "1",
+    "model": "gemma4:31b-cloud_baseline",
+    "latency_sec": 4.037317991256714,
+    "tokens_per_sec": 30.91,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.5588235294117647,
+    "recall": 0.9047619047619048,
+    "f1": 0.6909090909090908,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 22.4,
+    "cpu_peak_pct": 50.0,
+    "proc_cpu_avg_pct": 88.1,
+    "mem_avg_mb": 287.3,
+    "mem_peak_mb": 288.3,
+    "sys_mem_avg_mb": 4962.6,
+    "sys_mem_avg_pct": 45.5,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.6875,
+          "recall": 1.2222222222222223,
+          "f1": 0.8800000000000001,
+          "tp": 11,
+          "fp": 5,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.8,
+          "recall": 0.8,
+          "f1": 0.8000000000000002,
+          "tp": 8,
+          "fp": 2,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 8,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5588235294117647,
+        "recall": 0.9047619047619048,
+        "f1": 0.6909090909090908,
+        "tp": 19,
+        "fp": 15,
+        "fn": 2,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Arash Yousefi Jam",
+          "ground_truth_target": "Amin Yousefi Jam",
+          "ratio": 78.78787878787878
+        },
+        {
+          "entity": "Amin Yousefi Jam",
+          "ground_truth_target": "Arash Yousefi Jam",
+          "ratio": 78.78787878787878
+        },
+        {
+          "entity": "Ab Momeni",
+          "ground_truth_target": "Abdollah Momeni Roustani",
+          "ratio": 54.54545454545454
+        },
+        {
+          "entity": "Arash Yousefijam",
+          "ground_truth_target": "Amin Yousefi Jam",
+          "ratio": 75.0
+        },
+        {
+          "entity": "Arash Jam",
+          "ground_truth_target": "Arash Yousefi Jam",
+          "ratio": 69.23076923076923
+        },
+        {
+          "entity": "Amin Yousefijam",
+          "ground_truth_target": "Arash Yousefi Jam",
+          "ratio": 75.0
+        },
+        {
+          "entity": "Amin Jam",
+          "ground_truth_target": "Amin Yousefi Jam",
+          "ratio": 66.66666666666667
+        },
+        {
+          "entity": "Abdollah Momeni",
+          "ground_truth_target": "Abdollah Momeni Roustani",
+          "ratio": 76.92307692307692
+        },
+        {
+          "entity": "Amir Amiri",
+          "ground_truth_target": "Adam Barry",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Office of Export Enforcement",
+          "ground_truth_target": "Justice Department",
+          "ratio": 52.17391304347826
+        },
+        {
+          "entity": "Department of Commerce",
+          "ground_truth_target": "Justice Department",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Justice Department",
+          "ground_truth_target": "Department of Commerce",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Office of International Affairs",
+          "ground_truth_target": "Office of Export Enforcement",
+          "ratio": 54.23728813559322
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:05:51.941326+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "2",
+    "model": "gemma4:31b-cloud_baseline",
+    "latency_sec": 3.0282092094421387,
+    "tokens_per_sec": 24.47,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.625,
+    "recall": 0.7692307692307693,
+    "f1": 0.6896551724137931,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 24.8,
+    "cpu_peak_pct": 50.0,
+    "proc_cpu_avg_pct": 24.2,
+    "mem_avg_mb": 287.2,
+    "mem_peak_mb": 288.3,
+    "sys_mem_avg_mb": 4892.9,
+    "sys_mem_avg_pct": 44.8,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 5,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.625,
+          "f1": 0.7692307692307693,
+          "tp": 5,
+          "fp": 0,
+          "fn": 3
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 6,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.625,
+        "recall": 0.7692307692307693,
+        "f1": 0.6896551724137931,
+        "tp": 10,
+        "fp": 6,
+        "fn": 3,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Justice Department\u2019s National Security Division",
+          "ground_truth_target": "Homeland Security Investigations",
+          "ratio": 50.63291139240506
+        },
+        {
+          "entity": "Commerce Department\u2019s Office of Export Enforcement",
+          "ground_truth_target": "Justice Department\u2019s National Security Division",
+          "ratio": 51.546391752577314
+        },
+        {
+          "entity": "Homeland Security Investigations",
+          "ground_truth_target": "Justice Department\u2019s National Security Division",
+          "ratio": 50.63291139240506
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:05:50.929122+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "3",
+    "model": "gemma4:31b-cloud_baseline",
+    "latency_sec": 2.0234551429748535,
+    "tokens_per_sec": 66.82,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6875,
+    "recall": 0.8148148148148148,
+    "f1": 0.7457627118644067,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 16.4,
+    "cpu_peak_pct": 34.8,
+    "proc_cpu_avg_pct": 43.1,
+    "mem_avg_mb": 286.8,
+    "mem_peak_mb": 287.0,
+    "sys_mem_avg_mb": 4806.4,
+    "sys_mem_avg_pct": 44.1,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 14,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.6153846153846154,
+          "recall": 0.6666666666666666,
+          "f1": 0.64,
+          "tp": 8,
+          "fp": 5,
+          "fn": 5
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 5,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6875,
+        "recall": 0.8148148148148148,
+        "f1": 0.7457627118644067,
+        "tp": 22,
+        "fp": 10,
+        "fn": 5,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Herbert Vederman",
+          "ground_truth_target": "Robert Brand",
+          "ratio": 64.28571428571428
+        },
+        {
+          "entity": "Robert Brand",
+          "ground_truth_target": "Herbert Vederman",
+          "ratio": 64.28571428571428
+        },
+        {
+          "entity": "Criminal Division\u2019s Organized Crime and Gang Section",
+          "ground_truth_target": "Criminal Division\u2019s Public Integrity Section",
+          "ratio": 68.75
+        },
+        {
+          "entity": "Department of Justice\u2019s Office of the Inspector General",
+          "ground_truth_target": "Department of Justice\u2019s Criminal Division",
+          "ratio": 62.5
+        },
+        {
+          "entity": "Criminal Division\u2019s Public Integrity Section",
+          "ground_truth_target": "Criminal Division\u2019s Organized Crime and Gang Section",
+          "ratio": 68.75
+        },
+        {
+          "entity": "Department of Justice",
+          "ground_truth_target": "Department of Justice\u2019s Criminal Division",
+          "ratio": 67.74193548387098
+        },
+        {
+          "entity": "Department of Commerce\u2019s Office of Inspector General",
+          "ground_truth_target": "Department of Justice\u2019s Criminal Division",
+          "ratio": 53.76344086021505
+        },
+        {
+          "entity": "NASA Office of Inspector General",
+          "ground_truth_target": "Department of Justice\u2019s Office of the Inspector General",
+          "ratio": 68.96551724137932
+        },
+        {
+          "entity": "Internal Revenue Service-Criminal Investigation",
+          "ground_truth_target": "Department of Justice\u2019s Criminal Division",
+          "ratio": 56.81818181818181
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:05:49.930021+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "4",
+    "model": "gemma4:31b-cloud_baseline",
+    "latency_sec": 1.5191271305084229,
+    "tokens_per_sec": 58.19,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6206896551724138,
+    "recall": 1.0,
+    "f1": 0.7659574468085107,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 11.6,
+    "cpu_peak_pct": 34.8,
+    "proc_cpu_avg_pct": 76.6,
+    "mem_avg_mb": 286.7,
+    "mem_peak_mb": 286.9,
+    "sys_mem_avg_mb": 4767.5,
+    "sys_mem_avg_pct": 43.8,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 8,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.9090909090909091,
+          "recall": 1.0,
+          "f1": 0.9523809523809523,
+          "tp": 10,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 10,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6206896551724138,
+        "recall": 1.0,
+        "f1": 0.7659574468085107,
+        "tp": 18,
+        "fp": 11,
+        "fn": 0,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Carlos Saturnino",
+          "ground_truth_target": "Isabel dos Santos",
+          "ratio": 54.54545454545454
+        },
+        {
+          "entity": "Isabel dos Santos",
+          "ground_truth_target": "Carlos Saturnino",
+          "ratio": 54.54545454545454
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:05:49.422135+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "5",
+    "model": "gemma4:31b-cloud_baseline",
+    "latency_sec": 5.544856786727905,
+    "tokens_per_sec": 7.97,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.375,
+    "recall": 0.6,
+    "f1": 0.4615384615384615,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 31.5,
+    "cpu_peak_pct": 52.8,
+    "proc_cpu_avg_pct": 16.6,
+    "mem_avg_mb": 288.1,
+    "mem_peak_mb": 290.3,
+    "sys_mem_avg_mb": 5038.5,
+    "sys_mem_avg_pct": 46.2,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.25,
+          "recall": 0.3333333333333333,
+          "f1": 0.28571428571428575,
+          "tp": 1,
+          "fp": 3,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.375,
+        "recall": 0.6,
+        "f1": 0.4615384615384615,
+        "tp": 3,
+        "fp": 5,
+        "fn": 2,
+        "oov_recall": 0.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Jose Eduardo dos Santos",
+          "ground_truth_target": "Isabel dos Santos",
+          "ratio": 65.0
+        },
+        {
+          "entity": "Isabel dos Santos",
+          "ground_truth_target": "Jose Eduardo dos Santos",
+          "ratio": 65.0
+        },
+        {
+          "entity": "Exem Energy BV",
+          "ground_truth_target": "Exem Energy BV, the Chamber of Companies",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Chamber of Companies",
+          "ground_truth_target": "Exem Energy BV, the Chamber of Companies",
+          "ratio": 66.66666666666667
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:05:53.440693+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "6",
+    "model": "gemma4:31b-cloud_baseline",
+    "latency_sec": 4.540202856063843,
+    "tokens_per_sec": 4.29,
+    "retries": 1,
+    "parse_method": "direct_json",
+    "precision": 0.4,
+    "recall": 1.0,
+    "f1": 0.5714285714285715,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 33.8,
+    "cpu_peak_pct": 61.3,
+    "proc_cpu_avg_pct": 14.8,
+    "mem_avg_mb": 289.1,
+    "mem_peak_mb": 290.3,
+    "sys_mem_avg_mb": 5213.3,
+    "sys_mem_avg_pct": 47.7,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 3,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "fp": 3,
+        "fn": 0,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:05:54.447842+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "7",
+    "model": "gemma4:31b-cloud_baseline",
+    "latency_sec": 5.0462470054626465,
+    "tokens_per_sec": 11.59,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.42857142857142855,
+    "recall": 0.6,
+    "f1": 0.5,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 27.8,
+    "cpu_peak_pct": 64.3,
+    "proc_cpu_avg_pct": 70.2,
+    "mem_avg_mb": 287.8,
+    "mem_peak_mb": 290.3,
+    "sys_mem_avg_mb": 5012.4,
+    "sys_mem_avg_pct": 45.9,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 5,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.2,
+          "recall": 0.2,
+          "f1": 0.20000000000000004,
+          "tp": 1,
+          "fp": 4,
+          "fn": 4
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 4,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.42857142857142855,
+        "recall": 0.6,
+        "f1": 0.5,
+        "tp": 6,
+        "fp": 8,
+        "fn": 4,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Office of Foreign Assets Control",
+          "ground_truth_target": "U.S. Department of the Treasury\u2019s Office of Foreign Assets Control",
+          "ratio": 65.3061224489796
+        },
+        {
+          "entity": "U.S. Department of the Treasury",
+          "ground_truth_target": "U.S. Department of the Treasury\u2019s Office of Foreign Assets Control",
+          "ratio": 63.91752577319587
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "Port of Buchanan",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Port of Buchanan"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:05:52.946507+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "8",
+    "model": "gemma4:31b-cloud_baseline",
+    "latency_sec": 4.53853702545166,
+    "tokens_per_sec": 7.45,
+    "retries": 1,
+    "parse_method": "direct_json",
+    "precision": 0.5,
+    "recall": 1.0,
+    "f1": 0.6666666666666666,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 28.1,
+    "cpu_peak_pct": 61.3,
+    "proc_cpu_avg_pct": 19.0,
+    "mem_avg_mb": 289.1,
+    "mem_peak_mb": 290.3,
+    "sys_mem_avg_mb": 5213.2,
+    "sys_mem_avg_pct": 47.7,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "tp": 3,
+        "fp": 3,
+        "fn": 0,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Bill Teah TWEHWAY",
+          "ground_truth_target": "Bill Twehway",
+          "ratio": 82.75862068965517
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:05:54.450959+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "9",
+    "model": "gemma4:31b-cloud_baseline",
+    "latency_sec": 5.054112911224365,
+    "tokens_per_sec": 13.38,
+    "retries": 2,
+    "parse_method": "direct_json",
+    "precision": 0.631578947368421,
+    "recall": 0.9230769230769231,
+    "f1": 0.7499999999999999,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 25.7,
+    "cpu_peak_pct": 35.6,
+    "proc_cpu_avg_pct": 13.3,
+    "mem_avg_mb": 291.3,
+    "mem_peak_mb": 292.4,
+    "sys_mem_avg_mb": 5408.9,
+    "sys_mem_avg_pct": 49.4,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 7,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5,
+          "recall": 0.8333333333333334,
+          "f1": 0.625,
+          "tp": 5,
+          "fp": 5,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.631578947368421,
+        "recall": 0.9230769230769231,
+        "f1": 0.7499999999999999,
+        "tp": 12,
+        "fp": 7,
+        "fn": 1,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Zarylee Gbala",
+          "ground_truth_target": "Kanio Bai Gbala",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Peter Twehway",
+          "ground_truth_target": "Bill Twehway",
+          "ratio": 64.0
+        },
+        {
+          "entity": "Kanio Bai Gbala",
+          "ground_truth_target": "Zarylee Gbala",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Bill Twehway",
+          "ground_truth_target": "Peter Twehway",
+          "ratio": 64.0
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "Port of Buchanan",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Port of Buchanan"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:05:57.488649+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 3,
+    "record_id": "10",
+    "model": "gemma4:31b-cloud_baseline",
+    "latency_sec": 5.039412975311279,
+    "tokens_per_sec": 16.51,
+    "retries": 1,
+    "parse_method": "direct_json",
+    "precision": 0.7692307692307693,
+    "recall": 0.9090909090909091,
+    "f1": 0.8333333333333333,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 21.0,
+    "cpu_peak_pct": 35.8,
+    "proc_cpu_avg_pct": 13.6,
+    "mem_avg_mb": 291.9,
+    "mem_peak_mb": 292.4,
+    "sys_mem_avg_mb": 5460.2,
+    "sys_mem_avg_pct": 49.7,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.1428571428571428,
+          "f1": 1.0666666666666667,
+          "tp": 8,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.8,
+          "recall": 0.8571428571428571,
+          "f1": 0.8275862068965518,
+          "tp": 12,
+          "fp": 3,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 3,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.7692307692307693,
+        "recall": 0.9090909090909091,
+        "f1": 0.8333333333333333,
+        "tp": 20,
+        "fp": 6,
+        "fn": 2,
+        "oov_recall": 0.8888888888888888
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Peter Twehway",
+          "ground_truth_target": "Bill Twehway",
+          "ratio": 64.0
+        },
+        {
+          "entity": "Bill Twehway",
+          "ground_truth_target": "Peter Twehway",
+          "ratio": 64.0
+        },
+        {
+          "entity": "CDI",
+          "ground_truth_target": "WAFDI",
+          "ratio": 50.0
+        },
+        {
+          "entity": "LACC",
+          "ground_truth_target": "ICC",
+          "ratio": 57.14285714285714
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "Port of Buchanan",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Port of Buchanan"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:05:58.519302+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 3,
+    "record_id": "11",
+    "model": "gemma4:31b-cloud_baseline",
+    "latency_sec": 5.0554821491241455,
+    "tokens_per_sec": 32.4,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.47619047619047616,
+    "recall": 0.7142857142857143,
+    "f1": 0.5714285714285714,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 21.4,
+    "cpu_peak_pct": 35.7,
+    "proc_cpu_avg_pct": 14.1,
+    "mem_avg_mb": 291.3,
+    "mem_peak_mb": 292.4,
+    "sys_mem_avg_mb": 5380.8,
+    "sys_mem_avg_pct": 49.1,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.8571428571428571,
+          "recall": 1.0,
+          "f1": 0.923076923076923,
+          "tp": 12,
+          "fp": 2,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.7272727272727273,
+          "recall": 0.5,
+          "f1": 0.5925925925925926,
+          "tp": 8,
+          "fp": 3,
+          "fn": 8
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 17,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.47619047619047616,
+        "recall": 0.7142857142857143,
+        "f1": 0.5714285714285714,
+        "tp": 20,
+        "fp": 22,
+        "fn": 8,
+        "oov_recall": 0.75
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Juan Carlos Soto",
+          "ground_truth_target": "Juan Fernando Serrano Ponce",
+          "ratio": 51.162790697674424
+        },
+        {
+          "entity": "Juanfe Serrano",
+          "ground_truth_target": "Juan Fernando Serrano Ponce",
+          "ratio": 68.29268292682926
+        },
+        {
+          "entity": "Juan Fernando Serrano Ponce",
+          "ground_truth_target": "Juan Carlos Soto",
+          "ratio": 51.162790697674424
+        },
+        {
+          "entity": "Department\u2019s Task Force KleptoCapture",
+          "ground_truth_target": "U.S. Department of Commerce",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Justice Department\u2019s Office of International Affairs",
+          "ground_truth_target": "Justice Department",
+          "ratio": 51.42857142857142
+        },
+        {
+          "entity": "Justice Department",
+          "ground_truth_target": "Justice Department\u2019s Office of International Affairs",
+          "ratio": 51.42857142857142
+        },
+        {
+          "entity": "U.S. Attorneys\u2019 Offices for the Eastern District of New York",
+          "ground_truth_target": "Offices for the Eastern District of New York",
+          "ratio": 84.61538461538461
+        },
+        {
+          "entity": "U.S. District Court for the District of Connecticut",
+          "ground_truth_target": "Offices for the Eastern District of New York",
+          "ratio": 52.63157894736843
+        },
+        {
+          "entity": "U.S. Attorneys\u2019 Offices for the District of Connecticut",
+          "ground_truth_target": "Offices for the Eastern District of New York",
+          "ratio": 60.60606060606061
+        },
+        {
+          "entity": "U.S. Department of Commerce",
+          "ground_truth_target": "Department\u2019s Task Force KleptoCapture",
+          "ratio": 50.0
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:05:57.032476+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 3,
+    "record_id": "12",
+    "model": "gemma4:31b-cloud_baseline",
+    "latency_sec": 3.5388731956481934,
+    "tokens_per_sec": 40.04,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.5945945945945946,
+    "recall": 0.88,
+    "f1": 0.7096774193548386,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 37.0,
+    "cpu_peak_pct": 100.0,
+    "proc_cpu_avg_pct": 18.8,
+    "mem_avg_mb": 290.9,
+    "mem_peak_mb": 292.4,
+    "sys_mem_avg_mb": 5332.7,
+    "sys_mem_avg_pct": 48.8,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 8,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.9333333333333333,
+          "recall": 0.875,
+          "f1": 0.9032258064516129,
+          "tp": 14,
+          "fp": 1,
+          "fn": 3
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 14,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5945945945945946,
+        "recall": 0.88,
+        "f1": 0.7096774193548386,
+        "tp": 22,
+        "fp": 15,
+        "fn": 3,
+        "oov_recall": 0.8636363636363636
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Vadims Ananics",
+          "ground_truth_target": "Janis Uzbalis",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Janis Uzbalis",
+          "ground_truth_target": "Vadims Ananics",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Konstantin Lantsman",
+          "ground_truth_target": "Stanislav Romanyuk",
+          "ratio": 54.054054054054056
+        },
+        {
+          "entity": "Stanislav Romanyuk",
+          "ground_truth_target": "Konstantin Lantsman",
+          "ratio": 54.054054054054056
+        },
+        {
+          "entity": "Justice Department\u2019s Task Force KleptoCapture",
+          "ground_truth_target": "U.S. Department of Commerce",
+          "ratio": 52.77777777777778
+        },
+        {
+          "entity": "Latvian State Police",
+          "ground_truth_target": "Latvian State Revenue Service",
+          "ratio": 69.38775510204081
+        },
+        {
+          "entity": "Justice Department\u2019s Office of International Affairs",
+          "ground_truth_target": "U.S. Department of Commerce",
+          "ratio": 50.63291139240506
+        },
+        {
+          "entity": "Department of Commerce",
+          "ground_truth_target": "Justice Department",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Justice Department",
+          "ground_truth_target": "U.S. Department of Commerce",
+          "ratio": 57.77777777777777
+        },
+        {
+          "entity": "Latvian State Revenue Service",
+          "ground_truth_target": "Latvian State Police",
+          "ratio": 69.38775510204081
+        },
+        {
+          "entity": "U.S. Department of Commerce",
+          "ground_truth_target": "Justice Department",
+          "ratio": 57.77777777777777
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "European Union",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "European union"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:05:55.512910+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 4,
+    "record_id": "13",
+    "model": "gemma4:31b-cloud_baseline",
+    "latency_sec": 5.060468912124634,
+    "tokens_per_sec": 16.44,
+    "retries": 1,
+    "parse_method": "direct_json",
+    "precision": 0.56,
+    "recall": 1.0,
+    "f1": 0.717948717948718,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 13.1,
+    "cpu_peak_pct": 24.1,
+    "proc_cpu_avg_pct": 13.2,
+    "mem_avg_mb": 292.2,
+    "mem_peak_mb": 292.4,
+    "sys_mem_avg_mb": 5520.9,
+    "sys_mem_avg_pct": 50.2,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.8571428571428571,
+          "recall": 1.0,
+          "f1": 0.923076923076923,
+          "tp": 12,
+          "fp": 2,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 9,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.56,
+        "recall": 1.0,
+        "f1": 0.717948717948718,
+        "tp": 14,
+        "fp": 11,
+        "fn": 0,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "BGFIBank Group",
+          "ground_truth_target": "BGFIBank DRC",
+          "ratio": 76.92307692307692
+        },
+        {
+          "entity": "BGFIBank DRC",
+          "ground_truth_target": "BGFIBank Group",
+          "ratio": 76.92307692307692
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:06:01.064095+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 4,
+    "record_id": "14",
+    "model": "gemma4:31b-cloud_baseline",
+    "latency_sec": 5.050623893737793,
+    "tokens_per_sec": 11.58,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6470588235294118,
+    "recall": 0.9166666666666666,
+    "f1": 0.7586206896551724,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 17.1,
+    "cpu_peak_pct": 35.5,
+    "proc_cpu_avg_pct": 13.5,
+    "mem_avg_mb": 292.3,
+    "mem_peak_mb": 292.4,
+    "sys_mem_avg_mb": 5493.0,
+    "sys_mem_avg_pct": 50.0,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.7692307692307693,
+          "recall": 0.9090909090909091,
+          "f1": 0.8333333333333333,
+          "tp": 10,
+          "fp": 3,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 3,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6470588235294118,
+        "recall": 0.9166666666666666,
+        "f1": 0.7586206896551724,
+        "tp": 11,
+        "fp": 6,
+        "fn": 1,
+        "oov_recall": 0.9166666666666666
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Citibank",
+          "ground_truth_target": "BGFIBank DRC",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Commerzbank",
+          "ground_truth_target": "Citibank",
+          "ratio": 52.63157894736843
+        },
+        {
+          "entity": "BGFIBank DRC",
+          "ground_truth_target": "Citibank",
+          "ratio": 50.0
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:05:59.517853+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 4,
+    "record_id": "15",
+    "model": "gemma4:31b-cloud_baseline",
+    "latency_sec": 6.062471151351929,
+    "tokens_per_sec": 6.43,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.4444444444444444,
+    "recall": 1.0,
+    "f1": 0.6153846153846153,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 16.3,
+    "cpu_peak_pct": 35.5,
+    "proc_cpu_avg_pct": 11.5,
+    "mem_avg_mb": 292.3,
+    "mem_peak_mb": 292.4,
+    "sys_mem_avg_mb": 5498.8,
+    "sys_mem_avg_pct": 50.0,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.75,
+          "recall": 1.0,
+          "f1": 0.8571428571428571,
+          "tp": 3,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 4,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.4444444444444444,
+        "recall": 1.0,
+        "f1": 0.6153846153846153,
+        "tp": 4,
+        "fp": 5,
+        "fn": 0,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:06:00.525704+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "7",
+    "model": "gemma4:31b-cloud_rag_enhanced",
+    "latency_sec": 5.547449111938477,
+    "tokens_per_sec": 11.95,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.5714285714285714,
+    "recall": 0.8,
+    "f1": 0.6666666666666666,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 7.5,
+    "cpu_peak_pct": 22.2,
+    "proc_cpu_avg_pct": 18.3,
+    "mem_avg_mb": 876.9,
+    "mem_peak_mb": 877.0,
+    "sys_mem_avg_mb": 6014.3,
+    "sys_mem_avg_pct": 52.9,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 5,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.6,
+          "recall": 0.6,
+          "f1": 0.6,
+          "tp": 3,
+          "fp": 2,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 4,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5714285714285714,
+        "recall": 0.8,
+        "f1": 0.6666666666666666,
+        "tp": 8,
+        "fp": 6,
+        "fn": 2,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Port of Buchanan",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Port of Buchanan"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:06:07.182188+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "8",
+    "model": "gemma4:31b-cloud_rag_enhanced",
+    "latency_sec": 6.05560302734375,
+    "tokens_per_sec": 4.51,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.42857142857142855,
+    "recall": 1.0,
+    "f1": 0.6,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 15.1,
+    "cpu_peak_pct": 75.0,
+    "proc_cpu_avg_pct": 80.7,
+    "mem_avg_mb": 876.9,
+    "mem_peak_mb": 877.0,
+    "sys_mem_avg_mb": 6019.5,
+    "sys_mem_avg_pct": 52.9,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.3333333333333333,
+          "recall": 1.0,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 2,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.42857142857142855,
+        "recall": 1.0,
+        "f1": 0.6,
+        "tp": 3,
+        "fp": 4,
+        "fn": 0,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Bill Teah TWEHWAY",
+          "ground_truth_target": "Bill Twehway",
+          "ratio": 82.75862068965517
+        },
+        {
+          "entity": "Bill",
+          "ground_truth_target": "Bill Twehway",
+          "ratio": 50.0
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:06:07.676261+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "9",
+    "model": "gemma4:31b-cloud_rag_enhanced",
+    "latency_sec": 2.0252280235290527,
+    "tokens_per_sec": 32.74,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6666666666666666,
+    "recall": 0.9230769230769231,
+    "f1": 0.7741935483870968,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 7.2,
+    "cpu_peak_pct": 20.0,
+    "proc_cpu_avg_pct": 109.4,
+    "mem_avg_mb": 876.9,
+    "mem_peak_mb": 877.0,
+    "sys_mem_avg_mb": 5980.0,
+    "sys_mem_avg_pct": 52.8,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 7,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5555555555555556,
+          "recall": 0.8333333333333334,
+          "f1": 0.6666666666666667,
+          "tp": 5,
+          "fp": 4,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6666666666666666,
+        "recall": 0.9230769230769231,
+        "f1": 0.7741935483870968,
+        "tp": 12,
+        "fp": 6,
+        "fn": 1,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Zarylee Gbala",
+          "ground_truth_target": "Kanio Bai Gbala",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Peter Twehway",
+          "ground_truth_target": "Bill Twehway",
+          "ratio": 64.0
+        },
+        {
+          "entity": "Kanio Bai Gbala",
+          "ground_truth_target": "Zarylee Gbala",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Bill Twehway",
+          "ground_truth_target": "Peter Twehway",
+          "ratio": 64.0
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "Port of Buchanan",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Port of Buchanan"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:06:03.657051+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "1",
+    "model": "gemma4:31b-cloud_rag_enhanced",
+    "latency_sec": 3.035645008087158,
+    "tokens_per_sec": 43.25,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.5714285714285714,
+    "recall": 0.9523809523809523,
+    "f1": 0.7142857142857142,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 16.0,
+    "cpu_peak_pct": 50.0,
+    "proc_cpu_avg_pct": 115.8,
+    "mem_avg_mb": 876.9,
+    "mem_peak_mb": 877.0,
+    "sys_mem_avg_mb": 5988.5,
+    "sys_mem_avg_pct": 52.8,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.6875,
+          "recall": 1.2222222222222223,
+          "f1": 0.8800000000000001,
+          "tp": 11,
+          "fp": 5,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.8181818181818182,
+          "recall": 0.9,
+          "f1": 0.8571428571428572,
+          "tp": 9,
+          "fp": 2,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 8,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5714285714285714,
+        "recall": 0.9523809523809523,
+        "f1": 0.7142857142857142,
+        "tp": 20,
+        "fp": 15,
+        "fn": 1,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Arash Yousefi Jam",
+          "ground_truth_target": "Amin Yousefi Jam",
+          "ratio": 78.78787878787878
+        },
+        {
+          "entity": "Amin Yousefi Jam",
+          "ground_truth_target": "Arash Yousefi Jam",
+          "ratio": 78.78787878787878
+        },
+        {
+          "entity": "Ab Momeni",
+          "ground_truth_target": "Abdollah Momeni Roustani",
+          "ratio": 54.54545454545454
+        },
+        {
+          "entity": "Arash Yousefijam",
+          "ground_truth_target": "Amin Yousefi Jam",
+          "ratio": 75.0
+        },
+        {
+          "entity": "Arash Jam",
+          "ground_truth_target": "Arash Yousefi Jam",
+          "ratio": 69.23076923076923
+        },
+        {
+          "entity": "Amin Yousefijam",
+          "ground_truth_target": "Arash Yousefi Jam",
+          "ratio": 75.0
+        },
+        {
+          "entity": "Amin Jam",
+          "ground_truth_target": "Amin Yousefi Jam",
+          "ratio": 66.66666666666667
+        },
+        {
+          "entity": "Abdollah Momeni",
+          "ground_truth_target": "Abdollah Momeni Roustani",
+          "ratio": 76.92307692307692
+        },
+        {
+          "entity": "Amir Amiri",
+          "ground_truth_target": "Adam Barry",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Office of Export Enforcement",
+          "ground_truth_target": "Justice Department",
+          "ratio": 52.17391304347826
+        },
+        {
+          "entity": "Iranian Transactions and Sanctions Regulations",
+          "ground_truth_target": "U.S. Immigration and Customs Enforcements",
+          "ratio": 50.57471264367817
+        },
+        {
+          "entity": "Department of Commerce",
+          "ground_truth_target": "Justice Department",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Justice Department",
+          "ground_truth_target": "Department of Commerce",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Office of International Affairs",
+          "ground_truth_target": "Office of Export Enforcement",
+          "ratio": 54.23728813559322
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:06:04.669045+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "2",
+    "model": "gemma4:31b-cloud_rag_enhanced",
+    "latency_sec": 6.553517818450928,
+    "tokens_per_sec": 13.29,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6666666666666666,
+    "recall": 0.9230769230769231,
+    "f1": 0.7741935483870968,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 9.5,
+    "cpu_peak_pct": 23.5,
+    "proc_cpu_avg_pct": 10.1,
+    "mem_avg_mb": 876.9,
+    "mem_peak_mb": 877.0,
+    "sys_mem_avg_mb": 6027.5,
+    "sys_mem_avg_pct": 52.9,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 5,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.875,
+          "f1": 0.9333333333333333,
+          "tp": 7,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 6,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6666666666666666,
+        "recall": 0.9230769230769231,
+        "f1": 0.7741935483870968,
+        "tp": 12,
+        "fp": 6,
+        "fn": 1,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Justice Department\u2019s National Security Division",
+          "ground_truth_target": "Homeland Security Investigations",
+          "ratio": 50.63291139240506
+        },
+        {
+          "entity": "Commerce Department\u2019s Office of Export Enforcement",
+          "ground_truth_target": "Justice Department\u2019s National Security Division",
+          "ratio": 51.546391752577314
+        },
+        {
+          "entity": "Homeland Security Investigations",
+          "ground_truth_target": "Justice Department\u2019s National Security Division",
+          "ratio": 50.63291139240506
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:06:08.185640+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "3",
+    "model": "gemma4:31b-cloud_rag_enhanced",
+    "latency_sec": 7.05931282043457,
+    "tokens_per_sec": 20.99,
+    "retries": 1,
+    "parse_method": "direct_json",
+    "precision": 0.6944444444444444,
+    "recall": 0.9259259259259259,
+    "f1": 0.7936507936507936,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 10.6,
+    "cpu_peak_pct": 22.2,
+    "proc_cpu_avg_pct": 16.4,
+    "mem_avg_mb": 889.1,
+    "mem_peak_mb": 919.6,
+    "sys_mem_avg_mb": 6081.5,
+    "sys_mem_avg_pct": 53.2,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 14,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.6470588235294118,
+          "recall": 0.9166666666666666,
+          "f1": 0.7586206896551724,
+          "tp": 11,
+          "fp": 6,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 5,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6944444444444444,
+        "recall": 0.9259259259259259,
+        "f1": 0.7936507936507936,
+        "tp": 25,
+        "fp": 11,
+        "fn": 2,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Herbert Vederman",
+          "ground_truth_target": "Robert Brand",
+          "ratio": 64.28571428571428
+        },
+        {
+          "entity": "Robert Brand",
+          "ground_truth_target": "Herbert Vederman",
+          "ratio": 64.28571428571428
+        },
+        {
+          "entity": "Criminal Division\u2019s Organized Crime and Gang Section",
+          "ground_truth_target": "Criminal Division\u2019s Public Integrity Section",
+          "ratio": 68.75
+        },
+        {
+          "entity": "Department of Justice\u2019s Office of the Inspector General",
+          "ground_truth_target": "Department of Justice\u2019s Criminal Division",
+          "ratio": 62.5
+        },
+        {
+          "entity": "FBI\u2019s Philadelphia Division",
+          "ground_truth_target": "Department of Justice\u2019s Criminal Division",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Criminal Division\u2019s Public Integrity Section",
+          "ground_truth_target": "Criminal Division\u2019s Organized Crime and Gang Section",
+          "ratio": 68.75
+        },
+        {
+          "entity": "Department of Justice",
+          "ground_truth_target": "Department of Justice\u2019s Criminal Division",
+          "ratio": 67.74193548387098
+        },
+        {
+          "entity": "Department of Commerce\u2019s Office of Inspector General",
+          "ground_truth_target": "Department of Justice\u2019s Criminal Division",
+          "ratio": 53.76344086021505
+        },
+        {
+          "entity": "NASA Office of Inspector General",
+          "ground_truth_target": "Department of Justice\u2019s Office of the Inspector General",
+          "ratio": 68.96551724137932
+        },
+        {
+          "entity": "Internal Revenue Service-Criminal Investigation",
+          "ground_truth_target": "Department of Justice\u2019s Criminal Division",
+          "ratio": 56.81818181818181
+        },
+        {
+          "entity": "Justice Department\u2019s Criminal Division",
+          "ground_truth_target": "Department of Justice\u2019s Criminal Division",
+          "ratio": 75.9493670886076
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:06:10.219041+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "4",
+    "model": "gemma4:31b-cloud_rag_enhanced",
+    "latency_sec": 5.572222948074341,
+    "tokens_per_sec": 15.86,
+    "retries": 2,
+    "parse_method": "direct_json",
+    "precision": 0.6206896551724138,
+    "recall": 1.0,
+    "f1": 0.7659574468085107,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 9.1,
+    "cpu_peak_pct": 20.0,
+    "proc_cpu_avg_pct": 29.0,
+    "mem_avg_mb": 899.5,
+    "mem_peak_mb": 919.6,
+    "sys_mem_avg_mb": 6150.2,
+    "sys_mem_avg_pct": 53.5,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 8,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.9090909090909091,
+          "recall": 1.0,
+          "f1": 0.9523809523809523,
+          "tp": 10,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 10,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6206896551724138,
+        "recall": 1.0,
+        "f1": 0.7659574468085107,
+        "tp": 18,
+        "fp": 11,
+        "fn": 0,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Carlos Saturnino",
+          "ground_truth_target": "Isabel dos Santos",
+          "ratio": 54.54545454545454
+        },
+        {
+          "entity": "Isabel dos Santos",
+          "ground_truth_target": "Carlos Saturnino",
+          "ratio": 54.54545454545454
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:06:11.250812+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "5",
+    "model": "gemma4:31b-cloud_rag_enhanced",
+    "latency_sec": 6.052570104598999,
+    "tokens_per_sec": 7.3,
+    "retries": 1,
+    "parse_method": "direct_json",
+    "precision": 0.375,
+    "recall": 0.6,
+    "f1": 0.4615384615384615,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 9.2,
+    "cpu_peak_pct": 24.1,
+    "proc_cpu_avg_pct": 19.0,
+    "mem_avg_mb": 884.0,
+    "mem_peak_mb": 919.6,
+    "sys_mem_avg_mb": 6061.4,
+    "sys_mem_avg_pct": 53.1,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.25,
+          "recall": 0.3333333333333333,
+          "f1": 0.28571428571428575,
+          "tp": 1,
+          "fp": 3,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.375,
+        "recall": 0.6,
+        "f1": 0.4615384615384615,
+        "tp": 3,
+        "fp": 5,
+        "fn": 2,
+        "oov_recall": 0.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Jose Eduardo dos Santos",
+          "ground_truth_target": "Isabel dos Santos",
+          "ratio": 65.0
+        },
+        {
+          "entity": "Isabel dos Santos",
+          "ground_truth_target": "Jose Eduardo dos Santos",
+          "ratio": 65.0
+        },
+        {
+          "entity": "Exem Energy BV",
+          "ground_truth_target": "Exem Energy BV, the Chamber of Companies",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Chamber of Companies",
+          "ground_truth_target": "Exem Energy BV, the Chamber of Companies",
+          "ratio": 66.66666666666667
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:06:09.190466+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "6",
+    "model": "gemma4:31b-cloud_rag_enhanced",
+    "latency_sec": 1.0189456939697266,
+    "tokens_per_sec": 24.24,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.4,
+    "recall": 1.0,
+    "f1": 0.5714285714285715,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 8.3,
+    "cpu_peak_pct": 16.7,
+    "proc_cpu_avg_pct": 274.4,
+    "mem_avg_mb": 876.8,
+    "mem_peak_mb": 876.9,
+    "sys_mem_avg_mb": 5955.7,
+    "sys_mem_avg_pct": 52.6,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 3,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "fp": 3,
+        "fn": 0,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:06:02.639972+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 3,
+    "record_id": "10",
+    "model": "gemma4:31b-cloud_rag_enhanced",
+    "latency_sec": 4.050797939300537,
+    "tokens_per_sec": 21.5,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.7142857142857143,
+    "recall": 0.9090909090909091,
+    "f1": 0.8,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 9.9,
+    "cpu_peak_pct": 20.0,
+    "proc_cpu_avg_pct": 43.1,
+    "mem_avg_mb": 919.0,
+    "mem_peak_mb": 919.6,
+    "sys_mem_avg_mb": 6217.2,
+    "sys_mem_avg_pct": 53.9,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.1428571428571428,
+          "f1": 1.0666666666666667,
+          "tp": 8,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.75,
+          "recall": 0.8571428571428571,
+          "f1": 0.7999999999999999,
+          "tp": 12,
+          "fp": 4,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 4,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.7142857142857143,
+        "recall": 0.9090909090909091,
+        "f1": 0.8,
+        "tp": 20,
+        "fp": 8,
+        "fn": 2,
+        "oov_recall": 0.8888888888888888
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Peter Twehway",
+          "ground_truth_target": "Bill Twehway",
+          "ratio": 64.0
+        },
+        {
+          "entity": "Bill Twehway",
+          "ground_truth_target": "Peter Twehway",
+          "ratio": 64.0
+        },
+        {
+          "entity": "CDI",
+          "ground_truth_target": "WAFDI",
+          "ratio": 50.0
+        },
+        {
+          "entity": "LACC",
+          "ground_truth_target": "ICC",
+          "ratio": 57.14285714285714
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "Port of Buchanan",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Port of Buchanan"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:06:11.887649+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 3,
+    "record_id": "11",
+    "model": "gemma4:31b-cloud_rag_enhanced",
+    "latency_sec": 5.083611011505127,
+    "tokens_per_sec": 32.22,
+    "retries": 1,
+    "parse_method": "direct_json",
+    "precision": 0.45454545454545453,
+    "recall": 0.7142857142857143,
+    "f1": 0.5555555555555556,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 7.3,
+    "cpu_peak_pct": 19.8,
+    "proc_cpu_avg_pct": 23.9,
+    "mem_avg_mb": 918.3,
+    "mem_peak_mb": 919.5,
+    "sys_mem_avg_mb": 6322.5,
+    "sys_mem_avg_pct": 54.5,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.8571428571428571,
+          "recall": 1.0,
+          "f1": 0.923076923076923,
+          "tp": 12,
+          "fp": 2,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.6153846153846154,
+          "recall": 0.5,
+          "f1": 0.5517241379310345,
+          "tp": 8,
+          "fp": 5,
+          "fn": 8
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 17,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.45454545454545453,
+        "recall": 0.7142857142857143,
+        "f1": 0.5555555555555556,
+        "tp": 20,
+        "fp": 24,
+        "fn": 8,
+        "oov_recall": 0.75
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Juan Carlos Soto",
+          "ground_truth_target": "Juan Fernando Serrano Ponce",
+          "ratio": 51.162790697674424
+        },
+        {
+          "entity": "Juanfe Serrano",
+          "ground_truth_target": "Juan Fernando Serrano Ponce",
+          "ratio": 68.29268292682926
+        },
+        {
+          "entity": "Juan Fernando Serrano Ponce",
+          "ground_truth_target": "Juan Carlos Soto",
+          "ratio": 51.162790697674424
+        },
+        {
+          "entity": "Department\u2019s Task Force KleptoCapture",
+          "ground_truth_target": "U.S. Department of Commerce",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Justice Department\u2019s Office of International Affairs",
+          "ground_truth_target": "Justice Department",
+          "ratio": 51.42857142857142
+        },
+        {
+          "entity": "Justice Department",
+          "ground_truth_target": "Justice Department\u2019s Office of International Affairs",
+          "ratio": 51.42857142857142
+        },
+        {
+          "entity": "U.S. Attorneys\u2019 Offices for the Eastern District of New York",
+          "ground_truth_target": "Offices for the Eastern District of New York",
+          "ratio": 84.61538461538461
+        },
+        {
+          "entity": "U.S. District Court for the District of Connecticut",
+          "ground_truth_target": "Offices for the Eastern District of New York",
+          "ratio": 52.63157894736843
+        },
+        {
+          "entity": "U.S. Attorneys\u2019 Offices for the District of Connecticut",
+          "ground_truth_target": "Offices for the Eastern District of New York",
+          "ratio": 60.60606060606061
+        },
+        {
+          "entity": "U.S. Department of Commerce",
+          "ground_truth_target": "Department\u2019s Task Force KleptoCapture",
+          "ratio": 50.0
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:06:14.467593+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 3,
+    "record_id": "12",
+    "model": "gemma4:31b-cloud_rag_enhanced",
+    "latency_sec": 5.561157941818237,
+    "tokens_per_sec": 27.35,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6052631578947368,
+    "recall": 0.92,
+    "f1": 0.7301587301587301,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 11.5,
+    "cpu_peak_pct": 22.2,
+    "proc_cpu_avg_pct": 260.5,
+    "mem_avg_mb": 918.7,
+    "mem_peak_mb": 919.6,
+    "sys_mem_avg_mb": 6262.3,
+    "sys_mem_avg_pct": 54.2,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 8,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.9375,
+          "recall": 0.9375,
+          "f1": 0.9375,
+          "tp": 15,
+          "fp": 1,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 14,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6052631578947368,
+        "recall": 0.92,
+        "f1": 0.7301587301587301,
+        "tp": 23,
+        "fp": 15,
+        "fn": 2,
+        "oov_recall": 0.9090909090909091
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Vadims Ananics",
+          "ground_truth_target": "Janis Uzbalis",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Janis Uzbalis",
+          "ground_truth_target": "Vadims Ananics",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Konstantin Lantsman",
+          "ground_truth_target": "Stanislav Romanyuk",
+          "ratio": 54.054054054054056
+        },
+        {
+          "entity": "Stanislav Romanyuk",
+          "ground_truth_target": "Konstantin Lantsman",
+          "ratio": 54.054054054054056
+        },
+        {
+          "entity": "Justice Department\u2019s Task Force KleptoCapture",
+          "ground_truth_target": "U.S. Department of Commerce",
+          "ratio": 52.77777777777778
+        },
+        {
+          "entity": "U.S. Department of Commerce\u2019s Office of Export Enforcement",
+          "ground_truth_target": "U.S. Department of Commerce",
+          "ratio": 63.52941176470588
+        },
+        {
+          "entity": "Latvian State Police",
+          "ground_truth_target": "Latvian State Revenue Service",
+          "ratio": 69.38775510204081
+        },
+        {
+          "entity": "Justice Department\u2019s Office of International Affairs",
+          "ground_truth_target": "U.S. Department of Commerce",
+          "ratio": 50.63291139240506
+        },
+        {
+          "entity": "Department of Commerce",
+          "ground_truth_target": "Justice Department",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Justice Department",
+          "ground_truth_target": "U.S. Department of Commerce",
+          "ratio": 57.77777777777777
+        },
+        {
+          "entity": "Latvian State Revenue Service",
+          "ground_truth_target": "Latvian State Police",
+          "ratio": 69.38775510204081
+        },
+        {
+          "entity": "U.S. Department of Commerce",
+          "ground_truth_target": "Justice Department",
+          "ratio": 57.77777777777777
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "European Union",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "European union"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:06:13.413172+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 4,
+    "record_id": "13",
+    "model": "gemma4:31b-cloud_rag_enhanced",
+    "latency_sec": 5.550323009490967,
+    "tokens_per_sec": 14.99,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.56,
+    "recall": 1.0,
+    "f1": 0.717948717948718,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 19.8,
+    "cpu_peak_pct": 100.0,
+    "proc_cpu_avg_pct": 27.7,
+    "mem_avg_mb": 916.6,
+    "mem_peak_mb": 918.4,
+    "sys_mem_avg_mb": 6365.0,
+    "sys_mem_avg_pct": 54.8,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.8571428571428571,
+          "recall": 1.0,
+          "f1": 0.923076923076923,
+          "tp": 12,
+          "fp": 2,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 9,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.56,
+        "recall": 1.0,
+        "f1": 0.717948717948718,
+        "tp": 14,
+        "fp": 11,
+        "fn": 0,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "BGFIBank Group",
+          "ground_truth_target": "BGFIBank DRC",
+          "ratio": 76.92307692307692
+        },
+        {
+          "entity": "BGFIBank DRC",
+          "ground_truth_target": "BGFIBank Group",
+          "ratio": 76.92307692307692
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:06:15.921727+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 4,
+    "record_id": "14",
+    "model": "gemma4:31b-cloud_rag_enhanced",
+    "latency_sec": 4.560514211654663,
+    "tokens_per_sec": 13.11,
+    "retries": 1,
+    "parse_method": "direct_json",
+    "precision": 0.6111111111111112,
+    "recall": 0.9166666666666666,
+    "f1": 0.7333333333333334,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 10.5,
+    "cpu_peak_pct": 30.4,
+    "proc_cpu_avg_pct": 15.8,
+    "mem_avg_mb": 915.4,
+    "mem_peak_mb": 917.9,
+    "sys_mem_avg_mb": 6390.4,
+    "sys_mem_avg_pct": 54.9,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.7692307692307693,
+          "recall": 0.9090909090909091,
+          "f1": 0.8333333333333333,
+          "tp": 10,
+          "fp": 3,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 4,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6111111111111112,
+        "recall": 0.9166666666666666,
+        "f1": 0.7333333333333334,
+        "tp": 11,
+        "fp": 7,
+        "fn": 1,
+        "oov_recall": 0.9166666666666666
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Citibank",
+          "ground_truth_target": "BGFIBank DRC",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Commerzbank",
+          "ground_truth_target": "Citibank",
+          "ratio": 52.63157894736843
+        },
+        {
+          "entity": "BGFIBank DRC",
+          "ground_truth_target": "Citibank",
+          "ratio": 50.0
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:06:16.451950+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 4,
+    "record_id": "15",
+    "model": "gemma4:31b-cloud_rag_enhanced",
+    "latency_sec": 4.5386433601379395,
+    "tokens_per_sec": 8.59,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.4444444444444444,
+    "recall": 1.0,
+    "f1": 0.6153846153846153,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 15.8,
+    "cpu_peak_pct": 50.0,
+    "proc_cpu_avg_pct": 15.6,
+    "mem_avg_mb": 918.0,
+    "mem_peak_mb": 918.4,
+    "sys_mem_avg_mb": 6355.8,
+    "sys_mem_avg_pct": 54.7,
+    "vram_mb": 0.0,
+    "model_disk_mb": 0.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.75,
+          "recall": 1.0,
+          "f1": 0.8571428571428571,
+          "tp": 3,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 4,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.4444444444444444,
+        "recall": 1.0,
+        "f1": 0.6153846153846153,
+        "tp": 4,
+        "fp": 5,
+        "fn": 0,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-06T03:06:14.894877+00:00",
+      "model_version": "gemma4:31b-cloud",
+      "prompt_hash": "a6af280e"
+    }
+  }
+]

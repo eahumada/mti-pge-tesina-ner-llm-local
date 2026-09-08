@@ -644,3 +644,22 @@ ese número sea el que corresponde.** `total_records` está en el resumen precis
 
 Emparenta con `§L47` y `§L49`: las tres son la misma debilidad, que una comprobación mire menos de lo que su
 nombre promete. Aquí lo que se mira de menos es *sobre qué población* se calculó el número.
+
+### L51. Lo que no se versiona no existe, y el detalle por registro es lo primero que se echa de menos
+
+Los `detailed_results.json` estaban ignorados en git. Nadie lo decidió por una razón vigente: quedó así, y
+el coste apareció tres veces en forma de «esa cifra no se puede recalcular, hay que volver a inferir»
+(`§F67`).
+
+El patrón se repite con los `benchmark.log`, que también estuvieron ignorados hasta que se perdieron líneas
+de dos de ellos y solo se pudieron reconstruir las de uno. **Dos veces el mismo defecto, sobre dos ficheros
+distintos, y la regla que se escribió la primera vez no alcanzó al segundo.**
+
+Lo que distingue a estos ficheros no es su tamaño ni su formato, sino **qué se pierde si desaparecen**. Un
+agregado se puede volver a calcular a partir del detalle; el detalle solo se puede volver a obtener
+re-ejecutando el experimento, que en este proyecto son decenas de horas de máquina. La pregunta correcta
+antes de ignorar algo no es «¿ocupa mucho?» sino **«¿podría reconstruirlo si mañana no estuviera?»**.
+
+Corolario operativo: cuando se escriba una regla de conservación para una clase de artefacto, revisar en el
+mismo turno qué **otras** clases cumplen el mismo criterio. La regla de los logs se escribió sin mirar si
+había algo más en la misma situación, y lo había.
