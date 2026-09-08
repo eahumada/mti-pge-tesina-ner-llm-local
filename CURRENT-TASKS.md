@@ -144,6 +144,27 @@ Para **cada tarea** que ejecutes:
 
 ---
 
+### 1.5 ✅ COMPLETADA — Ampliación de la introducción y primeras figuras del informe (2026-09-08 15:40→16:05)
+
+- **Archivos tocados:** `doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.md`,
+  `doc/figuras/` (nuevo), `tools/generar_figuras_informe.py` (nuevo), `TODO-INFORME-FINAL.md`.
+  Ninguno declarado `EN CURSO` por otro agente.
+- **Commits:** `390899b` (introducción) y `6f5aa74` (figuras). Propagados a `main` y a
+  `backup/revision-final-20260908`; las tres ramas en `6f5aa74`.
+- **Resultado:** introducción de 1 068 → 1 457 palabras (~2,1 pp); dos figuras a 300 ppp con leyenda debajo,
+  como pide la norma. Comprobaciones mecánicas sin fallos.
+- ⚠️ **Para Claude Desktop:** las figuras hay que insertarlas en los `.docx` con el estilo `image` y su
+  leyenda con `figurecaption`, y **re-verificar el límite de 25 páginas**: la estimación del cuerpo sube a
+  ~24 páginas (medición base: PDF entregado, 31 pp totales, Anexo A en la 21, cuerpo 20 pp, 684 pal/pp).
+- **Corrección registrada:** la ampliación se hizo bajo el supuesto de que la plantilla pedía 3-4 páginas de
+  introducción. La norma dice «a lo más 3». La ampliación se conserva por quedar dentro del máximo y atender
+  el reparo del profesor guía, pero la introducción no debe crecer más. Detalle en `TODO-INFORME-FINAL.md`.
+- **Estado de la purga de GitHub:** sigue **sin completarse**. El objeto pre-reescritura `bb79279` continúa
+  devolviendo HTTP 200 con autenticación. El repositorio **no debe hacerse público** hasta que devuelva 404.
+  Comprobado además que la clave ya **no** está en ninguna parte de la historia alcanzable ni en el árbol.
+
+---
+
 ## 2. Claude Desktop
 
 > **Responsable de la edición y el formato de los `.docx`.** Detalle completo en
