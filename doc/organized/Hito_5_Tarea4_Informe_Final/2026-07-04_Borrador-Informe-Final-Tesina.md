@@ -639,7 +639,7 @@ _Tabla 9. Estructura del repositorio de código_
 | `data/dictionaries/persons.json` | Diccionario de personas (v1.0) |
 | `data/dictionaries/organizations.json` | Diccionario de organizaciones (v1.0) |
 | `data/dictionaries/augmented_persons.json` | Personas aumentadas (v1.0) |
-| `data/knowledge_base/` | Base de Conocimientos KB RAG (v1.1, NUEVO) |
+| `data/knowledge_base/` | Base de conocimientos del RAG contextual: guías tipológicas, reglas y ejemplares |
 | `data/knowledge_base/domain_guidelines.json` | 5 dominios con reglas NER tipológicas |
 | `data/knowledge_base/few_shot_exemplars.json` | 7 ejemplares anotados (artículos reales) |
 | `results/` | Salidas del benchmark |
