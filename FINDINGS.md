@@ -1845,7 +1845,7 @@ a comprobar el criterio de `§F53` por otra vía, sumando la matriz de confusió
 tiene respaldo. `CLAUDE.md` ya lo dejó escrito el 2026-09-08 para los `benchmark.log`, y la regla no se
 extendió al detalle por registro.
 
-**Corrección aplicada.** Retiradas las dos reglas del `.gitignore` y versionados los **23 ficheros
+**Corrección aplicada.** Retiradas las dos reglas del `.gitignore` y versionados los **22 ficheros
 existentes**, unos 16 MB. Comprobado antes que **ninguno contiene modelos excluidos**, que era la razón
 legítima para no versionarlos. Las otras diez reglas del fichero no se tocaron.
 
@@ -2008,3 +2008,20 @@ deja constancia y la receta:
 
 **Comprobación que se incorpora al verificador:** todo JSON rastreado debe parsear, con los `.jsonl`
 declarados como excepción explícita. Cuesta un segundo y cubre una clase entera de defecto.
+
+### §F67.ter — Auditoría de los hallazgos de esta sesión
+
+Comprobados contra los datos los seis valores numéricos que sostienen `§F59`, `§F65`, `§F67`, `§F67.bis`,
+`§F69` y `§F70`, con el mismo criterio que se aplica al informe. **Cinco reproducen exactamente**: los
+71 476 bytes restaurados, los 12 respaldos de 6,8 MB, el 12 852 de 19 464 al 66,0 %, el 240 de 480 de las
+claves sin valor y los 16,1 MB de detalle por registro.
+
+**Uno estaba mal.** `§F67` decía «23 ficheros» de `detailed_results.json` versionados y son **22**: el
+barrido inicial listaba `results/detailed_results.json` dos veces, porque lo recogía el patrón recursivo y
+además se añadía explícitamente. Corregido en `FINDINGS`, en `CURRENT-TASKS §1.18` y en el comentario del
+`.gitignore`, que era donde más importaba: ese comentario existe para que nadie retire la regla, y una cifra
+que no cuadra al comprobarla resta credibilidad a la explicación entera.
+
+La cita de `§F65` a `+10,01` y `+2,19` pp procede del manifiesto de artículos contaminados, que **aún vive
+solo en la rama del equipo de 48 GB** y llegará a `main` con su fusión. No es un error, pero conviene saber
+que hoy esa referencia no se puede seguir desde `main`.
