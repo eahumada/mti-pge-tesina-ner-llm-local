@@ -1,0 +1,96 @@
+2026-07-01 12:51:09,263 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-07-01 12:51:09,273 [WARNING] ner_benchmark: Model 'gemini-3.1-flash-lite' is not pulled in local Ollama repository. The benchmark will skip or warn when invoking this model.
+2026-07-01 12:51:09,274 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-07-01 12:51:09,274 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-07-01 12:51:09,274 [INFO] ner_benchmark: Corpus loaded: 15 articles split into 5 batches.
+2026-07-01 12:51:09,274 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-07-01 12:51:09,276 [WARNING] ner_benchmark: Skipping model gemini-3.1-flash-lite because it is not available in Ollama.
+2026-07-01 12:51:09,276 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=2 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-07-01 12:51:09,276 [INFO] ner_benchmark.pub_sub: Published task gemini-3.1-flash-lite-b0-1782924669 for batch 0 to memory queue.
+2026-07-01 12:51:09,276 [INFO] ner_benchmark.pub_sub: Published task gemini-3.1-flash-lite-b1-1782924669 for batch 1 to memory queue.
+2026-07-01 12:51:09,276 [INFO] ner_benchmark.pub_sub: Published task gemini-3.1-flash-lite-b2-1782924669 for batch 2 to memory queue.
+2026-07-01 12:51:09,277 [INFO] ner_benchmark.pub_sub: Published task gemini-3.1-flash-lite-b3-1782924669 for batch 3 to memory queue.
+2026-07-01 12:51:09,277 [INFO] ner_benchmark.pub_sub: Published task gemini-3.1-flash-lite-b4-1782924669 for batch 4 to memory queue.
+2026-07-01 12:51:09,277 [INFO] ner_benchmark: Running model 'gemini-3.1-flash-lite' with 2 workers (AIMD adaptive, circuit=CLOSED)...
+2026-07-01 12:51:09,277 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemini-3.1-flash-lite-b0-1782924669 from memory queue.
+2026-07-01 12:51:09,277 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemini-3.1-flash-lite-b1-1782924669 from memory queue.
+2026-07-01 12:51:09,277 [INFO] ner_benchmark: Processing batch 1 with 2 parallel workers...
+2026-07-01 12:51:09,277 [INFO] ner_benchmark: [Worker 1] Model 'gemini-3.1-flash-lite' (Mapped: 'gemini-3.1-flash-lite') -> Extracting entities for record '1'...
+2026-07-01 12:51:09,277 [INFO] ner_benchmark: [Worker 2] Model 'gemini-3.1-flash-lite' (Mapped: 'gemini-3.1-flash-lite') -> Extracting entities for record '2'...
+2026-07-01 12:51:09,277 [INFO] ner_benchmark: Processing batch 2 with 2 parallel workers...
+2026-07-01 12:51:09,277 [INFO] ner_benchmark: [Worker 1] Model 'gemini-3.1-flash-lite' (Mapped: 'gemini-3.1-flash-lite') -> Extracting entities for record '4'...
+2026-07-01 12:51:09,277 [INFO] ner_benchmark: [Worker 2] Model 'gemini-3.1-flash-lite' (Mapped: 'gemini-3.1-flash-lite') -> Extracting entities for record '5'...
+2026-07-01 12:51:09,277 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-3.1-flash-lite' → VertexAIProvider
+2026-07-01 12:51:09,277 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-3.1-flash-lite' → VertexAIProvider
+2026-07-01 12:51:09,277 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-3.1-flash-lite' → VertexAIProvider
+2026-07-01 12:51:09,278 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-3.1-flash-lite' → VertexAIProvider
+/Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/repos/ner-llm-entity-benchmark/src/providers/vertexai_provider.py:206: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai  # noqa: F401
+2026-07-01 12:51:11,137 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 12:51:11,137 [INFO] ner_benchmark: [Worker 3] Model 'gemini-3.1-flash-lite' (Mapped: 'gemini-3.1-flash-lite') -> Extracting entities for record '6'...
+2026-07-01 12:51:11,138 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-3.1-flash-lite' → VertexAIProvider
+2026-07-01 12:51:11,217 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 12:51:11,217 [INFO] ner_benchmark: [Worker 3] Model 'gemini-3.1-flash-lite' (Mapped: 'gemini-3.1-flash-lite') -> Extracting entities for record '3'...
+2026-07-01 12:51:11,218 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-3.1-flash-lite' → VertexAIProvider
+2026-07-01 12:51:11,406 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 12:51:11,508 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 12:51:11,876 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 12:51:11,877 [INFO] ner_benchmark.pub_sub: Acknowledged task gemini-3.1-flash-lite-b1-1782924669 in memory queue.
+2026-07-01 12:51:11,878 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemini-3.1-flash-lite-b2-1782924669 from memory queue.
+2026-07-01 12:51:11,878 [INFO] ner_benchmark: Processing batch 3 with 2 parallel workers...
+2026-07-01 12:51:11,878 [INFO] ner_benchmark: [Worker 1] Model 'gemini-3.1-flash-lite' (Mapped: 'gemini-3.1-flash-lite') -> Extracting entities for record '7'...
+2026-07-01 12:51:11,879 [INFO] ner_benchmark: [Worker 2] Model 'gemini-3.1-flash-lite' (Mapped: 'gemini-3.1-flash-lite') -> Extracting entities for record '8'...
+2026-07-01 12:51:11,879 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-3.1-flash-lite' → VertexAIProvider
+2026-07-01 12:51:11,879 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-3.1-flash-lite' → VertexAIProvider
+2026-07-01 12:51:13,234 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 12:51:13,236 [INFO] ner_benchmark.pub_sub: Acknowledged task gemini-3.1-flash-lite-b0-1782924669 in memory queue.
+2026-07-01 12:51:13,238 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemini-3.1-flash-lite-b3-1782924669 from memory queue.
+2026-07-01 12:51:13,238 [INFO] ner_benchmark: Processing batch 4 with 2 parallel workers...
+2026-07-01 12:51:13,238 [INFO] ner_benchmark: [Worker 1] Model 'gemini-3.1-flash-lite' (Mapped: 'gemini-3.1-flash-lite') -> Extracting entities for record '10'...
+2026-07-01 12:51:13,238 [INFO] ner_benchmark: [Worker 2] Model 'gemini-3.1-flash-lite' (Mapped: 'gemini-3.1-flash-lite') -> Extracting entities for record '11'...
+2026-07-01 12:51:13,238 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-3.1-flash-lite' → VertexAIProvider
+2026-07-01 12:51:13,238 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-3.1-flash-lite' → VertexAIProvider
+2026-07-01 12:51:13,368 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 12:51:13,368 [INFO] ner_benchmark: [Worker 3] Model 'gemini-3.1-flash-lite' (Mapped: 'gemini-3.1-flash-lite') -> Extracting entities for record '9'...
+2026-07-01 12:51:13,369 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-3.1-flash-lite' → VertexAIProvider
+2026-07-01 12:51:13,611 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 12:51:15,051 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 12:51:15,052 [INFO] ner_benchmark.pub_sub: Acknowledged task gemini-3.1-flash-lite-b2-1782924669 in memory queue.
+2026-07-01 12:51:15,054 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemini-3.1-flash-lite-b4-1782924669 from memory queue.
+2026-07-01 12:51:15,054 [INFO] ner_benchmark: Processing batch 5 with 2 parallel workers...
+2026-07-01 12:51:15,054 [INFO] ner_benchmark: [Worker 1] Model 'gemini-3.1-flash-lite' (Mapped: 'gemini-3.1-flash-lite') -> Extracting entities for record '13'...
+2026-07-01 12:51:15,054 [INFO] ner_benchmark: [Worker 2] Model 'gemini-3.1-flash-lite' (Mapped: 'gemini-3.1-flash-lite') -> Extracting entities for record '14'...
+2026-07-01 12:51:15,055 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-3.1-flash-lite' → VertexAIProvider
+2026-07-01 12:51:15,055 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-3.1-flash-lite' → VertexAIProvider
+2026-07-01 12:51:15,158 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 12:51:15,158 [INFO] ner_benchmark: [Worker 3] Model 'gemini-3.1-flash-lite' (Mapped: 'gemini-3.1-flash-lite') -> Extracting entities for record '12'...
+2026-07-01 12:51:15,158 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-3.1-flash-lite' → VertexAIProvider
+2026-07-01 12:51:15,339 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 12:51:16,636 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 12:51:16,638 [INFO] ner_benchmark.pub_sub: Acknowledged task gemini-3.1-flash-lite-b3-1782924669 in memory queue.
+2026-07-01 12:51:16,867 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 12:51:16,868 [INFO] ner_benchmark: [Worker 3] Model 'gemini-3.1-flash-lite' (Mapped: 'gemini-3.1-flash-lite') -> Extracting entities for record '15'...
+2026-07-01 12:51:16,868 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-3.1-flash-lite' → VertexAIProvider
+2026-07-01 12:51:17,439 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 12:51:17,736 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 12:51:17,738 [INFO] ner_benchmark.pub_sub: Acknowledged task gemini-3.1-flash-lite-b4-1782924669 in memory queue.
+2026-07-01 12:51:17,741 [INFO] ner_benchmark: [AIMD] Model 'gemini-3.1-flash-lite' done. Controller status: {'current_workers': 2, 'min_workers': 1, 'max_workers': 12, 'ai_ceiling': 9, 'circuit_state': 'CLOSED', 'consecutive_failures': 0, 'total_rate_limit_events': 0, 'total_ai_steps': 0, 'total_md_steps': 0, 'secs_since_last_error': None, 'stable_window_sec': 600.0, 'increase_interval_sec': 120.0}
+2026-07-01 12:51:17,741 [INFO] ner_benchmark: ==================================================
+2026-07-01 12:51:17,741 [INFO] ner_benchmark: BENCHMARK EXTRACTIONS COMPLETE. PROCESSING METRICS...
+2026-07-01 12:51:17,741 [INFO] ner_benchmark: ==================================================
+2026-07-01 12:51:17,761 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.
+
+==================================================
+      FINAL BENCHMARK PERFORMANCE RESULTS
+==================================================
+                             f1  precision    recall  hallucination_rate  latency_sec
+gemini-3.1-flash-lite  0.654714   0.540897  0.846883                 0.0     1.694567
+==================================================
+Full reports saved under: results/ directory.

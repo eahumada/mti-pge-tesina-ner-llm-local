@@ -1,0 +1,1243 @@
+2026-07-01 12:48:50,397 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-07-01 12:48:50,405 [WARNING] ner_benchmark: Model 'gemini-1.5-flash' is not pulled in local Ollama repository. The benchmark will skip or warn when invoking this model.
+2026-07-01 12:48:50,407 [WARNING] ner_benchmark: Model 'gliner:medium' is not pulled in local Ollama repository. The benchmark will skip or warn when invoking this model.
+2026-07-01 12:48:50,407 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-07-01 12:48:50,407 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-07-01 12:48:50,408 [INFO] ner_benchmark: Corpus loaded: 15 articles split into 5 batches.
+2026-07-01 12:48:50,408 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-07-01 12:48:50,410 [WARNING] ner_benchmark: Skipping model gemini-1.5-flash because it is not available in Ollama.
+2026-07-01 12:48:50,412 [WARNING] ner_benchmark: Skipping model gliner:medium because it is not available in Ollama.
+2026-07-01 12:48:50,412 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=2 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-07-01 12:48:50,414 [INFO] ner_benchmark.pub_sub: Published task gemini-1.5-flash-b0-1782924530 for batch 0 to memory queue.
+2026-07-01 12:48:50,414 [INFO] ner_benchmark.pub_sub: Published task gemini-1.5-flash-b1-1782924530 for batch 1 to memory queue.
+2026-07-01 12:48:50,414 [INFO] ner_benchmark.pub_sub: Published task gemini-1.5-flash-b2-1782924530 for batch 2 to memory queue.
+2026-07-01 12:48:50,414 [INFO] ner_benchmark.pub_sub: Published task gemini-1.5-flash-b3-1782924530 for batch 3 to memory queue.
+2026-07-01 12:48:50,414 [INFO] ner_benchmark.pub_sub: Published task gemini-1.5-flash-b4-1782924530 for batch 4 to memory queue.
+2026-07-01 12:48:50,414 [INFO] ner_benchmark: Running model 'gemini-1.5-flash' with 2 workers (AIMD adaptive, circuit=CLOSED)...
+2026-07-01 12:48:50,415 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemini-1.5-flash-b0-1782924530 from memory queue.
+2026-07-01 12:48:50,415 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemini-1.5-flash-b1-1782924530 from memory queue.
+2026-07-01 12:48:50,415 [INFO] ner_benchmark: Processing batch 1 with 2 parallel workers...
+2026-07-01 12:48:50,415 [INFO] ner_benchmark: [Worker 1] Model 'gemini-1.5-flash' (Mapped: 'gemini-1.5-flash') -> Extracting entities for record '1'...
+2026-07-01 12:48:50,415 [INFO] ner_benchmark: [Worker 2] Model 'gemini-1.5-flash' (Mapped: 'gemini-1.5-flash') -> Extracting entities for record '2'...
+2026-07-01 12:48:50,415 [INFO] ner_benchmark: Processing batch 2 with 2 parallel workers...
+2026-07-01 12:48:50,415 [INFO] ner_benchmark: [Worker 1] Model 'gemini-1.5-flash' (Mapped: 'gemini-1.5-flash') -> Extracting entities for record '4'...
+2026-07-01 12:48:50,415 [INFO] ner_benchmark: [Worker 2] Model 'gemini-1.5-flash' (Mapped: 'gemini-1.5-flash') -> Extracting entities for record '5'...
+2026-07-01 12:48:50,417 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-1.5-flash' → VertexAIProvider
+2026-07-01 12:48:50,417 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-1.5-flash' → VertexAIProvider
+2026-07-01 12:48:50,417 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-1.5-flash' → VertexAIProvider
+2026-07-01 12:48:50,417 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-1.5-flash' → VertexAIProvider
+/Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/repos/ner-llm-entity-benchmark/src/providers/vertexai_provider.py:206: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai  # noqa: F401
+2026-07-01 12:48:51,003 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:48:51,003 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:48:51,636 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:48:51,645 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:48:51,845 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 1/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:48:51,946 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 1/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:48:51,947 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 1/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:48:52,571 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 1/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:48:53,901 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:48:53,930 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:48:54,005 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:48:54,544 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:48:54,809 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 2/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:48:54,866 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 2/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:48:54,942 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 2/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:48:55,509 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 2/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:48:57,783 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:48:57,825 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:48:57,906 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:48:57,991 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 3/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:48:57,991 [INFO] ner_benchmark: [Worker 3] Model 'gemini-1.5-flash' (Mapped: 'gemini-1.5-flash') -> Extracting entities for record '6'...
+2026-07-01 12:48:57,991 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-1.5-flash' → VertexAIProvider
+2026-07-01 12:48:58,582 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:48:58,683 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 3/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:48:58,684 [INFO] ner_benchmark: [Worker 3] Model 'gemini-1.5-flash' (Mapped: 'gemini-1.5-flash') -> Extracting entities for record '3'...
+2026-07-01 12:48:58,684 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-1.5-flash' → VertexAIProvider
+2026-07-01 12:48:58,843 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 3/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:48:58,957 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:48:59,166 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 1/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:48:59,517 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 3/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:48:59,637 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:00,629 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 1/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:01,082 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:01,867 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:02,024 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 2/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:02,755 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 2/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:04,263 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:04,487 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 3/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:04,488 [INFO] ner_benchmark.pub_sub: Acknowledged task gemini-1.5-flash-b1-1782924530 in memory queue.
+2026-07-01 12:49:04,489 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemini-1.5-flash-b2-1782924530 from memory queue.
+2026-07-01 12:49:04,489 [INFO] ner_benchmark: Processing batch 3 with 2 parallel workers...
+2026-07-01 12:49:04,489 [INFO] ner_benchmark: [Worker 1] Model 'gemini-1.5-flash' (Mapped: 'gemini-1.5-flash') -> Extracting entities for record '7'...
+2026-07-01 12:49:04,489 [INFO] ner_benchmark: [Worker 2] Model 'gemini-1.5-flash' (Mapped: 'gemini-1.5-flash') -> Extracting entities for record '8'...
+2026-07-01 12:49:04,489 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-1.5-flash' → VertexAIProvider
+2026-07-01 12:49:04,489 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-1.5-flash' → VertexAIProvider
+2026-07-01 12:49:05,458 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:05,468 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:05,734 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:06,352 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 1/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:06,415 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 1/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:06,683 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 3/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:06,684 [INFO] ner_benchmark.pub_sub: Acknowledged task gemini-1.5-flash-b0-1782924530 in memory queue.
+2026-07-01 12:49:06,685 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemini-1.5-flash-b3-1782924530 from memory queue.
+2026-07-01 12:49:06,685 [INFO] ner_benchmark: Processing batch 4 with 2 parallel workers...
+2026-07-01 12:49:06,685 [INFO] ner_benchmark: [Worker 1] Model 'gemini-1.5-flash' (Mapped: 'gemini-1.5-flash') -> Extracting entities for record '10'...
+2026-07-01 12:49:06,685 [INFO] ner_benchmark: [Worker 2] Model 'gemini-1.5-flash' (Mapped: 'gemini-1.5-flash') -> Extracting entities for record '11'...
+2026-07-01 12:49:06,685 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-1.5-flash' → VertexAIProvider
+2026-07-01 12:49:06,685 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-1.5-flash' → VertexAIProvider
+2026-07-01 12:49:07,618 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:07,715 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:07,838 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 1/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:08,313 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:08,384 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:08,654 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 1/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:09,246 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 2/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:09,320 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 2/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:09,802 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:09,930 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:10,744 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 2/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:10,829 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 2/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:11,490 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:11,590 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:11,701 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 3/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:11,701 [INFO] ner_benchmark: [Worker 3] Model 'gemini-1.5-flash' (Mapped: 'gemini-1.5-flash') -> Extracting entities for record '9'...
+2026-07-01 12:49:11,701 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-1.5-flash' → VertexAIProvider
+2026-07-01 12:49:12,602 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:12,647 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 3/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:13,543 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 1/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:13,726 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:13,799 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:14,613 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 3/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:14,614 [INFO] ner_benchmark: [Worker 3] Model 'gemini-1.5-flash' (Mapped: 'gemini-1.5-flash') -> Extracting entities for record '12'...
+2026-07-01 12:49:14,614 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-1.5-flash' → VertexAIProvider
+2026-07-01 12:49:14,735 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 3/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:14,848 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:15,581 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:15,780 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 1/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:16,605 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 2/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:17,016 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:17,220 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 2/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:19,580 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:20,192 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:20,513 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 3/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:20,514 [INFO] ner_benchmark.pub_sub: Acknowledged task gemini-1.5-flash-b2-1782924530 in memory queue.
+2026-07-01 12:49:20,514 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemini-1.5-flash-b4-1782924530 from memory queue.
+2026-07-01 12:49:20,515 [INFO] ner_benchmark: Processing batch 5 with 2 parallel workers...
+2026-07-01 12:49:20,515 [INFO] ner_benchmark: [Worker 1] Model 'gemini-1.5-flash' (Mapped: 'gemini-1.5-flash') -> Extracting entities for record '13'...
+2026-07-01 12:49:20,515 [INFO] ner_benchmark: [Worker 2] Model 'gemini-1.5-flash' (Mapped: 'gemini-1.5-flash') -> Extracting entities for record '14'...
+2026-07-01 12:49:20,515 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-1.5-flash' → VertexAIProvider
+2026-07-01 12:49:20,515 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-1.5-flash' → VertexAIProvider
+2026-07-01 12:49:20,821 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:21,088 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 3/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:21,089 [INFO] ner_benchmark.pub_sub: Acknowledged task gemini-1.5-flash-b3-1782924530 in memory queue.
+2026-07-01 12:49:21,480 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:21,697 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 1/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:22,353 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 1/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:23,774 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:23,997 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 2/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:24,387 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:25,430 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 2/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:26,945 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:27,682 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:27,879 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 3/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:27,879 [INFO] ner_benchmark: [Worker 3] Model 'gemini-1.5-flash' (Mapped: 'gemini-1.5-flash') -> Extracting entities for record '15'...
+2026-07-01 12:49:27,879 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gemini-1.5-flash' → VertexAIProvider
+2026-07-01 12:49:27,881 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 3/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:28,844 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:29,779 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 1/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:31,818 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:32,681 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 2/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:35,587 [WARNING] ner_benchmark.providers.vertexai: GenerativeAI SDK failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.. Attempting direct HTTP REST fallback.
+2026-07-01 12:49:36,534 [WARNING] ner_benchmark.providers.vertexai: VertexAI attempt 3/3 failed for 'gemini-1.5-flash': Gemini API REST fallback failed with HTTP 400: {
+  "error": {
+    "code": 400,
+    "message": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "description": "Invalid JSON payload received. Unknown name \"systemInstruction\": Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+2026-07-01 12:49:36,534 [INFO] ner_benchmark.pub_sub: Acknowledged task gemini-1.5-flash-b4-1782924530 in memory queue.
+2026-07-01 12:49:36,536 [INFO] ner_benchmark: [AIMD] Model 'gemini-1.5-flash' done. Controller status: {'current_workers': 2, 'min_workers': 1, 'max_workers': 12, 'ai_ceiling': 9, 'circuit_state': 'CLOSED', 'consecutive_failures': 0, 'total_rate_limit_events': 0, 'total_ai_steps': 0, 'total_md_steps': 0, 'secs_since_last_error': None, 'stable_window_sec': 600.0, 'increase_interval_sec': 120.0}
+2026-07-01 12:49:36,536 [INFO] ner_benchmark.pub_sub: Published task gliner:medium-b0-1782924576 for batch 0 to memory queue.
+2026-07-01 12:49:36,536 [INFO] ner_benchmark.pub_sub: Published task gliner:medium-b1-1782924576 for batch 1 to memory queue.
+2026-07-01 12:49:36,536 [INFO] ner_benchmark.pub_sub: Published task gliner:medium-b2-1782924576 for batch 2 to memory queue.
+2026-07-01 12:49:36,536 [INFO] ner_benchmark.pub_sub: Published task gliner:medium-b3-1782924576 for batch 3 to memory queue.
+2026-07-01 12:49:36,536 [INFO] ner_benchmark.pub_sub: Published task gliner:medium-b4-1782924576 for batch 4 to memory queue.
+2026-07-01 12:49:36,536 [INFO] ner_benchmark: Running model 'gliner:medium' with 2 workers (AIMD adaptive, circuit=CLOSED)...
+2026-07-01 12:49:36,536 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gliner:medium-b0-1782924576 from memory queue.
+2026-07-01 12:49:36,536 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gliner:medium-b1-1782924576 from memory queue.
+2026-07-01 12:49:36,536 [INFO] ner_benchmark: Processing batch 2 with 2 parallel workers...
+2026-07-01 12:49:36,536 [INFO] ner_benchmark: Processing batch 1 with 2 parallel workers...
+2026-07-01 12:49:36,536 [INFO] ner_benchmark: [Worker 1] Model 'gliner:medium' (Mapped: 'gliner:medium') -> Extracting entities for record '4'...
+2026-07-01 12:49:36,536 [INFO] ner_benchmark: [Worker 2] Model 'gliner:medium' (Mapped: 'gliner:medium') -> Extracting entities for record '5'...
+2026-07-01 12:49:36,536 [INFO] ner_benchmark: [Worker 1] Model 'gliner:medium' (Mapped: 'gliner:medium') -> Extracting entities for record '1'...
+2026-07-01 12:49:36,536 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gliner:medium' → GlinerProvider
+2026-07-01 12:49:36,536 [INFO] ner_benchmark: [Worker 2] Model 'gliner:medium' (Mapped: 'gliner:medium') -> Extracting entities for record '2'...
+2026-07-01 12:49:36,537 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gliner:medium' → GlinerProvider
+2026-07-01 12:49:36,537 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gliner:medium' → GlinerProvider
+2026-07-01 12:49:36,537 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gliner:medium' → GlinerProvider
+2026-07-01 12:49:38,977 [INFO] ner_benchmark.providers.gliner: GlinerProvider: loading model 'urchade/gliner_medium-v2.1' (first call — may download weights).
+2026-07-01 12:49:38,977 [INFO] ner_benchmark.providers.gliner: GlinerProvider: loading model 'urchade/gliner_medium-v2.1' (first call — may download weights).
+2026-07-01 12:49:38,977 [INFO] ner_benchmark.providers.gliner: GlinerProvider: loading model 'urchade/gliner_medium-v2.1' (first call — may download weights).
+2026-07-01 12:49:38,977 [INFO] ner_benchmark.providers.gliner: GlinerProvider: loading model 'urchade/gliner_medium-v2.1' (first call — may download weights).
+/Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/repos/ner-llm-entity-benchmark/venv/lib/python3.13/site-packages/huggingface_hub/utils/_validators.py:189: UserWarning: The `resume_download` argument is deprecated and ignored in `snapshot_download`. Downloads always resume whenever possible.
+  warnings.warn(
+2026-07-01 12:49:39,189 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/urchade/gliner_medium-v2.1/revision/main "HTTP/1.1 200 OK"
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 92794.34it/s]
+2026-07-01 12:49:39,192 [INFO] gliner.model: Loading the following GLiNER type: <class 'gliner.model.UniEncoderSpanGLiNER'>...
+2026-07-01 12:49:39,192 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/urchade/gliner_medium-v2.1/revision/main "HTTP/1.1 200 OK"
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 21013.55it/s]
+2026-07-01 12:49:39,194 [INFO] gliner.model: Loading the following GLiNER type: <class 'gliner.model.UniEncoderSpanGLiNER'>...
+2026-07-01 12:49:39,201 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/urchade/gliner_medium-v2.1/revision/main "HTTP/1.1 200 OK"
+2026-07-01 12:49:39,201 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/urchade/gliner_medium-v2.1/revision/main "HTTP/1.1 200 OK"
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s][AFetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 65741.44it/s]
+Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 9523.85it/s]
+2026-07-01 12:49:39,205 [INFO] gliner.model: Loading the following GLiNER type: <class 'gliner.model.UniEncoderSpanGLiNER'>...
+2026-07-01 12:49:39,205 [INFO] gliner.model: Loading the following GLiNER type: <class 'gliner.model.UniEncoderSpanGLiNER'>...
+2026-07-01 12:49:39,379 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:39,392 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:39,393 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:39,397 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:39,408 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:39,409 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-07-01 12:49:39,409 [WARNING] huggingface_hub.utils._http: Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-07-01 12:49:39,412 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:39,431 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:39,563 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:39,573 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:39,576 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:39,582 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:39,592 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:39,594 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:39,605 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:39,622 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:39,757 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-07-01 12:49:39,765 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-07-01 12:49:39,765 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-07-01 12:49:39,794 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-07-01 12:49:39,930 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-07-01 12:49:39,944 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-07-01 12:49:39,944 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-07-01 12:49:40,042 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-07-01 12:49:40,255 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base "HTTP/1.1 200 OK"
+2026-07-01 12:49:40,671 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base "HTTP/1.1 200 OK"
+2026-07-01 12:49:40,671 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base "HTTP/1.1 200 OK"
+2026-07-01 12:49:40,674 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:40,674 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base "HTTP/1.1 200 OK"
+2026-07-01 12:49:40,695 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:40,874 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:40,874 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:40,874 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:40,893 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:40,893 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:40,893 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:50,713 [INFO] ner_benchmark.providers.gliner: GlinerProvider: model 'urchade/gliner_medium-v2.1' loaded in 11.74s.
+2026-07-01 12:49:51,420 [INFO] ner_benchmark.providers.gliner: GlinerProvider: model 'urchade/gliner_medium-v2.1' loaded in 12.44s.
+2026-07-01 12:49:51,522 [DEBUG] ner_benchmark.providers.gliner: GlinerProvider: extracted 8 entities in 0.809s (model=urchade/gliner_medium-v2.1, threshold=0.50).
+2026-07-01 12:49:51,576 [INFO] ner_benchmark: [Worker 3] Model 'gliner:medium' (Mapped: 'gliner:medium') -> Extracting entities for record '6'...
+2026-07-01 12:49:51,576 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gliner:medium' → GlinerProvider
+2026-07-01 12:49:51,576 [INFO] ner_benchmark.providers.gliner: GlinerProvider: loading model 'urchade/gliner_medium-v2.1' (first call — may download weights).
+2026-07-01 12:49:51,817 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/urchade/gliner_medium-v2.1/revision/main "HTTP/1.1 200 OK"
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 22501.63it/s]
+2026-07-01 12:49:51,820 [INFO] gliner.model: Loading the following GLiNER type: <class 'gliner.model.UniEncoderSpanGLiNER'>...
+2026-07-01 12:49:51,987 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:52,008 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+/Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/repos/ner-llm-entity-benchmark/venv/lib/python3.13/site-packages/gliner/data_processing/processor.py:417: UserWarning: Sentence of length 1012 has been truncated to 384
+  batch = [self.preprocess_example(b["tokenized_text"], b[key], class_to_ids) for b in batch_list]
+2026-07-01 12:49:52,151 [INFO] ner_benchmark.providers.gliner: GlinerProvider: model 'urchade/gliner_medium-v2.1' loaded in 13.17s.
+2026-07-01 12:49:52,204 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:52,221 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:52,292 [DEBUG] ner_benchmark.providers.gliner: GlinerProvider: extracted 18 entities in 0.871s (model=urchade/gliner_medium-v2.1, threshold=0.50).
+2026-07-01 12:49:52,390 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-07-01 12:49:52,566 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+/Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/repos/ner-llm-entity-benchmark/venv/lib/python3.13/site-packages/gliner/data_processing/processor.py:417: UserWarning: Sentence of length 966 has been truncated to 384
+  batch = [self.preprocess_example(b["tokenized_text"], b[key], class_to_ids) for b in batch_list]
+2026-07-01 12:49:52,842 [INFO] ner_benchmark.providers.gliner: GlinerProvider: model 'urchade/gliner_medium-v2.1' loaded in 13.86s.
+2026-07-01 12:49:52,957 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base "HTTP/1.1 200 OK"
+2026-07-01 12:49:52,998 [DEBUG] ner_benchmark.providers.gliner: GlinerProvider: extracted 12 entities in 0.847s (model=urchade/gliner_medium-v2.1, threshold=0.50).
+2026-07-01 12:49:53,061 [INFO] ner_benchmark: [Worker 3] Model 'gliner:medium' (Mapped: 'gliner:medium') -> Extracting entities for record '3'...
+2026-07-01 12:49:53,061 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gliner:medium' → GlinerProvider
+2026-07-01 12:49:53,061 [INFO] ner_benchmark.providers.gliner: GlinerProvider: loading model 'urchade/gliner_medium-v2.1' (first call — may download weights).
+2026-07-01 12:49:53,069 [DEBUG] ner_benchmark.providers.gliner: GlinerProvider: extracted 16 entities in 0.227s (model=urchade/gliner_medium-v2.1, threshold=0.50).
+2026-07-01 12:49:53,127 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:53,144 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:53,301 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/urchade/gliner_medium-v2.1/revision/main "HTTP/1.1 200 OK"
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 16384.00it/s]
+2026-07-01 12:49:53,303 [INFO] gliner.model: Loading the following GLiNER type: <class 'gliner.model.UniEncoderSpanGLiNER'>...
+2026-07-01 12:49:53,475 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:53,492 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:53,656 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:53,677 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:53,862 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-07-01 12:49:54,038 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-07-01 12:49:54,313 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base "HTTP/1.1 200 OK"
+2026-07-01 12:49:54,486 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:54,505 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:56,778 [INFO] ner_benchmark.providers.gliner: GlinerProvider: model 'urchade/gliner_medium-v2.1' loaded in 5.20s.
+2026-07-01 12:49:56,855 [DEBUG] ner_benchmark.providers.gliner: GlinerProvider: extracted 6 entities in 0.077s (model=urchade/gliner_medium-v2.1, threshold=0.50).
+2026-07-01 12:49:56,898 [INFO] ner_benchmark.pub_sub: Acknowledged task gliner:medium-b1-1782924576 in memory queue.
+2026-07-01 12:49:56,900 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gliner:medium-b2-1782924576 from memory queue.
+2026-07-01 12:49:56,900 [INFO] ner_benchmark: Processing batch 3 with 2 parallel workers...
+2026-07-01 12:49:56,900 [INFO] ner_benchmark: [Worker 1] Model 'gliner:medium' (Mapped: 'gliner:medium') -> Extracting entities for record '7'...
+2026-07-01 12:49:56,900 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gliner:medium' → GlinerProvider
+2026-07-01 12:49:56,900 [INFO] ner_benchmark: [Worker 2] Model 'gliner:medium' (Mapped: 'gliner:medium') -> Extracting entities for record '8'...
+2026-07-01 12:49:56,900 [INFO] ner_benchmark.providers.gliner: GlinerProvider: loading model 'urchade/gliner_medium-v2.1' (first call — may download weights).
+2026-07-01 12:49:56,900 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gliner:medium' → GlinerProvider
+2026-07-01 12:49:56,900 [INFO] ner_benchmark.providers.gliner: GlinerProvider: loading model 'urchade/gliner_medium-v2.1' (first call — may download weights).
+2026-07-01 12:49:57,072 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/urchade/gliner_medium-v2.1/revision/main "HTTP/1.1 200 OK"
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 26579.87it/s]
+2026-07-01 12:49:57,074 [INFO] gliner.model: Loading the following GLiNER type: <class 'gliner.model.UniEncoderSpanGLiNER'>...
+2026-07-01 12:49:57,075 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/urchade/gliner_medium-v2.1/revision/main "HTTP/1.1 200 OK"
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 20145.55it/s]
+2026-07-01 12:49:57,077 [INFO] gliner.model: Loading the following GLiNER type: <class 'gliner.model.UniEncoderSpanGLiNER'>...
+2026-07-01 12:49:57,242 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:57,249 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:57,259 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:57,268 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:57,425 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:57,440 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:57,442 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:57,459 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:57,611 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-07-01 12:49:57,640 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-07-01 12:49:57,797 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-07-01 12:49:57,820 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-07-01 12:49:58,078 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base "HTTP/1.1 200 OK"
+2026-07-01 12:49:58,168 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base "HTTP/1.1 200 OK"
+2026-07-01 12:49:58,248 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:58,266 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:58,354 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:49:58,373 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:49:58,998 [INFO] ner_benchmark.providers.gliner: GlinerProvider: model 'urchade/gliner_medium-v2.1' loaded in 5.94s.
+/Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/repos/ner-llm-entity-benchmark/venv/lib/python3.13/site-packages/gliner/data_processing/processor.py:417: UserWarning: Sentence of length 1218 has been truncated to 384
+  batch = [self.preprocess_example(b["tokenized_text"], b[key], class_to_ids) for b in batch_list]
+2026-07-01 12:50:00,540 [DEBUG] ner_benchmark.providers.gliner: GlinerProvider: extracted 17 entities in 1.542s (model=urchade/gliner_medium-v2.1, threshold=0.50).
+2026-07-01 12:50:00,585 [INFO] ner_benchmark.pub_sub: Acknowledged task gliner:medium-b0-1782924576 in memory queue.
+2026-07-01 12:50:00,587 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gliner:medium-b3-1782924576 from memory queue.
+2026-07-01 12:50:00,587 [INFO] ner_benchmark: Processing batch 4 with 2 parallel workers...
+2026-07-01 12:50:00,587 [INFO] ner_benchmark: [Worker 1] Model 'gliner:medium' (Mapped: 'gliner:medium') -> Extracting entities for record '10'...
+2026-07-01 12:50:00,587 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gliner:medium' → GlinerProvider
+2026-07-01 12:50:00,587 [INFO] ner_benchmark: [Worker 2] Model 'gliner:medium' (Mapped: 'gliner:medium') -> Extracting entities for record '11'...
+2026-07-01 12:50:00,587 [INFO] ner_benchmark.providers.gliner: GlinerProvider: loading model 'urchade/gliner_medium-v2.1' (first call — may download weights).
+2026-07-01 12:50:00,587 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gliner:medium' → GlinerProvider
+2026-07-01 12:50:00,588 [INFO] ner_benchmark.providers.gliner: GlinerProvider: loading model 'urchade/gliner_medium-v2.1' (first call — may download weights).
+2026-07-01 12:50:00,760 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/urchade/gliner_medium-v2.1/revision/main "HTTP/1.1 200 OK"
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 20580.49it/s]
+2026-07-01 12:50:00,762 [INFO] gliner.model: Loading the following GLiNER type: <class 'gliner.model.UniEncoderSpanGLiNER'>...
+2026-07-01 12:50:00,763 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/urchade/gliner_medium-v2.1/revision/main "HTTP/1.1 200 OK"
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 18674.55it/s]
+2026-07-01 12:50:00,765 [INFO] gliner.model: Loading the following GLiNER type: <class 'gliner.model.UniEncoderSpanGLiNER'>...
+2026-07-01 12:50:00,928 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:00,933 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:00,949 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:00,951 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:01,131 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:01,141 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:01,150 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:01,193 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:01,318 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-07-01 12:50:01,358 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-07-01 12:50:01,487 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-07-01 12:50:01,577 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-07-01 12:50:01,755 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base "HTTP/1.1 200 OK"
+2026-07-01 12:50:01,858 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base "HTTP/1.1 200 OK"
+2026-07-01 12:50:01,920 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:01,939 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:02,025 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:02,048 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:05,552 [INFO] ner_benchmark.providers.gliner: GlinerProvider: model 'urchade/gliner_medium-v2.1' loaded in 8.65s.
+/Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/repos/ner-llm-entity-benchmark/venv/lib/python3.13/site-packages/gliner/data_processing/processor.py:417: UserWarning: Sentence of length 1449 has been truncated to 384
+  batch = [self.preprocess_example(b["tokenized_text"], b[key], class_to_ids) for b in batch_list]
+2026-07-01 12:50:06,263 [INFO] ner_benchmark.providers.gliner: GlinerProvider: model 'urchade/gliner_medium-v2.1' loaded in 9.36s.
+2026-07-01 12:50:06,461 [DEBUG] ner_benchmark.providers.gliner: GlinerProvider: extracted 5 entities in 0.198s (model=urchade/gliner_medium-v2.1, threshold=0.50).
+2026-07-01 12:50:06,512 [INFO] ner_benchmark: [Worker 3] Model 'gliner:medium' (Mapped: 'gliner:medium') -> Extracting entities for record '9'...
+2026-07-01 12:50:06,512 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gliner:medium' → GlinerProvider
+2026-07-01 12:50:06,512 [INFO] ner_benchmark.providers.gliner: GlinerProvider: loading model 'urchade/gliner_medium-v2.1' (first call — may download weights).
+2026-07-01 12:50:06,520 [DEBUG] ner_benchmark.providers.gliner: GlinerProvider: extracted 11 entities in 0.968s (model=urchade/gliner_medium-v2.1, threshold=0.50).
+2026-07-01 12:50:06,683 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/urchade/gliner_medium-v2.1/revision/main "HTTP/1.1 200 OK"
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 17105.64it/s]
+2026-07-01 12:50:06,686 [INFO] gliner.model: Loading the following GLiNER type: <class 'gliner.model.UniEncoderSpanGLiNER'>...
+2026-07-01 12:50:06,876 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:06,895 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:07,069 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:07,094 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:07,268 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-07-01 12:50:07,443 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-07-01 12:50:07,854 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base "HTTP/1.1 200 OK"
+2026-07-01 12:50:08,030 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:08,056 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:10,826 [INFO] ner_benchmark.providers.gliner: GlinerProvider: model 'urchade/gliner_medium-v2.1' loaded in 10.24s.
+/Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/repos/ner-llm-entity-benchmark/venv/lib/python3.13/site-packages/gliner/data_processing/processor.py:417: UserWarning: Sentence of length 1638 has been truncated to 384
+  batch = [self.preprocess_example(b["tokenized_text"], b[key], class_to_ids) for b in batch_list]
+2026-07-01 12:50:11,391 [INFO] ner_benchmark.providers.gliner: GlinerProvider: model 'urchade/gliner_medium-v2.1' loaded in 10.80s.
+/Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/repos/ner-llm-entity-benchmark/venv/lib/python3.13/site-packages/gliner/data_processing/processor.py:417: UserWarning: Sentence of length 1585 has been truncated to 384
+  batch = [self.preprocess_example(b["tokenized_text"], b[key], class_to_ids) for b in batch_list]
+2026-07-01 12:50:11,685 [DEBUG] ner_benchmark.providers.gliner: GlinerProvider: extracted 14 entities in 0.859s (model=urchade/gliner_medium-v2.1, threshold=0.50).
+2026-07-01 12:50:11,698 [DEBUG] ner_benchmark.providers.gliner: GlinerProvider: extracted 15 entities in 0.307s (model=urchade/gliner_medium-v2.1, threshold=0.50).
+2026-07-01 12:50:11,774 [INFO] ner_benchmark: [Worker 3] Model 'gliner:medium' (Mapped: 'gliner:medium') -> Extracting entities for record '12'...
+2026-07-01 12:50:11,774 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gliner:medium' → GlinerProvider
+2026-07-01 12:50:11,774 [INFO] ner_benchmark.providers.gliner: GlinerProvider: loading model 'urchade/gliner_medium-v2.1' (first call — may download weights).
+2026-07-01 12:50:11,957 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/urchade/gliner_medium-v2.1/revision/main "HTTP/1.1 200 OK"
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 29959.31it/s]
+2026-07-01 12:50:11,959 [INFO] gliner.model: Loading the following GLiNER type: <class 'gliner.model.UniEncoderSpanGLiNER'>...
+2026-07-01 12:50:12,171 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:12,189 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:12,355 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:12,373 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:12,549 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-07-01 12:50:12,724 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-07-01 12:50:12,990 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base "HTTP/1.1 200 OK"
+2026-07-01 12:50:13,159 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:13,178 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:13,623 [INFO] ner_benchmark.providers.gliner: GlinerProvider: model 'urchade/gliner_medium-v2.1' loaded in 7.11s.
+/Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/repos/ner-llm-entity-benchmark/venv/lib/python3.13/site-packages/gliner/data_processing/processor.py:417: UserWarning: Sentence of length 824 has been truncated to 384
+  batch = [self.preprocess_example(b["tokenized_text"], b[key], class_to_ids) for b in batch_list]
+2026-07-01 12:50:14,467 [DEBUG] ner_benchmark.providers.gliner: GlinerProvider: extracted 14 entities in 0.844s (model=urchade/gliner_medium-v2.1, threshold=0.50).
+2026-07-01 12:50:14,518 [INFO] ner_benchmark.pub_sub: Acknowledged task gliner:medium-b2-1782924576 in memory queue.
+2026-07-01 12:50:14,520 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gliner:medium-b4-1782924576 from memory queue.
+2026-07-01 12:50:14,520 [INFO] ner_benchmark: Processing batch 5 with 2 parallel workers...
+2026-07-01 12:50:14,520 [INFO] ner_benchmark: [Worker 1] Model 'gliner:medium' (Mapped: 'gliner:medium') -> Extracting entities for record '13'...
+2026-07-01 12:50:14,521 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gliner:medium' → GlinerProvider
+2026-07-01 12:50:14,521 [INFO] ner_benchmark.providers.gliner: GlinerProvider: loading model 'urchade/gliner_medium-v2.1' (first call — may download weights).
+2026-07-01 12:50:14,521 [INFO] ner_benchmark: [Worker 2] Model 'gliner:medium' (Mapped: 'gliner:medium') -> Extracting entities for record '14'...
+2026-07-01 12:50:14,521 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gliner:medium' → GlinerProvider
+2026-07-01 12:50:14,521 [INFO] ner_benchmark.providers.gliner: GlinerProvider: loading model 'urchade/gliner_medium-v2.1' (first call — may download weights).
+2026-07-01 12:50:14,694 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/urchade/gliner_medium-v2.1/revision/main "HTTP/1.1 200 OK"
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 41943.04it/s]
+2026-07-01 12:50:14,696 [INFO] gliner.model: Loading the following GLiNER type: <class 'gliner.model.UniEncoderSpanGLiNER'>...
+2026-07-01 12:50:14,854 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/urchade/gliner_medium-v2.1/revision/main "HTTP/1.1 200 OK"
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 20087.66it/s]
+2026-07-01 12:50:14,855 [INFO] gliner.model: Loading the following GLiNER type: <class 'gliner.model.UniEncoderSpanGLiNER'>...
+2026-07-01 12:50:14,867 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:14,891 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:15,033 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:15,055 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:15,062 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:15,082 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:15,222 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:15,241 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:15,262 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-07-01 12:50:15,410 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-07-01 12:50:15,437 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-07-01 12:50:15,585 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-07-01 12:50:15,727 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base "HTTP/1.1 200 OK"
+2026-07-01 12:50:15,863 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base "HTTP/1.1 200 OK"
+2026-07-01 12:50:15,910 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:15,929 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:16,032 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:16,052 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:16,663 [INFO] ner_benchmark.providers.gliner: GlinerProvider: model 'urchade/gliner_medium-v2.1' loaded in 4.89s.
+/Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/repos/ner-llm-entity-benchmark/venv/lib/python3.13/site-packages/gliner/data_processing/processor.py:417: UserWarning: Sentence of length 867 has been truncated to 384
+  batch = [self.preprocess_example(b["tokenized_text"], b[key], class_to_ids) for b in batch_list]
+2026-07-01 12:50:18,217 [DEBUG] ner_benchmark.providers.gliner: GlinerProvider: extracted 16 entities in 1.553s (model=urchade/gliner_medium-v2.1, threshold=0.50).
+2026-07-01 12:50:18,264 [INFO] ner_benchmark.pub_sub: Acknowledged task gliner:medium-b3-1782924576 in memory queue.
+2026-07-01 12:50:21,665 [INFO] ner_benchmark.providers.gliner: GlinerProvider: model 'urchade/gliner_medium-v2.1' loaded in 7.14s.
+/Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/repos/ner-llm-entity-benchmark/venv/lib/python3.13/site-packages/gliner/data_processing/processor.py:417: UserWarning: Sentence of length 529 has been truncated to 384
+  batch = [self.preprocess_example(b["tokenized_text"], b[key], class_to_ids) for b in batch_list]
+2026-07-01 12:50:22,433 [INFO] ner_benchmark.providers.gliner: GlinerProvider: model 'urchade/gliner_medium-v2.1' loaded in 7.91s.
+/Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/repos/ner-llm-entity-benchmark/venv/lib/python3.13/site-packages/gliner/data_processing/processor.py:417: UserWarning: Sentence of length 948 has been truncated to 384
+  batch = [self.preprocess_example(b["tokenized_text"], b[key], class_to_ids) for b in batch_list]
+2026-07-01 12:50:22,621 [DEBUG] ner_benchmark.providers.gliner: GlinerProvider: extracted 11 entities in 0.955s (model=urchade/gliner_medium-v2.1, threshold=0.50).
+2026-07-01 12:50:22,686 [INFO] ner_benchmark: [Worker 3] Model 'gliner:medium' (Mapped: 'gliner:medium') -> Extracting entities for record '15'...
+2026-07-01 12:50:22,686 [DEBUG] ner_benchmark.providers.factory: Factory: routing model 'gliner:medium' → GlinerProvider
+2026-07-01 12:50:22,687 [INFO] ner_benchmark.providers.gliner: GlinerProvider: loading model 'urchade/gliner_medium-v2.1' (first call — may download weights).
+2026-07-01 12:50:22,695 [DEBUG] ner_benchmark.providers.gliner: GlinerProvider: extracted 10 entities in 0.262s (model=urchade/gliner_medium-v2.1, threshold=0.50).
+2026-07-01 12:50:22,929 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/urchade/gliner_medium-v2.1/revision/main "HTTP/1.1 200 OK"
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 17303.23it/s]
+2026-07-01 12:50:22,931 [INFO] gliner.model: Loading the following GLiNER type: <class 'gliner.model.UniEncoderSpanGLiNER'>...
+2026-07-01 12:50:23,138 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:23,156 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:23,333 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:23,350 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:23,517 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-07-01 12:50:23,706 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-07-01 12:50:23,987 [INFO] httpx: HTTP Request: GET https://huggingface.co/api/models/microsoft/deberta-v3-base "HTTP/1.1 200 OK"
+2026-07-01 12:50:24,155 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/microsoft/deberta-v3-base/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-07-01 12:50:24,173 [INFO] httpx: HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/microsoft/deberta-v3-base/8ccc9b6f36199bec6961081d44eb72fb3f7353f3/config.json "HTTP/1.1 200 OK"
+2026-07-01 12:50:27,093 [INFO] ner_benchmark.providers.gliner: GlinerProvider: model 'urchade/gliner_medium-v2.1' loaded in 4.41s.
+/Users/eahumada1/Documents/Personal/MTI/pge-2005-tesina-ner-llm-cumplimiento-soberano/repos/ner-llm-entity-benchmark/venv/lib/python3.13/site-packages/gliner/data_processing/processor.py:417: UserWarning: Sentence of length 1178 has been truncated to 384
+  batch = [self.preprocess_example(b["tokenized_text"], b[key], class_to_ids) for b in batch_list]
+2026-07-01 12:50:27,247 [DEBUG] ner_benchmark.providers.gliner: GlinerProvider: extracted 6 entities in 0.154s (model=urchade/gliner_medium-v2.1, threshold=0.50).
+2026-07-01 12:50:27,289 [INFO] ner_benchmark.pub_sub: Acknowledged task gliner:medium-b4-1782924576 in memory queue.
+2026-07-01 12:50:27,291 [INFO] ner_benchmark: [AIMD] Model 'gliner:medium' done. Controller status: {'current_workers': 2, 'min_workers': 1, 'max_workers': 12, 'ai_ceiling': 9, 'circuit_state': 'CLOSED', 'consecutive_failures': 0, 'total_rate_limit_events': 0, 'total_ai_steps': 0, 'total_md_steps': 0, 'secs_since_last_error': None, 'stable_window_sec': 600.0, 'increase_interval_sec': 120.0}
+2026-07-01 12:50:27,291 [INFO] ner_benchmark: ==================================================
+2026-07-01 12:50:27,291 [INFO] ner_benchmark: BENCHMARK EXTRACTIONS COMPLETE. PROCESSING METRICS...
+2026-07-01 12:50:27,291 [INFO] ner_benchmark: ==================================================
+2026-07-01 12:50:27,371 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.
+
+==================================================
+      FINAL BENCHMARK PERFORMANCE RESULTS
+==================================================
+                        f1  precision    recall  hallucination_rate  latency_sec
+gemini-1.5-flash  0.000000    1.00000  0.000000                 0.0     0.000000
+gliner:medium     0.476695    0.48064  0.519752                 0.0     0.698173
+==================================================
+Full reports saved under: results/ directory.

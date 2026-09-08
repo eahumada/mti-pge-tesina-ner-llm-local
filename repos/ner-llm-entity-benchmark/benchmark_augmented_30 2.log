@@ -1,0 +1,319 @@
+2026-07-01 17:27:56,941 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-07-01 17:27:56,959 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-07-01 17:27:56,960 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-07-01 17:27:56,960 [INFO] ner_benchmark: Corpus loaded: 30 articles split into 6 batches.
+2026-07-01 17:27:56,960 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-07-01 17:27:56,966 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=2 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-07-01 17:27:56,971 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-b0-1782941276 for batch 0 to memory queue.
+2026-07-01 17:27:56,971 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-b1-1782941276 for batch 1 to memory queue.
+2026-07-01 17:27:56,971 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-b2-1782941276 for batch 2 to memory queue.
+2026-07-01 17:27:56,971 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-b3-1782941276 for batch 3 to memory queue.
+2026-07-01 17:27:56,971 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-b4-1782941276 for batch 4 to memory queue.
+2026-07-01 17:27:56,971 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-b5-1782941276 for batch 5 to memory queue.
+2026-07-01 17:27:56,971 [INFO] ner_benchmark: Running model 'gemma4:31b' with 2 workers (AIMD adaptive, circuit=CLOSED)...
+2026-07-01 17:27:56,971 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-b0-1782941276 from memory queue.
+2026-07-01 17:27:56,971 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-b1-1782941276 from memory queue.
+2026-07-01 17:27:56,971 [INFO] ner_benchmark: Processing batch 1 with 2 parallel workers...
+2026-07-01 17:27:56,971 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '1'...
+2026-07-01 17:27:56,971 [INFO] ner_benchmark: Processing batch 2 with 2 parallel workers...
+2026-07-01 17:27:56,972 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '2'...
+2026-07-01 17:27:56,972 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '6'...
+2026-07-01 17:27:56,972 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '7'...
+2026-07-01 17:27:56,973 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:27:56,973 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:27:56,973 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:27:56,973 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:28:41,894 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:28:42,300 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:28:42,301 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '8'...
+2026-07-01 17:28:42,301 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:29:24,373 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:29:24,631 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:29:24,631 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '9'...
+2026-07-01 17:29:24,631 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:30:02,557 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:30:02,906 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:30:02,907 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '3'...
+2026-07-01 17:30:02,907 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:30:38,820 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:30:39,197 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:30:39,197 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '4'...
+2026-07-01 17:30:39,197 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:31:44,630 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:31:44,696 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:31:44,697 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '10'...
+2026-07-01 17:31:44,697 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:32:40,443 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:32:40,664 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:33:27,657 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:33:27,972 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:33:27,973 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '5'...
+2026-07-01 17:33:27,973 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:33:55,870 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:33:56,221 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:35:32,146 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:35:32,622 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:35:32,622 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-b1-1782941276 in memory queue.
+2026-07-01 17:35:32,624 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-b2-1782941276 from memory queue.
+2026-07-01 17:35:32,624 [INFO] ner_benchmark: Processing batch 3 with 2 parallel workers...
+2026-07-01 17:35:32,625 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '11'...
+2026-07-01 17:35:32,625 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '12'...
+2026-07-01 17:35:32,625 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:35:32,625 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:36:11,824 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:36:12,109 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:36:12,109 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-b0-1782941276 in memory queue.
+2026-07-01 17:36:12,110 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-b3-1782941276 from memory queue.
+2026-07-01 17:36:12,110 [INFO] ner_benchmark: Processing batch 4 with 2 parallel workers...
+2026-07-01 17:36:12,110 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '16'...
+2026-07-01 17:36:12,110 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '17'...
+2026-07-01 17:36:12,110 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:36:12,111 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:36:40,078 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:36:40,135 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:36:40,135 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '13'...
+2026-07-01 17:36:40,135 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:38:39,356 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:38:39,783 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:38:39,783 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '14'...
+2026-07-01 17:38:39,783 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:39:02,674 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:39:03,102 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:39:03,102 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '18'...
+2026-07-01 17:39:03,102 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:39:33,203 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:39:33,525 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:39:33,525 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '19'...
+2026-07-01 17:39:33,525 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:40:13,290 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:40:13,607 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:40:13,608 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '15'...
+2026-07-01 17:40:13,608 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:40:43,157 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:40:43,525 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:41:45,777 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:41:46,043 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:41:46,043 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '20'...
+2026-07-01 17:41:46,044 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:42:22,947 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:42:23,054 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:43:33,797 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:43:34,021 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:43:34,021 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-b2-1782941276 in memory queue.
+2026-07-01 17:43:34,024 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 937s (≥600s) | workers 2 → 3 | ceiling=9 (75% of max=12)
+2026-07-01 17:43:34,024 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-b4-1782941276 from memory queue.
+2026-07-01 17:43:34,024 [INFO] ner_benchmark: Processing batch 5 with 3 parallel workers...
+2026-07-01 17:43:34,024 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '21'...
+2026-07-01 17:43:34,024 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '22'...
+2026-07-01 17:43:34,024 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '23'...
+2026-07-01 17:43:34,024 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:43:34,024 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:43:34,024 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:44:09,842 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:44:10,095 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:44:10,096 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-b3-1782941276 in memory queue.
+2026-07-01 17:44:10,099 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-b5-1782941276 from memory queue.
+2026-07-01 17:44:10,099 [INFO] ner_benchmark: Processing batch 6 with 3 parallel workers...
+2026-07-01 17:44:10,100 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '26'...
+2026-07-01 17:44:10,100 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '27'...
+2026-07-01 17:44:10,100 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:44:10,100 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '28'...
+2026-07-01 17:44:10,100 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:44:10,100 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:45:10,391 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:45:10,488 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:45:10,488 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '24'...
+2026-07-01 17:45:10,489 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:45:43,042 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:45:43,415 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:45:43,415 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '25'...
+2026-07-01 17:45:43,415 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:46:17,541 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:46:17,855 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:46:40,069 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:46:40,269 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:46:40,270 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '29'...
+2026-07-01 17:46:40,270 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:47:13,826 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:47:14,214 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:47:14,215 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b' (Mapped: 'gemma4:31b') -> Extracting entities for record '30'...
+2026-07-01 17:47:14,215 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-07-01 17:47:36,016 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:47:36,047 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:48:10,335 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:48:10,561 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:48:37,419 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:48:37,895 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:48:37,895 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-b4-1782941276 in memory queue.
+2026-07-01 17:48:37,899 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 1241s (≥600s) | workers 3 → 4 | ceiling=9 (75% of max=12)
+2026-07-01 17:49:09,272 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:49:09,432 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:49:32,529 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:49:32,708 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:49:32,710 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-b5-1782941276 in memory queue.
+2026-07-01 17:49:32,713 [INFO] ner_benchmark: [AIMD] Model 'gemma4:31b' done. Controller status: {'current_workers': 4, 'min_workers': 1, 'max_workers': 12, 'ai_ceiling': 9, 'circuit_state': 'CLOSED', 'consecutive_failures': 0, 'total_rate_limit_events': 0, 'total_ai_steps': 2, 'total_md_steps': 0, 'secs_since_last_error': None, 'stable_window_sec': 600.0, 'increase_interval_sec': 120.0}
+2026-07-01 17:49:32,713 [INFO] ner_benchmark: Unloading model weights for gemma4:31b to protect VRAM.
+2026-07-01 17:49:32,770 [INFO] ner_benchmark.llm_runner: Successfully unloaded weights for gemma4:31b from VRAM.
+2026-07-01 17:49:34,790 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-mlx-b0-1782942574 for batch 0 to memory queue.
+2026-07-01 17:49:34,790 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-mlx-b1-1782942574 for batch 1 to memory queue.
+2026-07-01 17:49:34,790 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-mlx-b2-1782942574 for batch 2 to memory queue.
+2026-07-01 17:49:34,790 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-mlx-b3-1782942574 for batch 3 to memory queue.
+2026-07-01 17:49:34,790 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-mlx-b4-1782942574 for batch 4 to memory queue.
+2026-07-01 17:49:34,790 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-mlx-b5-1782942574 for batch 5 to memory queue.
+2026-07-01 17:49:34,790 [INFO] ner_benchmark: Running model 'gemma4:31b-mlx' with 4 workers (AIMD adaptive, circuit=CLOSED)...
+2026-07-01 17:49:34,790 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-mlx-b0-1782942574 from memory queue.
+2026-07-01 17:49:34,790 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-mlx-b1-1782942574 from memory queue.
+2026-07-01 17:49:34,790 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-mlx-b2-1782942574 from memory queue.
+2026-07-01 17:49:34,790 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-mlx-b3-1782942574 from memory queue.
+2026-07-01 17:49:34,790 [INFO] ner_benchmark: Processing batch 1 with 4 parallel workers...
+2026-07-01 17:49:34,790 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '1'...
+2026-07-01 17:49:34,790 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:49:34,791 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '2'...
+2026-07-01 17:49:34,791 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '3'...
+2026-07-01 17:49:34,791 [INFO] ner_benchmark: Processing batch 4 with 4 parallel workers...
+2026-07-01 17:49:34,791 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '4'...
+2026-07-01 17:49:34,791 [INFO] ner_benchmark: Processing batch 3 with 4 parallel workers...
+2026-07-01 17:49:34,792 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:49:34,792 [INFO] ner_benchmark: Processing batch 2 with 4 parallel workers...
+2026-07-01 17:49:34,792 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:49:34,792 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:49:34,792 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '16'...
+2026-07-01 17:49:34,792 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '17'...
+2026-07-01 17:49:34,792 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '18'...
+2026-07-01 17:49:34,792 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '19'...
+2026-07-01 17:49:34,793 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '11'...
+2026-07-01 17:49:34,793 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:49:34,793 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '12'...
+2026-07-01 17:49:34,793 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '13'...
+2026-07-01 17:49:34,793 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:49:34,793 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '6'...
+2026-07-01 17:49:34,793 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '7'...
+2026-07-01 17:49:34,793 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:49:34,793 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:49:34,794 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '8'...
+2026-07-01 17:49:34,794 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '9'...
+2026-07-01 17:49:34,794 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:49:34,794 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '14'...
+2026-07-01 17:49:34,794 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:49:34,795 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:49:34,795 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:49:34,795 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:49:34,795 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:49:34,796 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:49:34,796 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:49:53,825 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:49:54,180 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:49:54,181 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '20'...
+2026-07-01 17:49:54,182 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:50:10,989 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:50:11,431 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:50:11,432 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '10'...
+2026-07-01 17:50:11,432 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:50:33,219 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:50:33,764 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:50:33,765 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '15'...
+2026-07-01 17:50:33,766 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:50:45,886 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:50:46,449 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:50:46,451 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '5'...
+2026-07-01 17:50:46,451 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:51:07,258 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:51:07,681 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:51:17,848 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:51:18,520 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:51:30,067 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:51:30,591 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:51:38,482 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:51:38,714 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:52:16,529 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:52:16,752 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:52:35,477 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:52:35,539 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:52:48,557 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:52:48,666 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:53:08,228 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:53:08,473 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:53:17,111 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:53:17,684 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:53:25,227 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:53:25,788 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:53:34,289 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:53:34,369 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:53:49,229 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:53:49,614 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:54:01,674 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:54:01,848 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:54:01,851 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-mlx-b3-1782942574 in memory queue.
+2026-07-01 17:54:01,857 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 1565s (≥600s) | workers 4 → 5 | ceiling=9 (75% of max=12)
+2026-07-01 17:54:01,857 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-mlx-b4-1782942574 from memory queue.
+2026-07-01 17:54:01,860 [INFO] ner_benchmark: Processing batch 5 with 5 parallel workers...
+2026-07-01 17:54:01,861 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '21'...
+2026-07-01 17:54:01,861 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '22'...
+2026-07-01 17:54:01,861 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '23'...
+2026-07-01 17:54:01,861 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:54:01,861 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '24'...
+2026-07-01 17:54:01,861 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '25'...
+2026-07-01 17:54:01,861 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:54:01,861 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:54:01,862 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:54:01,862 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:54:32,456 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:54:32,717 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:54:32,719 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-mlx-b1-1782942574 in memory queue.
+2026-07-01 17:54:32,721 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-mlx-b5-1782942574 from memory queue.
+2026-07-01 17:54:32,721 [INFO] ner_benchmark: Processing batch 6 with 5 parallel workers...
+2026-07-01 17:54:32,722 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '26'...
+2026-07-01 17:54:32,722 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '27'...
+2026-07-01 17:54:32,722 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:54:32,722 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '28'...
+2026-07-01 17:54:32,722 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '29'...
+2026-07-01 17:54:32,722 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:54:32,722 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx') -> Extracting entities for record '30'...
+2026-07-01 17:54:32,723 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:54:32,723 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:54:32,724 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-07-01 17:55:14,800 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:55:14,907 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:55:14,912 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-mlx-b2-1782942574 in memory queue.
+2026-07-01 17:55:28,558 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:55:29,130 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:55:29,131 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-mlx-b0-1782942574 in memory queue.
+2026-07-01 17:55:40,129 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:55:40,258 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:56:09,430 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:56:09,864 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:56:20,209 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:56:20,422 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:56:33,403 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:56:33,673 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:56:43,982 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:56:44,508 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:56:44,509 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-mlx-b4-1782942574 in memory queue.
+2026-07-01 17:56:44,514 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 1728s (≥600s) | workers 5 → 6 | ceiling=9 (75% of max=12)
+2026-07-01 17:57:04,024 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:57:04,216 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:57:10,944 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:57:11,226 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:57:19,062 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:57:19,360 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:57:27,445 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:57:27,612 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:57:40,688 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-07-01 17:57:40,733 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-07-01 17:57:40,739 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-mlx-b5-1782942574 in memory queue.
+2026-07-01 17:57:40,747 [INFO] ner_benchmark: [AIMD] Model 'gemma4:31b-mlx' done. Controller status: {'current_workers': 6, 'min_workers': 1, 'max_workers': 12, 'ai_ceiling': 9, 'circuit_state': 'CLOSED', 'consecutive_failures': 0, 'total_rate_limit_events': 0, 'total_ai_steps': 4, 'total_md_steps': 0, 'secs_since_last_error': None, 'stable_window_sec': 600.0, 'increase_interval_sec': 120.0}
+2026-07-01 17:57:40,747 [INFO] ner_benchmark: Unloading model weights for gemma4:31b-mlx to protect VRAM.
+2026-07-01 17:57:40,770 [INFO] ner_benchmark.llm_runner: Successfully unloaded weights for gemma4:31b-mlx from VRAM.
+2026-07-01 17:57:42,779 [INFO] ner_benchmark: ==================================================
+2026-07-01 17:57:42,779 [INFO] ner_benchmark: BENCHMARK EXTRACTIONS COMPLETE. PROCESSING METRICS...
+2026-07-01 17:57:42,780 [INFO] ner_benchmark: ==================================================
+2026-07-01 17:57:43,216 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.
+
+==================================================
+      FINAL BENCHMARK PERFORMANCE RESULTS
+==================================================
+                      f1  precision    recall  hallucination_rate  latency_sec
+gemma4:31b      0.790303   0.733413  0.891111                 0.0   160.230099
+gemma4:31b-mlx  0.774740   0.730079  0.871667                 0.0   163.763718
+==================================================
+Full reports saved under: results/ directory.
