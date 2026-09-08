@@ -212,6 +212,8 @@ La elección del umbral es un compromiso: por debajo se admiten emparejamientos 
 
 Sobre esa base se calculan precisión, exhaustividad y F1 por artículo, que después se promedian, y una **tasa de alucinación** que mide algo distinto de las anteriores: no compara con la anotación de referencia sino con el **texto de origen**. Una entidad se considera alucinada cuando no aparece literalmente en el artículo y, además, su mejor similitud contra las ventanas deslizantes del texto (del mismo número de palabras que la entidad) queda por debajo de **70**, umbral deliberadamente más laxo que el 85 del emparejamiento. La distinción importa: una entidad correctamente extraída del artículo pero ausente de la anotación de referencia cuenta como falso positivo, no como alucinación, porque el modelo no la inventó. El módulo incorpora además la validación estadística: ANOVA de una vía para contrastar si las diferencias entre modelos y modos son significativas, pruebas post-hoc de Tukey HSD para identificar qué pares concretos difieren, intervalos de confianza al 95 % por grupo y un análisis de sensibilidad que recalcula las métricas excluyendo los artículos atípicamente largos, con el fin de comprobar que ningún resultado depende de unos pocos casos extremos.
 
+Un tercer límite, de naturaleza distinta a los anteriores porque no procede del cotejo sino del diseño, afecta a la comparabilidad de las cifras absolutas. Los prompts del sistema solicitan tres categorías de entidad, personas, organizaciones y localizaciones, mientras que los tres corpus anotan únicamente las dos primeras: el campo de localizaciones está vacío en los ciento veinte registros. Como el evaluador puntúa las tres categorías, toda localización que el modelo devuelve se contabiliza como falso positivo, sin que exista ninguna forma de acertar en ella. El efecto no es menor: **el 65 % de los falsos positivos del estudio, 20 946 de 32 201, proceden de esa categoría**. Conviene subrayar que se trata de una penalización exclusivamente de precisión, porque al no haber localizaciones anotadas tampoco puede haber omisiones: la exhaustividad no varía en ninguna configuración. Por esa razón este informe acompaña cada resultado de una segunda medición, **restringida a las categorías que el corpus efectivamente anota**, que se obtiene reagregando los desgloses por tipo ya almacenados y no requiere repetir la inferencia. Las cifras originales se conservan íntegras junto a ella, de modo que el lector pueda juzgar el alcance de la corrección; la Tabla del Anexo I recoge ambas para las cuarenta y nueve configuraciones medidas sobre el corpus N=120.
+
 ## 4. DISEÑO EXPERIMENTAL
 
 ### 4.1 Corpus de Evaluación
@@ -465,11 +467,34 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 5. Evaluación en producción (Fase 4): Despliegue piloto en Austranet con feeds reales de Google Alerts y medición de KPIs operacionales (tiempo de respuesta, carga, satisfacción del analista).
 
-6. **Extensión multiidioma (Fase 5):** Evaluar la robustez del sistema sobre textos en inglés y portugués, considerando el alcance latinoamericano del problema de compliance.
+6. **Extensión multiidioma (Fase 5):** Evaluar la robustez del sistema sobre textos en portugués, dado el alcance latinoamericano del problema de cumplimiento. El comportamiento en inglés ya queda caracterizado por los corpus del dominio empleados aquí, y el contraste entre ambos idiomas sobre el corpus N=120 aporta la primera evidencia comparativa.
 
 7. Normalización de codificación del corpus y re-evaluación (Fase 6): el corpus N=120 almacena los nombres con *mojibake* (`JosÃ© Bono` donde el nombre real es **José Bono**), defecto presente tanto en las entidades de referencia (20,1 %) como en el texto de entrada (87 % de los artículos), y por tanto **coherente entre ambos**. Esto favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía, con un efecto que varía entre −0.070 y +0.025 de F1 según el modelo (§5.3.5). La línea de trabajo consiste en normalizar la codificación en ambos lados de la comparación —reparando la referencia y la extracción antes del cotejo difuso, de modo que el resultado deje de depender de la representación de bytes— y **re-ejecutar el estudio N=120** para obtener valores absolutos libres de esta interacción. No se abordó en este trabajo porque el cotejo se resuelve en tiempo de inferencia y las extracciones por registro no se conservaron, lo que obliga a repetir la inferencia completa.
 
 ## 8. REFERENCIAS BIBLIOGRÁFICAS
+
+8. Anotación de localizaciones en el corpus de referencia (Prioridad Alta): los prompts del sistema solicitan
+   tres categorías de entidad, personas, organizaciones y localizaciones, pero ninguno de los tres corpus anota
+   la tercera. Como se explica en §3.3, eso convierte toda localización correctamente identificada en un falso
+   positivo, y de ahí procede el 65 % de los falsos positivos del estudio. La medición restringida a las dos
+   categorías anotadas, que este informe publica en paralelo, corrige el efecto sin reejecutar inferencia, pero
+   no sustituye a la solución de fondo: anotar las localizaciones y medir las tres categorías, que es la única
+   vía para saber cuánto de la precisión aparente se debe a la habilidad del modelo y cuánto al vacío del gold.
+
+9. Construcción de un corpus periodístico del dominio en español (Prioridad Alta): los dos corpus específicos
+   de cumplimiento empleados aquí, el de quince artículos anotados y el sintético de treinta, están redactados
+   en inglés, y el material en español proviene de CoNLL-2002, que es periodismo general y no del dominio. Falta
+   por tanto un corpus que reúna ambas condiciones a la vez. Las fuentes naturales son las resoluciones
+   sancionatorias de la UAF y de la CMF chilenas y la prensa económica regional, y su anotación por especialistas
+   en cumplimiento es el paso que este trabajo no pudo dar por falta de un corpus etiquetado en el dominio.
+
+10. Replicación del efecto del idioma del prompt (Prioridad Media): la ventaja de redactar la instrucción y los
+    ejemplos en español se midió en +10,40 puntos sobre el corpus de quince artículos, pero no replica: una
+    segunda ejecución sobre el mismo corpus y modelo da +3,11 puntos, y sobre el corpus de ciento veinte el
+    efecto se anula, con una diferencia de −0,43 puntos y p = 0,9328. Determinar si la ventaja existe exige un
+    diseño con réplicas y semillas declaradas sobre un corpus del tamaño suficiente, y conviene hacerlo porque
+    el mecanismo que se le atribuía, la concordancia de idioma entre prompt y texto, no puede ser el correcto:
+    la mejora se obtuvo sobre artículos en inglés.
 
 > *Formato IEEE*
 
@@ -835,3 +860,64 @@ Esta corrección **no pudo aplicarse retroactivamente**: el cotejo se resuelve e
 *Informe Final de Tesina — Magíster en Tecnologías de la Información (MTI)*  
 *Universidad Técnica Federico Santa María — Valparaíso, Chile*  
 *Septiembre de 2026*
+
+### Anexo I — Medición restringida a las categorías anotadas por el corpus
+
+_Tabla 19. Desempeño publicado y desempeño restringido a personas y organizaciones (N=120, 49 configuraciones)._
+
+Los prompts solicitan tres categorías de entidad y los corpus anotan dos, de modo que toda localización extraída se contabiliza como falso positivo (§3.3). Esta tabla acompaña cada cifra publicada de su equivalente restringido a las categorías que el corpus efectivamente anota. Se obtuvo reagregando los desgloses por tipo ya almacenados en los resultados por corrida, **sin repetir la inferencia**, tomando por configuración la corrida más reciente que aporta exactamente 120 registros. La exhaustividad es idéntica en ambas columnas porque el corpus no anota localizaciones y, por tanto, tampoco puede omitirlas: la corrección afecta solo a la precisión.
+
+| Configuración | Corrida | P | R | F1 | P restr. | F1 restr. | Δ F1 |
+|:---|:---|---:|---:|---:|---:|---:|---:|
+| gemma4:31b-cloud_baseline | gemma4_31b_cloud_n120_REMOTO | 58.58 | 76.80 | 66.46 | 86.70 | 81.45 | +14.99 |
+| gemma4:31b-cloud_kb_rag | gemma4_31b_cloud_n120_REMOTO | 57.29 | 76.50 | 65.52 | 83.19 | 79.71 | +14.19 |
+| gemma4:31b-mlx_baseline | benchmark_balanced_120_20260901_140421 | 55.41 | 72.11 | 62.67 | 82.25 | 76.85 | +14.18 |
+| gemma4:31b-mlx_kb_rag | benchmark_balanced_120_20260901_140421 | 55.77 | 72.77 | 63.15 | 80.72 | 76.54 | +13.39 |
+| gemma4:31b-mlx_rag_enhanced | benchmark_balanced_120_20260824_173036 | 55.02 | 70.51 | 61.81 | 82.67 | 76.11 | +14.30 |
+| zs-es | benchmark_balanced_120_20260825_071207 | 56.86 | 67.67 | 61.80 | 81.25 | 73.84 | +12.05 |
+| gpt-oss:20b_kb_rag | gptoss_rerun_REMOTO | 51.89 | 70.04 | 59.61 | 77.81 | 73.72 | +14.11 |
+| gemma4:latest_baseline | benchmark_balanced_120_20260901_140421 | 57.52 | 66.65 | 61.75 | 80.33 | 72.85 | +11.10 |
+| gemma4:latest_kb_rag | benchmark_balanced_120_20260901_140421 | 55.07 | 64.71 | 59.50 | 82.55 | 72.55 | +13.05 |
+| zs-en | benchmark_balanced_120_20260825_071207 | 56.75 | 64.47 | 60.36 | 80.39 | 71.56 | +11.20 |
+| fs-es | benchmark_balanced_120_20260825_071207 | 54.37 | 62.29 | 58.06 | 83.37 | 71.30 | +13.24 |
+| fs-en | benchmark_balanced_120_20260825_071207 | 54.38 | 62.33 | 58.09 | 81.98 | 70.82 | +12.73 |
+| gemma4:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 57.27 | 61.01 | 59.08 | 82.87 | 70.28 | +11.20 |
+| gpt-oss:20b_baseline | gptoss_rerun_REMOTO | 49.19 | 64.92 | 55.97 | 76.21 | 70.11 | +14.14 |
+| qwen2.5:14b_kb_rag | benchmark_balanced_120_20260901_140421 | 56.92 | 59.74 | 58.30 | 84.38 | 69.96 | +11.66 |
+| qwen2.5:14b_baseline | benchmark_balanced_120_20260901_140421 | 53.54 | 55.26 | 54.39 | 85.59 | 67.16 | +12.77 |
+| llama3.1:8b_baseline | benchmark_n120_REMOTO | 51.31 | 56.60 | 53.83 | 82.05 | 66.99 | +13.17 |
+| llama3.1:8b_kb_rag | benchmark_n120_REMOTO | 54.66 | 57.06 | 55.83 | 79.45 | 66.42 | +10.59 |
+| qwen3:8b_kb_rag | qwen3_nothink_n120_REMOTO | 49.82 | 60.35 | 54.59 | 72.80 | 65.99 | +11.41 |
+| qwen3:8b_baseline | qwen3_nothink_n120_REMOTO | 48.49 | 56.41 | 52.15 | 76.29 | 64.86 | +12.71 |
+| qwen2.5:14b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 53.45 | 51.28 | 52.34 | 86.97 | 64.52 | +12.18 |
+| llama3.2:latest_kb_rag | benchmark_balanced_120_20260901_140421 | 49.62 | 54.84 | 52.10 | 76.30 | 63.82 | +11.72 |
+| llama3.1:8b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 52.17 | 49.72 | 50.92 | 87.30 | 63.36 | +12.44 |
+| gemma:latest_kb_rag | benchmark_balanced_120_20260901_140421 | 53.14 | 57.59 | 55.28 | 64.04 | 60.64 | +5.37 |
+| mistral-nemo:latest_baseline | benchmark_n120_REMOTO | 56.28 | 43.58 | 49.12 | 84.92 | 57.60 | +8.48 |
+| nuextract:latest_baseline | benchmark_n120_REMOTO | 49.92 | 45.30 | 47.50 | 78.35 | 57.41 | +9.91 |
+| qwen3:8b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 51.98 | 43.71 | 47.48 | 82.62 | 57.17 | +9.69 |
+| mistral-nemo:latest_kb_rag | benchmark_n120_REMOTO | 60.16 | 43.14 | 50.25 | 83.61 | 56.92 | +6.67 |
+| gemma:latest_baseline | benchmark_balanced_120_20260901_140421 | 49.51 | 46.42 | 47.91 | 68.63 | 55.38 | +7.46 |
+| llama3.2:latest_baseline | benchmark_balanced_120_20260901_140421 | 43.29 | 38.91 | 40.98 | 82.54 | 52.89 | +11.91 |
+| llama3.2:latest | benchmark_balanced_120_20260824_173017 | 43.29 | 38.91 | 40.98 | 82.54 | 52.89 | +11.91 |
+| gemma:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 49.87 | 40.04 | 44.42 | 71.36 | 51.30 | +6.88 |
+| gemma4-12b-mlx-q8-64k:latest_baseline | benchmark_balanced_120_20260824_173036 | 58.14 | 30.98 | 40.42 | 85.52 | 45.48 | +5.06 |
+| nemotron-mini:4b_kb_rag | nemotron_rerun_n120_REMOTO | 41.06 | 36.90 | 38.87 | 55.48 | 44.32 | +5.46 |
+| llama3.2:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 41.63 | 30.46 | 35.18 | 78.10 | 43.83 | +8.65 |
+| gemma4:12b-mlx_baseline | benchmark_n120_REMOTO | 57.66 | 26.08 | 35.91 | 86.21 | 40.04 | +4.13 |
+| mistral-nemo:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 48.59 | 25.82 | 33.72 | 87.05 | 39.82 | +6.10 |
+| gemma4:31b-cloud_rag_enhanced | benchmark_balanced_120_20260824_173036 | 62.47 | 20.78 | 31.19 | 92.14 | 33.91 | +2.73 |
+| deepseek-r1:1.5b_baseline | benchmark_n120_REMOTO | 28.78 | 21.82 | 24.82 | 39.29 | 28.05 | +3.23 |
+| gemma4-12b-mlx-q8-64k:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 51.42 | 16.64 | 25.15 | 83.99 | 27.78 | +2.63 |
+| deepseek-r1:1.5b_kb_rag | benchmark_n120_REMOTO | 27.63 | 22.15 | 24.59 | 37.06 | 27.73 | +3.14 |
+| nemotron-mini:4b_baseline | nemotron_rerun_n120_REMOTO | 26.69 | 18.21 | 21.65 | 44.85 | 25.91 | +4.26 |
+| nuextract:latest_kb_rag | benchmark_n120_REMOTO | 19.85 | 26.22 | 22.59 | 24.92 | 25.55 | +2.96 |
+| nemotron-mini:4b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 28.71 | 14.72 | 19.46 | 41.15 | 21.69 | +2.22 |
+| nuextract:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 21.20 | 16.68 | 18.67 | 30.10 | 21.46 | +2.79 |
+| deepseek-r1:1.5b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 21.48 | 14.74 | 17.48 | 29.07 | 19.56 | +2.08 |
+| minimax-m3:cloud_baseline | benchmark_balanced_120_20260824_173036 | 48.44 | 8.63 | 14.65 | 76.54 | 15.51 | +0.86 |
+| gemma4:12b-mlx_kb_rag | benchmark_n120_REMOTO | 51.72 | 8.50 | 14.60 | 83.92 | 15.43 | +0.84 |
+| minimax-m3:cloud_rag_enhanced | benchmark_balanced_120_20260824_173036 | 51.93 | 6.65 | 11.79 | 81.74 | 12.30 | +0.51 |
+
+En conjunto, 20946 de los 32201 falsos positivos del estudio (65.0 %) proceden de la categoría no anotada. El mejor modelo local sobre este corpus, `gemma4:31b-mlx`, pasa de 62,67 % a **76,85 %** de F1 y supera el umbral de 70 % que fija la hipótesis sobre material periodístico mayoritariamente en español. La variante en la nube del mismo modelo conserva su ventaja (81,45 % frente a 76,85 %), de modo que la corrección **no** altera la conclusión sobre la comparación entre ejecución local y alojada.
+
