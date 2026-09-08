@@ -199,6 +199,33 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.20 🔴 EN CURSO — Saneamiento del aparato bibliográfico
+
+**Motivo:** `FINDINGS.md §F51`. Cuatro referencias de la bibliografía **no corresponden a ninguna obra
+existente**: [7] García y López (IberLEF), [9] Chang, Kim y Park (*J. Financial Data Science*), [10] Smith,
+Johnson y Davis (*ACM Transactions*) y [15] Min et al. (FiNER, ACL 2023). Verificado a mano el caso de [15]:
+la obra real es *FiNER: Financial **Numeric** Entity Recognition for XBRL Tagging*, de Loukas et al., ACL
+**2022** — título, autores y año distintos de los que declara el informe.
+
+**Alcance del daño.** Dos de ellas, [7] y [15], sostenían la afirmación de que el NER en español alcanza
+entre 88 % y 91 % de F1, acompañadas de [2], que tampoco puede respaldarla porque el artículo de BERT no
+evalúa NER en español. Y **tres filas de la Tabla 1** del estado del arte descansan sobre esas referencias,
+con cifras de 88 %, 83 % y 91 % que nadie ha publicado. Detectado además que el informe atribuye a
+BloombergGPT la arquitectura *GPT-J* y un F1 superior al 85 %, cuando el artículo declara arquitectura
+**BLOOM** y reporta F1 de NER entre **53,6 y 75,5**, con media 62,6.
+
+**Decisión del autor:** eliminar las citas ficticias. Es una **excepción autorizada a la política aditiva**,
+porque una cita fabricada no puede conservarse ni siquiera como histórico.
+
+**En ejecución:** workflow de saneamiento en cuatro fases — buscar fuentes reales, editar, re-verificar toda
+la bibliografía contra internet y revisar la integridad —, con prohibición explícita de inventar y con la
+regla de que una fuente solo sustituye a otra si **sostiene la misma afirmación**, no si simplemente trata
+del mismo tema. A las 02:43 el escritor tenía su respaldo hecho y seguía trabajando.
+
+**A continuación:** segunda pasada de revisión global con seis auditores que **no conocerán los hallazgos de
+la primera**, para que confirmen, aporten o contradigan sin anclaje, y un orquestador que cruce sus informes
+y dictamine si el documento está listo para entregar.
+
 ### 2.19 COMPLETADA — Sin emojis ni marcas de agua
 - **Cerrada:** 2026-09-08 01:45 por Claude Desktop. Regla nueva del autor, incorporada a `CLAUDE.md` y al
   encargo permanente de propagación: los documentos del proyecto no llevan emojis ni pictogramas decorativos,
@@ -1171,3 +1198,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-08 01:45 | Claude Desktop | §2.19: regla de no usar emojis ni marcas de agua, incorporada a `CLAUDE.md` y al encargo de propagación. Tres emojis retirados de la Tabla 2 (la palabra ya estaba al lado); ninguna marca de agua encontrada. Corregido el suelo de ancho de columna del renderizador, que se aplicaba antes de normalizar y partía «Español». `_v10` congelada |
 | 2026-09-07 20:35 | Claude Code (equipo principal) | 🔴 §2.16: corregida la descripción de la métrica de emparejamiento —era «similitud de tokens», es **distancia de Indel normalizada** (`fuzz.ratio`)— y declarados sus dos límites, que sesgan a la baja. Encargo de propagación a **Word y PDF** en `PROMPT-CLAUDE-DESKTOP-PROPAGACION-20260907.md`. Auditoría y dos subagentes en curso sobre el resto de enunciados técnicos. ⚠️ **Atribución:** mi commit `bdb3337` arrastró las versiones `_v6` y `_v7` de Claude Desktop bajo un mensaje que solo hablaba de la métrica; no se perdió nada, pero el historial las atribuye mal |
 | 2026-09-07 21:30 | Claude Code (equipo principal) | §2.17: registradas en `CLAUDE.md` y en el encargo las **reglas permanentes de Word y PDF** —resumen y abstract fundidos, sincronizados y en la primera página; recorte de espacios **por estilo** y nunca por contenido; 25 páginas exactas; Anexo B sin saltos duros; anexos consolidados sin perder contenido—. En el `.md`: §2.4 explica el aparato estadístico, §4.4 desarrolla las métricas y §5.5 deriva el coste **declarándolo estimación** |
+| 2026-09-08 02:50 | Claude Code (equipo principal) | 🔴 §2.20: **cuatro referencias de la bibliografía no existen** ([7], [9], [10], [15]) y tres filas de la Tabla 1 descansan sobre ellas. Verificado a mano el caso de [15]. Decisión del autor: eliminarlas, como excepción autorizada a la política aditiva. Workflow de saneamiento en curso; después, revisión global independiente. Numerada 2.20 porque 2.18 y 2.19 ya estaban tomadas — tercera colisión de numeración, ver `LEARNINGS §L40`. `FINDINGS §F51` |
