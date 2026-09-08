@@ -2243,3 +2243,12 @@ resuelve las dos cosas: la mezcla de corpus y la asimetría de presupuesto.
 
 **La guarda ya existe.** `merge_and_analyze.py` exige 26 grupos y se pararía con 24, de modo que el problema
 no puede colarse en silencio hasta el ANOVA. Pero pararse al final es mucho peor que decidirlo ahora.
+
+**El problema está acotado a un solo modelo.** Comprobado sobre `FINDINGS.md` y `CURRENT-TASKS.md`: de los
+trece, **solo `gpt-oss:20b` tiene una decisión de congelación**. Los cinco que quedan por correr tras
+`qwen3:8b` —`gemma:latest`, `mistral-nemo:latest`, `llama3.2:latest`, `deepseek-r1:1.5b` y
+`nemotron-mini:4b`— no tienen ninguna, de modo que el barrido los cubrirá sin intervención. Y
+`gemma4:31b-cloud`, que tampoco aparece en el registro del barrido, **sí está rehecho**: se ejecutó aparte y
+está verificado.
+
+Es decir: resuelto `gpt-oss:20b`, el estudio queda completo. No hay más huecos escondidos.
