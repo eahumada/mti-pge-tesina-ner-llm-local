@@ -9,7 +9,7 @@
   "afectados": 104,
   "no_afectados": 16
  },
- "nota": "El signo del efecto depende del criterio: por entidad de referencia corrupta la mayoría de los modelos puntúa MEJOR en los artículos afectados, y por texto de entrada corrupto puntúa PEOR. La tabla anterior del Anexo H.3 no se reproduce con ninguno de los dos.",
+ "nota": "El signo del efecto depende del criterio: por entidad de referencia corrupta la mayoría de los modelos puntúa MEJOR en los artículos afectados, y por texto de entrada corrupto puntúa PEOR. La tabla anterior del Anexo H.3 no se reproduce con ninguno de los dos. Se excluyen los modelos que no forman parte del estudio final.",
  "filas": [
   {
    "grupo": "deepseek-r1:1.5b_baseline",
@@ -110,16 +110,6 @@
    "grupo": "mistral-nemo:latest_kb_rag",
    "delta_por_entidad": 0.012164513371633934,
    "delta_por_texto": -0.12556848985075164
-  },
-  {
-   "grupo": "nuextract:latest_baseline",
-   "delta_por_entidad": 0.08651979351086664,
-   "delta_por_texto": 0.053248241322549794
-  },
-  {
-   "grupo": "nuextract:latest_kb_rag",
-   "delta_por_entidad": -0.0768941326235949,
-   "delta_por_texto": -0.055554555483242396
   },
   {
    "grupo": "qwen2.5:14b_baseline",

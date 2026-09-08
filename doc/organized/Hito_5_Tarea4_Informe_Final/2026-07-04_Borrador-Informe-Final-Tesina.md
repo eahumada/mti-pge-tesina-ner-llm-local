@@ -218,7 +218,7 @@ La elección del umbral es un compromiso: por debajo se admiten emparejamientos 
 
 Sobre esa base se calculan precisión, exhaustividad y F1 por artículo, que después se promedian, y una **tasa de alucinación** que mide algo distinto de las anteriores: no compara con la anotación de referencia sino con el **texto de origen**. Una entidad se considera alucinada cuando no aparece literalmente en el artículo y, además, su mejor similitud contra las ventanas deslizantes del texto (del mismo número de palabras que la entidad) queda por debajo de **70**, umbral deliberadamente más laxo que el 85 del emparejamiento. La distinción importa: una entidad correctamente extraída del artículo pero ausente de la anotación de referencia cuenta como falso positivo, no como alucinación, porque el modelo no la inventó. El módulo incorpora además la validación estadística: ANOVA de una vía para contrastar si las diferencias entre modelos y modos son significativas, pruebas post-hoc de Tukey HSD para identificar qué pares concretos difieren, intervalos de confianza al 95 % por grupo y un análisis de sensibilidad que recalcula las métricas excluyendo los artículos atípicamente largos, con el fin de comprobar que ningún resultado depende de unos pocos casos extremos.
 
-Un tercer límite, de naturaleza distinta a los anteriores porque no procede del cotejo sino del diseño, afecta a la comparabilidad de las cifras absolutas. Los prompts del sistema solicitan tres categorías de entidad, personas, organizaciones y localizaciones, mientras que los tres corpus anotan únicamente las dos primeras: el campo de localizaciones está vacío en los ciento veinte registros. Como el evaluador puntúa las tres categorías, toda localización que el modelo devuelve se contabiliza como falso positivo, sin que exista ninguna forma de acertar en ella. El efecto no es menor: **el 65 % de los falsos positivos del estudio, 20 946 de 32 201, proceden de esa categoría**. Conviene subrayar que se trata de una penalización exclusivamente de precisión, porque al no haber localizaciones anotadas tampoco puede haber omisiones: la exhaustividad no varía en ninguna configuración. Por esa razón este informe acompaña cada resultado de una segunda medición, **restringida a las categorías que el corpus efectivamente anota**, que se obtiene reagregando los desgloses por tipo ya almacenados y no requiere repetir la inferencia. Las cifras originales se conservan íntegras junto a ella, de modo que el lector pueda juzgar el alcance de la corrección; la Tabla del Anexo I recoge ambas para las cuarenta y siete configuraciones medidas sobre el corpus N=120.
+Un tercer límite, de naturaleza distinta a los anteriores porque no procede del cotejo sino del diseño, afecta a la comparabilidad de las cifras absolutas. Los prompts del sistema solicitan tres categorías de entidad, personas, organizaciones y localizaciones, mientras que los tres corpus anotan únicamente las dos primeras: el campo de localizaciones está vacío en los ciento veinte registros. Como el evaluador puntúa las tres categorías, toda localización que el modelo devuelve se contabiliza como falso positivo, sin que exista ninguna forma de acertar en ella. El efecto no es menor: **el 65 % de los falsos positivos del estudio, 20 946 de 32 201, proceden de esa categoría**. Conviene subrayar que se trata de una penalización exclusivamente de precisión, porque al no haber localizaciones anotadas tampoco puede haber omisiones: la exhaustividad no varía en ninguna configuración. Por esa razón este informe acompaña cada resultado de una segunda medición, **restringida a las categorías que el corpus efectivamente anota**, que se obtiene reagregando los desgloses por tipo ya almacenados y no requiere repetir la inferencia. Las cifras originales se conservan íntegras junto a ella, de modo que el lector pueda juzgar el alcance de la corrección; la Tabla del Anexo I recoge ambas para las cuarenta y dos configuraciones medidas sobre el corpus N=120.
 
 ## 4. DISEÑO EXPERIMENTAL
 
@@ -309,8 +309,7 @@ _Tabla 4. Benchmark exploratorio: doce modelos en trece configuraciones sobre el
 > Cifras medidas sobre `results/benchmark_results.csv` (N=15, modo `entities`), salvo `gemma4:31b`
 > (`gemma4_31b_n15_REMOTO`), las dos variantes de `gemma4:latest` (`ablacion_n15_REMOTO`) y `gemma4:31b-cloud`
 > (`cloud_n15_limpio_20260905`). Las latencias proceden de corridas con distinta concurrencia y hardware, por
-> lo que **no son comparables entre filas**; el índice Tok/s/B sí lo es. Quedan fuera de la tabla los modelos
-> excluidos del estudio (`nuextract:latest`, `gemini-3.1-flash-lite`, `minimax-m3`). La columna «Parámetros» recoge
+> lo que **no son comparables entre filas**; el índice Tok/s/B sí lo es. La columna «Parámetros» recoge
 > la denominación nominal de la etiqueta del modelo, que no siempre coincide con el recuento del manifiesto —1,8B en
 > `deepseek-r1:1.5b`, 4,2B en `nemotron-mini:4b`, 8,2B en `qwen3:8b`, 12,2B en `mistral-nemo`, 31,3B en `gemma4:31b`—,
 > y el índice Tok/s/B se calcula sobre la nominal. `gemma4:31b-cloud` corre además en BF16 sobre ~32,7B parámetros sin
@@ -405,7 +404,7 @@ El análisis cualitativo se apoya en la clasificación que el evaluador almacena
 
 La **confusión de tipo** aparece cuando el modelo asigna a una entidad una categoría distinta de la que registra la referencia. Los casos dominantes son homogéneos y tienen una explicación clara: `Estados Unidos`, `Francia`, `Israel` o `Valencia` extraídos como localización cuando la anotación de CoNLL-2002 los registra como organización, por tratarse de menciones al Estado o al club y no al territorio. No es una alucinación ni un fallo de comprensión, sino una divergencia entre la convención de anotación del corpus y la lectura natural del nombre, y se concentra precisamente en la categoría cuyo vacío en la referencia se discute en §3.3.
 
-Las **alucinaciones extrínsecas**, en las que el modelo propone entidades ausentes del texto, son el patrón que más varía entre modelos, y su rango es amplio: desde **cero** en las variantes alojadas de `gemma4:31b` hasta el **50,02 %** de `nuextract:latest` con recuperación. Treinta de los sesenta y siete grupos medidos quedan por debajo del 1 %, de modo que la instrucción de restringir la extracción al artículo presente funciona en la mayoría de las configuraciones; pero conviene no presentarlo como el problema menor del estudio, porque en los dos modelos que peor se comportan —`nuextract:latest`, entre 43,31 % y 50,02 %, y `deepseek-r1:1.5b`, entre 11,23 % en extracción directa y 21,59 % con recuperación por diccionario— es el defecto dominante y el que descarta su uso en un flujo de cumplimiento.
+Las **alucinaciones extrínsecas**, en las que el modelo propone entidades ausentes del texto, son el patrón que más varía entre modelos. Sobre los sesenta y un grupos de los modelos que forman el estudio, el rango va de **cero** en las variantes alojadas de `gemma4:31b` al **21,59 %** de `deepseek-r1:1.5b` con recuperación por diccionario, y **veintiocho de esos sesenta y un grupos quedan por debajo del 1 %**: la instrucción de restringir la extracción al artículo presente funciona en casi la mitad de las configuraciones y en todas las de mayor capacidad. El problema se concentra en los dos modelos más pequeños, y ahí es determinante: `deepseek-r1:1.5b` oscila entre 11,23 % en extracción directa y 21,59 % con recuperación, y `nemotron-mini:4b` entre 7,14 % y 14,75 %. En ambos casos el defecto, más que la exhaustividad, es lo que descarta su uso en un flujo de cumplimiento, porque una entidad inventada en un informe de sanciones tiene un coste mayor que una omitida.
 
 ### 5.5 Análisis de Eficiencia en Hardware Soberano
 
@@ -782,7 +781,6 @@ _Tabla 15. Procedencia de cada fila del benchmark exploratorio: correspondencia 
 | gemma4:latest (ZS-ES) y (FS-ES) | ablacion_n15_REMOTO |
 | gemma4:31b-cloud | cloud_n15_limpio_20260905 |
 | Resto de configuraciones | results/benchmark_results.csv (N=15, modo entities) |
-| Excluidos del estudio | nuextract:latest, gemini-3.1-flash-lite, minimax-m3 |
 
 ### Anexo F — Metodología Detallada de Generación del Corpus Sintético N=30
 
@@ -879,7 +877,6 @@ _Tabla 18. Efecto diferencial del *mojibake* sobre el F1 según el criterio de a
 | `gemma4:latest_kb_rag` | +0.0976 | -0.0666 |
 | `gemma:latest_kb_rag` | +0.0965 | -0.0845 |
 | `gemma4:31b-mlx_baseline` | +0.0873 | -0.0613 |
-| `nuextract:latest_baseline` | +0.0865 | +0.0532 |
 | `gpt-oss:20b_baseline` | +0.0819 | -0.0438 |
 | `mistral-nemo:latest_baseline` | +0.0684 | -0.1122 |
 | `qwen2.5:14b_baseline` | +0.0681 | -0.0821 |
@@ -895,7 +892,6 @@ _Tabla 18. Efecto diferencial del *mojibake* sobre el F1 según el criterio de a
 | `deepseek-r1:1.5b_baseline` | -0.0124 | +0.0028 |
 | `gemma4:12b-mlx_kb_rag` | -0.0214 | +0.0448 |
 | `deepseek-r1:1.5b_kb_rag` | -0.0717 | -0.1796 |
-| `nuextract:latest_kb_rag` | -0.0769 | -0.0556 |
 | `llama3.2:latest_baseline` | -0.0816 | -0.2665 |
 
 Los dos criterios apuntan en direcciones opuestas, y de forma sistemática: **19 de las 24 configuraciones
@@ -934,7 +930,7 @@ Esta corrección **no pudo aplicarse retroactivamente**: el cotejo se resuelve e
 
 Los prompts solicitan tres categorías de entidad y los corpus anotan dos, de modo que toda localización extraída se contabiliza como falso positivo (§3.3). Esta tabla acompaña cada cifra publicada de su equivalente restringido a las categorías que el corpus efectivamente anota. Se obtuvo reagregando los desgloses por tipo ya almacenados en los resultados por corrida, **sin repetir la inferencia**, tomando por configuración la corrida más reciente que aporta exactamente 120 registros. La exhaustividad es idéntica en ambas columnas porque el corpus no anota localizaciones y, por tanto, tampoco puede omitirlas: la corrección afecta solo a la precisión.
 
-_Tabla 19. Desempeño publicado y desempeño restringido a personas y organizaciones (N=120, 47 configuraciones)._
+_Tabla 19. Desempeño publicado y desempeño restringido a personas y organizaciones (N=120, 42 configuraciones)._
 | Configuración | Corrida | P | R | F1 | P restr. | F1 restr. | Δ F1 |
 |:---|:---|---:|---:|---:|---:|---:|---:|
 | gemma4:31b-cloud_baseline | gemma4_31b_cloud_n120_REMOTO | 58.58 | 76.80 | 66.46 | 86.70 | 81.45 | +14.99 |
@@ -962,7 +958,6 @@ _Tabla 19. Desempeño publicado y desempeño restringido a personas y organizaci
 | llama3.1:8b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 52.17 | 49.72 | 50.92 | 87.30 | 63.36 | +12.44 |
 | gemma:latest_kb_rag | benchmark_balanced_120_20260901_140421 | 53.14 | 57.59 | 55.28 | 64.04 | 60.64 | +5.37 |
 | mistral-nemo:latest_baseline | benchmark_n120_REMOTO | 56.28 | 43.58 | 49.12 | 84.92 | 57.60 | +8.48 |
-| nuextract:latest_baseline | benchmark_n120_REMOTO | 49.92 | 45.30 | 47.50 | 78.35 | 57.41 | +9.91 |
 | qwen3:8b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 51.98 | 43.71 | 47.48 | 82.62 | 57.17 | +9.69 |
 | mistral-nemo:latest_kb_rag | benchmark_n120_REMOTO | 60.16 | 43.14 | 50.25 | 83.61 | 56.92 | +6.67 |
 | gemma:latest_baseline | benchmark_balanced_120_20260901_140421 | 49.51 | 46.42 | 47.91 | 68.63 | 55.38 | +7.46 |
@@ -977,13 +972,9 @@ _Tabla 19. Desempeño publicado y desempeño restringido a personas y organizaci
 | deepseek-r1:1.5b_baseline | benchmark_n120_REMOTO | 28.78 | 21.82 | 24.82 | 39.29 | 28.05 | +3.23 |
 | deepseek-r1:1.5b_kb_rag | benchmark_n120_REMOTO | 27.63 | 22.15 | 24.59 | 37.06 | 27.73 | +3.14 |
 | nemotron-mini:4b_baseline | nemotron_rerun_n120_REMOTO | 26.69 | 18.21 | 21.65 | 44.85 | 25.91 | +4.26 |
-| nuextract:latest_kb_rag | benchmark_n120_REMOTO | 19.85 | 26.22 | 22.59 | 24.92 | 25.55 | +2.96 |
 | nemotron-mini:4b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 28.71 | 14.72 | 19.46 | 41.15 | 21.69 | +2.22 |
-| nuextract:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 21.20 | 16.68 | 18.67 | 30.10 | 21.46 | +2.79 |
 | deepseek-r1:1.5b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 21.48 | 14.74 | 17.48 | 29.07 | 19.56 | +2.08 |
-| minimax-m3:cloud_baseline | benchmark_balanced_120_20260824_173036 | 48.44 | 8.63 | 14.65 | 76.54 | 15.51 | +0.86 |
 | gemma4:12b-mlx_kb_rag | benchmark_n120_REMOTO | 51.72 | 8.50 | 14.60 | 83.92 | 15.43 | +0.84 |
-| minimax-m3:cloud_rag_enhanced | benchmark_balanced_120_20260824_173036 | 51.93 | 6.65 | 11.79 | 81.74 | 12.30 | +0.51 |
 
 En conjunto, 20946 de los 32201 falsos positivos del estudio (65.0 %) proceden de la categoría no anotada. El mejor modelo local sobre este corpus, `gemma4:31b-mlx`, pasa de 62,67 % a **76,85 %** de F1 y supera el umbral de 70 % que fija la hipótesis sobre material periodístico mayoritariamente en español. La variante en la nube del mismo modelo conserva su ventaja (81,45 % frente a 76,85 %), de modo que la corrección **no** altera la conclusión sobre la comparación entre ejecución local y alojada.
 

@@ -1381,6 +1381,18 @@ fallo de comprensión.
 
 ### Las cifras de alucinación tampoco correspondían
 
+> **CORRECCIÓN de esta misma sección, 2026-09-08.** La primera redacción de este hallazgo situaba a
+> `nuextract:latest` como el peor alucinador del estudio, con 43,31 % a 50,02 %. **Era un error mío**:
+> `nuextract:latest` está **excluido del estudio** por decisión del autor, junto con `minimax-m3` y
+> `gemini-3.1-flash-lite`, y el Anexo E lo declara. Citar su cifra como resultado del trabajo es exactamente
+> el defecto que este documento persigue. Recalculado sobre los **sesenta y un grupos de los modelos
+> incluidos**: el rango va de **0,00 %** a **21,59 %**, veintiocho de ellos quedan por debajo del 1 %, y el
+> peor es `deepseek-r1:1.5b` con 11,23 % a 21,59 %, seguido de `nemotron-mini:4b` con 7,14 % a 14,75 %. Es
+> decir: **la afirmación original del informe era sustancialmente correcta** y mi corrección la empeoró. Lo
+> que sí seguía siendo impreciso es el «superan el 13 %», porque la condición de extracción directa de
+> `deepseek` da 11,23 %.
+
+
 El informe declaraba «por debajo del 1 % en los modelos de mayor capacidad» y «superan el 13 % en
 `deepseek-r1:1.5b`». Medido sobre los grupos de 120 registros:
 

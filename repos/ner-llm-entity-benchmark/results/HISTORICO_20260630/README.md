@@ -6,7 +6,7 @@ macOS crea al copiar sobre un directorio que ya los tiene— y, a diferencia de 
 
 | Fichero | Contenido |
 |:---|:---|
-| `benchmark_results_20260630.csv` | 45 filas, tres modelos: `llama3.1:8b`, `minimax-m3:cloud` y `nemotron-mini:4b` |
+| `benchmark_results_20260630.csv` | 45 filas, tres modelos: `llama3.1:8b`, `nemotron-mini:4b` y un tercer modelo que no forma parte del estudio final |
 | `statistical_report_20260630.md` | ANOVA con **F = 65,9428** y **p = 1,1033e-13** |
 
 ## Por qué no contradicen el resultado del estudio

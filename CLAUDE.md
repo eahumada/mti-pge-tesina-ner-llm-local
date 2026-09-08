@@ -266,3 +266,35 @@ diagnóstico de los fallos de `nemotron-mini` y de `gemma4:12b-mlx` se resolvió
 > los artefactos que **afirman** —documentos, tablas, resultados agregados, entregables— y los que
 > **atestiguan** —logs, puntos de control, ficheros crudos de una corrida—. Los primeros se corrigen; los
 > segundos se conservan, porque son lo que permite comprobar que la corrección fue honesta.
+
+---
+
+## Modelos excluidos del estudio: lista cerrada
+
+Decisión del autor del 2026-09-08: **los modelos excluidos se retiran por completo y no se vuelven a
+incluir**. La verdad de referencia sobre qué modelos forman el estudio es el **PDF entregado al profesor
+guía**, conservado en `doc/versions/enviados/`.
+
+| Modelo | Motivo de la exclusión |
+|:---|:---|
+| `nuextract:latest` | excluido por el autor; el Anexo E del informe entregado ya lo declaraba fuera |
+| `minimax-m3:cloud` | ídem |
+| `gemini-3.1-flash-lite` | ídem |
+| `gemini-3.5-flash`, `phi3.5`, `gliner:medium` | figuraban como «Active» en el catálogo sin formar parte del estudio |
+| `sonct988/gemma4-26b` | cuantización *custom* de un usuario, no reproducible |
+| `gemma4-12b-mlx-q8-64k` | etiqueta con sufijo de cuantización falso; medía `gemma4:12b-mlx` |
+
+**Ninguno de estos nombres puede aparecer** en el informe, en sus anexos, en los datos agregados
+(`benchmark_results.csv`, `detailed_results.json`, resúmenes, puntos de control, informes estadísticos) ni en
+los artefactos derivados. **Tampoco en una glosa que los declare excluidos**: la exclusión se aplica, no se
+narra.
+
+**Y no se citan sus cifras como resultado del trabajo, ni siquiera como caso extremo.** Ocurrió el 2026-09-08:
+una corrección de §5.4 situó a `nuextract:latest` como el peor alucinador del estudio con 50,02 %, cuando está
+excluido. Recalculado sobre los modelos incluidos, el peor es `deepseek-r1:1.5b` con 21,59 %. La corrección
+era peor que el texto original.
+
+**Se conservan, en cambio, los artefactos que atestiguan**, por la misma razón que los registros de ejecución:
+los `benchmark.log`, el catálogo `results/RUNS_INDEX.md`, los `WORKLOG.md`, los datos crudos de corridas
+históricas y **los documentos de hitos ya entregados**, como `doc/organized/Hito_4_Tarea3_Informe_Avance/`.
+Reescribir un documento que ya se entregó no es limpiar: es falsificar el registro de lo que se entregó.
