@@ -1,0 +1,190 @@
+2026-09-08 19:58:12,935 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-08 19:58:12,949 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-08 19:58:12,949 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-09-08 19:58:12,950 [INFO] ner_benchmark: Corpus loaded: 15 articles split into 2 batches.
+2026-09-08 19:58:12,950 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-08 19:58:12,995 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-08 19:58:12,997 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-08 19:58:12,998 [INFO] ner_benchmark: [RAG] Using Knowledge Base mode: 'kb_combined'
+2026-09-08 19:58:13,010 [INFO] ner_benchmark.pub_sub: Published task qwen2.5:14b_baseline-b0-1788908293 for batch 0 to memory queue.
+2026-09-08 19:58:13,010 [INFO] ner_benchmark.pub_sub: Published task qwen2.5:14b_baseline-b1-1788908293 for batch 1 to memory queue.
+2026-09-08 19:58:13,010 [INFO] ner_benchmark.pub_sub: Published task qwen2.5:14b_kb_rag-b0-1788908293 for batch 0 to memory queue.
+2026-09-08 19:58:13,010 [INFO] ner_benchmark.pub_sub: Published task qwen2.5:14b_kb_rag-b1-1788908293 for batch 1 to memory queue.
+2026-09-08 19:58:13,010 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=1 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-09-08 19:58:13,012 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-08 19:58:13,013 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-08 19:58:13,013 [INFO] ner_benchmark: [RAG] Worker phase — Knowledge Base mode: 'kb_combined'
+2026-09-08 19:58:13,027 [INFO] ner_benchmark.pub_sub: Published task qwen2.5:14b_baseline-b0-1788908293 for batch 0 to memory queue.
+2026-09-08 19:58:13,027 [INFO] ner_benchmark.pub_sub: Published task qwen2.5:14b_baseline-b1-1788908293 for batch 1 to memory queue.
+2026-09-08 19:58:13,027 [INFO] ner_benchmark: Running RAG study 'qwen2.5:14b_baseline' with 1 workers...
+2026-09-08 19:58:13,027 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task qwen2.5:14b_baseline-b0-1788908293 from memory queue.
+2026-09-08 19:58:13,027 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-08 19:58:13,027 [INFO] ner_benchmark: [Worker 1] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_baseline') -> Extracting entities for record '1'...
+2026-09-08 19:58:13,028 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 19:58:13,031 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:58:26,756 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:58:27,242 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:58:27,274 [INFO] ner_benchmark: [Worker 2] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_baseline') -> Extracting entities for record '2'...
+2026-09-08 19:58:27,275 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 19:58:27,280 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:58:33,417 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:58:33,897 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:58:33,918 [INFO] ner_benchmark: [Worker 3] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_baseline') -> Extracting entities for record '3'...
+2026-09-08 19:58:33,918 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 19:58:33,922 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:58:47,982 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:58:48,113 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:58:48,150 [INFO] ner_benchmark: [Worker 4] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_baseline') -> Extracting entities for record '4'...
+2026-09-08 19:58:48,150 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 19:58:48,154 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:59:00,333 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:59:00,835 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:59:00,869 [INFO] ner_benchmark: [Worker 5] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_baseline') -> Extracting entities for record '5'...
+2026-09-08 19:59:00,869 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 19:59:00,873 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:59:05,257 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:59:05,462 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:59:05,473 [INFO] ner_benchmark: [Worker 6] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_baseline') -> Extracting entities for record '6'...
+2026-09-08 19:59:05,473 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 19:59:05,477 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:59:08,848 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:59:09,037 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:59:09,043 [INFO] ner_benchmark: [Worker 7] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_baseline') -> Extracting entities for record '7'...
+2026-09-08 19:59:09,043 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 19:59:09,048 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:59:20,533 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:59:20,696 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:59:20,714 [INFO] ner_benchmark: [Worker 8] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_baseline') -> Extracting entities for record '8'...
+2026-09-08 19:59:20,715 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 19:59:20,721 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:59:24,174 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:59:24,298 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:59:24,303 [INFO] ner_benchmark: [Worker 9] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_baseline') -> Extracting entities for record '9'...
+2026-09-08 19:59:24,304 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 19:59:24,310 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:59:33,969 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:59:34,471 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:59:34,485 [INFO] ner_benchmark: [Worker 10] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_baseline') -> Extracting entities for record '10'...
+2026-09-08 19:59:34,486 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 19:59:34,491 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:59:49,500 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:59:49,692 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:59:49,721 [INFO] ner_benchmark.pub_sub: Acknowledged task qwen2.5:14b_baseline-b0-1788908293 in memory queue.
+2026-09-08 19:59:49,724 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task qwen2.5:14b_baseline-b1-1788908293 from memory queue.
+2026-09-08 19:59:49,724 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-08 19:59:49,724 [INFO] ner_benchmark: [Worker 1] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_baseline') -> Extracting entities for record '11'...
+2026-09-08 19:59:49,724 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 19:59:49,729 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:00:07,464 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:00:07,499 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:00:07,542 [INFO] ner_benchmark: [Worker 2] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_baseline') -> Extracting entities for record '12'...
+2026-09-08 20:00:07,543 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:00:07,546 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:00:21,383 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:00:21,767 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:00:21,816 [INFO] ner_benchmark: [Worker 3] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_baseline') -> Extracting entities for record '13'...
+2026-09-08 20:00:21,816 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:00:21,820 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:00:31,373 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:00:31,451 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:00:31,472 [INFO] ner_benchmark: [Worker 4] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_baseline') -> Extracting entities for record '14'...
+2026-09-08 20:00:31,472 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:00:31,477 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:00:40,579 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:00:41,094 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:00:41,122 [INFO] ner_benchmark: [Worker 5] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_baseline') -> Extracting entities for record '15'...
+2026-09-08 20:00:41,122 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:00:41,128 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:00:50,302 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:00:50,773 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:00:50,788 [INFO] ner_benchmark.pub_sub: Acknowledged task qwen2.5:14b_baseline-b1-1788908293 in memory queue.
+2026-09-08 20:00:50,792 [INFO] ner_benchmark.pub_sub: Published task qwen2.5:14b_kb_rag-b0-1788908450 for batch 0 to memory queue.
+2026-09-08 20:00:50,792 [INFO] ner_benchmark.pub_sub: Published task qwen2.5:14b_kb_rag-b1-1788908450 for batch 1 to memory queue.
+2026-09-08 20:00:50,792 [INFO] ner_benchmark: Running RAG study 'qwen2.5:14b_kb_rag' with 1 workers...
+2026-09-08 20:00:50,792 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task qwen2.5:14b_kb_rag-b0-1788908450 from memory queue.
+2026-09-08 20:00:50,792 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-08 20:00:50,792 [INFO] ner_benchmark: [Worker 1] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_kb_rag') -> Extracting entities for record '1'...
+2026-09-08 20:00:50,942 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:00:50,946 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:01:04,439 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:01:04,649 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:01:04,668 [INFO] ner_benchmark: [Worker 2] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_kb_rag') -> Extracting entities for record '2'...
+2026-09-08 20:01:04,773 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:01:04,777 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:01:11,222 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:01:11,378 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:01:11,393 [INFO] ner_benchmark: [Worker 3] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_kb_rag') -> Extracting entities for record '3'...
+2026-09-08 20:01:11,480 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:01:11,483 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:01:27,363 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:01:27,669 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:01:27,693 [INFO] ner_benchmark: [Worker 4] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_kb_rag') -> Extracting entities for record '4'...
+2026-09-08 20:01:27,779 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:01:27,782 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:01:39,443 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:01:39,967 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:01:39,987 [INFO] ner_benchmark: [Worker 5] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_kb_rag') -> Extracting entities for record '5'...
+2026-09-08 20:01:40,073 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:01:40,077 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:01:45,751 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:01:46,154 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:01:46,165 [INFO] ner_benchmark: [Worker 6] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_kb_rag') -> Extracting entities for record '6'...
+2026-09-08 20:01:46,257 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:01:46,260 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:01:48,603 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:01:48,812 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:01:48,821 [INFO] ner_benchmark: [Worker 7] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_kb_rag') -> Extracting entities for record '7'...
+2026-09-08 20:01:48,920 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:01:48,924 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:02:01,604 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:02:02,116 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:02:02,127 [INFO] ner_benchmark: [Worker 8] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_kb_rag') -> Extracting entities for record '8'...
+2026-09-08 20:02:02,221 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:02:02,225 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:02:04,962 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:02:05,289 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:02:05,293 [INFO] ner_benchmark: [Worker 9] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_kb_rag') -> Extracting entities for record '9'...
+2026-09-08 20:02:05,388 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:02:05,391 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:02:15,009 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:02:15,508 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:02:15,519 [INFO] ner_benchmark: [Worker 10] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_kb_rag') -> Extracting entities for record '10'...
+2026-09-08 20:02:15,620 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:02:15,625 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:02:33,112 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:02:33,366 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:02:33,396 [INFO] ner_benchmark.pub_sub: Acknowledged task qwen2.5:14b_kb_rag-b0-1788908450 in memory queue.
+2026-09-08 20:02:33,402 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task qwen2.5:14b_kb_rag-b1-1788908450 from memory queue.
+2026-09-08 20:02:33,403 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-08 20:02:33,403 [INFO] ner_benchmark: [Worker 1] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_kb_rag') -> Extracting entities for record '11'...
+2026-09-08 20:02:33,498 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:02:33,501 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:02:51,360 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:02:51,716 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:02:51,770 [INFO] ner_benchmark: [Worker 2] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_kb_rag') -> Extracting entities for record '12'...
+2026-09-08 20:02:51,865 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:02:51,869 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:03:06,067 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:03:06,572 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:03:06,618 [INFO] ner_benchmark: [Worker 3] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_kb_rag') -> Extracting entities for record '13'...
+2026-09-08 20:03:06,724 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:03:06,728 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:03:16,041 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:03:16,382 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:03:16,412 [INFO] ner_benchmark: [Worker 4] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_kb_rag') -> Extracting entities for record '14'...
+2026-09-08 20:03:16,504 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:03:16,507 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:03:25,620 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:03:26,137 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:03:26,164 [INFO] ner_benchmark: [Worker 5] Model 'qwen2.5:14b' (Mapped: 'qwen2.5:14b_kb_rag') -> Extracting entities for record '15'...
+2026-09-08 20:03:26,259 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen2.5:14b' → OllamaProvider (default)
+2026-09-08 20:03:26,263 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen2.5:14b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 20:03:35,754 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:03:35,908 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:03:35,917 [INFO] ner_benchmark.pub_sub: Acknowledged task qwen2.5:14b_kb_rag-b1-1788908450 in memory queue.
+2026-09-08 20:03:35,929 [INFO] ner_benchmark: Unloading model weights for qwen2.5:14b to protect VRAM.
+2026-09-08 20:03:35,976 [INFO] ner_benchmark.llm_runner: Successfully unloaded weights for qwen2.5:14b from VRAM.
+2026-09-08 20:03:37,983 [INFO] ner_benchmark: ==================================================
+2026-09-08 20:03:37,983 [INFO] ner_benchmark: BENCHMARK EXTRACTIONS COMPLETE. PROCESSING METRICS...
+2026-09-08 20:03:37,983 [INFO] ner_benchmark: ==================================================
+2026-09-08 20:03:38,074 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.
