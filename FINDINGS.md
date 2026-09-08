@@ -2252,3 +2252,30 @@ trece, **solo `gpt-oss:20b` tiene una decisión de congelación**. Los cinco que
 está verificado.
 
 Es decir: resuelto `gpt-oss:20b`, el estudio queda completo. No hay más huecos escondidos.
+
+### §F68.quater — El séptimo modelo rompe el patrón: `qwen3:8b` cambia de signo al revés
+
+**2026-09-08, 20:52.** `qwen3:8b` completa el séptimo modelo y aporta el primer contraejemplo.
+
+Los seis anteriores tenían efecto positivo tras la corrección. **`qwen3:8b` no**: pasa de **+3,25 pp** a
+**−0,05 pp**. Es la primera inversión en sentido contrario —de positivo a negativo— y deja sin sostén la
+observación de que «los efectos son ahora todos positivos», que se venía repitiendo desde el quinto modelo.
+
+| | Con 6 modelos | Con 7 |
+|:---|:---|:---|
+| Todos positivos | sí | **no** |
+| Mínimo | +0,69 | **−0,05** |
+| Dispersión | 1,84 | 2,58 |
+
+**Lo que se mantiene y lo que no.** Se mantiene que la corrección **reordena** los efectos de forma
+sustancial: de los siete rehechos, tres pasan de negativo a positivo, uno de positivo a negativo y tres
+conservan el signo. Lo que ya no puede decirse es que la corrección favorezca sistemáticamente a la
+recuperación, ni que los efectos converjan a un valor pequeño y positivo.
+
+**Y refuerza la advertencia de `§F68.ter`.** El contraejemplo llegó con el séptimo modelo, cuando los seis
+primeros apuntaban todos en la misma dirección. Si se hubiera escrito una conclusión con seis —y estuve a
+punto, con cinco—, este dato la habría desmentido. Los dos modelos que de verdad deciden, `llama3.2:latest` y
+`nemotron-mini:4b`, siguen pendientes y ocupan las posiciones once y trece del barrido.
+
+**Nota de método sobre el propio `qwen3:8b`.** Su corrida lleva `thinking DISABLED` en el registro, coherente
+con la decisión de `ef5edfa`, de modo que el cambio no procede de un régimen de razonamiento distinto.

@@ -1,6 +1,6 @@
 # Estado de la re-corrida completa
 
-**Actualizado: 2026-09-08 20:31.** Regenerar con `python3 tools/estado_recorrida.py`; no editar a mano.
+**Actualizado: 2026-09-08 20:52.** Regenerar con `python3 tools/estado_recorrida.py`; no editar a mano.
 
 Todas las corridas listadas han pasado las cinco verificaciones del protocolo —cero
 `parse_method='failed'`, cero violaciones de `F1 ≤ (P+R)/2`, cero rechazos de infraestructura— y
@@ -19,14 +19,14 @@ descuentan (`FINDINGS §F65`).
 | `gpt-oss:20b` | 52.39 / 55.67 | *pendiente* | +3.28 | — | — |
 | `qwen2.5:14b` | 50.22 / 54.84 | **69.61 / 70.31** | +4.62 | +0.69 | igual |
 | `llama3.1:8b` | 48.76 / 50.75 | **69.17 / 71.48** | +1.99 | +2.31 | igual |
-| `qwen3:8b` | 48.21 / 51.46 | *pendiente* | +3.25 | — | — |
+| `qwen3:8b` | 48.21 / 51.46 | **69.03 / 68.98** | +3.25 | -0.05 | **cambia** |
 | `gemma:latest` | 44.00 / 51.36 | *pendiente* | +7.36 | — | — |
 | `mistral-nemo:latest` | 43.38 / 45.76 | *pendiente* | +2.38 | — | — |
 | `llama3.2:latest` | 36.11 / 46.93 | *pendiente* | +10.82 | — | — |
 | `deepseek-r1:1.5b` | 24.83 / 23.94 | *pendiente* | -0.89 | — | — |
 | `nemotron-mini:4b` | 22.59 / 37.12 | *pendiente* | +14.53 | — | — |
 
-**6 de 13 modelos** rehechos en N=120. **3 cambian el signo** del efecto del RAG.
+**7 de 13 modelos** rehechos en N=120. **4 cambian el signo** del efecto del RAG.
 
 ## N=30 y N=15
 
@@ -38,6 +38,7 @@ descuentan (`FINDINGS §F65`).
 | `gemma4:latest` | 87.30 / 85.56 | 71.77 / 79.59 |
 | `qwen2.5:14b` | 84.46 / 86.62 | 68.41 / 70.00 |
 | `llama3.1:8b` | 80.96 / 82.67 | 68.60 / 73.34 |
+| `qwen3:8b` | 76.85 / 79.97 | 67.68 / 73.04 |
 
 ## Avance del barrido
 
@@ -75,6 +76,12 @@ de 48 GB:
 [20:22:38] START llama3.1:8b N15
 [20:26:08] END   llama3.1:8b N15 rc=0
 [20:26:08] START qwen3:8b N120
+[20:44:30] END   qwen3:8b N120 rc=0
+[20:44:30] START qwen3:8b N30
+[20:46:22] END   qwen3:8b N30 rc=0
+[20:46:22] START qwen3:8b N15
+[20:49:57] END   qwen3:8b N15 rc=0
+[20:49:57] START gemma:latest N120
 ```
 
 ## Salvedades vigentes
