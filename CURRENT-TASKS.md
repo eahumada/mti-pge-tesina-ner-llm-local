@@ -199,6 +199,34 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.18 ✅ COMPLETADA — Sobriedad tipográfica propagada a Word y PDF
+- **Cerrada:** 2026-09-08 01:15 por Claude Desktop. **Abierta:** 00:55. Regla nueva en `CLAUDE.md` y en el encargo de propagación:
+  en el cuerpo de las descripciones, el guion largo y la negrita se reservan para lo excepcional. Los incisos
+  van con comas o paréntesis; la negrita, solo en los términos que se definen por primera vez y en las cifras
+  que la tabla no recoge, nunca en frases enteras ni en la conclusión de un párrafo. Quedan excluidas las
+  tablas, donde la negrita sigue marcando el mejor valor de cada columna, y los encabezados.
+- **Ya aplicada en la fuente** por Claude Code: el cuerpo pasa de 113 guiones largos y 164 negritas a 19 y 108,
+  con 12 832 palabras antes y después. Solo cambió el marcado.
+- **Instrucción complementaria para esta sesión:** al reconstruir, **no reintroducir resaltes**; si un bloque
+  pierde su estilo y hay que restituirlo, se restituye el estilo y no el énfasis.
+- **Revisado el renderizador, y la sospecha no se confirmó:** el `**Hallazgo N:**` que reaplica `post.py` al
+  separar los párrafos está en el `.md`, así que restituye marcado de la fuente, no lo inventa. Se deja.
+- **Contabilidad del marcado, fuente contra `.docx`:** la fuente trae 149 tramos en negrita y 47 guiones largos
+  fuera de tablas y títulos; el `.docx` reconstruido trae 147 y 46. La diferencia son las dos líneas de
+  palabras clave y la línea de filiación, que van a los estilos `keywords` y `address` y quedan fuera del
+  recuento de párrafos. **Nada añadido y nada perdido.** La negrita queda en 81 de 210 párrafos, no en todos.
+- **Un defecto que el conteo no habría cazado y sí la lectura de una muestra:** al mirar la página 4 apareció
+  `Inmediata mediante *prompt*` con los asteriscos impresos. El relleno de celdas quitaba `**` y comillas
+  invertidas pero no las cursivas simples, así que cuatro celdas de las tablas 1, 17 y 18 mostraban el marcado
+  en crudo (*prompt*, *mojibake* tres veces). Corregido en `render.py` y `render2.py`, que ahora emiten un run
+  en cursiva. Verificado: **cero celdas con marcado residual y cero asteriscos literales en el PDF.**
+- **📏 Verificación sobre el PDF:** **25 páginas exactas** · cuerpo **18 de 25** y anexos 7, desde la página 19 ·
+  cero páginas en blanco · encabezado y pie en las 25 sin solape (mínimos 20,9 y 17,4 pt) · resumen y abstract
+  en la página 1 con 199 y 183 palabras · nueve capítulos y ocho anexos A–H · 18 leyendas correlativas · las 20
+  entradas IEEE · ninguna llamada `§` rota · sin arte ASCII ni literales HTML.
+- **`_v9` congelada como entrega:** `.docx` `9f5afc36eec9` · `.pdf` `1a276fe50afc`. Renderizador actualizado en
+  `doc/versions/informe_final/_tools/`.
+
 ### 2.17 ✅ COMPLETADA — Propagación con reglas permanentes de Word y PDF
 > ✅ **Cerrada por Claude Desktop el 2026-09-08 00:40** (abierta 00:20). Los tres `.docx` reconstruidos desde el
 > `.md` canónico (106 701 bytes, 23:44), PDF exportado y `_v8` congelada como entrega.
@@ -1115,5 +1143,6 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 23:25 | Claude Desktop | §2.14: **PDF exportado** con LibreOffice — **25 páginas exactas**, formato íntegro. La exportación destapó tres defectos del `.docx` (leyendas duplicadas en los anexos D/E, colofón duplicado en el Anexo D y colofón varado con fecha «Julio 2026»); corregidos primero en el `.md` y propagados. `_v6` congelada como entrega |
 | 2026-09-08 00:05 | Claude Desktop | §2.15: **resumen y abstract fundidos** —el abstract estaba congelado desde julio y omitía el hallazgo central del RAG—. Sincronizados en 199 y 183 palabras, estilo `abstract` restituido, espaciado del encabezado compactado, ambos en la página inicial. `_v7` congelada |
 | 2026-09-08 00:40 | Claude Desktop | §2.17: propagación completa del `.md` nuevo (§2.4, §4.4 en prosa, §3.3 rapidfuzz, §5.5 coste estimado) a los tres `.docx` y al PDF. De 27 a **25 páginas exactas** solo por estilo; cuerpo 18/25 y anexos 7. Renderizador corregido (`p1a`/`Normal` y `abstract` por posición) y versionado en `_tools/`. `_v8` congelada |
+| 2026-09-08 01:15 | Claude Desktop | §2.18: sobriedad tipográfica propagada a los tres `.docx` y al PDF. Marcado contabilizado fuente contra documento (149/47 → 147/46, sin añadir ni perder). Corregidas cuatro celdas que imprimían las cursivas en crudo, defecto visto leyendo una muestra y no por el conteo. 25 páginas, cuerpo 18. `_v9` congelada |
 | 2026-09-07 20:35 | Claude Code (equipo principal) | 🔴 §2.16: corregida la descripción de la métrica de emparejamiento —era «similitud de tokens», es **distancia de Indel normalizada** (`fuzz.ratio`)— y declarados sus dos límites, que sesgan a la baja. Encargo de propagación a **Word y PDF** en `PROMPT-CLAUDE-DESKTOP-PROPAGACION-20260907.md`. Auditoría y dos subagentes en curso sobre el resto de enunciados técnicos. ⚠️ **Atribución:** mi commit `bdb3337` arrastró las versiones `_v6` y `_v7` de Claude Desktop bajo un mensaje que solo hablaba de la métrica; no se perdió nada, pero el historial las atribuye mal |
 | 2026-09-07 21:30 | Claude Code (equipo principal) | §2.17: registradas en `CLAUDE.md` y en el encargo las **reglas permanentes de Word y PDF** —resumen y abstract fundidos, sincronizados y en la primera página; recorte de espacios **por estilo** y nunca por contenido; 25 páginas exactas; Anexo B sin saltos duros; anexos consolidados sin perder contenido—. En el `.md`: §2.4 explica el aparato estadístico, §4.4 desarrolla las métricas y §5.5 deriva el coste **declarándolo estimación** |

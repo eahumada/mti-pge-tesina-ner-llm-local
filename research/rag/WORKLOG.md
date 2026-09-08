@@ -679,3 +679,37 @@ encabezado y pie en las 25 páginas sin solaparse con el cuerpo (holguras mínim
 
 **`_v8` congelada como versión de entrega**: `.docx` SHA-256 `69aadfb11853` y `.pdf` `00554ca8125c`, en
 `doc/versions/informe_final/` y con copia de ambos en la raíz del proyecto.
+
+### 2026-09-08 01:15 — Sobriedad tipográfica propagada a Word y PDF · versión de entrega (_v9)
+
+`CLAUDE.md` y el encargo de propagación fijan ahora que, en el cuerpo de las descripciones, el guion largo y la
+negrita se reservan para lo excepcional: los incisos van con comas o paréntesis, y la negrita solo en los
+términos que se definen por primera vez y en las cifras que la tabla no recoge, nunca en frases enteras ni en
+la conclusión de un párrafo. Quedan excluidas las tablas, donde la negrita sigue marcando el mejor valor de
+cada columna, y los encabezados.
+
+La regla llegaba ya aplicada en el `.md` por la sesión de Claude Code (113 guiones largos y 164 negritas
+pasaron a 19 y 108, sin perder una palabra), así que aquí solo había que heredarla sin reintroducir resaltes.
+
+**Contabilidad del marcado, fuente contra documento.** La fuente trae 149 tramos en negrita y 47 guiones largos
+fuera de tablas y títulos; el `.docx` reconstruido trae 147 y 46. La diferencia son las dos líneas de palabras
+clave y la de filiación, que van a los estilos `keywords` y `address` y quedan fuera del recuento de párrafos.
+Nada añadido y nada perdido. La negrita queda en 81 de 210 párrafos, no en todos. Comprobado además que el
+`**Hallazgo N:**` que `post.py` reaplica al separar los párrafos está en el `.md`: restituye marcado de la
+fuente, no lo inventa, de modo que se deja como está.
+
+**Un defecto que el conteo no habría cazado.** Al leer una muestra del PDF apareció, en la tabla 1 de la página
+4, `Inmediata mediante *prompt*` con los asteriscos impresos. El relleno de celdas quitaba `**` y comillas
+invertidas pero no las cursivas simples, así que cuatro celdas de las tablas 1, 17 y 18 mostraban el marcado en
+crudo (*prompt* y *mojibake* tres veces). Corregido en `render.py` y `render2.py`, que ahora emiten un run en
+cursiva dentro de la celda. Verificado: cero celdas con marcado residual y cero asteriscos literales en el PDF.
+Vale la pena anotarlo junto al error del que avisó el autor: en ediciones masivas de marcado, la verificación
+por conteo no basta, hay que leer una muestra. Aquí los conteos daban bien y el defecto estaba a la vista.
+
+**Verificación sobre el PDF:** 25 páginas exactas · cuerpo 18 de 25 y anexos 7, desde la página 19 · cero
+páginas en blanco · encabezado y pie en las 25 sin solaparse (holguras mínimas 20,9 y 17,4 pt) · resumen y
+abstract en la página 1, con 199 y 183 palabras · nueve capítulos y ocho anexos A–H con la G íntegra · 18
+leyendas correlativas · las 20 entradas IEEE · ninguna llamada `§` rota · sin arte ASCII ni literales HTML.
+
+**`_v9` congelada como versión de entrega**: `.docx` SHA-256 `9f5afc36eec9` y `.pdf` `1a276fe50afc`, con copia
+de ambos en la raíz. Renderizador actualizado en `doc/versions/informe_final/_tools/`.

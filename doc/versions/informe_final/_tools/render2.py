@@ -81,7 +81,12 @@ def emit_table(rows,caption):
             for e in ps[1:]: tc.remove(e)
             pp=Paragraph(ps[0],d)
             for r in list(pp.runs): r._r.getparent().remove(r._r)
-            pp.add_run(v).bold=b
+            for tok in re.split(r'(\*[^*]+\*)', v):
+                if not tok: continue
+                if tok.startswith('*') and tok.endswith('*') and len(tok) > 2:
+                    rr = pp.add_run(tok[1:-1]); rr.italic = True; rr.bold = b
+                else:
+                    pp.add_run(tok).bold = b
     fill(hdr,rows[0],True)
     for c in rows[1:]:
         tr=copy.deepcopy(tpl); tbl.append(tr); fill(tr,c)

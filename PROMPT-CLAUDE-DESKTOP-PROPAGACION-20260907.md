@@ -91,11 +91,18 @@ de página al empezar capítulo, sin ficha del estudiante, con desarrollo sufici
 marco conceptual que compara alternativas antes de que el capítulo 3 elija entre ellas. Ninguna compactación
 puede deshacerlos.
 
-**Sobriedad tipográfica.** En el cuerpo de las descripciones, el guion largo y la negrita quedan reservados
-para lo excepcional. Los incisos se marcan con comas o paréntesis, no con guiones largos, y la negrita se
+**Sobriedad tipográfica — es responsabilidad tuya al generar el `.docx` y el PDF.** En el cuerpo de las
+descripciones, el guion largo y la negrita quedan reservados para lo excepcional. Los incisos se marcan con comas o paréntesis, no con guiones largos, y la negrita se
 limita a los términos que se definen por primera vez y a las cifras que la tabla no recoge; nunca a frases
 enteras ni a la conclusión de un párrafo. Una negrita por párrafo no destaca nada y delata redacción asistida.
 El Markdown ya viene depurado —el cuerpo pasó de 113 guiones largos y 164 negritas a 19 y 108, sin perder una
 palabra—, así que al reconstruir **no reintroduzcas resaltes**: si un bloque pierde su estilo y lo restituyes,
 restituye el estilo, no el énfasis. Esta regla no alcanza a las tablas, donde la negrita sigue marcando el
 mejor valor de cada columna, ni a los encabezados.
+
+Concretando esa responsabilidad: **al generar cada documento debes comprobar el resultado, no solo confiar en
+la fuente**. Cuenta los guiones largos y los resaltes del cuerpo del `.docx` que produces, excluyendo tablas y
+encabezados, y compáralos con el Markdown de partida. El renderizador no debe **añadir** énfasis por su cuenta
+—ni al restituir un estilo perdido, ni al convertir un bloque, ni al aplicar la plantilla—, y si el conteo del
+documento generado supera al de la fuente, algo lo está introduciendo y hay que corregirlo antes de congelar.
+Deja el resultado del conteo en tu reporte de `CURRENT-TASKS.md`, junto al de páginas.
