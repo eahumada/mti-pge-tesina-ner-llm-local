@@ -71,6 +71,20 @@ financieras» donde el Markdown decía «Las instituciones», que no concordaba 
 del abstract. La corrección de hoy alineó el Markdown con lo que el `.docx` ya decía. Conviene recordarlo al
 propagar: la dirección no siempre es del Markdown hacia el Word.
 
+## Aviso: el recuento de páginas del `.docx` no se puede leer del metadato
+
+`docProps/app.xml` de los tres `.docx` declara **6 páginas y 1 646 palabras** en el canónico, y **1 página y
+83 palabras** en los otros dos. Es falso: el texto real del canónico son **16 776 palabras**, contadas sobre
+`word/document.xml`.
+
+La causa es que Word solo actualiza ese metadato al guardar desde Word, y estos ficheros se editan con
+`tools/docx_replace_terms.py`, que toca el XML sin recalcularlo. El dato que queda es el de la última vez que
+alguien los abrió y guardó a mano, hace vaya usted a saber cuánto.
+
+**Consecuencia práctica:** quien quiera comprobar el límite institucional de 25 páginas **no puede leerlo de
+ahí**. Hay que abrir el documento en Word o generar el PDF y contar. La única cifra fiable disponible hoy es
+la del PDF entregado: 31 páginas totales, Anexo A en la 21, cuerpo 20.
+
 ## Después de propagar
 
 1. `python3 tools/verificar_informe.py` sobre el Markdown, que debe seguir en cero fallos.
