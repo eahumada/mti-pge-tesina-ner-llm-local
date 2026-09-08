@@ -1678,10 +1678,15 @@ anotadas, permite por primera vez **contrastar esa estimación contra una medici
 
 | Grupo | F1 restringido (recálculo) | F1 medido (re-corrida) | Diferencia |
 |:---|---:|---:|---:|
-| `gemma4:31b-cloud` baseline | 80,42 | 81,73 | +1,31 |
-| `gemma4:31b-cloud` KB RAG | 78,89 | 82,82 | +3,93 |
-| `gemma4:12b-mlx` baseline | 73,81 | 77,16 | +3,35 |
-| `gemma4:12b-mlx` KB RAG | 74,30 | 79,97 | +5,67 |
+| `gemma4:31b-cloud` baseline | 80,42 | 82,13 | +1,71 |
+| `gemma4:31b-cloud` KB RAG | 78,89 | 82,94 | +4,05 |
+| `gemma4:12b-mlx` baseline | 73,81 | 77,67 | +3,86 |
+| `gemma4:12b-mlx` KB RAG | 74,30 | 79,96 | +5,66 |
+
+> **Cifras corregidas el mismo día.** La primera versión de esta tabla daba 81,73 · 82,82 · 77,16 · 79,97,
+> promediadas sobre las **120** filas del CSV crudo. Son incorrectas: la métrica publicada de la re-corrida
+> excluye los **7 artículos contaminados** y se calcula sobre **113**. El CSV conserva los 120 a propósito,
+> de modo que promediarlo entero produce un número que no es el del estudio. Ver el apartado siguiente.
 
 **La estimación acierta el orden de magnitud y falla el detalle**, siempre por defecto: entre 1,3 y 5,7
 puntos por debajo, en los cuatro casos en la misma dirección.
@@ -1701,3 +1706,43 @@ suponerlo.
 
 **Qué hacer:** esperar a los trece modelos. Si la subestimación se mantiene en el mismo sentido, el Anexo I
 puede declararla como cota inferior, que es una afirmación más fuerte y más defendible que la actual.
+
+---
+
+## §F65 — El CSV crudo de una corrida no es la métrica publicada: los 7 artículos contaminados
+
+**Fecha:** 2026-09-08. Encontrado al cuadrar el desglose por categoría de la re-corrida contra el corpus.
+
+Los siete ejemplares *few-shot* de la base de conocimientos **son artículos del propio corpus de
+evaluación**, con su anotación de oro como salida esperada. En los modos `kb_fewshot` y `kb_combined` eso es
+contaminación del conjunto de prueba: al modelo se le enseña la respuesta del examen. La magnitud está
+medida y no es despreciable: el KB RAG aporta **+10,01 pp** sobre esos siete artículos frente a **+2,19 pp**
+sobre los ciento trece restantes.
+
+Por decisión del autor del 2026-09-08 esos siete se **excluyen de la métrica publicada** y la exclusión se
+declara; los ejemplares no se borran. El manifiesto está en
+`data/knowledge_base/contaminated_exemplar_articles.json`.
+
+**La consecuencia operativa es la que importa aquí.** El `benchmark_results.csv` de cada corrida conserva
+los **120** registros a propósito —es el crudo, y atestigua—, mientras que `benchmark_summary.json` publica
+la métrica sobre **113**. Promediar el CSV entero produce un número que **no es el del estudio**, y es
+exactamente lo que se hizo al informar las primeras cifras de la re-corrida:
+
+| Grupo | promedio sobre 120 (incorrecto) | métrica publicada, 113 | diferencia |
+|:---|---:|---:|---:|
+| `gemma4:31b-cloud` baseline | 81,73 | **82,13** | 0,40 |
+| `gemma4:31b-cloud` KB RAG | 82,82 | **82,94** | 0,12 |
+| `gemma4:12b-mlx` baseline | 77,16 | **77,67** | 0,51 |
+| `gemma4:12b-mlx` KB RAG | 79,97 | **79,96** | 0,01 |
+
+Las diferencias son pequeñas, pero el error no lo es: incluir los artículos contaminados **infla
+sistemáticamente el beneficio atribuido al RAG**, que es justo la conclusión central del trabajo.
+
+**Comprobación que se incorpora:** antes de citar un F1 de una corrida, leer `total_records` de su
+`benchmark_summary.json` y comprobar que coincide con el número de filas que se están promediando. En N=15 y
+N=30 coinciden (15 y 30); en N=120 no, y son 113.
+
+**Nota de método.** Este defecto se destapó porque el desglose por categoría no cuadraba con el corpus: la
+matriz de confusión daba 1 098 personas de referencia donde el corpus tiene 594, una razón de 1,85 en las
+tres categorías. Cuadrar dos fuentes que deberían decir lo mismo es más barato que revisar cualquiera de las
+dos por separado, y encuentra lo que ninguna de las dos delata sola.
