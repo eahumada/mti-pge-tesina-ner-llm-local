@@ -685,3 +685,24 @@ Dos reglas, y la segunda importa más:
 Es hermana de `§L47` —un fichero vacío no da síntoma— y de `§L51` —lo que no se versiona no existe—. Las
 tres describen lo mismo desde ángulos distintos: **los defectos que sobreviven son los que no producen
 ningún síntoma**, y por eso hay que ir a buscarlos en vez de esperar a que aparezcan.
+
+### L53. Las horas de un documento de coordinación se leen del reloj, no se estiman
+
+Las veinte entradas que escribí hoy en `CURRENT-TASKS.md` llevaban horas inventadas. No al azar: fui
+incrementando una hora plausible en cada anotación, de modo que la deriva **creció de forma monótona** desde
+11 minutos hasta **5 horas y 38**, y la última entrada aparecía fechada al día siguiente. Corregidas las
+veinte contra la marca de tiempo del commit que introdujo cada una.
+
+Lo grave no es la imprecisión, es **dónde** estaba. `CURRENT-TASKS.md` existe para que varios agentes que
+trabajan a la vez sepan quién hizo qué y cuándo, y este proyecto ya ha tenido incidentes por edición
+concurrente. Una entrada fechada con dos horas de adelanto sitúa un trabajo después de otro que en realidad
+lo precedió, y hace irreconstruible la secuencia justo cuando hace falta reconstruirla.
+
+El error tiene además una forma reconocible: **una serie plausible es más creíble que un valor absurdo, y por
+eso sobrevive**. Nadie mira dos veces un «21:35» entre un «21:10» y un «22:00». Lo mismo pasó con los tres
+recuentos de guiones y negritas que dieron 19, 28 y 31 sobre el mismo texto: cada uno era plausible por
+separado.
+
+La regla es trivial y la omití veinte veces seguidas: **si hay que escribir una hora, se pregunta al
+sistema.** Y su corolario, que vale para cualquier dato que se anota de pasada: si un valor se puede
+obtener, no se estima.
