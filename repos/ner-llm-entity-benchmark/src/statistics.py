@@ -186,8 +186,18 @@ def run_sensitivity_analysis(all_results: list[dict], data_file: str) -> str:
         return "\n## 4. Sensitivity Analysis\nNo source data found to perform sensitivity analysis.\n"
         
     lengths = [len(r.get("caption", "")) for r in records.values()]
-    avg_len = sum(lengths) / len(lengths) if lengths else 0
-    length_threshold = avg_len + 500
+    # Fix 2026-09-08 (encargo §2.bis.5): el criterio anterior (avg_len + 500) no marcaba NUNCA un outlier
+    # en corpus cortos (N=30: media 202, máx 293 car.), de modo que el análisis de sensibilidad quedaba
+    # vacío por construcción. Se sustituye por la cerca superior de Tukey (Q3 + 1.5·IQR), un criterio
+    # estadístico real que se adapta a la distribución de longitudes del corpus.
+    import numpy as np
+    if lengths:
+        q1 = float(np.percentile(lengths, 25))
+        q3 = float(np.percentile(lengths, 75))
+        iqr = q3 - q1
+        length_threshold = q3 + 1.5 * iqr
+    else:
+        length_threshold = 0
     
     report = ["\n## 4. Sensitivity Analysis (Outlier Filtering)"]
     report.append(f"- **Difficulty Criteria:** Article length > {length_threshold:.1f} characters.")

@@ -1,0 +1,13 @@
+{
+  "_comment": "Fix 2026-09-08 (encargo §2.bis.1 / FINDINGS §F53). Los 7 ejemplares de few_shot_exemplars.json son artículos del propio corpus de evaluación (benchmark_balanced_120.json) con su anotación de oro como salida esperada: contaminación del conjunto de prueba en los modos kb_fewshot y kb_combined. Decisión del autor 2026-09-08: al no existir material anotado ajeno al corpus, estos 7 article_id se EXCLUYEN de la métrica de esas dos configuraciones y la exclusión se declara. NO se borran los ejemplares. Δ medido del KB RAG sobre estos 7: +10,01 pp frente a +2,19 pp en los 113 restantes.",
+  "excluded_from_metric_modes": ["kb_fewshot", "kb_combined"],
+  "article_ids": [
+    "real_mixed_1",
+    "real_mixed_41",
+    "real_mixed_21",
+    "real_mixed_101",
+    "real_mixed_59",
+    "real_mixed_79",
+    "real_mixed_27"
+  ]
+}

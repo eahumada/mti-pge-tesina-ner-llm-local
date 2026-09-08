@@ -117,7 +117,11 @@ def adapt_kleptotrace_record(record: dict) -> dict:
         "ground_truth": {
             "Persons": record.get("name_entities", []),
             "Organizations": record.get("organizations", []),
-            "Locations": []
+            # Fix 2026-09-08 (encargo §2.bis.2): antes era la constante [], que borraba las localizaciones
+            # anotadas por CoNLL-2002 y convertía en falso positivo toda localización devuelta. Ahora se
+            # lee el campo `locations` del registro; queda [] solo si el origen no lo aporta (p. ej. los 15
+            # artículos de Kleptotrace, que no anotan localizaciones).
+            "Locations": record.get("locations", [])
         }
     }
 

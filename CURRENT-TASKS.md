@@ -142,6 +142,29 @@ Para **cada tarea** que ejecutes:
 | `FINDINGS.md`, `LEARNING.md`, `TODO-INFORME-FINAL.md` | ✅ Creados |
 | `tools/docx_replace_terms.py` | ✅ Validado sobre copias; originales intactos |
 
+### 1.5 ⏸️ EN CURSO (parcial) — Correcciones de código/datos previas a la re-corrida (encargo `PROMPT-EQUIPO-REMOTO-RECORRIDA-COMPLETA-20260908.md`)
+
+**Inicio:** 2026-09-08. **Disparador:** señal `TURK_182_GOGO` detectada en el encargo. **Rama:** `fix/recorrida-correcciones-20260908`. **Backups:** en scratchpad de sesión. **Benchmark NO lanzado** (a la espera de revisión del autor + bloqueo de datos, ver abajo).
+
+Archivos tocados (disjuntos de los `.docx` de Claude Desktop):
+`repos/ner-llm-entity-benchmark/`: `src/evaluator.py`, `src/statistics.py`, `src/config.py`, `src/data_loader.py`, `src/providers/ollama_provider.py`, `download_conll2002.py`, `data/benchmark_balanced_120.json`, `data/test15_balanced.json`, `data/conll2002_es.json`, `data/knowledge_base/contaminated_exemplar_articles.json` (nuevo).
+
+| Ítem del encargo | Estado |
+|:---|:---|
+| §2.3 doble emparejamiento (`evaluator.py`) | ✅ Corregido y probado (recall≤1.0) |
+| §2.4 umbral alucinación explícito | ✅ Documentado y propagado |
+| §2.5 volcado config efectiva + `think` top-level | ✅ (`think` ya estaba; añadido log de config) |
+| §2.bis.3 presupuesto unificado `max_tokens=4096` | ✅ En `config.py` |
+| §2.bis.5b umbral longitud IQR (`statistics.py`) | ✅ Q3+1.5·IQR en vez de avg+500 |
+| §2.2 mojibake en corpus de evaluación | ✅ 120 y test15 a 0 marcas; validado con `analisis_mojibake.py` (afectados 0/120) |
+| §2.bis.2 código captura LOC (`download_conll2002.py`, `data_loader.py`) | ✅ Para futuras conversiones |
+| §2.bis.2 recuperar LOC en el corpus de 120 publicado | 🔴 BLOQUEADO — no hay script de build del corpus; no reproducible sin él o sin anotación experta |
+| §2.bis.1 exemplars contaminados | ⚠️ Decisión: excluir 7 `article_id` de la métrica kb_fewshot/kb_combined; manifiesto creado; falta cablear al pipeline de métrica |
+| §2.bis.4 repuntuar `detailed_results.json` viejos | ⏳ Pendiente (se regeneran en la re-corrida) |
+| §2.bis.5a filas nemotron viejas | ⏳ Pendiente (datos históricos) |
+
+**Bloqueo principal:** la re-corrida completa NO puede lanzarse hasta resolver la recuperación de `Locations` del corpus de 120 (§2.bis.2), que no es un fix de código sino regeneración de datos sin pipeline reproducible disponible.
+
 ---
 
 ## 2. Claude Desktop

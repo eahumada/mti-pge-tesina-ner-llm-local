@@ -7,6 +7,14 @@ import os
 # Global cache for dictionaries to avoid loading them repeatedly
 _GLOBAL_DICTIONARIES = None
 
+# Umbral de la tasa de alucinación (cotejo por SUBVENTANA contra el texto fuente).
+# Fix 2026-09-08 (encargo §2.4, FINDINGS §F50): es INTENCIONADAMENTE distinto del `fuzzy_threshold` del
+# cotejo entidad-a-entidad (85). Aquí se compara la entidad contra ventanas deslizantes del texto, donde un
+# umbral más laxo (70) evita marcar como alucinación variaciones ortográficas legítimas presentes en el
+# original. Antes el valor por omisión de la función (70) se usaba en silencio mientras la config declaraba
+# 85; ahora la diferencia es explícita y queda documentada, no propagada por accidente.
+HALLUCINATION_SUBSTRING_THRESHOLD = 70
+
 def _get_dictionaries() -> set:
     global _GLOBAL_DICTIONARIES
     if _GLOBAL_DICTIONARIES is not None:
@@ -80,17 +88,23 @@ def evaluate_extraction_by_type(extracted: dict, ground_truth: dict, threshold: 
             f1 = 0.0
             fp = len(ext_list)
         else:
-            # Standard TP count using fuzzy match
+            # Standard TP count using fuzzy match.
+            # Fix 2026-09-08 (encargo §2.3, FINDINGS §F49/§F50): cada entidad de referencia se empareja
+            # UNA sola vez. Antes dos extracciones que casaban con un mismo gold sumaban dos aciertos e
+            # inflaban la exhaustividad (recall > 1.0). Ahora tp = |gold emparejado| y una segunda
+            # extracción sobre un gold ya reclamado cuenta como falso positivo (duplicado).
             for entity in ext_list:
                 matched = False
                 for gt in gt_list:
+                    if gt in matched_gts:
+                        continue
                     if fuzz.ratio(entity.lower(), gt.lower()) >= threshold:
-                        tp += 1
-                        matched = True
                         matched_gts.add(gt)
+                        matched = True
                         break
                 if not matched:
                     fp += 1
+            tp = len(matched_gts)
             fn = len(gt_list) - len(matched_gts)
             
             precision = tp / len(ext_list) if len(ext_list) > 0 else 0.0
@@ -149,7 +163,7 @@ def evaluate_extraction_by_type(extracted: dict, ground_truth: dict, threshold: 
     
     return result
 
-def calculate_hallucination_rate(extracted_entities: dict, source_text: str, threshold: int = 70) -> dict:
+def calculate_hallucination_rate(extracted_entities: dict, source_text: str, threshold: int = HALLUCINATION_SUBSTRING_THRESHOLD) -> dict:
     """
     Checks if extracted entities exist in the original text (via partial match).
     Calculates Hallucination Rate = Count of Hallucinations / Total Extracted Entities.
@@ -299,7 +313,10 @@ def calculate_fine_grained_errors(extracted: dict, ground_truth: dict, source_te
 def evaluate_single_record(extracted: dict, ground_truth: dict, source_text: str, threshold: int = 85) -> dict:
     """Runs all evaluation metrics on a single record extraction trace."""
     extraction_results = evaluate_extraction_by_type(extracted, ground_truth, threshold)
-    hallucination_results = calculate_hallucination_rate(extracted, source_text)
+    # §2.4: la tasa de alucinación usa su propio umbral de subventana (HALLUCINATION_SUBSTRING_THRESHOLD),
+    # distinto del `threshold` de cotejo entidad-a-entidad. Se pasa de forma explícita para dejar constancia
+    # de que la diferencia es deliberada y no un descarte silencioso del parámetro configurado.
+    hallucination_results = calculate_hallucination_rate(extracted, source_text, HALLUCINATION_SUBSTRING_THRESHOLD)
     error_taxonomy = calculate_fine_grained_errors(extracted, ground_truth, source_text, threshold)
     
     return {

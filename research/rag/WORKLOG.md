@@ -779,3 +779,37 @@ hizo contra un original que no se movió. Del `.md` no se tocó nada: sigue decl
 
 **`_v11` congelada** (`.docx` `efe56e1d7495`, `.pdf` `872d23993314`), **sin declararla versión de entrega**: la
 extensión total está por resolver y §2.20 sigue abierta.
+
+---
+
+## 2026-09-08 — Correcciones previas a la re-corrida (encargo RECORRIDA-COMPLETA, señal TURK_182_GOGO)
+
+**Autor de la sesión:** Claude Code. **Rama:** `fix/recorrida-correcciones-20260908`. **Benchmark NO lanzado.**
+
+Tras detectar la señal `TURK_182_GOGO` en `PROMPT-EQUIPO-REMOTO-RECORRIDA-COMPLETA-20260908.md` se aplicaron
+las correcciones de código y datos previas a la re-corrida. Decisión del autor: resolver las dudas de criterio
+dentro de sesión, respetando la política aditiva y la integridad de medición.
+
+**Fixes de código (probados, imports OK):**
+- §2.3 `evaluator.py`: emparejamiento uno-a-uno; `tp=len(matched_gts)`. Elimina `recall>1.0` (probado con
+  dos extracciones sobre un mismo gold: tp=1, fp=1, recall=1.0).
+- §2.4 `evaluator.py`: umbral de alucinación como constante explícita `HALLUCINATION_SUBSTRING_THRESHOLD=70`,
+  documentado como distinto del `fuzzy_threshold` de cotejo (85); ya no se descarta en silencio.
+- §2.5 `ollama_provider.py`: `think` ya era top-level; se añadió volcado `logger.info` de la config efectiva
+  (options+think+cloud) para cotejar contra `run_config.json`.
+- §2.bis.3 `config.py`: `max_tokens` unificado a 4096 (ninguno agota el tope; gpt-oss pasó de 67 a 2 respaldos).
+- §2.bis.5b `statistics.py`: umbral de outlier por longitud = Q3+1,5·IQR (antes avg+500 nunca marcaba nada).
+- §2.bis.2 código: `download_conll2002.py` captura LOC; `data_loader.py` lee `locations` en vez de `[]`.
+
+**Reparación de datos (validada):**
+- §2.2 mojibake: `benchmark_balanced_120.json` y `test15_balanced.json` reparados a 0 marcas por roundtrip
+  latin-1 seguro (387 y 39 strings). `conll2002_es.json` (fuente) reparado 2985 strings, 19 residuales en
+  documentos largos donde el roundtrip completo falla (no entran en la métrica). `analisis_mojibake.py`
+  confirma partición de afectados 0/120 por entidad y 0/120 por texto (antes 20,1% y 87%).
+
+**Bloqueado / pendiente de decisión de datos:**
+- §2.bis.2 recuperación de `Locations` en el corpus de 120 PUBLICADO: no reproducible sin el script de build
+  del corpus (ausente); requiere pipeline original o anotación experta. **Bloquea la re-corrida completa.**
+- §2.bis.1 exemplars contaminados: decisión de excluir 7 `article_id` de la métrica kb_fewshot/kb_combined;
+  manifiesto en `data/knowledge_base/contaminated_exemplar_articles.json`; falta cablear al pipeline.
+- §2.bis.4 (repuntuar JSON viejos) y §2.bis.5a (filas nemotron) se regeneran en la re-corrida.

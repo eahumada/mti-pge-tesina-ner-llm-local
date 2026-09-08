@@ -25,12 +25,16 @@ def download_and_convert_conll2002():
     current_words = []
     current_persons = set()
     current_orgs = set()
-    
+    current_locs = set()
+
     current_entity_words = []
     current_entity_type = None
 
     article_count = 0
-    
+
+    # Fix 2026-09-08 (encargo §2.bis.2): CoNLL-2002 anota PER, ORG, LOC y MISC. La versión anterior
+    # descartaba LOC, lo que dejaba el campo Locations vacío en los 105 artículos de este origen y hacía
+    # que toda localización devuelta por el modelo se contara como falso positivo. Ahora se captura LOC.
     def save_entity():
         if current_entity_words:
             entity_name = " ".join(current_entity_words)
@@ -38,6 +42,8 @@ def download_and_convert_conll2002():
                 current_persons.add(entity_name)
             elif current_entity_type == "ORG":
                 current_orgs.add(entity_name)
+            elif current_entity_type == "LOC":
+                current_locs.add(entity_name)
             current_entity_words.clear()
 
     # We will group roughly every 10 sentences into a "document" to simulate an article
@@ -55,11 +61,13 @@ def download_and_convert_conll2002():
                         "title": f"Spanish News Snippet {article_count}",
                         "text": " ".join(current_words),
                         "name_entities": list(current_persons),
-                        "organizations": list(current_orgs)
+                        "organizations": list(current_orgs),
+                        "locations": list(current_locs)
                     })
                     current_words = []
                     current_persons = set()
                     current_orgs = set()
+                    current_locs = set()
                     sentence_count = 0
             continue
             
@@ -74,10 +82,10 @@ def download_and_convert_conll2002():
             if tag.startswith("B-"):
                 save_entity()
                 current_entity_type = tag[2:]
-                if current_entity_type in ["PER", "ORG"]:
+                if current_entity_type in ["PER", "ORG", "LOC"]:
                     current_entity_words.append(word)
             elif tag.startswith("I-"):
-                if current_entity_type in ["PER", "ORG"]:
+                if current_entity_type in ["PER", "ORG", "LOC"]:
                     current_entity_words.append(word)
             else:
                 save_entity()
@@ -92,7 +100,8 @@ def download_and_convert_conll2002():
             "title": f"Spanish News Snippet {article_count}",
             "text": " ".join(current_words),
             "name_entities": list(current_persons),
-            "organizations": list(current_orgs)
+            "organizations": list(current_orgs),
+            "locations": list(current_locs)
         })
 
     output_path = 'data/conll2002_es.json'

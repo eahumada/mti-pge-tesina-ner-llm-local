@@ -77,7 +77,12 @@ class BenchmarkConfig:
     system_prompt_file: str = 'SYSTEM_PROMPT.md'
     ollama_base_url: str = 'http://localhost:11434'
     temperature: float = 0.1
-    max_tokens: int = 2048
+    # Fix 2026-09-08 (encargo §2.bis.3): presupuesto de generación UNIFICADO para los 13 modelos. Antes
+    # gpt-oss:20b corrió con 4096 y el resto con 2048, y el signo del efecto RAG se invertía con el
+    # presupuesto (−9,65 pp vs +3,28 pp). 4096 es el valor con el que ningún modelo agota el tope (gpt-oss
+    # pasó de 67 respaldos con 2048 a 2 con 4096). Debe quedar registrado en run_config.json y verificarse
+    # tras la corrida que ningún modelo termina por límite de tokens.
+    max_tokens: int = 4096
     seed: int = 42
     rag_study: bool = False
     # RAG mode selector — controls Knowledge Base vs. legacy entity dict retrieval.

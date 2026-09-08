@@ -311,6 +311,13 @@ class OllamaProvider(LLMProvider):
                 self.model_name,
             )
         think_kw: dict[str, Any] = {"think": think_flag} if think_flag is not None else {}
+        # §2.5 / §2.bis.3: volcar la configuración EFECTIVA que recibe el proveedor, para cotejarla contra
+        # run_config.json y detectar parámetros descartados en silencio (num_predict corto que dispara
+        # respaldos, o `think` ignorado). No fiarse de lo que el código pretende enviar.
+        logger.info(
+            "OLLAMA effective config: model=%s options=%s think=%s cloud=%s",
+            self.model_name, options, think_flag, is_cloud,
+        )
         if is_cloud:
             logger.debug("Cloud-hosted Ollama model '%s': using cloud endpoint.", self.model_name)
 
