@@ -794,6 +794,57 @@ def c_tabla18_vs_artefacto(s):
           'con esta, todas las tablas de datos del informe estan atadas al dato')
 
 
+# --- 21. Todo JSON rastreado debe parsear -------------------------------------------------------
+# Ficheros que son JSONL de forma legitima —un objeto por linea— y por tanto no parsean como JSON.
+JSONL_LEGITIMOS = ('data/sample_an1.json', 'data/sample_an2.json', 'data/sample_sanctions.json')
+
+# Ficheros rotos por el barrido de exclusion, ya diagnosticados y pendientes de decision del autor
+# (FINDINGS §F70). Se avisan aparte en lugar de hacer fallar la comprobacion: una que siempre falla
+# se acaba desactivando (LEARNING §L48). Retirar la entrada cuando se reparen.
+JSON_ROTOS_DECLARADOS = {
+    'repos/ner-llm-entity-benchmark/results/excluidos_n120_REMOTO/detailed_results.json.bak_prescore':
+        '240 de 480 claves «model» sin valor; las otras 240 son de gpt-oss:20b y estan intactas',
+    'repos/ner-llm-entity-benchmark/results/excluidos_n120_REMOTO/benchmark_summary.json.bak_prescore':
+        'falta una clave de primer nivel, la del modelo excluido',
+}
+
+
+def c_json_parsea(s):
+    """Un fichero de datos roto se comporta igual que uno sano hasta que alguien lo abre.
+
+    El barrido que retiro los nombres de los modelos excluidos edito JSON por sustitucion de texto y
+    dejo dos ficheros ilegibles, con `"model":` sin valor en 240 registros. Nadie lo noto porque
+    nada los parseaba. Ver FINDINGS §F70.
+    """
+    import json as _json
+    r = subprocess.run(['git', 'ls-files'], cwd=RAIZ, capture_output=True, text=True)
+    fich = [l for l in r.stdout.split('\n') if l.endswith('.json') or '.json.bak' in l]
+    fallos, mirados, declarados = [], 0, []
+    for rel in fich:
+        p = os.path.join(RAIZ, rel)
+        if not os.path.isfile(p) or any(rel.endswith(j) for j in JSONL_LEGITIMOS):
+            continue
+        mirados += 1
+        try:
+            with open(p, encoding='utf-8') as fh:
+                _json.load(fh)
+        except Exception as e:
+            if rel in JSON_ROTOS_DECLARADOS:
+                declarados.append(rel)
+            else:
+                fallos.append('%s no parsea: %s' % (rel, str(e)[:70]))
+    nota = 'los .jsonl legitimos estan declarados como excepcion en JSONL_LEGITIMOS'
+    if declarados:
+        nota = ('%d fichero(s) rotos ya diagnosticados y pendientes de reparar (FINDINGS §F70)'
+                % len(declarados))
+    check('todo JSON rastreado parsea', mirados, fallos, nota)
+    if declarados:
+        print('  AVISO  %d JSON rotos declarados, pendientes de decision del autor:' % len(declarados))
+        for rel in declarados:
+            print('           - %s' % rel)
+            print('             %s' % JSON_ROTOS_DECLARADOS[rel])
+
+
 def main():
     s = texto()
     c_vacios()
@@ -815,6 +866,7 @@ def main():
     c_figura1_vs_artefacto(s)
     c_tablas_menores(s)
     c_tabla18_vs_artefacto(s)
+    c_json_parsea(s)
     if '--red' in sys.argv:
         c_urls(s)
 

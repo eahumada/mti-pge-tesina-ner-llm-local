@@ -663,3 +663,25 @@ antes de ignorar algo no es «¿ocupa mucho?» sino **«¿podría reconstruirlo 
 Corolario operativo: cuando se escriba una regla de conservación para una clase de artefacto, revisar en el
 mismo turno qué **otras** clases cumplen el mismo criterio. La regla de los logs se escribió sin mirar si
 había algo más en la misma situación, y lo había.
+
+### L52. Editar JSON por sustitución de texto lo rompe, y nadie se entera
+
+El barrido que retiró los nombres de los modelos excluidos borró la cadena del nombre allí donde aparecía,
+en lugar de cargar el fichero, modificar la estructura y volcarla. El resultado son dos ficheros con
+`"model":` colgando sin valor en 240 registros y un objeto al que le falta una clave (`§F70`).
+
+Lo que hace que este error sea caro no es la edición en sí, sino que **el daño es invisible**. Un JSON roto
+pesa lo mismo, se abre igual, aparece en un `ls` y pasa cualquier comprobación de existencia. Solo se
+manifiesta cuando alguien intenta cargarlo, y en este caso nadie lo intentó durante un día entero porque los
+ficheros estaban además ignorados en git.
+
+Dos reglas, y la segunda importa más:
+
+- **Un fichero estructurado se edita cargándolo y volcándolo**, nunca por sustitución de texto. Si hay que
+  hacerlo por texto, se valida después.
+- **Después de cualquier edición masiva de datos, parsear todo lo tocado.** No es una comprobación de la
+  edición, es una comprobación del fichero: cuesta un segundo por fichero y cubre la clase entera.
+
+Es hermana de `§L47` —un fichero vacío no da síntoma— y de `§L51` —lo que no se versiona no existe—. Las
+tres describen lo mismo desde ángulos distintos: **los defectos que sobreviven son los que no producen
+ningún síntoma**, y por eso hay que ir a buscarlos en vez de esperar a que aparezcan.

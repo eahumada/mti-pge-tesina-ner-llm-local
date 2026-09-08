@@ -1966,3 +1966,45 @@ ciertas sobre lo que cada una mide; lo que faltaba era decirlo.
 
 De ahí que el cálculo definitivo **declare cuántos grupos cubre**, igual que las comprobaciones del
 verificador: «26 de 26, ninguno sin cubrir» es lo que permite fiarse del total.
+
+---
+
+## §F70 — El barrido que retiró los modelos excluidos dejó dos ficheros de datos ilegibles
+
+**Fecha:** 2026-09-08. Encontrado al verificar la integridad de los ficheros que yo mismo había versionado
+horas antes.
+
+De los **192 ficheros JSON rastreados**, cinco no parsean. Tres son falsa alarma:
+`data/sample_an1.json`, `sample_an2.json` y `sample_sanctions.json` están en formato **JSONL** —un objeto por
+línea, veinte líneas y las veinte válidas—, que es legítimo y no debe «arreglarse».
+
+**Los otros dos están genuinamente corruptos**, y la causa es identificable:
+
+| Fichero | Daño |
+|:---|:---|
+| `results/excluidos_n120_REMOTO/detailed_results.json.bak_prescore` | **240 de 480** claves `"model"` sin valor |
+| `results/excluidos_n120_REMOTO/benchmark_summary.json.bak_prescore` | falta una clave de primer nivel; el objeto queda mal formado |
+
+El patrón es inequívoco. El barrido que retiró los nombres de los modelos excluidos **borró la cadena del
+nombre allí donde aparecía**, dejando `"model":` colgando sin valor y, en el resumen, una llave sin su clave.
+Editar JSON por sustitución de texto en lugar de cargarlo, modificarlo y volcarlo produce exactamente esto.
+
+**Las 240 filas afectadas son las del modelo excluido; las otras 240 son de `gpt-oss:20b`** y conservan sus
+valores. Es decir, el contenido que sí debe conservarse está atrapado dentro de un fichero que ya no se puede
+leer.
+
+**Por qué no se detectó antes.** Nada parseaba esos ficheros. Estaban ignorados en `.gitignore` —eran
+`.bak_*`— y solo entraron en git hoy; el defecto llevaba desde el barrido de exclusión sin que ninguna
+comprobación lo mirara. Es la misma familia que `§F59`, los cuatro documentos vacíos: **un fichero roto que
+nadie abre se comporta igual que uno sano.**
+
+**No se repara por iniciativa propia.** La reparación obvia —extraer solo las 240 filas de `gpt-oss:20b` a un
+fichero válido— implica decidir qué hacer con las 240 del modelo excluido, y eso es criterio del autor. Se
+deja constancia y la receta:
+
+1. Leer el `.bak` como texto, quedarse con los registros cuyo `"model"` tenga valor.
+2. Volcarlos como JSON válido en el mismo fichero o en uno nuevo.
+3. Anotar en el propio fichero cuántos registros se retiraron y por qué.
+
+**Comprobación que se incorpora al verificador:** todo JSON rastreado debe parsear, con los `.jsonl`
+declarados como excepción explícita. Cuesta un segundo y cubre una clase entera de defecto.
