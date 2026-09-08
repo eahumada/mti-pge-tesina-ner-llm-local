@@ -386,6 +386,14 @@ def main(argv: list[str] | None = None) -> int:
         ),
     )
     parser.add_argument(
+        "--grupos-esperados",
+        type=int,
+        default=26,
+        help="Numero de grupos modelo+modo que debe tener el consolidado (por defecto 26: los 13 "
+             "modelos del estudio en sus dos modos). 0 desactiva la comprobacion. Existe porque un "
+             "modelo que no se pasa no produce ningun sintoma.",
+    )
+    parser.add_argument(
         "--incluir-contaminados",
         action="store_true",
         help="NO excluir los articulos que son ejemplares del RAG. Solo para reproducir "
@@ -499,6 +507,18 @@ def main(argv: list[str] | None = None) -> int:
     )
     if n_models < 2:
         print("[ERROR] Se requieren al menos 2 grupos para ANOVA/Tukey.")
+        return 2
+
+    # Un modelo que no se pasa no produce ningun sintoma: la fusion sale bien, el ANOVA se calcula y
+    # el informe queda con un grupo de menos sin que nada avise. El estudio son 13 modelos en dos
+    # modos, es decir 26 grupos; quien fusione con otro numero deberia decirlo a proposito.
+    if args.grupos_esperados and n_models != args.grupos_esperados:
+        faltan = args.grupos_esperados - n_models
+        print(f"[ERROR] Se esperaban {args.grupos_esperados} grupos modelo+modo y hay {n_models}"
+              f" ({'faltan %d' % faltan if faltan > 0 else 'sobran %d' % -faltan}).")
+        print(f"        Grupos presentes: {sorted(merged['model'].unique().tolist())}")
+        print("        Si la diferencia es deliberada, pasar --grupos-esperados con el numero real"
+              " o 0 para desactivar la comprobacion.")
         return 2
 
     # 6. Estadistica (reutiliza src/statistics.py) --------------------------
