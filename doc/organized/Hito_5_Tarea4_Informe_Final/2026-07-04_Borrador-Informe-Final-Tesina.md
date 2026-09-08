@@ -98,6 +98,8 @@ Los **codificadores Transformer pre-entrenados** (BERT [2] y sus variantes multi
 
 Los modelos de lenguaje grande generativos (Transformers *decoder-only*) invierten el planteamiento: en lugar de ajustar los pesos al dominio, se describe la tarea en el propio *prompt*. Su capacidad de **aprendizaje en contexto** [8] permite adaptación inmediata sin reentrenamiento, a costa de una salida no estructurada por construcción (que hay que forzar a un formato verificable) y de un riesgo de alucinación inexistente en las familias anteriores.
 
+_Tabla 1. Familias de técnicas para el reconocimiento de entidades y su comportamiento frente a los criterios de selección._
+
 | Familia | Datos etiquetados requeridos | Adaptación a dominio nuevo | Riesgo principal |
 |:---|:---|:---|:---|
 | Reglas y diccionarios | Ninguno | Inmediata pero de cobertura cerrada | No detecta entidades no catalogadas |
@@ -144,7 +146,9 @@ Conviene retener una asimetría de interpretación: que una diferencia **no** al
 
 ### 2.5 Estado del arte y criterios de selección
 
-La Tabla 1 posiciona este trabajo respecto de investigaciones recientes en NER para dominios financieros y regulatorios.
+La Tabla 2 posiciona este trabajo respecto de investigaciones recientes en NER para dominios financieros y regulatorios.
+
+_Tabla 2. Estado del arte en reconocimiento de entidades para dominios financieros y regulatorios._
 
 | Trabajo | Dataset | Modelo | Desempeño publicado | Privacidad | Idioma |
 |:---|:---|:---|:---:|:---:|:---|
@@ -173,6 +177,8 @@ El tercer criterio, operar sobre hardware de consumo, obliga a cuantizar los pes
 ### 3.2 Arquitectura, proveedores y orquestación
 
 El sistema se organiza en cinco capas funcionales con responsabilidades separadas, así que cada una pueda evolucionar sin arrastrar a las demás.
+
+_Tabla 3. Arquitectura del sistema por capas, con sus módulos y su detalle técnico._
 
 | Capa | Módulo(s) | Detalle técnico |
 |:---|:---|:---|
@@ -242,9 +248,9 @@ El corpus sintético N=30 no fue descartado ni reemplazado: el flag `--data-file
 
 ### 4.2 Modelos evaluados
 
-El trabajo comprende dos conjuntos de evaluación que no hay que confundir. El benchmark exploratorio de la Tabla 2 (§5.1) cubre doce modelos en trece configuraciones sobre N=15 en modo `entities` (`gemma4:latest` aparece dos veces, en sus variantes ZS-ES y FS-ES), mientras que el estudio principal (§5.3.5) evalúa trece modelos sobre N=120 en modo `kb_combined`. El segundo incorpora `gemma4:12b-mlx` y `gpt-oss:20b`, que no disponen de corrida sobre el corpus reducido.
+El trabajo comprende dos conjuntos de evaluación que no hay que confundir. El benchmark exploratorio de la Tabla 4 (§5.1) cubre doce modelos en trece configuraciones sobre N=15 en modo `entities` (`gemma4:latest` aparece dos veces, en sus variantes ZS-ES y FS-ES), mientras que el estudio principal (§5.3.5) evalúa trece modelos sobre N=120 en modo `kb_combined`. El segundo incorpora `gemma4:12b-mlx` y `gpt-oss:20b`, que no disponen de corrida sobre el corpus reducido.
 
-Los modelos de la Tabla 2 se reparten en tres grupos. Entre los locales de ocho mil millones de parámetros o más figuran `gemma4:31b` y su compilación MLX, `gemma4:latest` (9B), `qwen2.5:14b`, `mistral-nemo:latest` (12B), `llama3.1:8b` y `qwen3:8b`. El tramo compacto, por debajo de 8B, lo componen `gemma:latest` (7B), `nemotron-mini:4b`, `llama3.2:latest` (3B) y `deepseek-r1:1.5b`. Completa el cuadro `gemma4:31b-cloud`, incluido únicamente como referencia externa frente a la ejecución local.
+Los modelos de la Tabla 4 se reparten en tres grupos. Entre los locales de ocho mil millones de parámetros o más figuran `gemma4:31b` y su compilación MLX, `gemma4:latest` (9B), `qwen2.5:14b`, `mistral-nemo:latest` (12B), `llama3.1:8b` y `qwen3:8b`. El tramo compacto, por debajo de 8B, lo componen `gemma:latest` (7B), `nemotron-mini:4b`, `llama3.2:latest` (3B) y `deepseek-r1:1.5b`. Completa el cuadro `gemma4:31b-cloud`, incluido únicamente como referencia externa frente a la ejecución local.
 
 ### 4.3 Análisis de variantes de prompts
 
@@ -280,7 +286,9 @@ Las pruebas se ejecutaron sobre Apple Silicon con aceleración Metal, en dos con
 
 ### 5.1 Benchmark General — 12 Modelos en 13 Configuraciones sobre Kleptotrace/CoNLL-2002 (N=15)
 
-La Tabla 2 presenta los resultados consolidados del benchmark completo agrupados por familia y tamaño de modelo:
+La Tabla 4 presenta los resultados consolidados del benchmark completo agrupados por familia y tamaño de modelo:
+
+_Tabla 4. Benchmark exploratorio: doce modelos en trece configuraciones sobre el corpus de quince artículos (N=15)._
 
 | Modelo | Tipo | Parámetros | F1 | Precisión | Recall | Hallucination | Latencia (s) | Tok/s/B |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
@@ -315,6 +323,8 @@ La Tabla 2 presenta los resultados consolidados del benchmark completo agrupados
 
 ### 5.2 Análisis de Variantes de Prompts (gemma4:latest, N=15)
 
+_Tabla 5. Variantes de prompt sobre `gemma4:latest`: diseño factorial de idioma de la instrucción y de los ejemplos (N=15)._
+
 | Configuración | F1 | Precisión | Recall | Hallucination | Latencia (s) | Δ vs. Baseline |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
 | Zero-shot Inglés (Baseline) | 64.05% | 57.69% | 77.17% | 0.20% | 157.90 | — |
@@ -333,6 +343,8 @@ La Tabla 2 presenta los resultados consolidados del benchmark completo agrupados
 
 El primer experimento evalúa los dos modelos de mayor capacidad del estudio sobre el corpus sintético del dominio AML/KYC, compuesto por treinta artículos breves con anotación experta. Su propósito no es comparar el catálogo completo de modelos (eso corresponde al §5.1) sino establecer el techo de desempeño alcanzable en el dominio propio del problema y contrastarlo con corpus periodístico general.
 
+_Tabla 6. Validación estadística sobre el corpus del dominio (N=30), con intervalos de confianza del 95 %._
+
 | Modelo | F1 | Precisión | Recall | IC 95 % del F1 | Fallos |
 |:---|:---:|:---:|:---:|:---:|:---:|
 | gemma4:31b-mlx | **80.57 %** | 74.17 % | **90.72 %** | [74.22 %, 86.92 %] | 0 |
@@ -347,6 +359,8 @@ Vale la pena señalar una particularidad de procedencia. Una primera ejecución 
 #### 5.3.5 Validación Estadística sobre Corpus Real N=120 (estudio completo)
 
 Sobre el corpus real N=120 descrito en §4.1.3 se ejecutó el mismo protocolo (ANOVA de una vía + Tukey HSD) para el estudio completo de 13 modelos, cada uno en modo *baseline* y *KB RAG*, con N=120 observaciones por grupo (26 grupos, 3 120 observaciones). Resultados consolidados en `results/ANALISIS_CONJUNTO_20260907/`.
+
+_Tabla 7. Efecto de la base de conocimientos contextual sobre el corpus real (N=120, trece modelos)._
 
 | Modelo | F1 baseline | F1 KB RAG | Δ RAG | Δ significativo |
 |:---|:---:|:---:|:---:|:---:|
@@ -390,6 +404,8 @@ Lectura conjunta con el corpus N=30 (§5.3): el mejor F1 local sobre N=120 (`gem
 El análisis cualitativo de las extracciones revela tres patrones de error recurrentes. Los **errores de límite** son los más frecuentes: el modelo incorpora al nombre preposiciones o aposiciones descriptivas, y extrae «Isabel dos Santos, hija del expresidente» donde la referencia registra solo «Isabel dos Santos». El cotejo difuso descrito en §4.4 absorbe buena parte de estos casos, que rara vez alteran la identificación de la entidad. La **confusión de tipo** aparece cuando una organización se clasifica como localización («Sonangol», la petrolera estatal angoleña según el propio artículo del corpus, etiquetada como lugar), error más costoso porque desplaza la entidad de la categoría en que un analista de cumplimiento la buscaría. Las **alucinaciones extrínsecas**, en las que el modelo propone entidades procedentes de su memoria paramétrica y ausentes del texto, resultaron ser el problema menos extendido: la instrucción de restringir la extracción al artículo presente las mantiene por debajo del 1 % en los modelos de mayor capacidad, aunque superan el 13 % en `deepseek-r1:1.5b`.
 
 ### 5.5 Análisis de Eficiencia en Hardware Soberano
+
+_Tabla 8. Eficiencia en hardware soberano: memoria, rendimiento y coste estimado por artículo._
 
 | Modelo | VRAM (MB) | Tok/s | Parámetros (B) | Índice Tok/s/B | Costo/Artículo |
 |:---|:---:|:---:|:---:|:---:|:---:|
@@ -581,6 +597,8 @@ repositorio del trabajo [37] (**https://github.com/eahumada/mti-pge-tesina-ner-l
 los parámetros exactos y su `benchmark_results.csv` con las métricas por artículo, de modo que las cifras de
 este informe pueden rehacerse sin repetir la inferencia. La estructura del repositorio es la siguiente:
 
+_Tabla 9. Estructura del repositorio de código._
+
 | Ruta | Descripción |
 |:---|:---|
 | `repos/ner-llm-entity-benchmark/` |  |
@@ -657,6 +675,8 @@ Eres un periodista de investigación financiera. Redacta un párrafo corto (2-4 
 
 ### Anexo C — Configuración del Entorno de Pruebas
 
+_Tabla 10. Configuración del entorno de pruebas._
+
 | Componente | Especificación |
 |:---|:---|
 | Hardware | Apple MacBook Pro, chip M4 Max |
@@ -675,7 +695,7 @@ Se documentan aquí los diagramas de flujo, tablas de configuración CLI y catá
 
 El módulo src/kb_rag_manager.py (KBRAGManager) implementa cuatro modos de operación configurables; para el modo `entities` el orquestador conserva la clase original `RAGManager` de src/rag_manager.py, de modo que la línea base dict-RAG se ejecuta con el código previo sin modificar:
 
-_Tabla 12. Configuración CLI del Módulo KB RAG_
+_Tabla 11. Configuración CLI del Módulo KB RAG._
 
 | Modo | Flag CLI | Descripción | Caso de Uso |
 |---|---|---|---|
@@ -711,7 +731,7 @@ KB RAG (nuevo): Template positivo — "[EXTRACTION GUIDANCE] Apply these rules t
 
 #### D.2 Catálogo de guías tipológicas y ejemplares de la base de Conocimientos
 
-_Tabla 13. Guías Tipológicas de Dominio de la Base de Conocimientos_
+_Tabla 12. Guías Tipológicas de Dominio de la Base de Conocimientos._
 
 | Dominio | ID | Idioma | Keywords Clave |
 |---|---|---|---|
@@ -721,7 +741,7 @@ _Tabla 13. Guías Tipológicas de Dominio de la Base de Conocimientos_
 | Judicial y Crimen | judicial_crime_es | ES | tribunal, fiscal, audiencia, sentencia |
 | Deportivo y Social | sports_social_es | ES | liga, federación, torneo |
 
-_Tabla 14. Ejemplares Few-Shot de la Base de Conocimientos_
+_Tabla 13. Ejemplares Few-Shot de la Base de Conocimientos._
 
 | ID Ejemplar | Dominio | Fuente |
 |---|---|---|
@@ -735,7 +755,7 @@ _Tabla 14. Ejemplares Few-Shot de la Base de Conocimientos_
 
 #### D.3 Reglas de la base de conocimientos contextual
 
-_Tabla 15. Reglas de la guía tipológica del dominio político-administrativo (politics_es), a modo de ejemplo_
+_Tabla 14. Reglas de la guía tipológica del dominio político-administrativo (politics_es), a modo de ejemplo._
 
 | Regla | Contenido |
 |---|---|
@@ -745,9 +765,9 @@ _Tabla 15. Reglas de la guía tipológica del dominio político-administrativo (
 
 ### Anexo E — Procedencia de los Datos del Benchmark General (N=15)
 
-_Tabla 16. Resultados Completos del Benchmark General (13 Configuraciones, N=15)_
+_Tabla 15. Procedencia de cada fila del benchmark exploratorio: correspondencia con su corrida de origen._
 
-| Filas de la Tabla 5 | Corrida de origen |
+| Filas de la Tabla 4 | Corrida de origen |
 |---|---|
 | gemma4:31b | gemma4_31b_n15_REMOTO (equipo de 48 GB) |
 | gemma4:latest (ZS-ES) y (FS-ES) | ablacion_n15_REMOTO |
@@ -802,6 +822,8 @@ No se utilizó IA para producir, estimar o extrapolar datos experimentales, ni p
 
 *Mojibake* (文字化け, «transformación de caracteres») designa el texto ilegible que resulta de escribir una cadena con una codificación y leerla con otra. En español afecta a las vocales acentuadas y a la «ñ», que en UTF-8 no ocupan un byte sino dos: la «é» se codifica como `0xC3 0xA9` y, leída como Latin-1 —donde cada byte es un carácter—, se descompone en `Ã` seguido de `©`. La firma del defecto es por tanto esa `Ã` inicial, común a toda vocal acentuada.
 
+_Tabla 16. Formas corruptas de los nombres almacenados y su representación real._
+
 | Forma almacenada (corrupta) | Forma real |
 |:---|:---|
 | `JosÃ© Bono` | José Bono |
@@ -812,6 +834,8 @@ No se utilizó IA para producir, estimar o extrapolar datos experimentales, ni p
 La reparación consiste en deshacer el paso erróneo: `s.encode('latin-1').decode('utf-8')`.
 
 #### H.2 Alcance medido y consecuencia sobre la comparación
+
+_Tabla 17. Alcance medido del defecto de codificación sobre el corpus N=120._
 
 | Comprobación sobre `data/benchmark_balanced_120.json` | Resultado |
 |:---|:---:|
@@ -829,6 +853,8 @@ El dato determinante es que el defecto **alcanza también al texto de entrada**,
 #### H.3 Evidencia empírica del efecto diferencial
 
 Diferencia de F1 entre los 88 artículos afectados y los 31 no afectados, sobre los mismos registros para todos los modelos:
+
+_Tabla 18. Efecto diferencial del *mojibake* sobre el F1, por modelo._
 
 | Modelo | Δ F1 (con *mojibake* − sin) |
 |:---|--:|
@@ -863,10 +889,9 @@ Esta corrección **no pudo aplicarse retroactivamente**: el cotejo se resuelve e
 
 ### Anexo I — Medición restringida a las categorías anotadas por el corpus
 
-_Tabla 19. Desempeño publicado y desempeño restringido a personas y organizaciones (N=120, 49 configuraciones)._
-
 Los prompts solicitan tres categorías de entidad y los corpus anotan dos, de modo que toda localización extraída se contabiliza como falso positivo (§3.3). Esta tabla acompaña cada cifra publicada de su equivalente restringido a las categorías que el corpus efectivamente anota. Se obtuvo reagregando los desgloses por tipo ya almacenados en los resultados por corrida, **sin repetir la inferencia**, tomando por configuración la corrida más reciente que aporta exactamente 120 registros. La exhaustividad es idéntica en ambas columnas porque el corpus no anota localizaciones y, por tanto, tampoco puede omitirlas: la corrección afecta solo a la precisión.
 
+_Tabla 19. Desempeño publicado y desempeño restringido a personas y organizaciones (N=120, 49 configuraciones)._
 | Configuración | Corrida | P | R | F1 | P restr. | F1 restr. | Δ F1 |
 |:---|:---|---:|---:|---:|---:|---:|---:|
 | gemma4:31b-cloud_baseline | gemma4_31b_cloud_n120_REMOTO | 58.58 | 76.80 | 66.46 | 86.70 | 81.45 | +14.99 |
