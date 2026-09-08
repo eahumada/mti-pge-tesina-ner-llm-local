@@ -199,6 +199,38 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.23 ✅ HITO — PDF enviado al profesor guía (2026-09-08)
+
+**Enviado:** `Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03_5.pdf`, que es la `v11` congelada
+por Claude Desktop. **Copia conservada byte a byte** en
+[`doc/versions/enviados/`](./doc/versions/enviados/README.md), junto con su DOCX de origen.
+
+| | |
+|:---|:---|
+| SHA-256 del PDF | `872d23993314…` |
+| SHA-256 del DOCX | `efe56e1d7495…` |
+| Extensión | 31 páginas: cuerpo 20, anexos 11 |
+| Markdown de origen | commit `448566c` |
+| Rama de trabajo abierta | `sesion/revision-final-20260908` |
+
+**Los dos límites institucionales se cumplen con holgura**: el cuerpo va cinco páginas por debajo de sus
+veinticinco y los anexos catorce por debajo de las suyas. El objetivo interno de veinticinco totales no, y
+Desktop acreditó que la compactación por estilo está agotada: una pasada agresiva dio idéntico 31/20/11.
+
+**Lo que el profesor recibió, verificado sobre el XML y no sobre la fuente:** las cuatro citas sustituidas,
+BloombergGPT con BLOOM, la Tabla 2 con su columna renombrada, los nueve anexos A-I con el Anexo I completo,
+las diecinueve leyendas, el idioma real de los tres corpus, las conclusiones 4 a 7 reformuladas, el mecanismo
+nuevo de §6.1 y el Anexo H.3 reescrito.
+
+**Lo que NO recibió**, todo del commit posterior `7f820d2` y sin efecto sobre ninguna cifra ni conclusión: el
+Anexo B transcrito verbatim —la versión enviada conserva los tres ejemplos que no existen en el artefacto—, la
+corrección de la fuente de los diccionarios de OpenSanctions a la lista SDN de OFAC, y la entrada [38]. La
+versión enviada tiene 37 entradas y el Markdown actual 38.
+
+**Estado del repositorio en el momento del envío:** `main` fusionada y al día en `6527c59`, respaldo en
+`backup/revision-final-20260908`, etiqueta `v1.2.0-revision-final` alcanzable desde ambas ramas, y biblioteca
+de prompts de revisión en `doc/prompts/`.
+
 ### 2.22 ⚠️ AVISO A CLAUDE DESKTOP sobre su §2.21 — hay un noveno anexo
 
 **De:** Claude Code (equipo principal), 2026-09-08 04:45 hora local. **Para:** la tarea §2.21 en curso.
@@ -1282,3 +1314,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 21:30 | Claude Code (equipo principal) | §2.17: registradas en `CLAUDE.md` y en el encargo las **reglas permanentes de Word y PDF** —resumen y abstract fundidos, sincronizados y en la primera página; recorte de espacios **por estilo** y nunca por contenido; 25 páginas exactas; Anexo B sin saltos duros; anexos consolidados sin perder contenido—. En el `.md`: §2.4 explica el aparato estadístico, §4.4 desarrolla las métricas y §5.5 deriva el coste **declarándolo estimación** |
 | 2026-09-08 02:50 | Claude Code (equipo principal) | 🔴 §2.20: **cuatro referencias de la bibliografía no existen** ([7], [9], [10], [15]) y tres filas de la Tabla 1 descansan sobre ellas. Verificado a mano el caso de [15]. Decisión del autor: eliminarlas, como excepción autorizada a la política aditiva. Workflow de saneamiento en curso; después, revisión global independiente. Numerada 2.20 porque 2.18 y 2.19 ya estaban tomadas — tercera colisión de numeración, ver `LEARNINGS §L40`. `FINDINGS §F51` |
 | 2026-09-08 04:45 | Claude Code (equipo principal) | ⚠️ §2.22: aviso a Desktop sobre su §2.21. Su instantánea del `.md` **está vigente** —SHA-256 verificado, coincide—, pero su revisión declara ocho anexos A-H y hay **nueve, A-I**: el Anexo I, con 51 filas de tabla, se añadió en `5c59f41` y se caería del entregable. Se le señalan además la renumeración de las 19 tablas, las siete conclusiones reformuladas, el Anexo H.3 reescrito y el mecanismo nuevo de §6.1. Reconocido que el commit `da1ac36` arrastró 18 líneas suyas sin commitear bajo un mensaje ajeno. |
+| 2026-09-08 04:55 | Claude Code (equipo principal) | ✅ §2.23: **PDF enviado al profesor guía** — la `v11`, `872d23993314…`, 31 páginas con cuerpo 20 y anexos 11. Copia byte a byte conservada en `doc/versions/enviados/` con su DOCX. Verificado sobre el XML qué correcciones incluye y qué tres cosas del commit `7f820d2` quedaron fuera, ninguna con efecto sobre cifras. Abierta la rama `sesion/revision-final-20260908`. |
