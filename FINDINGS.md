@@ -1919,3 +1919,50 @@ localizaciones de referencia frente a las 1 034 de N=120.
 **Qué hacer.** Nada en el informe todavía. Cuando estén los trece modelos: rehacer el consolidado, mirar el
 post-hoc y **reformular §5.3.1 con lo que digan los datos**, sea cual sea. Si la tesis de la proporcionalidad
 inversa sobrevive con otra redacción, se conserva; si no, se dice.
+
+---
+
+## §F69 — El informe daba dos cifras distintas para la composición de los falsos positivos, y ninguna era la del estudio
+
+**Fecha:** 2026-09-08. Encontrado al inventariar qué afirmaciones dependen de los datos que la re-corrida va
+a sustituir.
+
+El informe decía en dos sitios cosas distintas sobre la misma magnitud:
+
+| Dónde | Cifra | Origen |
+|:---|:---|:---|
+| §3.3, §7.2 y la leyenda de la Figura 1 | 19 178 de 28 404 = **67,5 %** | **ninguno**: no aparece en ningún artefacto de datos del repositorio |
+| Anexo I | 20 946 de 32 201 = **65,0 %** | `results/CORRECCION_LOCATIONS_20260908`, sobre **42 configuraciones** |
+
+**Ninguna de las dos describe el estudio publicado.** La segunda es correcta para lo que dice medir, pero
+cubre 42 configuraciones e incluye corridas después declaradas inválidas, entre ellas
+`gemma4:12b-mlx_kb_rag` con F1 14,60, la que el modo de razonamiento arruinó (`§F62`). La primera no se ha
+podido reproducir desde ningún dato.
+
+**Recalculado sobre los 26 grupos que sostienen la Tabla 7**, tomando para cada uno la corrida que el
+consolidado usa realmente, y con los 26 cubiertos sin omitir ninguno:
+
+| Categoría | Falsos positivos | tp + fn |
+|:---|---:|---:|
+| Locations | **12 852** | **0** |
+| Organizations | 5 132 | 21 301 |
+| Persons | 1 480 | 15 664 |
+| **Total** | **19 464** | |
+
+La cifra del estudio es **12 852 de 19 464, el 66,0 %**. Queda trazable en
+`results/COMPOSICION_FP_20260908/`, con el desglose por grupo.
+
+**Corregido en el informe:** §3.3 y §7.2 pasan a 66,0 %, la Figura 1 se regeneró con las cifras nuevas, y el
+Anexo I **conserva su 65,0 %** con una glosa que explica que cubre una población distinta. Las dos cifras son
+ciertas sobre lo que cada una mide; lo que faltaba era decirlo.
+
+**Dos tropiezos propios durante el cálculo**, que ilustran lo fácil que es equivocarse aquí:
+
+1. La primera versión del recuento no filtraba bien por grupo y **sumaba cero** de las corridas cuya
+   estructura no reconocía, sin avisar. Dio 66,0 % por casualidad, no por acierto.
+2. Al diagnosticarlo, imprimí las claves de un registro con `list(r)[:12]` y concluí que no traía
+   `metrics`, cuando era la **decimotercera**. Estuve a punto de dar por bueno que aquella corrida no tenía
+   desglose por tipo.
+
+De ahí que el cálculo definitivo **declare cuántos grupos cubre**, igual que las comprobaciones del
+verificador: «26 de 26, ninguno sin cubrir» es lo que permite fiarse del total.

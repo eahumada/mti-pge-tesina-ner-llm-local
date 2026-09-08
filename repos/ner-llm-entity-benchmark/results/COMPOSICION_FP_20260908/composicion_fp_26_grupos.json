@@ -1,0 +1,261 @@
+{
+ "nota": "Composicion de los falsos positivos del estudio publicado: los 26 grupos (13 modelos x 2 modos) que sostienen la Tabla 7, cada uno desde la corrida que el consolidado usa. Calculado desde los detailed_results.json, sin reejecutar inferencia. NO es lo mismo que results/CORRECCION_LOCATIONS_20260908, que cubre 42 configuraciones e incluye corridas posteriormente sustituidas por invalidas.",
+ "fecha": "2026-09-08",
+ "grupos": 26,
+ "grupos_cubiertos": 26,
+ "fp_por_categoria": {
+  "Persons": 1480,
+  "Organizations": 5132,
+  "Locations": 12852
+ },
+ "tp_por_categoria": {
+  "Persons": 9880,
+  "Organizations": 10479,
+  "Locations": 0
+ },
+ "fn_por_categoria": {
+  "Persons": 5784,
+  "Organizations": 10822,
+  "Locations": 0
+ },
+ "fp_total": 19464,
+ "fp_locations": 12852,
+ "pct_fp_locations": 66.0,
+ "locations_tp_mas_fn": 0,
+ "detalle": {
+  "deepseek-r1:1.5b_baseline": {
+   "corrida": "benchmark_n120_REMOTO",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 257,
+    "Organizations": 222,
+    "Locations": 288
+   }
+  },
+  "deepseek-r1:1.5b_kb_rag": {
+   "corrida": "benchmark_n120_REMOTO",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 239,
+    "Organizations": 296,
+    "Locations": 290
+   }
+  },
+  "gemma4:12b-mlx_baseline": {
+   "corrida": "afectados_thinking_n120_REMOTO",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 41,
+    "Organizations": 141,
+    "Locations": 608
+   }
+  },
+  "gemma4:12b-mlx_kb_rag": {
+   "corrida": "afectados_thinking_n120_REMOTO",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 43,
+    "Organizations": 188,
+    "Locations": 557
+   }
+  },
+  "gemma4:31b-cloud_baseline": {
+   "corrida": "gemma4_31b_cloud_n120_REMOTO",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 18,
+    "Organizations": 149,
+    "Locations": 603
+   }
+  },
+  "gemma4:31b-cloud_kb_rag": {
+   "corrida": "gemma4_31b_cloud_n120_REMOTO",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 39,
+    "Organizations": 180,
+    "Locations": 589
+   }
+  },
+  "gemma4:31b-mlx_baseline": {
+   "corrida": "benchmark_balanced_120_20260901_140421",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 34,
+    "Organizations": 187,
+    "Locations": 603
+   }
+  },
+  "gemma4:31b-mlx_kb_rag": {
+   "corrida": "benchmark_balanced_120_20260901_140421",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 45,
+    "Organizations": 202,
+    "Locations": 573
+   }
+  },
+  "gemma4:latest_baseline": {
+   "corrida": "benchmark_balanced_120_20260901_140421",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 49,
+    "Organizations": 203,
+    "Locations": 508
+   }
+  },
+  "gemma4:latest_kb_rag": {
+   "corrida": "benchmark_balanced_120_20260901_140421",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 40,
+    "Organizations": 153,
+    "Locations": 552
+   }
+  },
+  "gemma:latest_baseline": {
+   "corrida": "benchmark_balanced_120_20260901_140421",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 8,
+    "Organizations": 291,
+    "Locations": 368
+   }
+  },
+  "gemma:latest_kb_rag": {
+   "corrida": "benchmark_balanced_120_20260901_140421",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 114,
+    "Organizations": 342,
+    "Locations": 260
+   }
+  },
+  "gpt-oss:20b_baseline": {
+   "corrida": "gptoss_rerun_REMOTO",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 42,
+    "Organizations": 244,
+    "Locations": 660
+   }
+  },
+  "gpt-oss:20b_kb_rag": {
+   "corrida": "gptoss_rerun_REMOTO",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 46,
+    "Organizations": 236,
+    "Locations": 635
+   }
+  },
+  "llama3.1:8b_baseline": {
+   "corrida": "benchmark_n120_REMOTO",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 56,
+    "Organizations": 124,
+    "Locations": 601
+   }
+  },
+  "llama3.1:8b_kb_rag": {
+   "corrida": "benchmark_n120_REMOTO",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 49,
+    "Organizations": 159,
+    "Locations": 459
+   }
+  },
+  "llama3.2:latest_baseline": {
+   "corrida": "benchmark_balanced_120_20260901_140421",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 15,
+    "Organizations": 103,
+    "Locations": 613
+   }
+  },
+  "llama3.2:latest_kb_rag": {
+   "corrida": "benchmark_balanced_120_20260901_140421",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 34,
+    "Organizations": 207,
+    "Locations": 547
+   }
+  },
+  "mistral-nemo:latest_baseline": {
+   "corrida": "benchmark_n120_REMOTO",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 18,
+    "Organizations": 91,
+    "Locations": 368
+   }
+  },
+  "mistral-nemo:latest_kb_rag": {
+   "corrida": "benchmark_n120_REMOTO",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 22,
+    "Organizations": 97,
+    "Locations": 283
+   }
+  },
+  "nemotron-mini:4b_baseline": {
+   "corrida": "nemotron_rerun_n120_REMOTO",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 5,
+    "Organizations": 311,
+    "Locations": 390
+   }
+  },
+  "nemotron-mini:4b_kb_rag": {
+   "corrida": "nemotron_rerun_n120_REMOTO",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 82,
+    "Organizations": 336,
+    "Locations": 330
+   }
+  },
+  "qwen2.5:14b_baseline": {
+   "corrida": "benchmark_balanced_120_20260901_140421",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 19,
+    "Organizations": 112,
+    "Locations": 544
+   }
+  },
+  "qwen2.5:14b_kb_rag": {
+   "corrida": "benchmark_balanced_120_20260901_140421",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 28,
+    "Organizations": 128,
+    "Locations": 482
+   }
+  },
+  "qwen3:8b_baseline": {
+   "corrida": "qwen3_nothink_n120_REMOTO",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 68,
+    "Organizations": 181,
+    "Locations": 602
+   }
+  },
+  "qwen3:8b_kb_rag": {
+   "corrida": "qwen3_nothink_n120_REMOTO",
+   "registros": 120,
+   "fp_por_categoria": {
+    "Persons": 69,
+    "Organizations": 249,
+    "Locations": 539
+   }
+  }
+ }
+}
