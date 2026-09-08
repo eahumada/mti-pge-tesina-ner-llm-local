@@ -1,0 +1,191 @@
+2026-09-08 19:16:25,729 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-08 19:16:25,748 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-08 19:16:25,748 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-09-08 19:16:25,749 [INFO] ner_benchmark: Corpus loaded: 15 articles split into 2 batches.
+2026-09-08 19:16:25,749 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-08 19:16:25,793 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-08 19:16:25,795 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-08 19:16:25,795 [INFO] ner_benchmark: [RAG] Using Knowledge Base mode: 'kb_combined'
+2026-09-08 19:16:25,810 [INFO] ner_benchmark.pub_sub: Published task gemma4:latest_baseline-b0-1788905785 for batch 0 to memory queue.
+2026-09-08 19:16:25,810 [INFO] ner_benchmark.pub_sub: Published task gemma4:latest_baseline-b1-1788905785 for batch 1 to memory queue.
+2026-09-08 19:16:25,810 [INFO] ner_benchmark.pub_sub: Published task gemma4:latest_kb_rag-b0-1788905785 for batch 0 to memory queue.
+2026-09-08 19:16:25,810 [INFO] ner_benchmark.pub_sub: Published task gemma4:latest_kb_rag-b1-1788905785 for batch 1 to memory queue.
+2026-09-08 19:16:25,810 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=1 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-09-08 19:16:25,812 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-08 19:16:25,812 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-08 19:16:25,813 [INFO] ner_benchmark: [RAG] Worker phase — Knowledge Base mode: 'kb_combined'
+2026-09-08 19:16:25,825 [INFO] ner_benchmark.pub_sub: Published task gemma4:latest_baseline-b0-1788905785 for batch 0 to memory queue.
+2026-09-08 19:16:25,825 [INFO] ner_benchmark.pub_sub: Published task gemma4:latest_baseline-b1-1788905785 for batch 1 to memory queue.
+2026-09-08 19:16:25,825 [INFO] ner_benchmark: Running RAG study 'gemma4:latest_baseline' with 1 workers...
+2026-09-08 19:16:25,825 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:latest_baseline-b0-1788905785 from memory queue.
+2026-09-08 19:16:25,825 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-08 19:16:25,825 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:latest' (Mapped: 'gemma4:latest_baseline') -> Extracting entities for record '1'...
+2026-09-08 19:16:25,826 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:16:25,829 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:17:14,487 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:17:14,977 [DEBUG] ner_benchmark.llm_runner: Successfully extracted entities via regex key fallback.
+2026-09-08 19:17:15,007 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:latest' (Mapped: 'gemma4:latest_baseline') -> Extracting entities for record '2'...
+2026-09-08 19:17:15,007 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:17:15,012 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:17:18,831 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:17:19,078 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:17:19,090 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:latest' (Mapped: 'gemma4:latest_baseline') -> Extracting entities for record '3'...
+2026-09-08 19:17:19,090 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:17:19,093 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:18:03,484 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:18:03,664 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:18:03,695 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:latest' (Mapped: 'gemma4:latest_baseline') -> Extracting entities for record '4'...
+2026-09-08 19:18:03,695 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:18:03,699 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:18:27,848 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:18:28,028 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:18:28,057 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:latest' (Mapped: 'gemma4:latest_baseline') -> Extracting entities for record '5'...
+2026-09-08 19:18:28,057 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:18:28,061 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:18:29,935 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:18:30,113 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:18:30,121 [INFO] ner_benchmark: [Worker 6] Model 'gemma4:latest' (Mapped: 'gemma4:latest_baseline') -> Extracting entities for record '6'...
+2026-09-08 19:18:30,121 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:18:30,126 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:18:31,864 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:18:32,162 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:18:32,167 [INFO] ner_benchmark: [Worker 7] Model 'gemma4:latest' (Mapped: 'gemma4:latest_baseline') -> Extracting entities for record '7'...
+2026-09-08 19:18:32,167 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:18:32,172 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:19:01,052 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:19:01,573 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:19:01,590 [INFO] ner_benchmark: [Worker 8] Model 'gemma4:latest' (Mapped: 'gemma4:latest_baseline') -> Extracting entities for record '8'...
+2026-09-08 19:19:01,590 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:19:01,595 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:19:11,950 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:19:12,244 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:19:12,249 [INFO] ner_benchmark: [Worker 9] Model 'gemma4:latest' (Mapped: 'gemma4:latest_baseline') -> Extracting entities for record '9'...
+2026-09-08 19:19:12,249 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:19:12,256 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:19:32,087 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:19:32,546 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:19:32,557 [INFO] ner_benchmark: [Worker 10] Model 'gemma4:latest' (Mapped: 'gemma4:latest_baseline') -> Extracting entities for record '10'...
+2026-09-08 19:19:32,557 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:19:32,563 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:20:09,896 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:20:10,051 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:20:10,068 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:latest_baseline-b0-1788905785 in memory queue.
+2026-09-08 19:20:10,071 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:latest_baseline-b1-1788905785 from memory queue.
+2026-09-08 19:20:10,071 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-08 19:20:10,071 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:latest' (Mapped: 'gemma4:latest_baseline') -> Extracting entities for record '11'...
+2026-09-08 19:20:10,071 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:20:10,075 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:20:56,948 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:20:57,160 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:20:57,215 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:latest' (Mapped: 'gemma4:latest_baseline') -> Extracting entities for record '12'...
+2026-09-08 19:20:57,215 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:20:57,218 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:21:38,380 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:21:38,806 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:21:38,850 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:latest' (Mapped: 'gemma4:latest_baseline') -> Extracting entities for record '13'...
+2026-09-08 19:21:38,850 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:21:38,854 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:22:09,613 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:22:09,790 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:22:09,819 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:latest' (Mapped: 'gemma4:latest_baseline') -> Extracting entities for record '14'...
+2026-09-08 19:22:09,819 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:22:09,824 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:22:45,942 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:22:46,339 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:22:46,365 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:latest' (Mapped: 'gemma4:latest_baseline') -> Extracting entities for record '15'...
+2026-09-08 19:22:46,367 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:22:46,372 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:23:16,758 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:23:17,287 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:23:17,304 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:latest_baseline-b1-1788905785 in memory queue.
+2026-09-08 19:23:17,316 [INFO] ner_benchmark.pub_sub: Published task gemma4:latest_kb_rag-b0-1788906197 for batch 0 to memory queue.
+2026-09-08 19:23:17,316 [INFO] ner_benchmark.pub_sub: Published task gemma4:latest_kb_rag-b1-1788906197 for batch 1 to memory queue.
+2026-09-08 19:23:17,316 [INFO] ner_benchmark: Running RAG study 'gemma4:latest_kb_rag' with 1 workers...
+2026-09-08 19:23:17,316 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:latest_kb_rag-b0-1788906197 from memory queue.
+2026-09-08 19:23:17,316 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-08 19:23:17,317 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:latest' (Mapped: 'gemma4:latest_kb_rag') -> Extracting entities for record '1'...
+2026-09-08 19:23:17,532 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:23:17,536 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:24:07,033 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:24:07,246 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:24:07,277 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:latest' (Mapped: 'gemma4:latest_kb_rag') -> Extracting entities for record '2'...
+2026-09-08 19:24:07,380 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:24:07,384 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:24:11,533 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:24:11,972 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:24:11,998 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:latest' (Mapped: 'gemma4:latest_kb_rag') -> Extracting entities for record '3'...
+2026-09-08 19:24:12,091 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:24:12,094 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:24:19,084 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:24:19,179 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:24:19,221 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:latest' (Mapped: 'gemma4:latest_kb_rag') -> Extracting entities for record '4'...
+2026-09-08 19:24:19,310 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:24:19,313 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:24:46,217 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:24:46,668 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:24:46,694 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:latest' (Mapped: 'gemma4:latest_kb_rag') -> Extracting entities for record '5'...
+2026-09-08 19:24:46,794 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:24:46,797 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:25:04,337 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:25:04,559 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:25:04,571 [INFO] ner_benchmark: [Worker 6] Model 'gemma4:latest' (Mapped: 'gemma4:latest_kb_rag') -> Extracting entities for record '6'...
+2026-09-08 19:25:04,666 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:25:04,670 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:25:26,026 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:25:26,488 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:25:26,497 [INFO] ner_benchmark: [Worker 7] Model 'gemma4:latest' (Mapped: 'gemma4:latest_kb_rag') -> Extracting entities for record '7'...
+2026-09-08 19:25:26,604 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:25:26,609 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:25:31,577 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:25:31,662 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:25:31,676 [INFO] ner_benchmark: [Worker 8] Model 'gemma4:latest' (Mapped: 'gemma4:latest_kb_rag') -> Extracting entities for record '8'...
+2026-09-08 19:25:31,767 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:25:31,771 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:25:34,026 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:25:34,313 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:25:34,316 [INFO] ner_benchmark: [Worker 9] Model 'gemma4:latest' (Mapped: 'gemma4:latest_kb_rag') -> Extracting entities for record '9'...
+2026-09-08 19:25:34,411 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:25:34,414 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:26:09,390 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:26:09,864 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:26:09,869 [INFO] ner_benchmark: [Worker 10] Model 'gemma4:latest' (Mapped: 'gemma4:latest_kb_rag') -> Extracting entities for record '10'...
+2026-09-08 19:26:09,971 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:26:09,975 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:26:49,381 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:26:49,504 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:26:49,519 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:latest_kb_rag-b0-1788906197 in memory queue.
+2026-09-08 19:26:49,523 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 624s (≥600s) | workers 1 → 2 | ceiling=9 (75% of max=12)
+2026-09-08 19:26:49,524 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:latest_kb_rag-b1-1788906197 from memory queue.
+2026-09-08 19:26:49,524 [INFO] ner_benchmark: Processing batch 2 with 2 parallel workers...
+2026-09-08 19:26:49,524 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:latest' (Mapped: 'gemma4:latest_kb_rag') -> Extracting entities for record '11'...
+2026-09-08 19:26:49,524 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:latest' (Mapped: 'gemma4:latest_kb_rag') -> Extracting entities for record '12'...
+2026-09-08 19:26:49,676 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:26:49,707 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:26:49,711 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:26:49,715 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:26:55,983 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:26:56,299 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:26:56,347 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:latest' (Mapped: 'gemma4:latest_kb_rag') -> Extracting entities for record '13'...
+2026-09-08 19:26:56,440 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:26:56,443 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:27:40,245 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:27:40,381 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:27:40,434 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:latest' (Mapped: 'gemma4:latest_kb_rag') -> Extracting entities for record '14'...
+2026-09-08 19:27:40,531 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:27:40,534 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:27:44,440 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:27:44,568 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:27:44,587 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:latest' (Mapped: 'gemma4:latest_kb_rag') -> Extracting entities for record '15'...
+2026-09-08 19:27:44,686 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:latest' → OllamaProvider (default)
+2026-09-08 19:27:44,689 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 19:27:47,932 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:27:48,138 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:27:51,650 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 19:27:51,809 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 19:27:51,826 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:latest_kb_rag-b1-1788906197 in memory queue.
+2026-09-08 19:27:51,835 [INFO] ner_benchmark: Unloading model weights for gemma4:latest to protect VRAM.
+2026-09-08 19:27:51,909 [INFO] ner_benchmark.llm_runner: Successfully unloaded weights for gemma4:latest from VRAM.
+2026-09-08 19:27:53,917 [INFO] ner_benchmark: ==================================================
+2026-09-08 19:27:53,917 [INFO] ner_benchmark: BENCHMARK EXTRACTIONS COMPLETE. PROCESSING METRICS...
+2026-09-08 19:27:53,918 [INFO] ner_benchmark: ==================================================
+2026-09-08 19:27:54,006 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.
