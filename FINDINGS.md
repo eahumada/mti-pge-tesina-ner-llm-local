@@ -1262,3 +1262,59 @@ abstract, que ahora atribuyen el +10,4 al corpus de quince artículos y declaran
 > **Regla operativa.** Cuando existan varias corridas del mismo experimento, el informe declara **todas** y
 > explica cuál se toma como referencia y por qué. Citar la más favorable sin mencionar las demás es
 > indistinguible de seleccionar el resultado, aunque no haya intención de hacerlo.
+
+---
+
+## §F56 — Localización de las entidades, no solo del texto: por qué el prompt en español ayudó sobre texto inglés
+
+**Fecha:** 2026-09-08. **Origen:** pregunta del autor —«¿será que a pesar de declararse en inglés existen
+entidades en español en este dataset?»—. **Analizado y medido.** La intuición era acertada en su premisa y el
+resultado explica el hallazgo mejor de lo que lo hacía el informe.
+
+### Lo que dicen los datos
+
+| Corpus | Personas | De aspecto ibérico | Organizaciones | De aspecto ibérico |
+|:---|---:|---:|---:|---:|
+| N=15 Kleptotrace | 84 | **12 (14 %)** | 128 | 3 (2 %) |
+| N=30 sintético | 36 | 1 (3 %) | 69 | 0 (0 %) |
+| N=120 mixto | 594 | **263 (44 %)** | 812 | 198 (24 %) |
+
+En el N=15 el texto es íntegramente inglés, pero **sí hay una minoría de entidades ibéricas**, y casi todas
+proceden del caso de corrupción angoleño, de modo que son **portuguesas** antes que españolas: `Isabel dos
+Santos`, `José Eduardo dos Santos`, `Hélder Pitta Grós`, `Mario Leite da Silva`, `Nuno Ribeiro da Cunha`,
+`Paula Oliveira`, más `Banco de Fomento Angola` y `Petroleos de Venezuela S.A.`. Son precisamente los nombres
+con partículas (`dos`, `da`, `de`) y acentos que un modelo instruido en español segmenta mejor: donde un
+tokenizador anglocéntrico parte `Isabel dos Santos` en dos entidades, uno sensible a la partícula la mantiene
+unida.
+
+### Por qué esto reformula el hallazgo
+
+El informe atribuía la mejora del prompt en español a que «los ejemplos rinden en el idioma del corpus». Eso
+no puede ser: el corpus está en inglés. La explicación que los datos soportan es distinta y más precisa: la
+instrucción en español no ayuda a leer el texto, **ayuda a delimitar la minoría de nombres ibéricos**. Y esa
+explicación predice un efecto **modesto**, proporcional a ese 14 %, no los +10,40 puntos declarados — que es
+justamente lo que se observa, porque **la corrida que replica da +3,11** (§F55).
+
+### Y explica por qué el efecto se anula en el corpus español
+
+Queda la paradoja aparente: si la ventaja viene de manejar nombres ibéricos, el N=120 —con 44 % de personas
+hispanas— debería beneficiarse más, y en cambio el efecto se anula (−0,43 puntos, p = 0,9328). La respuesta
+está en el *mojibake*: en ese corpus las entidades de referencia están corrompidas (`JosÃ© Bono` por
+**José Bono**), de modo que **la competencia en español se convierte en una desventaja**. Un modelo que
+normaliza la ortografía escribe el nombre bien y falla el cotejo; uno que transcribe los bytes literalmente,
+acierta.
+
+Esto no es especulación: la medición del efecto del *mojibake* (§F57) muestra que **19 de 24 grupos puntúan
+mejor en los artículos cuyas entidades de referencia están corruptas**. El corpus premia la copia literal.
+Los dos efectos se cancelan, y de ahí el cero.
+
+### Síntesis defendible
+
+- **N=15**: texto inglés, 14 % de entidades ibéricas, codificación limpia → beneficio modesto y replicable.
+- **N=120**: texto español, 44 % de entidades hispanas, **pero referencia corrompida** → el beneficio
+  lingüístico se anula contra la penalización por normalizar.
+
+> **Regla operativa.** En una evaluación de NER, la lengua que importa no es solo la del texto: es la de las
+> **entidades**, porque son ellas las que se segmentan y se cotejan. Un corpus puede estar redactado en un
+> idioma y poblado de nombres de otro, y esa combinación cambia qué modelo gana. Caracterizar el corpus exige
+> medir ambas cosas por separado.
