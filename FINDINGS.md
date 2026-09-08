@@ -1877,3 +1877,45 @@ puntuación** del 2026-09-06. Comprobados uno a uno contra el historial de git:
 
 La regla genérica `*.bak_*` **no se toca**, para no arrastrar respaldos de editor; los doce entran de forma
 explícita y el `.gitignore` deja constancia de por qué.
+
+---
+
+## §F68 — Con el corpus corregido, el RAG deja de perjudicar a los modelos grandes
+
+**Fecha:** 2026-09-08. **Observación provisional: 3 de 13 modelos.** No debe llevarse al informe hasta tener
+la re-corrida completa, pero sí debe conocerse ya, porque afecta a una afirmación del capítulo de resultados.
+
+Con tres modelos rehechos sobre el corpus con localizaciones anotadas, el efecto del KB RAG **cambia de
+signo en los dos de mayor capacidad**:
+
+| Modelo | Δ publicado | Δ re-corrida | Cambia de signo |
+|:---|---:|---:|:---:|
+| `gemma4:31b-cloud` | −0,53 pp | **+0,81 pp** | sí |
+| `gemma4:31b-mlx` | −0,18 pp | **+0,97 pp** | sí |
+| `gemma4:12b-mlx` | +2,28 pp | +2,29 pp | no |
+
+El informe afirma hoy, en §5.3.1, que el beneficio del RAG «**se anula o revierte en los de mayor
+capacidad** (−0,54 y −0,18 puntos en los dos de 31B)». Con estos datos esa frase no se sostendría: en los dos
+de 31B el efecto es positivo, aunque pequeño.
+
+**El mecanismo explica el cambio y conviene decirlo.** Mientras el corpus no anotaba localizaciones, cada
+localización que el RAG ayudaba a extraer se contabilizaba como falso positivo. La recuperación estaba siendo
+**penalizada precisamente por hacer su trabajo** en una de las tres categorías que el *prompt* pide. Corregida
+la anotación, esa penalización desaparece. No es que el resultado anterior estuviera mal medido dentro de su
+convención: es que la convención castigaba al RAG.
+
+**Dos cosas que no cambian**, y que conviene registrar porque son señales de robustez:
+
+- **El orden se conserva.** Publicado: `cloud` 62,38 > `31b-mlx` 59,25 > `12b-mlx` 56,18. Re-corrida:
+  `cloud` 82,13 > `31b-mlx` 81,47 > `12b-mlx` 77,67. La corrección sube a todos, no reordena.
+- **La magnitud sigue siendo pequeña en los grandes.** +0,81 y +0,97 puntos no son una mejora demostrable;
+  habrá que ver qué dice el post-hoc de Tukey sobre el consolidado nuevo. Lo que cae es la palabra
+  «revierte», no necesariamente la tesis de que el beneficio decrece con la capacidad.
+
+**Subida general por la corrección**, para dimensionar el efecto: +19,75 pp en `cloud`, +21,49 en `12b-mlx` y
++22,22 en `31b-mlx` sobre N=120; en N=30, +5,03 pp en `31b-mlx`, mucho menor porque ese corpus tiene 40
+localizaciones de referencia frente a las 1 034 de N=120.
+
+**Qué hacer.** Nada en el informe todavía. Cuando estén los trece modelos: rehacer el consolidado, mirar el
+post-hoc y **reformular §5.3.1 con lo que digan los datos**, sea cual sea. Si la tesis de la proporcionalidad
+inversa sobrevive con otra redacción, se conserva; si no, se dice.
