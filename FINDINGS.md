@@ -1483,3 +1483,61 @@ método entre partes del corpus y un lector tiene derecho a saberlo.
 > existir en **todas** ellas antes de puntuarla. Si una fuente no la aporta, se anota o se excluye esa
 > categoría de la métrica, pero no se mide contra el vacío en una parte del corpus y contra la anotación real
 > en otra.
+
+---
+
+## §F59 — Cuatro documentos llevaban dos meses vacíos, dos de ellos de hitos ya entregados
+
+**Fecha:** 2026-09-08. Encontrado al barrer los ficheros rastreados de tamaño cero.
+
+El commit `064a45f`, del 2026-07-01, dejó **cuatro documentos a cero bytes** bajo un mensaje que solo
+hablaba de actualizar `.gitignore`, corregir rutas y añadir informes de rendimiento. El vaciado no se
+menciona en ninguna parte:
+
+| Documento | Bytes antes | Después |
+|:---|---:|---:|
+| `doc/organized/Hito_3_Tarea2_Propuesta_Tesina/TAREA_N2_Formulacion_Propuesta_Tesina_EXPANDIDA.md` | 48 594 | 0 |
+| `doc/organized/Hito_1_Perfil_Proyecto/Formulario-perfil-tesina.docx-2.md` | 13 938 | 0 |
+| `doc/organized/Presentations/PRESENTACION_DEFENSA_TESINA_Eduardo_Ahumada.md` | 5 343 | 0 |
+| `doc/organized/Instructions/evaluacion-propuesta_tesina-formulario-2025.md` | 3 601 | 0 |
+
+Los dos primeros corresponden a **hitos ya entregados**, que la política del proyecto manda conservar
+intactos. Los cuatro se restauraron desde `b7b8aa3`, el commit inmediatamente anterior, sumando 71 476 bytes.
+Escribir sobre un fichero vacío no destruye nada, de modo que la restauración es estrictamente aditiva.
+
+**Por qué sobrevivió dos meses.** Un fichero vacío no rompe nada: no da error al abrirlo, no falla ninguna
+comprobación de existencia de ruta y no aparece en un `git status` limpio. Solo se ve si se pregunta por el
+tamaño. Ninguna de las comprobaciones mecánicas del proyecto lo hacía.
+
+**Comprobación que se incorpora:** `git ls-files` y, para cada fichero, comprobar que existe **y que no está
+vacío**. Es de coste despreciable y detecta la clase entera de defecto.
+
+---
+
+## §F60 — La regla que ignora los duplicados de macOS afirmaba algo falso, y tapaba instantáneas previas a la exclusión de modelos
+
+**Fecha:** 2026-09-08.
+
+El `.gitignore` de la raíz ignora los ficheros con sufijo « 2», « 3»… que crea Finder, y lo justifica
+diciendo que «son copias byte a byte». **No lo son.** De los 78 duplicados presentes en el árbol, 48 son
+idénticos a su original, 7 no tienen original alguno y **23 difieren**. Varios son además **mayores** que el
+fichero que duplican.
+
+La razón de que sean mayores es la que importa: son **instantáneas anteriores a la retirada de los modelos
+excluidos**. `results/benchmark_results 3.csv` tiene 28 modelos y 420 filas donde el fichero vigente tiene
+22 y 330, y las seis configuraciones de más son `nuextract:latest`, `minimax-m3:cloud` y
+`gemma4-12b-mlx-q8-64k:latest`.
+
+El efecto de la regla es por tanto correcto —esos agregados no deben entrar en git— pero su enunciado es
+falso, y un enunciado falso invita a levantarla. Se corrige el comentario para que diga lo que ocurre de
+verdad.
+
+**Queda constancia de dos cosas que no se tocan.** Primero, el agregado vigente `results/benchmark_results.csv`
+está **limpio**: 22 configuraciones, ninguna excluida. Segundo, algunos de esos duplicados **están rastreados
+desde antes** de que existiera la regla —`.gitignore` no desrastrea— y contienen nombres excluidos. No se
+eliminan: la decisión de qué hacer con un artefacto histórico que ya está en git es del autor, y la política
+del proyecto obliga a distinguir lo que afirma de lo que atestigua antes de borrar nada. Ver `§F53` y la
+sección «Modelos excluidos del estudio» de `CLAUDE.md`.
+
+**Riesgo concreto que se documenta:** cualquier script que agregue con un patrón como `benchmark_results*.csv`
+readmitiría los modelos excluidos sin avisar. Los agregados se leen por ruta exacta, nunca por comodín.

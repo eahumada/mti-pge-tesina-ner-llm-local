@@ -583,3 +583,28 @@ coincidencias, y estuve a punto de concluir que la vía no servía. La causa era
 codificación reparada y el otro no. Normalizando ambos, 105 de 120. Cuando un emparejamiento por contenido
 da casi cero, la hipótesis más probable no es que el contenido difiera, sino que **difiera su
 representación**.
+
+### L47. Un fichero vacío no rompe nada, y por eso sobrevive
+
+Cuatro documentos del proyecto llevaban dos meses a cero bytes, dos de ellos de hitos ya entregados
+(`§F59`). Ninguna comprobación los detectó porque un fichero vacío se comporta como un fichero: existe, se
+abre, se lee, y `git status` no dice nada de él. La ausencia de contenido no genera ningún síntoma.
+
+La lección general es que **las comprobaciones de existencia son más débiles de lo que parecen**. Comprobar
+que una ruta existe no comprueba que tenga algo dentro, igual que comprobar que una tabla tiene una leyenda
+no comprueba que la leyenda describa esa tabla, y que comprobar que una URL está escrita no comprueba que
+responda. En los tres casos el proyecto ya se llevó un susto.
+
+El corolario práctico es barato: cuando una comprobación mecánica verifique que algo está presente, que
+verifique además que **no está vacío**.
+
+### L48. Una regla acertada con una justificación falsa acaba levantándose
+
+El `.gitignore` ignoraba los duplicados de macOS diciendo que «son copias byte a byte». La regla acierta
+—esos ficheros no deben entrar—, pero la razón era falsa: 23 de 78 difieren, y varios son instantáneas
+anteriores a la retirada de los modelos excluidos (`§F60`).
+
+Importa porque una justificación falsa es frágil de una forma peculiar: el día que alguien compruebe la
+afirmación y vea que no se sostiene, concluirá que la regla sobra y la quitará, reintroduciendo justo lo que
+la regla evitaba. **Una regla se documenta con la razón por la que se cumple, no con la primera razón que
+pareció explicarla.**

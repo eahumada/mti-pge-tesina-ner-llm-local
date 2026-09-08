@@ -215,6 +215,10 @@ de defectos reales encontrados en la revisión final:
 6. **Identificadores**: antes de escribir `§F<n>`, `§L<n>` o `§<n>.<n>`, comprobar que el número no está
    usado. Ha habido **tres colisiones**, dos de ellas posteriores a escribir la lección que advierte de
    ellas, de modo que el recordatorio no basta: hay que comprobarlo con un `grep` en el mismo turno.
+7. **Ficheros vacíos**: comprobar que ningún fichero rastreado tiene cero bytes. Un fichero vacío no rompe
+   nada —existe, se abre, se lee, y no aparece en un `git status` limpio—, de modo que sobrevive
+   indefinidamente. Cuatro documentos del proyecto, dos de ellos de hitos ya entregados, llevaban dos meses
+   así (`FINDINGS §F59`, `LEARNING §L47`). La comprobación es un `git ls-files` con una prueba de tamaño.
 
 ## Secretos y publicación del repositorio
 
