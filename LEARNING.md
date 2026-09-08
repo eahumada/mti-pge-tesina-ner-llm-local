@@ -608,3 +608,22 @@ Importa porque una justificación falsa es frágil de una forma peculiar: el dí
 afirmación y vea que no se sostiene, concluirá que la regla sobra y la quitará, reintroduciendo justo lo que
 la regla evitaba. **Una regla se documenta con la razón por la que se cumple, no con la primera razón que
 pareció explicarla.**
+
+### L49. Fusionar corridas hereda sus diferencias de configuración, y nadie las mira
+
+El consolidado del estudio une ocho corridas. Cada una había pasado la comprobación de protocolo —que sus
+nueve parámetros fueran los de la corrida de referencia—, pero esa comprobación se aplicaba **dentro** de
+cada corrida, nunca **entre** ellas. El resultado es que `gpt-oss:20b` acabó publicado con el doble de
+presupuesto de salida que los otros doce modelos sin que ninguna verificación lo advirtiera (`§F61.bis`).
+
+El patrón es general y vale para cualquier agregación: **una propiedad que se comprueba por parte no queda
+comprobada en el todo**. Ocho ficheros internamente coherentes producen un conjunto que puede no serlo, y la
+coherencia de cada parte da además una falsa sensación de haberlo verificado.
+
+La comprobación que faltaba es barata: leer los `run_config.json` de todas las fuentes de un consolidado y
+exigir que los parámetros que afectan a la medición sean **idénticos entre sí**, no solo correctos por
+separado. Cuando no puedan serlo, declararlo en el informe como reserva de comparabilidad.
+
+Emparenta con `§L47`: comprobar que algo existe no es comprobar que tenga contenido, y comprobar cada parte
+no es comprobar el conjunto. Las dos son la misma debilidad, que la comprobación mire menos de lo que su
+nombre promete.

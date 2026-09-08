@@ -1026,6 +1026,44 @@ _Tabla 19. Desempeño publicado y desempeño restringido a personas y organizaci
 | deepseek-r1:1.5b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 22.28 | 17.41 | 16.82 | 30.80 | 20.11 | +3.29 |
 | gemma4:12b-mlx_kb_rag | afectados_thinking_n120_REMOTO | 53.29 | 68.33 | 58.46 | 80.50 | 74.30 | +15.84 |
 
+#### Corridas múltiples del mismo modelo, y cuál se toma como referencia
+
+Cuatro de los trece modelos se midieron **más de una vez** sobre el corpus N=120, de modo que ocho de los
+veintiséis grupos disponen de dos o tres corridas. La columna «Corrida» de la tabla anterior indica cuál
+sostiene cada fila; este apartado declara las restantes, porque publicar una cifra sin mencionar las demás
+sería indistinguible de seleccionar el resultado aunque no haya intención de hacerlo. La Tabla 20 las recoge
+todas.
+
+_Tabla 20. Grupos con más de una corrida sobre N=120, con la publicada, la sustituida y el motivo_
+
+| Grupo | Corrida publicada | F1 | Corrida no publicada | F1 | Motivo de la sustitución |
+|:---|:---|:---:|:---|:---:|:---|
+| gemma4:12b-mlx (baseline) | afectados_thinking | 56,18 | P3 | 27,31 | modo de razonamiento activo |
+| gemma4:12b-mlx (KB RAG) | afectados_thinking | 58,46 | P3 | 11,21 | modo de razonamiento activo |
+| qwen3:8b (baseline) | qwen3_nothink | 48,21 | P3 / 12b-mlx | 44,83 / 44,38 | modo de razonamiento activo; cobertura parcial |
+| qwen3:8b (KB RAG) | qwen3_nothink | 51,46 | 12b-mlx / P3 | 43,51 / 42,59 | modo de razonamiento activo; cobertura parcial |
+| gpt-oss:20b (baseline) | gptoss_rerun | 52,39 | excluidos | 43,84 | presupuesto de salida ampliado |
+| gpt-oss:20b (KB RAG) | gptoss_rerun | 55,67 | excluidos | 34,19 | presupuesto de salida ampliado |
+| nemotron-mini:4b (baseline) | nemotron_rerun | 22,59 | P3 | 21,30 | repetición del diagnóstico de vacíos |
+| nemotron-mini:4b (KB RAG) | nemotron_rerun | 37,12 | P3 | 37,33 | repetición del diagnóstico de vacíos |
+
+El criterio aplicado no es el resultado sino la validez de la medición, y la última fila de la tabla lo
+acredita: en `nemotron-mini:4b` con KB RAG la corrida publicada da **menos** que la sustituida (37,12 frente
+a 37,33), y aun así es la que se toma, porque es la que repite el diagnóstico de los vacíos esporádicos.
+
+Dos motivos merecen precisión. El **modo de razonamiento activo** hacía que el modelo consumiera el
+presupuesto de salida en su deliberación y devolviera una respuesta vacía o truncada; desactivarlo es lo que
+separa 11,21 de 58,46 en `gemma4:12b-mlx` con KB RAG, y por eso la corrida antigua no mide el desempeño del
+modelo sino el de un arnés mal configurado.
+
+El **presupuesto de salida ampliado** exige una salvedad de comparabilidad que conviene no minimizar:
+`gpt-oss:20b` es el único de los trece cuya cifra publicada procede de una corrida con **4096** tokens de
+salida, mientras los otros doce se midieron con **2048**. Su ventaja sobre `qwen2.5:14b` o `llama3.1:8b`, por
+tanto, no es enteramente atribuible al modelo. La re-corrida completa pendiente unifica el presupuesto en
+4096 para los trece y resuelve la asimetría; hasta entonces, las cifras de `gpt-oss:20b` de la Tabla 7 deben
+leerse con esta reserva. Los nueve parámetros restantes —modo de recuperación `kb_combined`, corpus,
+temperatura 0,1, tamaño de lote y los demás— coinciden en las ocho corridas fusionadas.
+
 Tres advertencias de lectura antes de las cifras. Las columnas publicadas se toman del campo almacenado por registro, que es lo que publican las tablas del cuerpo, y las restringidas se recalculan desde el desglose por tipo. En `nemotron-mini:4b_baseline` los dos no cuadran en **siete de sus ciento veinte registros**, los que se reextrajeron fuera del arnés de lotes tras un fallo de contexto (§5.3.1), de modo que su columna restringida arrastra esa incoherencia y conviene leerla con esa reserva. Las dos primeras filas de `llama3.2:latest` reproducen **la misma medición** bajo dos etiquetas de corrida: coinciden en los siete valores y, comprobado registro a registro, en los aciertos y errores de los ciento veinte artículos, de modo que la tabla tiene cuarenta y dos filas pero cuarenta y una configuraciones distintas. Y las dos filas de `gemma4:12b-mlx` proceden de `afectados_thinking_n120_REMOTO` y no de `benchmark_n120_REMOTO`, porque esta última quedó averiada por el modo de razonamiento —sesenta y ocho y noventa y ocho de sus ciento veinte registros no recuperan ninguna entidad— y sus cifras no representan la capacidad del modelo.
 
 En conjunto, 20946 de los 32201 falsos positivos del estudio (65.0 %) proceden de la categoría no anotada. El mejor modelo local sobre este corpus, `gemma4:31b-mlx`, pasa de 62,67 % a **76,55 %** de F1 y supera el umbral de 70 % que fija la hipótesis sobre material periodístico mayoritariamente en español. La variante en la nube del mismo modelo conserva su ventaja (80,42 % frente a 76,55 %), de modo que la corrección **no** altera la conclusión sobre la comparación entre ejecución local y alojada.

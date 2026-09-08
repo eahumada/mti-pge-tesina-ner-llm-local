@@ -1541,3 +1541,59 @@ sección «Modelos excluidos del estudio» de `CLAUDE.md`.
 
 **Riesgo concreto que se documenta:** cualquier script que agregue con un patrón como `benchmark_results*.csv`
 readmitiría los modelos excluidos sin avisar. Los agregados se leen por ruta exacta, nunca por comodín.
+
+---
+
+## §F61 — Cuatro de los trece modelos tenían más de una corrida, y el informe publicaba una sin mencionar las otras
+
+**Fecha:** 2026-09-08. Detectado al cruzar `merge_manifest.json` con las ocho corridas fuente del
+consolidado `results/ANALISIS_CONJUNTO_20260907/`.
+
+`CLAUDE.md` obliga a que, cuando existan varias corridas del mismo experimento, el informe **las declare
+todas** y explique cuál se toma como referencia y por qué. No se cumplía. Ocho de los veintiséis grupos
+—cuatro modelos en sus dos modos— disponen de dos o tres corridas, y la Tabla 7 publicaba una sola sin
+constancia de las demás:
+
+| Grupo | Publicada | No publicada | Diferencia |
+|:---|---:|---:|---:|
+| gemma4:12b-mlx (KB RAG) | 58,46 | 11,21 | +47,25 |
+| gemma4:12b-mlx (baseline) | 56,18 | 27,31 | +28,87 |
+| gpt-oss:20b (KB RAG) | 55,67 | 34,19 | +21,48 |
+| gpt-oss:20b (baseline) | 52,39 | 43,84 | +8,55 |
+| qwen3:8b (KB RAG) | 51,46 | 43,51 / 42,59 | +8,87 |
+| qwen3:8b (baseline) | 48,21 | 44,83 / 44,38 | +3,82 |
+| nemotron-mini:4b (baseline) | 22,59 | 21,30 | +1,29 |
+| nemotron-mini:4b (KB RAG) | 37,12 | 37,33 | **−0,21** |
+
+**Los motivos de sustitución son legítimos** y están documentados: modo de razonamiento activo que consumía
+el presupuesto de salida (`gemma4:12b-mlx`, `qwen3:8b`), repetición del diagnóstico de vacíos esporádicos
+(`nemotron-mini:4b`) y ampliación del presupuesto de salida (`gpt-oss:20b`). La última fila acredita además
+que el criterio fue la validez y no el resultado: en `nemotron-mini:4b` con KB RAG se publica la corrida que
+da **menos**.
+
+Pero el motivo legítimo no exime de declararlo. Un lector que encuentre las ocho corridas en `results/` sin
+una explicación en el informe no tiene forma de distinguir un criterio de validez de una selección
+favorable, y es lo segundo lo que un tribunal juzga. Se añade al Anexo I el apartado «Corridas múltiples del
+mismo modelo, y cuál se toma como referencia», con la Tabla 20.
+
+## §F61.bis — `gpt-oss:20b` se mide con el doble de presupuesto de salida que los otros doce modelos
+
+Consecuencia del anterior, y de suficiente entidad para separarla.
+
+Comprobados los `run_config.json` de las ocho corridas fusionadas: siete usan **`max_tokens = 2048`** y una
+sola, `gptoss_rerun_REMOTO`, usa **4096**. Es precisamente la que sostiene las cifras publicadas de
+`gpt-oss:20b` en la Tabla 7 (52,39 % y 55,67 %).
+
+La ventaja de `gpt-oss:20b` sobre `qwen2.5:14b` (50,22 %) o `llama3.1:8b` (48,76 %) **no es enteramente
+atribuible al modelo**: parte procede de disponer del doble de presupuesto para emitir su respuesta, lo que
+en un modelo de razonamiento no es un detalle. Los otros nueve parámetros del protocolo coinciden en las
+ocho corridas: `--rag-mode kb_combined`, mismo corpus, temperatura 0,1, tamaño de lote 3 y los demás.
+
+**La re-corrida completa pendiente resuelve la asimetría**, porque el equipo de 48 GB ya fijó
+`max_tokens=4096` en configuración y CLI para los trece modelos (§2.bis.3 de su encargo). Hasta entonces, la
+reserva queda declarada en el Anexo I.
+
+**Lección de método:** la comprobación de protocolo del proyecto exige que «los nueve parámetros coincidan
+con la corrida de referencia». Se venía aplicando **dentro** de cada corrida y no **entre** corridas
+fusionadas. Un consolidado que une ocho fuentes hereda las diferencias de las ocho, y ninguna comprobación
+las miraba.
