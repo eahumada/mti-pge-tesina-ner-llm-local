@@ -713,3 +713,35 @@ leyendas correlativas · las 20 entradas IEEE · ninguna llamada `§` rota · si
 
 **`_v9` congelada como versión de entrega**: `.docx` SHA-256 `9f5afc36eec9` y `.pdf` `1a276fe50afc`, con copia
 de ambos en la raíz. Renderizador actualizado en `doc/versions/informe_final/_tools/`.
+
+### 2026-09-08 01:45 — Ni emojis ni marcas de agua · versión de entrega (_v10)
+
+Regla nueva del autor, incorporada a `CLAUDE.md` y al encargo permanente de propagación: los documentos del
+proyecto no llevan emojis ni pictogramas decorativos, ni marcas de agua, sellos de borrador o leyendas
+superpuestas. Donde un símbolo hace de valor se escribe la palabra, que es lo que un tribunal lee y lo que
+sobrevive a cualquier tipografía.
+
+**Auditoría.** Emojis: tres, en el `.md` y por herencia en los tres `.docx`, todos en la Tabla 2 del estado del
+arte, donde una marca de verificación y una cruz hacían de valor en la columna Privacidad. Marcas de agua:
+ninguna. La cadena «CONFIDENCIAL» que aparece en `document.xml` es la palabra «confidencialidad» del resumen y
+«confidenciales» de las conclusiones, no un sello.
+
+**Corregido primero en el `.md`** (respaldo `.bak_pre_emojis_20260908`): la columna pasa a leerse «Local»,
+«Cloud» y «100% Local». La palabra ya acompañaba al símbolo, así que no se pierde información. Las flechas
+tipográficas que describen flujos («JSON → validación → registros») se conservan: no son emojis, y la regla lo
+dice explícitamente para que nadie las retire por exceso de celo.
+
+**Un defecto colateral que solo se vio leyendo.** Al quitar los dos caracteres, la columna «Idioma» quedó tan
+estrecha que «Español» se partía en «Españo / l». La causa no era la tabla sino el renderizador: el ancho
+mínimo por columna se aplicaba antes de normalizar a los 8838 twips útiles, de modo que la normalización lo
+deshacía. Ahora el suelo de 900 twips se impone después de normalizar y el descuento se reparte entre las
+columnas con holgura. Es la segunda vez seguida que un defecto aparece al mirar una página y no en los
+conteos.
+
+**Verificación sobre el PDF:** cero emojis y cero marcas de agua, tanto en el PDF como en los tres `.docx` · 25
+páginas exactas, cuerpo 18 de 25 y anexos 7 · cero páginas en blanco · encabezado y pie en las 25 sin solape ·
+resumen y abstract en la página 1 con 199 y 183 palabras · nueve capítulos y ocho anexos A–H · 18 leyendas
+correlativas · las 20 entradas IEEE · ninguna llamada `§` rota · ninguna palabra partida en las tablas.
+
+**`_v10` congelada como versión de entrega**: `.docx` SHA-256 `2e786c7f7ebd` y `.pdf` `d109daf55485`, con copia
+de ambos en la raíz. Renderizador actualizado en `doc/versions/informe_final/_tools/`.

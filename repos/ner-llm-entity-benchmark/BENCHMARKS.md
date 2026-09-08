@@ -249,3 +249,29 @@ Injecting vector-retrieved context from local organizational and personal dictio
 > (`results/benchmark_n120_REMOTO`, post-fix de scoring): **baseline F1=0.4876 (P=0.4737, R=0.5491) · kb_rag
 > F1=0.5075 (P=0.5085, R=0.5523)**. Para `llama3.2:latest` **no existe** corrida N=120; sus cifras de prototipo
 > se retiran del cuerpo de resultados. Se conservan las filas por política aditiva, marcadas como no verificables.
+
+---
+
+## Cierre del estudio (2026-09-07)
+
+*Nota aditiva. Todo lo anterior se conserva como registro de las corridas intermedias; esta sección fija el
+estado final.*
+
+El estudio cerró con **13 modelos** evaluados sobre el corpus real de 120 artículos en los dos modos,
+extracción directa y KB RAG contextual. El análisis conjunto definitivo vive en
+`results/ANALISIS_CONJUNTO_20260907/`: 26 grupos, 3 120 observaciones, **F=38,2222** y **p=3,4453e-160**. El
+post-hoc de Tukey sitúa la mejora del KB RAG como estadísticamente significativa **solo en los dos modelos más
+débiles** —`nemotron-mini:4b` con +14,52 pp y `llama3.2:latest` con +10,82 pp—, aunque diez de los trece
+mejoren.
+
+Cuatro correcciones de método afectan a cualquier lectura de las cifras anteriores a esa fecha. La convención
+de puntuación cambió: una extracción vacía sobre referencia no vacía ya no recibe F1 de 1,0, y todas las
+corridas se re-puntuaron desde los recuentos guardados. El modo *thinking* resultó estar mal propagado, de modo
+que varios modelos corrieron con un régimen distinto del declarado. `gpt-oss:20b` fue re-ejecutado con
+`num_predict` ampliado, y su ΔRAG pasó de −0,097 a +0,033 al desaparecer el truncamiento. Y el corpus N=120
+arrastra *mojibake* en el 20,1 % de sus entidades de referencia, defecto declarado como limitación en el
+informe y como trabajo futuro.
+
+**La única fuente válida de precisión, exhaustividad y F1 es `benchmark_results.csv`.** Ver
+`results/AVISO-SUMMARIES-OBSOLETOS.md`, `CIERRE-BENCHMARKS-20260907.md` y los hallazgos §F44 a §F50 de
+`FINDINGS.md`.

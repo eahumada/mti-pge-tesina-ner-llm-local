@@ -63,3 +63,82 @@ This document captures the user stories required to solve the architectural inco
 - **Acceptance Criteria**:
     - Latency box-plots are generated in `statistics.py`.
     - Visualizations are integrated into the Streamlit dashboard.
+
+---
+
+## 4. Integridad de la Medición (añadido 2026-09-07)
+
+*Historias derivadas de los hallazgos del cierre del estudio. Cada una nace de un defecto real observado y
+documentado en `FINDINGS.md`; no son mejoras especulativas. Las secciones 1 a 3 se conservan sin cambios.*
+
+### US-INT-01: Persistencia de las extracciones crudas
+**Como** investigador que debe corregir un defecto de puntuación descubierto a posteriori,
+**quiero** que cada corrida almacene las entidades extraídas por registro y no solo sus recuentos,
+**para** poder re-puntuar sobre lo guardado sin repetir la inferencia.
+- **Criterios de aceptación**:
+    - `detailed_results.json` incluye la lista de entidades extraídas por registro y tipo.
+    - Una herramienta de re-puntaje puede recalcular P/R/F1 con una regla de cotejo distinta sin invocar al modelo.
+- **Motivación**: `FINDINGS.md §F48`. Corregir el *mojibake* del corpus habría exigido re-ejecutar las ~200 horas del estudio porque solo se conservaban `tp/fp/fn`; el defecto quedó declarado como limitación en lugar de corregido.
+
+### US-INT-02: Validación de la codificación del corpus
+**Como** responsable de la calidad de los datos,
+**quiero** que el cargador detecte y reporte texto con codificación corrupta antes de ejecutar,
+**para** no descubrir el problema cuando los resultados ya están publicados.
+- **Criterios de aceptación**:
+    - Al cargar un corpus se comprueba, en el texto y en las entidades de referencia, si `s.encode('latin-1').decode('utf-8')` difiere de `s`.
+    - La corrida se detiene o emite un aviso destacado indicando el porcentaje afectado.
+- **Motivación**: `FINDINGS.md §F46` y `§F48`. El 20,1 % de las entidades de referencia del corpus N=120 y el 87 % de sus textos tenían *mojibake*, y el defecto se detectó cuando el estudio estaba cerrado.
+
+### US-INT-03: Coherencia de la convención de puntuación
+**Como** revisor de resultados,
+**quiero** que todas las métricas del evaluador compartan la misma convención ante la ausencia de datos,
+**para** que no queden rincones con el criterio antiguo tras una corrección.
+- **Criterios de aceptación**:
+    - Ninguna métrica devuelve 1,0 por ausencia de predicciones o de referencia, salvo el acierto vacío legítimo.
+    - Existe una prueba que recorre todas las métricas del módulo y verifica la convención.
+- **Motivación**: `FINDINGS.md §F49`. La corrección del 2026-09-06 dejó `oov_recall` con el valor por defecto 1,0 que el resto del *scoring* abandonó.
+
+### US-INT-04: Conteo simétrico de aciertos y omisiones
+**Como** investigador,
+**quiero** que aciertos y omisiones se cuenten sobre la misma unidad,
+**para** que la exhaustividad no pueda superar 1,0 ni inflarse cuando varias menciones casan con la misma entidad.
+- **Criterios de aceptación**:
+    - El acierto se contabiliza por entidad de referencia cubierta, no por entidad extraída que casa.
+    - Una prueba con dos extracciones que emparejan con un mismo gold produce exhaustividad de 1,0, no de 2,0.
+- **Motivación**: `FINDINGS.md §F50`. Entre el 2 % y el 6 % de los registros presentan exhaustividad inflada, con desviaciones de hasta +0,5.
+
+### US-INT-05: Propagación efectiva de los parámetros configurados
+**Como** operador,
+**quiero** que un umbral fijado en la configuración llegue a todas las funciones que dicen usarlo,
+**para** que la configuración describa lo que el sistema hace.
+- **Criterios de aceptación**:
+    - `calculate_hallucination_rate` recibe el umbral desde la configuración en lugar de su valor por defecto.
+    - Si una métrica usa deliberadamente un umbral distinto, se declara como parámetro propio y no se hereda por omisión.
+- **Motivación**: `FINDINGS.md §F50`. El umbral configurado de 85 se descarta en silencio y la tasa de alucinación usa siempre 70.
+
+### US-INT-06: Detección de truncamiento por presupuesto de tokens
+**Como** operador,
+**quiero** que el sistema avise cuando una respuesta agota `num_predict` sin cerrar su estructura,
+**para** distinguir un fallo del arnés de una limitación del modelo.
+- **Criterios de aceptación**:
+    - Se registra cuántas respuestas alcanzan el tope de tokens y cuántas caen al analizador de respaldo.
+    - Un porcentaje alto de respaldo activa un aviso al finalizar la corrida.
+- **Motivación**: el caso de `gpt-oss:20b`, cuyo desempeño parecía una limitación del modelo (ΔRAG −0,097) y resultó ser truncamiento: con `num_predict` ampliado pasó a +0,033 y los respaldos cayeron de 67 a 2.
+
+### US-INT-07: Régimen de razonamiento declarado por corrida
+**Como** investigador que compara modelos,
+**quiero** que el `run_config.json` registre si cada modelo se ejecutó con el modo *thinking* activo,
+**para** no comparar corridas con regímenes distintos sin saberlo.
+- **Criterios de aceptación**:
+    - El fichero de configuración de cada corrida incluye el estado efectivo del razonamiento por modelo.
+    - Una fusión de corridas advierte si mezcla regímenes.
+- **Motivación**: `FINDINGS.md §F44` y `§F45`. El parámetro viajaba dentro de `options` y Ollama lo descartaba, de modo que durante meses se creyó que un modelo corría sin razonamiento cuando corría con él.
+
+### US-INT-08: Regeneración conjunta de todos los artefactos de una corrida
+**Como** consumidor de los resultados,
+**quiero** que al re-puntuar se actualicen también el resumen y el informe estadístico, no solo el CSV,
+**para** que ningún artefacto quede con cifras obsoletas.
+- **Criterios de aceptación**:
+    - La herramienta de re-puntaje reescribe `benchmark_results.csv`, `detailed_results.json` y `benchmark_summary.json`.
+    - Los artefactos que no se regeneren quedan marcados como obsoletos de forma visible.
+- **Motivación**: el re-puntaje inicial solo alcanzó al CSV, y una auditoría posterior tomó cifras infladas de un `benchmark_summary.json` anterior a la corrección, creyéndolo fuente primaria.

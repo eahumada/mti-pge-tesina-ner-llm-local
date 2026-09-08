@@ -3,7 +3,11 @@
 - **Strict Additive Documentation**: Never overwrite or delete existing documentation when adding new session findings. All documents (`BENCHMARKS.md`, `TODO.md`, `ROADMAP.md`, etc.) must be strictly additive. Verify via git history that no previous content is lost.
 - **Comparative Study Value**: A difference of up to 0.02 in F1 Score when comparing Baseline vs RAG is tolerable and considered highly relevant information. Always preserve the RAG infrastructure and indexing work to allow alternate runs (with and without RAG) side-by-side.
 - **Metric Degradation Rule**: A drop of up to 0.02 in F1 score is acceptable for the sake of comparison. However, continue evaluating whether further lists degrade precision. The goal is to accurately present the results of the study with and without RAG.
-- **Optimal Analysis**: Always analyze the optimal configuration carefully before rolling out to the full benchmark sweep. *(Nota 2026-09-05: el barrido se planificó con 16 modelos; el alcance final es de **12** — ver `TODO-INFORME-FINAL.md §8`.)*
+- **Optimal Analysis**: Always analyze the optimal configuration carefully before rolling out to the full benchmark sweep. *(Nota 2026-09-05: el barrido se planificó con 16 modelos; el alcance entonces previsto era de **12** — ver
+`TODO-INFORME-FINAL.md §8`.)* **Actualización 2026-09-07:** el estudio cerró con **13 modelos** sobre N=120,
+tras incorporar `gemma4:12b-mlx` y `gpt-oss:20b` y retirar `sonct988/gemma4-26b` por no ser reproducible.
+El análisis conjunto definitivo está en `results/ANALISIS_CONJUNTO_20260907/` (F=38,2222, p=3,4453e-160) y el
+cierre en `CIERRE-BENCHMARKS-20260907.md`.
 
 ---
 

@@ -98,6 +98,14 @@ def emit_table(rows,caption):
             m=max(m,min(len(v),34),max((len(x) for x in v.split()),default=1))
         w.append(m)
     tot=sum(w); w=[max(700,int(USABLE*x/tot)) for x in w]; sc=USABLE/sum(w); w=[int(x*sc) for x in w]; w[-1]+=USABLE-sum(w)
+    MINW=900
+    falta=sum(max(0,MINW-x) for x in w)
+    if falta:
+        w=[max(MINW,x) for x in w]
+        for _,i in sorted(((x-MINW,i) for i,x in enumerate(w)), reverse=True):
+            if falta<=0: break
+            q=min(falta, w[i]-MINW); w[i]-=q; falta-=q
+        w[max(range(len(w)), key=lambda i: w[i])] += USABLE-sum(w)
     for gc,x in zip(grid.findall(qn('w:gridCol')),w): gc.set(qn('w:w'),str(x))
     for tr in tbl.findall(qn('w:tr')):
         for tc,x in zip(tr.findall(qn('w:tc')),w):

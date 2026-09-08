@@ -104,6 +104,18 @@ def emit_table(rows, caption):
         widths.append(m)
     tot = sum(widths); widths = [max(700, int(USABLE*w/tot)) for w in widths]
     sc = USABLE/sum(widths); widths = [int(w*sc) for w in widths]; widths[-1] += USABLE - sum(widths)
+    # suelo por columna DESPUÉS de normalizar: una palabra corta en negrita no debe partirse
+    MINW = 900
+    falta = sum(max(0, MINW-w) for w in widths)
+    if falta:
+        widths = [max(MINW, w) for w in widths]
+        holgura = [(w-MINW, i) for i, w in enumerate(widths)]
+        holgura.sort(reverse=True)
+        for _, i in holgura:
+            if falta <= 0: break
+            quita = min(falta, widths[i]-MINW)
+            widths[i] -= quita; falta -= quita
+        widths[max(range(len(widths)), key=lambda i: widths[i])] += USABLE - sum(widths)
     for g, w in zip(grid.findall(qn('w:gridCol')), widths): g.set(qn('w:w'), str(w))
     for tr in tbl_el.findall(qn('w:tr')):
         for tc, w in zip(tr.findall(qn('w:tc')), widths):

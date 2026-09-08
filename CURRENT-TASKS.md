@@ -199,6 +199,30 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.19 COMPLETADA — Sin emojis ni marcas de agua
+- **Cerrada:** 2026-09-08 01:45 por Claude Desktop. Regla nueva del autor, incorporada a `CLAUDE.md` y al
+  encargo permanente de propagación: los documentos del proyecto no llevan emojis ni pictogramas decorativos,
+  ni marcas de agua, sellos de borrador o leyendas superpuestas.
+- **Auditoría previa.** Emojis: tres en el `.md` y por herencia en los tres `.docx`, todos en la tabla del
+  estado del arte (`Tabla 2`), donde una marca de verificación y una cruz hacían de valor en la columna
+  Privacidad. Marcas de agua: **ninguna**. La cadena «CONFIDENCIAL» que aparecía en `document.xml` es la
+  palabra «confidencialidad» del resumen y «confidenciales» de las conclusiones, no un sello.
+- **Corregido primero en el `.md`** (respaldo `.bak_pre_emojis_20260908`): «marca de verificación Local» pasa a
+  «Local», «cruz Cloud» a «Cloud» y «marca 100% Local» a «100% Local». La palabra ya estaba junto al símbolo,
+  así que no se pierde información: la columna se lee igual y sobrevive a cualquier tipografía.
+- **Las flechas tipográficas se conservan.** El `→` que describe flujos («JSON → validación → registros») no es
+  un emoji, y la regla lo dice explícitamente para que nadie lo retire por celo.
+- **Un defecto colateral, visto leyendo la página 6.** Al quitar los dos caracteres, la columna «Idioma» de la
+  Tabla 2 quedó tan estrecha que «Español» se partía en «Españo / l». La causa estaba en el renderizador: el
+  ancho mínimo por columna se aplicaba **antes** de normalizar a los 8838 twips útiles, de modo que la
+  normalización lo deshacía. Corregido en `render.py` y `render2.py`, que ahora imponen un suelo de 900 twips
+  **después** de normalizar y reparten el descuento entre las columnas con holgura.
+- **Verificación sobre el PDF:** cero emojis y cero marcas de agua en el PDF y en los tres `.docx` · **25
+  páginas exactas**, cuerpo **18 de 25** y anexos 7 · cero páginas en blanco · encabezado y pie en las 25 sin
+  solape · resumen y abstract en la página 1 con 199 y 183 palabras · nueve capítulos y ocho anexos A–H · 18
+  leyendas correlativas · las 20 entradas IEEE · ninguna llamada `§` rota · ninguna palabra partida en tablas.
+- **`_v10` congelada como entrega:** `.docx` `2e786c7f7ebd` · `.pdf` `d109daf55485`.
+
 ### 2.18 ✅ COMPLETADA — Sobriedad tipográfica propagada a Word y PDF
 - **Cerrada:** 2026-09-08 01:15 por Claude Desktop. **Abierta:** 00:55. Regla nueva en `CLAUDE.md` y en el encargo de propagación:
   en el cuerpo de las descripciones, el guion largo y la negrita se reservan para lo excepcional. Los incisos
@@ -1144,5 +1168,6 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-08 00:05 | Claude Desktop | §2.15: **resumen y abstract fundidos** —el abstract estaba congelado desde julio y omitía el hallazgo central del RAG—. Sincronizados en 199 y 183 palabras, estilo `abstract` restituido, espaciado del encabezado compactado, ambos en la página inicial. `_v7` congelada |
 | 2026-09-08 00:40 | Claude Desktop | §2.17: propagación completa del `.md` nuevo (§2.4, §4.4 en prosa, §3.3 rapidfuzz, §5.5 coste estimado) a los tres `.docx` y al PDF. De 27 a **25 páginas exactas** solo por estilo; cuerpo 18/25 y anexos 7. Renderizador corregido (`p1a`/`Normal` y `abstract` por posición) y versionado en `_tools/`. `_v8` congelada |
 | 2026-09-08 01:15 | Claude Desktop | §2.18: sobriedad tipográfica propagada a los tres `.docx` y al PDF. Marcado contabilizado fuente contra documento (149/47 → 147/46, sin añadir ni perder). Corregidas cuatro celdas que imprimían las cursivas en crudo, defecto visto leyendo una muestra y no por el conteo. 25 páginas, cuerpo 18. `_v9` congelada |
+| 2026-09-08 01:45 | Claude Desktop | §2.19: regla de no usar emojis ni marcas de agua, incorporada a `CLAUDE.md` y al encargo de propagación. Tres emojis retirados de la Tabla 2 (la palabra ya estaba al lado); ninguna marca de agua encontrada. Corregido el suelo de ancho de columna del renderizador, que se aplicaba antes de normalizar y partía «Español». `_v10` congelada |
 | 2026-09-07 20:35 | Claude Code (equipo principal) | 🔴 §2.16: corregida la descripción de la métrica de emparejamiento —era «similitud de tokens», es **distancia de Indel normalizada** (`fuzz.ratio`)— y declarados sus dos límites, que sesgan a la baja. Encargo de propagación a **Word y PDF** en `PROMPT-CLAUDE-DESKTOP-PROPAGACION-20260907.md`. Auditoría y dos subagentes en curso sobre el resto de enunciados técnicos. ⚠️ **Atribución:** mi commit `bdb3337` arrastró las versiones `_v6` y `_v7` de Claude Desktop bajo un mensaje que solo hablaba de la métrica; no se perdió nada, pero el historial las atribuye mal |
 | 2026-09-07 21:30 | Claude Code (equipo principal) | §2.17: registradas en `CLAUDE.md` y en el encargo las **reglas permanentes de Word y PDF** —resumen y abstract fundidos, sincronizados y en la primera página; recorte de espacios **por estilo** y nunca por contenido; 25 páginas exactas; Anexo B sin saltos duros; anexos consolidados sin perder contenido—. En el `.md`: §2.4 explica el aparato estadístico, §4.4 desarrolla las métricas y §5.5 deriva el coste **declarándolo estimación** |
