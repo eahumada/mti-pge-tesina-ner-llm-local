@@ -493,7 +493,12 @@ La colisión se detectó al integrar y se resolvió renumerando el segundo a **�
 tarea— hacer `pull` y releer el fichero. Si aparece una colisión, **renumera el que llegó después y deja
 constancia**; nunca reutilices el número ni renumeres el ajeno.
 
-### L39. Persistir los estudios completos (zip versionado) y las extracciones crudas
+### L41. Persistir los estudios completos (zip versionado) y las extracciones crudas
+
+> *Renumerada de L39 a L41 el 2026-09-08: el identificador L39 ya estaba ocupado por la lección sobre el
+> corpus corrupto (línea 455). Es la tercera colisión de este tipo y la segunda **después** de escribir L40,
+> que advierte precisamente de ella; señal de que la regla necesita una comprobación automática y no solo
+> un recordatorio. No se altera el contenido de ninguna de las dos.*
 **Contexto.** El corpus N=120 tuvo que catalogarse para re-inferir por el mojibake (F46) porque **las
 extracciones crudas por registro no se persistieron** (solo `tp/fp/fn`), y `results/` está gitignored, así
 que ni los CSV sobrevivían en git. La corrida N=30 de julio se perdió directamente por sobrescritura.
@@ -506,3 +511,54 @@ que ni los CSV sobrevivían en git. La corrida N=30 de julio se perdió directam
 
 > **Aplicación:** al cierre de cada estudio, empaquetar `results/<estudio>/` en
 > `remote_48g/estudio_<fecha>.zip` y commitearlo. Ver `FINDINGS.md §F46`.
+
+---
+
+## 8. Lecciones de la segunda pasada de revisión (2026-09-08)
+
+### L42. Una segunda pasada solo vale si no sabe lo que encontró la primera
+
+Los seis auditores de la revisión global recibieron una instrucción explícita: *«esta es una segunda pasada
+independiente; deliberadamente no se te dice qué encontró la primera»*. Encontraron 172 hallazgos, 61 graves,
+y entre ellos los tres que bloquean la entrega — ninguno de los cuales había aparecido en la primera ronda,
+que se había centrado en la bibliografía. Si se les hubiera entregado el informe anterior, habrían dedicado
+el esfuerzo a confirmarlo.
+
+> **Aplicación:** al encargar una verificación independiente, ocultar los resultados previos y decirlo en el
+> prompt. Y valorar por encima de todo la **contradicción**: cuando dos auditores discrepan sobre el mismo
+> punto, ahí hay algo que ninguno de los dos ha entendido del todo, y es lo primero que hay que ir a mirar.
+
+### L43. Reescribir el historial de git no borra un secreto de GitHub
+
+`git filter-repo` purgó la clave de API de los 20 commits afectados y el force-push dejó el remoto limpio.
+Pero al comprobarlo después, el commit antiguo seguía respondiendo HTTP 200 en la API y su versión del
+fichero **todavía contenía la clave en claro**. Los objetos quedan sin referencia pero GitHub los sigue
+sirviendo por SHA directo, y no ejecuta el recolector por iniciativa propia.
+
+> **Aplicación:** la reescritura es mitigación, no remedio. El remedio es **revocar la credencial**, y hay que
+> hacerlo primero. Después, pedir a GitHub Support la purga de objetos inalcanzables. Y nunca publicar un
+> repositorio que tuvo un secreto sin haber completado los dos pasos: publicar convierte una clave
+> recuperable-si-conoces-el-SHA en una clave indexable.
+
+### L44. Lo que el prompt pide y lo que el corpus anota tienen que coincidir
+
+El 65 % de los falsos positivos de todo el estudio provenían de una categoría, `Locations`, que los cuatro
+prompts ordenaban extraer y que **ningún corpus anotaba**. El evaluador la puntuaba igual, de modo que cada
+localización correctamente identificada contaba como error. Nadie lo advirtió en dos meses porque las cifras
+eran internamente consistentes: bajas, pero coherentes entre sí.
+
+> **Aplicación:** antes de dar por buena una métrica, comprobar que **cada categoría puntuada existe en la
+> anotación de referencia**. El indicador barato es `fn` agregado por categoría: si vale cero mientras `fp`
+> crece, esa categoría está puntuando contra el vacío. Y una cifra baja pero estable no prueba que la
+> medición sea correcta; prueba que el defecto es sistemático.
+
+### L45. Con varias corridas del mismo experimento, se declaran todas
+
+El informe presentaba +10,40 puntos por el prompt en español. Había tres corridas: esa, otra con +3,11 sobre
+el mismo corpus y modelo, y una tercera sobre el corpus ocho veces mayor con **−0,43 puntos y p=0,9328**.
+Ninguna de las dos últimas se mencionaba. No hubo intención de seleccionar, pero el resultado es
+indistinguible de haberlo hecho, y eso es lo que un tribunal juzga.
+
+> **Aplicación:** al escribir una cifra, buscar en `results/` si hay más corridas del mismo experimento antes
+> de citarla. Si las hay, declararlas y explicar cuál se toma como referencia y por qué. La política aditiva
+> del proyecto ya obliga a conservarlas; lo que faltaba era obligarse a **mencionarlas**.
