@@ -1,0 +1,220 @@
+2026-09-08 17:49:16,903 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-08 17:49:16,928 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-08 17:49:16,928 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-09-08 17:49:16,929 [INFO] ner_benchmark: Corpus loaded: 15 articles split into 2 batches.
+2026-09-08 17:49:16,929 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-08 17:49:16,976 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-08 17:49:16,980 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-08 17:49:16,980 [INFO] ner_benchmark: [RAG] Using Knowledge Base mode: 'kb_combined'
+2026-09-08 17:49:16,997 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-mlx_baseline-b0-1788900556 for batch 0 to memory queue.
+2026-09-08 17:49:16,997 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-mlx_baseline-b1-1788900556 for batch 1 to memory queue.
+2026-09-08 17:49:16,997 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-mlx_kb_rag-b0-1788900556 for batch 0 to memory queue.
+2026-09-08 17:49:16,997 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-mlx_kb_rag-b1-1788900556 for batch 1 to memory queue.
+2026-09-08 17:49:16,997 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=1 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-09-08 17:49:16,999 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-08 17:49:16,999 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-08 17:49:16,999 [INFO] ner_benchmark: [RAG] Worker phase — Knowledge Base mode: 'kb_combined'
+2026-09-08 17:49:17,015 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-mlx_baseline-b0-1788900557 for batch 0 to memory queue.
+2026-09-08 17:49:17,015 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-mlx_baseline-b1-1788900557 for batch 1 to memory queue.
+2026-09-08 17:49:17,015 [INFO] ner_benchmark: Running RAG study 'gemma4:31b-mlx_baseline' with 1 workers...
+2026-09-08 17:49:17,016 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-mlx_baseline-b0-1788900557 from memory queue.
+2026-09-08 17:49:17,016 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-08 17:49:17,016 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_baseline') -> Extracting entities for record '1'...
+2026-09-08 17:49:17,017 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:49:17,021 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:49:17,021 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:49:46,171 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:49:46,433 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:49:46,465 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_baseline') -> Extracting entities for record '2'...
+2026-09-08 17:49:46,465 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:49:46,474 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:49:46,474 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:49:58,417 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:49:58,705 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:49:58,721 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_baseline') -> Extracting entities for record '3'...
+2026-09-08 17:49:58,721 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:49:58,726 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:49:58,726 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:50:23,272 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:50:23,437 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:50:23,468 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_baseline') -> Extracting entities for record '4'...
+2026-09-08 17:50:23,468 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:50:23,473 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:50:23,473 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:50:42,742 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:50:43,121 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:50:43,154 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_baseline') -> Extracting entities for record '5'...
+2026-09-08 17:50:43,155 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:50:43,159 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:50:43,159 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:50:49,177 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:50:49,267 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:50:49,273 [INFO] ner_benchmark: [Worker 6] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_baseline') -> Extracting entities for record '6'...
+2026-09-08 17:50:49,273 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:50:49,277 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:50:49,277 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:50:52,775 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:50:52,813 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:50:52,818 [INFO] ner_benchmark: [Worker 7] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_baseline') -> Extracting entities for record '7'...
+2026-09-08 17:50:52,818 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:50:52,822 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:50:52,822 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:51:14,529 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:51:15,014 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:51:15,025 [INFO] ner_benchmark: [Worker 8] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_baseline') -> Extracting entities for record '8'...
+2026-09-08 17:51:15,026 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:51:15,031 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:51:15,031 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:51:19,585 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:51:20,096 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:51:20,099 [INFO] ner_benchmark: [Worker 9] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_baseline') -> Extracting entities for record '9'...
+2026-09-08 17:51:20,100 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:51:20,103 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:51:20,103 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:51:35,702 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:51:35,785 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:51:35,797 [INFO] ner_benchmark: [Worker 10] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_baseline') -> Extracting entities for record '10'...
+2026-09-08 17:51:35,798 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:51:35,802 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:51:35,802 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:52:03,416 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:52:03,547 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:52:03,576 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-mlx_baseline-b0-1788900557 in memory queue.
+2026-09-08 17:52:03,592 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-mlx_baseline-b1-1788900557 from memory queue.
+2026-09-08 17:52:03,593 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-08 17:52:03,595 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_baseline') -> Extracting entities for record '11'...
+2026-09-08 17:52:03,595 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:52:03,601 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:52:03,601 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:52:34,987 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:52:35,358 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:52:35,399 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_baseline') -> Extracting entities for record '12'...
+2026-09-08 17:52:35,399 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:52:35,404 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:52:35,404 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:52:56,144 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:52:56,573 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:52:56,602 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_baseline') -> Extracting entities for record '13'...
+2026-09-08 17:52:56,602 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:52:56,606 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:52:56,606 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:53:10,679 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:53:10,775 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:53:10,794 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_baseline') -> Extracting entities for record '14'...
+2026-09-08 17:53:10,794 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:53:10,799 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:53:10,799 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:53:27,306 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:53:27,449 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:53:27,478 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_baseline') -> Extracting entities for record '15'...
+2026-09-08 17:53:27,479 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:53:27,483 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:53:27,483 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:53:44,805 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:53:45,149 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:53:45,163 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-mlx_baseline-b1-1788900557 in memory queue.
+2026-09-08 17:53:45,200 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-mlx_kb_rag-b0-1788900825 for batch 0 to memory queue.
+2026-09-08 17:53:45,200 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-mlx_kb_rag-b1-1788900825 for batch 1 to memory queue.
+2026-09-08 17:53:45,201 [INFO] ner_benchmark: Running RAG study 'gemma4:31b-mlx_kb_rag' with 1 workers...
+2026-09-08 17:53:45,201 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-mlx_kb_rag-b0-1788900825 from memory queue.
+2026-09-08 17:53:45,202 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-08 17:53:45,202 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_kb_rag') -> Extracting entities for record '1'...
+2026-09-08 17:53:45,719 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:53:45,723 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:53:45,723 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:54:10,830 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:54:10,989 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:54:11,006 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_kb_rag') -> Extracting entities for record '2'...
+2026-09-08 17:54:11,114 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:54:11,118 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:54:11,118 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:54:27,236 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:54:27,317 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:54:27,338 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_kb_rag') -> Extracting entities for record '3'...
+2026-09-08 17:54:27,448 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:54:27,453 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:54:27,453 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:54:52,379 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:54:52,657 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:54:52,693 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_kb_rag') -> Extracting entities for record '4'...
+2026-09-08 17:54:52,802 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:54:52,807 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:54:52,807 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:55:10,895 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:55:11,060 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:55:11,089 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_kb_rag') -> Extracting entities for record '5'...
+2026-09-08 17:55:11,193 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:55:11,197 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:55:11,197 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:55:24,220 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:55:24,445 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:55:24,451 [INFO] ner_benchmark: [Worker 6] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_kb_rag') -> Extracting entities for record '6'...
+2026-09-08 17:55:24,572 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:55:24,577 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:55:24,578 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:55:29,052 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:55:29,175 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:55:29,180 [INFO] ner_benchmark: [Worker 7] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_kb_rag') -> Extracting entities for record '7'...
+2026-09-08 17:55:29,291 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:55:29,294 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:55:29,295 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:55:51,897 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:55:52,150 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:55:52,163 [INFO] ner_benchmark: [Worker 8] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_kb_rag') -> Extracting entities for record '8'...
+2026-09-08 17:55:52,270 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:55:52,274 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:55:52,274 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:56:01,384 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:56:01,897 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:56:01,901 [INFO] ner_benchmark: [Worker 9] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_kb_rag') -> Extracting entities for record '9'...
+2026-09-08 17:56:02,014 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:56:02,020 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:56:02,020 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:56:17,193 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:56:17,305 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:56:17,315 [INFO] ner_benchmark: [Worker 10] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_kb_rag') -> Extracting entities for record '10'...
+2026-09-08 17:56:17,428 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:56:17,432 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:56:17,432 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:56:48,966 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:56:49,514 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:56:49,529 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-mlx_kb_rag-b0-1788900825 in memory queue.
+2026-09-08 17:56:49,534 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-mlx_kb_rag-b1-1788900825 from memory queue.
+2026-09-08 17:56:49,534 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-08 17:56:49,535 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_kb_rag') -> Extracting entities for record '11'...
+2026-09-08 17:56:49,637 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:56:49,642 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:56:49,642 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:57:22,672 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:57:23,080 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:57:23,115 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_kb_rag') -> Extracting entities for record '12'...
+2026-09-08 17:57:23,218 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:57:23,223 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:57:23,223 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:57:50,164 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:57:50,610 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:57:50,638 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_kb_rag') -> Extracting entities for record '13'...
+2026-09-08 17:57:50,742 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:57:50,746 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:57:50,746 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:58:05,047 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:58:05,484 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:58:05,519 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_kb_rag') -> Extracting entities for record '14'...
+2026-09-08 17:58:05,620 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:58:05,624 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:58:05,624 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:58:22,058 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:58:22,353 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:58:22,381 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b-mlx' (Mapped: 'gemma4:31b-mlx_kb_rag') -> Extracting entities for record '15'...
+2026-09-08 17:58:22,485 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-mlx' → OllamaProvider (default)
+2026-09-08 17:58:22,489 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'gemma4:31b-mlx': su razonamiento agota num_predict y vacia content.
+2026-09-08 17:58:22,489 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-mlx options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 17:58:45,176 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 17:58:45,332 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 17:58:45,345 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-mlx_kb_rag-b1-1788900825 in memory queue.
+2026-09-08 17:58:45,360 [INFO] ner_benchmark: Unloading model weights for gemma4:31b-mlx to protect VRAM.
+2026-09-08 17:58:45,383 [INFO] ner_benchmark.llm_runner: Successfully unloaded weights for gemma4:31b-mlx from VRAM.
+2026-09-08 17:58:47,390 [INFO] ner_benchmark: ==================================================
+2026-09-08 17:58:47,391 [INFO] ner_benchmark: BENCHMARK EXTRACTIONS COMPLETE. PROCESSING METRICS...
+2026-09-08 17:58:47,391 [INFO] ner_benchmark: ==================================================
+2026-09-08 17:58:47,780 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.
