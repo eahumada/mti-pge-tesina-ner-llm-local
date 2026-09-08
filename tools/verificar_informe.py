@@ -586,6 +586,54 @@ def c_tabla4_vs_datos(s):
           'la correspondencia fila-corrida refleja la Tabla 15 del informe')
 
 
+# --- 18. La Figura 1 y §3.3 reproducen desde el artefacto de composicion -------------------------
+ARTEFACTO_FP = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark/results/'
+                                  'COMPOSICION_FP_20260908/composicion_fp_26_grupos.json')
+
+
+def c_figura1_vs_artefacto(s):
+    """La composicion de los falsos positivos, atada al fichero que la calcula.
+
+    El informe llego a dar dos cifras distintas para esta magnitud, una de ellas sin respaldo en
+    ningun dato (FINDINGS §F69). Esta comprobacion ata las tres apariciones —la prosa de §3.3, la
+    del §7.2 y el script que dibuja la Figura 1— al artefacto que las computa.
+    """
+    import json as _json
+    if not os.path.exists(ARTEFACTO_FP):
+        check('la Figura 1 reproduce desde el artefacto de composicion', 0,
+              ['no existe %s' % os.path.relpath(ARTEFACTO_FP, RAIZ)])
+        return
+    with open(ARTEFACTO_FP, encoding='utf-8') as fh:
+        a = _json.load(fh)
+    loc, tot, pct = a['fp_locations'], a['fp_total'], a['pct_fp_locations']
+    fallos, mirados = [], 0
+    # el artefacto debe declarar su propia cobertura y haberla completado
+    mirados += 1
+    if a.get('grupos') != a.get('grupos_cubiertos'):
+        fallos.append('el artefacto cubre %s de %s grupos' % (a.get('grupos_cubiertos'), a.get('grupos')))
+    # §3.3 y §7.2
+    esp = '%.1f' % pct
+    for etiqueta, patron in (('§3.3', r'\*\*%s\s*%%\*\*[^.]{0,90}?%s de %s'
+                              % (esp.replace('.', ','), '{:,}'.format(loc).replace(',', ' '),
+                                 '{:,}'.format(tot).replace(',', ' '))),
+                             ('§7.2', r'procede el %s\s*%% de los falsos positivos' % esp.replace('.', ','))):
+        mirados += 1
+        if not re.search(patron, s):
+            fallos.append('%s no cita %s %% con %d de %d' % (etiqueta, esp.replace('.', ','), loc, tot))
+    # el script de figuras
+    mirados += 1
+    try:
+        sc = open(SCRIPT_FIGURAS, encoding='utf-8').read()
+        if not re.search(r'loc,\s*total\s*=\s*%d,\s*%d' % (loc, tot), sc):
+            fallos.append('generar_figuras_informe.py no usa %d y %d' % (loc, tot))
+        if esp.replace('.', ',') + ' %' not in sc:
+            fallos.append('generar_figuras_informe.py no rotula %s %%' % esp.replace('.', ','))
+    except Exception as e:
+        fallos.append('no se puede leer el script de figuras: %s' % e)
+    check('la Figura 1 y la prosa reproducen desde el artefacto de composicion', mirados, fallos,
+          'ata las tres apariciones de la cifra al fichero que la computa')
+
+
 def main():
     s = texto()
     c_vacios()
@@ -604,6 +652,7 @@ def main():
     c_anexo_vs_tabla7(s)
     c_tabla7_vs_datos(s)
     c_tabla4_vs_datos(s)
+    c_figura1_vs_artefacto(s)
     if '--red' in sys.argv:
         c_urls(s)
 
