@@ -292,6 +292,33 @@ corpus, y reportar la media y la dispersión. Sin réplicas no se puede decidir 
 
 ---
 
+## 3.bis Registro por entidad: requisito nuevo, sin el cual la re-corrida no responde a §3.2
+
+Añadido el 2026-09-08 tras vuestra investigación de `tools/composicion_ibericas.py`, que llega a la
+conclusión correcta: **el contraste que pide §3.2 no se puede calcular con los artefactos actuales**, porque
+los `detailed_results.json` guardan métricas agregadas por artículo y no qué entidad concreta se extrajo y
+si acertó.
+
+Sin ese registro, la re-corrida repetirá el problema: tendremos otra vez F1 por artículo y seguiremos sin
+poder responder a la pregunta que más nos interesa, que es **si la ventaja del prompt en español se concentra
+en las entidades ibéricas**.
+
+**Tarea:** que el evaluador persista, por registro, la lista de entidades extraídas con su veredicto —acierto,
+falso positivo, o falso negativo por omisión— y la entidad de referencia con la que emparejó, si la hubo. Con
+eso, el contraste de §3.2 se calcula después sin reejecutar nada: se clasifica cada entidad de referencia como
+ibérica o no y se comparan las tasas de acierto entre los dos subconjuntos, dentro de cada configuración de
+*prompt*.
+
+Es además el registro que habría permitido diagnosticar sin discusión otros dos defectos de este estudio: el
+doble emparejamiento, que se detectó indirectamente por `recall > 1.0`, y la naturaleza de los «errores de
+límite», que resultaron agrupar tres fenómenos distintos.
+
+**Sobre vuestra heurística de entidades ibéricas.** Documentáis que infra-cuenta las personas —172 frente a
+263— porque no marca apellidos sin acento. Es correcto documentarlo, y para el contraste conviene una lista
+explícita en lugar de una heurística: con el registro por entidad, la clasificación se hace una vez sobre las
+entidades de referencia distintas, que son unos pocos cientos, y se revisa a mano. Una heurística que falla
+en un tercio de los casos contaminaría el contraste que se quiere medir.
+
 ## 4. Modelos: lista cerrada
 
 **No incluir en ninguna corrida** `nuextract:latest`, `minimax-m3:cloud`, `gemini-3.1-flash-lite`,
