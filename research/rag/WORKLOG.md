@@ -779,3 +779,95 @@ hizo contra un original que no se movió. Del `.md` no se tocó nada: sigue decl
 
 **`_v11` congelada** (`.docx` `efe56e1d7495`, `.pdf` `872d23993314`), **sin declararla versión de entrega**: la
 extensión total está por resolver y §2.20 sigue abierta.
+
+---
+
+### 2026-09-08 15:40-20:30 — Sesión de Claude Code: verificación mecanizada, integridad de datos y arranque de la re-corrida
+
+Sesión larga y de naturaleza distinta a las anteriores: casi todo lo que produjo fueron **defectos
+encontrados**, la mitad de ellos en mi propio trabajo de las horas previas. Se resume aquí lo que quedó, con
+la trazabilidad para poder rehacerlo.
+
+#### El informe
+
+Se amplió la **introducción** de 1 068 a 1 457 palabras con material del propio trabajo: la volatilidad de
+la lista SDN, que obliga a vigilancia continua y no a una carga inicial, y la asimetría del error, que
+orienta el diseño hacia la exhaustividad. **La justificación era errónea:** se hizo creyendo que la plantilla
+pedía tres o cuatro páginas cuando dice «a lo más 3». La ampliación se conserva porque el capítulo queda en
+~2,1 páginas y atiende el reparo del profesor guía sobre el poco desarrollo, pero no debe crecer más.
+
+Se añadieron las **dos primeras figuras**, generadas a 300 ppp por `tools/generar_figuras_informe.py` con la
+leyenda debajo y centrada como pide la norma: la composición de los falsos positivos en §4.4 y el efecto del
+KB RAG sobre los trece modelos en §5.3.1. El script **no recalcula** las cifras desde los CSV, las toma
+escritas de las tablas publicadas, para que figura y tabla no puedan divergir.
+
+Se cotejaron **resumen y abstract** frase a frase —siete en cada idioma, diez cifras idénticas— y se corrigió
+la única divergencia: el español decía «Las instituciones» donde el inglés dice «Financial institutions».
+
+#### `tools/verificar_informe.py`
+
+Las comprobaciones mecánicas del proyecto vivían en prosa y se reescribían a mano en cada sesión, lo que las
+hacía irreproducibles: tres auditores contaron guiones y negritas de tres maneras sobre el mismo texto. Ahora
+son **trece comprobaciones ejecutables**, y cada una **declara cuántos elementos examinó**; una que examina
+cero se marca VACÍA y no como superada, porque una comprobación que no mira nada es indistinguible de una que
+pasa —el informe documenta en §5.3 una prueba de sensibilidad que no podía marcar nada por construcción y se
+dio por buena durante meses—.
+
+Tres de ellas fallaron al estrenarse y en los tres casos **el defecto estaba en la comprobación**: el `©` de
+«JosÃ© Bono» no es un pictograma sino la mitad del *mojibake* que el informe explica; «Parámetros» empieza por
+«p» y se tomaba por «Precisión», dando catorce falsos positivos de aritmética; y la Tabla 4 declara «doce
+modelos en trece configuraciones», que son dos cifras ciertas sobre cosas distintas.
+
+#### Integridad del repositorio
+
+**Cuatro documentos llevaban dos meses a cero bytes**, vaciados el 1 de julio por un commit cuyo mensaje solo
+hablaba de `.gitignore` y rutas; dos eran de hitos ya entregados. Restaurados desde el commit anterior,
+71 476 bytes. Sobrevivieron tanto porque un fichero vacío no da ningún síntoma: existe, se abre, se lee y no
+sale en un `git status` limpio.
+
+Se corrigió el comentario del `.gitignore` sobre los duplicados de macOS, que afirmaba en falso que son
+«copias byte a byte»: de 78, 23 difieren y varios son instantáneas anteriores a la retirada de los modelos
+excluidos. Ninguna regla se tocó.
+
+Por decisión del autor, y tras presentarle el inventario completo, se retiraron del repositorio 22
+duplicados rastreados, las 12 filas que el servicio de nube rechazó por cuota y dos ficheros de
+`_to_delete`. **Ninguna cifra publicada cambió.** Se conservaron las 480 filas invalidadas de una fuente del
+consolidado, porque editarla rompería la reproducibilidad del ANOVA publicado, y el agregado histórico de
+junio, que atestigua. Ningún registro de ejecución entró en la retirada.
+
+#### La re-corrida
+
+Se desbloqueó al equipo de 48 GB, que llevaba dos horas y media parado esperando dos respuestas: si los 15
+artículos de Kleptotrace embebidos en el corpus debían heredar sus 63 localizaciones —sí, verificado sobre su
+propia rama antes de contestar— y dónde lanzar la re-corrida —entera en el equipo de 48 GB, para no mezclar
+telemetría de dos máquinas en la misma tabla—.
+
+Aplicaron las localizaciones (119 de 120 artículos, **545** en total) y entregaron seis corridas, las seis
+válidas. **`§F53` queda cerrado y verificado:** dieciocho categorías comprobadas, ninguna puntúa contra el
+vacío; *Locations* pasa de cero entidades de referencia a **1 034** en N=120 y su peso en los falsos
+positivos cae del **67,5 % al 44-46 %**.
+
+#### Los dos hallazgos de fondo
+
+**`§F65`.** Al cuadrar el desglose por categoría contra el corpus apareció una razón de 1,85 en las tres
+categorías. Tirando de ahí: `total_records` es **113 y no 120**, porque los siete ejemplares *few-shot* son
+artículos del propio corpus con su anotación de oro como salida esperada, y por decisión del autor se
+excluyen de la métrica publicada. El KB RAG aporta **+10,01 pp** sobre esos siete frente a **+2,19 pp** sobre
+los ciento trece. **Las primeras cifras que informé estaban mal**, promediadas sobre el CSV crudo.
+
+**`§F66`.** `src/merge_and_analyze.py` **no excluía** esos artículos: la exclusión vivía en `main.py` y se
+perdía al fusionar, de modo que el ANOVA consolidado los incluía. Rehecho sin ellos, las observaciones pasan
+de 3 120 a 2 938 y el ANOVA de F = 38,2222 a **F = 35,5557**. **Ninguno de los trece modelos cambia de
+veredicto**, pero el efecto del RAG se encoge en doce de los trece. Que el veredicto aguante lo convierte en
+un **resultado de robustez** y no en un problema. Corregida la herramienta, y validada de extremo a extremo:
+el F1 de la fusión coincide **exactamente** con el del resumen de cada corrida.
+
+#### Seguimiento
+
+Revisados los ocho bloqueantes del `TODO-INFORME-FINAL §10`, levantados el 5 de septiembre y nunca
+actualizados: **siete están cerrados** y el octavo tiene ya respuesta con evidencia. Un listado de
+bloqueantes desactualizado induce a creer que quedan ocho cosas por hacer antes de la defensa.
+
+**Pendiente:** once modelos de la re-corrida; decidir si el informe adopta F = 35,5557 o espera al
+consolidado nuevo; la purga de GitHub, que arrastra el 404 de la referencia [37]; y resincronizar los tres
+`.docx`, que van muy por detrás del Markdown.
