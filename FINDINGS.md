@@ -2205,3 +2205,41 @@ sostenían son precisamente los que cambiaron de signo.
 **Lección.** Escribí una explicación mecanicista plausible seis minutos después de ver el patrón, y la puse
 por escrito antes de comprobarla teniendo los datos a mano para hacerlo. La explicación era falsa y la
 muestra estaba sesgada. Ver `LEARNING §L54`.
+
+---
+
+## §F72 — `gpt-oss:20b` no está en el barrido, y eso dejaría el estudio con dos corpus mezclados
+
+**Fecha:** 2026-09-08, 20:42. Detectado al analizar el orden del barrido. **Requiere decisión del autor, y
+conviene tomarla antes de que termine la re-corrida.**
+
+`gpt-oss:20b` **no aparece en `_sweep_progress.log`**: ni START, ni END, ni SKIP. No es que esté pendiente,
+es que nunca se programó. El barrido va por el orden de la Tabla 7 y salta directamente del cuarto modelo al
+sexto.
+
+**La causa probable es una lectura razonable de `§F44`,** que recoge una decisión firme del autor:
+«`gpt-oss:20b` se deja con think ON, congelado; su corrida oficial no se re-ejecuta ni se toca». El equipo de
+48 GB parece haberla aplicado literalmente y haberlo excluido del barrido.
+
+**Pero esa decisión era sobre el *thinking*, no sobre el corpus.** Se tomó porque apagar el razonamiento le
+hace *dejar de responder* —`recall = 0` en 7 de 15 y 10 de 15—, de modo que congelarlo protegía el régimen de
+razonamiento. Nada en ella dice que el modelo deba medirse sobre un corpus sin localizaciones anotadas.
+
+**La consecuencia, si no se corrige.** El consolidado final tendría **doce modelos sobre el corpus corregido
+y uno sobre el antiguo**. El F1 de `gpt-oss:20b` quedaría unos veinte puntos por debajo del resto por un
+defecto del corpus y no por su desempeño —los otros modelos suben entre +19,75 y +22,22 puntos al corregirlo—,
+y aparecería en la tabla como el peor de su franja sin serlo. Sería un defecto **peor** que el que la
+re-corrida viene a arreglar, porque el actual afecta a todos por igual y este afectaría a uno solo.
+
+**Dos apuntes de precisión.** El primero: `§F44` dice que la corrida oficial de `gpt-oss:20b` es
+`results/excluidos_n120_REMOTO`, y **no es así**: el consolidado publicado toma sus filas de
+`gptoss_rerun_REMOTO`. Esa frase de `§F44` está desactualizada. El segundo: `§F61.bis` afirmaba que «la
+re-corrida completa resuelve la asimetría» del presupuesto de salida de `gpt-oss`. **Si no se re-ejecuta, no
+la resuelve**, y esa afirmación queda condicionada a esta decisión.
+
+**Lo que se propone.** Re-ejecutarlo **con `think` ON**, que es lo que la decisión de `§F44` protege, sobre el
+corpus corregido y con `max_tokens=4096` como el resto. Eso respeta la decisión del autor en lo que decía y
+resuelve las dos cosas: la mezcla de corpus y la asimetría de presupuesto.
+
+**La guarda ya existe.** `merge_and_analyze.py` exige 26 grupos y se pararía con 24, de modo que el problema
+no puede colarse en silencio hasta el ANOVA. Pero pararse al final es mucho peor que decidirlo ahora.
