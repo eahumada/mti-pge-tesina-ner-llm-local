@@ -241,8 +241,8 @@ saber que ya habías tomado la tarea, así que en gran parte te resultará redun
 detallado del desfase te sirve, y en particular la tensión que declara sobre `pandoc` frente a
 `docx_replace_terms.py`, que sigue en pie.
 
-### 2.21 EN CURSO — Resincronizar los tres `.docx` y el PDF con el `.md` saneado
-- **Abierta:** 2026-09-08 07:15 por Claude Desktop, a pedido del autor. Los tres `.docx` y el PDF de la `_v10`
+### 2.21 COMPLETADA — Resincronizar los tres `.docx` y el PDF con el `.md` saneado
+- **Cerrada:** 2026-09-08 07:30 por Claude Desktop. **Abierta:** 07:15, a pedido del autor. Los tres `.docx` y el PDF de la `_v10`
   quedaron con **20 referencias frente a las 37 del `.md`** y con la **Tabla 2 antigua**, la que descansaba
   sobre las citas ficticias de §2.20.
 - **Archivos que toco:** los tres `.docx`, el PDF, `doc/versions/informe_final/` y `VERSIONES.md`. **Del `.md`
@@ -256,8 +256,29 @@ detallado del desfase te sirve, y en particular la tensión que declara sobre `p
   y la Tabla 2 se rehizo con obras reales: BloombergGPT con arquitectura **BLOOM 50B** y F1 de 53,6-75,5 % en
   lugar de GPT-J con «más del 85 %»; FiNER-139 con SEC-BERT-SHAPE y 82,1 % de micro-F1; y Cañete et al. con
   BETO y 88,43 %, que sustituye a la referencia fabricada de García y López.
-- **Aviso de extensión:** el `.md` pasa de 15 915 a 19 549 palabras, de modo que hay que esperar desborde. Se
-  recorta por estilo, y si no cabe se avisa antes de suprimir nada, como manda el encargo.
+- **Resultado medido sobre el PDF: 31 páginas · cuerpo 20 · anexos 11.** Los dos límites institucionales se
+  cumplen con holgura: el cuerpo va 5 páginas por debajo de sus 25, y los anexos 14 por debajo de las 25
+  propias. Lo que ya no se cumple es el objetivo interno de 25 páginas totales, y conviene decirlo con la
+  medición delante: el `.md` creció de 15 915 a 19 549 palabras, el cuerpo pasó de 18 a 20 páginas y los anexos
+  de 7 a 11.
+- **La compactación por estilo está agotada, y se comprobó.** Se probó una pasada agresiva —interlineado de
+  `Normal` 228 → 220, encabezados 220/110 → 180/90, 160/80 → 130/65 y 140/70 → 120/60, leyendas 100/60 → 90/50,
+  filas de tabla 184 → 176— y el resultado fue **idéntico: 31, 20 y 11**. No gana ni una página, porque los
+  cortes los manda ahora el contenido y no el espaciado. Se conserva por tanto la configuración moderada, que
+  se lee mejor. Bajar de 31 exigiría **suprimir texto**, y eso no se hace sin autorización expresa: queda a
+  decisión del autor.
+- **Referencias y Tabla 2 verificadas en el PDF, no en el Word:** las **37 entradas** están en el capítulo 8,
+  de la 1 a la 37 y correlativas, sin ninguna ausente; cada cita del texto tiene su entrada y ninguna entrada
+  queda sin citar. La fila de BloombergGPT declara **BLOOM 50B** y F1 de 53,6-75,5 %, no GPT-J con «más del
+  85 %». Los tres `.docx` coinciden: 37 referencias y la misma fila.
+- **Resto de la verificación superada:** cero páginas en blanco · encabezado y pie en las 31 páginas sin
+  solaparse (holguras mínimas 20,9 y 17,5 pt) · resumen y abstract en la página 1, con 199 y 189 palabras ·
+  nueve capítulos y ocho anexos A-H · 19 leyendas correlativas · ninguna llamada `§` rota · ningún emoji, arte
+  ASCII ni asterisco literal.
+- **Concurrencia:** el `.md` se volvió a leer al terminar y su SHA-256 sigue siendo `d4a1b6de5b3f`, de modo que
+  la propagación se hizo contra un original que no se movió. Del `.md` no se tocó nada: sigue bajo §2.20.
+- **`_v11` congelada:** `.docx` `efe56e1d7495` · `.pdf` `872d23993314`, con copia de ambos en la raíz.
+  **No se declara versión de entrega**: la extensión total está por resolver y §2.20 sigue abierta.
 
 ### 2.20 🔴 EN CURSO — Saneamiento del aparato bibliográfico
 
@@ -1256,6 +1277,7 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-08 00:40 | Claude Desktop | §2.17: propagación completa del `.md` nuevo (§2.4, §4.4 en prosa, §3.3 rapidfuzz, §5.5 coste estimado) a los tres `.docx` y al PDF. De 27 a **25 páginas exactas** solo por estilo; cuerpo 18/25 y anexos 7. Renderizador corregido (`p1a`/`Normal` y `abstract` por posición) y versionado en `_tools/`. `_v8` congelada |
 | 2026-09-08 01:15 | Claude Desktop | §2.18: sobriedad tipográfica propagada a los tres `.docx` y al PDF. Marcado contabilizado fuente contra documento (149/47 → 147/46, sin añadir ni perder). Corregidas cuatro celdas que imprimían las cursivas en crudo, defecto visto leyendo una muestra y no por el conteo. 25 páginas, cuerpo 18. `_v9` congelada |
 | 2026-09-08 01:45 | Claude Desktop | §2.19: regla de no usar emojis ni marcas de agua, incorporada a `CLAUDE.md` y al encargo de propagación. Tres emojis retirados de la Tabla 2 (la palabra ya estaba al lado); ninguna marca de agua encontrada. Corregido el suelo de ancho de columna del renderizador, que se aplicaba antes de normalizar y partía «Español». `_v10` congelada |
+| 2026-09-08 07:30 | Claude Desktop | §2.21: los tres `.docx` y el PDF resincronizados con el `.md` saneado. **37 referencias** (antes 20) y la **Tabla 2 nueva** con BLOOM 50B y 53,6-75,5 % en lugar de GPT-J. Medido sobre el PDF: 31 páginas, cuerpo 20/25 y anexos 11/25, ambos límites cumplidos; el objetivo interno de 25 totales ya no se alcanza y la compactación por estilo está agotada (una pasada agresiva da el mismo 31). `_v11` congelada, sin declararla entrega |
 | 2026-09-07 20:35 | Claude Code (equipo principal) | 🔴 §2.16: corregida la descripción de la métrica de emparejamiento —era «similitud de tokens», es **distancia de Indel normalizada** (`fuzz.ratio`)— y declarados sus dos límites, que sesgan a la baja. Encargo de propagación a **Word y PDF** en `PROMPT-CLAUDE-DESKTOP-PROPAGACION-20260907.md`. Auditoría y dos subagentes en curso sobre el resto de enunciados técnicos. ⚠️ **Atribución:** mi commit `bdb3337` arrastró las versiones `_v6` y `_v7` de Claude Desktop bajo un mensaje que solo hablaba de la métrica; no se perdió nada, pero el historial las atribuye mal |
 | 2026-09-07 21:30 | Claude Code (equipo principal) | §2.17: registradas en `CLAUDE.md` y en el encargo las **reglas permanentes de Word y PDF** —resumen y abstract fundidos, sincronizados y en la primera página; recorte de espacios **por estilo** y nunca por contenido; 25 páginas exactas; Anexo B sin saltos duros; anexos consolidados sin perder contenido—. En el `.md`: §2.4 explica el aparato estadístico, §4.4 desarrolla las métricas y §5.5 deriva el coste **declarándolo estimación** |
 | 2026-09-08 02:50 | Claude Code (equipo principal) | 🔴 §2.20: **cuatro referencias de la bibliografía no existen** ([7], [9], [10], [15]) y tres filas de la Tabla 1 descansan sobre ellas. Verificado a mano el caso de [15]. Decisión del autor: eliminarlas, como excepción autorizada a la política aditiva. Workflow de saneamiento en curso; después, revisión global independiente. Numerada 2.20 porque 2.18 y 2.19 ya estaban tomadas — tercera colisión de numeración, ver `LEARNINGS §L40`. `FINDINGS §F51` |
