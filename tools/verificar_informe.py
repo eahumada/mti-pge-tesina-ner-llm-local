@@ -461,6 +461,52 @@ def c_anexo_vs_tabla7(s):
           'las mismas cifras en el cuerpo y en el anexo deben coincidir')
 
 
+# --- 16. La Tabla 7 reproduce desde los datos ----------------------------------------------------
+CSV_CONSOLIDADO = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark/results/'
+                                     'ANALISIS_CONJUNTO_20260907/merged_results.csv')
+
+
+def c_tabla7_vs_datos(s):
+    """La tabla central del informe, contrastada contra el CSV del que sale.
+
+    Hasta el 2026-09-08 la Tabla 7 solo se comprobaba contra la Figura 2 y contra el Anexo I, es
+    decir, contra otras dos copias de si misma. Que tres sitios coincidan no dice nada si los tres
+    se escribieron a mano desde la misma lectura. Esta comprobacion es la unica que la ata al dato.
+    """
+    import csv as _csv
+    import collections as _c
+    if not os.path.exists(CSV_CONSOLIDADO):
+        check('la Tabla 7 reproduce desde el CSV consolidado', 0,
+              ['no existe %s' % os.path.relpath(CSV_CONSOLIDADO, RAIZ)])
+        return
+    i = s.find('_Tabla 7.')
+    if i < 0:
+        check('la Tabla 7 reproduce desde el CSV consolidado', 0, ['no se encuentra la Tabla 7'])
+        return
+    t7 = {}
+    for l in s[i:i + 3000].split('\n'):
+        m = re.match(r'^\|\s*([^|]+?)\s*\|\s*\*{0,2}([\d.]+)%\*{0,2}\s*\|\s*\*{0,2}([\d.]+)%\*{0,2}\s*\|', l)
+        if m and not m.group(1).startswith('Modelo'):
+            t7[m.group(1).strip()] = (float(m.group(2)), float(m.group(3)))
+    g = _c.defaultdict(list)
+    with open(CSV_CONSOLIDADO, encoding='utf-8') as fh:
+        for r in _csv.DictReader(fh):
+            # `is not None` y no la veracidad del valor: un F1 de 0.0 es un dato, no un hueco.
+            if r.get('f1') not in (None, ''):
+                g[r['model']].append(float(r['f1']))
+    dat = {k: 100 * sum(v) / len(v) for k, v in g.items()}
+    fallos = []
+    for mod, (b, r) in t7.items():
+        for suf, val in (('_baseline', b), ('_kb_rag', r)):
+            d = dat.get(mod + suf)
+            if d is None:
+                fallos.append('%s%s no esta en el CSV consolidado' % (mod, suf))
+            elif abs(d - val) > 0.011:
+                fallos.append('%s%s: la tabla dice %.2f y el dato da %.2f' % (mod, suf, val, d))
+    check('la Tabla 7 reproduce desde el CSV consolidado', 2 * len(t7), fallos,
+          'es la unica comprobacion que ata la tabla central al dato y no a otra copia suya')
+
+
 def main():
     s = texto()
     c_vacios()
@@ -477,6 +523,7 @@ def main():
     c_recuentos(s)
     c_protocolo(s)
     c_anexo_vs_tabla7(s)
+    c_tabla7_vs_datos(s)
     if '--red' in sys.argv:
         c_urls(s)
 
