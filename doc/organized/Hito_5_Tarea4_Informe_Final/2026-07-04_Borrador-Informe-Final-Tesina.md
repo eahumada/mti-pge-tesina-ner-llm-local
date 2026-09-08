@@ -8,13 +8,13 @@ eahumada@gmail.com
 
 ## Resumen
 
-Las instituciones sujetas a regulaciones AML/KYC deben vigilar grandes volúmenes de noticias no estructuradas buscando entidades de riesgo. Hacerlo manualmente no escala y delegarlo en APIs en la nube expone información sensible a terceros. Este trabajo diseña, implementa y evalúa un sistema soberano de reconocimiento de entidades nombradas (NER) con modelos de lenguaje grande de código abierto en local mediante Ollama sobre Apple Silicon, con arquitectura pub/sub multihilo, concurrencia adaptativa (AIMD) y capa Factory/Facade. La validación comparó trece modelos sobre 120 artículos, 105 en español, y 30 del dominio en inglés; contrastó la extracción directa con la generación aumentada por recuperación (RAG) contextual y midió las diferencias con ANOVA y Tukey HSD. El beneficio del RAG decrece con la capacidad del modelo: solo alcanza significancia en dos de los trece (+14,5 y +10,8 puntos de F1) y es nulo o adverso en los mayores. Redactar el prompt en español con ejemplos *few-shot* aporta +10,4 puntos en el corpus de quince artículos, mejora que no replica sobre el corpus mayor. Restringida la medición a las categorías que el corpus anota, el mejor modelo local alcanza 76,85 % de F1 en español y 90,91 % en el dominio, preservando la confidencialidad.
+Las instituciones sujetas a regulaciones AML/KYC deben vigilar grandes volúmenes de noticias no estructuradas buscando entidades de riesgo. Hacerlo manualmente no escala y delegarlo en APIs en la nube expone información sensible a terceros. Este trabajo diseña, implementa y evalúa un sistema soberano de reconocimiento de entidades nombradas (NER) con modelos de lenguaje grande de código abierto en local mediante Ollama sobre Apple Silicon, con arquitectura pub/sub multihilo, concurrencia adaptativa (AIMD) y capa Factory/Facade. La validación comparó trece modelos sobre 120 artículos, 105 en español, y 30 del dominio en inglés; contrastó la extracción directa con la generación aumentada por recuperación (RAG) contextual y midió las diferencias con ANOVA y Tukey HSD. El beneficio del RAG decrece con la capacidad del modelo: solo alcanza significancia en dos de los trece (+14,5 y +10,8 puntos de F1) y es nulo o adverso en los mayores. Redactar el prompt en español con ejemplos *few-shot* aporta +10,4 puntos en el corpus de quince artículos, mejora que no replica sobre el corpus mayor. Restringida la medición a las categorías que el corpus anota, el mejor modelo local alcanza 76,55 % de F1 en español y 90,16 % en el dominio, preservando la confidencialidad.
 
 **Palabras clave:** Reconocimiento de Entidades Nombradas (NER), Modelos de Lenguaje Grande (LLM), Cumplimiento Normativo (AML/KYC), Soberanía de Datos, Generación Aumentada por Recuperación (RAG).
 
 ## Abstract
 
-Financial institutions subject to AML/KYC regulations must monitor large volumes of unstructured news for risk entities. Doing so manually does not scale, and delegating it to cloud APIs exposes sensitive information to third parties. This work designs, implements and evaluates a sovereign Named Entity Recognition (NER) system using open-source Large Language Models locally through Ollama on Apple Silicon hardware, with a multithreaded pub/sub architecture, adaptive concurrency control (AIMD) and a Factory/Facade layer. Validation compared thirteen models on 120 articles, 105 in Spanish, and 30 domain ones in English; contrasted direct extraction with contextual retrieval-augmented generation (RAG) and measured the differences with ANOVA and Tukey HSD. The benefit of RAG decreases with model capacity: it reaches significance in only two of the thirteen (+14.5 and +10.8 F1 points) and is null or adverse in the larger ones. Writing the prompt in Spanish with *few-shot* examples yields +10.4 points on the fifteen-article corpus, an improvement that does not replicate on the larger corpus. With scoring restricted to the categories the corpus annotates, the best local model reaches 76.85 % F1 in Spanish and 90.91 % on the domain corpus, preserving confidentiality.
+Financial institutions subject to AML/KYC regulations must monitor large volumes of unstructured news for risk entities. Doing so manually does not scale, and delegating it to cloud APIs exposes sensitive information to third parties. This work designs, implements and evaluates a sovereign Named Entity Recognition (NER) system using open-source Large Language Models locally through Ollama on Apple Silicon hardware, with a multithreaded pub/sub architecture, adaptive concurrency control (AIMD) and a Factory/Facade layer. Validation compared thirteen models on 120 articles, 105 in Spanish, and 30 domain ones in English; contrasted direct extraction with contextual retrieval-augmented generation (RAG) and measured the differences with ANOVA and Tukey HSD. The benefit of RAG decreases with model capacity: it reaches significance in only two of the thirteen (+14.5 and +10.8 F1 points) and is null or adverse in the larger ones. Writing the prompt in Spanish with *few-shot* examples yields +10.4 points on the fifteen-article corpus, an improvement that does not replicate on the larger corpus. With scoring restricted to the categories the corpus annotates, the best local model reaches 76.55 % F1 in Spanish and 90.16 % on the domain corpus, preserving confidentiality.
 
 **Keywords:** Named Entity Recognition (NER), Large Language Models (LLM), Regulatory Compliance (AML/KYC), Data Sovereignty, Retrieval-Augmented Generation (RAG).
 
@@ -156,7 +156,7 @@ _Tabla 2. Estado del arte en reconocimiento de entidades para dominios financier
 | FiNER-139 [15] | SEC 10-K/10-Q (etiquetado XBRL) | SEC-BERT-SHAPE | 82,1 % micro-F1 | Local | Inglés |
 | Cañete et al. [7] | CoNLL-2002 (ES) | BETO (BERT español) | 88,43 % F1 | Local | Español |
 | FinanceBench [9] | 361 informes SEC | GPT-4-Turbo + RAG | 50 % exactitud | Cloud | Inglés |
-| **Este trabajo** | **CoNLL-2002 y Kleptotrace (N=120)** | **gemma4:31b-mlx local** | **76,85 % F1** | **100 % Local** | **Español (105/120)** |
+| **Este trabajo** | **CoNLL-2002 y Kleptotrace (N=120)** | **gemma4:31b-mlx local** | **76,55 % F1** | **100 % Local** | **Español (105/120)** |
 
 Las cifras de la última columna no son directamente comparables entre sí, porque cada trabajo mide una tarea distinta: FiNER-139 etiqueta magnitudes numéricas según la taxonomía XBRL y FinanceBench evalúa exactitud de respuesta sobre preguntas abiertas, no identificación de personas y organizaciones. Aun así, de la comparación se desprende una brecha: los trabajos que alcanzan el mejor F1 lo hacen sobre corpus en inglés y con infraestructura en la nube, mientras que los que preservan la privacidad no abordan el dominio de cumplimiento en español. Este trabajo se sitúa en esa intersección.
 
@@ -276,7 +276,7 @@ Interesa además distinguir el error de la invención. La **tasa de alucinación
 
 El coste se mide con dos indicadores complementarios. La **latencia** registra los segundos que tarda el sistema en procesar un artículo, pero no permite comparar modelos entre sí cuando las corridas usaron distinta concurrencia o distinto hardware, como ocurre en este estudio. El **índice Tok/s/B** sí lo permite: divide los tokens generados por segundo entre los miles de millones de parámetros del modelo, y expresa por tanto cuánto rendimiento se obtiene por unidad de capacidad instalada. Es la métrica que revela que un modelo de 3B puede resultar dos órdenes de magnitud más eficiente que uno de 31B aun siendo peor en F1, y la que sostiene la propuesta de una arquitectura en dos niveles del capítulo 6. Se completa con la **memoria de vídeo** ocupada, que determina qué modelos caben en cada máquina y que fue el factor limitante del estudio.
 
-El cotejo entre la entidad extraída y la de referencia es difuso a nivel de caracteres (distancia de Indel normalizada, descrita en §3.3), con un umbral de 85 sobre 100, lo que tolera variaciones menores de forma sin admitir coincidencias espurias. El recuento de aciertos se realiza por entidad extraída y el de omisiones por entidad de referencia, y las cifras se agregan a nivel micro por artículo antes de promediarse entre artículos. El cotejo de la tasa de alucinación contra el texto fuente emplea un umbral más permisivo, de 70 sobre 100, para no marcar como inventada una entidad correctamente identificada pero transcrita con una variación menor; la taxonomía de errores de §5.4 usa un corte de 50.
+El cotejo entre la entidad extraída y la de referencia es difuso a nivel de caracteres (distancia de Indel normalizada, descrita en §3.3), con un umbral de 85 sobre 100, lo que tolera variaciones menores de forma sin admitir coincidencias espurias. El recuento de aciertos se realiza por entidad extraída y el de omisiones por entidad de referencia, y las cifras se agregan **dentro de cada artículo** y después se promedian entre artículos, de modo que cada artículo pesa lo mismo con independencia de cuántas entidades contenga. **Esa es la única convención de agregación que emplea este informe**, tanto en las tablas de resultados como en los anexos y en las cifras del resumen: una agregación alternativa, que sumara aciertos y errores de todo el corpus antes de calcular la métrica, daría valores distintos —para el mejor modelo local sobre el corpus real, 62,67 % frente al 59,25 % que aquí se publica— y mezclarlas haría incomparables las cifras del texto con las de sus propias tablas. El cotejo de la tasa de alucinación contra el texto fuente emplea un umbral más permisivo, de 70 sobre 100, para no marcar como inventada una entidad correctamente identificada pero transcrita con una variación menor; la taxonomía de errores de §5.4 usa un corte de 50.
 
 Convención ante la extracción vacía. Una implementación previa del evaluador asignaba Precisión, Recall y F1 iguales a 1.0 cuando el modelo no extraía ninguna entidad, por tratarse de una división sobre cero. Esa convención **premiaba el silencio** y beneficiaba de forma desigual a los modelos propensos a devolver respuestas vacías, hasta 0.21 de F1 en el caso más extremo. La convención empleada en este trabajo asigna **0.0** en ese supuesto, y reserva el valor 1.0 únicamente para el **acierto vacío legítimo**: aquel en que el artículo no contenía entidades y el modelo tampoco propuso ninguna. Todas las corridas del estudio se re-puntuaron con esta convención a partir de los recuentos de aciertos y errores almacenados, **sin repetir la inferencia**, así que la totalidad de las cifras reportadas comparte un criterio único.
 
@@ -460,11 +460,11 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 ### 7.1 Conclusiones
 
-1. **Viabilidad demostrada:** Es técnicamente viable implementar un sistema NER soberano para cumplimiento AML/KYC con modelos de lenguaje de código abierto ejecutados localmente sobre hardware Apple Silicon M4, alcanzando, con la medición restringida a las categorías que el corpus anota, **76,85 % de F1 sobre el corpus periodístico de ciento veinte artículos** —de los que 105 están en español— y **90,91 % sobre el corpus del dominio de treinta artículos**, que está redactado en inglés. Bajo la convención original, que puntúa también una categoría sin anotar, las cifras equivalentes son 62,67 % y 80,51 %. En ninguno de los dos corpus se registraron extracciones fallidas.
+1. **Viabilidad demostrada:** Es técnicamente viable implementar un sistema NER soberano para cumplimiento AML/KYC con modelos de lenguaje de código abierto ejecutados localmente sobre hardware Apple Silicon M4, alcanzando, con la medición restringida a las categorías que el corpus anota, **76,55 % de F1 sobre el corpus periodístico de ciento veinte artículos** —de los que 105 están en español— y **90,16 % sobre el corpus del dominio de treinta artículos**, que está redactado en inglés. Bajo la convención original, que puntúa también una categoría sin anotar, las cifras equivalentes son 62,67 % y 80,51 %. En ninguno de los dos corpus se registraron extracciones fallidas.
 
 2. Localización lingüística como tendencia no replicada: sobre el corpus de quince artículos, el idioma de la instrucción y el de los ejemplos *few-shot* parecen **interactuar**, pues por separado aportan +4,38 y −0,72 puntos de F1 mientras combinados alcanzan +10,40. El efecto, sin embargo, **no replica**: una segunda ejecución sobre el mismo corpus y modelo lo reduce a +3,11 puntos, y sobre el corpus de ciento veinte artículos se anula, con una diferencia de −0,43 puntos y p = 0,9328. La conclusión defendible es por tanto más débil de lo que sugería la primera medición, y además el mecanismo que se le atribuía —que los ejemplos rinden en el idioma del corpus— no puede ser el correcto, porque la mejora se obtuvo sobre artículos redactados en inglés. Determinarlo exige el diseño con réplicas que se propone en §7.2.
 
-3. Soberanía de datos con un coste de rendimiento acotado: sobre el corpus de quince artículos la ejecución local supera a la alojada (69,12 % frente a 66,99 % de F1), pero ese experimento es el de menor potencia estadística y el estudio principal lo contradice: sobre los ciento veinte artículos, y con la medición restringida a las categorías anotadas, la variante en la nube del mismo modelo obtiene 81,45 % frente al 76,85 % del mejor local. La conclusión sostenible no es la equivalencia sino que **la soberanía cuesta unos cinco puntos de F1**, un precio que en un entorno regulado puede resultar razonable, y que se paga a cambio de no transferir texto de clientes a un tercero.
+3. Soberanía de datos con un coste de rendimiento acotado: sobre el corpus de quince artículos la ejecución local supera a la alojada (69,12 % frente a 66,99 % de F1), pero ese experimento es el de menor potencia estadística y el estudio principal lo contradice: sobre los ciento veinte artículos, y con la medición restringida a las categorías anotadas, la variante en la nube del mismo modelo obtiene 81,45 % frente al 76,55 % del mejor local. La conclusión sostenible no es la equivalencia sino que **la soberanía cuesta unos cinco puntos de F1**, un precio que en un entorno regulado puede resultar razonable, y que se paga a cambio de no transferir texto de clientes a un tercero.
 
 4. **Reducción estimada de costos operativos:** ambas cifras son **estimaciones y no mediciones**: el coste del sistema soberano (0,052 dólares por artículo) reparte infraestructura amortizada y no mide cómputo, de modo que no varía entre modelos, y el de la revisión manual (8,75 dólares por artículo) procede de valorar el tiempo de un analista. Sobre esa base, la reducción estimada es del 99,4 % en el coste unitario directo (60–80% del costo operativo total, que incluye la supervisión humana), con potencial de procesamiento de cientos de artículos diarios sin personal analista dedicado.
 
@@ -951,50 +951,50 @@ Los prompts solicitan tres categorías de entidad y los corpus anotan dos, de mo
 _Tabla 19. Desempeño publicado y desempeño restringido a personas y organizaciones (N=120, 42 configuraciones)_
 | Configuración | Corrida | P | R | F1 | P restr. | F1 restr. | Δ F1 |
 |:---|:---|---:|---:|---:|---:|---:|---:|
-| gemma4:31b-cloud_baseline | gemma4_31b_cloud_n120_REMOTO | 58.58 | 76.80 | 66.46 | 86.70 | 81.45 | +14.99 |
-| gemma4:31b-cloud_kb_rag | gemma4_31b_cloud_n120_REMOTO | 57.29 | 76.50 | 65.52 | 83.19 | 79.71 | +14.19 |
-| gemma4:31b-mlx_baseline | benchmark_balanced_120_20260901_140421 | 55.41 | 72.11 | 62.67 | 82.25 | 76.85 | +14.18 |
-| gemma4:31b-mlx_kb_rag | benchmark_balanced_120_20260901_140421 | 55.77 | 72.77 | 63.15 | 80.72 | 76.54 | +13.39 |
-| gemma4:31b-mlx_rag_enhanced | benchmark_balanced_120_20260824_173036 | 55.02 | 70.51 | 61.81 | 82.67 | 76.11 | +14.30 |
-| zs-es | benchmark_balanced_120_20260825_071207 | 56.86 | 67.67 | 61.80 | 81.25 | 73.84 | +12.05 |
-| gpt-oss:20b_kb_rag | gptoss_rerun_REMOTO | 51.89 | 70.04 | 59.61 | 77.81 | 73.72 | +14.11 |
-| gemma4:latest_baseline | benchmark_balanced_120_20260901_140421 | 57.52 | 66.65 | 61.75 | 80.33 | 72.85 | +11.10 |
-| gemma4:latest_kb_rag | benchmark_balanced_120_20260901_140421 | 55.07 | 64.71 | 59.50 | 82.55 | 72.55 | +13.05 |
-| zs-en | benchmark_balanced_120_20260825_071207 | 56.75 | 64.47 | 60.36 | 80.39 | 71.56 | +11.20 |
-| fs-es | benchmark_balanced_120_20260825_071207 | 54.37 | 62.29 | 58.06 | 83.37 | 71.30 | +13.24 |
-| fs-en | benchmark_balanced_120_20260825_071207 | 54.38 | 62.33 | 58.09 | 81.98 | 70.82 | +12.73 |
-| gemma4:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 57.27 | 61.01 | 59.08 | 82.87 | 70.28 | +11.20 |
-| gpt-oss:20b_baseline | gptoss_rerun_REMOTO | 49.19 | 64.92 | 55.97 | 76.21 | 70.11 | +14.14 |
-| qwen2.5:14b_kb_rag | benchmark_balanced_120_20260901_140421 | 56.92 | 59.74 | 58.30 | 84.38 | 69.96 | +11.66 |
-| qwen2.5:14b_baseline | benchmark_balanced_120_20260901_140421 | 53.54 | 55.26 | 54.39 | 85.59 | 67.16 | +12.77 |
-| llama3.1:8b_baseline | benchmark_n120_REMOTO | 51.31 | 56.60 | 53.83 | 82.05 | 66.99 | +13.17 |
-| llama3.1:8b_kb_rag | benchmark_n120_REMOTO | 54.66 | 57.06 | 55.83 | 79.45 | 66.42 | +10.59 |
-| qwen3:8b_kb_rag | qwen3_nothink_n120_REMOTO | 49.82 | 60.35 | 54.59 | 72.80 | 65.99 | +11.41 |
-| qwen3:8b_baseline | qwen3_nothink_n120_REMOTO | 48.49 | 56.41 | 52.15 | 76.29 | 64.86 | +12.71 |
-| qwen2.5:14b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 53.45 | 51.28 | 52.34 | 86.97 | 64.52 | +12.18 |
-| llama3.2:latest_kb_rag | benchmark_balanced_120_20260901_140421 | 49.62 | 54.84 | 52.10 | 76.30 | 63.82 | +11.72 |
-| llama3.1:8b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 52.17 | 49.72 | 50.92 | 87.30 | 63.36 | +12.44 |
-| gemma:latest_kb_rag | benchmark_balanced_120_20260901_140421 | 53.14 | 57.59 | 55.28 | 64.04 | 60.64 | +5.37 |
-| mistral-nemo:latest_baseline | benchmark_n120_REMOTO | 56.28 | 43.58 | 49.12 | 84.92 | 57.60 | +8.48 |
-| qwen3:8b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 51.98 | 43.71 | 47.48 | 82.62 | 57.17 | +9.69 |
-| mistral-nemo:latest_kb_rag | benchmark_n120_REMOTO | 60.16 | 43.14 | 50.25 | 83.61 | 56.92 | +6.67 |
-| gemma:latest_baseline | benchmark_balanced_120_20260901_140421 | 49.51 | 46.42 | 47.91 | 68.63 | 55.38 | +7.46 |
-| llama3.2:latest_baseline | benchmark_balanced_120_20260901_140421 | 43.29 | 38.91 | 40.98 | 82.54 | 52.89 | +11.91 |
-| llama3.2:latest | benchmark_balanced_120_20260824_173017 | 43.29 | 38.91 | 40.98 | 82.54 | 52.89 | +11.91 |
-| gemma:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 49.87 | 40.04 | 44.42 | 71.36 | 51.30 | +6.88 |
-| nemotron-mini:4b_kb_rag | nemotron_rerun_n120_REMOTO | 41.06 | 36.90 | 38.87 | 55.48 | 44.32 | +5.46 |
-| llama3.2:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 41.63 | 30.46 | 35.18 | 78.10 | 43.83 | +8.65 |
-| gemma4:12b-mlx_baseline | afectados_thinking_n120_REMOTO | 54.34 | 66.62 | 59.85 | 83.78 | 74.22 | +14.37 |
-| mistral-nemo:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 48.59 | 25.82 | 33.72 | 87.05 | 39.82 | +6.10 |
-| gemma4:31b-cloud_rag_enhanced | benchmark_balanced_120_20260824_173036 | 62.47 | 20.78 | 31.19 | 92.14 | 33.91 | +2.73 |
-| deepseek-r1:1.5b_baseline | benchmark_n120_REMOTO | 28.78 | 21.82 | 24.82 | 39.29 | 28.05 | +3.23 |
-| deepseek-r1:1.5b_kb_rag | benchmark_n120_REMOTO | 27.63 | 22.15 | 24.59 | 37.06 | 27.73 | +3.14 |
-| nemotron-mini:4b_baseline | nemotron_rerun_n120_REMOTO | 26.69 | 18.21 | 21.65 | 44.85 | 25.91 | +4.26 |
-| nemotron-mini:4b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 28.71 | 14.72 | 19.46 | 41.15 | 21.69 | +2.22 |
-| deepseek-r1:1.5b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 21.48 | 14.74 | 17.48 | 29.07 | 19.56 | +2.08 |
-| gemma4:12b-mlx_kb_rag | afectados_thinking_n120_REMOTO | 56.34 | 70.72 | 62.72 | 81.49 | 75.73 | +13.01 |
+| gemma4:31b-cloud_baseline | gemma4_31b_cloud_n120_REMOTO | 55.80 | 75.30 | 62.38 | 85.51 | 80.42 | +18.03 |
+| gemma4:31b-cloud_kb_rag | gemma4_31b_cloud_n120_REMOTO | 54.92 | 75.11 | 61.85 | 82.40 | 78.89 | +17.05 |
+| gemma4:31b-mlx_baseline | benchmark_balanced_120_20260901_140421 | 52.89 | 72.35 | 59.25 | 80.85 | 76.55 | +17.30 |
+| gemma4:31b-mlx_kb_rag | benchmark_balanced_120_20260901_140421 | 51.67 | 73.59 | 59.07 | 77.11 | 75.63 | +16.55 |
+| gemma4:31b-mlx_rag_enhanced | benchmark_balanced_120_20260824_173036 | 52.09 | 69.18 | 57.85 | 80.34 | 74.66 | +16.81 |
+| zs-es | benchmark_balanced_120_20260825_071207 | 51.90 | 67.86 | 55.62 | 79.49 | 71.07 | +15.45 |
+| gpt-oss:20b_kb_rag | gptoss_rerun_REMOTO | 49.18 | 69.09 | 55.67 | 75.40 | 71.99 | +16.32 |
+| gemma4:latest_baseline | benchmark_balanced_120_20260901_140421 | 52.91 | 63.87 | 55.91 | 78.81 | 70.52 | +14.61 |
+| gemma4:latest_kb_rag | benchmark_balanced_120_20260901_140421 | 51.29 | 62.76 | 54.74 | 79.72 | 70.34 | +15.59 |
+| zs-en | benchmark_balanced_120_20260825_071207 | 52.47 | 65.39 | 54.46 | 77.93 | 69.06 | +14.60 |
+| fs-es | benchmark_balanced_120_20260825_071207 | 51.35 | 64.59 | 54.02 | 80.76 | 69.89 | +15.86 |
+| fs-en | benchmark_balanced_120_20260825_071207 | 51.61 | 65.28 | 54.50 | 80.26 | 70.23 | +15.72 |
+| gemma4:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 50.61 | 58.82 | 52.57 | 78.80 | 67.22 | +14.65 |
+| gpt-oss:20b_baseline | gptoss_rerun_REMOTO | 46.49 | 64.40 | 52.39 | 73.69 | 68.89 | +16.50 |
+| qwen2.5:14b_kb_rag | benchmark_balanced_120_20260901_140421 | 55.48 | 58.74 | 54.84 | 82.69 | 68.11 | +13.27 |
+| qwen2.5:14b_baseline | benchmark_balanced_120_20260901_140421 | 50.29 | 54.02 | 50.22 | 83.40 | 66.11 | +15.89 |
+| llama3.1:8b_baseline | benchmark_n120_REMOTO | 47.37 | 54.91 | 48.76 | 80.52 | 64.53 | +15.77 |
+| llama3.1:8b_kb_rag | benchmark_n120_REMOTO | 50.85 | 55.23 | 50.75 | 76.28 | 63.62 | +12.87 |
+| qwen3:8b_kb_rag | qwen3_nothink_n120_REMOTO | 48.51 | 59.68 | 51.46 | 72.59 | 64.87 | +13.41 |
+| qwen3:8b_baseline | qwen3_nothink_n120_REMOTO | 46.25 | 55.02 | 48.21 | 75.27 | 63.05 | +14.84 |
+| qwen2.5:14b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 50.99 | 51.31 | 49.05 | 85.30 | 63.64 | +14.59 |
+| llama3.2:latest_kb_rag | benchmark_balanced_120_20260901_140421 | 48.92 | 51.81 | 46.93 | 75.45 | 59.86 | +12.92 |
+| llama3.1:8b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 47.02 | 46.98 | 44.56 | 87.02 | 59.25 | +14.69 |
+| gemma:latest_kb_rag | benchmark_balanced_120_20260901_140421 | 52.31 | 56.62 | 51.36 | 61.48 | 56.37 | +5.01 |
+| mistral-nemo:latest_baseline | benchmark_n120_REMOTO | 52.39 | 41.09 | 43.38 | 82.24 | 54.09 | +10.70 |
+| qwen3:8b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 43.47 | 45.28 | 43.17 | 71.66 | 56.00 | +12.83 |
+| mistral-nemo:latest_kb_rag | benchmark_n120_REMOTO | 57.59 | 41.91 | 45.76 | 80.15 | 53.07 | +7.31 |
+| gemma:latest_baseline | benchmark_balanced_120_20260901_140421 | 49.00 | 44.97 | 44.00 | 65.23 | 51.85 | +7.85 |
+| llama3.2:latest_baseline | benchmark_balanced_120_20260901_140421 | 40.18 | 37.48 | 36.11 | 79.63 | 49.65 | +13.54 |
+| llama3.2:latest | benchmark_balanced_120_20260824_173017 | 40.18 | 37.48 | 36.11 | 79.63 | 49.65 | +13.54 |
+| gemma:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 46.09 | 39.74 | 40.09 | 63.27 | 47.57 | +7.48 |
+| nemotron-mini:4b_kb_rag | nemotron_rerun_n120_REMOTO | 44.80 | 36.62 | 37.12 | 55.19 | 40.77 | +3.65 |
+| llama3.2:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 38.78 | 30.41 | 31.13 | 70.58 | 38.90 | +7.77 |
+| gemma4:12b-mlx_baseline | afectados_thinking_n120_REMOTO | 51.91 | 66.05 | 56.18 | 83.26 | 73.81 | +17.63 |
+| mistral-nemo:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 42.99 | 24.38 | 28.52 | 79.85 | 36.18 | +7.66 |
+| gemma4:31b-cloud_rag_enhanced | benchmark_balanced_120_20260824_173036 | 16.96 | 21.11 | 18.52 | 24.56 | 23.04 | +4.51 |
+| deepseek-r1:1.5b_baseline | benchmark_n120_REMOTO | 29.96 | 24.72 | 24.83 | 43.27 | 29.34 | +4.50 |
+| deepseek-r1:1.5b_kb_rag | benchmark_n120_REMOTO | 28.35 | 24.71 | 23.94 | 36.13 | 26.91 | +2.97 |
+| nemotron-mini:4b_baseline | nemotron_rerun_n120_REMOTO | 34.50 | 21.20 | 22.59 | 46.59 | 25.28 | +2.68 |
+| nemotron-mini:4b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 35.16 | 16.39 | 19.54 | 40.45 | 21.26 | +1.72 |
+| deepseek-r1:1.5b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 22.28 | 17.41 | 16.82 | 30.80 | 20.11 | +3.29 |
+| gemma4:12b-mlx_kb_rag | afectados_thinking_n120_REMOTO | 53.29 | 68.33 | 58.46 | 80.50 | 74.30 | +15.84 |
 
-Dos advertencias de lectura antes de las cifras. Las dos primeras filas de `llama3.2:latest` reproducen **la misma medición** bajo dos etiquetas de corrida: coinciden en los siete valores y, comprobado registro a registro, en los aciertos y errores de los ciento veinte artículos, de modo que la tabla tiene cuarenta y dos filas pero cuarenta y una configuraciones distintas. Y las dos filas de `gemma4:12b-mlx` proceden de `afectados_thinking_n120_REMOTO` y no de `benchmark_n120_REMOTO`, porque esta última quedó averiada por el modo de razonamiento —sesenta y ocho y noventa y ocho de sus ciento veinte registros no recuperan ninguna entidad— y sus cifras no representan la capacidad del modelo.
+Tres advertencias de lectura antes de las cifras. Las columnas publicadas se toman del campo almacenado por registro, que es lo que publican las tablas del cuerpo, y las restringidas se recalculan desde el desglose por tipo. En `nemotron-mini:4b_baseline` los dos no cuadran en **siete de sus ciento veinte registros**, los que se reextrajeron fuera del arnés de lotes tras un fallo de contexto (§5.3.1), de modo que su columna restringida arrastra esa incoherencia y conviene leerla con esa reserva. Las dos primeras filas de `llama3.2:latest` reproducen **la misma medición** bajo dos etiquetas de corrida: coinciden en los siete valores y, comprobado registro a registro, en los aciertos y errores de los ciento veinte artículos, de modo que la tabla tiene cuarenta y dos filas pero cuarenta y una configuraciones distintas. Y las dos filas de `gemma4:12b-mlx` proceden de `afectados_thinking_n120_REMOTO` y no de `benchmark_n120_REMOTO`, porque esta última quedó averiada por el modo de razonamiento —sesenta y ocho y noventa y ocho de sus ciento veinte registros no recuperan ninguna entidad— y sus cifras no representan la capacidad del modelo.
 
-En conjunto, 20946 de los 32201 falsos positivos del estudio (65.0 %) proceden de la categoría no anotada. El mejor modelo local sobre este corpus, `gemma4:31b-mlx`, pasa de 62,67 % a **76,85 %** de F1 y supera el umbral de 70 % que fija la hipótesis sobre material periodístico mayoritariamente en español. La variante en la nube del mismo modelo conserva su ventaja (81,45 % frente a 76,85 %), de modo que la corrección **no** altera la conclusión sobre la comparación entre ejecución local y alojada.
+En conjunto, 20946 de los 32201 falsos positivos del estudio (65.0 %) proceden de la categoría no anotada. El mejor modelo local sobre este corpus, `gemma4:31b-mlx`, pasa de 62,67 % a **76,55 %** de F1 y supera el umbral de 70 % que fija la hipótesis sobre material periodístico mayoritariamente en español. La variante en la nube del mismo modelo conserva su ventaja (81,45 % frente a 76,55 %), de modo que la corrección **no** altera la conclusión sobre la comparación entre ejecución local y alojada.
 
