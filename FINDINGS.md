@@ -1194,3 +1194,71 @@ La opción 1 es la recomendable: reaprovecha todo el cómputo ya hecho y corrige
 > **Regla operativa.** Lo que el prompt pide y lo que el corpus anota tienen que coincidir. Toda categoría
 > que se puntúe debe existir en la anotación de referencia; si no existe, o se anota o se excluye del cálculo,
 > pero nunca se deja puntuando contra el vacío.
+
+---
+
+## §F54 — Los dos corpus del dominio están en inglés, no en español
+
+**Fecha:** 2026-09-08. **Origen:** tres auditores de la segunda pasada. **Verificado por medición propia.**
+
+El resumen, el abstract, la hipótesis y el objetivo específico 2 declaraban validación sobre noticias «en
+español». La medición sobre los ficheros versionados dice otra cosa:
+
+| Corpus | Registros | Español | Inglés |
+|:---|---:|---:|---:|
+| `kleptotrace.json` (N=15, Gold Standard) | 15 | **0** | 15 |
+| `kleptotrace_augmented_30.json` (N=30, validación estadística) | 30 | **0** | 30 |
+| `benchmark_balanced_120.json` (N=120, estudio principal) | 120 | 105 | 15 |
+
+El primer artículo del N=15 empieza «The Justice Department announced today…» y el del N=30 «The US
+Department of the Treasury's OFAC announced sanctions against Alexey Shevchenko…». El único corpus con
+material en español es el N=120, y lo es porque 105 de sus 120 artículos provienen de CoNLL-2002.
+
+**Por qué era grave.** El umbral de la hipótesis, F1 ≥ 70 % en español, se acreditaba precisamente sobre los
+dos corpus ingleses: el 80,57 % del N=30 y el 79 % del N=15. Sobre el corpus español el mejor local daba
+59,25 %, muy por debajo. Es decir: **la hipótesis estaba respaldada por el material que no le correspondía.**
+
+**Cómo se resuelve.** Corregido junto con §F53, porque los dos hallazgos se compensan. Con la medición
+restringida a las categorías que el corpus anota, el mejor local sobre el N=120 alcanza **76,85 %** y supera
+el umbral sobre material realmente en español. La hipótesis queda acreditada, pero por otra vía.
+
+**Un residuo que sigue abierto.** El Anexo F transcribe un prompt generador redactado en español cuya salida
+versionada está en inglés. O el prompt transcrito no es el que se ejecutó, o el corpus versionado no es el
+que ese prompt generó. Requiere criterio del autor: no se puede decidir desde los artefactos.
+
+**Y una explicación causal que estaba invertida.** §6.1 atribuía la mejora del prompt en español a que
+«comparte idioma con el corpus». No puede ser: el prompt en español ganó **sobre texto inglés**. El hallazgo
+empírico sobrevive e incluso resulta más interesante, porque sugiere que el efecto no es de concordancia de
+idioma sino de calidad de la instrucción; pero el mecanismo declarado era falso.
+
+---
+
+## §F55 — El efecto del prompt en español no replica: hay tres corridas y el informe citaba una
+
+**Fecha:** 2026-09-08. **Origen:** un solo auditor de la segunda pasada; el orquestador lo verificó y lo
+ascendió a bloqueante precisamente por venir de una sola fuente y contradecir un titular del resumen.
+
+El informe presentaba +10,40 puntos de F1 por redactar el prompt en español con ejemplos *few-shot*. Existen
+**tres corridas del mismo experimento** y solo se citaba la más favorable:
+
+| Corrida | Corpus | zs-en | fs-es | Diferencia |
+|:---|:---|---:|---:|---:|
+| `ablacion_n15_REMOTO` (la citada) | N=15 | 67,52 % | 77,92 % | **+10,40 pp** |
+| `kleptotrace_20260727_110454` | N=15 | 66,76 % | 69,87 % | +3,11 pp |
+| `benchmark_balanced_120_20260825_071207` | N=120 | 54,46 % | 54,02 % | **−0,43 pp** |
+
+La tercera, sobre el corpus ocho veces mayor, da **ANOVA F=0,1451 con p=0,9328** y t pareada p=0,7019: el
+efecto es **nulo**. Y las dos primeras usan el mismo modelo, el mismo corpus, semilla 42 y temperatura 0,1,
+de modo que la diferencia entre +10,40 y +3,11 no se explica por la configuración.
+
+**Matiz de historia del proyecto que conviene no confundir.** Una auditoría anterior cuestionó la ablación y
+fue refutada; aquella refutación acreditó que las cifras publicadas verifican contra `ablacion_n15_REMOTO`, y
+eso **sigue siendo cierto**. Lo que nunca se declaró es que hubiera una selección entre tres corridas.
+
+**Resolución (decisión del autor).** Declarar las tres, conservando las cifras de N=15 como manda la política
+aditiva, y reformular la conclusión 2 como **tendencia no replicada**. Ya aplicado en el resumen y el
+abstract, que ahora atribuyen el +10,4 al corpus de quince artículos y declaran que no replica sobre el mayor.
+
+> **Regla operativa.** Cuando existan varias corridas del mismo experimento, el informe declara **todas** y
+> explica cuál se toma como referencia y por qué. Citar la más favorable sin mencionar las demás es
+> indistinguible de seleccionar el resultado, aunque no haya intención de hacerlo.
