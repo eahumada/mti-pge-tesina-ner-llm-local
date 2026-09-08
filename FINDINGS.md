@@ -1130,3 +1130,67 @@ concluir después.**
 
 > **Regla operativa que se añade.** Ninguna cifra entra en una tabla comparativa sin que su fuente esté
 > abierta y leída, y ninguna columna agrupa métricas de tareas distintas bajo un mismo encabezado.
+
+---
+
+## §F53 — CRÍTICO: `Locations` genera el 66 % de los falsos positivos del estudio y su gold está vacío
+
+**Fecha:** 2026-09-08. **Origen:** segunda pasada de revisión global; tres auditores independientes lo
+señalaron por separado. **Verificado por medición propia sobre los 87 grupos modelo-corrida.**
+
+**El defecto.** Los cuatro prompts del sistema ordenan al modelo extraer **tres** categorías —`Persons`,
+`Organizations` y `Locations`—, el evaluador puntúa las tres (`evaluator.py:45` y `:211`), pero **ninguno de
+los corpus anota localizaciones**. En `data_loader.py:120`, `adapt_kleptotrace_record` fija
+`"Locations": []`, y la comprobación directa sobre `benchmark_balanced_120.json` confirma que **los 120
+registros llevan solo `name_entities` y `organizations`**: cero localizaciones en el gold, también en la
+parte de CoNLL-2002.
+
+La consecuencia es mecánica: **toda localización que el modelo extrae es un falso positivo**, y no existe
+ninguna forma de acertar en esa categoría. No es un sesgo de medición, es una penalización estructural.
+
+**Magnitud.** Sobre el conjunto del estudio, **31 709 de los 47 957 falsos positivos —el 66,1 %— proceden de
+`Locations`**. Ejemplo de un solo registro de `qwen3_nothink_n120_REMOTO`: `Persons` F1 0,800 y
+`Organizations` F1 0,400, pero `Locations` aporta `tp=0, fp=10, fn=0`, y el F1 global cae a 0,500 cuando sin
+esa categoría sería 0,667.
+
+**Efecto sobre las cifras publicadas.** Recalculando los 87 grupos sin la categoría, el F1 sube en todos los
+casos, pero **de forma muy desigual**, entre +0,5 y +15 puntos:
+
+| Corrida y grupo | F1 publicado | F1 sin `Locations` | Delta |
+|:---|---:|---:|---:|
+| `gemma4:31b-cloud` (N=120) | 66,46 % | 81,45 % | +14,99 pp |
+| `gemma4:31b-mlx` baseline (N=120) | 63,32 % | 77,77 % | +14,45 pp |
+| `gemma4:31b` (N=15) | 71,14 % | 85,84 % | +14,71 pp |
+| `gemma4:31b-mlx` (N=30) | 80,51 % | 90,91 % | +10,40 pp |
+| `deepseek-r1:1.5b` baseline (N=120) | 24,82 % | 28,05 % | +3,23 pp |
+| `nemotron-mini:4b` baseline (N=120) | 21,65 % | 25,91 % | +4,26 pp |
+| `minimax-m3:cloud` baseline (N=120) | 14,65 % | 15,51 % | +0,86 pp |
+
+**Por qué importa más de lo que parece.** La corrección no es un desplazamiento uniforme que dejaría intactas
+las comparaciones: los modelos capaces ganan unos 14 puntos y los débiles unos 3, de modo que **el orden
+cambia**. En la corrida `benchmark_balanced_120_20260824_173036`, `gemma:latest` (47,91 %) figura por encima
+de `nuextract:latest` (47,50 %); sin `Locations` el orden se invierte, 57,41 % frente a 55,38 %. Todo lo que
+descansa sobre esas comparaciones —el ANOVA, el Tukey HSD, los rankings y las conclusiones— queda afectado.
+
+**El lado favorable, que conviene no exagerar.** La corrección **rescata la hipótesis sobre datos realmente
+en español**. El umbral declarado es F1 ≥ 70 % en español, y sobre el corpus N=120 —105 de cuyos 120
+artículos están en español— `gemma4:31b-mlx` pasa de 63,32 % a **77,77 %**, superándolo con holgura. Esto
+importa porque el otro hallazgo grave de la misma revisión (§F54) es que los corpus N=15 y N=30, sobre los
+que el informe apoyaba el cumplimiento del umbral, **están íntegramente en inglés**.
+
+**Las tres salidas posibles, para decisión del autor.** No son equivalentes y ninguna es gratuita:
+
+1. **Excluir `Locations` de la puntuación** y volver a agregar desde los `detailed_results.json` ya
+   existentes. No requiere reejecutar ningún modelo, porque el desglose `per_type` está guardado. Es la vía
+   barata, y es defendible: se mide lo que el corpus anota.
+2. **Retirar `Locations` de los prompts** y reejecutar. Metodológicamente la más limpia, porque alinea lo que
+   se pide con lo que se mide, pero exige repetir el barrido completo.
+3. **Declararlo como limitación** y dejar las cifras. Es la opción más débil: un tribunal que abra un
+   `detailed_results.json` verá `tp=0, fp=10` en una categoría y preguntará por qué se puntúa algo que no se
+   anota.
+
+La opción 1 es la recomendable: reaprovecha todo el cómputo ya hecho y corrige la medición de raíz.
+
+> **Regla operativa.** Lo que el prompt pide y lo que el corpus anota tienen que coincidir. Toda categoría
+> que se puntúe debe existir en la anotación de referencia; si no existe, o se anota o se excluye del cálculo,
+> pero nunca se deja puntuando contra el vacío.
