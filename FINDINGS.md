@@ -1663,3 +1663,41 @@ paralelismo para modelos sujetos a cuota, descrito en §3.2 del informe.
 protocolo advierte para el promediado, y aquí apareció en el volcado. La regla vale para cualquier lectura de
 un número que puede ser cero, no solo para promediar: **comparar contra `None`, nunca contra la veracidad del
 valor.**
+
+---
+
+## §F64 — La métrica restringida anticipa la magnitud pero se queda corta de forma sistemática
+
+**Fecha:** 2026-09-08. **Observación provisional**, con 4 puntos de comparación de los 26 posibles. No debe
+escribirse en el informe hasta tener la re-corrida completa.
+
+El Anexo I acompaña cada cifra publicada de una **métrica restringida**, recalculada desde el desglose por
+tipo ya almacenado, que excluye la categoría *Locations* porque el corpus no la anotaba. Se presentó como la
+estimación de lo que el estudio habría medido sin ese defecto. La re-corrida, ya con las 545 localizaciones
+anotadas, permite por primera vez **contrastar esa estimación contra una medición real**:
+
+| Grupo | F1 restringido (recálculo) | F1 medido (re-corrida) | Diferencia |
+|:---|---:|---:|---:|
+| `gemma4:31b-cloud` baseline | 80,42 | 81,73 | +1,31 |
+| `gemma4:31b-cloud` KB RAG | 78,89 | 82,82 | +3,93 |
+| `gemma4:12b-mlx` baseline | 73,81 | 77,16 | +3,35 |
+| `gemma4:12b-mlx` KB RAG | 74,30 | 79,97 | +5,67 |
+
+**La estimación acierta el orden de magnitud y falla el detalle**, siempre por defecto: entre 1,3 y 5,7
+puntos por debajo, en los cuatro casos en la misma dirección.
+
+**Por qué era esperable, y por qué conviene decirlo así.** Las dos cifras **no miden lo mismo**. La
+restringida **elimina** *Locations* del cómputo; la re-corrida **la puntúa** contra una anotación real. Un
+modelo que acierta localizaciones gana puntos que la métrica restringida no puede concederle, porque para
+ella esa categoría no existe. La diferencia no es error de la estimación: es el crédito por acertar en una
+categoría que antes no se podía acertar.
+
+**Corrección de una afirmación propia.** Al ver el primer caso —el cloud, con 1,31 puntos— se dijo que la
+metodología del Anexo I quedaba «validada contra una medición posterior». Con cuatro puntos la formulación
+correcta es más modesta: **corrobora la magnitud del efecto y subestima su tamaño de forma sistemática**. La
+diferencia importa, porque el informe apoya en esa métrica su afirmación de superar el umbral del 70 %, y una
+estimación conservadora refuerza esa conclusión en lugar de debilitarla — pero eso hay que decirlo, no
+suponerlo.
+
+**Qué hacer:** esperar a los trece modelos. Si la subestimación se mantiene en el mismo sentido, el Anexo I
+puede declararla como cota inferior, que es una afirmación más fuerte y más defendible que la actual.
