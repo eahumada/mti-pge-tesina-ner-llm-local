@@ -1023,13 +1023,23 @@ referencia** no cubiertas (`fn = len(gt_list) − len(matched_gts)`). Numerador 
 misma unidad: dos menciones que casan con la misma entidad de referencia suman dos aciertos frente a una sola
 entidad cubierta.
 
-| Medición propia | Resultado |
-|:---|:---:|
-| Celdas por tipo de entidad con exhaustividad > 1,0 | **258 de 28 113 (0,9 %)** |
-| Registros afectados en `benchmark_n120_REMOTO` | **19 de 1 680 (1,1 %)** |
+Se midió de dos formas. La estricta cuenta las celdas cuya exhaustividad **supera 1,0**, que son los casos
+extremos: **258 de 28 113 (0,9 %)**. La correcta recalcula, para cada registro, la exhaustividad real como
+entidades de referencia cubiertas sobre el total, y la compara con la publicada:
 
-El alcance es reducido y el efecto neto sigue siendo conservador, pero la afirmación absoluta no se sostenía y
-se ha acotado en §3.3 del informe.
+| Corrida | Registros inflados | Δ medio | Δ máximo |
+|:---|:---:|:---:|:---:|
+| `benchmark_n120_REMOTO` | 61 de 1 680 (3,6 %) | +0,088 | +0,208 |
+| `nemotron_rerun_n120_REMOTO` | 14 de 240 (5,8 %) | +0,133 | +0,500 |
+| `qwen3_nothink_n120_REMOTO` | 9 de 240 (3,8 %) | +0,025 | +0,076 |
+
+Entre un 2 % y un 6 % de los registros según la corrida, por tanto. El efecto neto sigue siendo conservador,
+pero la afirmación absoluta no se sostenía y se ha acotado en §3.3 del informe con estas cifras.
+
+> **Matiz metodológico sobre la propia medición.** La primera cuenta —celdas con exhaustividad mayor que uno—
+> subestima el problema en un factor de tres o cuatro, porque solo detecta los casos donde la inflación es tan
+> grande que rompe el techo de la métrica. Medir un sesgo por sus manifestaciones extremas es una trampa
+> frecuente: hay que recalcular el valor correcto y compararlo, no buscar valores imposibles.
 
 **2. El umbral de la tasa de alucinación no es configurable en la práctica.** `evaluate_single_record` recibe
 el umbral configurado —85— y lo propaga a las demás funciones, pero invoca
