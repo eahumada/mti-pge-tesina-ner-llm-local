@@ -833,3 +833,22 @@ disponibles. La evidencia presente es internamente contradictoria (prompt españ
 resuelve por criterio propio: se escala al autor con esta evidencia.** Si el generador se lanzó en inglés por
 error, la tarea derivada (regenerar N=30 en español, §3.1 del encargo) cambia el sentido del experimento del
 dominio y debe decidirla el autor.
+
+### 2026-09-08 (cont. 2) — Cierre de avances paralelos
+
+**§3.3 `tools/analisis_ablacion_idioma.py`.** Agrega las tres corridas de ablación y reporta tres contrastes.
+Resultado: el contraste publicado (fs-es−zs-en) da media +4,36 pp pero desviación 5,52 (valores 10,4 / −0,43 /
+3,11): inestable. El idioma PURO en zero-shot (zs-es−zs-en) es pequeño pero consistentemente positivo
+(+2,24 pp, sd 1,86). Confirma FINDINGS §F55: sin réplicas (>=5 semillas/celda, hoy solo 3 corridas) el efecto
+no se declara. Las réplicas exigen correr benchmark (bloqueado).
+
+**§3.2 `tools/composicion_ibericas.py`.** Reproduce la tabla de composición del encargo. Totales EXACTOS por
+corpus (PER 84/36/594, ORG 128/69/812; N=15 = `data/kleptotrace.json`) y fracción ibérica de organizaciones
+casi exacta (N=120: 196 vs 198). La de personas infra-cuenta (172 vs 263) porque la heurística ortográfica no
+marca apellidos ibéricos sin acento; documentado. El contraste F1 por subconjunto de entidad que pide §3.2
+exige re-corrida con registro por entidad (los detailed_results no guardan extracción por entidad).
+
+**Estado global.** Todo lo resoluble offline/en código está hecho, probado y empujado a
+`fix/recorrida-correcciones-20260908`. Lo que resta depende de correr benchmark (bloqueado por §2.bis.2
+Locations) o de decisiones del autor (§2.bis.1 exemplars, §3.1 idioma del generador). Nada más es
+paralelizable sin esas decisiones.
