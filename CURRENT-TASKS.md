@@ -165,6 +165,8 @@ Archivos tocados (disjuntos de los `.docx` de Claude Desktop):
 
 **Bloqueo principal:** la re-corrida completa NO puede lanzarse hasta resolver la recuperación de `Locations` del corpus de 120 (§2.bis.2), que no es un fix de código sino regeneración de datos sin pipeline reproducible disponible.
 
+**Avance paralelo mientras el remoto decide (2026-09-08):** creado `tools/verificar_corrida.py` (§5), que aplica las seis comprobaciones obligatorias sobre el directorio de una corrida (fn>0 por categoría, cero `recall>1.0`, F1 coherente con precisión/exhaustividad, recuento de fallos por modelo con causa, cotejo de los nueve parámetros de `run_config.json`). Probado sobre `results/benchmark_n120_REMOTO/`: marca NO VÁLIDA por `Locations` (fn=0, fp=4993) y 21 registros con `recall>1.0`, exactamente los defectos que las correcciones resuelven. Da al equipo remoto una compuerta objetiva para validar las corridas nuevas. NO se cableó la exclusión de exemplars al pipeline: es una de las decisiones que el remoto aún debate.
+
 ---
 
 ## 2. Claude Desktop
