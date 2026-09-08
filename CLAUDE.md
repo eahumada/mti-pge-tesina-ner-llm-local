@@ -175,7 +175,8 @@ sí. Ver `FINDINGS.md §F53` y `LEARNING.md §L44`.
 
 - **Toda categoría que se puntúe debe existir en la anotación de referencia.** Si el prompt pide una
   categoría que el corpus no anota, cada acierto del modelo se contabiliza como error. El indicador barato
-  es el **`fn` agregado por categoría**: si vale cero mientras `fp` crece, esa categoría está puntuando
+  es **`tp + fn` agregado por categoría**: si esa suma vale cero mientras `fp` crece, la categoría no tiene
+  ni una entidad de referencia en todo el corpus y está puntuando
   contra el vacío. Comprobarlo antes de dar por buena cualquier métrica nueva.
 - **Una cifra baja pero estable no acredita que la medición sea correcta.** Acredita que el defecto es
   sistemático. La coherencia interna de un conjunto de resultados no es prueba de validez.
@@ -193,7 +194,13 @@ sí. Ver `FINDINGS.md §F53` y `LEARNING.md §L44`.
 ## Verificación antes de comprometer un cambio en el informe
 
 Comprobaciones mecánicas que hay que pasar sobre el Markdown canónico antes de cada commit. Todas surgieron
-de defectos reales encontrados en la revisión final:
+de defectos reales encontrados en la revisión final.
+
+> **Están implementadas en `tools/verificar_informe.py`.** Ejecutarlo antes de cada commit sobre el informe;
+> devuelve 0 si no hay fallos. Cada comprobación declara **cuántos elementos examinó**, y una que examina
+> cero se marca como VACÍA y no como superada: el informe ya documenta una prueba de sensibilidad que no
+> podía marcar nada por construcción (§5.3), y una comprobación que no mira nada es indistinguible de una
+> que pasa. Al añadir una comprobación nueva, comprobar que su recuento no es cero.
 
 1. **Referencias cruzadas**: ninguna llamada a `§x.y`, a `Tabla N` o a `Anexo X` puede apuntar a algo que no
    exista. Atención al escribir: al añadir una referencia se contrae la obligación de crear su destino en el
@@ -214,6 +221,10 @@ de defectos reales encontrados en la revisión final:
 6. **Identificadores**: antes de escribir `§F<n>`, `§L<n>` o `§<n>.<n>`, comprobar que el número no está
    usado. Ha habido **tres colisiones**, dos de ellas posteriores a escribir la lección que advierte de
    ellas, de modo que el recordatorio no basta: hay que comprobarlo con un `grep` en el mismo turno.
+7. **Ficheros vacíos**: comprobar que ningún fichero rastreado tiene cero bytes. Un fichero vacío no rompe
+   nada —existe, se abre, se lee, y no aparece en un `git status` limpio—, de modo que sobrevive
+   indefinidamente. Cuatro documentos del proyecto, dos de ellos de hitos ya entregados, llevaban dos meses
+   así (`FINDINGS §F59`, `LEARNING §L47`). La comprobación es un `git ls-files` con una prueba de tamaño.
 
 ## Secretos y publicación del repositorio
 

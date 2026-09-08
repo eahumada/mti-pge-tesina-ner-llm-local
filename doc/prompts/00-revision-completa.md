@@ -68,3 +68,30 @@ Comprobar sobre el Markdown canónico:
 
 Si alguna cifra cambia, **recontarla contra el fichero de resultados**, no contra lo que se recuerde haber
 medido. En esta revisión se colaron dos cifras mal transcritas y ambas se detectaron así.
+
+---
+
+## Comprobaciones mecánicas ejecutables (2026-09-08)
+
+Las comprobaciones que este documento describe en prosa están implementadas en
+**`tools/verificar_informe.py`**. Ejecutarlo antes de dar por buena cualquier revisión:
+
+```sh
+python3 tools/verificar_informe.py          # detalle
+python3 tools/verificar_informe.py --breve  # solo lo que falla o está vacío
+```
+
+Cubre diez comprobaciones: ficheros rastreados a cero bytes, referencias `§x.y` con destino existente,
+tablas numeradas con leyenda encima y citadas, figuras numeradas con leyenda debajo y con imagen real y no
+vacía, bibliografía contigua con URL y correspondencia en ambos sentidos, resumen y abstract por debajo de
+200 palabras, ausencia de pictogramas y de arte ASCII, ausencia de modelos excluidos, coherencia de la
+Figura 2 con la Tabla 7 junto con la aritmética de sus deltas, e identificadores `§F`/`§L` sin colisión.
+
+**Cada comprobación declara cuántos elementos examinó**, y una que examina cero se marca como VACÍA en lugar
+de superada. Es deliberado: el propio informe documenta en §5.3 una prueba de sensibilidad que no podía
+marcar nada por construcción y se dio por buena durante meses. Al añadir una comprobación, verificar que su
+recuento no sea cero.
+
+Lo que el script **no** cubre y sigue exigiendo lectura: que la leyenda de una tabla describa esa tabla y no
+otra heredada; que resumen y abstract digan lo mismo en los dos idiomas; que las URL de la bibliografía
+respondan; y el recuento de páginas del PDF, que solo se obtiene generándolo.

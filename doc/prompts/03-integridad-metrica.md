@@ -10,7 +10,8 @@
 ## La comprobación que hay que hacer siempre, y cuesta un minuto
 
 > Para cada categoría que el evaluador puntúe, comprobar que **existe en la anotación de referencia**. El
-> indicador barato es el `fn` agregado por categoría: si vale cero mientras `fp` crece, esa categoría está
+> indicador barato es `tp + fn` agregado por categoría: si esa suma vale cero mientras `fp` crece, la categoría
+> no tiene ni una entidad de referencia en todo el corpus y está
 > puntuando contra el vacío y cada acierto del modelo se cuenta como error.
 
 En este proyecto ese defecto generaba **20 946 de 32 201 falsos positivos**, el 65 %, y sobrevivió dos meses

@@ -702,3 +702,76 @@ porque el cotejo se resuelve en tiempo de inferencia y las extracciones por regi
 **Consecuencia inmediata para Claude Desktop:** el `.md` canónico cambió después de su propagación —se añadió
 el punto 7 a §7.2—, de modo que hay que **propagar ese único punto a los tres `.docx`**. Es un párrafo; el
 cuerpo iba por 21 páginas de 25, así que la holgura es suficiente.
+
+---
+
+## Figuras del informe (Claude Code, 2026-09-08)
+
+El informe no tenía ninguna figura pese a que la plantilla define los estilos `figurecaption` e `image` y a
+que la norma institucional regula expresamente su leyenda («Figuras: Leyenda se posiciona en parte inferior,
+centrada»). Se añaden dos, generadas electrónicamente a 300 ppp por
+`tools/generar_figuras_informe.py`, en escala de grises legible al imprimir y sin arte ASCII:
+
+| Figura | Ubicación | Contenido | Fuente de los datos |
+|:---|:---|:---|:---|
+| Figura 1 | §4.4 | Composición de los falsos positivos: 19 178 de 28 404 (67,5 %) son localizaciones | §4.4 del propio informe |
+| Figura 2 | §5.3.1 | (a) desplazamiento del F1 de los trece modelos al añadir KB RAG; (b) la mejora frente al F1 de partida | Tabla 7 |
+
+**Regla de mantenimiento.** El script **no recalcula** las cifras desde los CSV: las toma escritas de las
+tablas ya publicadas, de modo que figura y tabla no puedan divergir. Si la Tabla 7 cambia, hay que cambiar
+también `TABLA7` en el script y regenerar. Los ficheros PNG **no llevan número en el nombre**, porque la
+numeración depende del orden de aparición en el documento y ya se desincronizó una vez.
+
+**Pendiente para quien maquete el `.docx`:** insertar ambas imágenes con el estilo `image`, la leyenda
+debajo y centrada con `figurecaption`, y **re-verificar el límite de 25 páginas** (ver abajo).
+
+### Recuento de páginas: estado y estimación
+
+Medido sobre el PDF entregado al profesor guía
+(`doc/versions/enviados/2026-09-08_...ENVIADO-AL-PROFESOR-GUIA.pdf`): **31 páginas en total**, el Anexo A
+empieza en la 21, luego el **cuerpo ocupa 20 páginas** sobre un máximo de 25. La densidad medida es de
+**684 palabras por página**.
+
+Desde ese PDF el `.md` canónico ha crecido de 19 549 a 21 578 palabras (+2 029, unas **3 páginas**) y se le
+añaden **dos figuras** (~0,8 páginas). La estimación del cuerpo queda por tanto en **~24 páginas**, dentro
+del límite pero **sin holgura**. No es una medición: hay que confirmarla sobre el PDF regenerado antes de
+volver a entregar.
+
+**Corrección de un supuesto erróneo.** En una nota anterior de esta sesión se amplió la introducción bajo la
+idea de que la plantilla pedía «tres o cuatro páginas». La norma dice lo contrario: «se recomienda que la
+Introducción contenga **a lo más** 3 páginas». La ampliación se conserva porque atiende el reparo del
+profesor guía sobre el poco desarrollo y porque el capítulo queda en 1 457 palabras, unas **2,1 páginas**,
+por debajo de ese máximo; pero la introducción **no debe crecer más**.
+
+---
+
+## Bloqueante para la entrega: el repositorio que cita [37] devuelve 404
+
+**Detectado el 2026-09-08 por `tools/verificar_informe.py --red`.** Es el único fallo de las trece
+comprobaciones.
+
+La línea 623 del Markdown canónico afirma:
+
+> «El código, los corpus, los resultados por corrida y los documentos de trabajo **están publicados** en el
+> repositorio del trabajo [37] (`https://github.com/eahumada/mti-pge-tesina-ner-llm-local`).»
+
+y la entrada [37] de la bibliografía lo cita con fecha de acceso del 8 de septiembre de 2026. **El
+repositorio es privado**, de modo que la URL devuelve HTTP 404 a cualquiera que no sea el autor. Un miembro
+del tribunal que pulse el enlace no encuentra nada, y la afirmación de que el material está publicado no es
+cierta hoy. **El PDF ya entregado al profesor guía contiene este enlace.**
+
+No se corrige el texto por iniciativa propia porque su redacción depende de una decisión ya tomada —publicar
+el repositorio— cuya ejecución está bloqueada por la purga de objetos inalcanzables de GitHub, que a esta
+hora sigue devolviendo HTTP 200 sobre `bb79279`. Reformular ahora y volver a reformular después es
+movimiento inútil.
+
+**Secuencia correcta, y su orden importa:**
+
+1. Esperar a que la purga se complete. Comprobación: el objeto `bb79279` debe devolver **404**.
+2. Solo entonces hacer público el repositorio. Publicar antes convierte una clave recuperable-si-conoces-el-SHA
+   en una clave indexable (`LEARNING §L43`).
+3. Volver a ejecutar `python3 tools/verificar_informe.py --red` y comprobar que [37] responde 200.
+4. Si hubiera que entregar **antes** de poder publicar, entonces sí hay que corregir la línea 623 y la
+   entrada [37], porque un entregable no puede afirmar algo que no es cierto.
+
+La comprobación queda automatizada: mientras [37] no responda, `--red` falla y lo recuerda.

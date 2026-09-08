@@ -46,3 +46,39 @@ La referencia [37] y el Anexo A afirman que el código y los corpus «están pub
 trabajo». Hoy el repositorio es **privado** (verificado contra la API: `"private": true`), de modo que la
 afirmación no es cierta para un tribunal que intente comprobarla. La secuencia correcta es revocar la clave,
 pedir la purga a GitHub y solo entonces hacerlo público.
+
+---
+
+## Decisión del autor (2026-09-08): esperar al recolector normal
+
+Se descartan las dos vías activas y se espera a que GitHub recoja los objetos por sí mismo.
+
+**Lo que se descarta y por qué queda constancia.** Se valoró **borrar y recrear el repositorio**, que
+eliminaría los objetos con certeza y no dependería de que Support atienda. El coste era bajo —cero *issues*,
+*pull requests*, *releases*, estrellas y observadores; siete ramas y cinco etiquetas, todas en el respaldo
+verificado de 30 MB— y el token tiene permiso para hacerlo. **No se ejecuta**: borrar un repositorio es
+irreversible, afecta a un servicio externo y el equipo remoto está trabajando contra ese remoto ahora mismo.
+
+**Lo que esto implica, y hay que tenerlo presente.** Mientras el recolector no pase:
+
+- El commit `bb79279` sigue respondiendo HTTP 200 con la clave en claro **a quien tenga acceso al
+  repositorio**. No a cualquiera: el repositorio es privado, tiene cero *forks* y red cero, de modo que la
+  exposición se limita a las cuentas autorizadas.
+- **El repositorio no puede hacerse público.** Publicarlo convertiría una clave alcanzable-si-conoces-el-SHA
+  en una clave indexable. Esto afecta a la referencia [37] del informe y al Anexo A, que afirman que el
+  material «está publicado»: mientras esto no se resuelva, esa afirmación no es verificable por el tribunal.
+- **No hay plazo garantizado.** GitHub no publica cuándo recoge los objetos inalcanzables de un repositorio
+  privado, y puede no hacerlo nunca sin una solicitud. La comprobación es de una línea y se incorpora a la
+  rutina de seguimiento:
+
+```sh
+. ./.setenv.sh
+curl -s -o /dev/null -w '%{http_code}
+' -H "Authorization: Bearer $GITHUB_TOKEN" \
+  "https://api.github.com/repos/eahumada/mti-pge-tesina-ner-llm-local/contents/test_flash.py?ref=bb79279"
+```
+
+**404 significa que el recolector pasó** y que el repositorio puede publicarse. Mientras devuelva **200**, no.
+
+La solicitud a Support sigue redactada y lista en `SOLICITUD-GITHUB-PURGA-20260908.md` por si el autor
+decide acelerar el proceso más adelante.
