@@ -2098,3 +2098,32 @@ salida** de 2 048 a 4 096 tokens. Una respuesta que antes se truncaba ahora se c
 Queda sin explicar la otra mitad: por qué los *baseline* bajan tanto. La pregunta al equipo de 48 GB se
 mantiene, pero **acotada**: no es la máquina, y la parte que sube tiene explicación. Lo que falta entender es
 la bajada.
+
+### §F68.bis — Con cinco modelos, lo que se ve no es un cambio de signo sino una convergencia
+
+**2026-09-08, 20:05.** `qwen2.5:14b` completa el quinto modelo y obliga a reformular cómo se venía
+describiendo el efecto.
+
+Hasta ahora se decía «cambia de signo», porque los tres primeros pasaban de negativo a positivo.
+`qwen2.5:14b` no cambia de signo —era +4,62 y sigue positivo— pero **cae a +0,69**. Con los cinco a la
+vista, el patrón es otro:
+
+| | Δ publicado | Δ re-corrida |
+|:---|---:|---:|
+| Mínimo | −1,17 | **+0,69** |
+| Máximo | +4,62 | **+2,53** |
+| Media | +1,00 | +1,46 |
+| **Dispersión (máx − mín)** | **5,79** | **1,84** |
+
+**Los cinco efectos son ahora positivos y la dispersión se reduce a un tercio.** No es que la corrección
+favorezca al RAG: es que **comprime** el efecto hacia un valor pequeño y consistentemente positivo. Los
+modelos que salían perjudicados dejan de estarlo, y el que más se beneficiaba deja de hacerlo tanto.
+
+**La lectura que sugiere, y que habrá que confirmar con los trece:** buena parte de la dispersión anterior no
+medía cuánto ayudaba la recuperación a cada modelo, sino **cuántas localizaciones emitía cada modelo** en una
+categoría donde toda extracción contaba como error. Un modelo locuaz en localizaciones era penalizado en
+ambos modos, pero no por igual, y esa diferencia entraba en el Δ como si fuera efecto del RAG.
+
+Si se confirma, el capítulo de resultados gana una afirmación **más fuerte** que la actual: el efecto del KB
+RAG sobre este corpus es **pequeño, positivo y homogéneo entre modelos**, en lugar de «inversamente
+proporcional a la capacidad». Pero no puede escribirse hasta tener los trece, y menos aún desde cinco.
