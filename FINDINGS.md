@@ -1746,3 +1746,52 @@ N=30 coinciden (15 y 30); en N=120 no, y son 113.
 matriz de confusión daba 1 098 personas de referencia donde el corpus tiene 594, una razón de 1,85 en las
 tres categorías. Cuadrar dos fuentes que deberían decir lo mismo es más barato que revisar cualquiera de las
 dos por separado, y encuentra lo que ninguna de las dos delata sola.
+
+---
+
+## §F66 — El ANOVA consolidado incluía los artículos contaminados, y `merge_and_analyze.py` no sabía excluirlos
+
+**Fecha:** 2026-09-08. Consecuencia directa de `§F65`, encontrada al comprobar si la herramienta de fusión
+estaría lista para cerrar la re-corrida.
+
+`main.py` descuenta los 7 artículos contaminados al calcular el resumen de cada corrida
+(`_excluir_contaminados`), pero **`src/merge_and_analyze.py` no lo hacía**: fusionaba los
+`benchmark_results.csv` crudos, que conservan los 120 registros a propósito, y ejecutaba el ANOVA sobre
+todos. La exclusión existía en un punto de la cadena y se perdía en el siguiente.
+
+**Alcance medido.** Rehecho el consolidado de las ocho corridas sin los 7 artículos:
+
+| | Con contaminados (publicado) | Sin contaminados |
+|:---|:---|:---|
+| Observaciones | 3 120 (26 × 120) | **2 938** (26 × 113) |
+| ANOVA | F = 38,2222 · p = 3,4453e-160 | **F = 35,5557 · p = 3,6729e-148** |
+
+**La conclusión del estudio resiste, y esto es lo importante:** de los trece modelos, **ninguno cambia de
+veredicto**. Siguen siendo `nemotron-mini:4b` y `llama3.2:latest` los dos únicos cuya mejora por
+recuperación supera la corrección por comparaciones múltiples, y los otros once siguen sin alcanzarla.
+
+**Pero el efecto se encoge en doce de los trece.** La mejora atribuida al KB RAG baja en todos menos
+`gemma4:latest`, y los dos casos significativos pierden potencia:
+
+| Modelo | Δ con contaminados | Δ sin contaminados | p con | p sin |
+|:---|---:|---:|---:|---:|
+| `nemotron-mini:4b` | +0,1452 | **+0,1348** | 0,0000 | 1,0e-4 |
+| `llama3.2:latest` | +0,1082 | **+0,1006** | 6,9e-3 | 3,6e-2 |
+
+Es exactamente lo que anticipaba la medición de `§F65`: sobre los siete contaminados el KB RAG aporta
++10,01 pp frente a +2,19 pp sobre los ciento trece restantes, de modo que incluirlos infla el efecto que el
+estudio mide.
+
+**Lectura para la defensa.** Que el veredicto no cambie convierte esto en un **resultado de robustez** y no
+en un problema: la conclusión del trabajo se sostiene sobre la población limpia, con tamaños de efecto algo
+menores. Declararlo es más fuerte que omitirlo.
+
+**Corrección aplicada.** `src/merge_and_analyze.py` excluye ahora los artículos del manifiesto por defecto,
+lo declara en la salida y lo deja escrito en `merge_manifest.json`. La exclusión alcanza a **ambos modos**,
+no solo al contaminado: comparar un *baseline* sobre 120 con un `kb_rag` sobre 113 sería comparar
+poblaciones distintas, y la diferencia entre modos es justo lo que se publica. Existe
+`--incluir-contaminados` para reproducir análisis antiguos, con su advertencia.
+
+**Pendiente de decisión del autor:** si el informe adopta ya las cifras sin contaminados (F = 35,5557) o
+espera a la re-corrida completa, que sustituirá el consolidado entero. La segunda evita rehacer el trabajo
+dos veces; la primera deja el documento coherente desde hoy.
