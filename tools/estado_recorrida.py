@@ -50,6 +50,26 @@ def par(tag, corpus):
     return (b[0], r[0]) if b and r else None
 
 
+def directorios_reales():
+    """Los directorios de corrida que existen de verdad en la rama."""
+    t = subprocess.run(['git', 'ls-tree', '-r', '--name-only', RAMA, BASE],
+                       capture_output=True, text=True).stdout
+    return sorted({p[len(BASE):].split('/')[0] for p in t.split('\n')
+                   if p.strip() and '/' in p[len(BASE):]})
+
+
+def huerfanos():
+    """Directorios presentes que ninguna entrada de MODELOS reclama.
+
+    La correspondencia modelo -> directorio esta escrita a mano, y los nueve modelos que faltan
+    todavia no han creado el suyo. Si el equipo de 48 GB lo nombra de otro modo, este documento
+    mostraria «pendiente» para siempre sin que nada avisara, que es la clase de fallo silencioso
+    contra la que se han ido poniendo guardas todo el dia.
+    """
+    esperados = {'%s__%s' % (tag, c) for _, tag, _ in MODELOS for c in ('N120', 'N30', 'N15')}
+    return [d for d in directorios_reales() if d not in esperados]
+
+
 def main():
     out = []
     w = out.append
@@ -102,6 +122,12 @@ def main():
     w('- **El consolidado no se rehace hasta tener los trece**, para no mezclar modelos medidos con')
     w('  localizaciones anotadas y sin ellas.')
     w('- Si el cambio de signo se confirma, **§5.3.1 habrá de reformularse** (`FINDINGS §F68`).')
+    h = huerfanos()
+    if h:
+        w('\n> ⚠️ **Directorios de corrida que este documento no reconoce:** `%s`. La correspondencia'
+          % '`, `'.join(h))
+        w('> modelo → directorio está escrita a mano en `tools/estado_recorrida.py`; hay que añadirlos o')
+        w('> figurarán como pendientes aunque estén hechos.')
     print('\n'.join(out))
     return 0
 
