@@ -10,6 +10,36 @@ reponerlo a mano.
 
 ---
 
+## 0. Disparador de ejecución
+
+**TURK_182_GOGO**
+
+Esta palabra es la orden de ejecución. Su presencia en este documento significa que **las revisiones globales
+del informe han terminado** y que el equipo de 48 GB debe **volver a correr todos los benchmarks** con las
+correcciones que este encargo detalla.
+
+El autor fijó el protocolo así a propósito: la palabra no se escribió mientras las revisiones estaban en
+curso, precisamente para que su aparición no pueda confundirse con un aviso preparatorio. Si estáis leyendo
+esto, la condición se cumplió.
+
+**Antes de lanzar, leed las secciones 2 y 4.** La sección 2 enumera cinco defectos de código que hay que
+reparar primero, y lanzar sin repararlos produciría otra vez cifras que habría que descartar. La sección 4
+fija la lista cerrada de modelos: ocho nombres que no deben aparecer en ninguna corrida.
+
+---
+
+**Condición cumplida.** Las tres rondas de revisión global del informe han terminado. La última cerró con
+199 hallazgos y 75 graves, y su veredicto íntegro está en
+[`VEREDICTO-REVISION-GLOBAL-20260908.md`](./VEREDICTO-REVISION-GLOBAL-20260908.md). Cuatro de esos hallazgos
+son defectos de código que **invalidarían esta re-corrida si no se reparan antes de lanzarla**, y están en la
+sección 2.bis, que se añadió después de redactar el resto de este encargo. **Leedla antes que nada.**
+
+Conviene que sepáis el estado del informe, porque explica el encargo: el veredicto es **no listo para
+entregar**, y una de sus razones es que la métrica actual no es defendible. La re-corrida no es un refinamiento
+opcional: es lo que permite publicar cifras que resistan una defensa.
+
+---
+
 ## 1. Por qué se pide repetir el estudio
 
 Una segunda pasada de revisión, con seis auditores independientes y un orquestador, encontró **172 hallazgos,
@@ -98,6 +128,76 @@ daba 67 respaldos, con 4096 bajó a 2.
 
 Antes de la re-corrida, **volcar la configuración efectiva que recibe el proveedor** y comprobarla contra
 `run_config.json`, no fiarse de lo que el código pretende enviar.
+
+---
+
+## 2.bis Defectos descubiertos en la tercera revisión global (2026-09-08, posteriores a la redacción de este encargo)
+
+Cuatro hallazgos nuevos, todos verificados de forma independiente por el orquestador de la revisión. **Los
+cuatro invalidarían la re-corrida si no se reparan antes de lanzarla**, igual que invalidaron la anterior.
+
+### 2.bis.1 Contaminación del conjunto de prueba en la base de conocimientos (BLOQUEANTE)
+
+Los siete ejemplares de `data/knowledge_base/few_shot_exemplars.json` llevan en su campo `source` la cadena
+`benchmark_balanced_120.json#real_mixed_N`: **son artículos del corpus que se evalúa**, con su anotación de
+oro como salida esperada. Afecta a los modos `kb_fewshot` y `kb_combined`, que son los del estudio principal.
+
+El efecto está medido: el Δ del KB RAG sobre esos siete artículos es **+10,01 pp frente a +2,19 pp en los 113
+restantes**, y el patrón se repite en las siete corridas sin excepción, de +5,29 en la variante alojada a
++31,41 en `nemotron-mini`. Las dos significancias de Tukey sobreviven al descuento, pero **la magnitud
+publicada está inflada**.
+
+Hay un segundo efecto: los ejemplares llevan `Locations` pobladas (`Bilbao`, `Iran`, `WASHINGTON`,
+`Liberia`), de modo que la base de conocimientos **enseña al modelo a emitir justo la categoría que el cotejo
+penaliza** como falso positivo.
+
+**Tarea:** reconstruir los ejemplares con material **ajeno al corpus de evaluación** y retirar de ellos las
+localizaciones. Si se prefiere conservarlos, hay que excluir esos siete artículos de la métrica y declararlo.
+
+### 2.bis.2 CoNLL-2002 sí anota localizaciones: el defecto está en la conversión (BLOQUEANTE)
+
+Corrige lo que la sección 2.1 de este encargo daba por supuesto. CoNLL-2002 anota cuatro tipos —PER, ORG,
+LOC y MISC— y aporta 105 de los 120 artículos del corpus principal. **Las localizaciones existen**; lo que
+las pierde es el conversor:
+
+- `download_conll2002.py` conserva solo `name_entities` y `organizations`.
+- `src/data_loader.py:117-120` escribe `"Locations": []` como **constante**.
+
+De modo que para 105 de los 120 artículos **basta con no descartarlas al convertir**, y no hace falta
+anotación experta. Eso cambia la tarea: en lugar de retirar `Locations` de los prompts, la vía limpia es
+**recuperar las localizaciones de CoNLL-2002 en la conversión** y medir las tres categorías. Los quince
+artículos de Kleptotrace seguirían sin anotarlas, y ese subconjunto sí habría que anotar a mano o excluir de
+la métrica de esa categoría.
+
+### 2.bis.3 `gpt-oss:20b` corrió con otro presupuesto de generación (BLOQUEANTE)
+
+Entró en la Tabla 7 y en el ANOVA con **`max_tokens=4096`** mientras los otros doce modelos corrieron con
+**2048**. Existe una corrida previa del mismo modelo y corpus con 2048 en `results/excluidos_n120_REMOTO`,
+donde el Δ del RAG es **−9,65 pp (43,84 → 34,19)** frente al **+3,28 pp** publicado: **el signo del efecto se
+invierte con el presupuesto**. Ni el parámetro ni la corrida descartada se declaran en el informe.
+
+**Tarea:** correr los trece modelos con el **mismo** presupuesto, elegido de modo que ninguno lo agote, y
+dejar constancia del valor en `run_config.json`. Comprobar tras la corrida que ningún modelo termina por
+límite de tokens.
+
+### 2.bis.4 La repuntuación de la extracción vacía no llegó a los JSON
+
+La convención corregida —F1 = 0 y no 1 ante extracción vacía— se aplicó a los `benchmark_results.csv` pero
+**no a los `detailed_results.json`**, que son precisamente los ficheros de los que se calculan los anexos.
+Quedan **251 registros con F1 = 1,0** por extracción vacía en nueve corridas.
+
+**Tarea:** aplicar la convención a los dos formatos y comprobar que ningún registro con extracción vacía
+tiene F1 distinto de cero.
+
+### 2.bis.5 Dos defectos de datos menores, para arreglar de paso
+
+- Las **siete filas re-extraídas de `nemotron-mini`** tienen `latencia = 0`, `0 tokens/s` y, lo importante,
+  **su `per_type` no cuadra con su `overall`**: faltan 26 falsos positivos. De ahí nacen dos denominadores
+  distintos para el mismo recuento.
+- El **análisis de sensibilidad por longitud atípica es vacío por construcción**: `src/statistics.py:189`
+  fija el umbral en `avg_len + 500` y el corpus N=30 tiene media 202 y máximo 293 caracteres, de modo que el
+  criterio de 702 no podía marcar nada. Sustituirlo por un criterio estadístico real, como el rango
+  intercuartílico.
 
 ---
 
