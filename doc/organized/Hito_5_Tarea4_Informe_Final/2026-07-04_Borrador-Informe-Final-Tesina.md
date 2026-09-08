@@ -96,7 +96,7 @@ Las **arquitecturas neuronales BiLSTM-CRF** [24] sustituyen los rasgos manuales 
 
 Los **codificadores Transformer pre-entrenados** (BERT [2] y sus variantes multilingües como XLM-R [23]) constituyen el estado del arte académico. Partiendo de un modelo pre-entrenado, un ajuste fino alcanza 88,43 % de F1 en español sobre CoNLL-2002 con un codificador monolingüe [7], y 82,1 % de micro-F1 sobre FiNER-139, un corpus financiero en inglés cuya tarea es etiquetar magnitudes según la taxonomía XBRL y no identificar personas y organizaciones [15]. Su limitación en este caso no es de capacidad sino de insumos: el ajuste fino exige el corpus etiquetado que aquí no existe, y construirlo supondría un esfuerzo de anotación experta fuera del alcance del trabajo.
 
-Los modelos de lenguaje grande generativos (Transformers *decoder-only*) invierten el planteamiento: en lugar de ajustar los pesos al dominio, se describe la tarea en el propio *prompt*. Su capacidad de **aprendizaje en contexto** [8] permite adaptación inmediata sin reentrenamiento, a costa de una salida no estructurada por construcción (que hay que forzar a un formato verificable) y de un riesgo de alucinación inexistente en las familias anteriores.
+Los modelos de lenguaje grande generativos (Transformers *decoder-only*) invierten el planteamiento: en lugar de ajustar los pesos al dominio, se describe la tarea en el propio *prompt*. Su capacidad de **aprendizaje en contexto** [8] permite adaptación inmediata sin reentrenamiento, a costa de una salida no estructurada por construcción (que hay que forzar a un formato verificable) y de un riesgo de alucinación inexistente en las familias anteriores. La Tabla 1 las compara frente a los criterios de selección.
 
 _Tabla 1. Familias de técnicas para el reconocimiento de entidades y su comportamiento frente a los criterios de selección_
 
@@ -176,7 +176,7 @@ El tercer criterio, operar sobre hardware de consumo, obliga a cuantizar los pes
 
 ### 3.2 Arquitectura, proveedores y orquestación
 
-El sistema se organiza en cinco capas funcionales con responsabilidades separadas, así que cada una pueda evolucionar sin arrastrar a las demás.
+El sistema se organiza en cinco capas funcionales con responsabilidades separadas, así que cada una pueda evolucionar sin arrastrar a las demás. La Tabla 3 las detalla con sus módulos y su cometido.
 
 _Tabla 3. Arquitectura del sistema por capas, con sus módulos y su detalle técnico_
 
@@ -322,6 +322,8 @@ _Tabla 4. Benchmark exploratorio: doce modelos en trece configuraciones sobre el
 
 ### 5.2 Análisis de Variantes de Prompts (gemma4:latest, N=15)
 
+La Tabla 5 recoge las cuatro configuraciones del diseño factorial con sus métricas.
+
 _Tabla 5. Variantes de prompt sobre `gemma4:latest`: diseño factorial de idioma de la instrucción y de los ejemplos (N=15)_
 
 | Configuración | F1 | Precisión | Recall | Hallucination | Latencia (s) | Δ vs. Baseline |
@@ -340,7 +342,7 @@ _Tabla 5. Variantes de prompt sobre `gemma4:latest`: diseño factorial de idioma
 
 ### 5.3 Validación Estadística sobre el Corpus del Dominio (N=30)
 
-El primer experimento evalúa los dos modelos de mayor capacidad del estudio sobre el corpus sintético del dominio AML/KYC, compuesto por treinta artículos breves con anotación experta. Su propósito no es comparar el catálogo completo de modelos (eso corresponde al §5.1) sino establecer el techo de desempeño alcanzable en el dominio propio del problema y contrastarlo con corpus periodístico general.
+El primer experimento evalúa los dos modelos de mayor capacidad del estudio sobre el corpus sintético del dominio AML/KYC, compuesto por treinta artículos breves con anotación experta. Su propósito no es comparar el catálogo completo de modelos (eso corresponde al §5.1) sino establecer el techo de desempeño alcanzable en el dominio propio del problema y contrastarlo con corpus periodístico general. La Tabla 6 recoge sus métricas con los intervalos de confianza.
 
 _Tabla 6. Validación estadística sobre el corpus del dominio (N=30), con intervalos de confianza del 95 %_
 
@@ -357,7 +359,7 @@ Vale la pena señalar una particularidad de procedencia. Una primera ejecución 
 
 #### 5.3.1 Validación Estadística sobre Corpus Real N=120 (estudio completo)
 
-Sobre el corpus real N=120 descrito en §4.1.2 se ejecutó el mismo protocolo (ANOVA de una vía + Tukey HSD) para el estudio completo de 13 modelos, cada uno en modo *baseline* y *KB RAG*, con N=120 observaciones por grupo (26 grupos, 3 120 observaciones). Resultados consolidados en `results/ANALISIS_CONJUNTO_20260907/`.
+Sobre el corpus real N=120 descrito en §4.1.2 se ejecutó el mismo protocolo (ANOVA de una vía + Tukey HSD) para el estudio completo de 13 modelos, cada uno en modo *baseline* y *KB RAG*, con N=120 observaciones por grupo (26 grupos, 3 120 observaciones). Resultados consolidados en `results/ANALISIS_CONJUNTO_20260907/`. Sus resultados se recogen en la Tabla 7.
 
 _Tabla 7. Efecto de la base de conocimientos contextual sobre el corpus real (N=120, trece modelos)_
 
@@ -407,6 +409,8 @@ La **confusión de tipo** aparece cuando el modelo asigna a una entidad una cate
 Las **alucinaciones extrínsecas**, en las que el modelo propone entidades ausentes del texto, son el patrón que más varía entre modelos. Sobre los sesenta y un grupos medidos —entendiendo por grupo cada combinación de modelo y modo de recuperación que aporta los ciento veinte registros completos, contando todas las corridas conservadas y no solo la de referencia de cada modelo—, el rango va de **cero** en las variantes alojadas de `gemma4:31b` al **21,59 %** de `deepseek-r1:1.5b` con recuperación por diccionario, y **veintiocho de esos sesenta y un grupos quedan por debajo del 1 %**: la instrucción de restringir la extracción al artículo presente funciona en casi la mitad de las configuraciones y en todas las de mayor capacidad. El problema se concentra en los dos modelos más pequeños, y ahí es determinante: `deepseek-r1:1.5b` oscila entre 11,23 % en extracción directa y 21,59 % con recuperación, y `nemotron-mini:4b` entre 7,14 % y 14,75 %. En ambos casos el defecto, más que la exhaustividad, es lo que descarta su uso en un flujo de cumplimiento, porque una entidad inventada en un informe de sanciones tiene un coste mayor que una omitida.
 
 ### 5.5 Análisis de Eficiencia en Hardware Soberano
+
+La Tabla 8 reúne el consumo de memoria, el rendimiento y el coste estimado por artículo de cada modelo.
 
 _Tabla 8. Eficiencia en hardware soberano: memoria, rendimiento y coste estimado por artículo_
 
@@ -605,7 +609,7 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 El código, los corpus, los resultados por corrida y los documentos de trabajo están publicados en el
 repositorio del trabajo [37] (**https://github.com/eahumada/mti-pge-tesina-ner-llm-local**). Cada corrida conserva su `run_config.json` con
 los parámetros exactos y su `benchmark_results.csv` con las métricas por artículo, de modo que las cifras de
-este informe pueden rehacerse sin repetir la inferencia. La estructura del repositorio es la siguiente:
+este informe pueden rehacerse sin repetir la inferencia. La estructura del repositorio es la siguiente: La Tabla 9 describe la estructura del repositorio.
 
 _Tabla 9. Estructura del repositorio de código_
 
@@ -691,6 +695,8 @@ Eres un periodista de investigación financiera. Redacta un párrafo corto (2-4 
 
 ### Anexo C — Configuración del Entorno de Pruebas
 
+La Tabla 10 detalla el equipamiento y las versiones de software con que se ejecutaron las corridas.
+
 _Tabla 10. Configuración del entorno de pruebas_
 
 | Componente | Especificación |
@@ -709,7 +715,7 @@ Se documentan aquí los diagramas de flujo, tablas de configuración CLI y catá
 
 #### D.1 Implementación técnica del módulo KB RAG (src/kb_rag_manager.py)
 
-El módulo src/kb_rag_manager.py (KBRAGManager) implementa cuatro modos de operación configurables; para el modo `entities` el orquestador conserva la clase original `RAGManager` de src/rag_manager.py, de modo que la línea base dict-RAG se ejecuta con el código previo sin modificar:
+El módulo src/kb_rag_manager.py (KBRAGManager) implementa cuatro modos de operación configurables; para el modo `entities` el orquestador conserva la clase original `RAGManager` de src/rag_manager.py, de modo que la línea base dict-RAG se ejecuta con el código previo sin modificar: La Tabla 11 recoge los modos disponibles en la interfaz de línea de órdenes.
 
 _Tabla 11. Configuración CLI del Módulo KB RAG_
 
@@ -747,6 +753,8 @@ KB RAG (nuevo): Template positivo — "[EXTRACTION GUIDANCE] Apply these rules t
 
 #### D.2 Catálogo de guías tipológicas y ejemplares de la base de Conocimientos
 
+La Tabla 12 enumera las guías tipológicas de la base de conocimientos con su idioma y sus palabras clave.
+
 _Tabla 12. Guías Tipológicas de Dominio de la Base de Conocimientos_
 
 | Dominio | ID | Idioma | Keywords Clave |
@@ -756,6 +764,8 @@ _Tabla 12. Guías Tipológicas de Dominio de la Base de Conocimientos_
 | AML y Sanciones | aml_sanctions_en | EN | OFAC, indictment, money laundering, kleptocracy |
 | Judicial y Crimen | judicial_crime_es | ES | tribunal, fiscal, audiencia, sentencia |
 | Deportivo y Social | sports_social_es | ES | liga, federación, torneo |
+
+La Tabla 13 enumera los ejemplares anotados de la base de conocimientos con su dominio y su procedencia.
 
 _Tabla 13. Ejemplares Few-Shot de la Base de Conocimientos_
 
@@ -771,6 +781,8 @@ _Tabla 13. Ejemplares Few-Shot de la Base de Conocimientos_
 
 #### D.3 Reglas de la base de conocimientos contextual
 
+La Tabla 14 reproduce, a modo de ejemplo, las reglas de una de esas guías.
+
 _Tabla 14. Reglas de la guía tipológica del dominio político-administrativo (politics_es), a modo de ejemplo_
 
 | Regla | Contenido |
@@ -780,6 +792,8 @@ _Tabla 14. Reglas de la guía tipológica del dominio político-administrativo (
 | 3. Desambiguación | Un apellido solo ('Bono')... |
 
 ### Anexo E — Procedencia de los Datos del Benchmark General (N=15)
+
+La Tabla 15 declara de qué corrida procede cada fila del benchmark exploratorio.
 
 _Tabla 15. Procedencia de cada fila del benchmark exploratorio: correspondencia con su corrida de origen_
 
@@ -835,7 +849,7 @@ No se utilizó IA para producir, estimar o extrapolar datos experimentales, ni p
 
 #### H.1 Naturaleza y alcance del defecto
 
-*Mojibake* (文字化け, «transformación de caracteres») designa el texto ilegible que resulta de escribir una cadena con una codificación y leerla con otra. En español afecta a las vocales acentuadas y a la «ñ», que en UTF-8 no ocupan un byte sino dos: la «é» se codifica como `0xC3 0xA9` y, leída como Latin-1 —donde cada byte es un carácter—, se descompone en `Ã` seguido de `©`. La firma del defecto es por tanto esa `Ã` inicial, común a toda vocal acentuada.
+*Mojibake* (文字化け, «transformación de caracteres») designa el texto ilegible que resulta de escribir una cadena con una codificación y leerla con otra. En español afecta a las vocales acentuadas y a la «ñ», que en UTF-8 no ocupan un byte sino dos: la «é» se codifica como `0xC3 0xA9` y, leída como Latin-1 —donde cada byte es un carácter—, se descompone en `Ã` seguido de `©`. La firma del defecto es por tanto esa `Ã` inicial, común a toda vocal acentuada. La Tabla 16 muestra las formas corruptas frente a su representación real.
 
 _Tabla 16. Formas corruptas de los nombres almacenados y su representación real_
 
@@ -849,6 +863,8 @@ _Tabla 16. Formas corruptas de los nombres almacenados y su representación real
 La reparación consiste en deshacer el paso erróneo: `s.encode('latin-1').decode('utf-8')`.
 
 #### H.2 Alcance medido y consecuencia sobre la comparación
+
+La Tabla 17 resume las comprobaciones realizadas sobre el corpus y su resultado.
 
 _Tabla 17. Alcance medido del defecto de codificación sobre el corpus N=120_
 
@@ -878,6 +894,8 @@ cuál se elija**, y esa dependencia es en sí misma el resultado:
 
 - **Por entidad de referencia corrupta**: 89 artículos afectados y 31 no.
 - **Por texto de entrada corrupto**: 104 artículos afectados y 16 no.
+
+La Tabla 18 recoge el efecto por configuración y por criterio de artículo afectado.
 
 _Tabla 18. Efecto diferencial del *mojibake* sobre el F1 según el criterio de artículo afectado_
 
@@ -946,7 +964,7 @@ Esta corrección **no pudo aplicarse retroactivamente**: el cotejo se resuelve e
 
 ### Anexo I — Medición restringida a las categorías anotadas por el corpus
 
-Los prompts solicitan tres categorías de entidad y los corpus anotan dos, de modo que toda localización extraída se contabiliza como falso positivo (§3.3). Esta tabla acompaña cada cifra publicada de su equivalente restringido a las categorías que el corpus efectivamente anota. Se obtuvo reagregando los desgloses por tipo ya almacenados en los resultados por corrida, **sin repetir la inferencia**, tomando por configuración la corrida más reciente que aporta exactamente 120 registros. La exhaustividad es idéntica en ambas columnas porque el corpus no anota localizaciones y, por tanto, tampoco puede omitirlas: la corrección afecta solo a la precisión.
+Los prompts solicitan tres categorías de entidad y los corpus anotan dos, de modo que toda localización extraída se contabiliza como falso positivo (§3.3). Esta tabla acompaña cada cifra publicada de su equivalente restringido a las categorías que el corpus efectivamente anota. Se obtuvo reagregando los desgloses por tipo ya almacenados en los resultados por corrida, **sin repetir la inferencia**, tomando por configuración la corrida más reciente que aporta exactamente 120 registros. La exhaustividad es idéntica en ambas columnas porque el corpus no anota localizaciones y, por tanto, tampoco puede omitirlas: la corrección afecta solo a la precisión. La Tabla 19 acompaña cada cifra publicada de su equivalente restringido.
 
 _Tabla 19. Desempeño publicado y desempeño restringido a personas y organizaciones (N=120, 42 configuraciones)_
 | Configuración | Corrida | P | R | F1 | P restr. | F1 restr. | Δ F1 |
