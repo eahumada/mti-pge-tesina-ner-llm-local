@@ -7,7 +7,8 @@ nada por construcción (§5.3 del informe), y una comprobación que no mira nada
 que pasa.
 
 Uso:  python3 tools/verificar_informe.py            # todas
-      python3 tools/verificar_informe.py --breve    # solo el resumen final
+      python3 tools/verificar_informe.py --breve    # solo lo que falla
+      python3 tools/verificar_informe.py --red      # además comprueba las URL en red
 Devuelve 0 si no hay fallos, 1 si los hay.
 """
 import ast
@@ -315,6 +316,47 @@ def c_recuentos(s):
           'solo se comprueban las leyendas que declaran un recuento explícito')
 
 
+# --- 13. Las URL de la bibliografía responden (opcional: --red) ----------------------------------
+# Editoriales que bloquean al lector automático. CLAUDE.md ya admite acreditarlas por resolución del
+# DOI y dejar constancia: un 403 de ACM no es un enlace roto, es un portero.
+PORTEROS = ('dl.acm.org', 'acm.org', 'ieeexplore.ieee.org', 'sciencedirect.com', 'link.springer.com')
+
+
+def c_urls(s):
+    import urllib.request
+    import urllib.error
+    # El paréntesis SÍ forma parte de algunos DOI: 10.1016/0169-7552(89)90019-6. Cortar en «)»
+    # trunca la referencia [26] y la convierte en un 404 inventado por el propio verificador.
+    urls = []
+    for m in re.finditer(r'^\[(\d+)\] (.*)$', s, re.M):
+        u = re.search(r'https?://[^\s>\]]+', m.group(2))
+        urls.append((m.group(1), u.group(0).rstrip('.,;') if u else None))
+    fallos = []
+    for n, u in urls:
+        if u is None:
+            fallos.append('[%s] sin URL' % n)
+            continue
+        req = urllib.request.Request(u, headers={
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'})
+        try:
+            with urllib.request.urlopen(req, timeout=25) as r:
+                if r.status >= 400:
+                    fallos.append('[%s] HTTP %d — %s' % (n, r.status, u))
+        except urllib.error.HTTPError as e:
+            # El portero aparece TRAS la redirección: la entrada cita un doi.org que reenvía a
+            # dl.acm.org, y mirar solo la URL de partida no lo detecta nunca.
+            destino = getattr(e, 'url', '') or ''
+            if e.code in (401, 403) and any(p in u or p in destino for p in PORTEROS):
+                continue  # acreditada por resolución del DOI, no es un enlace roto
+            fallos.append('[%s] HTTP %d — %s%s'
+                          % (n, e.code, u, ' -> %s' % destino if destino and destino != u else ''))
+        except Exception as e:
+            fallos.append('[%s] %s — %s' % (n, type(e).__name__, u))
+    check('las URL de la bibliografía responden', len(urls), fallos,
+          'los 401/403 de las editoriales que bloquean lectores automáticos no cuentan como rotos')
+
+
 def main():
     s = texto()
     c_vacios()
@@ -329,6 +371,8 @@ def main():
     c_identificadores()
     c_aritmetica(s)
     c_recuentos(s)
+    if '--red' in sys.argv:
+        c_urls(s)
 
     breve = '--breve' in sys.argv
     fallos_totales = vacias = 0

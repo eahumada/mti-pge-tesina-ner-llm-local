@@ -742,3 +742,36 @@ idea de que la plantilla pedía «tres o cuatro páginas». La norma dice lo con
 Introducción contenga **a lo más** 3 páginas». La ampliación se conserva porque atiende el reparo del
 profesor guía sobre el poco desarrollo y porque el capítulo queda en 1 457 palabras, unas **2,1 páginas**,
 por debajo de ese máximo; pero la introducción **no debe crecer más**.
+
+---
+
+## Bloqueante para la entrega: el repositorio que cita [37] devuelve 404
+
+**Detectado el 2026-09-08 por `tools/verificar_informe.py --red`.** Es el único fallo de las trece
+comprobaciones.
+
+La línea 623 del Markdown canónico afirma:
+
+> «El código, los corpus, los resultados por corrida y los documentos de trabajo **están publicados** en el
+> repositorio del trabajo [37] (`https://github.com/eahumada/mti-pge-tesina-ner-llm-local`).»
+
+y la entrada [37] de la bibliografía lo cita con fecha de acceso del 8 de septiembre de 2026. **El
+repositorio es privado**, de modo que la URL devuelve HTTP 404 a cualquiera que no sea el autor. Un miembro
+del tribunal que pulse el enlace no encuentra nada, y la afirmación de que el material está publicado no es
+cierta hoy. **El PDF ya entregado al profesor guía contiene este enlace.**
+
+No se corrige el texto por iniciativa propia porque su redacción depende de una decisión ya tomada —publicar
+el repositorio— cuya ejecución está bloqueada por la purga de objetos inalcanzables de GitHub, que a esta
+hora sigue devolviendo HTTP 200 sobre `bb79279`. Reformular ahora y volver a reformular después es
+movimiento inútil.
+
+**Secuencia correcta, y su orden importa:**
+
+1. Esperar a que la purga se complete. Comprobación: el objeto `bb79279` debe devolver **404**.
+2. Solo entonces hacer público el repositorio. Publicar antes convierte una clave recuperable-si-conoces-el-SHA
+   en una clave indexable (`LEARNING §L43`).
+3. Volver a ejecutar `python3 tools/verificar_informe.py --red` y comprobar que [37] responde 200.
+4. Si hubiera que entregar **antes** de poder publicar, entonces sí hay que corregir la línea 623 y la
+   entrada [37], porque un entregable no puede afirmar algo que no es cierto.
+
+La comprobación queda automatizada: mientras [37] no responda, `--red` falla y lo recuerda.
