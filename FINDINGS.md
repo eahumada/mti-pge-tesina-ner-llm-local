@@ -1795,3 +1795,25 @@ poblaciones distintas, y la diferencia entre modos es justo lo que se publica. E
 **Pendiente de decisión del autor:** si el informe adopta ya las cifras sin contaminados (F = 35,5557) o
 espera a la re-corrida completa, que sustituirá el consolidado entero. La segunda evita rehacer el trabajo
 dos veces; la primera deja el documento coherente desde hoy.
+
+### §F66.bis — Validación de extremo a extremo del arreglo
+
+Probada la herramienta corregida contra el formato nuevo de la re-corrida (`recorrida_20260908/`), con las
+dos corridas de N=120 disponibles: 480 filas pasan a 452, que son 4 grupos × 113, la comprobación de
+integridad da conforme y el ANOVA se ejecuta.
+
+Lo que cierra el asunto es la comparación con la otra vía de cálculo. El F1 que produce la fusión coincide
+**exactamente, a cuatro decimales**, con el que publica el `benchmark_summary.json` de cada corrida:
+
+| Grupo | Fusión (113) | Resumen de la corrida |
+|:---|---:|---:|
+| `gemma4:31b-cloud` baseline | 0,8213 | 0,8213 |
+| `gemma4:31b-cloud` KB RAG | 0,8294 | 0,8294 |
+| `gemma4:12b-mlx` baseline | 0,7767 | 0,7767 |
+| `gemma4:12b-mlx` KB RAG | 0,7996 | 0,7996 |
+
+Antes del arreglo las dos vías habrían divergido, porque una promediaba 120 registros y la otra 113. Que
+ahora coincidan **es la comprobación de que la cadena entera aplica la misma convención**, que es lo que
+faltaba: la exclusión estaba en un extremo y se perdía en el otro.
+
+Se hizo en un directorio de trabajo aparte; el consolidado publicado no se ha tocado.
