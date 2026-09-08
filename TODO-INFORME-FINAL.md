@@ -775,3 +775,36 @@ movimiento inútil.
    entrada [37], porque un entregable no puede afirmar algo que no es cierto.
 
 La comprobación queda automatizada: mientras [37] no responda, `--red` falla y lo recuerda.
+
+---
+
+## Revisión del §10: los ocho bloqueantes, cuatro meses después
+
+**2026-09-08.** La lista del §10 se levantó el 2026-09-05 y **no se ha actualizado desde entonces**, de modo
+que sigue presentando como abiertos varios asuntos ya cerrados. Un listado de bloqueantes desactualizado es
+peor que no tenerlo, porque induce a creer que quedan ocho cosas por resolver antes de la defensa. Esta
+sección revisa cada uno contra el estado de hoy. **No se modifica la tabla original**, que queda como
+registro de lo que se detectó y cuándo.
+
+| # | Estado hoy | Evidencia |
+|:--|:---|:---|
+| 1 | **Cerrado** | Decisión del autor del 2026-09-07, registrada en `BENCHMARKS.md`. Las dos filas aritméticamente imposibles proceden de prototipos sobre un *sample* de 20 registros cuyo CSV no sobrevive |
+| 2 | **Cerrado** | Ya no hay métricas idénticas. La Tabla 4 da `gemma4:31b` 69,12 / 58,83 / 86,80 / 0,16 y `gemma4:31b-mlx` 68,52 / 58,31 / 86,76 / 0,00. Comprobado además que **ninguna** pareja de filas de esa tabla comparte las cinco métricas |
+| 3 | **Cerrado** | Cero apariciones de «KPMG» en el informe. La cita inventada se sustituyó durante el saneamiento del aparato bibliográfico |
+| 4 | **Cerrado** | §5 y la Tabla 10 declaran ahora las dos configuraciones: 16 GB para los modelos de hasta ~12B y 48 GB para los de 31B y las variantes MLX mayores. No hay contradicción física |
+| 5 | **Cerrado** | La Tabla 8 recoge 24 607 MB y 22,80 tok/s, que son exactamente los valores del CSV que el propio §10 citaba como discrepantes |
+| 6 | **Declarado, no oculto** | Las cuatro filas siguen en `BENCHMARKS.md` con su advertencia de que no son trazables. **El informe no las usa**: su Tabla 5 publica la corrida catalogada, con FS-ES en 74,44 % y no 0,7169. Queda al criterio del autor si conservarlas ahí |
+| 7 | **Cerrado** el 2026-09-08 | Ya marcado en la tabla original |
+| 8 | **Resuelto con evidencia** | La discrepancia tenía causa, encontrada el 2026-09-08: el crudo de 0,3973 procede de una corrida **invalidada por la cuota del servicio** (HTTP 429 en 6 de los 15 artículos de cada modo, con latencia 0 y 0 tokens/s, el 3 de septiembre a las 14:06). La medición válida es `cloud_n15_limpio_20260905`, con **0,6699** y los quince artículos resueltos por análisis directo, que es la que publica la Tabla 4. Ver `FINDINGS §F63` |
+
+**Conclusión.** De los ocho, **siete están cerrados** y el octavo tiene ya una respuesta documentada con su
+evidencia. El único punto que sigue pidiendo criterio del autor es el 6, y no bloquea la defensa porque el
+informe no descansa en esas cifras.
+
+**Lo que sí queda pendiente**, y no figuraba en esta lista, es de otra naturaleza:
+
+- **La re-corrida completa**, en curso: dos de trece modelos entregados y verificados.
+- **Adoptar o no F = 35,5557** en lugar de F = 38,2222 (`FINDINGS §F66`), que es la diferencia entre incluir
+  o excluir los siete artículos contaminados. Ninguno de los trece modelos cambia de veredicto.
+- **La publicación del repositorio**, que arrastra el 404 de la referencia [37] y espera a la purga.
+- **Resincronizar los tres `.docx`** con el Markdown canónico.
