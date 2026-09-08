@@ -348,7 +348,7 @@ o una fuente que solo tú puedes aportar.
 | 4 | **Contradicción de hardware**: se declara ejecutar modelos de ~24.7 GB de VRAM sobre 16 GB de memoria unificada | Informe §2.4 (L125) y §3.6 (L210) | Físicamente contradictorio tal como está redactado |
 | 5 | **Tabla de eficiencia no reproducible**: VRAM y Tok/s de §5.5 no se derivan de ningún CSV | Informe §5.5, L471-473 | El CSV da 24.607 MB / 22.80 tok/s frente a 24.751 / 27.56 de la tabla |
 | 6 | **Tabla de configuraciones de prompt sin corrida de origen**: 0.7169 / 0.6640 / 0.6482 / 0.5874 solo existen en `BENCHMARKS.md` | `BENCHMARKS.md` L195-202 | No trazables a ningún resultado |
-| 7 | **Etiqueta `q8-64k` viva en los datos** que alimentan la Tabla 2 (30 filas del CSV) | `results/benchmark_results.csv` | Ver `FINDINGS.md §F26`. Recomendación: documentar la equivalencia en el informe |
+| 7 | ~~Etiqueta viva en los datos~~ **RESUELTO 2026-09-08** | — | Eliminación total por decisión del autor: 270 filas de resultados, sus JSON, resúmenes, puntos de control, informes derivados, 990 líneas de log y dos filas del Anexo I. Cero rastros en datos y entregables. Ver `FINDINGS.md §F26` |
 | 8 | **Discrepancia tabla vs crudo** en modelos cloud: 0.6754 vs 0.3973 (`gemma4:31b-cloud`), 0.6321 vs 0.2011 (`minimax-m3:cloud`) | `BENCHMARKS.md`, nota de trazabilidad | Requiere decidir cuál es la fuente válida |
 
 ### Modelos evaluados sin declarar — ✅ RESUELTO (2026-09-05)

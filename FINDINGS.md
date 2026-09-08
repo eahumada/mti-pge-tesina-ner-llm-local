@@ -304,6 +304,22 @@ De 84 correcciones aplicadas, la etapa de verificación detectó **5 regresiones
 ## 9. Alcance real de la retirada de nombres
 
 ### F26. El nombre de modelo retirado sobrevive en los datos experimentales
+
+> **RESUELTO el 2026-09-08 por decisión del autor: eliminación total.** La etiqueta se retiró de **todos** los
+> datos y de todos los entregables, no solo de la documentación como en el intento de septiembre de 2026 que
+> este hallazgo declaró insuficiente. Se retiraron 270 filas de resultados —240 de la corrida N=120 y 30 del
+> CSV consolidado—, sus registros equivalentes en los `detailed_results.json`, las entradas de los resúmenes,
+> los puntos de control y las configuraciones, las filas de los informes estadísticos derivados, 990 líneas de
+> los dos registros de ejecución, y las dos filas del Anexo I del informe, cuyo recuento pasó de 49 a 47
+> configuraciones. **Verificado: cero rastros en `results/` y en el informe.** Quedan solo en respaldos
+> `.bak`, en ficheros duplicados y en los documentos internos que registran esta corrección, que es lo
+> contrario de un rastro del modelo.
+>
+> La decisión es defendible porque esa etiqueta **no era un modelo distinto**: medía `gemma4:12b-mlx` con un
+> sufijo de cuantización falso, ya que el artefacto real es 4-bit NVFP4 y no q8 (ver F4). Retirarla no quita
+> un modelo del estudio, quita una **medición duplicada mal etiquetada** de un modelo que sigue presente con
+> su nombre correcto.
+
 **Severidad: alta (integridad académica).** Detectado el 2026-09-05 por una auditoría de coherencia.
 
 Se afirmó en varios documentos que el nombre `gemma4-12b-mlx-q8-64k` tenía **«cero ocurrencias en todo el

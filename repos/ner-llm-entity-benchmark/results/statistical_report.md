@@ -10,8 +10,6 @@
 ## 2. Model Performance Intervals (95% Confidence)
 | Model | Sample Size (N) | Mean F1-Score | 95% CI Lower | 95% CI Upper | Std Dev |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| gemma4-12b-mlx-q8-64k:latest_baseline | 15 | 0.2313 | 0.0398 | 0.4228 | 0.3458 |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced | 15 | 0.1270 | -0.0190 | 0.2730 | 0.2637 |
 | gemma4:31b-cloud_baseline | 15 | 0.3973 | 0.2054 | 0.5892 | 0.3466 |
 | gemma4:31b-cloud_rag_enhanced | 15 | 0.4272 | 0.2248 | 0.6296 | 0.3654 |
 | minimax-m3:cloud_baseline | 15 | 0.2011 | 0.0321 | 0.3702 | 0.3052 |
@@ -43,8 +41,6 @@
 | Comparison | Mean Difference | Adjusted p-Value | Statistically Significant? | 95% Confidence Interval |
 | :--- | :---: | :---: | :---: | :---: |
 | deepseek-r1:1.5b_baseline vs deepseek-r1:1.5b_rag_enhanced | -0.0682 | 1.0000e+00 | ❌ No | [-0.3853, 0.2488] |
-| deepseek-r1:1.5b_baseline vs gemma4-12b-mlx-q8-64k:latest_baseline | -0.1118 | 1.0000e+00 | ❌ No | [-0.4289, 0.2052] |
-| deepseek-r1:1.5b_baseline vs gemma4-12b-mlx-q8-64k:latest_rag_enhanced | -0.2161 | 7.2640e-01 | ❌ No | [-0.5332, 0.1009] |
 | deepseek-r1:1.5b_baseline vs gemma4:31b-cloud_baseline | 0.0542 | 1.0000e+00 | ❌ No | [-0.2628, 0.3712] |
 | deepseek-r1:1.5b_baseline vs gemma4:31b-cloud_rag_enhanced | 0.0841 | 1.0000e+00 | ❌ No | [-0.2330, 0.4011] |
 | deepseek-r1:1.5b_baseline vs gemma4:31b-mlx_baseline | 0.3421 | 1.7500e-02 | ✅ Yes | [0.0251, 0.6592] |
@@ -69,8 +65,6 @@
 | deepseek-r1:1.5b_baseline vs qwen2.5:14b_rag_enhanced | 0.2859 | 1.5270e-01 | ❌ No | [-0.0312, 0.6029] |
 | deepseek-r1:1.5b_baseline vs qwen3:8b_baseline | 0.1934 | 8.9050e-01 | ❌ No | [-0.1237, 0.5104] |
 | deepseek-r1:1.5b_baseline vs qwen3:8b_rag_enhanced | 0.1580 | 9.9010e-01 | ❌ No | [-0.1590, 0.4751] |
-| deepseek-r1:1.5b_rag_enhanced vs gemma4-12b-mlx-q8-64k:latest_baseline | -0.0436 | 1.0000e+00 | ❌ No | [-0.3606, 0.2734] |
-| deepseek-r1:1.5b_rag_enhanced vs gemma4-12b-mlx-q8-64k:latest_rag_enhanced | -0.1479 | 9.9630e-01 | ❌ No | [-0.4649, 0.1691] |
 | deepseek-r1:1.5b_rag_enhanced vs gemma4:31b-cloud_baseline | 0.1224 | 9.9990e-01 | ❌ No | [-0.1946, 0.4395] |
 | deepseek-r1:1.5b_rag_enhanced vs gemma4:31b-cloud_rag_enhanced | 0.1523 | 9.9420e-01 | ❌ No | [-0.1647, 0.4694] |
 | deepseek-r1:1.5b_rag_enhanced vs gemma4:31b-mlx_baseline | 0.4103 | 6.0000e-04 | ✅ Yes | [0.0933, 0.7274] |
@@ -95,55 +89,6 @@
 | deepseek-r1:1.5b_rag_enhanced vs qwen2.5:14b_rag_enhanced | 0.3541 | 1.0200e-02 | ✅ Yes | [0.0370, 0.6711] |
 | deepseek-r1:1.5b_rag_enhanced vs qwen3:8b_baseline | 0.2616 | 3.0770e-01 | ❌ No | [-0.0554, 0.5787] |
 | deepseek-r1:1.5b_rag_enhanced vs qwen3:8b_rag_enhanced | 0.2263 | 6.3300e-01 | ❌ No | [-0.0908, 0.5433] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs gemma4-12b-mlx-q8-64k:latest_rag_enhanced | -0.1043 | 1.0000e+00 | ❌ No | [-0.4213, 0.2127] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs gemma4:31b-cloud_baseline | 0.1660 | 9.8060e-01 | ❌ No | [-0.1510, 0.4831] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs gemma4:31b-cloud_rag_enhanced | 0.1959 | 8.7630e-01 | ❌ No | [-0.1211, 0.5130] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs gemma4:31b-mlx_baseline | 0.4540 | 0.0000e+00 | ✅ Yes | [0.1369, 0.7710] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs gemma4:31b-mlx_rag_enhanced | 0.4584 | 0.0000e+00 | ✅ Yes | [0.1413, 0.7754] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs gemma4:latest_baseline | 0.4363 | 1.0000e-04 | ✅ Yes | [0.1193, 0.7534] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs gemma4:latest_rag_enhanced | 0.3735 | 4.0000e-03 | ✅ Yes | [0.0565, 0.6906] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs gemma:latest_baseline | 0.3953 | 1.3000e-03 | ✅ Yes | [0.0783, 0.7123] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs gemma:latest_rag_enhanced | 0.4033 | 8.0000e-04 | ✅ Yes | [0.0863, 0.7203] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs llama3.1:8b_baseline | 0.3759 | 3.5000e-03 | ✅ Yes | [0.0588, 0.6929] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs llama3.1:8b_rag_enhanced | 0.4029 | 9.0000e-04 | ✅ Yes | [0.0859, 0.7199] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs llama3.2:latest_baseline | 0.4006 | 1.0000e-03 | ✅ Yes | [0.0836, 0.7177] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs llama3.2:latest_rag_enhanced | 0.3445 | 1.5700e-02 | ✅ Yes | [0.0275, 0.6615] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs minimax-m3:cloud_baseline | -0.0302 | 1.0000e+00 | ❌ No | [-0.3472, 0.2869] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs minimax-m3:cloud_rag_enhanced | 0.1405 | 9.9840e-01 | ❌ No | [-0.1765, 0.4576] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs mistral-nemo:latest_baseline | 0.2994 | 9.6600e-02 | ❌ No | [-0.0176, 0.6165] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs mistral-nemo:latest_rag_enhanced | 0.3273 | 3.3100e-02 | ✅ Yes | [0.0102, 0.6443] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs nemotron-mini:4b_baseline | 0.1887 | 9.1420e-01 | ❌ No | [-0.1284, 0.5057] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs nemotron-mini:4b_rag_enhanced | 0.1742 | 9.6450e-01 | ❌ No | [-0.1428, 0.4913] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs nuextract:latest_baseline | 0.3102 | 6.5000e-02 | ❌ No | [-0.0068, 0.6273] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs nuextract:latest_rag_enhanced | 0.1283 | 9.9970e-01 | ❌ No | [-0.1888, 0.4453] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs qwen2.5:14b_baseline | 0.3793 | 3.0000e-03 | ✅ Yes | [0.0623, 0.6964] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs qwen2.5:14b_rag_enhanced | 0.3977 | 1.1000e-03 | ✅ Yes | [0.0806, 0.7147] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs qwen3:8b_baseline | 0.3052 | 7.8400e-02 | ❌ No | [-0.0118, 0.6223] |
-| gemma4-12b-mlx-q8-64k:latest_baseline vs qwen3:8b_rag_enhanced | 0.2699 | 2.4670e-01 | ❌ No | [-0.0472, 0.5869] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs gemma4:31b-cloud_baseline | 0.2703 | 2.4350e-01 | ❌ No | [-0.0467, 0.5874] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs gemma4:31b-cloud_rag_enhanced | 0.3002 | 9.3900e-02 | ❌ No | [-0.0168, 0.6173] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs gemma4:31b-mlx_baseline | 0.5583 | 0.0000e+00 | ✅ Yes | [0.2412, 0.8753] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs gemma4:31b-mlx_rag_enhanced | 0.5627 | 0.0000e+00 | ✅ Yes | [0.2456, 0.8797] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs gemma4:latest_baseline | 0.5406 | 0.0000e+00 | ✅ Yes | [0.2236, 0.8577] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs gemma4:latest_rag_enhanced | 0.4778 | 0.0000e+00 | ✅ Yes | [0.1608, 0.7949] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs gemma:latest_baseline | 0.4996 | 0.0000e+00 | ✅ Yes | [0.1826, 0.8166] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs gemma:latest_rag_enhanced | 0.5076 | 0.0000e+00 | ✅ Yes | [0.1906, 0.8246] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs llama3.1:8b_baseline | 0.4802 | 0.0000e+00 | ✅ Yes | [0.1631, 0.7972] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs llama3.1:8b_rag_enhanced | 0.5072 | 0.0000e+00 | ✅ Yes | [0.1902, 0.8242] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs llama3.2:latest_baseline | 0.5049 | 0.0000e+00 | ✅ Yes | [0.1879, 0.8220] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs llama3.2:latest_rag_enhanced | 0.4488 | 1.0000e-04 | ✅ Yes | [0.1318, 0.7658] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs minimax-m3:cloud_baseline | 0.0741 | 1.0000e+00 | ❌ No | [-0.2429, 0.3912] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs minimax-m3:cloud_rag_enhanced | 0.2448 | 4.5400e-01 | ❌ No | [-0.0722, 0.5619] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs mistral-nemo:latest_baseline | 0.4037 | 8.0000e-04 | ✅ Yes | [0.0867, 0.7208] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs mistral-nemo:latest_rag_enhanced | 0.4316 | 2.0000e-04 | ✅ Yes | [0.1145, 0.7486] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs nemotron-mini:4b_baseline | 0.2930 | 1.2080e-01 | ❌ No | [-0.0241, 0.6100] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs nemotron-mini:4b_rag_enhanced | 0.2785 | 1.9190e-01 | ❌ No | [-0.0385, 0.5956] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs nuextract:latest_baseline | 0.4145 | 5.0000e-04 | ✅ Yes | [0.0975, 0.7316] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs nuextract:latest_rag_enhanced | 0.2326 | 5.7190e-01 | ❌ No | [-0.0845, 0.5496] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs qwen2.5:14b_baseline | 0.4836 | 0.0000e+00 | ✅ Yes | [0.1666, 0.8007] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs qwen2.5:14b_rag_enhanced | 0.5020 | 0.0000e+00 | ✅ Yes | [0.1849, 0.8190] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs qwen3:8b_baseline | 0.4095 | 6.0000e-04 | ✅ Yes | [0.0925, 0.7266] |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced vs qwen3:8b_rag_enhanced | 0.3742 | 3.9000e-03 | ✅ Yes | [0.0571, 0.6912] |
 | gemma4:31b-cloud_baseline vs gemma4:31b-cloud_rag_enhanced | 0.0299 | 1.0000e+00 | ❌ No | [-0.2872, 0.3469] |
 | gemma4:31b-cloud_baseline vs gemma4:31b-mlx_baseline | 0.2879 | 1.4290e-01 | ❌ No | [-0.0291, 0.6050] |
 | gemma4:31b-cloud_baseline vs gemma4:31b-mlx_rag_enhanced | 0.2924 | 1.2330e-01 | ❌ No | [-0.0247, 0.6094] |
@@ -429,8 +374,6 @@
 | :--- | :---: | :---: | :---: | :---: |
 | deepseek-r1:1.5b_baseline | 0.3431 | 0.3108 | -0.0323 | 📉 Decreased |
 | deepseek-r1:1.5b_rag_enhanced | 0.2749 | 0.3160 | +0.0411 | 📈 Improved |
-| gemma4-12b-mlx-q8-64k:latest_baseline | 0.2313 | 0.2360 | +0.0047 | 📈 Improved |
-| gemma4-12b-mlx-q8-64k:latest_rag_enhanced | 0.1270 | 0.1376 | +0.0106 | 📈 Improved |
 | gemma4:31b-cloud_baseline | 0.3973 | 0.2848 | -0.1125 | 📉 Decreased |
 | gemma4:31b-cloud_rag_enhanced | 0.4272 | 0.4579 | +0.0307 | 📈 Improved |
 | gemma4:31b-mlx_baseline | 0.6852 | 0.6681 | -0.0172 | 📉 Decreased |

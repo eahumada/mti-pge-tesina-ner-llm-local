@@ -1,7 +1,7 @@
 {
- "nota": "Puntuacion restringida a Persons y Organizations. Recalculada desde los detailed_results.json existentes, sin reejecutar inferencia. Una corrida por grupo, la mas reciente con exactamente 120 registros.",
+ "nota": "Puntuacion restringida a Persons y Organizations. Recalculada desde los detailed_results.json existentes, sin reejecutar inferencia. Una corrida por grupo, la mas reciente con exactamente 120 registros. Se retiraron dos configuraciones que median el mismo modelo bajo una etiqueta de cuantizacion erronea, duplicando por tanto una medicion que ya figura con su nombre correcto.",
  "fecha": "2026-09-08",
- "grupos": 49,
+ "grupos": 47,
  "fp_locations": 20946,
  "fp_total": 32201,
  "pct_fp_locations": 65.0,
@@ -552,23 +552,6 @@
    "fn_locations": 0
   },
   {
-   "grupo": "gemma4-12b-mlx-q8-64k:latest_baseline",
-   "corrida": "benchmark_balanced_120_20260824_173036",
-   "pub": {
-    "P": 58.14,
-    "R": 30.98,
-    "F1": 40.42
-   },
-   "sin_loc": {
-    "P": 85.52,
-    "R": 30.98,
-    "F1": 45.48
-   },
-   "delta_F1": 5.06,
-   "fp_locations": 244,
-   "fn_locations": 0
-  },
-  {
    "grupo": "nemotron-mini:4b_kb_rag",
    "corrida": "nemotron_rerun_n120_REMOTO",
    "pub": {
@@ -668,23 +651,6 @@
    },
    "delta_F1": 3.23,
    "fp_locations": 288,
-   "fn_locations": 0
-  },
-  {
-   "grupo": "gemma4-12b-mlx-q8-64k:latest_rag_enhanced",
-   "corrida": "benchmark_balanced_120_20260824_173036",
-   "pub": {
-    "P": 51.42,
-    "R": 16.64,
-    "F1": 25.15
-   },
-   "sin_loc": {
-    "P": 83.99,
-    "R": 16.64,
-    "F1": 27.78
-   },
-   "delta_F1": 2.63,
-   "fp_locations": 178,
    "fn_locations": 0
   },
   {
