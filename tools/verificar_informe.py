@@ -213,6 +213,108 @@ def c_identificadores():
           'ha habido tres colisiones; comprobarlo en el mismo turno en que se escribe')
 
 
+# --- 11. Aritmética de las tablas de métricas ---------------------------------------------------
+PALABRAS = {'dos': 2, 'tres': 3, 'cuatro': 4, 'cinco': 5, 'seis': 6, 'siete': 7, 'ocho': 8,
+            'nueve': 9, 'diez': 10, 'once': 11, 'doce': 12, 'trece': 13, 'catorce': 14,
+            'quince': 15, 'dieciséis': 16, 'veintiséis': 26, 'treinta': 30, 'cuarenta y dos': 42}
+
+
+def _celdas(l):
+    return [c.strip() for c in l.strip().strip('|').split('|')]
+
+
+def _num(c):
+    return float(re.sub(r'[^\d.,-]', '', c).replace(',', '.')) if re.search(r'\d', c) else None
+
+
+def _tablas(s):
+    """Devuelve (numero, leyenda, cabecera, filas) por cada tabla con leyenda."""
+    L = s.split('\n')
+    out, i = [], 0
+    while i < len(L):
+        m = re.match(r'^_Tabla (\d+)\. (.*)_$', L[i])
+        if not m:
+            i += 1
+            continue
+        j = i + 1
+        while j < len(L) and not L[j].lstrip().startswith('|'):
+            j += 1
+        if j >= len(L):
+            i += 1
+            continue
+        k, filas = j + 2, []
+        while k < len(L) and L[k].lstrip().startswith('|'):
+            filas.append(L[k])
+            k += 1
+        out.append((m.group(1), m.group(2), _celdas(L[j]), filas))
+        i = k
+    return out
+
+
+def c_aritmetica(s):
+    """F1 no puede superar la media de precisión y exhaustividad."""
+    fallos, filas_vistas, tablas = [], 0, 0
+    for n, _, cab, filas in _tablas(s):
+        c = [x.lower() for x in cab]
+
+        def idx(*claves):
+            """Coincidencia exacta, nunca por prefijo.
+
+            «Parámetros» empieza por «p» y se tomaba por «Precisión», con lo que la comprobación
+            leía el número de parámetros como si fuera la precisión y daba catorce falsos positivos.
+            Una abreviatura de una letra solo vale si la celda ES esa letra.
+            """
+            for k, v in enumerate(c):
+                if any(v == x or v.rstrip('.') == x for x in claves):
+                    return k
+            return None
+
+        ip = idx('precisión', 'precision', 'p')
+        ir = idx('recall', 'exhaustividad', 'r')
+        i1 = idx('f1')
+        if None in (ip, ir, i1) or len({ip, ir, i1}) < 3:
+            continue
+        tablas += 1
+        for l in filas:
+            cel = _celdas(l)
+            if len(cel) <= max(ip, ir, i1):
+                continue
+            p, r, f = _num(cel[ip]), _num(cel[ir]), _num(cel[i1])
+            if None in (p, r, f):
+                continue
+            filas_vistas += 1
+            if f > (p + r) / 2 + 0.02:
+                fallos.append('Tabla %s, «%s»: F1 %.2f supera la media de P y R (%.2f)'
+                              % (n, cel[0][:32], f, (p + r) / 2))
+    check('F1 nunca superior a la media de P y R', filas_vistas, fallos,
+          'comprobadas %d tablas con las tres métricas' % tablas)
+
+
+# --- 12. La leyenda cuenta lo que la tabla tiene -------------------------------------------------
+def c_recuentos(s):
+    """Si la leyenda declara «trece modelos» o «42 configuraciones», deben ser tantas filas."""
+    fallos, declarados = [], 0
+    for n, ley, _, filas in _tablas(s):
+        vistos = []
+        for m in re.finditer(r'(\d+|%s)\s+(modelos|configuraciones|filas)'
+                             % '|'.join(PALABRAS), ley, re.I):
+            crudo = m.group(1).lower()
+            v = int(crudo) if crudo.isdigit() else PALABRAS.get(crudo)
+            if v is not None:
+                vistos.append((v, m.group(2)))
+        if not vistos:
+            continue
+        declarados += 1
+        # Basta con que UNO de los recuentos declarados sea el de filas. La Tabla 4 dice «doce
+        # modelos en trece configuraciones» y tiene trece filas: las dos cifras son ciertas y
+        # describen cosas distintas, porque un modelo aporta dos configuraciones de prompt.
+        if not any(v == len(filas) for v, _ in vistos):
+            fallos.append('Tabla %s declara %s y tiene %d filas'
+                          % (n, ' y '.join('%d %s' % x for x in vistos), len(filas)))
+    check('los recuentos que declara una leyenda coinciden con sus filas', declarados, fallos,
+          'solo se comprueban las leyendas que declaran un recuento explícito')
+
+
 def main():
     s = texto()
     c_vacios()
@@ -225,6 +327,8 @@ def main():
     c_excluidos(s)
     c_figura_vs_tabla(s)
     c_identificadores()
+    c_aritmetica(s)
+    c_recuentos(s)
 
     breve = '--breve' in sys.argv
     fallos_totales = vacias = 0
