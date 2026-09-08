@@ -80,7 +80,7 @@ Este capítulo revisa las familias de técnicas disponibles para resolver el pro
 
 ### 2.1 El problema y las familias de técnicas disponibles
 
-El Reconocimiento de Entidades Nombradas (NER) es una subtarea del Procesamiento de Lenguaje Natural que consiste en localizar fragmentos de texto y clasificarlos en categorías semánticas predefinidas. En cumplimiento normativo las categorías relevantes son **Personas** (PER), **Organizaciones** (ORG) y **Ubicaciones** (LOC), pues son las que permiten cotejar una noticia contra listas de sanciones y de personas expuestas políticamente [19].
+El Reconocimiento de Entidades Nombradas (NER) es una subtarea del Procesamiento de Lenguaje Natural que consiste en localizar fragmentos de texto y clasificarlos en categorías semánticas predefinidas. En cumplimiento normativo las categorías relevantes son **Personas** (PER), **Organizaciones** (ORG) y **Ubicaciones** (LOC), pues son las que permiten cotejar una noticia contra listas de sanciones [19] y de personas expuestas políticamente [38].
 
 Formalmente se plantea como un problema de etiquetado de secuencias: dado un texto segmentado en tokens, se asigna a cada uno una etiqueta según el esquema IOB2, que distingue el inicio de una entidad (*Beginning*), su continuación (*Inside*) y el texto ajeno a toda entidad (*Outside*). Esta formulación, heredada de la tarea compartida CoNLL-2002 [12], es la que fija el criterio de evaluación: una entidad se considera correctamente extraída solo si coinciden a la vez sus límites y su categoría.
 
@@ -98,7 +98,7 @@ Los **codificadores Transformer pre-entrenados** (BERT [2] y sus variantes multi
 
 Los modelos de lenguaje grande generativos (Transformers *decoder-only*) invierten el planteamiento: en lugar de ajustar los pesos al dominio, se describe la tarea en el propio *prompt*. Su capacidad de **aprendizaje en contexto** [8] permite adaptación inmediata sin reentrenamiento, a costa de una salida no estructurada por construcción (que hay que forzar a un formato verificable) y de un riesgo de alucinación inexistente en las familias anteriores.
 
-_Tabla 1. Familias de técnicas para el reconocimiento de entidades y su comportamiento frente a los criterios de selección._
+_Tabla 1. Familias de técnicas para el reconocimiento de entidades y su comportamiento frente a los criterios de selección_
 
 | Familia | Datos etiquetados requeridos | Adaptación a dominio nuevo | Riesgo principal |
 |:---|:---|:---|:---|
@@ -120,13 +120,13 @@ Un factor específico del castellano es el **coste de tokenización**: los model
 
 ### 2.3 Aumento por recuperación y ejecución local
 
-La Generación Aumentada por Recuperación (RAG) [1] fundamenta la generación en información recuperada en tiempo de consulta, en lugar de confiarla exclusivamente a los pesos del modelo. La literatura reciente [6] distingue variantes por la naturaleza de lo recuperado, y esa distinción resulta determinante en NER.
+La Generación Aumentada por Recuperación (RAG) [1] fundamenta la generación en información recuperada en tiempo de consulta, en lugar de confiarla exclusivamente a los pesos del modelo; la práctica de diseño de estos sistemas está recogida con detalle en la literatura técnica [5]. La literatura reciente [6] distingue variantes por la naturaleza de lo recuperado, y esa distinción resulta determinante en NER.
 
 Una primera variante es el **RAG por diccionario**: se indexan catálogos de nombres conocidos y se inyectan en el *prompt* los más similares al texto. Aporta cobertura sobre entidades ya catalogadas, pero introduce un sesgo de reconocimiento (el modelo tiende a proponer lo que se le ha sugerido), extremo que este trabajo comprueba empíricamente en §5.6, y no ayuda ante nombres ausentes del catálogo.
 
 Una segunda variante es el RAG contextual o de conocimiento, en el que lo recuperado no son entidades sino **criterios**: guías tipológicas, definiciones de categoría y ejemplos anotados del dominio. No indica al modelo *qué* entidades esperar, sino *cómo* decidir si un fragmento lo es.
 
-Una tercera configuración, adoptada por trabajos aplicados al ámbito financiero [5], [9], emplea el propio documento como **contexto único**, restringiendo la extracción al texto presente y mitigando la alucinación extrínseca.
+Una tercera configuración, adoptada por trabajos aplicados al ámbito financiero [9], emplea el propio documento como **contexto único**, restringiendo la extracción al texto presente y mitigando la alucinación extrínseca.
 
 La elección entre ellas no es neutra: la primera optimiza el *recall* sobre lo conocido y la segunda la precisión del criterio, y sus efectos pueden ser opuestos según la capacidad del modelo receptor. El capítulo 5 contrasta empíricamente ambas.
 
@@ -148,7 +148,7 @@ Conviene retener una asimetría de interpretación: que una diferencia **no** al
 
 La Tabla 2 posiciona este trabajo respecto de investigaciones recientes en NER para dominios financieros y regulatorios.
 
-_Tabla 2. Estado del arte en reconocimiento de entidades para dominios financieros y regulatorios._
+_Tabla 2. Estado del arte en reconocimiento de entidades para dominios financieros y regulatorios_
 
 | Trabajo | Dataset | Modelo | Desempeño publicado | Privacidad | Idioma |
 |:---|:---|:---|:---:|:---:|:---|
@@ -178,7 +178,7 @@ El tercer criterio, operar sobre hardware de consumo, obliga a cuantizar los pes
 
 El sistema se organiza en cinco capas funcionales con responsabilidades separadas, así que cada una pueda evolucionar sin arrastrar a las demás.
 
-_Tabla 3. Arquitectura del sistema por capas, con sus módulos y su detalle técnico._
+_Tabla 3. Arquitectura del sistema por capas, con sus módulos y su detalle técnico_
 
 | Capa | Módulo(s) | Detalle técnico |
 |:---|:---|:---|
@@ -218,13 +218,13 @@ La elección del umbral es un compromiso: por debajo se admiten emparejamientos 
 
 Sobre esa base se calculan precisión, exhaustividad y F1 por artículo, que después se promedian, y una **tasa de alucinación** que mide algo distinto de las anteriores: no compara con la anotación de referencia sino con el **texto de origen**. Una entidad se considera alucinada cuando no aparece literalmente en el artículo y, además, su mejor similitud contra las ventanas deslizantes del texto (del mismo número de palabras que la entidad) queda por debajo de **70**, umbral deliberadamente más laxo que el 85 del emparejamiento. La distinción importa: una entidad correctamente extraída del artículo pero ausente de la anotación de referencia cuenta como falso positivo, no como alucinación, porque el modelo no la inventó. El módulo incorpora además la validación estadística: ANOVA de una vía para contrastar si las diferencias entre modelos y modos son significativas, pruebas post-hoc de Tukey HSD para identificar qué pares concretos difieren, intervalos de confianza al 95 % por grupo y un análisis de sensibilidad que recalcula las métricas excluyendo los artículos atípicamente largos, con el fin de comprobar que ningún resultado depende de unos pocos casos extremos.
 
-Un tercer límite, de naturaleza distinta a los anteriores porque no procede del cotejo sino del diseño, afecta a la comparabilidad de las cifras absolutas. Los prompts del sistema solicitan tres categorías de entidad, personas, organizaciones y localizaciones, mientras que los tres corpus anotan únicamente las dos primeras: el campo de localizaciones está vacío en los ciento veinte registros. Como el evaluador puntúa las tres categorías, toda localización que el modelo devuelve se contabiliza como falso positivo, sin que exista ninguna forma de acertar en ella. El efecto no es menor: **el 65 % de los falsos positivos del estudio, 20 946 de 32 201, proceden de esa categoría**. Conviene subrayar que se trata de una penalización exclusivamente de precisión, porque al no haber localizaciones anotadas tampoco puede haber omisiones: la exhaustividad no varía en ninguna configuración. Por esa razón este informe acompaña cada resultado de una segunda medición, **restringida a las categorías que el corpus efectivamente anota**, que se obtiene reagregando los desgloses por tipo ya almacenados y no requiere repetir la inferencia. Las cifras originales se conservan íntegras junto a ella, de modo que el lector pueda juzgar el alcance de la corrección; la Tabla del Anexo I recoge ambas para las cuarenta y dos configuraciones medidas sobre el corpus N=120.
+Un tercer límite, de naturaleza distinta a los anteriores porque no procede del cotejo sino del diseño, afecta a la comparabilidad de las cifras absolutas. Los prompts del sistema solicitan tres categorías de entidad, personas, organizaciones y localizaciones, mientras que los tres corpus anotan únicamente las dos primeras: el campo de localizaciones está vacío en los ciento veinte registros. Como el evaluador puntúa las tres categorías, toda localización que el modelo devuelve se contabiliza como falso positivo, sin que exista ninguna forma de acertar en ella. El efecto no es menor: **el 67,5 % de los falsos positivos del estudio, 19 178 de 28 404, proceden de esa categoría**. Conviene subrayar que se trata de una penalización exclusivamente de precisión, porque al no haber localizaciones anotadas tampoco puede haber omisiones: la exhaustividad no varía en ninguna configuración. Por esa razón este informe acompaña cada resultado de una segunda medición, **restringida a las categorías que el corpus efectivamente anota**, que se obtiene reagregando los desgloses por tipo ya almacenados y no requiere repetir la inferencia. Las cifras originales se conservan íntegras junto a ella, de modo que el lector pueda juzgar el alcance de la corrección; la Tabla del Anexo I recoge ambas para las cuarenta y dos configuraciones medidas sobre el corpus N=120.
 
 ## 4. DISEÑO EXPERIMENTAL
 
 ### 4.1 Corpus de Evaluación
 
-Se utilizaron dos corpus complementarios:
+Se utilizaron tres corpus complementarios:
 
 Corpus 1 — Kleptotrace/CoNLL-2002 (N=15, Gold Standard) [18], [12]:  
 15 artículos periodísticos reales del conjunto *Kleptotrace-micro-dataset* [18] sobre corrupción financiera, lavado de activos y sanciones internacionales, **redactados en inglés**. Anotados manualmente con entidades Personas (PER) y Organizaciones (ORG) como referencia; el corpus no anota localizaciones, lo que tiene consecuencias sobre la medición que se discuten en §3.3. Longitud promedio: ~4.833 caracteres por artículo (mediana 5.280; rango 725–8.813).
@@ -254,7 +254,7 @@ Los modelos de la Tabla 4 se reparten en tres grupos. Entre los locales de ocho 
 
 ### 4.3 Análisis de variantes de prompts
 
-Sobre `gemma4:latest` se evaluaron cuatro configuraciones de *prompt* que cruzan dos factores (idioma, inglés o español, y estrategia de demostración, con ejemplos o sin ellos), lo que es un diseño factorial 2×2, habitualmente llamado *ablation study* en la bibliografía en inglés. Las cuatro celdas son zero-shot en inglés, que actúa como referencia, zero-shot en español, few-shot en inglés y few-shot en español, empleando en los dos últimos tres ejemplos del dominio de cumplimiento.
+Sobre `gemma4:latest` se evaluaron cuatro configuraciones de *prompt* que cruzan dos factores (idioma, inglés o español, y estrategia de demostración, con ejemplos o sin ellos), lo que es un diseño factorial 2×2, habitualmente llamado *ablation study* en la bibliografía en inglés. Las cuatro celdas son zero-shot en inglés, que actúa como referencia, zero-shot en español, few-shot en inglés y few-shot en español, empleando en los dos últimos dos ejemplos del dominio de cumplimiento.
 
 El aprendizaje en contexto es la capacidad de un modelo de adaptarse a una tarea nueva sin actualizar sus pesos, solo a partir de lo que recibe en el *prompt*; Brown et al. [8] la documentaron en el trabajo fundacional de GPT-3 y es lo que separa a estos modelos de los supervisados tradicionales. En su variante *few-shot* el *prompt* antepone a la tarea real un puñado de ejemplos resueltos, cada uno con su entrada y la salida esperada, así que el modelo infiere el patrón antes de enfrentarse al caso que importa. En la variante *zero-shot* no hay ejemplos y el modelo debe deducir formato y criterio solo de la instrucción.
 
@@ -288,7 +288,7 @@ Las pruebas se ejecutaron sobre Apple Silicon con aceleración Metal, en dos con
 
 La Tabla 4 presenta los resultados consolidados del benchmark completo agrupados por familia y tamaño de modelo:
 
-_Tabla 4. Benchmark exploratorio: doce modelos en trece configuraciones sobre el corpus de quince artículos (N=15)._
+_Tabla 4. Benchmark exploratorio: doce modelos en trece configuraciones sobre el corpus de quince artículos (N=15)_
 
 | Modelo | Tipo | Parámetros | F1 | Precisión | Recall | Hallucination | Latencia (s) | Tok/s/B |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
@@ -322,7 +322,7 @@ _Tabla 4. Benchmark exploratorio: doce modelos en trece configuraciones sobre el
 
 ### 5.2 Análisis de Variantes de Prompts (gemma4:latest, N=15)
 
-_Tabla 5. Variantes de prompt sobre `gemma4:latest`: diseño factorial de idioma de la instrucción y de los ejemplos (N=15)._
+_Tabla 5. Variantes de prompt sobre `gemma4:latest`: diseño factorial de idioma de la instrucción y de los ejemplos (N=15)_
 
 | Configuración | F1 | Precisión | Recall | Hallucination | Latencia (s) | Δ vs. Baseline |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
@@ -342,7 +342,7 @@ _Tabla 5. Variantes de prompt sobre `gemma4:latest`: diseño factorial de idioma
 
 El primer experimento evalúa los dos modelos de mayor capacidad del estudio sobre el corpus sintético del dominio AML/KYC, compuesto por treinta artículos breves con anotación experta. Su propósito no es comparar el catálogo completo de modelos (eso corresponde al §5.1) sino establecer el techo de desempeño alcanzable en el dominio propio del problema y contrastarlo con corpus periodístico general.
 
-_Tabla 6. Validación estadística sobre el corpus del dominio (N=30), con intervalos de confianza del 95 %._
+_Tabla 6. Validación estadística sobre el corpus del dominio (N=30), con intervalos de confianza del 95 %_
 
 | Modelo | F1 | Precisión | Recall | IC 95 % del F1 | Fallos |
 |:---|:---:|:---:|:---:|:---:|:---:|
@@ -359,7 +359,7 @@ Vale la pena señalar una particularidad de procedencia. Una primera ejecución 
 
 Sobre el corpus real N=120 descrito en §4.1.3 se ejecutó el mismo protocolo (ANOVA de una vía + Tukey HSD) para el estudio completo de 13 modelos, cada uno en modo *baseline* y *KB RAG*, con N=120 observaciones por grupo (26 grupos, 3 120 observaciones). Resultados consolidados en `results/ANALISIS_CONJUNTO_20260907/`.
 
-_Tabla 7. Efecto de la base de conocimientos contextual sobre el corpus real (N=120, trece modelos)._
+_Tabla 7. Efecto de la base de conocimientos contextual sobre el corpus real (N=120, trece modelos)_
 
 | Modelo | F1 baseline | F1 KB RAG | Δ RAG | Δ significativo |
 |:---|:---:|:---:|:---:|:---:|
@@ -408,7 +408,7 @@ Las **alucinaciones extrínsecas**, en las que el modelo propone entidades ausen
 
 ### 5.5 Análisis de Eficiencia en Hardware Soberano
 
-_Tabla 8. Eficiencia en hardware soberano: memoria, rendimiento y coste estimado por artículo._
+_Tabla 8. Eficiencia en hardware soberano: memoria, rendimiento y coste estimado por artículo_
 
 | Modelo | VRAM (MB) | Tok/s | Parámetros (B) | Índice Tok/s/B | Costo/Artículo |
 |:---|:---:|:---:|:---:|:---:|:---:|
@@ -472,7 +472,7 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 6. El RAG contextual supera al RAG por diccionario: La implementación de la Base de Conocimientos Contextual (KB RAG) demuestra que el reconocimiento de entidades mediante LLMs locales es un problema de **comprensión sintáctico-contextual**, no de búsqueda en bases de datos cerradas. En el estudio N=120 sobre 13 modelos, el KB RAG (`--rag-mode kb_combined`) mejoró el F1-Score de forma **estadísticamente significativa** (Tukey HSD) en dos de los trece modelos (`nemotron-mini:4b` **+14,52 pp**, p<0,001, y `llama3.2:latest` **+10,82 pp**, p=0,007; conviene precisar que este último no es el segundo más débil del estudio sino el tercero por la cola, y que el segundo, `deepseek-r1:1.5b`, empeora 0,90 puntos con KB RAG), con ganancias positivas pero no concluyentes en la franja intermedia y efecto nulo en los modelos de 31B, versus el dict-RAG (v1.0), que en un sondeo exploratorio N=5 sobre el mismo modelo, no persistido en `results/`, degradó el F1 hasta 0.2367 (−57.8% respecto de su propio baseline), degradación confirmada después en la corrida reproducible N=120, donde ese mismo modelo cae de 0.3611 a 0.3113. Su efectividad parece modularse por la capacidad paramétrica, beneficiando sobre todo a los modelos de 3 a 14 mil millones de parámetros, donde actúa como memoria externa de conocimiento lingüístico sin coste adicional de hardware. La relación es una **tendencia y no un resultado significativo**: la correlación por rangos entre capacidad y beneficio da ρ = −0,52 con p = 0,071, que no alcanza el nivel de significación que este trabajo fija, con trece modelos como tamaño de muestra. Este hallazgo tiene implicaciones directas para el diseño de sistemas RAG en dominio abierto con LLMs soberanos.
 
-7. La codificación del corpus condiciona la medición, y no de forma neutra: el corpus N=120 almacena los nombres con *mojibake* (`JosÃ© Bono` donde el nombre real es **José Bono**), un defecto presente a la vez en las entidades de referencia (20,1 %) y en el texto de entrada (87 % de los artículos). Al ser **coherente entre ambos**, no introduce el sesgo uniforme que cabría suponer: favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía, con un efecto cuyo **signo depende de dónde esté la corrupción**, y esa dependencia es el resultado. Cuando está en la anotación de referencia, diecinueve de las veinticuatro configuraciones medidas puntúan **mejor** en los artículos afectados, porque el cotejo premia transcribir los bytes literalmente y penaliza al modelo que escribe el nombre correctamente. Cuando está en el texto de entrada, diecinueve de veinticuatro puntúan **peor**, porque la corrupción dificulta la extracción para todos. Los dos efectos se contraponen, y su cancelación explica que la ventaja de la instrucción en español desaparezca precisamente sobre el corpus con más entidades hispanas: allí la competencia lingüística se vuelve desventaja frente a una referencia corrompida. La implicación metodológica excede a este trabajo: en una evaluación de NER un defecto de codificación no es ruido de fondo sino una variable que interactúa con el comportamiento del modelo, y verificar la codificación **de la entrada y de la referencia por separado** debe formar parte del protocolo antes de dar por válida cualquier cifra. El detalle, con el script que permite reproducirlo, se desarrolla en el **Anexo H**.
+7. La codificación del corpus condiciona la medición, y no de forma neutra: el corpus N=120 almacena los nombres con *mojibake* (`JosÃ© Bono` donde el nombre real es **José Bono**), un defecto presente a la vez en las entidades de referencia (20,1 %) y en el texto de entrada (87 % de los artículos). Al ser **coherente entre ambos**, no introduce el sesgo uniforme que cabría suponer: favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía, con un efecto cuyo **signo depende de dónde esté la corrupción**, y esa dependencia es el resultado. Cuando está en la anotación de referencia, dieciocho de las veintidós configuraciones medidas puntúan **mejor** en los artículos afectados, porque el cotejo premia transcribir los bytes literalmente y penaliza al modelo que escribe el nombre correctamente. Cuando está en el texto de entrada, dieciocho de veintidós puntúan **peor**, porque la corrupción dificulta la extracción para todos. Los dos efectos se contraponen, y su cancelación explica que la ventaja de la instrucción en español desaparezca precisamente sobre el corpus con más entidades hispanas: allí la competencia lingüística se vuelve desventaja frente a una referencia corrompida. La implicación metodológica excede a este trabajo: en una evaluación de NER un defecto de codificación no es ruido de fondo sino una variable que interactúa con el comportamiento del modelo, y verificar la codificación **de la entrada y de la referencia por separado** debe formar parte del protocolo antes de dar por válida cualquier cifra. El detalle, con el script que permite reproducirlo, se desarrolla en el **Anexo H**.
 
 ### 7.2 Trabajo Futuro
 
@@ -480,7 +480,7 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 2. **Fine-tuning supervisado (Fase 1):** Aplicar LoRA (*Low-Rank Adaptation*) [27], técnica que ajusta un modelo a un dominio entrenando solo un pequeño conjunto de matrices añadidas y dejando intactos los pesos originales, lo que reduce drásticamente el coste del ajuste fino sobre `gemma4:31b` con 200+ ejemplos anotados de Kleptotrace/CoNLL-2002 para cerrar la brecha hacia la meta aspiracional de 85% de F1 (§6.1).
 
-3. Expansión del corpus de evaluación (Fase 2): Ampliar el corpus de N=120 a N≥200 artículos reales del dominio AML/KYC chileno, incorporando fuentes como la UAF, CMF y bases de datos de OpenSanctions [19].
+3. Expansión del corpus de evaluación (Fase 2): Ampliar el corpus de N=120 a N≥200 artículos reales del dominio AML/KYC chileno, incorporando fuentes como la UAF, CMF y bases de datos de OpenSanctions [38].
 
 4. Ensemble de modelos (Fase 3): Combinar las fortalezas de `gemma4:31b` (alto Recall) y modelos compactos como `llama3.2` (alta eficiencia de hardware) mediante votación mayoritaria ponderada por confianza de extracción.
 
@@ -490,12 +490,11 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 7. Normalización de codificación del corpus y re-evaluación (Fase 6): el corpus N=120 almacena los nombres con *mojibake* (`JosÃ© Bono` donde el nombre real es **José Bono**), defecto presente tanto en las entidades de referencia (20,1 %) como en el texto de entrada (87 % de los artículos), y por tanto **coherente entre ambos**. Esto favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía, con un efecto que varía entre −0.070 y +0.025 de F1 según el modelo (§5.3.5). La línea de trabajo consiste en normalizar la codificación en ambos lados de la comparación —reparando la referencia y la extracción antes del cotejo difuso, de modo que el resultado deje de depender de la representación de bytes— y **re-ejecutar el estudio N=120** para obtener valores absolutos libres de esta interacción. No se abordó en este trabajo porque el cotejo se resuelve en tiempo de inferencia y las extracciones por registro no se conservaron, lo que obliga a repetir la inferencia completa.
 
-## 8. REFERENCIAS BIBLIOGRÁFICAS
 
 8. Anotación de localizaciones en el corpus de referencia (Prioridad Alta): los prompts del sistema solicitan
    tres categorías de entidad, personas, organizaciones y localizaciones, pero ninguno de los tres corpus anota
    la tercera. Como se explica en §3.3, eso convierte toda localización correctamente identificada en un falso
-   positivo, y de ahí procede el 65 % de los falsos positivos del estudio. La medición restringida a las dos
+   positivo, y de ahí procede el 67,5 % de los falsos positivos del estudio. La medición restringida a las dos
    categorías anotadas, que este informe publica en paralelo, corrige el efecto sin reejecutar inferencia, pero
    no sustituye a la solución de fondo: anotar las localizaciones y medir las tres categorías, que es la única
    vía para saber cuánto de la precisión aparente se debe a la habilidad del modelo y cuánto al vacío del gold.
@@ -515,7 +514,9 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
     el mecanismo que se le atribuía, la concordancia de idioma entre prompt y texto, no puede ser el correcto:
     la mejora se obtuvo sobre artículos en inglés.
 
-> *Formato IEEE*
+
+## REFERENCIAS
+
 
 [1] P. Lewis et al., "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks," *Advances in Neural Information Processing Systems*, vol. 33, pp. 9459-9474, 2020. [En línea]. Disponible: https://proceedings.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html
 
@@ -525,7 +526,7 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 [4] A. Vaswani et al., "Attention is All you Need," *Advances in Neural Information Processing Systems*, vol. 30, 2017. [En línea]. Disponible: https://proceedings.neurips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html
 
-[5] K. Bourne, *Unlocking Data with Generative AI and RAG*. Birmingham, R.U.: Packt Publishing, 2024, ISBN 978-1-83588-790-5. [En línea]. Disponible: https://books.google.com/books?vid=ISBN9781835887905
+[5] K. Bourne and S. Es, *Unlocking Data with Generative AI and RAG*. Birmingham, R.U.: Packt Publishing, 2024, ISBN 978-1-83588-790-5. [En línea]. Disponible: https://books.google.com/books?vid=ISBN9781835887905
 
 [6] Y. Gao et al., "Retrieval-Augmented Generation for Large Language Models: A Survey," 2024, arXiv:2312.10997. [Online]. Available: https://arxiv.org/abs/2312.10997
 
@@ -552,8 +553,6 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 [17] J. Lafferty, A. McCallum, and F. Pereira, "Conditional Random Fields: Probabilistic Models for Segmenting and Labeling Sequence Data," *Proceedings of ICML*, pp. 282-289, 2001. [En línea]. Disponible: https://dl.acm.org/doi/10.5555/645530.655813
 
 [18] Proyecto KLEPTOTRACE, "Kleptotrace-micro-dataset," conjunto de datos, Zenodo, 2024 (15 artículos y 441 frases sobre corrupción financiera, con listas de personas y organizaciones anotadas). doi: 10.5281/zenodo.14027005. [En línea]. Disponible: https://doi.org/10.5281/zenodo.14027005
-
-[38] OpenSanctions, *FollowTheMoney: an ontology and data model for anti-corruption and due diligence data* [En línea]. Disponible: https://followthemoney.tech
 
 [19] U.S. Department of the Treasury, Office of Foreign Assets Control, *Specially Designated Nationals and Blocked Persons List (SDN)*, instantánea del 27 de julio de 2026. [En línea]. Disponible: https://www.treasury.gov/ofac/downloads/sdn.csv
 
@@ -593,7 +592,9 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 [37] E. Ahumada Gallardo. *mti-pge-tesina-ner-llm-local*, repositorio de código del trabajo, 2026. [Online]. Available: https://github.com/eahumada/mti-pge-tesina-ner-llm-local (accedido: 8 sep. 2026).
 
-## 9. ANEXOS
+[38] OpenSanctions, *FollowTheMoney: an ontology and data model for anti-corruption and due diligence data* [En línea]. Disponible: https://followthemoney.tech
+
+## ANEXOS
 
 ### Anexo A — Estructura del Repositorio de Código
 
@@ -602,7 +603,7 @@ repositorio del trabajo [37] (**https://github.com/eahumada/mti-pge-tesina-ner-l
 los parámetros exactos y su `benchmark_results.csv` con las métricas por artículo, de modo que las cifras de
 este informe pueden rehacerse sin repetir la inferencia. La estructura del repositorio es la siguiente:
 
-_Tabla 9. Estructura del repositorio de código._
+_Tabla 9. Estructura del repositorio de código_
 
 | Ruta | Descripción |
 |:---|:---|
@@ -683,7 +684,7 @@ Eres un periodista de investigación financiera. Redacta un párrafo corto (2-4 
 
 ### Anexo C — Configuración del Entorno de Pruebas
 
-_Tabla 10. Configuración del entorno de pruebas._
+_Tabla 10. Configuración del entorno de pruebas_
 
 | Componente | Especificación |
 |:---|:---|
@@ -703,7 +704,7 @@ Se documentan aquí los diagramas de flujo, tablas de configuración CLI y catá
 
 El módulo src/kb_rag_manager.py (KBRAGManager) implementa cuatro modos de operación configurables; para el modo `entities` el orquestador conserva la clase original `RAGManager` de src/rag_manager.py, de modo que la línea base dict-RAG se ejecuta con el código previo sin modificar:
 
-_Tabla 11. Configuración CLI del Módulo KB RAG._
+_Tabla 11. Configuración CLI del Módulo KB RAG_
 
 | Modo | Flag CLI | Descripción | Caso de Uso |
 |---|---|---|---|
@@ -739,7 +740,7 @@ KB RAG (nuevo): Template positivo — "[EXTRACTION GUIDANCE] Apply these rules t
 
 #### D.2 Catálogo de guías tipológicas y ejemplares de la base de Conocimientos
 
-_Tabla 12. Guías Tipológicas de Dominio de la Base de Conocimientos._
+_Tabla 12. Guías Tipológicas de Dominio de la Base de Conocimientos_
 
 | Dominio | ID | Idioma | Keywords Clave |
 |---|---|---|---|
@@ -749,7 +750,7 @@ _Tabla 12. Guías Tipológicas de Dominio de la Base de Conocimientos._
 | Judicial y Crimen | judicial_crime_es | ES | tribunal, fiscal, audiencia, sentencia |
 | Deportivo y Social | sports_social_es | ES | liga, federación, torneo |
 
-_Tabla 13. Ejemplares Few-Shot de la Base de Conocimientos._
+_Tabla 13. Ejemplares Few-Shot de la Base de Conocimientos_
 
 | ID Ejemplar | Dominio | Fuente |
 |---|---|---|
@@ -763,7 +764,7 @@ _Tabla 13. Ejemplares Few-Shot de la Base de Conocimientos._
 
 #### D.3 Reglas de la base de conocimientos contextual
 
-_Tabla 14. Reglas de la guía tipológica del dominio político-administrativo (politics_es), a modo de ejemplo._
+_Tabla 14. Reglas de la guía tipológica del dominio político-administrativo (politics_es), a modo de ejemplo_
 
 | Regla | Contenido |
 |---|---|
@@ -773,7 +774,7 @@ _Tabla 14. Reglas de la guía tipológica del dominio político-administrativo (
 
 ### Anexo E — Procedencia de los Datos del Benchmark General (N=15)
 
-_Tabla 15. Procedencia de cada fila del benchmark exploratorio: correspondencia con su corrida de origen._
+_Tabla 15. Procedencia de cada fila del benchmark exploratorio: correspondencia con su corrida de origen_
 
 | Filas de la Tabla 4 | Corrida de origen |
 |---|---|
@@ -829,7 +830,7 @@ No se utilizó IA para producir, estimar o extrapolar datos experimentales, ni p
 
 *Mojibake* (文字化け, «transformación de caracteres») designa el texto ilegible que resulta de escribir una cadena con una codificación y leerla con otra. En español afecta a las vocales acentuadas y a la «ñ», que en UTF-8 no ocupan un byte sino dos: la «é» se codifica como `0xC3 0xA9` y, leída como Latin-1 —donde cada byte es un carácter—, se descompone en `Ã` seguido de `©`. La firma del defecto es por tanto esa `Ã` inicial, común a toda vocal acentuada.
 
-_Tabla 16. Formas corruptas de los nombres almacenados y su representación real._
+_Tabla 16. Formas corruptas de los nombres almacenados y su representación real_
 
 | Forma almacenada (corrupta) | Forma real |
 |:---|:---|
@@ -842,7 +843,7 @@ La reparación consiste en deshacer el paso erróneo: `s.encode('latin-1').decod
 
 #### H.2 Alcance medido y consecuencia sobre la comparación
 
-_Tabla 17. Alcance medido del defecto de codificación sobre el corpus N=120._
+_Tabla 17. Alcance medido del defecto de codificación sobre el corpus N=120_
 
 | Comprobación sobre `data/benchmark_balanced_120.json` | Resultado |
 |:---|:---:|
@@ -859,7 +860,7 @@ El dato determinante es que el defecto **alcanza también al texto de entrada**,
 
 #### H.3 Evidencia empírica del efecto diferencial
 
-El efecto se midió sobre las 24 configuraciones del corpus N=120 que aportan los ciento veinte registros
+El efecto se midió sobre las 22 configuraciones del corpus N=120 que aportan los ciento veinte registros
 completos, con el script `tools/analisis_mojibake.py`, que se publica para que la tabla sea reproducible. La
 medición obliga a declarar el criterio de «artículo afectado», porque **el signo del efecto depende de cuál se
 elija**, y esa dependencia es en sí misma el resultado:
@@ -867,7 +868,7 @@ elija**, y esa dependencia es en sí misma el resultado:
 - **Por entidad de referencia corrupta**: 89 artículos afectados y 31 no.
 - **Por texto de entrada corrupto**: 104 artículos afectados y 16 no.
 
-_Tabla 18. Efecto diferencial del *mojibake* sobre el F1 según el criterio de artículo afectado._
+_Tabla 18. Efecto diferencial del *mojibake* sobre el F1 según el criterio de artículo afectado_
 
 | Configuración | Δ F1 por entidad de referencia | Δ F1 por texto de entrada |
 |:---|--:|--:|
@@ -894,8 +895,8 @@ _Tabla 18. Efecto diferencial del *mojibake* sobre el F1 según el criterio de a
 | `deepseek-r1:1.5b_kb_rag` | -0.0717 | -0.1796 |
 | `llama3.2:latest_baseline` | -0.0816 | -0.2665 |
 
-Los dos criterios apuntan en direcciones opuestas, y de forma sistemática: **19 de las 24 configuraciones
-puntúan mejor** en los artículos cuya anotación de referencia está corrompida, y **5 de las 24 puntúan peor**
+Los dos criterios apuntan en direcciones opuestas, y de forma sistemática: **19 de las 22 configuraciones
+puntúan mejor** en los artículos cuya anotación de referencia está corrompida, y **4 de las 22 puntúan peor**
 en aquellos cuyo texto lo está. La lectura es coherente con el mecanismo del cotejo difuso. Cuando la
 corrupción está en la referencia, el corpus premia la transcripción literal de los bytes y penaliza al modelo
 que escribe el nombre correctamente, porque `José Bono` no casa con `JosÃ© Bono`. Cuando está en el texto de
@@ -930,7 +931,7 @@ Esta corrección **no pudo aplicarse retroactivamente**: el cotejo se resuelve e
 
 Los prompts solicitan tres categorías de entidad y los corpus anotan dos, de modo que toda localización extraída se contabiliza como falso positivo (§3.3). Esta tabla acompaña cada cifra publicada de su equivalente restringido a las categorías que el corpus efectivamente anota. Se obtuvo reagregando los desgloses por tipo ya almacenados en los resultados por corrida, **sin repetir la inferencia**, tomando por configuración la corrida más reciente que aporta exactamente 120 registros. La exhaustividad es idéntica en ambas columnas porque el corpus no anota localizaciones y, por tanto, tampoco puede omitirlas: la corrección afecta solo a la precisión.
 
-_Tabla 19. Desempeño publicado y desempeño restringido a personas y organizaciones (N=120, 42 configuraciones)._
+_Tabla 19. Desempeño publicado y desempeño restringido a personas y organizaciones (N=120, 42 configuraciones)_
 | Configuración | Corrida | P | R | F1 | P restr. | F1 restr. | Δ F1 |
 |:---|:---|---:|---:|---:|---:|---:|---:|
 | gemma4:31b-cloud_baseline | gemma4_31b_cloud_n120_REMOTO | 58.58 | 76.80 | 66.46 | 86.70 | 81.45 | +14.99 |
