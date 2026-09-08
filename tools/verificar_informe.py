@@ -205,8 +205,9 @@ def c_identificadores():
         if not os.path.exists(fich):
             continue
         # «§F61.bis» es una subnumeración deliberada, no una colisión con «§F61»: el proyecto ya
-        # usa ese sufijo en §2.bis y §3.bis. El identificador incluye el sufijo.
-        nums = re.findall(r'^#{2,3} *§?%s(\d+(?:\.bis)?)' % pref,
+        # usa ese sufijo en §2.bis y §3.bis. El identificador incluye el sufijo, cualquiera que sea:
+        # la primera versión solo admitía «.bis» y marcó como colisión un «.ter» legítimo.
+        nums = re.findall(r'^#{2,3} *§?%s(\d+(?:\.[a-z]+)?)' % pref,
                           open(fich, encoding='utf-8').read(), re.M)
         total += len(nums)
         vistos = {}
