@@ -745,3 +745,37 @@ correlativas · las 20 entradas IEEE · ninguna llamada `§` rota · ninguna pal
 
 **`_v10` congelada como versión de entrega**: `.docx` SHA-256 `2e786c7f7ebd` y `.pdf` `d109daf55485`, con copia
 de ambos en la raíz. Renderizador actualizado en `doc/versions/informe_final/_tools/`.
+
+### 2026-09-08 07:30 — Resincronización con el `.md` saneado (_v11, sin declarar entrega)
+
+Los tres `.docx` y el PDF de la `_v10` arrastraban **20 referencias frente a las 37 del Markdown** y la **Tabla
+2 antigua**, la que descansaba sobre las cuatro citas inexistentes que §2.20 mandó eliminar. Resincronizados.
+
+**Revisión del `.md` antes de propagar.** 131 490 bytes, escrito a las 07:06 y estable, SHA-256 `d4a1b6de5b3f`.
+37 entradas de bibliografía numeradas de 1 a 37 y correlativas; cada cita del texto tiene su entrada y cada
+entrada se cita al menos una vez, sin huérfanas por ninguno de los dos lados; nueve capítulos y ocho anexos A-H;
+19 tablas; ningún emoji ni arte ASCII. Las citas fabricadas han desaparecido: cero ocurrencias de «Smith,
+Johnson» y de «Min et al». La Tabla 2 se rehizo sobre obras reales, con BloombergGPT declarando **BLOOM 50B** y
+F1 de 53,6-75,5 % en lugar de GPT-J con «más del 85 %», FiNER-139 con SEC-BERT-SHAPE y 82,1 % de micro-F1, y
+Cañete et al. con BETO y 88,43 % en sustitución de la referencia atribuida a García y López.
+
+**Extensión, con la medición delante.** El `.md` creció de 15 915 a 19 549 palabras. El documento queda en **31
+páginas: cuerpo 20 y anexos 11**. Los dos límites institucionales se cumplen con holgura —el cuerpo va cinco
+páginas por debajo de sus 25 y los anexos catorce por debajo de las suyas—, pero el objetivo interno de 25
+totales ya no se alcanza. **La compactación por estilo está agotada, y se comprobó en lugar de suponerlo:** una
+pasada agresiva (interlineado 228 → 220, encabezados 220/110 → 180/90, 160/80 → 130/65 y 140/70 → 120/60,
+leyendas 100/60 → 90/50, filas 184 → 176) da un resultado idéntico, 31 páginas con cuerpo 20 y anexos 11, porque
+los cortes los manda ahora el contenido y no el espaciado. Se conserva la configuración moderada, que se lee
+mejor. Bajar de 31 exigiría suprimir texto, y eso no se hace sin autorización expresa.
+
+**Verificación sobre el PDF:** las 37 entradas presentes y correlativas en el capítulo 8 · cero páginas en
+blanco · encabezado y pie en las 31 páginas sin solaparse (holguras mínimas 20,9 y 17,5 pt) · resumen y abstract
+en la página 1, con 199 y 189 palabras · nueve capítulos y ocho anexos A-H · 19 leyendas correlativas · ninguna
+llamada `§` rota · ningún emoji, arte ASCII ni asterisco literal. Los tres `.docx` coinciden en las 37
+referencias y en la fila de BloombergGPT.
+
+**Concurrencia:** el `.md` se releyó al terminar y su hash sigue siendo `d4a1b6de5b3f`, así que la propagación se
+hizo contra un original que no se movió. Del `.md` no se tocó nada: sigue declarado bajo §2.20 por Claude Code.
+
+**`_v11` congelada** (`.docx` `efe56e1d7495`, `.pdf` `872d23993314`), **sin declararla versión de entrega**: la
+extensión total está por resolver y §2.20 sigue abierta.
