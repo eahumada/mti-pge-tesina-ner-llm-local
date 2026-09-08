@@ -1207,6 +1207,14 @@ que el informe apoyaba el cumplimiento del umbral, **están íntegramente en ing
 
 La opción 1 es la recomendable: reaprovecha todo el cómputo ya hecho y corrige la medición de raíz.
 
+> **Corrección del criterio de detección, 2026-09-08.** La primera versión de esta regla decía que el
+> indicador era el `fn` agregado por categoría, y **estaba mal**. El equipo remoto lo detectó al implementar
+> la comprobación (commit `e6a3b8f`): `fn == 0` con `tp > 0` es **exhaustividad perfecta**, no un defecto, y
+> ese criterio invalidaría corridas legítimas. La señal correcta es **`tp + fn == 0` con `fp > 0`**, es decir
+> que la categoría no tenga ni una entidad de referencia en todo el corpus y aun así acumule falsos
+> positivos. Corregido en `CLAUDE.md`, en `LEARNING.md §L44`, en `doc/prompts/03-integridad-metrica.md` y en
+> el encargo al equipo remoto.
+>
 > **Regla operativa.** Lo que el prompt pide y lo que el corpus anota tienen que coincidir. Toda categoría
 > que se puntúe debe existir en la anotación de referencia; si no existe, o se anota o se excluye del cálculo,
 > pero nunca se deja puntuando contra el vacío.

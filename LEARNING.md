@@ -548,7 +548,8 @@ localización correctamente identificada contaba como error. Nadie lo advirtió 
 eran internamente consistentes: bajas, pero coherentes entre sí.
 
 > **Aplicación:** antes de dar por buena una métrica, comprobar que **cada categoría puntuada existe en la
-> anotación de referencia**. El indicador barato es `fn` agregado por categoría: si vale cero mientras `fp`
+> anotación de referencia**. El indicador barato es `tp + fn` agregado por categoría: si esa suma vale cero
+> mientras `fp`
 > crece, esa categoría está puntuando contra el vacío. Y una cifra baja pero estable no prueba que la
 > medición sea correcta; prueba que el defecto es sistemático.
 

@@ -175,7 +175,8 @@ sí. Ver `FINDINGS.md §F53` y `LEARNING.md §L44`.
 
 - **Toda categoría que se puntúe debe existir en la anotación de referencia.** Si el prompt pide una
   categoría que el corpus no anota, cada acierto del modelo se contabiliza como error. El indicador barato
-  es el **`fn` agregado por categoría**: si vale cero mientras `fp` crece, esa categoría está puntuando
+  es **`tp + fn` agregado por categoría**: si esa suma vale cero mientras `fp` crece, la categoría no tiene
+  ni una entidad de referencia en todo el corpus y está puntuando
   contra el vacío. Comprobarlo antes de dar por buena cualquier métrica nueva.
 - **Una cifra baja pero estable no acredita que la medición sea correcta.** Acredita que el defecto es
   sistemático. La coherencia interna de un conjunto de resultados no es prueba de validez.

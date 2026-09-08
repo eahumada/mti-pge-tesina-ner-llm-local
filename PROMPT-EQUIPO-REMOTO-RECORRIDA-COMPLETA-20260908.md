@@ -202,7 +202,7 @@ anotada. Medir contra el vacío en una parte del corpus y contra la anotación r
 `FINDINGS §F53` documenta y que esta secuencia cierra.
 
 **Comprobación de salida**, antes de dar los dos pasos por buenos: los 120 artículos del corpus principal y
-los 30 del sintético deben tener la clave `locations` presente, y el `fn` agregado de la categoría en la
+los 30 del sintético deben tener la clave `locations` presente, y `tp + fn` agregado de la categoría en la
 primera corrida de prueba debe ser **mayor que cero**. Si sigue en cero, algún paso no se aplicó y vuestra
 propia `tools/verificar_corrida.py` lo dictaminará no válida.
 
@@ -345,7 +345,7 @@ sección «Los registros de ejecución se conservan».
 
 **Verificaciones que hay que pasar antes de declarar una corrida válida**, y reportarlas explícitamente:
 
-1. `fn` agregado mayor que cero en **cada** categoría puntuada.
+1. `tp + fn` agregado mayor que cero en **cada** categoría puntuada. **Ojo con el criterio, que corregimos el 2026-09-08 y venía mal en la primera versión de este encargo:** la señal del defecto es `tp + fn == 0` con `fp > 0`, es decir que la categoría no tenga **ninguna** entidad de referencia en todo el corpus. Comprobar solo `fn == 0` es incorrecto, porque `fn == 0` con `tp > 0` es exhaustividad perfecta y no un defecto; ese criterio invalidaría corridas legítimas. La corrección es vuestra, del commit `e6a3b8f`.
 2. Cero registros con `recall > 1.0`.
 3. Ninguna fila con F1 mayor que la media de precisión y exhaustividad.
 4. Recuento de `parse_method='failed'` y de `recall=0` por modelo, con su causa: latencia cero y cero tokens
