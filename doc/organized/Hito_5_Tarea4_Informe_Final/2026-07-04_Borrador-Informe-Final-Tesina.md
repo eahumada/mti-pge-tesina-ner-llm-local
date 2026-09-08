@@ -472,7 +472,7 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 6. El RAG contextual supera al RAG por diccionario: La implementación de la Base de Conocimientos Contextual (KB RAG) demuestra que el reconocimiento de entidades mediante LLMs locales es un problema de **comprensión sintáctico-contextual**, no de búsqueda en bases de datos cerradas. En el estudio N=120 sobre 13 modelos, el KB RAG (`--rag-mode kb_combined`) mejoró el F1-Score de forma **estadísticamente significativa** (Tukey HSD) en dos de los trece modelos (`nemotron-mini:4b` **+14,52 pp**, p<0,001, y `llama3.2:latest` **+10,82 pp**, p=0,007; conviene precisar que este último no es el segundo más débil del estudio sino el tercero por la cola, y que el segundo, `deepseek-r1:1.5b`, empeora 0,90 puntos con KB RAG), con ganancias positivas pero no concluyentes en la franja intermedia y efecto nulo en los modelos de 31B, versus el dict-RAG (v1.0), que en un sondeo exploratorio N=5 sobre el mismo modelo, no persistido en `results/`, degradó el F1 hasta 0.2367 (−57.8% respecto de su propio baseline), degradación confirmada después en la corrida reproducible N=120, donde ese mismo modelo cae de 0.3611 a 0.3113. Su efectividad parece modularse por la capacidad paramétrica, beneficiando sobre todo a los modelos de 3 a 14 mil millones de parámetros, donde actúa como memoria externa de conocimiento lingüístico sin coste adicional de hardware. La relación es una **tendencia y no un resultado significativo**: la correlación por rangos entre capacidad y beneficio da ρ = −0,52 con p = 0,071, que no alcanza el nivel de significación que este trabajo fija, con trece modelos como tamaño de muestra. Este hallazgo tiene implicaciones directas para el diseño de sistemas RAG en dominio abierto con LLMs soberanos.
 
-7. La codificación del corpus condiciona la medición, y no de forma neutra: el corpus N=120 almacena los nombres con *mojibake* (`JosÃ© Bono` donde el nombre real es **José Bono**), un defecto presente a la vez en las entidades de referencia (20,1 %) y en el texto de entrada (87 % de los artículos). Al ser **coherente entre ambos**, no introduce el sesgo uniforme que cabría suponer: favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía, con un efecto cuyo **signo depende de dónde esté la corrupción**, y esa dependencia es el resultado. Cuando está en la anotación de referencia, dieciocho de las veintidós configuraciones medidas puntúan **mejor** en los artículos afectados, porque el cotejo premia transcribir los bytes literalmente y penaliza al modelo que escribe el nombre correctamente. Cuando está en el texto de entrada, dieciocho de veintidós puntúan **peor**, porque la corrupción dificulta la extracción para todos. Los dos efectos se contraponen, y su cancelación explica que la ventaja de la instrucción en español desaparezca precisamente sobre el corpus con más entidades hispanas: allí la competencia lingüística se vuelve desventaja frente a una referencia corrompida. La implicación metodológica excede a este trabajo: en una evaluación de NER un defecto de codificación no es ruido de fondo sino una variable que interactúa con el comportamiento del modelo, y verificar la codificación **de la entrada y de la referencia por separado** debe formar parte del protocolo antes de dar por válida cualquier cifra. El detalle, con el script que permite reproducirlo, se desarrolla en el **Anexo H**.
+7. La codificación del corpus condiciona la medición, y no de forma neutra: el corpus N=120 almacena los nombres con *mojibake* (`JosÃ© Bono` donde el nombre real es **José Bono**), un defecto presente a la vez en las entidades de referencia (20,1 %) y en el texto de entrada (87 % de los artículos). Al ser **coherente entre ambos**, no introduce el sesgo uniforme que cabría suponer: favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía, con un efecto cuyo **signo depende de dónde esté la corrupción**, y esa dependencia es el resultado. Cuando está en la anotación de referencia, veintiuna de las veintiséis configuraciones medidas puntúan **mejor** en los artículos afectados, porque el cotejo premia transcribir los bytes literalmente y penaliza al modelo que escribe el nombre correctamente. Cuando está en el texto de entrada, veintitrés de veintiséis puntúan **peor**, porque la corrupción dificulta la extracción para todos. Los dos efectos se contraponen, y su cancelación explica que la ventaja de la instrucción en español desaparezca precisamente sobre el corpus con más entidades hispanas: allí la competencia lingüística se vuelve desventaja frente a una referencia corrompida. La implicación metodológica excede a este trabajo: en una evaluación de NER un defecto de codificación no es ruido de fondo sino una variable que interactúa con el comportamiento del modelo, y verificar la codificación **de la entrada y de la referencia por separado** debe formar parte del protocolo antes de dar por válida cualquier cifra. El detalle, con el script que permite reproducirlo, se desarrolla en el **Anexo H**.
 
 ### 7.2 Trabajo Futuro
 
@@ -488,7 +488,7 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 6. **Extensión multiidioma (Fase 5):** Evaluar la robustez del sistema sobre textos en portugués, dado el alcance latinoamericano del problema de cumplimiento. El comportamiento en inglés ya queda caracterizado por los corpus del dominio empleados aquí, y el contraste entre ambos idiomas sobre el corpus N=120 aporta la primera evidencia comparativa.
 
-7. Normalización de codificación del corpus y re-evaluación (Fase 6): el corpus N=120 almacena los nombres con *mojibake* (`JosÃ© Bono` donde el nombre real es **José Bono**), defecto presente tanto en las entidades de referencia (20,1 %) como en el texto de entrada (87 % de los artículos), y por tanto **coherente entre ambos**. Esto favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía, con un efecto que varía entre −0.070 y +0.025 de F1 según el modelo (§5.3.1). La línea de trabajo consiste en normalizar la codificación en ambos lados de la comparación —reparando la referencia y la extracción antes del cotejo difuso, de modo que el resultado deje de depender de la representación de bytes— y **re-ejecutar el estudio N=120** para obtener valores absolutos libres de esta interacción. No se abordó en este trabajo porque el cotejo se resuelve en tiempo de inferencia y las extracciones por registro no se conservaron, lo que obliga a repetir la inferencia completa.
+7. Normalización de codificación del corpus y re-evaluación (Fase 6): el corpus N=120 almacena los nombres con *mojibake* (`JosÃ© Bono` donde el nombre real es **José Bono**), defecto presente tanto en las entidades de referencia (20,1 %) como en el texto de entrada (87 % de los artículos), y por tanto **coherente entre ambos**. Esto favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía, con un efecto que, según el criterio de artículo afectado, va de −0,082 a +0,155 de F1 cuando la corrupción está en la anotación de referencia y de −0,267 a +0,015 cuando está en el texto de entrada (Anexo H.3). La línea de trabajo consiste en normalizar la codificación en ambos lados de la comparación —reparando la referencia y la extracción antes del cotejo difuso, de modo que el resultado deje de depender de la representación de bytes— y **re-ejecutar el estudio N=120** para obtener valores absolutos libres de esta interacción. No se abordó en este trabajo porque el cotejo se resuelve en tiempo de inferencia y las extracciones por registro no se conservaron, lo que obliga a repetir la inferencia completa.
 
 
 8. Recuperación de las localizaciones que el conversor descarta (Prioridad Alta): los prompts del sistema solicitan
@@ -864,10 +864,14 @@ El dato determinante es que el defecto **alcanza también al texto de entrada**,
 
 #### H.3 Evidencia empírica del efecto diferencial
 
-El efecto se midió sobre las 22 configuraciones del corpus N=120 que aportan los ciento veinte registros
-completos, con el script `tools/analisis_mojibake.py`, que se publica para que la tabla sea reproducible. La
-medición obliga a declarar el criterio de «artículo afectado», porque **el signo del efecto depende de cuál se
-elija**, y esa dependencia es en sí misma el resultado:
+El efecto se midió sobre las **veintiséis configuraciones** del estudio —los trece modelos en sus dos modos— con el
+script `tools/analisis_mojibake.py`, que se publica para que la tabla sea reproducible. Se toma una corrida por
+configuración, y el orden de preferencia del script antepone las corridas sanas: la medición de
+`gemma4:12b-mlx` de `benchmark_n120_REMOTO` está averiada por el modo de razonamiento, con 68 y 98 registros
+sin ninguna entidad recuperada, y habría distorsionado el resultado.
+
+La medición obliga a declarar el criterio de «artículo afectado», porque **el sentido del efecto depende de
+cuál se elija**, y esa dependencia es en sí misma el resultado:
 
 - **Por entidad de referencia corrupta**: 89 artículos afectados y 31 no.
 - **Por texto de entrada corrupto**: 104 artículos afectados y 16 no.
@@ -876,43 +880,49 @@ _Tabla 18. Efecto diferencial del *mojibake* sobre el F1 según el criterio de a
 
 | Configuración | Δ F1 por entidad de referencia | Δ F1 por texto de entrada |
 |:---|--:|--:|
+| `qwen3:8b_kb_rag` | +0.1554 | +0.0152 |
 | `gemma4:31b-cloud_baseline` | +0.1418 | +0.0029 |
 | `gemma4:31b-cloud_kb_rag` | +0.1131 | -0.0433 |
 | `gemma4:31b-mlx_kb_rag` | +0.0999 | -0.0102 |
 | `gemma4:latest_kb_rag` | +0.0976 | -0.0666 |
 | `gemma:latest_kb_rag` | +0.0965 | -0.0845 |
+| `nemotron-mini:4b_kb_rag` | +0.0948 | -0.0609 |
 | `gemma4:31b-mlx_baseline` | +0.0873 | -0.0613 |
 | `gpt-oss:20b_baseline` | +0.0819 | -0.0438 |
+| `gemma4:12b-mlx_baseline` | +0.0789 | -0.0612 |
 | `mistral-nemo:latest_baseline` | +0.0684 | -0.1122 |
 | `qwen2.5:14b_baseline` | +0.0681 | -0.0821 |
 | `gemma4:latest_baseline` | +0.0620 | -0.0958 |
+| `gemma4:12b-mlx_kb_rag` | +0.0604 | -0.0897 |
 | `llama3.1:8b_baseline` | +0.0514 | -0.0709 |
 | `gpt-oss:20b_kb_rag` | +0.0511 | -0.0997 |
 | `gemma:latest_baseline` | +0.0409 | -0.1678 |
-| `gemma4:12b-mlx_baseline` | +0.0385 | +0.1795 |
 | `qwen2.5:14b_kb_rag` | +0.0380 | -0.0887 |
 | `llama3.2:latest_kb_rag` | +0.0254 | -0.1130 |
 | `llama3.1:8b_kb_rag` | +0.0186 | -0.1428 |
 | `mistral-nemo:latest_kb_rag` | +0.0122 | -0.1256 |
+| `qwen3:8b_baseline` | -0.0076 | -0.1359 |
 | `deepseek-r1:1.5b_baseline` | -0.0124 | +0.0028 |
-| `gemma4:12b-mlx_kb_rag` | -0.0214 | +0.0448 |
+| `nemotron-mini:4b_baseline` | -0.0477 | -0.1942 |
 | `deepseek-r1:1.5b_kb_rag` | -0.0717 | -0.1796 |
 | `llama3.2:latest_baseline` | -0.0816 | -0.2665 |
 
-Los dos criterios apuntan en direcciones opuestas, y de forma sistemática: **19 de las 22 configuraciones
-puntúan mejor** en los artículos cuya anotación de referencia está corrompida, y **4 de las 22 puntúan peor**
-en aquellos cuyo texto lo está. La lectura es coherente con el mecanismo del cotejo difuso. Cuando la
-corrupción está en la referencia, el corpus premia la transcripción literal de los bytes y penaliza al modelo
-que escribe el nombre correctamente, porque `José Bono` no casa con `JosÃ© Bono`. Cuando está en el texto de
-entrada, en cambio, dificulta la extracción para todos, y ahí el efecto es de signo negativo.
+Los dos criterios apuntan en direcciones opuestas y de forma sistemática: **veintiuna de las veintiséis configuraciones
+puntúan mejor** en los artículos cuya anotación de referencia está corrompida, y **veintitrés puntúan peor** en
+aquellos cuyo texto lo está. La lectura es coherente con el mecanismo del cotejo difuso. Cuando la corrupción
+está en la referencia, el corpus premia la transcripción literal de los bytes y penaliza al modelo que
+escribe el nombre correctamente, porque `José Bono` no casa con `JosÃ© Bono`. Cuando está en el texto de
+entrada, en cambio, dificulta la extracción para todos.
 
-> **Cautela metodológica, y una advertencia sobre la versión anterior de esta tabla.** Los artículos afectados
-> podrían ser además más largos o intrínsecamente más difíciles, lo que confundiría la magnitud absoluta de
-> cada diferencia; el sentido del efecto, sin embargo, es consistente dentro de cada criterio. Una versión
-> anterior de este anexo declaraba una partición de 88 artículos afectados y 31 no —cuya suma es 119 y no
-> 120— y unas diferencias que no se reproducen con ninguno de los dos criterios: para `gemma4:latest`
-> reportaba −0,0695 donde la medición da +0,0620 por entidad y −0,0958 por texto. Se sustituye por la tabla
-> presente, obtenida con el script publicado, y se conserva esta nota para que la corrección quede trazable.
+> **Cautela metodológica, y dos advertencias sobre versiones anteriores de esta tabla.** Los artículos
+> afectados podrían ser además más largos o intrínsecamente más difíciles, lo que confundiría la magnitud
+> absoluta de cada diferencia; el sentido del efecto, sin embargo, es consistente dentro de cada criterio.
+> Una primera versión declaraba una partición de 88 artículos afectados y 31 no —cuya suma es 119 y no 120— y
+> unas diferencias que no se reproducen con ninguno de los dos criterios. Una segunda tomaba para
+> `gemma4:12b-mlx` la corrida averiada por el modo de razonamiento, y de ahí salía un valor extremo de
+> +0,1795 por criterio de texto que era artefacto de configuración y no efecto de la codificación. Con la
+> corrida sana, el máximo por ese criterio baja a +0.0152. Se conservan estas notas para que ambas correcciones
+> queden trazables.
 
 #### H.4 Cómo debe repararse
 
