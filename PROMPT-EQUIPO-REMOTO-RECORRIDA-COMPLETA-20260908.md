@@ -169,6 +169,43 @@ anotación experta. Eso cambia la tarea: en lugar de retirar `Locations` de los 
 artículos de Kleptotrace seguirían sin anotarlas, y ese subconjunto sí habría que anotar a mano o excluir de
 la métrica de esa categoría.
 
+### 2.bis.2.bis Secuencia completa de las localizaciones, en dos pasos y en este orden
+
+Resuelto por el equipo principal el 2026-09-08. **No hay decisión pendiente**: la herramienta está hecha y
+verificada, y la anotación manual también. Ejecutad los dos pasos en este orden, **antes de lanzar**.
+
+**Paso 1 — recuperar lo que la fuente ya anota.** Vuestro arreglo de `download_conll2002.py` es correcto,
+pero el `conll2002_es.json` que commiteasteis quedó con la salida anterior y no tiene localizaciones: hay que
+reejecutar el conversor. Después, `tools/recuperar_locations_n120.py` traslada las localizaciones al corpus
+del estudio emparejando por texto, sin necesitar el script de muestreo perdido.
+
+```sh
+python3 download_conll2002.py                        # regenera la fuente CON localizaciones
+python3 tools/recuperar_locations_n120.py --dry-run  # debe dar 105 emparejados y 482 localizaciones
+python3 tools/recuperar_locations_n120.py
+```
+
+**Paso 2 — anotar lo que ninguna fuente aporta.** Los quince artículos de Kleptotrace y los treinta del
+corpus sintético no tienen localizaciones en su origen. El autor decidió **anotarlos a mano**, y ya están:
+63 localizaciones en los quince y 20 en trece de los treinta, con el criterio tomado de las 482 recuperadas
+para que ambos orígenes sean homogéneos. La anotación vive en `data/anotaciones/locations_manuales.json`,
+versionada aparte del código y con su criterio declarado.
+
+```sh
+python3 tools/aplicar_locations_manuales.py --dry-run   # 15 y 63 · 13 y 20
+python3 tools/aplicar_locations_manuales.py
+```
+
+**Este paso 2 se aplica a todo corpus con el que se trabaje**, no solo a estos dos: si incorporáis un corpus
+nuevo, su categoría de localizaciones tiene que existir antes de puntuarla, sea recuperada de su fuente o
+anotada. Medir contra el vacío en una parte del corpus y contra la anotación real en otra es el defecto que
+`FINDINGS §F53` documenta y que esta secuencia cierra.
+
+**Comprobación de salida**, antes de dar los dos pasos por buenos: los 120 artículos del corpus principal y
+los 30 del sintético deben tener la clave `locations` presente, y el `fn` agregado de la categoría en la
+primera corrida de prueba debe ser **mayor que cero**. Si sigue en cero, algún paso no se aplicó y vuestra
+propia `tools/verificar_corrida.py` lo dictaminará no válida.
+
 ### 2.bis.3 `gpt-oss:20b` corrió con otro presupuesto de generación (BLOQUEANTE)
 
 Entró en la Tabla 7 y en el ANOVA con **`max_tokens=4096`** mientras los otros doce modelos corrieron con
