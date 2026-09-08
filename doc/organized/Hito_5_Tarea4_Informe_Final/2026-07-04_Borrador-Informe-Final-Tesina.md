@@ -473,59 +473,59 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 > *Formato IEEE*
 
-[1] P. Lewis et al., "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks," *Advances in Neural Information Processing Systems*, vol. 33, pp. 9459-9474, 2020.
+[1] P. Lewis et al., "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks," *Advances in Neural Information Processing Systems*, vol. 33, pp. 9459-9474, 2020. [En línea]. Disponible: https://proceedings.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html
 
-[2] J. Devlin, M.-W. Chang, K. Lee, and K. Toutanova, "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding," *Proceedings of NAACL*, pp. 4171-4186, 2019.
+[2] J. Devlin, M.-W. Chang, K. Lee, and K. Toutanova, "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding," *Proceedings of NAACL*, pp. 4171-4186, 2019. [En línea]. Disponible: https://doi.org/10.18653/v1/N19-1423
 
 [3] S. Wu et al., "BloombergGPT: A Large Language Model for Finance," 2023, arXiv:2303.17564. [Online]. Available: https://arxiv.org/abs/2303.17564
 
-[4] A. Vaswani et al., "Attention Is All You Need," *Advances in Neural Information Processing Systems*, 2017.
+[4] A. Vaswani et al., "Attention is All you Need," *Advances in Neural Information Processing Systems*, vol. 30, 2017. [En línea]. Disponible: https://proceedings.neurips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html
 
-[5] K. Bourne, *Unlocking Data with Generative AI and RAG*. O'Reilly Media, 2024.
+[5] K. Bourne, *Unlocking Data with Generative AI and RAG*. Birmingham, R.U.: Packt Publishing, 2024, ISBN 978-1-83588-790-5. [En línea]. Disponible: https://books.google.com/books?vid=ISBN9781835887905
 
 [6] X. Gao et al., "Retrieval-Augmented Generation for Large Language Models: A Survey," 2024, arXiv:2312.10997. [Online]. Available: https://arxiv.org/abs/2312.10997
 
 [7] J. Cañete, G. Chaperon, R. Fuentes, J.-H. Ho, H. Kang, and J. Pérez, "Spanish Pre-Trained BERT Model and Evaluation Data," in *Proc. Practical ML for Developing Countries Workshop (PML4DC) at ICLR 2020*, Addis Abeba, Etiopía, 2020. [En línea]. Disponible: https://arxiv.org/abs/2308.02976
 
-[8] T. Brown et al., "Language Models are Few-Shot Learners," *Advances in Neural Information Processing Systems*, vol. 33, pp. 1877-1901, 2020.
+[8] T. Brown et al., "Language Models are Few-Shot Learners," *Advances in Neural Information Processing Systems*, vol. 33, pp. 1877-1901, 2020. [En línea]. Disponible: https://proceedings.neurips.cc/paper/2020/hash/1457c0d6bfcb4967418bfb8ac142f64a-Abstract.html
 
 [9] P. Islam, A. Kannappan, D. Kiela, R. Qian, N. Scherrer, and B. Vidgen, "FinanceBench: A New Benchmark for Financial Question Answering," 2023, arXiv:2311.11944. [En línea]. Disponible: https://arxiv.org/abs/2311.11944
 
 [10] J. C. Salinas Alvarado, K. Verspoor, and T. Baldwin, "Domain Adaption of Named Entity Recognition to Support Credit Risk Assessment," in *Proc. Australasian Language Technology Association Workshop (ALTA)*, Parramatta, Australia, dic. 2015, pp. 84-90. [En línea]. Disponible: https://aclanthology.org/U15-1010/
 
-[11] T. Ahia et al., "Do All Languages Cost the Same? Tokenization in the Era of Commercial Language Models," *Proceedings of EMNLP*, 2023.
+[11] O. Ahia et al., "Do All Languages Cost the Same? Tokenization in the Era of Commercial Language Models," in *Proc. Conf. Empirical Methods in Natural Language Processing (EMNLP)*, 2023, pp. 9904-9923. [En línea]. Disponible: https://doi.org/10.18653/v1/2023.emnlp-main.614
 
 [12] E. F. Tjong Kim Sang, "Introduction to the CoNLL-2002 Shared Task: Language-Independent Named Entity Recognition," *Proceedings of CoNLL-2002*, pp. 155-158, 2002. [Online]. Available: https://www.clips.uantwerpen.be/conll2002/ner/
 
-[13] J. Wei et al., "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models," *Advances in Neural Information Processing Systems*, vol. 35, 2022.
+[13] J. Wei et al., "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models," *Advances in Neural Information Processing Systems*, vol. 35, pp. 24824-24837, 2022. [En línea]. Disponible: https://doi.org/10.52202/068431-1800
 
-[14] A. Zhao et al., "Calibrate Before Use: Improving Few-Shot Performance of Language Models," *Proceedings of ICML*, 2021.
+[14] Z. Zhao et al., "Calibrate Before Use: Improving Few-shot Performance of Language Models," in *Proc. 38th Int. Conf. Machine Learning (ICML)*, PMLR vol. 139, 2021, pp. 12697-12706. [En línea]. Disponible: https://proceedings.mlr.press/v139/zhao21c.html
 
 [15] L. Loukas, M. Fergadiotis, I. Chalkidis, E. Spyropoulou, P. Malakasiotis, I. Androutsopoulos, and G. Paliouras, "FiNER: Financial Numeric Entity Recognition for XBRL Tagging," in *Proc. 60th Annu. Meeting Assoc. Comput. Linguistics (ACL)*, vol. 1, Dublín, Irlanda, mayo 2022, pp. 4419-4431, doi: 10.18653/v1/2022.acl-long.303. [En línea]. Disponible: https://aclanthology.org/2022.acl-long.303/
 
-[16] R. Schwartz et al., "Green AI," *Communications of the ACM*, vol. 63, no. 12, pp. 54-63, 2020.
+[16] R. Schwartz et al., "Green AI," *Communications of the ACM*, vol. 63, no. 12, pp. 54-63, 2020. [En línea]. Disponible: https://doi.org/10.1145/3381831
 
-[17] J. Lafferty, A. McCallum, and F. Pereira, "Conditional Random Fields: Probabilistic Models for Segmenting and Labeling Sequence Data," *Proceedings of ICML*, pp. 282-289, 2001.
+[17] J. Lafferty, A. McCallum, and F. Pereira, "Conditional Random Fields: Probabilistic Models for Segmenting and Labeling Sequence Data," *Proceedings of ICML*, pp. 282-289, 2001. [En línea]. Disponible: https://dl.acm.org/doi/10.5555/645530.655813
 
-[18] Kleptotrace Project, "Kleptotrace corpus: Financial Sanctions and Money Laundering News Corpus," conjunto de datos del proyecto (15 artículos anotados por expertos), 2024.
+[18] Proyecto KLEPTOTRACE, "Kleptotrace-micro-dataset," conjunto de datos, Zenodo, 2024 (15 artículos y 441 frases sobre corrupción financiera, con listas de personas y organizaciones anotadas). doi: 10.5281/zenodo.14027005. [En línea]. Disponible: https://doi.org/10.5281/zenodo.14027005
 
 [19] OpenSanctions. (2024). *OpenSanctions: Open Data on Sanctions Lists and Politically Exposed Persons* [Online]. Available: https://www.opensanctions.org (accedido: 8 sep. 2026).
 
-[20] T. Dettmers et al., "QLoRA: Efficient Finetuning of Quantized LLMs," *Advances in Neural Information Processing Systems*, vol. 36, 2023.
+[20] T. Dettmers, A. Pagnoni, A. Holtzman, and L. Zettlemoyer, "QLoRA: Efficient Finetuning of Quantized LLMs," *Advances in Neural Information Processing Systems*, vol. 36, pp. 10088-10115, 2023. [En línea]. Disponible: https://doi.org/10.52202/075280-0441
 
 [21] Verified Market Research. (2022, mar. 8). *RegTech Market Size Worth $87.17 Billion, Globally, by 2028 at 23.92% CAGR* [Online]. Available: https://www.prnewswire.com/news-releases/regtech-market-size-worth--87-17-billion-globally-by-2028-at-23-92-cagr-verified-market-research-301497770.html (accedido: 8 sep. 2026).
 
 [22] Chile, *Ley N.º 19.913: Crea la Unidad de Análisis Financiero y modifica diversas disposiciones en materia de lavado y blanqueo de activos*, Diario Oficial, 18 dic. 2003. [Online]. Available: https://www.uaf.cl/es-cl/normativa/nuestra-ley (accedido: 8 sep. 2026).
 
-[23] A. Conneau et al., "Unsupervised Cross-lingual Representation Learning at Scale," in *Proc. 58th Annual Meeting of the Association for Computational Linguistics (ACL)*, 2020, pp. 8440-8451.
+[23] A. Conneau et al., "Unsupervised Cross-lingual Representation Learning at Scale," in *Proc. 58th Annual Meeting of the Association for Computational Linguistics (ACL)*, 2020, pp. 8440-8451. [En línea]. Disponible: https://doi.org/10.18653/v1/2020.acl-main.747
 
-[24] G. Lample et al., "Neural Architectures for Named Entity Recognition," in *Proc. Conf. North American Chapter of the Association for Computational Linguistics: Human Language Technologies (NAACL-HLT)*, San Diego, CA, USA, 2016, pp. 260-270.
+[24] G. Lample et al., "Neural Architectures for Named Entity Recognition," in *Proc. Conf. North American Chapter of the Association for Computational Linguistics: Human Language Technologies (NAACL-HLT)*, San Diego, CA, USA, 2016, pp. 260-270. [En línea]. Disponible: https://doi.org/10.18653/v1/N16-1030
 
-[25] J. W. Tukey, "Comparing Individual Means in the Analysis of Variance," *Biometrics*, vol. 5, no. 2, pp. 99-114, 1949.
+[25] J. W. Tukey, "Comparing Individual Means in the Analysis of Variance," *Biometrics*, vol. 5, no. 2, pp. 99-114, 1949. [En línea]. Disponible: https://doi.org/10.2307/3001913
 
-[26] D.-M. Chiu and R. Jain, "Analysis of the Increase and Decrease Algorithms for Congestion Avoidance in Computer Networks," *Computer Networks and ISDN Systems*, vol. 17, no. 1, pp. 1-14, 1989.
+[26] D.-M. Chiu and R. Jain, "Analysis of the Increase and Decrease Algorithms for Congestion Avoidance in Computer Networks," *Computer Networks and ISDN Systems*, vol. 17, no. 1, pp. 1-14, 1989. [En línea]. Disponible: https://doi.org/10.1016/0169-7552(89)90019-6
 
-[27] E. J. Hu et al., "LoRA: Low-Rank Adaptation of Large Language Models," in *Proc. Int. Conf. on Learning Representations (ICLR)*, 2022.
+[27] E. J. Hu et al., "LoRA: Low-Rank Adaptation of Large Language Models," in *Proc. Int. Conf. on Learning Representations (ICLR)*, 2022. [En línea]. Disponible: https://iclr.cc/virtual/2022/poster/6319
 
 [28] W. Kwon et al., "Efficient Memory Management for Large Language Model Serving with PagedAttention," in *Proc. 29th ACM Symp. on Operating Systems Principles (SOSP)*, 2023, pp. 611-626. doi: 10.1145/3600006.3613165.
 
@@ -539,9 +539,9 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 [33] M. Bachmann et al. *RapidFuzz: rapid fuzzy string matching in Python* [Online]. Available: https://pypi.org/project/RapidFuzz/ (accedido: 8 sep. 2026).
 
-[34] F. Pedregosa et al., "Scikit-learn: Machine Learning in Python," *Journal of Machine Learning Research*, vol. 12, pp. 2825-2830, 2011.
+[34] F. Pedregosa et al., "Scikit-learn: Machine Learning in Python," *Journal of Machine Learning Research*, vol. 12, pp. 2825-2830, 2011. [En línea]. Disponible: https://www.jmlr.org/papers/v12/pedregosa11a.html
 
-[35] S. Seabold and J. Perktold, "Statsmodels: Econometric and Statistical Modeling with Python," in *Proc. 9th Python in Science Conf. (SciPy)*, Austin, TX, USA, 2010, pp. 92-96.
+[35] S. Seabold and J. Perktold, "Statsmodels: Econometric and Statistical Modeling with Python," in *Proc. 9th Python in Science Conf. (SciPy)*, Austin, TX, USA, 2010, pp. 92-96. [En línea]. Disponible: https://doi.org/10.25080/Majora-92bf1922-011
 
 [36] Apple Inc. *recommendedMaxWorkingSetSize (Metal, MTLDevice)* [Online]. Available: https://developer.apple.com/documentation/metal/mtldevice/recommendedmaxworkingsetsize (accedido: 8 sep. 2026).
 
