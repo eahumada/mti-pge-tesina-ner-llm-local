@@ -507,6 +507,85 @@ def c_tabla7_vs_datos(s):
           'es la unica comprobacion que ata la tabla central al dato y no a otra copia suya')
 
 
+# --- 17. La Tabla 4 reproduce desde sus corridas de origen ----------------------------------------
+BENCH_DIR = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark')
+# Correspondencia fila -> (csv de origen, grupo dentro de ese csv). Refleja la Tabla 15 del informe,
+# que declara la procedencia de cada fila; el grupo interno no figura alli porque la corrida de
+# ablacion nombra sus condiciones «zs-es» y «fs-es» en lugar de «modelo_baseline».
+FUENTES_T4 = {
+    'gemma4:31b': ('results/gemma4_31b_n15_REMOTO/benchmark_results.csv', 'gemma4:31b_baseline'),
+    'gemma4:31b-cloud': ('results/cloud_n15_limpio_20260905/benchmark_results.csv',
+                         'gemma4:31b-cloud_baseline'),
+    'gemma4:latest (ZS-ES)': ('results/ablacion_n15_REMOTO/benchmark_results.csv', 'zs-es'),
+    'gemma4:latest (FS-ES)': ('results/ablacion_n15_REMOTO/benchmark_results.csv', 'fs-es'),
+}
+CSV_T4_DEFECTO = 'results/benchmark_results.csv'
+
+
+def c_tabla4_vs_datos(s):
+    """Las 13 filas del benchmark exploratorio, contra las corridas que las sostienen.
+
+    Ademas de comparar los cuatro valores de cada fila, comprueba que la Tabla 15 siga nombrando
+    las mismas corridas de origen: si alguien cambia la procedencia alli y no aqui, la
+    correspondencia de este script quedaria obsoleta sin que nada avisara.
+    """
+    import csv as _csv
+    import collections as _c
+    i = s.find('_Tabla 4.')
+    if i < 0:
+        check('la Tabla 4 reproduce desde sus corridas', 0, ['no se encuentra la Tabla 4'])
+        return
+    filas = []
+    for l in s[i:i + 3000].split('\n'):
+        if not l.startswith('|') or 'Modelo' in l or '---' in l:
+            continue
+        c = [x.strip().replace('**', '') for x in l.strip().strip('|').split('|')]
+        if len(c) >= 7 and c[3].endswith('%'):
+            try:
+                filas.append((c[0],) + tuple(float(x.rstrip('%')) for x in c[3:7]))
+            except ValueError:
+                pass
+    cache = {}
+
+    def med(p):
+        if p not in cache:
+            g = _c.defaultdict(lambda: _c.defaultdict(list))
+            with open(os.path.join(BENCH_DIR, p), encoding='utf-8') as fh:
+                for r in _csv.DictReader(fh):
+                    for k in ('f1', 'precision', 'recall', 'hallucination_rate'):
+                        if r.get(k) not in (None, ''):
+                            g[r['model']][k].append(float(r[k]))
+            cache[p] = {m: {k: 100 * sum(v) / len(v) for k, v in d.items()} for m, d in g.items()}
+        return cache[p]
+
+    fallos = []
+    # guarda: la Tabla 15 debe seguir citando las mismas corridas de origen
+    j = s.find('_Tabla 15.')
+    t15 = s[j:j + 1500] if j >= 0 else ''
+    for path, _ in FUENTES_T4.values():
+        run = os.path.basename(os.path.dirname(path))
+        if t15 and run not in t15:
+            fallos.append('la Tabla 15 ya no cita «%s»: revisar FUENTES_T4' % run)
+    for fila in filas:
+        nom, f1, p, rc, h = fila
+        path, grupo = FUENTES_T4.get(nom, (CSV_T4_DEFECTO, nom + '_baseline'))
+        if not os.path.exists(os.path.join(BENCH_DIR, path)):
+            fallos.append('%s: no existe %s' % (nom, path))
+            continue
+        v = med(path).get(grupo)
+        if v is None:
+            fallos.append('%s: el grupo «%s» no esta en %s' % (nom, grupo, path))
+            continue
+        for etiq, esperado, clave in (('F1', f1, 'f1'), ('P', p, 'precision'),
+                                      ('R', rc, 'recall'), ('alucinacion', h, 'hallucination_rate')):
+            d = v.get(clave)
+            if d is None or abs(d - esperado) > 0.02:
+                fallos.append('%s %s: la tabla dice %.2f y el dato %s'
+                              % (nom, etiq, esperado, '—' if d is None else '%.2f' % d))
+    check('la Tabla 4 reproduce desde sus corridas de origen', 4 * len(filas), fallos,
+          'la correspondencia fila-corrida refleja la Tabla 15 del informe')
+
+
 def main():
     s = texto()
     c_vacios()
@@ -524,6 +603,7 @@ def main():
     c_protocolo(s)
     c_anexo_vs_tabla7(s)
     c_tabla7_vs_datos(s)
+    c_tabla4_vs_datos(s)
     if '--red' in sys.argv:
         c_urls(s)
 
