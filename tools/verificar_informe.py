@@ -634,6 +634,116 @@ def c_figura1_vs_artefacto(s):
           'ata las tres apariciones de la cifra al fichero que la computa')
 
 
+# --- 19. Las tablas 5, 6 y 8 reproducen desde sus corridas ---------------------------------------
+def _medias(rel, campos, escala=100.0):
+    import csv as _csv
+    import collections as _c
+    g = _c.defaultdict(lambda: _c.defaultdict(list))
+    with open(os.path.join(BENCH_DIR, rel), encoding='utf-8') as fh:
+        for r in _csv.DictReader(fh):
+            for k in campos:
+                if r.get(k) not in (None, ''):
+                    g[r['model']][k].append(float(r[k]))
+    return {m: {k: (escala if k in ('f1', 'precision', 'recall', 'hallucination_rate') else 1.0)
+                * sum(v) / len(v) for k, v in d.items()} for m, d in g.items()}
+
+
+def c_tablas_menores(s):
+    """Tabla 5 (variantes de prompt), Tabla 6 (N=30) y Tabla 8 (eficiencia), contra sus corridas.
+
+    Completan la cobertura: con estas, todas las tablas de datos del informe estan atadas al dato y
+    no a otra copia suya. La Tabla 5 rotula sus filas en espanol —«Zero-shot Ingles»— mientras la
+    corrida nombra sus grupos «zs-en», de modo que la correspondencia se deduce del rotulo.
+    """
+    fallos, mirados = [], 0
+
+    # --- Tabla 5
+    abl = 'results/ablacion_n15_REMOTO/benchmark_results.csv'
+    if os.path.exists(os.path.join(BENCH_DIR, abl)):
+        d = _medias(abl, ('f1', 'precision', 'recall', 'hallucination_rate', 'latency_sec'))
+        i = s.find('_Tabla 5.')
+        for l in (s[i:i + 1500].split('\n') if i >= 0 else []):
+            if not l.startswith('|') or '---' in l or 'Configuración' in l:
+                continue
+            c = [x.strip().replace('**', '') for x in l.strip().strip('|').split('|')]
+            if len(c) < 6 or not c[1].endswith('%'):
+                continue
+            n = c[0].lower()
+            g = ('fs-' if 'few' in n else 'zs-') + ('es' if 'espa' in n else 'en')
+            if g not in d:
+                fallos.append('Tabla 5: el grupo «%s» no esta en la corrida de ablacion' % g)
+                continue
+            for etiq, val, clave, tol in (('F1', c[1], 'f1', 0.02), ('P', c[2], 'precision', 0.02),
+                                          ('R', c[3], 'recall', 0.02),
+                                          ('alucinacion', c[4], 'hallucination_rate', 0.02),
+                                          ('latencia', c[5], 'latency_sec', 0.06)):
+                mirados += 1
+                try:
+                    a = float(str(val).rstrip('%'))
+                except ValueError:
+                    continue
+                b = d[g].get(clave)
+                if b is None or abs(a - b) > tol:
+                    fallos.append('Tabla 5 %s %s: la tabla dice %.2f y el dato %s'
+                                  % (c[0], etiq, a, '—' if b is None else '%.2f' % b))
+
+    # --- Tabla 6
+    n30 = 'results/n30_rerun_REMOTO/benchmark_results.csv'
+    if os.path.exists(os.path.join(BENCH_DIR, n30)):
+        d = _medias(n30, ('f1', 'precision', 'recall'))
+        i = s.find('_Tabla 6.')
+        for l in (s[i:i + 1200].split('\n') if i >= 0 else []):
+            if not l.startswith('|') or '---' in l or 'Modelo' in l:
+                continue
+            c = [x.strip().replace('**', '').replace('%', '').strip() for x in l.strip().strip('|').split('|')]
+            if len(c) < 4 or c[0] not in d:
+                continue
+            for etiq, val, clave in (('F1', c[1], 'f1'), ('P', c[2], 'precision'), ('R', c[3], 'recall')):
+                mirados += 1
+                try:
+                    a = float(val)
+                except ValueError:
+                    continue
+                b = d[c[0]].get(clave)
+                if b is None or abs(a - b) > 0.02:
+                    fallos.append('Tabla 6 %s %s: la tabla dice %.2f y el dato %s'
+                                  % (c[0], etiq, a, '—' if b is None else '%.2f' % b))
+
+    # --- Tabla 8
+    raiz = _medias('results/benchmark_results.csv', ('vram_mb', 'tokens_per_sec'), escala=1.0)
+    remoto = ({} if not os.path.exists(os.path.join(BENCH_DIR, 'results/gemma4_31b_n15_REMOTO/benchmark_results.csv'))
+              else _medias('results/gemma4_31b_n15_REMOTO/benchmark_results.csv',
+                           ('vram_mb', 'tokens_per_sec'), escala=1.0))
+    MAPA8 = {'gemma4:31b': (remoto, 'gemma4:31b_baseline'),
+             'gemma4:31b-mlx': (raiz, 'gemma4:31b-mlx_baseline'),
+             'llama3.2 (3B)': (raiz, 'llama3.2:latest_baseline')}
+    i = s.find('_Tabla 8.')
+    for l in (s[i:i + 900].split('\n') if i >= 0 else []):
+        if not l.startswith('|') or '---' in l or 'Modelo' in l:
+            continue
+        c = [x.strip() for x in l.strip().strip('|').split('|')]
+        if len(c) < 3 or c[0] not in MAPA8:
+            continue
+        src, g = MAPA8[c[0]]
+        if g not in src:
+            fallos.append('Tabla 8: el grupo «%s» no esta en su corrida' % g)
+            continue
+        for etiq, val, clave, tol in (('VRAM', c[1].replace(',', ''), 'vram_mb', 1.0),
+                                      ('Tok/s', c[2], 'tokens_per_sec', 0.02)):
+            mirados += 1
+            try:
+                a = float(val)
+            except ValueError:
+                continue
+            b = src[g].get(clave)
+            if b is None or abs(a - b) > tol:
+                fallos.append('Tabla 8 %s %s: la tabla dice %.2f y el dato %s'
+                              % (c[0], etiq, a, '—' if b is None else '%.2f' % b))
+
+    check('las tablas 5, 6 y 8 reproducen desde sus corridas', mirados, fallos,
+          'con estas, todas las tablas de datos del informe quedan atadas al dato')
+
+
 def main():
     s = texto()
     c_vacios()
@@ -653,6 +763,7 @@ def main():
     c_tabla7_vs_datos(s)
     c_tabla4_vs_datos(s)
     c_figura1_vs_artefacto(s)
+    c_tablas_menores(s)
     if '--red' in sys.argv:
         c_urls(s)
 
