@@ -51,26 +51,31 @@ def evaluate_extraction_by_type(extracted: dict, ground_truth: dict, threshold: 
     Inputs are dicts with keys 'Persons', 'Organizations', 'Locations'.
     """
     types = ["Persons", "Organizations", "Locations"]
-    result = {"per_type": {}, "overall": {}}
-    
+    # per_entity (Fix 2026-09-08, encargo §3.bis): registro por entidad con su veredicto para poder
+    # calcular después el contraste ibéricas/anglosajonas (§3.2) sin reejecutar, y para diagnosticar sin
+    # discusión el doble emparejamiento y los errores de límite. Cada tipo mapea a una lista de dicts
+    # {verdict: tp|fp|fn, extracted: <str|None>, reference: <str|None>}.
+    result = {"per_type": {}, "overall": {}, "per_entity": {}}
+
     overall_tp = 0
     overall_fp = 0
     overall_fn = 0
-    
+
     oov_tp = 0
     oov_gt_total = 0
-    
+
     dict_cache = _get_dictionaries()
-    
+
     for t in types:
         ext_list = extracted.get(t, [])
         gt_list = ground_truth.get(t, [])
-        
+
         tp = 0
         fp = 0
         fn = 0
         matched_gts = set()
-        
+        records: list[dict] = []  # veredicto por entidad para este tipo (§3.bis)
+
         if not ext_list and not gt_list:
             # Empty list matches
             precision = 1.0
@@ -81,12 +86,14 @@ def evaluate_extraction_by_type(extracted: dict, ground_truth: dict, threshold: 
             recall = 0.0
             f1 = 0.0
             fn = len(gt_list)
+            records = [{"verdict": "fn", "extracted": None, "reference": gt} for gt in gt_list]
         elif not gt_list:
             # LLM extracted entities but no GT exists → all are hallucinations
             precision = 0.0
             recall = 0.0  # Undefined; 0.0 by convention (no GT → cannot satisfy any recall)
             f1 = 0.0
             fp = len(ext_list)
+            records = [{"verdict": "fp", "extracted": e, "reference": None} for e in ext_list]
         else:
             # Standard TP count using fuzzy match.
             # Fix 2026-09-08 (encargo §2.3, FINDINGS §F49/§F50): cada entidad de referencia se empareja
@@ -94,23 +101,30 @@ def evaluate_extraction_by_type(extracted: dict, ground_truth: dict, threshold: 
             # inflaban la exhaustividad (recall > 1.0). Ahora tp = |gold emparejado| y una segunda
             # extracción sobre un gold ya reclamado cuenta como falso positivo (duplicado).
             for entity in ext_list:
-                matched = False
+                matched_ref = None
                 for gt in gt_list:
                     if gt in matched_gts:
                         continue
                     if fuzz.ratio(entity.lower(), gt.lower()) >= threshold:
                         matched_gts.add(gt)
-                        matched = True
+                        matched_ref = gt
                         break
-                if not matched:
+                if matched_ref is not None:
+                    records.append({"verdict": "tp", "extracted": entity, "reference": matched_ref})
+                else:
                     fp += 1
+                    records.append({"verdict": "fp", "extracted": entity, "reference": None})
             tp = len(matched_gts)
             fn = len(gt_list) - len(matched_gts)
-            
+            # Referencias no emparejadas → falso negativo por omisión.
+            for gt in gt_list:
+                if gt not in matched_gts:
+                    records.append({"verdict": "fn", "extracted": None, "reference": gt})
+
             precision = tp / len(ext_list) if len(ext_list) > 0 else 0.0
             recall = tp / len(gt_list) if len(gt_list) > 0 else 0.0
             f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0.0
-            
+
         result["per_type"][t] = {
             "precision": precision,
             "recall": recall,
@@ -119,6 +133,7 @@ def evaluate_extraction_by_type(extracted: dict, ground_truth: dict, threshold: 
             "fp": fp,
             "fn": fn
         }
+        result["per_entity"][t] = records
         
         # Calculate OOV metrics for this type
         for gt in gt_list:

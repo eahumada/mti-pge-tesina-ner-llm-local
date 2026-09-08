@@ -29,6 +29,32 @@ from src.kb_rag_manager import KBRAGManager, RAG_MODE_ENTITIES
 
 logger = logging.getLogger("ner_benchmark")
 
+# §2.bis.1 / FINDINGS §F53: manifiesto de artículos contaminados (ejemplares few-shot que son del propio
+# corpus de evaluación). Se excluyen SOLO de la métrica publicada en los modos kb afectados; el crudo
+# detailed_results.json conserva todos los registros. La exclusión es programática y declarada, no a mano.
+_MANIFIESTO_CONTAMINADOS = os.path.join("data", "knowledge_base", "contaminated_exemplar_articles.json")
+
+
+def _excluir_contaminados(results: list[dict], rag_mode) -> list[dict]:
+    """Devuelve los resultados sin los artículos contaminados si el modo actual está afectado.
+    Si el modo no está en la lista del manifiesto, o el manifiesto no existe, devuelve todo sin tocar."""
+    try:
+        with open(_MANIFIESTO_CONTAMINADOS, "r", encoding="utf-8") as f:
+            man = json.load(f)
+    except (FileNotFoundError, ValueError):
+        return results
+    modos = set(man.get("excluded_from_metric_modes", []))
+    if rag_mode not in modos:
+        return results
+    excluidos = set(man.get("article_ids", []))
+    filtrados = [r for r in results if str(r.get("record_id")) not in excluidos]
+    n = len(results) - len(filtrados)
+    if n:
+        logger.info("§2.bis.1: excluidos %d registros contaminados de la métrica (modo '%s'); "
+                    "el crudo los conserva.", n, rag_mode)
+    return filtrados
+
+
 def setup_logging(results_dir: str) -> None:
     """Configures system logging outputs."""
     os.makedirs(results_dir, exist_ok=True)
@@ -624,15 +650,20 @@ def run_benchmark(config: BenchmarkConfig, resume: bool = False, ablation: bool 
         logger.error("No benchmark results generated.")
         return
         
+    # §2.bis.1: la métrica publicada (summary, matriz de confusión, informe estadístico) se calcula sobre
+    # los resultados SIN los artículos contaminados en los modos kb afectados. El crudo (state.results,
+    # que exporta detailed_results.json) se conserva íntegro.
+    metric_results = _excluir_contaminados(state.results, config.rag_mode)
+
     # Aggregate summary stats
-    summary = aggregate_model_results(state.results)
-    
+    summary = aggregate_model_results(metric_results)
+
     # Calculate confusion matrix parameters
-    confusion = build_confusion_matrix(state.results)
-    
+    confusion = build_confusion_matrix(metric_results)
+
     # Group results by model for statistical reporting
     model_results = {}
-    for r in state.results:
+    for r in metric_results:
         model_name = r["model"]
         if model_name not in model_results:
             model_results[model_name] = []
