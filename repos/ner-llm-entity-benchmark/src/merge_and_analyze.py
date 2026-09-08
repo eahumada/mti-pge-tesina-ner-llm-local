@@ -220,7 +220,15 @@ def excluir_contaminados(df: pd.DataFrame, manifiesto: str) -> tuple[pd.DataFram
     precisamente lo que se publica.
     """
     if not os.path.exists(manifiesto):
-        return df, [], [f"manifiesto no encontrado en '{manifiesto}': no se excluye nada"]
+        # No se degrada en silencio. Si el manifiesto falta, el ANOVA saldria con los articulos
+        # contaminados dentro y la unica senal seria una linea INFO entre muchas: exactamente el
+        # defecto que esta funcion existe para evitar. Se para y se obliga a decidir.
+        raise SystemExit(
+            f"[ERROR] No se encuentra el manifiesto de articulos contaminados en '{manifiesto}'.\n"
+            "        Sin el, el ANOVA incluiria los articulos que son a la vez ejemplares del RAG y\n"
+            "        sobrevaloraria el efecto de la recuperacion (+10,01 pp frente a +2,19). Ver FINDINGS §F65.\n"
+            "        Opciones: indicar la ruta con --manifiesto-contaminados, o pasar\n"
+            "        --incluir-contaminados si de verdad se quiere el analisis sin excluirlos.")
     with open(manifiesto, encoding="utf-8") as fh:
         datos = json.load(fh)
     ids = [str(x) for x in (datos.get("article_ids") or datos.get("contaminated") or [])]
