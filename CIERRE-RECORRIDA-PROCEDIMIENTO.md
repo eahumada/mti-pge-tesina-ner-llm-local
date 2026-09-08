@@ -87,7 +87,7 @@ avisa expresamente.
 
 Esto no se automatiza. Por orden de importancia:
 
-1. **§5.3.1.** Si el cambio de signo se confirma —cuatro de cuatro modelos lo mostraban al escribir esto—, la
+1. **§5.3.1.** Si el cambio de signo se confirma —tres de los cuatro primeros modelos rehechos lo mostraban, y el cuarto ya era positivo—, la
    frase «el beneficio se anula o revierte en los de mayor capacidad» deja de ser cierta (`FINDINGS §F68`).
    Reformular con lo que digan los datos, sea lo que sea.
 2. **§3.3, §7.2 y la leyenda de la Figura 1**, según el paso 4.

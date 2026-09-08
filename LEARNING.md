@@ -727,3 +727,22 @@ aquí lo que quedaba fuera eran justamente los dos casos que definían el fenóm
 
 Emparenta con `§L53` —una serie plausible sobrevive porque nadie la mira dos veces— y con la nota de método
 de `§F44`: un hallazgo de auditoría es una hipótesis, no un hecho.
+
+### L55. El recuento en prosa se desvía del dato, y siempre en cifras pequeñas
+
+El repaso que abrió `§L54` ha encontrado hoy **cinco** afirmaciones numéricas propias que no reproducían: una
+explicación mecanicista falsa, un «solo en modo KB RAG» que ignoraba un contraejemplo, dos decimales citados
+de un fichero sin comprobarlos, un «23 ficheros» que eran 22, un «nueve de los doce» que eran ocho y un
+«cuatro de cuatro» que era tres de cuatro.
+
+Ninguna cambió una conclusión. Todas eran **cifras pequeñas escritas de memoria** mientras la atención estaba
+en el argumento: cuántos ficheros, cuántos de cuántos, en qué modo. Es donde el cuidado se relaja, porque el
+número parece un detalle de la frase y no un dato.
+
+Lo que las hace peligrosas es que **son verificables y por tanto verificables en la defensa**. Un tribunal
+que abra el repositorio y cuente doce ficheros donde el texto dice trece no concluye que hubo un desliz:
+concluye que las cifras del trabajo no se comprueban.
+
+La regla operativa que se deriva: **cuando una frase contiene un recuento, obtenerlo en el mismo turno en que
+se escribe**, aunque parezca obvio. Y al terminar una tanda de documentación, repasar los recuentos contra
+los datos, que es lo que hizo aparecer estos cinco.

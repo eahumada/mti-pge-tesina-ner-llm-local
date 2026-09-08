@@ -1895,7 +1895,7 @@ puntuación** del 2026-09-06. Comprobados uno a uno contra el historial de git:
 
 - **15 ficheros (1,3 MB)** ya se recuperan del historial: no aportan nada y siguen ignorados.
 - **12 ficheros (6,8 MB)** son la **única copia** y **no contienen modelos excluidos**. Se versionan con
-  `git add -f`. Nueve de los doce son `detailed_results.json.bak_prescore`, es decir, el detalle por registro
+  `git add -f`. Ocho de los doce son `detailed_results.json.bak_prescore`, es decir, el detalle por registro
   anterior a la corrección: exactamente lo que el informe lamenta haber perdido para la ejecución de julio,
   donde «sus datos por registro se perdieron por sobrescritura, de modo que no podía recalcularse».
 - **9 ficheros (14,5 MB)** contienen nombres de modelos excluidos. **No se versionan**: la política los
