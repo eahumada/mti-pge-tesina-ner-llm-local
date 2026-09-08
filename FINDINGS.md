@@ -1051,3 +1051,37 @@ informe—, pero sí una discrepancia entre lo que la configuración promete y l
 > **Regla operativa.** Una afirmación sobre la *dirección* de un sesgo es más fuerte que una sobre su
 > magnitud, y por eso exige más evidencia. Antes de escribir «nunca al alza», hay que buscar activamente el
 > mecanismo que podría empujar en sentido contrario.
+
+
+---
+
+### F51. Cuatro referencias de la bibliografía no corresponden a ninguna obra existente
+
+**Registrado:** 2026-09-08 01:50 (UTC−3) · Hallado por verificación automatizada contra internet de las veinte
+referencias, con **confirmación independiente** del equipo principal en el caso más claro.
+**Gravedad: máxima. Es un problema de integridad académica, no de formato.**
+
+| Ref. | Declarado en el informe | Resultado de la verificación |
+|:---|:---|:---|
+| **[7]** | A. García y M. López, «Evaluating BERT and Transformers for NER in Spanish», IberLEF, 2021 | **No encontrada.** Sin resultados por título, por autores ni por combinaciones |
+| **[9]** | M. Chang, J. Kim y S. Park, «RAG for Financial Document Analysis», *Journal of Financial Data Science* | **No encontrada** |
+| **[10]** | J. Smith, L. Johnson y R. Davis, «CRF for NER in Financial Texts», *ACM Transactions* | **No encontrada** |
+| **[15]** | M. Min et al., «FiNER: Financial Named Entity Recognition Dataset and Benchmark», ACL, 2023 | **No encontrada.** Confirmado a mano: existe *FiNER: Financial **Numeric** Entity Recognition for XBRL Tagging*, ACL **2022**, de Loukas et al., y *FiNER-ORD* de Shah et al. Título, año y autores difieren |
+
+**Por qué importa más allá del formato.** Dos de esas cuatro sostienen una afirmación del estado del arte: la
+línea que cita [2], [7] y [15] para respaldar que el NER en español alcanza «entre 88 % y 91 % de F1 en
+*benchmarks* académicos». La verificación de [2] señala que esa cifra no puede proceder de BERT, que no evalúa
+NER en español, de modo que **la carga probatoria recaía enteramente en dos referencias inexistentes**.
+
+**Señal de alerta que estaba a la vista.** Las cuatro comparten un rasgo: nombres de autor genéricos —«J.
+Smith, L. Johnson, R. Davis»; «A. García y M. López»— y publicaciones designadas de forma vaga, sin volumen ni
+páginas. Es la firma característica de una cita fabricada, y era detectable sin salir del documento.
+
+**Qué NO se ha hecho.** No se ha eliminado ninguna entrada ni se ha sustituido por otra. Retirar una referencia
+cambia lo que el texto afirma, y sustituirla exige comprobar que la obra nueva dice lo mismo. **Es decisión del
+autor**, y está registrada en `TODO-INFORME-FINAL.md`.
+
+> **Regla operativa.** Toda bibliografía heredada debe verificarse contra la fuente primaria antes de defender
+> el trabajo. Este proyecto ya había sufrido una atribución falsa —una cifra de mercado adjudicada a KPMG— y no
+> se extendió la sospecha al resto del aparato bibliográfico. Un solo caso detectado obliga a auditar el
+> conjunto.
