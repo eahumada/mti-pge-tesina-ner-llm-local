@@ -1,0 +1,221 @@
+2026-09-08 15:00:50,003 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-08 15:00:50,006 [INFO] ner_benchmark: Model 'gemma4:31b-cloud' is a cloud-hosted Ollama model. Bypassing local availability check.
+2026-09-08 15:00:50,006 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-08 15:00:50,007 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-09-08 15:00:50,007 [INFO] ner_benchmark: Corpus loaded: 15 articles split into 2 batches.
+2026-09-08 15:00:50,007 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-08 15:00:50,053 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-08 15:00:50,056 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-08 15:00:50,056 [INFO] ner_benchmark: [RAG] Using Knowledge Base mode: 'kb_combined'
+2026-09-08 15:00:50,063 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_baseline-b0-1788890450 for batch 0 to memory queue.
+2026-09-08 15:00:50,063 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_baseline-b1-1788890450 for batch 1 to memory queue.
+2026-09-08 15:00:50,063 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_kb_rag-b0-1788890450 for batch 0 to memory queue.
+2026-09-08 15:00:50,063 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_kb_rag-b1-1788890450 for batch 1 to memory queue.
+2026-09-08 15:00:50,063 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=1 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-09-08 15:00:50,065 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-08 15:00:50,065 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-08 15:00:50,065 [INFO] ner_benchmark: [RAG] Worker phase — Knowledge Base mode: 'kb_combined'
+2026-09-08 15:00:50,071 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_baseline-b0-1788890450 for batch 0 to memory queue.
+2026-09-08 15:00:50,071 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_baseline-b1-1788890450 for batch 1 to memory queue.
+2026-09-08 15:00:50,071 [INFO] ner_benchmark: Running RAG study 'gemma4:31b-cloud_baseline' with 1 workers...
+2026-09-08 15:00:50,071 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-cloud_baseline-b0-1788890450 from memory queue.
+2026-09-08 15:00:50,071 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-08 15:00:50,071 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '1'...
+2026-09-08 15:00:50,073 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:00:50,076 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:00:50,076 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:00:55,330 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:00:55,674 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:00:55,706 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '2'...
+2026-09-08 15:00:55,706 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:00:55,712 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:00:55,712 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:00:56,937 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:00:57,287 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:00:57,311 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '3'...
+2026-09-08 15:00:57,311 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:00:57,315 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:00:57,315 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:00:59,195 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:00:59,390 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:00:59,427 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '4'...
+2026-09-08 15:00:59,427 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:00:59,432 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:00:59,432 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:01,137 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:01,507 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:01,525 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '5'...
+2026-09-08 15:01:01,525 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:01,530 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:01,530 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:04,097 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:04,607 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:04,613 [INFO] ner_benchmark: [Worker 6] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '6'...
+2026-09-08 15:01:04,613 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:04,616 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:04,616 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:05,409 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:05,634 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:05,643 [INFO] ner_benchmark: [Worker 7] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '7'...
+2026-09-08 15:01:05,644 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:05,650 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:05,650 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:06,835 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:07,222 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:07,240 [INFO] ner_benchmark: [Worker 8] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '8'...
+2026-09-08 15:01:07,240 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:07,245 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:07,245 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:08,365 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:08,819 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:08,826 [INFO] ner_benchmark: [Worker 9] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '9'...
+2026-09-08 15:01:08,826 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:08,831 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:08,831 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:10,377 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:10,908 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:10,919 [INFO] ner_benchmark: [Worker 10] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '10'...
+2026-09-08 15:01:10,920 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:10,923 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:10,923 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:14,343 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:14,567 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:14,582 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-cloud_baseline-b0-1788890450 in memory queue.
+2026-09-08 15:01:14,585 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-cloud_baseline-b1-1788890450 from memory queue.
+2026-09-08 15:01:14,586 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-08 15:01:14,586 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '11'...
+2026-09-08 15:01:14,586 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:14,593 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:14,593 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:17,253 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:17,671 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:17,709 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '12'...
+2026-09-08 15:01:17,710 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:17,713 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:17,713 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:19,683 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:19,788 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:19,836 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '13'...
+2026-09-08 15:01:19,836 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:19,840 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:19,840 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:21,321 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:21,405 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:21,423 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '14'...
+2026-09-08 15:01:21,423 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:21,427 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:21,427 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:22,899 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:22,998 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:23,021 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '15'...
+2026-09-08 15:01:23,021 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:23,025 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:23,025 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:24,402 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:24,596 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:24,604 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-cloud_baseline-b1-1788890450 in memory queue.
+2026-09-08 15:01:24,611 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_kb_rag-b0-1788890484 for batch 0 to memory queue.
+2026-09-08 15:01:24,611 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_kb_rag-b1-1788890484 for batch 1 to memory queue.
+2026-09-08 15:01:24,611 [INFO] ner_benchmark: Running RAG study 'gemma4:31b-cloud_kb_rag' with 1 workers...
+2026-09-08 15:01:24,612 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-cloud_kb_rag-b0-1788890484 from memory queue.
+2026-09-08 15:01:24,612 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-08 15:01:24,612 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_kb_rag') -> Extracting entities for record '1'...
+2026-09-08 15:01:24,830 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:24,834 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:24,834 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:27,127 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:27,415 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:27,432 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_kb_rag') -> Extracting entities for record '2'...
+2026-09-08 15:01:27,522 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:27,525 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:27,525 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:28,739 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:29,096 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:29,120 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_kb_rag') -> Extracting entities for record '3'...
+2026-09-08 15:01:29,215 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:29,218 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:29,218 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:31,281 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:31,748 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:31,782 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_kb_rag') -> Extracting entities for record '4'...
+2026-09-08 15:01:31,879 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:31,882 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:31,882 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:33,339 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:33,447 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:33,467 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_kb_rag') -> Extracting entities for record '5'...
+2026-09-08 15:01:33,553 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:33,556 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:33,556 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:34,686 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:35,126 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:35,134 [INFO] ner_benchmark: [Worker 6] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_kb_rag') -> Extracting entities for record '6'...
+2026-09-08 15:01:35,229 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:35,232 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:35,232 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:42,644 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:42,849 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:42,859 [INFO] ner_benchmark: [Worker 7] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_kb_rag') -> Extracting entities for record '7'...
+2026-09-08 15:01:42,962 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:42,965 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:42,965 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:44,030 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:44,541 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:44,553 [INFO] ner_benchmark: [Worker 8] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_kb_rag') -> Extracting entities for record '8'...
+2026-09-08 15:01:44,644 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:44,647 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:44,647 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:45,395 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:45,713 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:45,717 [INFO] ner_benchmark: [Worker 9] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_kb_rag') -> Extracting entities for record '9'...
+2026-09-08 15:01:45,810 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:45,813 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:45,813 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:46,879 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:47,383 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:47,398 [INFO] ner_benchmark: [Worker 10] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_kb_rag') -> Extracting entities for record '10'...
+2026-09-08 15:01:47,497 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:47,500 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:47,501 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:49,366 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:49,584 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:49,603 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-cloud_kb_rag-b0-1788890484 in memory queue.
+2026-09-08 15:01:49,607 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-cloud_kb_rag-b1-1788890484 from memory queue.
+2026-09-08 15:01:49,607 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-08 15:01:49,607 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_kb_rag') -> Extracting entities for record '11'...
+2026-09-08 15:01:49,703 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:49,707 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:49,707 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:51,871 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:52,284 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:52,324 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_kb_rag') -> Extracting entities for record '12'...
+2026-09-08 15:01:52,411 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:52,414 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:52,414 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:54,626 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:54,952 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:54,989 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_kb_rag') -> Extracting entities for record '13'...
+2026-09-08 15:01:55,090 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:55,093 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:55,093 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:56,613 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:57,170 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:57,196 [INFO] ner_benchmark: [Worker 4] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_kb_rag') -> Extracting entities for record '14'...
+2026-09-08 15:01:57,288 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:57,291 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:57,291 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:58,425 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:58,810 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:58,823 [INFO] ner_benchmark: [Worker 5] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_kb_rag') -> Extracting entities for record '15'...
+2026-09-08 15:01:58,908 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-08 15:01:58,911 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gemma4:31b-cloud options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=True
+2026-09-08 15:01:58,911 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-08 15:01:59,715 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 15:01:59,977 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 15:01:59,987 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-cloud_kb_rag-b1-1788890484 in memory queue.
+2026-09-08 15:01:59,992 [INFO] ner_benchmark: Unloading model weights for gemma4:31b-cloud to protect VRAM.
+2026-09-08 15:02:00,183 [INFO] ner_benchmark.llm_runner: Successfully unloaded weights for gemma4:31b-cloud from VRAM.
+2026-09-08 15:02:02,186 [INFO] ner_benchmark: ==================================================
+2026-09-08 15:02:02,186 [INFO] ner_benchmark: BENCHMARK EXTRACTIONS COMPLETE. PROCESSING METRICS...
+2026-09-08 15:02:02,186 [INFO] ner_benchmark: ==================================================
+2026-09-08 15:02:02,269 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.
