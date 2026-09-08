@@ -26,3 +26,15 @@ data/*.json
 
 # Los registros de ejecucion NO se ignoran: son la prueba de que se ejecuto.
 # Ver CLAUDE.md, seccion «Los registros de ejecucion se conservan» (2026-09-08).
+
+# Duplicados de macOS: el sufijo « 2» que crea Finder al copiar sobre un directorio
+# que ya tiene el fichero. Son copias byte a byte y no deben entrar en git.
+*[ ][0-9].md
+*[ ][0-9].json
+*[ ][0-9].csv
+*[ ][0-9].log
+*[ ][0-9].txt
+*[ ][0-9].py
+*[ ][0-9].docx
+*[ ][0-9].pdf
+*[ ][0-9].zip
