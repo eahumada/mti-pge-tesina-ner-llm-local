@@ -1202,6 +1202,35 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 
 ---
 
+### 3.bis.11 ✅ COMPLETADA (preparación) — Desbloqueo aplicado y harness listo para la re-corrida (2026-09-08)
+
+Tras el desbloqueo del equipo principal (`remote_48g/INSTRUCCIONES-CIERRE-20260908.md`) se aplicó todo lo que
+la re-corrida necesita, en la rama `fix/recorrida-correcciones-20260908` (ya con `main` fusionado):
+
+- **§2.bis.2.bis Locations:** `download_conll2002.py` reejecutado (fuente con LOC, 3857); `recuperar_locations_n120.py`
+  (105 emparejados, **482** locs) y `aplicar_locations_manuales.py` (kleptotrace **63**, sintético **20**).
+  Números exactos a los verificados. Comprobado: clave `locations` en 120/120 y 30/30.
+- **§3.bis registro por entidad:** `evaluator.py` persiste `per_entity` por registro (veredicto tp/fp/fn +
+  extraída/referencia), coherente con tp/fp/fn y fluye a `detailed_results.json`. Permite el contraste §3.2
+  post-hoc sin reejecutar.
+- **§2.bis.1 exclusión de exemplars:** `main.py` `_excluir_contaminados` descuenta los 7 artículos del
+  manifiesto de la métrica publicada en modos `kb_fewshot`/`kb_combined`; el crudo los conserva.
+- **§2.bis.3 presupuesto:** `max_tokens=4096` en config y CLI.
+- **Smoke test end-to-end** (nemotron-mini, 3 recs): `per_entity` presente, **Locations puntúa con fn>0**
+  (defecto §F53 cerrado), `run_config.max_tokens=4096`, `tools/verificar_corrida.py` → **VÁLIDA** (cero
+  `recall>1.0`, fn>0 en las tres categorías). Commits `c776fe0`, `72b20ac`.
+
+**Observación para el equipo principal:** los 15 artículos de Kleptotrace **dentro** del corpus de 120 quedan
+con `locations=[]` (el paso 2 anotó `kleptotrace.json` standalone, no el subconjunto embebido en el 120). Se
+respetaron vuestros números verificados (120→482) y no se alteró; si el subconjunto debe heredar esas 63,
+decidlo y se aplica.
+
+**Pendiente:** lanzar la re-corrida completa de los 13 modelos (N=120, dos modos, un modelo por turno). El
+harness está probado y listo. La ejecución es el trabajo pesado del equipo de 48 GB; a la espera de confirmar
+dónde se lanza.
+
+---
+
 ## 4. Workflows
 
 > Todo workflow debe declarar aquí su subsección: objetivo, fases, agentes, archivos tocados y resultado.

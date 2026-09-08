@@ -852,3 +852,23 @@ exige re-corrida con registro por entidad (los detailed_results no guardan extra
 `fix/recorrida-correcciones-20260908`. Lo que resta depende de correr benchmark (bloqueado por §2.bis.2
 Locations) o de decisiones del autor (§2.bis.1 exemplars, §3.1 idioma del generador). Nada más es
 paralelizable sin esas decisiones.
+
+### 2026-09-08 (cont. 3) — Desbloqueo §2.bis.2 aplicado; harness listo y verificado
+
+El equipo principal desbloqueó §2.bis.2 (herramientas `recuperar_locations_n120.py` y
+`aplicar_locations_manuales.py` + anotación manual) y añadió §3.bis (registro por entidad). Aplicado todo:
+
+- Locations: conll regenerado con LOC; recuperadas 482 en el 120 (105 emparejados) y anotadas a mano 63
+  (kleptotrace) + 20 (sintético). Clave `locations` presente en 120/120 y 30/30. Números exactos a los del
+  equipo principal.
+- §3.bis: `evaluator.py` persiste `per_entity` (tp/fp/fn + extraída/referencia) por registro; fluye a
+  `detailed_results` vía `metrics`. Coherente con tp/fp/fn (probado).
+- §2.bis.1: `main.py` excluye los 7 contaminados de la métrica en modos kb; crudo intacto.
+- §2.bis.3: `max_tokens=4096` en config y CLI.
+- Smoke end-to-end (nemotron-mini, 3 recs): Locations puntúa con fn>0 (§F53 cerrado), per_entity presente,
+  `verificar_corrida` → VÁLIDA. Commits `c776fe0`, `72b20ac`.
+
+Observación abierta: los 15 de Kleptotrace embebidos en el 120 quedan con `locations=[]`; se respetaron los
+números verificados del equipo principal, pendiente su decisión sobre si heredan las 63.
+
+Pendiente: lanzar la re-corrida completa (13 modelos), trabajo pesado del equipo de 48 GB. Harness probado.
