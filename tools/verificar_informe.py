@@ -744,6 +744,56 @@ def c_tablas_menores(s):
           'con estas, todas las tablas de datos del informe quedan atadas al dato')
 
 
+# --- 20. La Tabla 18 reproduce desde el analisis de mojibake -------------------------------------
+ARTEFACTO_MOJIBAKE = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark/results/'
+                                        'ANALISIS_MOJIBAKE_20260908/efecto_mojibake.json')
+
+
+def c_tabla18_vs_artefacto(s):
+    """El efecto diferencial del mojibake, atado al fichero que lo calcula.
+
+    Ultima tabla de datos del informe que quedaba sin contrastar. Con esta, las seis —4, 5, 6, 7, 8
+    y 18—, el Anexo I y las dos figuras salen del dato y no de otra copia suya.
+    """
+    import json as _json
+    if not os.path.exists(ARTEFACTO_MOJIBAKE):
+        check('la Tabla 18 reproduce desde el analisis de mojibake', 0,
+              ['no existe %s' % os.path.relpath(ARTEFACTO_MOJIBAKE, RAIZ)])
+        return
+    with open(ARTEFACTO_MOJIBAKE, encoding='utf-8') as fh:
+        a = _json.load(fh)
+    art = {f['grupo']: f for f in a.get('filas', [])}
+    i = s.find('_Tabla 18.')
+    if i < 0:
+        check('la Tabla 18 reproduce desde el analisis de mojibake', 0, ['no se encuentra la Tabla 18'])
+        return
+    fallos, mirados = [], 0
+    vistos = set()
+    for l in s[i:i + 3500].split('\n'):
+        m = re.match(r'^\|\s*`([^`]+)`\s*\|\s*([+-][\d.]+)\s*\|\s*([+-][\d.]+)\s*\|', l)
+        if not m:
+            continue
+        cfg, x, y = m.group(1), float(m.group(2)), float(m.group(3))
+        vistos.add(cfg)
+        f = art.get(cfg)
+        if f is None:
+            fallos.append('%s no esta en el artefacto de mojibake' % cfg)
+            continue
+        for etiq, val, clave in (('por entidad', x, 'delta_por_entidad'),
+                                 ('por texto', y, 'delta_por_texto')):
+            mirados += 1
+            d = f.get(clave)
+            if d is None or abs(val - d) > 0.0002:
+                fallos.append('Tabla 18 %s %s: la tabla dice %+.4f y el dato %s'
+                              % (cfg, etiq, val, '—' if d is None else '%+.4f' % d))
+    # el recuento declarado por el artefacto debe coincidir con las filas de la tabla
+    if a.get('configuraciones') and a['configuraciones'] != len(vistos):
+        fallos.append('el artefacto declara %s configuraciones y la tabla tiene %d'
+                      % (a['configuraciones'], len(vistos)))
+    check('la Tabla 18 reproduce desde el analisis de mojibake', mirados, fallos,
+          'con esta, todas las tablas de datos del informe estan atadas al dato')
+
+
 def main():
     s = texto()
     c_vacios()
@@ -764,6 +814,7 @@ def main():
     c_tabla4_vs_datos(s)
     c_figura1_vs_artefacto(s)
     c_tablas_menores(s)
+    c_tabla18_vs_artefacto(s)
     if '--red' in sys.argv:
         c_urls(s)
 
