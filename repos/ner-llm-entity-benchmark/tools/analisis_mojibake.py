@@ -16,6 +16,7 @@ import json, io, glob, collections, re, argparse, os
 MOJIBAKE = re.compile(r'Ã|Â|â€|Ã‚')
 CORPUS = 'data/benchmark_balanced_120.json'
 CORRIDAS = ['results/benchmark_balanced_120_20260901_140421/detailed_results.json',
+            'results/afectados_thinking_n120_REMOTO/detailed_results.json',
             'results/benchmark_n120_REMOTO/detailed_results.json',
             'results/gemma4_31b_cloud_n120_REMOTO/detailed_results.json',
             'results/qwen3_nothink_n120_REMOTO/detailed_results.json',
@@ -67,6 +68,11 @@ def main():
             # `is not None`: un F1 de 0.0 es un dato, no una ausencia
             if r.get('model') and r.get('f1') is not None:
                 grupos[r['model']].append(r)
+    # Un modelo puede figurar en varias corridas. Se conserva la primera de la lista
+    # CORRIDAS que aporte 120 registros, y el orden de esa lista pone delante las
+    # corridas sanas: `benchmark_n120_REMOTO` contiene la medicion de
+    # `gemma4:12b-mlx` averiada por el modo de razonamiento, con 68 y 98 registros
+    # en recall cero, y no debe desplazar a la de `afectados_thinking_n120_REMOTO`.
 
     filas = []
     for m, rs in sorted(grupos.items()):
