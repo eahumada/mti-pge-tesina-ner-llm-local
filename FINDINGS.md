@@ -2090,14 +2090,27 @@ sistema y VRAM por registro:
 **La misma máquina y la misma huella de memoria, con la latencia 52 veces menor.** La explicación de los
 16 GB con paginación queda descartada: ambas corridas usaron ~30 GB de sistema y ~26,7 GB de VRAM.
 
-Eso desplaza la causa al **arnés o a la propia medición**, no al hardware. Y hay una pieza que sí encaja: los
-aumentos ocurren **solo en modo KB RAG** —`gemma4:latest` sube de 489,6 a 790,9 s mientras su *baseline* baja
-de 98,0 a 46,3—, que es justo el modo que genera más texto, y la re-corrida **duplicó el presupuesto de
-salida** de 2 048 a 4 096 tokens. Una respuesta que antes se truncaba ahora se completa, y eso cuesta tiempo.
+Eso desplaza la causa al **arnés o a la propia medición**, no al hardware.
 
-Queda sin explicar la otra mitad: por qué los *baseline* bajan tanto. La pregunta al equipo de 48 GB se
-mantiene, pero **acotada**: no es la máquina, y la parte que sube tiene explicación. Lo que falta entender es
-la bajada.
+> **Corrección del 2026-09-08, 20:15.** La primera versión de este apartado afirmaba que «los aumentos
+> ocurren solo en modo KB RAG». **Es falso**, y se comprobó al repasar las afirmaciones propias tras
+> `§L54`. Con cinco modelos rehechos hay **diez pares** comparables: **ocho bajan y dos suben**, y de los dos
+> que suben **uno es de modo *baseline***:
+>
+> | Grupo | Modo | Antes | Ahora | Factor |
+> |:---|:---|---:|---:|---:|
+> | `gemma4:31b-cloud` | **baseline** | 1,2 s | 3,1 s | ×2,61 |
+> | `gemma4:latest` | KB RAG | 489,6 s | 790,9 s | ×1,62 |
+>
+> Los dos casos no son comparables entre sí, y ahí estaba el error de agruparlos: la latencia del modelo
+> alojado es de **uno a tres segundos** y la domina el viaje de red, no la generación, de modo que su ×2,61
+> se mueve sobre una base minúscula y no dice nada del arnés. El de `gemma4:latest` sí ocurre sobre una base
+> grande y sigue siendo compatible con el presupuesto de salida duplicado, de 2 048 a 4 096 tokens: una
+> respuesta que antes se truncaba ahora se completa. Pero eso es **una explicación para un caso**, no un
+> patrón.
+
+Lo que queda sin explicar es lo principal: **por qué bajan ocho de diez**, algunas hasta ×0,02. La pregunta al
+equipo de 48 GB se mantiene y sigue **acotada** a eso: no es la máquina.
 
 ### §F68.bis — Con cinco modelos, lo que se ve no es un cambio de signo sino una convergencia
 

@@ -22,11 +22,14 @@ latencia por petición y aquí la mayoría baja.
 por registro, y `gemma4:31b-mlx` corrió con **30 539 MB de sistema y 26 606 de VRAM** en la publicada frente
 a **30 331 y 26 720** en la vuestra. Misma máquina, misma huella, latencia 52 veces menor. Descartado.
 
-**Y una parte ya se explica.** Los aumentos ocurren solo en modo KB RAG —`gemma4:latest` sube de 489,6 a
-790,9 s mientras su *baseline* baja de 98,0 a 46,3—, que es el modo que más texto genera, y la re-corrida
-duplicó el presupuesto de salida de 2 048 a 4 096. Una respuesta que antes se truncaba ahora se completa.
+**Corrección sobre lo que decía antes este documento.** Habíamos escrito que los aumentos ocurren solo en
+modo KB RAG. No es así: con cinco modelos rehechos hay **diez pares comparables, ocho bajan y dos suben**, y
+uno de los dos que suben es de modo *baseline* (`gemma4:31b-cloud`, de 1,2 a 3,1 s). Ese caso se mueve sobre
+una base de uno a tres segundos dominada por el viaje de red, así que no dice nada del arnés. El otro,
+`gemma4:latest` con KB RAG de 489,6 a 790,9 s, sí ocurre sobre una base grande y encaja con haber duplicado
+el presupuesto de salida de 2 048 a 4 096: una respuesta que antes se truncaba ahora se completa.
 
-**La pregunta que queda, acotada: ¿por qué bajan tanto los *baseline*?** De 1 066 a 20,5 segundos en
+**La pregunta que queda: ¿por qué bajan ocho de los diez pares, algunos hasta ×0,02?** De 1 066 a 20,5 segundos en
 `gemma4:31b-mlx` y de 99 a 4,7 en `gemma4:12b-mlx`, en la misma máquina. ¿Cambió algo en cómo se mide
 `latency_sec` —por ejemplo, si antes incluía la carga del modelo en un barrido que encadenaba varios y ahora
 cada uno corre en su propio proceso—, o hay otra explicación que se nos escapa?
