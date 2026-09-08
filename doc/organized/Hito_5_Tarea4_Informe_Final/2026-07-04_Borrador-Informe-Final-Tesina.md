@@ -325,7 +325,7 @@ La Tabla 2 presenta los resultados consolidados del benchmark completo agrupados
 > (F = 1,1379; p = 0,3417) ni la alcanza ninguna comparación de Tukey, consecuencia de N=15: los deltas deben
 > leerse como una tendencia consistente y no como una diferencia demostrada.
 
-> **Hallazgo 4:** ninguno de los dos factores basta por separado —la localización al español aporta +4.38 pp y los ejemplos *few-shot* en inglés restan 0.72 pp—, pero **su combinación alcanza +10.40 pp** sobre el baseline ZS-EN, con el mejor Recall del conjunto (86.87%). Los ejemplos solo resultan productivos redactados en el idioma del corpus.
+> **Hallazgo 5:** ninguno de los dos factores basta por separado —la localización al español aporta +4.38 pp y los ejemplos *few-shot* en inglés restan 0.72 pp—, pero **su combinación alcanza +10.40 pp** sobre el baseline ZS-EN, con el mejor Recall del conjunto (86.87%). Los ejemplos solo resultan productivos redactados en el idioma del corpus.
 
 ### 5.3 Validación Estadística sobre el Corpus del Dominio (N=30)
 
@@ -483,7 +483,7 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 [5] K. Bourne, *Unlocking Data with Generative AI and RAG*. Birmingham, R.U.: Packt Publishing, 2024, ISBN 978-1-83588-790-5. [En línea]. Disponible: https://books.google.com/books?vid=ISBN9781835887905
 
-[6] X. Gao et al., "Retrieval-Augmented Generation for Large Language Models: A Survey," 2024, arXiv:2312.10997. [Online]. Available: https://arxiv.org/abs/2312.10997
+[6] Y. Gao et al., "Retrieval-Augmented Generation for Large Language Models: A Survey," 2024, arXiv:2312.10997. [Online]. Available: https://arxiv.org/abs/2312.10997
 
 [7] J. Cañete, G. Chaperon, R. Fuentes, J.-H. Ho, H. Kang, and J. Pérez, "Spanish Pre-Trained BERT Model and Evaluation Data," in *Proc. Practical ML for Developing Countries Workshop (PML4DC) at ICLR 2020*, Addis Abeba, Etiopía, 2020. [En línea]. Disponible: https://arxiv.org/abs/2308.02976
 
@@ -495,7 +495,7 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 [11] O. Ahia et al., "Do All Languages Cost the Same? Tokenization in the Era of Commercial Language Models," in *Proc. Conf. Empirical Methods in Natural Language Processing (EMNLP)*, 2023, pp. 9904-9923. [En línea]. Disponible: https://doi.org/10.18653/v1/2023.emnlp-main.614
 
-[12] E. F. Tjong Kim Sang, "Introduction to the CoNLL-2002 Shared Task: Language-Independent Named Entity Recognition," *Proceedings of CoNLL-2002*, pp. 155-158, 2002. [Online]. Available: https://www.clips.uantwerpen.be/conll2002/ner/
+[12] E. F. Tjong Kim Sang, "Introduction to the CoNLL-2002 Shared Task: Language-Independent Named Entity Recognition," *Proceedings of CoNLL-2002*, pp. 155-158, 2002. [Online]. Available: https://aclanthology.org/W02-2024/
 
 [13] J. Wei et al., "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models," *Advances in Neural Information Processing Systems*, vol. 35, pp. 24824-24837, 2022. [En línea]. Disponible: https://doi.org/10.52202/068431-1800
 
@@ -751,7 +751,7 @@ Paso 5 — Control de calidad por diversidad: Se verificó que ningún artículo
 
 ### Anexo G — Declaración de Uso de Inteligencia Artificial en la Elaboración de esta Tesina
 
-Este anexo declara, con propósito de transparencia académica, el alcance y los límites del uso de herramientas de inteligencia artificial (IA) generativa durante el desarrollo de esta tesina. La declaración se basa en el registro documental del proyecto: el historial de control de versiones (20 commits entre el 29 de junio y el 1 de septiembre de 2026), los registros de trabajo WORKLOG.md (raíz del repositorio y research/rag/), y los informes de investigación asociados.
+Este anexo declara, con propósito de transparencia académica, el alcance y los límites del uso de herramientas de inteligencia artificial (IA) generativa durante el desarrollo de esta tesina. La declaración se basa en el registro documental del proyecto: el historial de control de versiones (más de 130 commits entre el 1 de julio y el 8 de septiembre de 2026), los registros de trabajo WORKLOG.md (raíz del repositorio y research/rag/), y los informes de investigación asociados.
 
 #### G.1 Trabajo realizado por el autor de la tesina
 
@@ -769,7 +769,7 @@ Asistentes de programación basados en LLM se emplearon como apoyo en tareas de 
 
 #### G.4 Límites y verificación
 
-No se utilizó IA para producir, estimar o extrapolar datos experimentales, ni para redactar conclusiones no sustentadas en las corridas registradas. Toda cifra citada en este informe es trazable a un archivo de resultados versionado en el repositorio. Las limitaciones conocidas se declaran explícitamente en el cuerpo del informe, entre ellas que la validación complementaria sobre el corpus real N=120 (§5.3.5) cubre un subconjunto de cinco modelos y que la re-evaluación de los modelos restantes queda como trabajo futuro (§7.2). El autor asume la responsabilidad final sobre el contenido, la exactitud y la integridad académica de este documento.
+No se utilizó IA para producir, estimar o extrapolar datos experimentales, ni para redactar conclusiones no sustentadas en las corridas registradas. Toda cifra citada en este informe es trazable a un archivo de resultados versionado en el repositorio. Las limitaciones conocidas se declaran explícitamente en el cuerpo del informe, entre ellas las que el capítulo 6 discute sobre la codificación del corpus y el alcance de la medición. El autor asume la responsabilidad final sobre el contenido, la exactitud y la integridad académica de este documento.
 
 ### Anexo H — Codificación del corpus: análisis del *mojibake* y su efecto sobre la medición
 
