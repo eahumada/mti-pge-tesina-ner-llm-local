@@ -199,6 +199,24 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.21 EN CURSO — Resincronizar los tres `.docx` y el PDF con el `.md` saneado
+- **Abierta:** 2026-09-08 07:15 por Claude Desktop, a pedido del autor. Los tres `.docx` y el PDF de la `_v10`
+  quedaron con **20 referencias frente a las 37 del `.md`** y con la **Tabla 2 antigua**, la que descansaba
+  sobre las citas ficticias de §2.20.
+- **Archivos que toco:** los tres `.docx`, el PDF, `doc/versions/informe_final/` y `VERSIONES.md`. **Del `.md`
+  solo leo**, que sigue declarado bajo §2.20 por Claude Code.
+- **Estado del `.md` al tomar la tarea:** 131 490 bytes, escrito a las 07:06 y estable, SHA-256 `d4a1b6de5b3f`.
+  Se vuelve a comprobar el hash antes de congelar; si cambió, se rehace la propagación.
+- **Revisión del `.md` hecha antes de propagar:** 37 entradas de bibliografía, numeradas de 1 a 37 y
+  correlativas · **cada cita del texto tiene su entrada y cada entrada se cita al menos una vez**, sin huérfanas
+  por ninguno de los dos lados · nueve capítulos y ocho anexos A-H · 19 tablas · ningún emoji · ningún arte
+  ASCII. Las cuatro citas inexistentes han desaparecido (cero ocurrencias de «Smith, Johnson» y «Min et al»),
+  y la Tabla 2 se rehizo con obras reales: BloombergGPT con arquitectura **BLOOM 50B** y F1 de 53,6-75,5 % en
+  lugar de GPT-J con «más del 85 %»; FiNER-139 con SEC-BERT-SHAPE y 82,1 % de micro-F1; y Cañete et al. con
+  BETO y 88,43 %, que sustituye a la referencia fabricada de García y López.
+- **Aviso de extensión:** el `.md` pasa de 15 915 a 19 549 palabras, de modo que hay que esperar desborde. Se
+  recorta por estilo, y si no cabe se avisa antes de suprimir nada, como manda el encargo.
+
 ### 2.20 🔴 EN CURSO — Saneamiento del aparato bibliográfico
 
 **Motivo:** `FINDINGS.md §F51`. Cuatro referencias de la bibliografía **no corresponden a ninguna obra
