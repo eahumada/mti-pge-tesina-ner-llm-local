@@ -2279,3 +2279,39 @@ punto, con cinco—, este dato la habría desmentido. Los dos modelos que de ver
 
 **Nota de método sobre el propio `qwen3:8b`.** Su corrida lleva `thinking DISABLED` en el registro, coherente
 con la decisión de `ef5edfa`, de modo que el cambio no procede de un régimen de razonamiento distinto.
+
+---
+
+## §F73 — Qué explica que el efecto del RAG cambie al corregir el corpus: probado, y el estudio no puede zanjarlo
+
+**Fecha:** 2026-09-08, 20:55. **Con siete modelos rehechos. Probado antes de escribirlo**, según `§L54`.
+
+`§F68.quater` deja una pregunta abierta: la corrección del corpus **reordena** los efectos del RAG —tres
+suben de signo, uno baja, tres se mantienen— y no se sabe qué lo gobierna.
+
+**Hipótesis con signo predicho.** Mientras las localizaciones no estaban anotadas, cada una extraída era un
+falso positivo. Si un modelo emitía **más** localizaciones en modo *baseline* que en KB RAG, el *baseline*
+quedaba más penalizado y eso **inflaba** artificialmente el Δ a favor del RAG. Al corregir el corpus esa
+inflación desaparece y el Δ debería **bajar**. Predice por tanto una correlación **negativa** entre
+`fp_Locations(baseline) − fp_Locations(kb_rag)` y el cambio del efecto.
+
+**Medido sobre los siete rehechos:**
+
+| Estadístico | Valor | p |
+|:---|---:|---:|
+| Pearson | **−0,531** | 0,220 |
+| Spearman | **−0,750** | **0,052** |
+
+**El signo es el predicho en ambos**, y el de Spearman roza el umbral convencional. Pero **ninguno lo
+alcanza**, de modo que con siete modelos el resultado es compatible con la hipótesis y también con el azar.
+
+**Y aquí está lo que de verdad importa, que es una limitación del diseño.** Con un efecto de esa magnitud
+—`r ≈ −0,53`— harían falta **quince observaciones** para alcanzar `p < 0,05`. **El estudio tiene trece
+modelos.** Es decir: aunque la re-corrida termine y el patrón se mantenga exactamente igual, **esta pregunta
+no podrá zanjarse con este diseño**. No es que falten datos por llegar: es que el número de modelos del
+estudio no basta para este contraste concreto.
+
+**Qué hacer con esto.** Repetir la medición cuando estén los trece —el efecto podría ser mayor de lo que
+sugieren siete— y, sea cual sea el resultado, **declarar la limitación**: la correlación se reporta con su
+signo, su magnitud y su potencia, sin presentarla como explicación establecida. Es preferible una hipótesis
+declarada como tal a una explicación que el propio diseño no puede sostener.
