@@ -199,6 +199,48 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.22 ⚠️ AVISO A CLAUDE DESKTOP sobre su §2.21 — hay un noveno anexo
+
+**De:** Claude Code (equipo principal), 2026-09-08 04:45 hora local. **Para:** la tarea §2.21 en curso.
+**No toco ninguno de tus archivos:** este aviso es solo informativo y va por append, en mi propia sección.
+
+**La buena noticia primero: tu instantánea del `.md` está vigente.** He comparado el SHA-256 completo y
+coincide con el que declaras, `d4a1b6de5b3f…`, y el tamaño también, 131 490 bytes. No hace falta rehacer nada
+por desfase de la fuente. El fichero íntegro es
+`d4a1b6de5b3f2b23f729bc215eff9ed39023ecc77b612a3283a2236a105b3ca5`.
+
+**Pero tu revisión previa declara «nueve capítulos y ocho anexos A-H», y hay NUEVE anexos, A-I.** El noveno se
+añadió en el commit `5c59f41` y es el que materializa la decisión del autor sobre el hallazgo `§F53`:
+
+> `### Anexo I — Medición restringida a las categorías anotadas por el corpus` (línea 924)
+
+Ocupa 59 líneas y contiene una tabla de **51 filas** —49 configuraciones más cabecera y separador— con la
+Tabla 19 como leyenda. Si propagas creyendo que los anexos terminan en H, **ese anexo entero se cae del
+entregable**, y con él la única prueba de que las cifras corregidas existen. Merece la pena comprobarlo en el
+`.docx` antes de congelar la versión.
+
+**Otras cuatro cosas cambiaron después de la tanda de bibliografía**, todas dentro del mismo fichero y del
+mismo hash que ya tienes, por si tu inventario se hizo antes de leerlas:
+
+- **Las diecinueve tablas están renumeradas en orden de aparición**, del 1 al 19, cada una con su leyenda
+  inmediatamente encima. Antes solo cinco tenían leyenda, del 12 al 16. La tabla del estado del arte es ahora
+  la **Tabla 2** y el benchmark exploratorio la **Tabla 4**; ese benchmark se citaba como «Tabla 2» en el
+  cuerpo y como «Tabla 5» en el Anexo E, y ya es la 4 en ambos sitios.
+- **Las siete conclusiones se reformularon** sobre datos verificados y cambian de extensión, algunas bastante.
+- **El Anexo H.3 se reescribió** completo: su tabla anterior declaraba una partición de 88 y 31 artículos,
+  cuya suma es 119 y no 120, y no se reproducía con ningún criterio.
+- **§6.1 tiene un mecanismo nuevo** para el efecto del idioma del prompt. El anterior era imposible: atribuía
+  la mejora a la fluidez del modelo leyendo español, sobre un corpus que está en inglés.
+
+**Y una disculpa operativa.** Al commitear mi encargo arrastré dieciocho líneas tuyas de `CURRENT-TASKS.md`
+que estaban sin commitear, en el commit `da1ac36`, bajo un mensaje que habla de otra cosa. Tu texto está
+íntegro y no lo he modificado; solo quedó mal atribuido. No lo revierto para no romper nada.
+
+**El encargo que había escrito** está en `PROMPT-CLAUDE-DESKTOP-RESINCRONIZACION-20260908.md`. Lo escribí sin
+saber que ya habías tomado la tarea, así que en gran parte te resultará redundante; queda por si el inventario
+detallado del desfase te sirve, y en particular la tensión que declara sobre `pandoc` frente a
+`docx_replace_terms.py`, que sigue en pie.
+
 ### 2.21 EN CURSO — Resincronizar los tres `.docx` y el PDF con el `.md` saneado
 - **Abierta:** 2026-09-08 07:15 por Claude Desktop, a pedido del autor. Los tres `.docx` y el PDF de la `_v10`
   quedaron con **20 referencias frente a las 37 del `.md`** y con la **Tabla 2 antigua**, la que descansaba
@@ -1217,3 +1259,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-07 20:35 | Claude Code (equipo principal) | 🔴 §2.16: corregida la descripción de la métrica de emparejamiento —era «similitud de tokens», es **distancia de Indel normalizada** (`fuzz.ratio`)— y declarados sus dos límites, que sesgan a la baja. Encargo de propagación a **Word y PDF** en `PROMPT-CLAUDE-DESKTOP-PROPAGACION-20260907.md`. Auditoría y dos subagentes en curso sobre el resto de enunciados técnicos. ⚠️ **Atribución:** mi commit `bdb3337` arrastró las versiones `_v6` y `_v7` de Claude Desktop bajo un mensaje que solo hablaba de la métrica; no se perdió nada, pero el historial las atribuye mal |
 | 2026-09-07 21:30 | Claude Code (equipo principal) | §2.17: registradas en `CLAUDE.md` y en el encargo las **reglas permanentes de Word y PDF** —resumen y abstract fundidos, sincronizados y en la primera página; recorte de espacios **por estilo** y nunca por contenido; 25 páginas exactas; Anexo B sin saltos duros; anexos consolidados sin perder contenido—. En el `.md`: §2.4 explica el aparato estadístico, §4.4 desarrolla las métricas y §5.5 deriva el coste **declarándolo estimación** |
 | 2026-09-08 02:50 | Claude Code (equipo principal) | 🔴 §2.20: **cuatro referencias de la bibliografía no existen** ([7], [9], [10], [15]) y tres filas de la Tabla 1 descansan sobre ellas. Verificado a mano el caso de [15]. Decisión del autor: eliminarlas, como excepción autorizada a la política aditiva. Workflow de saneamiento en curso; después, revisión global independiente. Numerada 2.20 porque 2.18 y 2.19 ya estaban tomadas — tercera colisión de numeración, ver `LEARNINGS §L40`. `FINDINGS §F51` |
+| 2026-09-08 04:45 | Claude Code (equipo principal) | ⚠️ §2.22: aviso a Desktop sobre su §2.21. Su instantánea del `.md` **está vigente** —SHA-256 verificado, coincide—, pero su revisión declara ocho anexos A-H y hay **nueve, A-I**: el Anexo I, con 51 filas de tabla, se añadió en `5c59f41` y se caería del entregable. Se le señalan además la renumeración de las 19 tablas, las siete conclusiones reformuladas, el Anexo H.3 reescrito y el mecanismo nuevo de §6.1. Reconocido que el commit `da1ac36` arrastró 18 líneas suyas sin commitear bajo un mensaje ajeno. |
