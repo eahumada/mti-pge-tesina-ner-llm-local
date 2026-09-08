@@ -1334,3 +1334,69 @@ Los dos efectos se cancelan, y de ahí el cero.
 > **entidades**, porque son ellas las que se segmentan y se cotejan. Un corpus puede estar redactado en un
 > idioma y poblado de nombres de otro, y esa combinación cambia qué modelo gana. Caracterizar el corpus exige
 > medir ambas cosas por separado.
+
+---
+
+## §F57 — La taxonomía de errores describía fenómenos que los artefactos no contienen
+
+**Fecha:** 2026-09-08. **Origen:** un auditor de la segunda pasada; **verificado y ampliado por medición
+propia** sobre los 17 ficheros de resultados detallados.
+
+### Los dos ejemplos ilustrativos no existían
+
+§5.4 ilustraba los errores de límite con «Isabel dos Santos, hija del expresidente» y la confusión de tipo con
+«Sonangol» etiquetada como lugar. Recuento sobre todos los `detailed_results.json`:
+
+| Cadena buscada | Ocurrencias |
+|:---|---:|
+| `Isabel dos Santos, hija` | **0** |
+| `Sonangol` | **0** |
+| `Isabel dos Santos` (forma limpia) | 307 |
+
+Los dos ejemplos eran verosímiles y estaban inventados. La entidad existe en el corpus, pero el modelo nunca
+la extrajo con la aposición que el informe le atribuía.
+
+### Y la categoría no significaba lo que el informe decía
+
+Lo más relevante no es que faltaran los ejemplos, sino que **la categoría agrupa tres fenómenos distintos** y
+el informe describía solo uno. Un «error de límite» es todo emparejamiento con similitud entre 50 y 85. Los
+casos más frecuentes, medidos:
+
+| Extraído | Referencia | Similitud | Qué es en realidad |
+|:---|:---|---:|:---|
+| `José María Aznar` | `JosÃ© MarÃ­a Aznar` | 82,4 | **el modelo acierta y la referencia está corrupta** |
+| `EFE` | `EFECOM` | 66,7 | variante de sigla de la misma agencia |
+| `Mario Delgado` | `Corín Tellado` | 51,9 | **personas distintas sin relación alguna** |
+| `Peter Twehway` | `Bill Twehway` | 64,0 | personas distintas con el mismo apellido |
+
+De modo que el recuento de esta categoría **no mide la habilidad del modelo para delimitar entidades**: mide
+con qué frecuencia el cotejo difuso cae en su franja intermedia, y una parte apreciable de esos casos la
+provoca el *mojibake* del corpus. La afirmación «los errores de límite son los más frecuentes» era cierta como
+recuento y engañosa como interpretación.
+
+La **confusión de tipo** resultó igualmente homogénea y explicable: los casos dominantes son `Estados Unidos`,
+`Francia`, `Israel` y `Valencia` extraídos como localización cuando CoNLL-2002 los anota como organización,
+por referirse al Estado o al club y no al territorio. Es una divergencia de convención de anotación, no un
+fallo de comprensión.
+
+### Las cifras de alucinación tampoco correspondían
+
+El informe declaraba «por debajo del 1 % en los modelos de mayor capacidad» y «superan el 13 % en
+`deepseek-r1:1.5b`». Medido sobre los grupos de 120 registros:
+
+- El rango real va de **0,00 %** —variantes alojadas de `gemma4:31b`— a **50,02 %**.
+- **30 de 67 grupos** quedan por debajo del 1 %, de modo que esa parte se sostiene.
+- **`nuextract:latest` es el peor, con 43,31 % a 50,02 %**, no `deepseek-r1:1.5b`, que va de 11,23 % en
+  extracción directa a 21,59 % con recuperación por diccionario. Señalar a `deepseek` como el caso extremo
+  ocultaba un modelo tres veces peor.
+- Con un grupo al 50 %, presentar la alucinación como «el problema menos extendido» del estudio es defendible
+  en la mediana y engañoso en la cola.
+
+**Aplicado:** §5.4 reescrita con los ejemplos reales, la explicación de qué agrupa cada categoría y el rango
+verdadero. Corregido además el Anexo F, que declaraba un par de una persona y una organización por artículo
+cuando la media es de 1,2 y 2,3, y solo 2 de los 30 artículos cumplen el par exacto.
+
+> **Regla operativa.** Un ejemplo ilustrativo de un informe empírico **se extrae del artefacto**, no se
+> redacta para ilustrar. Y antes de interpretar el recuento de una categoría de error, hay que leer qué
+> incluye: un nombre plausible como «error de límite» puede estar agrupando el acierto del modelo frente a una
+> referencia corrupta.
