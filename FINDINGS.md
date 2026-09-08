@@ -2127,3 +2127,41 @@ ambos modos, pero no por igual, y esa diferencia entraba en el Δ como si fuera 
 Si se confirma, el capítulo de resultados gana una afirmación **más fuerte** que la actual: el efecto del KB
 RAG sobre este corpus es **pequeño, positivo y homogéneo entre modelos**, en lugar de «inversamente
 proporcional a la capacidad». Pero no puede escribirse hasta tener los trece, y menos aún desde cinco.
+
+### §F68.ter — La hipótesis de §F68.bis es falsa, y la «convergencia» descansa en una muestra sesgada
+
+**2026-09-08, 20:12.** Corrección de lo escrito hace seis minutos. Se probó la hipótesis con los datos que ya
+había, y no se sostiene.
+
+**Lo que decía `§F68.bis`:** que la dispersión de los efectos publicados no medía cuánto ayudaba la
+recuperación a cada modelo sino cuántas localizaciones emitía cada uno, en una categoría donde toda
+extracción contaba como error.
+
+**La prueba.** Si fuera cierto, la métrica restringida del Anexo I —que excluye *Locations* del cómputo—
+debería mostrar los efectos ya comprimidos. Calculado sobre los trece modelos publicados:
+
+| | Mínimo | Máximo | Dispersión | Desviación |
+|:---|---:|---:|---:|---:|
+| Δ publicado | −1,17 | +14,53 | 15,70 | 4,53 |
+| Δ **restringido** | −2,43 | +15,49 | **17,92** | **4,97** |
+
+**Excluir las localizaciones no reduce la dispersión: la aumenta ligeramente.** La hipótesis queda refutada.
+
+**Y hay un problema mayor, de método.** La «convergencia» de `§F68.bis` se midió sobre los cinco modelos
+rehechos, y esos cinco **no son una muestra representativa**: son cinco de los seis con mejor F1, y los dos
+efectos más grandes de todo el estudio —`nemotron-mini:4b` con +14,53 y `llama3.2:latest` con +10,82— **están
+entre los ocho que faltan**. Entre los cinco rehechos la dispersión publicada ya era 5,79; entre los ocho
+pendientes es 15,42.
+
+Que cinco modelos con efectos pequeños sigan teniendo efectos pequeños tras la corrección **no es una
+convergencia**: es lo que cabía esperar. La afirmación de `§F68.bis` se retira hasta que estén los trece, y en
+particular los dos extremos.
+
+**Lo que sí se sostiene de `§F68`**, porque no depende de la muestra: tres de los cuatro modelos que tenían
+efecto negativo pasan a tenerlo positivo, y ninguno de los cinco empeora. La frase de §5.3.1 sobre que el
+beneficio «se anula o revierte en los de mayor capacidad» sigue en entredicho, porque los tres que la
+sostenían son precisamente los que cambiaron de signo.
+
+**Lección.** Escribí una explicación mecanicista plausible seis minutos después de ver el patrón, y la puse
+por escrito antes de comprobarla teniendo los datos a mano para hacerlo. La explicación era falsa y la
+muestra estaba sesgada. Ver `LEARNING §L54`.

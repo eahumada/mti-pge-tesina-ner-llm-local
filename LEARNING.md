@@ -706,3 +706,24 @@ separado.
 La regla es trivial y la omití veinte veces seguidas: **si hay que escribir una hora, se pregunta al
 sistema.** Y su corolario, que vale para cualquier dato que se anota de pasada: si un valor se puede
 obtener, no se estima.
+
+### L54. Una explicación plausible escrita antes de comprobarla es una hipótesis disfrazada de hallazgo
+
+Al ver que cinco modelos rehechos mostraban efectos muy parecidos, escribí en `§F68.bis` que la dispersión
+anterior venía de cuántas localizaciones emitía cada modelo. Sonaba bien, encajaba con el mecanismo conocido
+y explicaba el dato. Seis minutos después la comprobé con datos que ya estaban en el repositorio y resultó
+falsa: excluir las localizaciones del cómputo **aumenta** la dispersión en lugar de reducirla (`§F68.ter`).
+
+Peor todavía: la «convergencia» que pretendía explicar se medía sobre cinco modelos que **excluyen los dos
+efectos más grandes del estudio**, ambos pendientes de rehacer. Estaba explicando un artefacto de muestreo.
+
+Lo que falló no fue el razonamiento sino el **orden**. La prueba costó dos minutos y los datos llevaban horas
+en el disco. Escribir primero y comprobar después convierte una hipótesis en un hallazgo aparente que otros
+—o yo mismo mañana— citarán como establecido.
+
+La regla, para cuando aparezca un patrón atractivo: **antes de escribir por qué ocurre algo, comprobar si
+ocurre.** Y con muestras parciales, mirar explícitamente **qué queda fuera** antes de describir lo que se ve;
+aquí lo que quedaba fuera eran justamente los dos casos que definían el fenómeno.
+
+Emparenta con `§L53` —una serie plausible sobrevive porque nadie la mira dos veces— y con la nota de método
+de `§F44`: un hallazgo de auditoría es una hipótesis, no un hecho.
