@@ -224,7 +224,7 @@ La elección del umbral es un compromiso: por debajo se admiten emparejamientos 
 
 Sobre esa base se calculan precisión, exhaustividad y F1 por artículo, que después se promedian, y una **tasa de alucinación** que mide algo distinto de las anteriores: no compara con la anotación de referencia sino con el **texto de origen**. Una entidad se considera alucinada cuando no aparece literalmente en el artículo y, además, su mejor similitud contra las ventanas deslizantes del texto (del mismo número de palabras que la entidad) queda por debajo de **70**, umbral deliberadamente más laxo que el 85 del emparejamiento. La distinción importa: una entidad correctamente extraída del artículo pero ausente de la anotación de referencia cuenta como falso positivo, no como alucinación, porque el modelo no la inventó. El módulo incorpora además la validación estadística: ANOVA de una vía para contrastar si las diferencias entre modelos y modos son significativas, pruebas post-hoc de Tukey HSD para identificar qué pares concretos difieren, intervalos de confianza al 95 % por grupo y un análisis de sensibilidad que recalcula las métricas excluyendo los artículos atípicamente largos, con el fin de comprobar que ningún resultado depende de unos pocos casos extremos.
 
-Un tercer límite, de naturaleza distinta a los anteriores porque no procede del cotejo sino del diseño, afecta a la comparabilidad de las cifras absolutas. Los prompts del sistema solicitan tres categorías de entidad, personas, organizaciones y localizaciones, mientras que los registros del estudio anotan únicamente las dos primeras: el campo de localizaciones está vacío en los ciento veinte. Conviene precisar dónde se pierde, porque no es donde parece: CoNLL-2002, que aporta 105 de los 120 artículos, **sí anota localizaciones** —etiqueta cuatro tipos, personas, organizaciones, lugares y misceláneos—, y es el conversor del proyecto el que las descarta, al filtrar las etiquetas por `["PER", "ORG"]` durante el análisis y escribir después la lista de localizaciones como constante vacía. El defecto es de la cadena de preparación de datos, no de la anotación de origen. Como el evaluador puntúa las tres categorías, toda localización que el modelo devuelve se contabiliza como falso positivo, sin que exista ninguna forma de acertar en ella. El efecto no es menor: el **67,5 %** de los falsos positivos del estudio, 19 178 de 28 404, proceden de esa categoría, según recoge la Figura 1. Conviene subrayar que se trata de una penalización exclusivamente de precisión, porque al no haber localizaciones anotadas tampoco puede haber omisiones: la exhaustividad no varía en ninguna configuración. Por esa razón este informe acompaña cada resultado de una segunda medición, restringida a las categorías que el corpus efectivamente anota, que se obtiene reagregando los desgloses por tipo ya almacenados y no requiere repetir la inferencia. Las cifras originales se conservan íntegras junto a ella, de modo que el lector pueda juzgar el alcance de la corrección; la Tabla del Anexo I recoge ambas para las cuarenta y dos configuraciones medidas sobre el corpus N=120.
+Un tercer límite, de naturaleza distinta a los anteriores porque no procede del cotejo sino del diseño, afecta a la comparabilidad de las cifras absolutas. Los prompts del sistema solicitan tres categorías de entidad, personas, organizaciones y localizaciones, mientras que los registros con los que se tomaron las medidas de este informe anotaban únicamente las dos primeras: el campo de localizaciones estaba vacío en los ciento veinte. Conviene precisar dónde se pierde, porque no es donde parece: CoNLL-2002, que aporta 105 de los 120 artículos, **sí anota localizaciones** —etiqueta cuatro tipos, personas, organizaciones, lugares y misceláneos—, y es el conversor del proyecto el que las descarta, al filtrar las etiquetas por `["PER", "ORG"]` durante el análisis y escribir después la lista de localizaciones como constante vacía. El defecto es de la cadena de preparación de datos, no de la anotación de origen. Como el evaluador puntúa las tres categorías, toda localización que el modelo devuelve se contabiliza como falso positivo, sin que exista ninguna forma de acertar en ella. El efecto no es menor: el **67,5 %** de los falsos positivos del estudio, 19 178 de 28 404, proceden de esa categoría, según recoge la Figura 1. Conviene subrayar que se trata de una penalización exclusivamente de precisión, porque al no haber localizaciones anotadas tampoco puede haber omisiones: la exhaustividad no varía en ninguna configuración. Por esa razón este informe acompaña cada resultado de una segunda medición, restringida a las categorías que el corpus efectivamente anota, que se obtiene reagregando los desgloses por tipo ya almacenados y no requiere repetir la inferencia. Las cifras originales se conservan íntegras junto a ella, de modo que el lector pueda juzgar el alcance de la corrección; la Tabla del Anexo I recoge ambas para las cuarenta y dos configuraciones medidas sobre el corpus N=120. El defecto está corregido en el corpus desde el 8 de septiembre de 2026: recuperadas de CoNLL-2002 las localizaciones que su anotación ya traía y anotados a mano los quince artículos restantes, el fichero pasa a tener 545 localizaciones en 119 de los 120 registros, y el único que queda sin ninguna no menciona ningún lugar. Las cifras de este informe son anteriores a esa corrección y se conservan tal como se midieron; sustituirlas exige volver a inferir, que es lo que hará la re-corrida pendiente.
 
 ![Composición de los falsos positivos del estudio según la categoría de entidad](../../figuras/falsos-positivos.png)
 
@@ -818,6 +818,15 @@ _Tabla 15. Procedencia de cada fila del benchmark exploratorio: correspondencia 
 | gemma4:31b-cloud | cloud_n15_limpio_20260905 |
 | Resto de configuraciones | results/benchmark_results.csv (N=15, modo entities) |
 
+Las tres primeras filas proceden de una corrida propia por un motivo distinto en cada caso, y el de
+`gemma4:31b-cloud` conviene declararlo. Su primera medición quedó invalidada el 3 de septiembre de 2026 por
+la cuota semanal del servicio alojado, que devolvió HTTP 429 en seis de los quince artículos de cada modo;
+esas seis peticiones no llegaron a atenderse, de modo que registran latencia y rendimiento nulos y ninguna
+entidad. La corrida `cloud_n15_limpio_20260905` la sustituye y resuelve los quince por análisis directo del
+JSON. Sus cifras invalidadas no se recogen en este informe, por la razón expuesta en el Anexo I: un número
+que no mide lo que dice medir no es un resultado. La contramedida quedó incorporada al sistema como el
+limitador de tasa descrito en §3.2.
+
 ### Anexo F — Metodología Detallada de Generación del Corpus Sintético N=30
 
 Paso 1 — Definición de la distribución temática: Se analizaron los 15 artículos reales de Kleptotrace/CoNLL-2002 e identificaron sus categorías temáticas recurrentes: (a) sanciones internacionales a personas y empresas, (b) investigaciones por lavado de activos, (c) vínculos con Personas Políticamente Expuestas (PEP), y (d) corrupción en empresas públicas. Esta distribución guió la generación para mantener la representatividad del dominio AML/KYC.
@@ -1025,6 +1034,55 @@ _Tabla 19. Desempeño publicado y desempeño restringido a personas y organizaci
 | nemotron-mini:4b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 35.16 | 16.39 | 19.54 | 40.45 | 21.26 | +1.72 |
 | deepseek-r1:1.5b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 22.28 | 17.41 | 16.82 | 30.80 | 20.11 | +3.29 |
 | gemma4:12b-mlx_kb_rag | afectados_thinking_n120_REMOTO | 53.29 | 68.33 | 58.46 | 80.50 | 74.30 | +15.84 |
+
+#### Corridas múltiples del mismo modelo, y cuál se toma como referencia
+
+Cuatro de los trece modelos se midieron **más de una vez** sobre el corpus N=120, de modo que ocho de los
+veintiséis grupos disponen de dos o tres corridas. La columna «Corrida» de la tabla anterior indica cuál
+sostiene cada fila; este apartado declara las restantes. La Tabla 20 las recoge todas.
+
+Conviene separar dos situaciones que no son la misma. Seis de esos ocho grupos tienen una corrida previa que
+**no es una medición alternativa sino una medición inválida**: el modelo no llegó a responder en una parte
+sustancial del corpus, de modo que sus cifras no describen su desempeño sino el de un arnés mal configurado.
+Esas cifras **no se publican en ninguna parte de este informe**, porque un número que no mide lo que dice
+medir no es un resultado y ofrecerlo junto al bueno invitaría a leerlos como dos estimaciones entre las que
+se ha elegido. Lo que sí se declara es que la corrida existió, por qué se descartó y con qué evidencia. Los
+dos grupos restantes sí son repeticiones válidas, y ahí se dan ambas cifras.
+
+_Tabla 20. Grupos con más de una corrida sobre N=120, con el motivo de la sustitución y la evidencia_
+
+| Grupo | Corrida publicada | F1 | Corrida sustituida | Situación y evidencia |
+|:---|:---|:---:|:---|:---|
+| gemma4:12b-mlx (baseline) | afectados_thinking | 56,18 | P3 | inválida: 68 de 120 artículos sin extraer nada |
+| gemma4:12b-mlx (KB RAG) | afectados_thinking | 58,46 | P3 | inválida: 98 de 120 artículos sin extraer nada |
+| qwen3:8b (baseline) | qwen3_nothink | 48,21 | P3 y 12b-mlx | inválida: 19 de 120 sin extraer nada; cobertura parcial |
+| qwen3:8b (KB RAG) | qwen3_nothink | 51,46 | 12b-mlx y P3 | inválida: 31 de 120 sin extraer nada; cobertura parcial |
+| gpt-oss:20b (baseline) | gptoss_rerun | 52,39 | excluidos | inválida: 27 de 120 sin extraer nada por presupuesto agotado |
+| gpt-oss:20b (KB RAG) | gptoss_rerun | 55,67 | excluidos | inválida: 49 de 120 sin extraer nada por presupuesto agotado |
+| nemotron-mini:4b (baseline) | nemotron_rerun | 22,59 | P3 (F1 21,30) | válida: repetición del diagnóstico de vacíos |
+| nemotron-mini:4b (KB RAG) | nemotron_rerun | 37,12 | P3 (F1 37,33) | válida: repetición del diagnóstico de vacíos |
+
+La última fila acredita que el criterio fue la validez de la medición y no su resultado: en
+`nemotron-mini:4b` con KB RAG la corrida publicada da **menos** que la sustituida (37,12 frente a 37,33), y
+aun así es la que se toma.
+
+Los motivos de invalidez son dos. El **modo de razonamiento activo** hacía que el modelo consumiera el
+presupuesto de salida deliberando y devolviera una respuesta vacía; el síntoma es inequívoco, porque
+precisión y exhaustividad caen **a cero a la vez**, que es la firma de no haber contestado y no la de haberse
+equivocado. En `gemma4:12b-mlx` con KB RAG eso ocurrió en 98 de los 120 artículos, con una latencia media de
+967 s frente a los 158 s de la corrida válida. Desactivado el razonamiento, los 120 registros resuelven por
+análisis directo del JSON.
+
+El **presupuesto de salida agotado** produce el mismo efecto por otra vía: `gpt-oss:20b` es un modelo de
+razonamiento, y con 2048 tokens no alcanzaba a emitir el JSON tras deliberar. Ampliarlo a 4096 baja los
+artículos sin extracción de 27 y 49 a 6 y 5. Eso exige una salvedad de comparabilidad que conviene no
+minimizar:
+`gpt-oss:20b` es el único de los trece cuya cifra publicada procede de una corrida con **4096** tokens de
+salida, mientras los otros doce se midieron con **2048**. Su ventaja sobre `qwen2.5:14b` o `llama3.1:8b`, por
+tanto, no es enteramente atribuible al modelo. La re-corrida completa pendiente unifica el presupuesto en
+4096 para los trece y resuelve la asimetría; hasta entonces, las cifras de `gpt-oss:20b` de la Tabla 7 deben
+leerse con esta reserva. Los nueve parámetros restantes —modo de recuperación `kb_combined`, corpus,
+temperatura 0,1, tamaño de lote y los demás— coinciden en las ocho corridas fusionadas.
 
 Tres advertencias de lectura antes de las cifras. Las columnas publicadas se toman del campo almacenado por registro, que es lo que publican las tablas del cuerpo, y las restringidas se recalculan desde el desglose por tipo. En `nemotron-mini:4b_baseline` los dos no cuadran en **siete de sus ciento veinte registros**, los que se reextrajeron fuera del arnés de lotes tras un fallo de contexto (§5.3.1), de modo que su columna restringida arrastra esa incoherencia y conviene leerla con esa reserva. Las dos primeras filas de `llama3.2:latest` reproducen **la misma medición** bajo dos etiquetas de corrida: coinciden en los siete valores y, comprobado registro a registro, en los aciertos y errores de los ciento veinte artículos, de modo que la tabla tiene cuarenta y dos filas pero cuarenta y una configuraciones distintas. Y las dos filas de `gemma4:12b-mlx` proceden de `afectados_thinking_n120_REMOTO` y no de `benchmark_n120_REMOTO`, porque esta última quedó averiada por el modo de razonamiento —sesenta y ocho y noventa y ocho de sus ciento veinte registros no recuperan ninguna entidad— y sus cifras no representan la capacidad del modelo.
 

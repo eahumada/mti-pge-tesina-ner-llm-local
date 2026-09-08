@@ -204,7 +204,10 @@ def c_identificadores():
     for fich, pref in ((os.path.join(RAIZ, 'FINDINGS.md'), 'F'), (os.path.join(RAIZ, 'LEARNING.md'), 'L')):
         if not os.path.exists(fich):
             continue
-        nums = re.findall(r'^#{2,3} *§?%s(\d+)' % pref, open(fich, encoding='utf-8').read(), re.M)
+        # «§F61.bis» es una subnumeración deliberada, no una colisión con «§F61»: el proyecto ya
+        # usa ese sufijo en §2.bis y §3.bis. El identificador incluye el sufijo.
+        nums = re.findall(r'^#{2,3} *§?%s(\d+(?:\.bis)?)' % pref,
+                          open(fich, encoding='utf-8').read(), re.M)
         total += len(nums)
         vistos = {}
         for n in nums:
@@ -357,6 +360,68 @@ def c_urls(s):
           'los 401/403 de las editoriales que bloquean lectores automáticos no cuentan como rotos')
 
 
+# --- 14. Protocolo homogéneo ENTRE las corridas fusionadas ---------------------------------------
+MANIFIESTO = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark/results/'
+                                'ANALISIS_CONJUNTO_20260907/merge_manifest.json')
+BENCH = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark')
+# Parámetros que afectan a la medición y deben ser idénticos en todas las fuentes de un consolidado.
+PARAMS = ('rag_mode', 'data_file', 'max_tokens', 'temperature', 'batch_size', 'fuzzy_threshold')
+
+# Divergencias que el informe YA declara como reserva de comparabilidad. Se listan aquí para que la
+# comprobación no falle indefinidamente: una comprobación que siempre falla se acaba desactivando
+# (LEARNING §L48). Añadir una entrada exige haberla declarado antes en el informe, y retirarla cuando
+# la corrida que la resuelve esté hecha.
+DIVERGENCIAS_DECLARADAS = {
+    'max_tokens': ('4096 en gptoss_rerun frente a 2048 en las demás; declarado en el Anexo I, '
+                   'apartado «Corridas múltiples». Lo resuelve la re-corrida completa pendiente, '
+                   'que fija 4096 para los trece modelos. Ver FINDINGS §F61.bis'),
+}
+
+
+def c_protocolo(s):
+    """La comprobación de protocolo se venía aplicando DENTRO de cada corrida y nunca ENTRE ellas.
+
+    Un consolidado que une ocho fuentes hereda las diferencias de las ocho: así se publicó
+    gpt-oss:20b con el doble de presupuesto de salida que los otros doce modelos sin que nada lo
+    advirtiera. Ver FINDINGS §F61.bis y LEARNING §L49.
+    """
+    import json
+    if not os.path.exists(MANIFIESTO):
+        check('protocolo homogéneo entre las corridas fusionadas', 0, ['no existe el manifiesto'])
+        return
+    man = json.load(open(MANIFIESTO, encoding='utf-8'))
+    vistos, fallos = {}, []
+    for f in man.get('sources', []):
+        cfg = os.path.join(BENCH, os.path.dirname(f['csv_path']), 'run_config.json')
+        if not os.path.exists(cfg):
+            fallos.append('%s sin run_config.json' % f['label'])
+            continue
+        d = json.load(open(cfg, encoding='utf-8'))
+        for p in PARAMS:
+            if p in d:
+                vistos.setdefault(p, {}).setdefault(str(d[p]), []).append(f['label'])
+    declaradas = []
+    for p, valores in sorted(vistos.items()):
+        if len(valores) <= 1:
+            continue
+        detalle = '%s difiere: %s' % (p, '; '.join(
+            '%s en %s' % (v, ', '.join(l)) for v, l in sorted(valores.items())))
+        if p in DIVERGENCIAS_DECLARADAS:
+            declaradas.append(p)
+        else:
+            fallos.append(detalle)
+    nota = 'una diferencia aquí exige declararla como reserva de comparabilidad en el informe'
+    if declaradas:
+        nota = ('divergencias ya declaradas y pendientes de resolver: %s'
+                % '; '.join('%s (%s)' % (p, DIVERGENCIAS_DECLARADAS[p]) for p in declaradas))
+    check('protocolo homogéneo entre las corridas fusionadas',
+          len(man.get('sources', [])), fallos, nota)
+    if declaradas:
+        print('  AVISO  %d divergencia(s) de protocolo declaradas, no resueltas:' % len(declaradas))
+        for p in declaradas:
+            print('           - %s: %s' % (p, DIVERGENCIAS_DECLARADAS[p]))
+
+
 def main():
     s = texto()
     c_vacios()
@@ -371,6 +436,7 @@ def main():
     c_identificadores()
     c_aritmetica(s)
     c_recuentos(s)
+    c_protocolo(s)
     if '--red' in sys.argv:
         c_urls(s)
 
