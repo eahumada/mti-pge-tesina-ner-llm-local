@@ -1,0 +1,220 @@
+2026-09-07 12:13:48,029 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-07 12:13:48,057 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-07 12:13:48,057 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-09-07 12:13:48,057 [INFO] ner_benchmark: Corpus loaded: 15 articles split into 5 batches.
+2026-09-07 12:13:48,057 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-07 12:13:48,154 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-07 12:13:48,169 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-07 12:13:48,169 [INFO] ner_benchmark: [RAG] Using Knowledge Base mode: 'kb_combined'
+2026-09-07 12:13:48,185 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b0-1788794028 for batch 0 to memory queue.
+2026-09-07 12:13:48,185 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b1-1788794028 for batch 1 to memory queue.
+2026-09-07 12:13:48,185 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b2-1788794028 for batch 2 to memory queue.
+2026-09-07 12:13:48,185 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b3-1788794028 for batch 3 to memory queue.
+2026-09-07 12:13:48,185 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b4-1788794028 for batch 4 to memory queue.
+2026-09-07 12:13:48,185 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b0-1788794028 for batch 0 to memory queue.
+2026-09-07 12:13:48,185 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b1-1788794028 for batch 1 to memory queue.
+2026-09-07 12:13:48,185 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b2-1788794028 for batch 2 to memory queue.
+2026-09-07 12:13:48,185 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b3-1788794028 for batch 3 to memory queue.
+2026-09-07 12:13:48,185 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b4-1788794028 for batch 4 to memory queue.
+2026-09-07 12:13:48,185 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=4 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-09-07 12:13:48,187 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-07 12:13:48,187 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-07 12:13:48,187 [INFO] ner_benchmark: [RAG] Worker phase — Knowledge Base mode: 'kb_combined'
+2026-09-07 12:13:48,200 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b0-1788794028 for batch 0 to memory queue.
+2026-09-07 12:13:48,200 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b1-1788794028 for batch 1 to memory queue.
+2026-09-07 12:13:48,200 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b2-1788794028 for batch 2 to memory queue.
+2026-09-07 12:13:48,200 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b3-1788794028 for batch 3 to memory queue.
+2026-09-07 12:13:48,200 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b4-1788794028 for batch 4 to memory queue.
+2026-09-07 12:13:48,200 [INFO] ner_benchmark: Running RAG study 'deepseek-r1:1.5b_baseline' with 4 workers...
+2026-09-07 12:13:48,200 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_baseline-b0-1788794028 from memory queue.
+2026-09-07 12:13:48,200 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_baseline-b1-1788794028 from memory queue.
+2026-09-07 12:13:48,200 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_baseline-b2-1788794028 from memory queue.
+2026-09-07 12:13:48,200 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_baseline-b3-1788794028 from memory queue.
+2026-09-07 12:13:48,200 [INFO] ner_benchmark: Processing batch 1 with 4 parallel workers...
+2026-09-07 12:13:48,200 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_82'...
+2026-09-07 12:13:48,201 [INFO] ner_benchmark: Processing batch 2 with 4 parallel workers...
+2026-09-07 12:13:48,200 [INFO] ner_benchmark: Processing batch 3 with 4 parallel workers...
+2026-09-07 12:13:48,201 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_15'...
+2026-09-07 12:13:48,201 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_4'...
+2026-09-07 12:13:48,201 [INFO] ner_benchmark: Processing batch 4 with 4 parallel workers...
+2026-09-07 12:13:48,201 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_95'...
+2026-09-07 12:13:48,201 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_32'...
+2026-09-07 12:13:48,201 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_36'...
+2026-09-07 12:13:48,201 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_29'...
+2026-09-07 12:13:48,202 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_14'...
+2026-09-07 12:13:48,201 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_18'...
+2026-09-07 12:13:48,202 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_87'...
+2026-09-07 12:13:48,202 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_115'...
+2026-09-07 12:13:48,202 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_70'...
+2026-09-07 12:13:48,203 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:13:48,203 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:13:48,203 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:13:48,203 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:13:48,204 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:13:48,203 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:13:48,204 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:13:48,204 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:13:48,204 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:13:48,204 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:13:48,204 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:13:48,204 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:13:48,210 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:13:48,211 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:13:48,211 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:13:48,212 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:13:48,212 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:13:48,213 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:13:48,213 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:13:48,213 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:13:48,214 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:13:48,213 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:13:48,214 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:13:48,215 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:13:57,947 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:13:58,296 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:14:02,223 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:14:02,315 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:14:10,093 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:14:10,374 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:14:14,191 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:14:14,371 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:14:20,252 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:14:20,441 [DEBUG] ner_benchmark.llm_runner: Successfully extracted entities via regex key fallback.
+2026-09-07 12:14:24,687 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:14:24,973 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:14:28,296 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:14:28,486 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:14:34,346 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:14:34,539 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:14:38,151 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:14:38,524 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:14:38,531 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_baseline-b1-1788794028 in memory queue.
+2026-09-07 12:14:38,532 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_baseline-b4-1788794028 from memory queue.
+2026-09-07 12:14:38,533 [INFO] ner_benchmark: Processing batch 5 with 4 parallel workers...
+2026-09-07 12:14:38,533 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_12'...
+2026-09-07 12:14:38,533 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_76'...
+2026-09-07 12:14:38,533 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_55'...
+2026-09-07 12:14:38,533 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:14:38,533 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:14:38,533 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:14:38,539 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:14:38,539 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:14:38,539 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:14:41,956 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:14:42,087 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:14:42,104 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_baseline-b0-1788794028 in memory queue.
+2026-09-07 12:14:46,179 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:14:46,604 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:14:46,619 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_baseline-b3-1788794028 in memory queue.
+2026-09-07 12:14:48,896 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:14:49,121 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:14:49,139 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_baseline-b2-1788794028 in memory queue.
+2026-09-07 12:14:53,299 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:14:53,654 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:14:55,884 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:14:56,159 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:15:00,251 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:15:00,711 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:15:00,730 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_baseline-b4-1788794028 in memory queue.
+2026-09-07 12:15:00,732 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b0-1788794100 for batch 0 to memory queue.
+2026-09-07 12:15:00,732 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b1-1788794100 for batch 1 to memory queue.
+2026-09-07 12:15:00,732 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b2-1788794100 for batch 2 to memory queue.
+2026-09-07 12:15:00,732 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b3-1788794100 for batch 3 to memory queue.
+2026-09-07 12:15:00,732 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b4-1788794100 for batch 4 to memory queue.
+2026-09-07 12:15:00,732 [INFO] ner_benchmark: Running RAG study 'deepseek-r1:1.5b_kb_rag' with 4 workers...
+2026-09-07 12:15:00,733 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_kb_rag-b0-1788794100 from memory queue.
+2026-09-07 12:15:00,733 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_kb_rag-b1-1788794100 from memory queue.
+2026-09-07 12:15:00,733 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_kb_rag-b2-1788794100 from memory queue.
+2026-09-07 12:15:00,733 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_kb_rag-b3-1788794100 from memory queue.
+2026-09-07 12:15:00,733 [INFO] ner_benchmark: Processing batch 3 with 4 parallel workers...
+2026-09-07 12:15:00,734 [INFO] ner_benchmark: Processing batch 1 with 4 parallel workers...
+2026-09-07 12:15:00,734 [INFO] ner_benchmark: Processing batch 4 with 4 parallel workers...
+2026-09-07 12:15:00,734 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_29'...
+2026-09-07 12:15:00,734 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_18'...
+2026-09-07 12:15:00,734 [INFO] ner_benchmark: Processing batch 2 with 4 parallel workers...
+2026-09-07 12:15:00,734 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_14'...
+2026-09-07 12:15:00,735 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_95'...
+2026-09-07 12:15:00,735 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_82'...
+2026-09-07 12:15:00,735 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_87'...
+2026-09-07 12:15:00,735 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_115'...
+2026-09-07 12:15:00,735 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_70'...
+2026-09-07 12:15:00,735 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_36'...
+2026-09-07 12:15:00,736 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_15'...
+2026-09-07 12:15:00,736 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_4'...
+2026-09-07 12:15:00,735 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_32'...
+2026-09-07 12:15:01,783 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:15:01,932 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:15:01,932 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:15:01,952 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:15:01,952 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:15:01,983 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:15:01,993 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:15:01,999 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:15:01,999 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:15:02,000 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:15:02,008 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:15:02,021 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:15:02,039 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:15:02,044 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:15:02,047 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:15:02,051 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:15:02,051 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:15:02,052 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:15:02,051 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:15:02,051 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:15:02,054 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:15:02,055 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:15:02,055 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:15:02,057 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:15:05,598 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:15:06,073 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:15:09,227 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:15:09,616 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:15:12,454 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:15:12,638 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:15:17,512 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:15:17,672 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:15:21,174 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:15:21,199 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:15:26,098 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:15:26,232 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:15:28,627 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:15:28,741 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:15:31,990 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:15:32,260 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:15:32,268 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_kb_rag-b1-1788794100 in memory queue.
+2026-09-07 12:15:32,271 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_kb_rag-b4-1788794100 from memory queue.
+2026-09-07 12:15:32,271 [INFO] ner_benchmark: Processing batch 5 with 4 parallel workers...
+2026-09-07 12:15:32,271 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_12'...
+2026-09-07 12:15:32,271 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_76'...
+2026-09-07 12:15:32,272 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_55'...
+2026-09-07 12:15:32,503 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:15:32,534 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:15:32,537 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:15:32,539 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:15:32,540 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-07 12:15:32,543 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'deepseek-r1:1.5b': su razonamiento agota num_predict y vacia content.
+2026-09-07 12:15:47,753 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:15:47,875 [DEBUG] ner_benchmark.llm_runner: Successfully extracted entities via regex key fallback.
+2026-09-07 12:15:55,024 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:15:55,395 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:15:55,411 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_kb_rag-b2-1788794100 in memory queue.
+2026-09-07 12:15:59,935 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:15:59,971 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:15:59,973 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_kb_rag-b3-1788794100 in memory queue.
+2026-09-07 12:16:15,656 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:16:16,076 [WARNING] ner_benchmark.llm_runner: Failed to parse JSON from raw response: ...
+2026-09-07 12:16:16,099 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_kb_rag-b0-1788794100 in memory queue.
+2026-09-07 12:16:18,001 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:16:18,340 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:16:20,349 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:16:20,857 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:16:24,322 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-07 12:16:24,364 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-07 12:16:24,386 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_kb_rag-b4-1788794100 in memory queue.
+2026-09-07 12:16:24,390 [INFO] ner_benchmark: Unloading model weights for deepseek-r1:1.5b to protect VRAM.
+2026-09-07 12:16:24,422 [INFO] ner_benchmark.llm_runner: Successfully unloaded weights for deepseek-r1:1.5b from VRAM.
+2026-09-07 12:16:26,425 [INFO] ner_benchmark: ==================================================
+2026-09-07 12:16:26,426 [INFO] ner_benchmark: BENCHMARK EXTRACTIONS COMPLETE. PROCESSING METRICS...
+2026-09-07 12:16:26,426 [INFO] ner_benchmark: ==================================================
+2026-09-07 12:16:26,555 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.

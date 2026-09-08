@@ -1,0 +1,227 @@
+2026-09-05 23:40:59,454 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-05 23:40:59,476 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-05 23:40:59,476 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-09-05 23:40:59,477 [INFO] ner_benchmark: Corpus loaded: 15 articles split into 5 batches.
+2026-09-05 23:40:59,477 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-05 23:41:01,425 [INFO] src.rag_manager: [RAG] Vector DB already populated with 17453 entities. Skipping load.
+2026-09-05 23:41:01,439 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b0-1788666061 for batch 0 to memory queue.
+2026-09-05 23:41:01,439 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b1-1788666061 for batch 1 to memory queue.
+2026-09-05 23:41:01,439 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b2-1788666061 for batch 2 to memory queue.
+2026-09-05 23:41:01,439 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b3-1788666061 for batch 3 to memory queue.
+2026-09-05 23:41:01,439 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b4-1788666061 for batch 4 to memory queue.
+2026-09-05 23:41:01,439 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b0-1788666061 for batch 0 to memory queue.
+2026-09-05 23:41:01,439 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b1-1788666061 for batch 1 to memory queue.
+2026-09-05 23:41:01,439 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b2-1788666061 for batch 2 to memory queue.
+2026-09-05 23:41:01,439 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b3-1788666061 for batch 3 to memory queue.
+2026-09-05 23:41:01,439 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b4-1788666061 for batch 4 to memory queue.
+2026-09-05 23:41:01,439 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=4 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-09-05 23:41:01,448 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b0-1788666061 for batch 0 to memory queue.
+2026-09-05 23:41:01,448 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b1-1788666061 for batch 1 to memory queue.
+2026-09-05 23:41:01,448 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b2-1788666061 for batch 2 to memory queue.
+2026-09-05 23:41:01,448 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b3-1788666061 for batch 3 to memory queue.
+2026-09-05 23:41:01,448 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b4-1788666061 for batch 4 to memory queue.
+2026-09-05 23:41:01,448 [INFO] ner_benchmark: Running RAG study 'gemma4:31b_baseline' with 4 workers...
+2026-09-05 23:41:01,448 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b_baseline-b0-1788666061 from memory queue.
+2026-09-05 23:41:01,448 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b_baseline-b1-1788666061 from memory queue.
+2026-09-05 23:41:01,448 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b_baseline-b2-1788666061 from memory queue.
+2026-09-05 23:41:01,449 [INFO] ner_benchmark: Processing batch 1 with 4 parallel workers...
+2026-09-05 23:41:01,449 [INFO] ner_benchmark: Processing batch 2 with 4 parallel workers...
+2026-09-05 23:41:01,449 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '1'...
+2026-09-05 23:41:01,449 [INFO] ner_benchmark: Processing batch 3 with 4 parallel workers...
+2026-09-05 23:41:01,449 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '3'...
+2026-09-05 23:41:01,449 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b_baseline-b3-1788666061 from memory queue.
+2026-09-05 23:41:01,449 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '2'...
+2026-09-05 23:41:01,450 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '8'...
+2026-09-05 23:41:01,450 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '9'...
+2026-09-05 23:41:01,449 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '7'...
+2026-09-05 23:41:01,450 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '4'...
+2026-09-05 23:41:01,450 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '5'...
+2026-09-05 23:41:01,450 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '6'...
+2026-09-05 23:41:01,449 [INFO] ner_benchmark: Processing batch 4 with 4 parallel workers...
+2026-09-05 23:41:01,450 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '10'...
+2026-09-05 23:41:01,450 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '12'...
+2026-09-05 23:41:01,450 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '11'...
+2026-09-05 23:41:01,457 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 23:41:01,458 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 23:41:01,458 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 23:41:01,458 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 23:41:01,458 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 23:41:01,459 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 23:41:01,460 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 23:41:01,460 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 23:41:01,460 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 23:41:01,459 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 23:41:01,460 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 23:41:01,460 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 23:44:31,626 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:44:31,954 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:46:41,363 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:46:41,578 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:47:19,257 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:47:19,461 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:48:32,967 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:48:33,379 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:49:56,615 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:49:56,937 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:54:26,051 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:54:26,687 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:55:53,729 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:55:54,167 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:57:28,413 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:57:28,604 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:57:28,628 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b_baseline-b0-1788666061 in memory queue.
+2026-09-05 23:57:28,637 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 987s (≥600s) | workers 4 → 5 | ceiling=9 (75% of max=12)
+2026-09-05 23:57:28,638 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b_baseline-b4-1788666061 from memory queue.
+2026-09-05 23:57:28,639 [INFO] ner_benchmark: Processing batch 5 with 5 parallel workers...
+2026-09-05 23:57:28,641 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '13'...
+2026-09-05 23:57:28,641 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '14'...
+2026-09-05 23:57:28,643 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 23:57:28,644 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '15'...
+2026-09-05 23:57:28,644 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 23:57:28,657 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 23:58:58,924 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:58:59,273 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:58:59,285 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b_baseline-b1-1788666061 in memory queue.
+2026-09-06 01:01:01,250 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:01:01,695 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:01:01,733 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b_baseline-b2-1788666061 in memory queue.
+2026-09-06 01:01:01,736 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 1200s (≥600s) | workers 5 → 6 | ceiling=9 (75% of max=12)
+2026-09-06 01:10:46,857 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-06 01:10:46,897 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-06 01:10:46,898 [INFO] ner_benchmark: Resuming benchmark from checkpoint. Completed batches logged.
+2026-09-06 01:10:46,898 [INFO] ner_benchmark: Corpus loaded: 15 articles split into 5 batches.
+2026-09-06 01:10:46,898 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-06 01:10:47,029 [INFO] src.rag_manager: [RAG] Vector DB already populated with 17453 entities. Skipping load.
+2026-09-06 01:10:47,048 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b3-1788667847 for batch 3 to memory queue.
+2026-09-06 01:10:47,048 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b4-1788667847 for batch 4 to memory queue.
+2026-09-06 01:10:47,048 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b0-1788667847 for batch 0 to memory queue.
+2026-09-06 01:10:47,048 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b1-1788667847 for batch 1 to memory queue.
+2026-09-06 01:10:47,049 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b2-1788667847 for batch 2 to memory queue.
+2026-09-06 01:10:47,049 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b3-1788667847 for batch 3 to memory queue.
+2026-09-06 01:10:47,049 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b4-1788667847 for batch 4 to memory queue.
+2026-09-06 01:10:47,049 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=4 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-09-06 01:10:47,065 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b3-1788667847 for batch 3 to memory queue.
+2026-09-06 01:10:47,065 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b4-1788667847 for batch 4 to memory queue.
+2026-09-06 01:10:47,065 [INFO] ner_benchmark: Running RAG study 'gemma4:31b_baseline' with 4 workers...
+2026-09-06 01:10:47,065 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b_baseline-b3-1788667847 from memory queue.
+2026-09-06 01:10:47,065 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b_baseline-b4-1788667847 from memory queue.
+2026-09-06 01:10:47,065 [INFO] ner_benchmark: Processing batch 4 with 4 parallel workers...
+2026-09-06 01:10:47,065 [INFO] ner_benchmark: Processing batch 5 with 4 parallel workers...
+2026-09-06 01:10:47,066 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '10'...
+2026-09-06 01:10:47,066 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '12'...
+2026-09-06 01:10:47,066 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '14'...
+2026-09-06 01:10:47,066 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '11'...
+2026-09-06 01:10:47,066 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '13'...
+2026-09-06 01:10:47,066 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '15'...
+2026-09-06 01:10:47,070 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:10:47,071 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:10:47,071 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:10:47,071 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:10:47,071 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:10:47,071 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:13:10,784 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:13:11,062 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:16:22,469 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:16:22,775 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:17:56,457 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:17:56,760 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:21:02,659 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:21:02,988 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:22:58,725 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:22:59,259 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:22:59,287 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b_baseline-b4-1788667847 in memory queue.
+2026-09-06 01:22:59,304 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 732s (≥600s) | workers 4 → 5 | ceiling=9 (75% of max=12)
+2026-09-06 01:25:17,799 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:25:17,976 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:25:18,002 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b_baseline-b3-1788667847 in memory queue.
+2026-09-06 01:25:18,006 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 871s (≥600s) | workers 5 → 6 | ceiling=9 (75% of max=12)
+2026-09-06 01:25:18,012 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b0-1788668718 for batch 0 to memory queue.
+2026-09-06 01:25:18,014 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b1-1788668718 for batch 1 to memory queue.
+2026-09-06 01:25:18,014 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b2-1788668718 for batch 2 to memory queue.
+2026-09-06 01:25:18,014 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b3-1788668718 for batch 3 to memory queue.
+2026-09-06 01:25:18,014 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b4-1788668718 for batch 4 to memory queue.
+2026-09-06 01:25:18,015 [INFO] ner_benchmark: Running RAG study 'gemma4:31b_rag_enhanced' with 6 workers...
+2026-09-06 01:25:18,017 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b_rag_enhanced-b0-1788668718 from memory queue.
+2026-09-06 01:25:18,017 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b_rag_enhanced-b1-1788668718 from memory queue.
+2026-09-06 01:25:18,017 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b_rag_enhanced-b2-1788668718 from memory queue.
+2026-09-06 01:25:18,018 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b_rag_enhanced-b3-1788668718 from memory queue.
+2026-09-06 01:25:18,018 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b_rag_enhanced-b4-1788668718 from memory queue.
+2026-09-06 01:25:18,019 [INFO] ner_benchmark: Processing batch 1 with 6 parallel workers...
+2026-09-06 01:25:18,020 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b_rag_enhanced') -> Extracting entities for record '1'...
+2026-09-06 01:25:18,040 [INFO] ner_benchmark: Processing batch 3 with 6 parallel workers...
+2026-09-06 01:25:18,055 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b_rag_enhanced') -> Extracting entities for record '2'...
+2026-09-06 01:25:18,055 [INFO] ner_benchmark: Processing batch 5 with 6 parallel workers...
+2026-09-06 01:25:18,056 [INFO] ner_benchmark: Processing batch 4 with 6 parallel workers...
+2026-09-06 01:25:18,056 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b_rag_enhanced') -> Extracting entities for record '3'...
+2026-09-06 01:25:18,058 [INFO] ner_benchmark: Processing batch 2 with 6 parallel workers...
+2026-09-06 01:25:18,058 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b_rag_enhanced') -> Extracting entities for record '7'...
+2026-09-06 01:25:18,059 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b_rag_enhanced') -> Extracting entities for record '8'...
+2026-09-06 01:25:18,060 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b_rag_enhanced') -> Extracting entities for record '9'...
+2026-09-06 01:25:18,061 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b_rag_enhanced') -> Extracting entities for record '13'...
+2026-09-06 01:25:18,061 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b_rag_enhanced') -> Extracting entities for record '14'...
+2026-09-06 01:25:18,062 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b_rag_enhanced') -> Extracting entities for record '15'...
+2026-09-06 01:25:18,062 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b_rag_enhanced') -> Extracting entities for record '10'...
+2026-09-06 01:25:18,063 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b_rag_enhanced') -> Extracting entities for record '4'...
+2026-09-06 01:25:18,064 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b_rag_enhanced') -> Extracting entities for record '5'...
+2026-09-06 01:25:18,063 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b_rag_enhanced') -> Extracting entities for record '11'...
+2026-09-06 01:25:18,064 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b_rag_enhanced') -> Extracting entities for record '6'...
+2026-09-06 01:25:18,092 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b_rag_enhanced') -> Extracting entities for record '12'...
+2026-09-06 01:25:19,455 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:25:19,467 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:25:19,519 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:25:19,644 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:25:19,658 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:25:19,658 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:25:19,666 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:25:19,666 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:25:19,687 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:25:19,687 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:25:19,692 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:25:19,687 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:25:19,692 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:25:19,693 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:25:19,693 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-06 01:26:44,254 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:26:44,804 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:27:27,781 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:27:28,243 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:28:39,794 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:28:40,264 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:30:26,581 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:30:26,709 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:32:00,605 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:32:00,932 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:35:41,638 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:35:42,062 [WARNING] ner_benchmark.llm_runner: Failed to parse JSON from raw response: ...
+2026-09-06 01:37:16,701 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:37:16,797 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:37:16,825 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b_rag_enhanced-b1-1788668718 in memory queue.
+2026-09-06 01:37:16,837 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 1590s (≥600s) | workers 6 → 7 | ceiling=9 (75% of max=12)
+2026-09-06 01:39:36,741 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:39:37,148 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:42:24,380 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:42:24,695 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:44:40,940 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:44:41,048 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:47:17,732 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:47:17,929 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:49:14,791 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:49:14,893 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:49:14,921 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b_rag_enhanced-b2-1788668718 in memory queue.
+2026-09-06 01:49:14,928 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 2308s (≥600s) | workers 7 → 8 | ceiling=9 (75% of max=12)
+2026-09-06 01:51:19,823 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:51:20,197 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:51:20,234 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b_rag_enhanced-b4-1788668718 in memory queue.
+2026-09-06 01:51:20,239 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 2433s (≥600s) | workers 8 → 9 | ceiling=9 (75% of max=12)
+2026-09-06 01:53:22,252 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:53:22,693 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:53:22,724 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b_rag_enhanced-b0-1788668718 in memory queue.
+2026-09-06 01:55:15,220 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 01:55:15,529 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 01:55:15,557 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b_rag_enhanced-b3-1788668718 in memory queue.
+2026-09-06 01:55:15,564 [INFO] ner_benchmark: Unloading model weights for gemma4:31b to protect VRAM.
+2026-09-06 01:55:15,706 [INFO] ner_benchmark.llm_runner: Successfully unloaded weights for gemma4:31b from VRAM.
+2026-09-06 01:55:17,708 [INFO] ner_benchmark: ==================================================
+2026-09-06 01:55:17,708 [INFO] ner_benchmark: BENCHMARK EXTRACTIONS COMPLETE. PROCESSING METRICS...
+2026-09-06 01:55:17,708 [INFO] ner_benchmark: ==================================================
+2026-09-06 01:55:18,323 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.

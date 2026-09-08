@@ -239,3 +239,30 @@ a la sesión que trabajaba en él. **No revertirlo sin comprobar antes qué se p
 con las credenciales y el directorio `Instrucciones Informe Final de Tesina/` con las normas institucionales.
 Renombrar de vuelta conserva todo; clonar de cero, no. El orden correcto es: comprobar que el contenido está
 íntegro y sincronizado con el remoto, enumerar lo que no está en git, y solo entonces decidir.
+
+---
+
+## Los registros de ejecución se conservan
+
+Regla añadida el 2026-09-08 **a instancia del autor**, después de que una limpieza retirase líneas de dos
+`benchmark.log` para eliminar de los datos una etiqueta de modelo. La objeción del autor fue exacta: esos
+registros pueden ser necesarios para verificar un dato en el futuro. Este proyecto ya los usó así — el
+diagnóstico de los fallos de `nemotron-mini` y de `gemma4:12b-mlx` se resolvió con un `grep` sobre
+`benchmark.log`, buscando `Failed to parse JSON from raw response:`.
+
+- **No se eliminan ni se editan los registros de ejecución**, ni el fichero completo ni líneas suyas, salvo
+  petición explícita del autor para ese fichero concreto. Una instrucción de retirar un dato de «los datos»
+  **no alcanza a los logs**: los logs no son datos del estudio, son la prueba de qué se ejecutó.
+- **La única excepción** es un registro que sea copia de algo ya incluido en las entregas, y ni siquiera
+  entonces se borra sin comprobar que la copia superviviente es completa.
+- **Los registros de ejecución no se ignoran en `.gitignore` y se versionan.** Un log ignorado no tiene
+  respaldo: si alguien lo edita o lo borra, no hay forma de recuperarlo. Fue exactamente lo que ocurrió aquí,
+  y de las líneas retiradas de un log solo se pudieron reconstruir las de uno de los dos, fusionando por marca
+  de tiempo desde un registro de consola que sobrevivió por casualidad.
+- Antes de cualquier operación sobre un log, **comprobar si está rastreado**. Si no lo está, versionarlo
+  primero y modificarlo después, para que exista un punto de retorno.
+
+> **Corolario general.** Cuando una instrucción dice «eliminar todo rastro» de algo, hay que distinguir entre
+> los artefactos que **afirman** —documentos, tablas, resultados agregados, entregables— y los que
+> **atestiguan** —logs, puntos de control, ficheros crudos de una corrida—. Los primeros se corrigen; los
+> segundos se conservan, porque son lo que permite comprobar que la corrección fue honesta.

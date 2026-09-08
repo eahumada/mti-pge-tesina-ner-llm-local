@@ -1,0 +1,655 @@
+2026-08-24 17:30:17,063 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-08-24 17:30:17,080 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-08-24 17:30:17,080 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-08-24 17:30:17,082 [INFO] ner_benchmark: Corpus loaded: 120 articles split into 40 batches.
+2026-08-24 17:30:17,082 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-08-24 17:30:17,094 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=2 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b0-1787607017 for batch 0 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b1-1787607017 for batch 1 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b2-1787607017 for batch 2 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b3-1787607017 for batch 3 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b4-1787607017 for batch 4 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b5-1787607017 for batch 5 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b6-1787607017 for batch 6 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b7-1787607017 for batch 7 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b8-1787607017 for batch 8 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b9-1787607017 for batch 9 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b10-1787607017 for batch 10 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b11-1787607017 for batch 11 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b12-1787607017 for batch 12 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b13-1787607017 for batch 13 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b14-1787607017 for batch 14 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b15-1787607017 for batch 15 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b16-1787607017 for batch 16 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b17-1787607017 for batch 17 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b18-1787607017 for batch 18 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b19-1787607017 for batch 19 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b20-1787607017 for batch 20 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b21-1787607017 for batch 21 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b22-1787607017 for batch 22 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b23-1787607017 for batch 23 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b24-1787607017 for batch 24 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b25-1787607017 for batch 25 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b26-1787607017 for batch 26 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b27-1787607017 for batch 27 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b28-1787607017 for batch 28 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b29-1787607017 for batch 29 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b30-1787607017 for batch 30 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b31-1787607017 for batch 31 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b32-1787607017 for batch 32 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b33-1787607017 for batch 33 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b34-1787607017 for batch 34 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b35-1787607017 for batch 35 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b36-1787607017 for batch 36 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b37-1787607017 for batch 37 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b38-1787607017 for batch 38 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest-b39-1787607017 for batch 39 to memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark: Running model 'llama3.2:latest' with 2 workers (AIMD adaptive, circuit=CLOSED)...
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b0-1787607017 from memory queue.
+2026-08-24 17:30:17,109 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b1-1787607017 from memory queue.
+2026-08-24 17:30:17,110 [INFO] ner_benchmark: Processing batch 2 with 2 parallel workers...
+2026-08-24 17:30:17,110 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_4'...
+2026-08-24 17:30:17,110 [INFO] ner_benchmark: Processing batch 1 with 2 parallel workers...
+2026-08-24 17:30:17,110 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_5'...
+2026-08-24 17:30:17,110 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_1'...
+2026-08-24 17:30:17,110 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_2'...
+2026-08-24 17:30:17,111 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:17,111 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:17,111 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:17,111 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:20,797 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:30:21,148 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:30:21,163 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_3'...
+2026-08-24 17:30:21,164 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:22,126 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:30:22,152 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:30:22,168 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_6'...
+2026-08-24 17:30:22,169 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:23,752 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:30:24,160 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:30:25,671 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:30:26,177 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:30:27,453 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:30:27,714 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:30:27,726 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b0-1787607017 in memory queue.
+2026-08-24 17:30:27,727 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b2-1787607017 from memory queue.
+2026-08-24 17:30:27,727 [INFO] ner_benchmark: Processing batch 3 with 2 parallel workers...
+2026-08-24 17:30:27,728 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_7'...
+2026-08-24 17:30:27,728 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:27,728 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_8'...
+2026-08-24 17:30:27,728 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:29,692 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:30:29,736 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:30:29,754 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b1-1787607017 in memory queue.
+2026-08-24 17:30:29,755 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b3-1787607017 from memory queue.
+2026-08-24 17:30:29,755 [INFO] ner_benchmark: Processing batch 4 with 2 parallel workers...
+2026-08-24 17:30:29,755 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_10'...
+2026-08-24 17:30:29,755 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:29,755 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_11'...
+2026-08-24 17:30:29,755 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:31,395 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:30:31,774 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:30:31,789 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_9'...
+2026-08-24 17:30:31,789 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:32,736 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:30:32,782 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:30:36,547 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:30:36,825 [DEBUG] ner_benchmark.llm_runner: Successfully extracted entities via regex key fallback.
+2026-08-24 17:30:36,834 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_12'...
+2026-08-24 17:30:36,834 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:37,721 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:30:38,957 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:30:40,532 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:30:40,825 [DEBUG] ner_benchmark.system_monitor: VRAM query error: HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout=3)
+2026-08-24 17:30:40,901 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:30:41,905 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:30:41,906 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:30:41,923 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b2-1787607017 in memory queue.
+2026-08-24 17:30:41,923 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b3-1787607017 in memory queue.
+2026-08-24 17:30:41,924 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b4-1787607017 from memory queue.
+2026-08-24 17:30:41,926 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b5-1787607017 from memory queue.
+2026-08-24 17:30:41,926 [INFO] ner_benchmark: Processing batch 6 with 2 parallel workers...
+2026-08-24 17:30:41,926 [INFO] ner_benchmark: Processing batch 5 with 2 parallel workers...
+2026-08-24 17:30:41,926 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_16'...
+2026-08-24 17:30:41,928 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:41,928 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_13'...
+2026-08-24 17:30:41,928 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:41,927 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_17'...
+2026-08-24 17:30:41,929 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:41,929 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_14'...
+2026-08-24 17:30:41,929 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:42,957 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:30:43,515 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:30:43,517 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_18'...
+2026-08-24 17:30:43,517 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:47,442 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:30:47,555 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:30:51,213 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:30:51,570 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:30:51,585 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_15'...
+2026-08-24 17:30:51,586 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:55,796 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:30:56,110 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:30:57,441 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:30:57,670 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:30:57,689 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b5-1787607017 in memory queue.
+2026-08-24 17:30:57,691 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b6-1787607017 from memory queue.
+2026-08-24 17:30:57,691 [INFO] ner_benchmark: Processing batch 7 with 2 parallel workers...
+2026-08-24 17:30:57,691 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_19'...
+2026-08-24 17:30:57,692 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:30:57,692 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_20'...
+2026-08-24 17:30:57,692 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:00,667 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:01,222 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:01,231 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b4-1787607017 in memory queue.
+2026-08-24 17:31:01,233 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b7-1787607017 from memory queue.
+2026-08-24 17:31:01,233 [INFO] ner_benchmark: Processing batch 8 with 2 parallel workers...
+2026-08-24 17:31:01,233 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_22'...
+2026-08-24 17:31:01,233 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:01,233 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_23'...
+2026-08-24 17:31:01,234 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:02,068 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:02,299 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:02,322 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_21'...
+2026-08-24 17:31:02,322 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:04,741 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:04,808 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:06,362 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:06,836 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:06,837 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_24'...
+2026-08-24 17:31:06,837 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:09,944 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:10,364 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:12,387 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:12,451 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:12,466 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b6-1787607017 in memory queue.
+2026-08-24 17:31:12,468 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b8-1787607017 from memory queue.
+2026-08-24 17:31:12,468 [INFO] ner_benchmark: Processing batch 9 with 2 parallel workers...
+2026-08-24 17:31:12,469 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_25'...
+2026-08-24 17:31:12,469 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:12,469 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_26'...
+2026-08-24 17:31:12,469 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:14,054 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:14,459 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:14,472 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b7-1787607017 in memory queue.
+2026-08-24 17:31:14,475 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b9-1787607017 from memory queue.
+2026-08-24 17:31:14,475 [INFO] ner_benchmark: Processing batch 10 with 2 parallel workers...
+2026-08-24 17:31:14,476 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_28'...
+2026-08-24 17:31:14,476 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:14,476 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_29'...
+2026-08-24 17:31:14,476 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:15,723 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:16,061 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:16,076 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_27'...
+2026-08-24 17:31:16,076 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:18,929 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:19,087 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:24,051 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:24,121 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:24,143 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_30'...
+2026-08-24 17:31:24,143 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:26,121 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:26,614 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:31,455 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:31,765 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:31,781 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b8-1787607017 in memory queue.
+2026-08-24 17:31:31,783 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b10-1787607017 from memory queue.
+2026-08-24 17:31:31,783 [INFO] ner_benchmark: Processing batch 11 with 2 parallel workers...
+2026-08-24 17:31:31,783 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_31'...
+2026-08-24 17:31:31,784 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:31,784 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_32'...
+2026-08-24 17:31:31,784 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:32,943 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:33,266 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:33,275 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b9-1787607017 in memory queue.
+2026-08-24 17:31:33,280 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b11-1787607017 from memory queue.
+2026-08-24 17:31:33,281 [INFO] ner_benchmark: Processing batch 12 with 2 parallel workers...
+2026-08-24 17:31:33,281 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_34'...
+2026-08-24 17:31:33,282 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:33,281 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_35'...
+2026-08-24 17:31:33,282 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:34,400 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:34,866 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:34,870 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_33'...
+2026-08-24 17:31:34,870 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:36,573 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:36,877 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:38,836 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:39,384 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:39,393 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_36'...
+2026-08-24 17:31:39,393 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:40,840 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:41,405 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:42,579 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:42,986 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:43,010 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b10-1787607017 in memory queue.
+2026-08-24 17:31:43,024 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b12-1787607017 from memory queue.
+2026-08-24 17:31:43,025 [INFO] ner_benchmark: Processing batch 13 with 2 parallel workers...
+2026-08-24 17:31:43,025 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_37'...
+2026-08-24 17:31:43,025 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:43,025 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_38'...
+2026-08-24 17:31:43,025 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:44,362 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:44,497 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:44,522 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b11-1787607017 in memory queue.
+2026-08-24 17:31:44,526 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b13-1787607017 from memory queue.
+2026-08-24 17:31:44,526 [INFO] ner_benchmark: Processing batch 14 with 2 parallel workers...
+2026-08-24 17:31:44,526 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_40'...
+2026-08-24 17:31:44,527 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:44,526 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_41'...
+2026-08-24 17:31:44,527 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:46,715 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:47,116 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:47,140 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_39'...
+2026-08-24 17:31:47,141 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:50,297 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:50,650 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:52,661 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:53,159 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:53,175 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_42'...
+2026-08-24 17:31:53,176 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:54,674 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:55,168 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:55,832 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:56,275 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:56,285 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b12-1787607017 in memory queue.
+2026-08-24 17:31:56,289 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b14-1787607017 from memory queue.
+2026-08-24 17:31:56,289 [INFO] ner_benchmark: Processing batch 15 with 2 parallel workers...
+2026-08-24 17:31:56,289 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_43'...
+2026-08-24 17:31:56,290 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:56,290 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_44'...
+2026-08-24 17:31:56,290 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:58,781 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:31:59,295 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:31:59,325 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b13-1787607017 in memory queue.
+2026-08-24 17:31:59,329 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b15-1787607017 from memory queue.
+2026-08-24 17:31:59,329 [INFO] ner_benchmark: Processing batch 16 with 2 parallel workers...
+2026-08-24 17:31:59,330 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_46'...
+2026-08-24 17:31:59,330 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:31:59,330 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_47'...
+2026-08-24 17:31:59,331 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:03,250 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:03,409 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:32:03,431 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_45'...
+2026-08-24 17:32:03,431 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:09,930 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:10,455 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:32:11,549 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:11,997 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:32:12,018 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_48'...
+2026-08-24 17:32:12,018 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:16,184 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:16,531 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:32:18,465 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:18,600 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:32:18,621 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b14-1787607017 in memory queue.
+2026-08-24 17:32:18,626 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b16-1787607017 from memory queue.
+2026-08-24 17:32:18,626 [INFO] ner_benchmark: Processing batch 17 with 2 parallel workers...
+2026-08-24 17:32:18,626 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_49'...
+2026-08-24 17:32:18,627 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_50'...
+2026-08-24 17:32:18,627 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:18,627 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:20,094 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:20,646 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:32:20,653 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b15-1787607017 in memory queue.
+2026-08-24 17:32:20,656 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b17-1787607017 from memory queue.
+2026-08-24 17:32:20,657 [INFO] ner_benchmark: Processing batch 18 with 2 parallel workers...
+2026-08-24 17:32:20,657 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_52'...
+2026-08-24 17:32:20,657 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:20,657 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_53'...
+2026-08-24 17:32:20,658 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:22,442 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:22,725 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:32:22,743 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_51'...
+2026-08-24 17:32:22,743 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:25,234 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:25,747 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:32:28,481 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:28,805 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:32:28,821 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_54'...
+2026-08-24 17:32:28,822 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:31,035 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:31,314 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:32:33,194 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:33,408 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:32:33,419 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b16-1787607017 in memory queue.
+2026-08-24 17:32:33,499 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b18-1787607017 from memory queue.
+2026-08-24 17:32:33,499 [INFO] ner_benchmark: Processing batch 19 with 2 parallel workers...
+2026-08-24 17:32:33,499 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_55'...
+2026-08-24 17:32:33,500 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:33,499 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_56'...
+2026-08-24 17:32:33,500 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:34,646 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:34,946 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:32:34,956 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b17-1787607017 in memory queue.
+2026-08-24 17:32:34,963 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b19-1787607017 from memory queue.
+2026-08-24 17:32:34,963 [INFO] ner_benchmark: Processing batch 20 with 2 parallel workers...
+2026-08-24 17:32:34,963 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_58'...
+2026-08-24 17:32:34,963 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_59'...
+2026-08-24 17:32:34,964 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:34,964 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:38,054 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:38,602 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:32:38,620 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_57'...
+2026-08-24 17:32:38,621 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:41,182 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:41,623 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:32:44,197 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:44,608 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:32:44,629 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_60'...
+2026-08-24 17:32:44,629 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:49,470 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:49,644 [DEBUG] ner_benchmark.llm_runner: Successfully extracted entities via regex key fallback.
+2026-08-24 17:32:50,919 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:51,266 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:32:51,282 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b18-1787607017 in memory queue.
+2026-08-24 17:32:51,286 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b20-1787607017 from memory queue.
+2026-08-24 17:32:51,286 [INFO] ner_benchmark: Processing batch 21 with 2 parallel workers...
+2026-08-24 17:32:51,286 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_61'...
+2026-08-24 17:32:51,287 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:51,287 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_62'...
+2026-08-24 17:32:51,287 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:53,324 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:53,758 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:32:53,776 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b19-1787607017 in memory queue.
+2026-08-24 17:32:53,782 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b21-1787607017 from memory queue.
+2026-08-24 17:32:53,782 [INFO] ner_benchmark: Processing batch 22 with 2 parallel workers...
+2026-08-24 17:32:53,782 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_64'...
+2026-08-24 17:32:53,782 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_65'...
+2026-08-24 17:32:53,782 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:53,782 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:32:56,070 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:32:56,379 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:32:56,391 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_63'...
+2026-08-24 17:32:56,391 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:03,643 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:03,938 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:05,302 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:05,436 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:05,442 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_66'...
+2026-08-24 17:33:05,442 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:07,400 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:07,953 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:09,710 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:10,053 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:10,065 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b20-1787607017 in memory queue.
+2026-08-24 17:33:10,071 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b22-1787607017 from memory queue.
+2026-08-24 17:33:10,071 [INFO] ner_benchmark: Processing batch 23 with 2 parallel workers...
+2026-08-24 17:33:10,071 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_67'...
+2026-08-24 17:33:10,071 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_68'...
+2026-08-24 17:33:10,072 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:10,071 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:12,164 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:12,572 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:12,602 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b21-1787607017 in memory queue.
+2026-08-24 17:33:12,611 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b23-1787607017 from memory queue.
+2026-08-24 17:33:12,612 [INFO] ner_benchmark: Processing batch 24 with 2 parallel workers...
+2026-08-24 17:33:12,612 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_70'...
+2026-08-24 17:33:12,612 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:12,612 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_71'...
+2026-08-24 17:33:12,612 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:13,993 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:14,159 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:14,171 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_69'...
+2026-08-24 17:33:14,171 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:20,105 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:20,318 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:22,733 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:22,837 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:22,861 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_72'...
+2026-08-24 17:33:22,861 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:25,661 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:25,865 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:28,361 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:28,429 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:28,452 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b22-1787607017 in memory queue.
+2026-08-24 17:33:28,457 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b24-1787607017 from memory queue.
+2026-08-24 17:33:28,457 [INFO] ner_benchmark: Processing batch 25 with 2 parallel workers...
+2026-08-24 17:33:28,458 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_73'...
+2026-08-24 17:33:28,458 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:28,458 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_74'...
+2026-08-24 17:33:28,458 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:31,603 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:31,994 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:32,013 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b23-1787607017 in memory queue.
+2026-08-24 17:33:32,019 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b25-1787607017 from memory queue.
+2026-08-24 17:33:32,019 [INFO] ner_benchmark: Processing batch 26 with 2 parallel workers...
+2026-08-24 17:33:32,019 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_76'...
+2026-08-24 17:33:32,019 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:32,019 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_77'...
+2026-08-24 17:33:32,020 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:33,959 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:34,066 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:34,087 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_75'...
+2026-08-24 17:33:34,087 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:35,887 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:36,083 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:36,774 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:37,119 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:37,119 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_78'...
+2026-08-24 17:33:37,119 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:39,833 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:40,138 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:41,391 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:41,708 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:41,711 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b24-1787607017 in memory queue.
+2026-08-24 17:33:41,718 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b26-1787607017 from memory queue.
+2026-08-24 17:33:41,718 [INFO] ner_benchmark: Processing batch 27 with 2 parallel workers...
+2026-08-24 17:33:41,718 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_79'...
+2026-08-24 17:33:41,719 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:41,719 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_80'...
+2026-08-24 17:33:41,719 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:44,363 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:44,740 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:44,752 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b25-1787607017 in memory queue.
+2026-08-24 17:33:44,765 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b27-1787607017 from memory queue.
+2026-08-24 17:33:44,765 [INFO] ner_benchmark: Processing batch 28 with 2 parallel workers...
+2026-08-24 17:33:44,765 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_82'...
+2026-08-24 17:33:44,765 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:44,765 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_83'...
+2026-08-24 17:33:44,766 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:47,298 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:47,833 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:47,844 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_81'...
+2026-08-24 17:33:47,844 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:53,991 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:54,387 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:56,285 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:56,405 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:33:56,415 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_84'...
+2026-08-24 17:33:56,415 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:33:58,976 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:33:59,424 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:00,727 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:01,023 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:01,037 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b26-1787607017 in memory queue.
+2026-08-24 17:34:01,043 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b28-1787607017 from memory queue.
+2026-08-24 17:34:01,044 [INFO] ner_benchmark: Processing batch 29 with 2 parallel workers...
+2026-08-24 17:34:01,044 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_85'...
+2026-08-24 17:34:01,044 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:01,044 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_86'...
+2026-08-24 17:34:01,045 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:02,184 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:02,525 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:02,539 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b27-1787607017 in memory queue.
+2026-08-24 17:34:02,546 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b29-1787607017 from memory queue.
+2026-08-24 17:34:02,547 [INFO] ner_benchmark: Processing batch 30 with 2 parallel workers...
+2026-08-24 17:34:02,547 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_88'...
+2026-08-24 17:34:02,547 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:02,547 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_89'...
+2026-08-24 17:34:02,547 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:03,981 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:04,125 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:04,135 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_87'...
+2026-08-24 17:34:04,135 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:06,317 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:06,640 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:08,344 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:08,656 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:08,665 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_90'...
+2026-08-24 17:34:08,665 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:09,722 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:10,160 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:13,011 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:13,262 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:13,277 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b28-1787607017 in memory queue.
+2026-08-24 17:34:13,291 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b30-1787607017 from memory queue.
+2026-08-24 17:34:13,291 [INFO] ner_benchmark: Processing batch 31 with 2 parallel workers...
+2026-08-24 17:34:13,291 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_91'...
+2026-08-24 17:34:13,291 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:13,291 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_92'...
+2026-08-24 17:34:13,292 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:16,287 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:16,776 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:16,794 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b29-1787607017 in memory queue.
+2026-08-24 17:34:16,804 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b31-1787607017 from memory queue.
+2026-08-24 17:34:16,805 [INFO] ner_benchmark: Processing batch 32 with 2 parallel workers...
+2026-08-24 17:34:16,805 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_94'...
+2026-08-24 17:34:16,805 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:16,805 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_95'...
+2026-08-24 17:34:16,805 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:18,317 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:18,393 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:18,414 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_93'...
+2026-08-24 17:34:18,414 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:21,579 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:22,153 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:25,226 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:25,426 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:25,454 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_96'...
+2026-08-24 17:34:25,454 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:26,653 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:26,953 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:28,338 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:28,556 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:28,567 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b30-1787607017 in memory queue.
+2026-08-24 17:34:28,575 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b32-1787607017 from memory queue.
+2026-08-24 17:34:28,576 [INFO] ner_benchmark: Processing batch 33 with 2 parallel workers...
+2026-08-24 17:34:28,576 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_97'...
+2026-08-24 17:34:28,576 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:28,576 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_98'...
+2026-08-24 17:34:28,577 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:30,028 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:30,558 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:30,579 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b31-1787607017 in memory queue.
+2026-08-24 17:34:30,591 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b33-1787607017 from memory queue.
+2026-08-24 17:34:30,591 [INFO] ner_benchmark: Processing batch 34 with 2 parallel workers...
+2026-08-24 17:34:30,591 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_100'...
+2026-08-24 17:34:30,591 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:30,591 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_101'...
+2026-08-24 17:34:30,592 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:31,740 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:32,162 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:32,175 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_99'...
+2026-08-24 17:34:32,176 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:35,239 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:35,690 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:38,198 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:38,717 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:38,724 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_102'...
+2026-08-24 17:34:38,724 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:39,614 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:39,721 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:41,015 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:41,304 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:41,307 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b32-1787607017 in memory queue.
+2026-08-24 17:34:41,314 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b34-1787607017 from memory queue.
+2026-08-24 17:34:41,315 [INFO] ner_benchmark: Processing batch 35 with 2 parallel workers...
+2026-08-24 17:34:41,315 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_103'...
+2026-08-24 17:34:41,316 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:41,316 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_104'...
+2026-08-24 17:34:41,316 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:41,567 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:41,808 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:41,809 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b33-1787607017 in memory queue.
+2026-08-24 17:34:41,820 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b35-1787607017 from memory queue.
+2026-08-24 17:34:41,820 [INFO] ner_benchmark: Processing batch 36 with 2 parallel workers...
+2026-08-24 17:34:41,820 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_106'...
+2026-08-24 17:34:41,820 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:41,821 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_107'...
+2026-08-24 17:34:41,821 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:42,433 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:42,893 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:42,893 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_105'...
+2026-08-24 17:34:42,894 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:44,868 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:45,406 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:45,953 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:46,409 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:46,411 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_108'...
+2026-08-24 17:34:46,412 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:50,520 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:50,953 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:52,709 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:53,013 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:53,030 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b34-1787607017 in memory queue.
+2026-08-24 17:34:53,038 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b36-1787607017 from memory queue.
+2026-08-24 17:34:53,038 [INFO] ner_benchmark: Processing batch 37 with 2 parallel workers...
+2026-08-24 17:34:53,038 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_109'...
+2026-08-24 17:34:53,038 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:53,038 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_110'...
+2026-08-24 17:34:53,039 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:54,208 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:54,532 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:54,537 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b35-1787607017 in memory queue.
+2026-08-24 17:34:54,546 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b37-1787607017 from memory queue.
+2026-08-24 17:34:54,546 [INFO] ner_benchmark: Processing batch 38 with 2 parallel workers...
+2026-08-24 17:34:54,546 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_112'...
+2026-08-24 17:34:54,548 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:54,547 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_113'...
+2026-08-24 17:34:54,548 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:34:57,448 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:34:57,636 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:34:57,660 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_111'...
+2026-08-24 17:34:57,660 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:35:02,088 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:35:02,168 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:35:03,144 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:35:03,671 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:35:03,675 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_114'...
+2026-08-24 17:35:03,675 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:35:04,876 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:35:05,185 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:35:06,560 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:35:06,789 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:35:06,815 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b36-1787607017 in memory queue.
+2026-08-24 17:35:06,823 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b38-1787607017 from memory queue.
+2026-08-24 17:35:06,823 [INFO] ner_benchmark: Processing batch 39 with 2 parallel workers...
+2026-08-24 17:35:06,824 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_115'...
+2026-08-24 17:35:06,824 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:35:06,824 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_116'...
+2026-08-24 17:35:06,824 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:35:08,134 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:35:08,273 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:35:08,280 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b37-1787607017 in memory queue.
+2026-08-24 17:35:08,291 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest-b39-1787607017 from memory queue.
+2026-08-24 17:35:08,291 [INFO] ner_benchmark: Processing batch 40 with 2 parallel workers...
+2026-08-24 17:35:08,292 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_118'...
+2026-08-24 17:35:08,292 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:35:08,293 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_119'...
+2026-08-24 17:35:08,293 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:35:09,139 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:35:09,399 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:35:09,401 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_117'...
+2026-08-24 17:35:09,401 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:35:10,427 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:35:10,909 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:35:11,840 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:35:12,385 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:35:12,395 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest') -> Extracting entities for record 'real_mixed_120'...
+2026-08-24 17:35:12,395 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-08-24 17:35:13,258 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:35:13,390 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:35:17,861 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:35:18,006 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:35:18,015 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b38-1787607017 in memory queue.
+2026-08-24 17:35:19,946 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-08-24 17:35:20,024 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-08-24 17:35:20,031 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest-b39-1787607017 in memory queue.
+2026-08-24 17:35:20,044 [INFO] ner_benchmark: [AIMD] Model 'llama3.2:latest' done. Controller status: {'current_workers': 2, 'min_workers': 1, 'max_workers': 12, 'ai_ceiling': 9, 'circuit_state': 'CLOSED', 'consecutive_failures': 0, 'total_rate_limit_events': 0, 'total_ai_steps': 0, 'total_md_steps': 0, 'secs_since_last_error': None, 'stable_window_sec': 600.0, 'increase_interval_sec': 120.0}
+2026-08-24 17:35:20,044 [INFO] ner_benchmark: Unloading model weights for llama3.2:latest to protect VRAM.
+2026-08-24 17:35:20,076 [INFO] ner_benchmark.llm_runner: Successfully unloaded weights for llama3.2:latest from VRAM.
+2026-08-24 17:35:22,080 [INFO] ner_benchmark: ==================================================
+2026-08-24 17:35:22,080 [INFO] ner_benchmark: BENCHMARK EXTRACTIONS COMPLETE. PROCESSING METRICS...
+2026-08-24 17:35:22,080 [INFO] ner_benchmark: ==================================================
+2026-08-24 17:35:22,419 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.

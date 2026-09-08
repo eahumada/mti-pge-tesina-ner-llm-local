@@ -1,0 +1,195 @@
+2026-09-06 18:17:33,236 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-06 18:17:33,257 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-06 18:17:33,257 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-09-06 18:17:33,257 [INFO] ner_benchmark: Corpus loaded: 7 articles split into 7 batches.
+2026-09-06 18:17:33,257 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-06 18:17:33,299 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-06 18:17:33,301 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-06 18:17:33,301 [INFO] ner_benchmark: [RAG] Using Knowledge Base mode: 'kb_combined'
+2026-09-06 18:17:33,318 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_baseline-b0-1788729453 for batch 0 to memory queue.
+2026-09-06 18:17:33,318 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_baseline-b1-1788729453 for batch 1 to memory queue.
+2026-09-06 18:17:33,318 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_baseline-b2-1788729453 for batch 2 to memory queue.
+2026-09-06 18:17:33,318 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_baseline-b3-1788729453 for batch 3 to memory queue.
+2026-09-06 18:17:33,318 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_baseline-b4-1788729453 for batch 4 to memory queue.
+2026-09-06 18:17:33,318 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_baseline-b5-1788729453 for batch 5 to memory queue.
+2026-09-06 18:17:33,318 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_baseline-b6-1788729453 for batch 6 to memory queue.
+2026-09-06 18:17:33,318 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_kb_rag-b0-1788729453 for batch 0 to memory queue.
+2026-09-06 18:17:33,318 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_kb_rag-b1-1788729453 for batch 1 to memory queue.
+2026-09-06 18:17:33,318 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_kb_rag-b2-1788729453 for batch 2 to memory queue.
+2026-09-06 18:17:33,318 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_kb_rag-b3-1788729453 for batch 3 to memory queue.
+2026-09-06 18:17:33,318 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_kb_rag-b4-1788729453 for batch 4 to memory queue.
+2026-09-06 18:17:33,318 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_kb_rag-b5-1788729453 for batch 5 to memory queue.
+2026-09-06 18:17:33,318 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_kb_rag-b6-1788729453 for batch 6 to memory queue.
+2026-09-06 18:17:33,318 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=1 | min=1 | max=1 | ai_ceiling=1 | stable_window=600.0s | increase_interval=120.0s
+2026-09-06 18:17:33,320 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-06 18:17:33,320 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-06 18:17:33,320 [INFO] ner_benchmark: [RAG] Worker phase — Knowledge Base mode: 'kb_combined'
+2026-09-06 18:17:33,333 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_baseline-b0-1788729453 for batch 0 to memory queue.
+2026-09-06 18:17:33,333 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_baseline-b1-1788729453 for batch 1 to memory queue.
+2026-09-06 18:17:33,333 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_baseline-b2-1788729453 for batch 2 to memory queue.
+2026-09-06 18:17:33,333 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_baseline-b3-1788729453 for batch 3 to memory queue.
+2026-09-06 18:17:33,333 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_baseline-b4-1788729453 for batch 4 to memory queue.
+2026-09-06 18:17:33,333 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_baseline-b5-1788729453 for batch 5 to memory queue.
+2026-09-06 18:17:33,333 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_baseline-b6-1788729453 for batch 6 to memory queue.
+2026-09-06 18:17:33,333 [INFO] ner_benchmark: Running RAG study 'nemotron-mini:4b_baseline' with 1 workers...
+2026-09-06 18:17:33,333 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task nemotron-mini:4b_baseline-b0-1788729453 from memory queue.
+2026-09-06 18:17:33,334 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-06 18:17:33,334 [INFO] ner_benchmark: [Worker 1] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record 'real_mixed_30'...
+2026-09-06 18:17:33,334 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-06 18:17:33,825 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:17:33,851 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:17:33,852 [WARNING] ner_benchmark.providers.ollama: Attempt 1/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:17:35,360 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:17:35,881 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:17:35,882 [WARNING] ner_benchmark.providers.ollama: Attempt 2/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:17:38,378 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:17:38,394 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:17:38,395 [WARNING] ner_benchmark.providers.ollama: Attempt 3/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:17:38,409 [INFO] ner_benchmark.pub_sub: Acknowledged task nemotron-mini:4b_baseline-b0-1788729453 in memory queue.
+2026-09-06 18:17:38,410 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task nemotron-mini:4b_baseline-b1-1788729453 from memory queue.
+2026-09-06 18:17:38,410 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-06 18:17:38,410 [INFO] ner_benchmark: [Worker 1] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record 'real_mixed_32'...
+2026-09-06 18:17:38,410 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-06 18:17:40,022 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:17:40,444 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:17:40,444 [WARNING] ner_benchmark.providers.ollama: Attempt 1/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:17:42,724 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:17:42,973 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:17:42,974 [WARNING] ner_benchmark.providers.ollama: Attempt 2/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:17:46,249 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:17:46,498 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:17:46,498 [WARNING] ner_benchmark.providers.ollama: Attempt 3/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:17:46,509 [INFO] ner_benchmark.pub_sub: Acknowledged task nemotron-mini:4b_baseline-b1-1788729453 in memory queue.
+2026-09-06 18:17:46,510 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task nemotron-mini:4b_baseline-b2-1788729453 from memory queue.
+2026-09-06 18:17:46,510 [INFO] ner_benchmark: Processing batch 3 with 1 parallel workers...
+2026-09-06 18:17:46,510 [INFO] ner_benchmark: [Worker 1] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record 'real_mixed_50'...
+2026-09-06 18:17:46,510 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-06 18:17:47,382 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:17:47,542 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:17:47,542 [WARNING] ner_benchmark.providers.ollama: Attempt 1/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:17:49,400 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:17:49,573 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:17:49,573 [WARNING] ner_benchmark.providers.ollama: Attempt 2/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:17:52,438 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:17:52,606 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:17:52,606 [WARNING] ner_benchmark.providers.ollama: Attempt 3/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:17:52,620 [INFO] ner_benchmark.pub_sub: Acknowledged task nemotron-mini:4b_baseline-b2-1788729453 in memory queue.
+2026-09-06 18:17:52,621 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task nemotron-mini:4b_baseline-b3-1788729453 from memory queue.
+2026-09-06 18:17:52,621 [INFO] ner_benchmark: Processing batch 4 with 1 parallel workers...
+2026-09-06 18:17:52,621 [INFO] ner_benchmark: [Worker 1] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record 'real_mixed_53'...
+2026-09-06 18:17:52,621 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-06 18:17:53,683 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:17:54,154 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:17:54,154 [WARNING] ner_benchmark.providers.ollama: Attempt 1/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:17:55,838 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:17:56,185 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:17:56,186 [WARNING] ner_benchmark.providers.ollama: Attempt 2/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:17:58,871 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:17:59,210 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:17:59,210 [WARNING] ner_benchmark.providers.ollama: Attempt 3/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:17:59,222 [INFO] ner_benchmark.pub_sub: Acknowledged task nemotron-mini:4b_baseline-b3-1788729453 in memory queue.
+2026-09-06 18:17:59,222 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task nemotron-mini:4b_baseline-b4-1788729453 from memory queue.
+2026-09-06 18:17:59,222 [INFO] ner_benchmark: Processing batch 5 with 1 parallel workers...
+2026-09-06 18:17:59,222 [INFO] ner_benchmark: [Worker 1] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record 'real_mixed_70'...
+2026-09-06 18:17:59,223 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-06 18:18:00,628 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:18:00,757 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:18:00,757 [WARNING] ner_benchmark.providers.ollama: Attempt 1/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:18:03,936 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:18:04,296 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:18:04,296 [WARNING] ner_benchmark.providers.ollama: Attempt 2/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:18:08,470 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:18:08,835 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:18:08,835 [WARNING] ner_benchmark.providers.ollama: Attempt 3/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:18:08,866 [INFO] ner_benchmark.pub_sub: Acknowledged task nemotron-mini:4b_baseline-b4-1788729453 in memory queue.
+2026-09-06 18:18:08,867 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task nemotron-mini:4b_baseline-b5-1788729453 from memory queue.
+2026-09-06 18:18:08,867 [INFO] ner_benchmark: Processing batch 6 with 1 parallel workers...
+2026-09-06 18:18:08,867 [INFO] ner_benchmark: [Worker 1] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record 'real_mixed_101'...
+2026-09-06 18:18:08,867 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-06 18:18:09,954 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:18:10,395 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:18:10,395 [WARNING] ner_benchmark.providers.ollama: Attempt 1/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:18:11,898 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:18:11,910 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:18:11,910 [WARNING] ner_benchmark.providers.ollama: Attempt 2/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:18:14,402 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:18:14,424 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:18:14,424 [WARNING] ner_benchmark.providers.ollama: Attempt 3/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:18:14,431 [INFO] ner_benchmark.pub_sub: Acknowledged task nemotron-mini:4b_baseline-b5-1788729453 in memory queue.
+2026-09-06 18:18:14,433 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task nemotron-mini:4b_baseline-b6-1788729453 from memory queue.
+2026-09-06 18:18:14,433 [INFO] ner_benchmark: Processing batch 7 with 1 parallel workers...
+2026-09-06 18:18:14,433 [INFO] ner_benchmark: [Worker 1] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record 'real_mixed_106'...
+2026-09-06 18:18:14,433 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-06 18:18:15,434 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:18:15,451 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:18:15,451 [WARNING] ner_benchmark.providers.ollama: Attempt 1/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:18:17,136 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:18:17,486 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:18:17,486 [WARNING] ner_benchmark.providers.ollama: Attempt 2/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:18:20,159 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:18:20,510 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:18:20,510 [WARNING] ner_benchmark.providers.ollama: Attempt 3/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'
+2026-09-06 18:18:20,512 [INFO] ner_benchmark.pub_sub: Acknowledged task nemotron-mini:4b_baseline-b6-1788729453 in memory queue.
+2026-09-06 18:18:20,513 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_kb_rag-b0-1788729500 for batch 0 to memory queue.
+2026-09-06 18:18:20,513 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_kb_rag-b1-1788729500 for batch 1 to memory queue.
+2026-09-06 18:18:20,513 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_kb_rag-b2-1788729500 for batch 2 to memory queue.
+2026-09-06 18:18:20,513 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_kb_rag-b3-1788729500 for batch 3 to memory queue.
+2026-09-06 18:18:20,513 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_kb_rag-b4-1788729500 for batch 4 to memory queue.
+2026-09-06 18:18:20,513 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_kb_rag-b5-1788729500 for batch 5 to memory queue.
+2026-09-06 18:18:20,513 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_kb_rag-b6-1788729500 for batch 6 to memory queue.
+2026-09-06 18:18:20,513 [INFO] ner_benchmark: Running RAG study 'nemotron-mini:4b_kb_rag' with 1 workers...
+2026-09-06 18:18:20,514 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task nemotron-mini:4b_kb_rag-b0-1788729500 from memory queue.
+2026-09-06 18:18:20,514 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-06 18:18:20,514 [INFO] ner_benchmark: [Worker 1] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record 'real_mixed_30'...
+2026-09-06 18:18:20,650 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-06 18:18:22,488 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:18:22,684 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:18:22,697 [INFO] ner_benchmark.pub_sub: Acknowledged task nemotron-mini:4b_kb_rag-b0-1788729500 in memory queue.
+2026-09-06 18:18:22,699 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task nemotron-mini:4b_kb_rag-b1-1788729500 from memory queue.
+2026-09-06 18:18:22,699 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-06 18:18:22,699 [INFO] ner_benchmark: [Worker 1] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record 'real_mixed_32'...
+2026-09-06 18:18:22,795 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-06 18:18:25,174 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:18:25,338 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:18:25,348 [INFO] ner_benchmark.pub_sub: Acknowledged task nemotron-mini:4b_kb_rag-b1-1788729500 in memory queue.
+2026-09-06 18:18:25,349 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task nemotron-mini:4b_kb_rag-b2-1788729500 from memory queue.
+2026-09-06 18:18:25,349 [INFO] ner_benchmark: Processing batch 3 with 1 parallel workers...
+2026-09-06 18:18:25,349 [INFO] ner_benchmark: [Worker 1] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record 'real_mixed_50'...
+2026-09-06 18:18:25,438 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-06 18:18:28,543 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:18:28,993 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:18:29,007 [INFO] ner_benchmark.pub_sub: Acknowledged task nemotron-mini:4b_kb_rag-b2-1788729500 in memory queue.
+2026-09-06 18:18:29,008 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task nemotron-mini:4b_kb_rag-b3-1788729500 from memory queue.
+2026-09-06 18:18:29,008 [INFO] ner_benchmark: Processing batch 4 with 1 parallel workers...
+2026-09-06 18:18:29,009 [INFO] ner_benchmark: [Worker 1] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record 'real_mixed_53'...
+2026-09-06 18:18:29,097 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-06 18:18:31,476 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:18:31,650 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:18:31,661 [INFO] ner_benchmark.pub_sub: Acknowledged task nemotron-mini:4b_kb_rag-b3-1788729500 in memory queue.
+2026-09-06 18:18:31,663 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task nemotron-mini:4b_kb_rag-b4-1788729500 from memory queue.
+2026-09-06 18:18:31,663 [INFO] ner_benchmark: Processing batch 5 with 1 parallel workers...
+2026-09-06 18:18:31,663 [INFO] ner_benchmark: [Worker 1] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record 'real_mixed_70'...
+2026-09-06 18:18:31,755 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-06 18:18:32,937 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:18:33,298 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:18:33,328 [INFO] ner_benchmark.pub_sub: Acknowledged task nemotron-mini:4b_kb_rag-b4-1788729500 in memory queue.
+2026-09-06 18:18:33,329 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task nemotron-mini:4b_kb_rag-b5-1788729500 from memory queue.
+2026-09-06 18:18:33,329 [INFO] ner_benchmark: Processing batch 6 with 1 parallel workers...
+2026-09-06 18:18:33,329 [INFO] ner_benchmark: [Worker 1] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record 'real_mixed_101'...
+2026-09-06 18:18:33,417 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-06 18:18:34,942 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:18:35,457 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:18:35,473 [INFO] ner_benchmark.pub_sub: Acknowledged task nemotron-mini:4b_kb_rag-b5-1788729500 in memory queue.
+2026-09-06 18:18:35,475 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task nemotron-mini:4b_kb_rag-b6-1788729500 from memory queue.
+2026-09-06 18:18:35,475 [INFO] ner_benchmark: Processing batch 7 with 1 parallel workers...
+2026-09-06 18:18:35,475 [INFO] ner_benchmark: [Worker 1] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record 'real_mixed_106'...
+2026-09-06 18:18:35,566 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-06 18:18:37,061 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-06 18:18:37,091 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-06 18:18:37,093 [INFO] ner_benchmark.pub_sub: Acknowledged task nemotron-mini:4b_kb_rag-b6-1788729500 in memory queue.
+2026-09-06 18:18:37,094 [INFO] ner_benchmark: Unloading model weights for nemotron-mini:4b to protect VRAM.
+2026-09-06 18:18:37,122 [INFO] ner_benchmark.llm_runner: Successfully unloaded weights for nemotron-mini:4b from VRAM.
+2026-09-06 18:18:39,123 [INFO] ner_benchmark: ==================================================
+2026-09-06 18:18:39,123 [INFO] ner_benchmark: BENCHMARK EXTRACTIONS COMPLETE. PROCESSING METRICS...
+2026-09-06 18:18:39,123 [INFO] ner_benchmark: ==================================================
+2026-09-06 18:18:39,194 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.

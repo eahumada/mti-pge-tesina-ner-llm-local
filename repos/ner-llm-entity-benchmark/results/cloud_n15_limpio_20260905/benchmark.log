@@ -1,0 +1,240 @@
+2026-09-05 23:05:47,581 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-05 23:05:47,589 [INFO] ner_benchmark: Model 'gemma4:31b-cloud' is a cloud-hosted Ollama model. Bypassing local availability check.
+2026-09-05 23:05:47,607 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-05 23:05:47,607 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-09-05 23:05:47,608 [INFO] ner_benchmark: Corpus loaded: 15 articles split into 5 batches.
+2026-09-05 23:05:47,608 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-05 23:05:47,848 [INFO] src.rag_manager: [RAG] Vector DB already populated with 17453 entities. Skipping load.
+2026-09-05 23:05:47,873 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_baseline-b0-1788663947 for batch 0 to memory queue.
+2026-09-05 23:05:47,873 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_baseline-b1-1788663947 for batch 1 to memory queue.
+2026-09-05 23:05:47,873 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_baseline-b2-1788663947 for batch 2 to memory queue.
+2026-09-05 23:05:47,873 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_baseline-b3-1788663947 for batch 3 to memory queue.
+2026-09-05 23:05:47,873 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_baseline-b4-1788663947 for batch 4 to memory queue.
+2026-09-05 23:05:47,873 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_rag_enhanced-b0-1788663947 for batch 0 to memory queue.
+2026-09-05 23:05:47,873 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_rag_enhanced-b1-1788663947 for batch 1 to memory queue.
+2026-09-05 23:05:47,873 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_rag_enhanced-b2-1788663947 for batch 2 to memory queue.
+2026-09-05 23:05:47,873 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_rag_enhanced-b3-1788663947 for batch 3 to memory queue.
+2026-09-05 23:05:47,873 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_rag_enhanced-b4-1788663947 for batch 4 to memory queue.
+2026-09-05 23:05:47,873 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=3 | min=1 | max=8 | ai_ceiling=6 | stable_window=600.0s | increase_interval=120.0s
+2026-09-05 23:05:47,879 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_baseline-b0-1788663947 for batch 0 to memory queue.
+2026-09-05 23:05:47,879 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_baseline-b1-1788663947 for batch 1 to memory queue.
+2026-09-05 23:05:47,879 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_baseline-b2-1788663947 for batch 2 to memory queue.
+2026-09-05 23:05:47,879 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_baseline-b3-1788663947 for batch 3 to memory queue.
+2026-09-05 23:05:47,879 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_baseline-b4-1788663947 for batch 4 to memory queue.
+2026-09-05 23:05:47,879 [INFO] ner_benchmark: Running RAG study 'gemma4:31b-cloud_baseline' with 3 workers...
+2026-09-05 23:05:47,879 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-cloud_baseline-b0-1788663947 from memory queue.
+2026-09-05 23:05:47,880 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-cloud_baseline-b2-1788663947 from memory queue.
+2026-09-05 23:05:47,879 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-cloud_baseline-b1-1788663947 from memory queue.
+2026-09-05 23:05:47,880 [INFO] ner_benchmark: Processing batch 1 with 3 parallel workers...
+2026-09-05 23:05:47,880 [INFO] ner_benchmark: Processing batch 3 with 3 parallel workers...
+2026-09-05 23:05:47,880 [INFO] ner_benchmark: Processing batch 2 with 3 parallel workers...
+2026-09-05 23:05:47,880 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '1'...
+2026-09-05 23:05:47,880 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '2'...
+2026-09-05 23:05:47,880 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '8'...
+2026-09-05 23:05:47,880 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '4'...
+2026-09-05 23:05:47,880 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '9'...
+2026-09-05 23:05:47,880 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '7'...
+2026-09-05 23:05:47,880 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '6'...
+2026-09-05 23:05:47,880 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '3'...
+2026-09-05 23:05:47,880 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '5'...
+2026-09-05 23:05:47,882 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:05:47,882 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:05:47,882 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:05:47,882 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:05:47,882 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:05:47,882 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:05:47,882 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:05:47,883 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:05:47,883 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:05:47,886 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:05:47,888 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:05:47,889 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:05:47,889 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:05:47,889 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:05:47,890 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:05:47,889 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:05:47,889 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:05:47,890 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:05:48,399 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 429 Too Many Requests"
+2026-09-05 23:05:48,400 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 429 Too Many Requests"
+2026-09-05 23:05:48,401 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 429 Too Many Requests"
+2026-09-05 23:05:48,903 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:05:48,904 [WARNING] ner_benchmark.providers.ollama: Attempt 1/3 failed for model 'gemma4:31b-cloud': too many concurrent requests (status code: 429)
+2026-09-05 23:05:48,905 [WARNING] ner_benchmark.providers.ollama: Attempt 1/3 failed for model 'gemma4:31b-cloud': too many concurrent requests (status code: 429)
+2026-09-05 23:05:48,905 [WARNING] ner_benchmark.providers.ollama: Attempt 1/3 failed for model 'gemma4:31b-cloud': too many concurrent requests (status code: 429)
+2026-09-05 23:05:49,409 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:05:49,796 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:05:49,914 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:05:50,143 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 429 Too Many Requests"
+2026-09-05 23:05:50,420 [WARNING] ner_benchmark.providers.ollama: Attempt 2/3 failed for model 'gemma4:31b-cloud': too many concurrent requests (status code: 429)
+2026-09-05 23:05:50,437 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:05:50,918 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:05:51,628 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:05:51,925 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:05:51,941 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-cloud_baseline-b0-1788663947 in memory queue.
+2026-09-05 23:05:51,942 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-cloud_baseline-b3-1788663947 from memory queue.
+2026-09-05 23:05:51,942 [INFO] ner_benchmark: Processing batch 4 with 3 parallel workers...
+2026-09-05 23:05:51,942 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '10'...
+2026-09-05 23:05:51,942 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '12'...
+2026-09-05 23:05:51,942 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:05:51,942 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '11'...
+2026-09-05 23:05:51,942 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:05:51,942 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:05:51,946 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:05:51,946 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:05:51,946 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:05:52,155 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 429 Too Many Requests"
+2026-09-05 23:05:52,454 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:05:52,462 [WARNING] ner_benchmark.providers.ollama: Attempt 1/3 failed for model 'gemma4:31b-cloud': too many concurrent requests (status code: 429)
+2026-09-05 23:05:52,935 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:05:53,398 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:05:53,435 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:05:53,999 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:05:54,400 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:05:54,445 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:05:54,446 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:05:54,451 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-cloud_baseline-b1-1788663947 in memory queue.
+2026-09-05 23:05:54,452 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-cloud_baseline-b4-1788663947 from memory queue.
+2026-09-05 23:05:54,452 [INFO] ner_benchmark: Processing batch 5 with 3 parallel workers...
+2026-09-05 23:05:54,452 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '13'...
+2026-09-05 23:05:54,453 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '14'...
+2026-09-05 23:05:54,453 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_baseline') -> Extracting entities for record '15'...
+2026-09-05 23:05:54,453 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:05:54,453 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:05:54,453 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:05:54,457 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:05:54,457 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:05:54,457 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:05:54,671 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 429 Too Many Requests"
+2026-09-05 23:05:54,975 [WARNING] ner_benchmark.providers.ollama: Attempt 1/3 failed for model 'gemma4:31b-cloud': too many concurrent requests (status code: 429)
+2026-09-05 23:05:55,335 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:05:55,485 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:05:56,557 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:05:57,002 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:05:57,196 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:05:57,476 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:05:57,489 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-cloud_baseline-b2-1788663947 in memory queue.
+2026-09-05 23:05:58,365 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:05:58,507 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:05:58,519 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-cloud_baseline-b3-1788663947 in memory queue.
+2026-09-05 23:05:59,228 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:05:59,508 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:06:00,023 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:06:00,520 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:06:00,774 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:06:01,040 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:06:01,064 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-cloud_baseline-b4-1788663947 in memory queue.
+2026-09-05 23:06:01,066 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_rag_enhanced-b0-1788663961 for batch 0 to memory queue.
+2026-09-05 23:06:01,066 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_rag_enhanced-b1-1788663961 for batch 1 to memory queue.
+2026-09-05 23:06:01,066 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_rag_enhanced-b2-1788663961 for batch 2 to memory queue.
+2026-09-05 23:06:01,066 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_rag_enhanced-b3-1788663961 for batch 3 to memory queue.
+2026-09-05 23:06:01,066 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b-cloud_rag_enhanced-b4-1788663961 for batch 4 to memory queue.
+2026-09-05 23:06:01,066 [INFO] ner_benchmark: Running RAG study 'gemma4:31b-cloud_rag_enhanced' with 3 workers...
+2026-09-05 23:06:01,067 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-cloud_rag_enhanced-b0-1788663961 from memory queue.
+2026-09-05 23:06:01,067 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-cloud_rag_enhanced-b1-1788663961 from memory queue.
+2026-09-05 23:06:01,067 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-cloud_rag_enhanced-b2-1788663961 from memory queue.
+2026-09-05 23:06:01,067 [INFO] ner_benchmark: Processing batch 1 with 3 parallel workers...
+2026-09-05 23:06:01,067 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_rag_enhanced') -> Extracting entities for record '1'...
+2026-09-05 23:06:01,067 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_rag_enhanced') -> Extracting entities for record '2'...
+2026-09-05 23:06:01,068 [INFO] ner_benchmark: Processing batch 2 with 3 parallel workers...
+2026-09-05 23:06:01,068 [INFO] ner_benchmark: Processing batch 3 with 3 parallel workers...
+2026-09-05 23:06:01,068 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_rag_enhanced') -> Extracting entities for record '3'...
+2026-09-05 23:06:01,068 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_rag_enhanced') -> Extracting entities for record '4'...
+2026-09-05 23:06:01,068 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_rag_enhanced') -> Extracting entities for record '5'...
+2026-09-05 23:06:01,068 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_rag_enhanced') -> Extracting entities for record '6'...
+2026-09-05 23:06:01,068 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_rag_enhanced') -> Extracting entities for record '7'...
+2026-09-05 23:06:01,068 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_rag_enhanced') -> Extracting entities for record '8'...
+2026-09-05 23:06:01,069 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_rag_enhanced') -> Extracting entities for record '9'...
+2026-09-05 23:06:01,607 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:06:01,607 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:06:01,607 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:06:01,607 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:06:01,612 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:06:01,612 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:06:01,613 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:06:01,613 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:06:01,615 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:06:01,617 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:06:01,618 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:06:01,618 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:06:01,618 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:06:01,619 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:06:01,620 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:06:01,620 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:06:01,620 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:06:01,620 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:06:01,830 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 429 Too Many Requests"
+2026-09-05 23:06:01,835 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 429 Too Many Requests"
+2026-09-05 23:06:01,851 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 429 Too Many Requests"
+2026-09-05 23:06:02,128 [WARNING] ner_benchmark.providers.ollama: Attempt 1/3 failed for model 'gemma4:31b-cloud': too many concurrent requests (status code: 429)
+2026-09-05 23:06:02,132 [WARNING] ner_benchmark.providers.ollama: Attempt 1/3 failed for model 'gemma4:31b-cloud': too many concurrent requests (status code: 429)
+2026-09-05 23:06:02,132 [WARNING] ner_benchmark.providers.ollama: Attempt 1/3 failed for model 'gemma4:31b-cloud': too many concurrent requests (status code: 429)
+2026-09-05 23:06:02,338 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:06:02,638 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:06:03,297 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:06:03,375 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 429 Too Many Requests"
+2026-09-05 23:06:03,645 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:06:03,645 [WARNING] ner_benchmark.providers.ollama: Attempt 2/3 failed for model 'gemma4:31b-cloud': too many concurrent requests (status code: 429)
+2026-09-05 23:06:04,376 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:06:04,654 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:06:06,771 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:06:07,168 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:06:07,503 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:06:07,673 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:06:07,677 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-cloud_rag_enhanced-b2-1788663961 in memory queue.
+2026-09-05 23:06:07,680 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-cloud_rag_enhanced-b3-1788663961 from memory queue.
+2026-09-05 23:06:07,680 [INFO] ner_benchmark: Processing batch 4 with 3 parallel workers...
+2026-09-05 23:06:07,680 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_rag_enhanced') -> Extracting entities for record '10'...
+2026-09-05 23:06:07,680 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_rag_enhanced') -> Extracting entities for record '12'...
+2026-09-05 23:06:07,680 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_rag_enhanced') -> Extracting entities for record '11'...
+2026-09-05 23:06:07,807 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:06:07,808 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:06:07,811 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:06:07,812 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:06:07,817 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:06:07,820 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:06:08,056 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 429 Too Many Requests"
+2026-09-05 23:06:08,064 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:06:08,174 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:06:08,335 [WARNING] ner_benchmark.providers.ollama: Attempt 1/3 failed for model 'gemma4:31b-cloud': too many concurrent requests (status code: 429)
+2026-09-05 23:06:08,793 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:06:09,186 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:06:09,711 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:06:10,193 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:06:10,219 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-cloud_rag_enhanced-b0-1788663961 in memory queue.
+2026-09-05 23:06:10,221 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b-cloud_rag_enhanced-b4-1788663961 from memory queue.
+2026-09-05 23:06:10,221 [INFO] ner_benchmark: Processing batch 5 with 3 parallel workers...
+2026-09-05 23:06:10,222 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_rag_enhanced') -> Extracting entities for record '13'...
+2026-09-05 23:06:10,222 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_rag_enhanced') -> Extracting entities for record '15'...
+2026-09-05 23:06:10,222 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b-cloud' (Mapped: 'gemma4:31b-cloud_rag_enhanced') -> Extracting entities for record '14'...
+2026-09-05 23:06:10,342 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:06:10,343 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:06:10,348 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:06:10,348 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:06:10,349 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b-cloud' → OllamaProvider (default)
+2026-09-05 23:06:10,351 [DEBUG] ner_benchmark.providers.ollama: Cloud-hosted Ollama model 'gemma4:31b-cloud': using cloud endpoint.
+2026-09-05 23:06:10,559 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 429 Too Many Requests"
+2026-09-05 23:06:10,740 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:06:10,864 [WARNING] ner_benchmark.providers.ollama: Attempt 1/3 failed for model 'gemma4:31b-cloud': too many concurrent requests (status code: 429)
+2026-09-05 23:06:11,234 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:06:11,251 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-cloud_rag_enhanced-b1-1788663961 in memory queue.
+2026-09-05 23:06:11,572 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:06:11,862 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:06:12,865 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:06:13,373 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:06:14,086 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:06:14,424 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:06:14,467 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-cloud_rag_enhanced-b3-1788663961 in memory queue.
+2026-09-05 23:06:14,725 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:06:14,887 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:06:15,637 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:06:15,898 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:06:16,298 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-05 23:06:16,431 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-05 23:06:16,452 [INFO] ner_benchmark.pub_sub: Acknowledged task gemma4:31b-cloud_rag_enhanced-b4-1788663961 in memory queue.
+2026-09-05 23:06:16,456 [INFO] ner_benchmark: Unloading model weights for gemma4:31b-cloud to protect VRAM.
+2026-09-05 23:06:16,751 [INFO] ner_benchmark.llm_runner: Successfully unloaded weights for gemma4:31b-cloud from VRAM.
+2026-09-05 23:06:18,753 [INFO] ner_benchmark: ==================================================
+2026-09-05 23:06:18,753 [INFO] ner_benchmark: BENCHMARK EXTRACTIONS COMPLETE. PROCESSING METRICS...
+2026-09-05 23:06:18,753 [INFO] ner_benchmark: ==================================================
+2026-09-05 23:06:18,878 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.

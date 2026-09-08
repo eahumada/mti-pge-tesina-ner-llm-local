@@ -1,0 +1,120 @@
+2026-09-05 22:34:04,257 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-05 22:34:04,295 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-05 22:34:04,295 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-09-05 22:34:04,295 [INFO] ner_benchmark: Corpus loaded: 15 articles split into 5 batches.
+2026-09-05 22:34:04,296 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-05 22:34:04,593 [INFO] src.rag_manager: [RAG] Vector DB already populated with 17453 entities. Skipping load.
+2026-09-05 22:34:04,606 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b0-1788662044 for batch 0 to memory queue.
+2026-09-05 22:34:04,606 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b1-1788662044 for batch 1 to memory queue.
+2026-09-05 22:34:04,606 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b2-1788662044 for batch 2 to memory queue.
+2026-09-05 22:34:04,606 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b3-1788662044 for batch 3 to memory queue.
+2026-09-05 22:34:04,606 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b4-1788662044 for batch 4 to memory queue.
+2026-09-05 22:34:04,606 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b0-1788662044 for batch 0 to memory queue.
+2026-09-05 22:34:04,606 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b1-1788662044 for batch 1 to memory queue.
+2026-09-05 22:34:04,606 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b2-1788662044 for batch 2 to memory queue.
+2026-09-05 22:34:04,607 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b3-1788662044 for batch 3 to memory queue.
+2026-09-05 22:34:04,607 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b4-1788662044 for batch 4 to memory queue.
+2026-09-05 22:34:04,607 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=8 | min=1 | max=8 | ai_ceiling=6 | stable_window=600.0s | increase_interval=120.0s
+2026-09-05 22:34:04,616 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b0-1788662044 for batch 0 to memory queue.
+2026-09-05 22:34:04,616 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b1-1788662044 for batch 1 to memory queue.
+2026-09-05 22:34:04,616 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b2-1788662044 for batch 2 to memory queue.
+2026-09-05 22:34:04,616 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b3-1788662044 for batch 3 to memory queue.
+2026-09-05 22:34:04,616 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b4-1788662044 for batch 4 to memory queue.
+2026-09-05 22:34:04,616 [INFO] ner_benchmark: Running RAG study 'gemma4:31b_baseline' with 8 workers...
+2026-09-05 22:34:04,617 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b_baseline-b0-1788662044 from memory queue.
+2026-09-05 22:34:04,617 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b_baseline-b1-1788662044 from memory queue.
+2026-09-05 22:34:04,617 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b_baseline-b2-1788662044 from memory queue.
+2026-09-05 22:34:04,617 [INFO] ner_benchmark: Processing batch 1 with 8 parallel workers...
+2026-09-05 22:34:04,617 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b_baseline-b3-1788662044 from memory queue.
+2026-09-05 22:34:04,617 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b_baseline-b4-1788662044 from memory queue.
+2026-09-05 22:34:04,617 [INFO] ner_benchmark: Processing batch 2 with 8 parallel workers...
+2026-09-05 22:34:04,618 [INFO] ner_benchmark: Processing batch 5 with 8 parallel workers...
+2026-09-05 22:34:04,617 [INFO] ner_benchmark: Processing batch 4 with 8 parallel workers...
+2026-09-05 22:34:04,617 [INFO] ner_benchmark: Processing batch 3 with 8 parallel workers...
+2026-09-05 22:34:04,618 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '1'...
+2026-09-05 22:34:04,618 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '4'...
+2026-09-05 22:34:04,618 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '3'...
+2026-09-05 22:34:04,618 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '6'...
+2026-09-05 22:34:04,618 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '13'...
+2026-09-05 22:34:04,618 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '14'...
+2026-09-05 22:34:04,618 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '2'...
+2026-09-05 22:34:04,618 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '5'...
+2026-09-05 22:34:04,618 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '15'...
+2026-09-05 22:34:04,619 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '10'...
+2026-09-05 22:34:04,619 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '12'...
+2026-09-05 22:34:04,619 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '11'...
+2026-09-05 22:34:04,619 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '7'...
+2026-09-05 22:34:04,619 [INFO] ner_benchmark: [Worker 2] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '8'...
+2026-09-05 22:34:04,619 [INFO] ner_benchmark: [Worker 3] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '9'...
+2026-09-05 22:34:04,621 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 22:34:04,621 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 22:34:04,621 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 22:34:04,621 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 22:34:04,621 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 22:34:04,622 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 22:34:04,622 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 22:34:04,623 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 22:34:04,622 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 22:34:04,622 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 22:34:04,623 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 22:34:04,622 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 22:34:04,623 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 22:34:04,623 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 22:34:04,623 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
+2026-09-05 23:01:35,881 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-05 23:01:35,909 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-05 23:01:35,909 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-09-05 23:01:35,909 [INFO] ner_benchmark: Corpus loaded: 15 articles split into 15 batches.
+2026-09-05 23:01:35,909 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-05 23:01:36,086 [INFO] src.rag_manager: [RAG] Vector DB already populated with 17453 entities. Skipping load.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b0-1788663696 for batch 0 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b1-1788663696 for batch 1 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b2-1788663696 for batch 2 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b3-1788663696 for batch 3 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b4-1788663696 for batch 4 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b5-1788663696 for batch 5 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b6-1788663696 for batch 6 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b7-1788663696 for batch 7 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b8-1788663696 for batch 8 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b9-1788663696 for batch 9 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b10-1788663696 for batch 10 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b11-1788663696 for batch 11 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b12-1788663696 for batch 12 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b13-1788663696 for batch 13 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b14-1788663696 for batch 14 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b0-1788663696 for batch 0 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b1-1788663696 for batch 1 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b2-1788663696 for batch 2 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b3-1788663696 for batch 3 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b4-1788663696 for batch 4 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b5-1788663696 for batch 5 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b6-1788663696 for batch 6 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b7-1788663696 for batch 7 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b8-1788663696 for batch 8 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b9-1788663696 for batch 9 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b10-1788663696 for batch 10 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b11-1788663696 for batch 11 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b12-1788663696 for batch 12 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b13-1788663696 for batch 13 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_rag_enhanced-b14-1788663696 for batch 14 to memory queue.
+2026-09-05 23:01:36,096 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=1 | min=1 | max=8 | ai_ceiling=6 | stable_window=600.0s | increase_interval=120.0s
+2026-09-05 23:01:36,105 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b0-1788663696 for batch 0 to memory queue.
+2026-09-05 23:01:36,105 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b1-1788663696 for batch 1 to memory queue.
+2026-09-05 23:01:36,105 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b2-1788663696 for batch 2 to memory queue.
+2026-09-05 23:01:36,105 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b3-1788663696 for batch 3 to memory queue.
+2026-09-05 23:01:36,105 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b4-1788663696 for batch 4 to memory queue.
+2026-09-05 23:01:36,105 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b5-1788663696 for batch 5 to memory queue.
+2026-09-05 23:01:36,105 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b6-1788663696 for batch 6 to memory queue.
+2026-09-05 23:01:36,105 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b7-1788663696 for batch 7 to memory queue.
+2026-09-05 23:01:36,105 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b8-1788663696 for batch 8 to memory queue.
+2026-09-05 23:01:36,105 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b9-1788663696 for batch 9 to memory queue.
+2026-09-05 23:01:36,105 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b10-1788663696 for batch 10 to memory queue.
+2026-09-05 23:01:36,105 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b11-1788663696 for batch 11 to memory queue.
+2026-09-05 23:01:36,105 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b12-1788663696 for batch 12 to memory queue.
+2026-09-05 23:01:36,105 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b13-1788663696 for batch 13 to memory queue.
+2026-09-05 23:01:36,105 [INFO] ner_benchmark.pub_sub: Published task gemma4:31b_baseline-b14-1788663696 for batch 14 to memory queue.
+2026-09-05 23:01:36,105 [INFO] ner_benchmark: Running RAG study 'gemma4:31b_baseline' with 1 workers...
+2026-09-05 23:01:36,105 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gemma4:31b_baseline-b0-1788663696 from memory queue.
+2026-09-05 23:01:36,106 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-05 23:01:36,106 [INFO] ner_benchmark: [Worker 1] Model 'gemma4:31b' (Mapped: 'gemma4:31b_baseline') -> Extracting entities for record '1'...
+2026-09-05 23:01:36,107 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gemma4:31b' → OllamaProvider (default)
