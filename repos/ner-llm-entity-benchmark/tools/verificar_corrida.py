@@ -46,23 +46,30 @@ def cargar_config(run_dir):
 
 
 def check_fn_por_categoria(recs):
-    """§5.1: fn agregado y fp agregado por categoría."""
+    """§5.1: detecta una categoría que puntúa contra el vacío (defecto §F53).
+
+    La señal correcta es tp+fn==0 con fp>0: la categoría NO tiene ninguna entidad de referencia en todo el
+    corpus y sin embargo acumula falsos positivos, de modo que cada acierto del modelo se cuenta como error.
+    OJO: fn==0 con tp>0 NO es el defecto, es exhaustividad perfecta (se encontró todo el gold, quizá con
+    extras); una versión anterior de este check marcaba ese caso por error e invalidaba corridas legítimas."""
     fn = collections.Counter()
     fp = collections.Counter()
+    tp = collections.Counter()
     presentes = set()
     for r in recs:
         per = r.get("metrics", {}).get("per_type", {})
         for c in CATEGORIAS:
             if c in per:
                 presentes.add(c)
+                tp[c] += per[c].get("tp", 0)
                 fn[c] += per[c].get("fn", 0)
                 fp[c] += per[c].get("fp", 0)
     problemas = []
     detalle = {}
     for c in sorted(presentes):
-        detalle[c] = {"fn": fn[c], "fp": fp[c]}
-        if fn[c] == 0 and fp[c] > 0:
-            problemas.append(f"categoría '{c}': fn=0 con fp={fp[c]} (puntúa contra el vacío)")
+        detalle[c] = {"tp": tp[c], "fn": fn[c], "fp": fp[c]}
+        if (tp[c] + fn[c]) == 0 and fp[c] > 0:
+            problemas.append(f"categoría '{c}': sin gold (tp+fn=0) con fp={fp[c]} (puntúa contra el vacío)")
     return (len(problemas) == 0), detalle, problemas
 
 
