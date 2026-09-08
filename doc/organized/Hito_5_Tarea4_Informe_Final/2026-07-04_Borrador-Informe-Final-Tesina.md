@@ -94,7 +94,7 @@ Los **Campos Aleatorios Condicionales (CRF)** [10], [17] modelan la secuencia de
 
 Las **arquitecturas neuronales BiLSTM-CRF** [24] sustituyen los rasgos manuales por representaciones aprendidas, eliminando gran parte del trabajo de ingeniería a cambio de un requisito de datos aún mayor.
 
-Los **codificadores Transformer pre-entrenados** (BERT [2] y sus variantes multilingües como XLM-R [23]) constituyen el estado del arte académico. Partiendo de un modelo pre-entrenado, un ajuste fino sobre el dominio alcanza en torno al 88 % de F1 en español [7] y hasta el 91 % en corpus financieros en inglés [15]. Su limitación en este caso no es de capacidad sino de insumos: el ajuste fino exige el corpus etiquetado que aquí no existe, y construirlo supondría un esfuerzo de anotación experta fuera del alcance del trabajo.
+Los **codificadores Transformer pre-entrenados** (BERT [2] y sus variantes multilingües como XLM-R [23]) constituyen el estado del arte académico. Partiendo de un modelo pre-entrenado, un ajuste fino alcanza 88,43 % de F1 en español sobre CoNLL-2002 con un codificador monolingüe [7], y 82,1 % de micro-F1 sobre FiNER-139, un corpus financiero en inglés cuya tarea es etiquetar magnitudes según la taxonomía XBRL y no identificar personas y organizaciones [15]. Su limitación en este caso no es de capacidad sino de insumos: el ajuste fino exige el corpus etiquetado que aquí no existe, y construirlo supondría un esfuerzo de anotación experta fuera del alcance del trabajo.
 
 Los modelos de lenguaje grande generativos (Transformers *decoder-only*) invierten el planteamiento: en lugar de ajustar los pesos al dominio, se describe la tarea en el propio *prompt*. Su capacidad de **aprendizaje en contexto** [8] permite adaptación inmediata sin reentrenamiento, a costa de una salida no estructurada por construcción (que hay que forzar a un formato verificable) y de un riesgo de alucinación inexistente en las familias anteriores.
 
@@ -146,15 +146,15 @@ Conviene retener una asimetría de interpretación: que una diferencia **no** al
 
 La Tabla 1 posiciona este trabajo respecto de investigaciones recientes en NER para dominios financieros y regulatorios.
 
-| Trabajo | Dataset | Modelo | F1 | Privacidad | Idioma |
+| Trabajo | Dataset | Modelo | Desempeño publicado | Privacidad | Idioma |
 |:---|:---|:---|:---:|:---:|:---|
-| BloombergGPT [3] | Bloomberg corpus | GPT-J + dominio | 85%+ | Cloud | Inglés |
-| FiNER-139 Benchmark [15] | SEC 10-K/10-Q | BERT fine-tuned | 91% | Cloud | Inglés |
-| García & López [7] | CoNLL-ES | XLM-R | 88% | Local | Español |
-| Chang et al. [9] | Docs bancarios | GPT-4 + RAG | 83% | Cloud | Inglés |
-| **Este trabajo** | **Kleptotrace/CoNLL-2002 (AML), corpus sintético N=30** | **gemma4:31b local** | **79%** | **100% Local** | **Español** |
+| BloombergGPT [3] | Corpus financiero propio | BLOOM 50B + dominio | 53,6-75,5 % F1 | Cloud | Inglés |
+| FiNER-139 [15] | SEC 10-K/10-Q (etiquetado XBRL) | SEC-BERT-SHAPE | 82,1 % micro-F1 | Local | Inglés |
+| Cañete et al. [7] | CoNLL-2002 (ES) | BETO (BERT español) | 88,43 % F1 | Local | Español |
+| FinanceBench [9] | 361 informes SEC | GPT-4-Turbo + RAG | 50 % exactitud | Cloud | Inglés |
+| **Este trabajo** | **Kleptotrace/CoNLL-2002 (AML), corpus sintético N=30** | **gemma4:31b local** | **79 % F1** | **100% Local** | **Español** |
 
-De la comparación se desprende una brecha: los trabajos que alcanzan el mejor F1 lo hacen sobre corpus en inglés y con infraestructura en la nube, mientras que los que preservan la privacidad no abordan el dominio de cumplimiento en español. Este trabajo se sitúa en esa intersección.
+Las cifras de la última columna no son directamente comparables entre sí, porque cada trabajo mide una tarea distinta: FiNER-139 etiqueta magnitudes numéricas según la taxonomía XBRL y FinanceBench evalúa exactitud de respuesta sobre preguntas abiertas, no identificación de personas y organizaciones. Aun así, de la comparación se desprende una brecha: los trabajos que alcanzan el mejor F1 lo hacen sobre corpus en inglés y con infraestructura en la nube, mientras que los que preservan la privacidad no abordan el dominio de cumplimiento en español. Este trabajo se sitúa en esa intersección.
 
 La revisión anterior deja fijados los criterios con los que el capítulo 3 justifica cada decisión de diseño: (C1) prescindir de datos etiquetados, por no existir corpus del dominio en español; (C2) preservar la soberanía del dato, lo que excluye toda API externa; (C3) operar sobre hardware de consumo, lo que obliga a cuantización y a gestión explícita de memoria; **(C4) producir salida verificable**, dado que el modelo elegido genera texto libre; y (C5) permitir comparación empírica entre variantes, tanto de *prompt* como de estrategia de recuperación.
 
@@ -485,13 +485,13 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 [6] X. Gao et al., "Retrieval-Augmented Generation for Large Language Models: A Survey," 2024, arXiv:2312.10997. [Online]. Available: https://arxiv.org/abs/2312.10997
 
-[7] A. García and M. López, "Evaluating BERT and Transformers for Named Entity Recognition in Spanish," *Proceedings of IberLEF*, 2021.
+[7] J. Cañete, G. Chaperon, R. Fuentes, J.-H. Ho, H. Kang, and J. Pérez, "Spanish Pre-Trained BERT Model and Evaluation Data," in *Proc. Practical ML for Developing Countries Workshop (PML4DC) at ICLR 2020*, Addis Abeba, Etiopía, 2020. [En línea]. Disponible: https://arxiv.org/abs/2308.02976
 
 [8] T. Brown et al., "Language Models are Few-Shot Learners," *Advances in Neural Information Processing Systems*, vol. 33, pp. 1877-1901, 2020.
 
-[9] M. Chang, J. Kim, and S. Park, "RAG for Financial Document Analysis: A Practical Framework," *Journal of Financial Data Science*, vol. 6, no. 2, pp. 45-62, 2024.
+[9] P. Islam, A. Kannappan, D. Kiela, R. Qian, N. Scherrer, and B. Vidgen, "FinanceBench: A New Benchmark for Financial Question Answering," 2023, arXiv:2311.11944. [En línea]. Disponible: https://arxiv.org/abs/2311.11944
 
-[10] J. Smith, L. Johnson, and R. Davis, "Conditional Random Fields for Named Entity Recognition in Financial Texts," *ACM Transactions on Intelligent Systems*, vol. 10, no. 3, pp. 1-25, 2019.
+[10] J. C. Salinas Alvarado, K. Verspoor, and T. Baldwin, "Domain Adaption of Named Entity Recognition to Support Credit Risk Assessment," in *Proc. Australasian Language Technology Association Workshop (ALTA)*, Parramatta, Australia, dic. 2015, pp. 84-90. [En línea]. Disponible: https://aclanthology.org/U15-1010/
 
 [11] T. Ahia et al., "Do All Languages Cost the Same? Tokenization in the Era of Commercial Language Models," *Proceedings of EMNLP*, 2023.
 
@@ -501,7 +501,7 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 [14] A. Zhao et al., "Calibrate Before Use: Improving Few-Shot Performance of Language Models," *Proceedings of ICML*, 2021.
 
-[15] M. Min et al., "FiNER: Financial Named Entity Recognition Dataset and Benchmark," *Proceedings of ACL*, 2023.
+[15] L. Loukas, M. Fergadiotis, I. Chalkidis, E. Spyropoulou, P. Malakasiotis, I. Androutsopoulos, and G. Paliouras, "FiNER: Financial Numeric Entity Recognition for XBRL Tagging," in *Proc. 60th Annu. Meeting Assoc. Comput. Linguistics (ACL)*, vol. 1, Dublín, Irlanda, mayo 2022, pp. 4419-4431, doi: 10.18653/v1/2022.acl-long.303. [En línea]. Disponible: https://aclanthology.org/2022.acl-long.303/
 
 [16] R. Schwartz et al., "Green AI," *Communications of the ACM*, vol. 63, no. 12, pp. 54-63, 2020.
 
