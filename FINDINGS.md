@@ -1085,3 +1085,48 @@ autor**, y está registrada en `TODO-INFORME-FINAL.md`.
 > el trabajo. Este proyecto ya había sufrido una atribución falsa —una cifra de mercado adjudicada a KPMG— y no
 > se extendió la sospecha al resto del aparato bibliográfico. Un solo caso detectado obliga a auditar el
 > conjunto.
+
+---
+
+## §F52 — Resolución de §F51: las cuatro citas ficticias, sustituidas por obras reales verificadas
+
+**Fecha:** 2026-09-08. **Estado:** aplicado en el Markdown canónico (commit `f30d8d5`).
+
+Las cuatro entradas inexistentes se sustituyeron por obras reales, cada una comprobada abriendo su ficha
+oficial, no solo buscándola:
+
+| Ficticia | Obra real que la sustituye | Comprobación |
+|:---|:---|:---|
+| [7] García y López, IberLEF 2021 | Cañete et al., *Spanish Pre-Trained BERT Model and Evaluation Data*, PML4DC @ ICLR 2020 | `arxiv.org/abs/2308.02976` y el README oficial de `dccuchile/beto` |
+| [9] Chang, Kim y Park, *JFDS* 2024 | Islam et al., *FinanceBench*, arXiv:2311.11944 | resumen oficial en arXiv |
+| [10] Smith, Johnson y Davis, *ACM Trans.* 2019 | Salinas Alvarado, Verspoor y Baldwin, ALTA 2015, pp. 84-90 | `aclanthology.org/U15-1010/` |
+| [15] Min et al., FiNER, ACL 2023 | Loukas et al., *FiNER: Financial **Numeric** Entity Recognition for XBRL Tagging*, ACL 2022, pp. 4419-4431 | `aclanthology.org/2022.acl-long.303/` |
+
+**Lo que reveló la sustitución.** Al buscar las obras reales apareció un daño mayor que la simple falta de
+respaldo: **tres de las cinco filas de la Tabla 1 declaraban cifras que nadie ha publicado.**
+
+- La fila de FiNER-139 atribuía **91 %** a un «BERT fine-tuned» en la nube. El artículo real reporta **82,1 %
+  de micro-F1** con SEC-BERT-SHAPE, un modelo abierto y ejecutable en local. Y la tarea no es NER de personas
+  y organizaciones: es etiquetado de **magnitudes numéricas** según la taxonomía XBRL.
+- La fila de español atribuía **88 %** a XLM-R sobre CoNLL-ES. Ninguna fuente publica esa combinación. Las
+  cifras reales son BETO 88,43 %, mBERT 87,38 % y XLM-R large 89,72 %. Es decir: el 88 % existe, pero
+  corresponde a **otro modelo**.
+- La fila de RAG atribuía **83 %** a GPT-4 con RAG sobre documentos bancarios. La cifra real publicada es
+  **50 %** de exactitud con índice por documento, y **19 %** con índice compartido: el propio resumen de
+  FinanceBench dice que GPT-4-Turbo con recuperación «falla o rehúsa el 81 % de las preguntas».
+- Se corrigió además la fila de BloombergGPT, que declaraba arquitectura *GPT-J* y «85 %+», cuando el
+  artículo declara **BLOOM** y reporta F1 de NER entre **53,6 y 75,5**.
+
+**Defecto de diseño de la tabla, no solo de sus datos.** La columna se titulaba «F1» y alojaba métricas de
+tareas distintas —F1 de NER, micro-F1 de etiquetado XBRL, exactitud de respuesta— como si fueran homogéneas.
+Se renombró a «Desempeño publicado» y se añadió una glosa que advierte que las filas no son directamente
+comparables. Ninguna fila se eliminó: todas se reescribieron con datos reales.
+
+**Aprendizaje.** Una cita fabricada no es solo una referencia que falta: es una cifra que entró en una tabla
+comparativa sin que nadie pudiera contrastarla, y que sostenía la tesis de que existe una brecha. La brecha
+sigue existiendo con los datos reales —de hecho se ensancha, porque el RAG en la nube rinde 50 % y no 83 %—
+pero eso es una conclusión afortunada, no un mérito del método. **El orden correcto es verificar primero y
+concluir después.**
+
+> **Regla operativa que se añade.** Ninguna cifra entra en una tabla comparativa sin que su fuente esté
+> abierta y leída, y ninguna columna agrupa métricas de tareas distintas bajo un mismo encabezado.
