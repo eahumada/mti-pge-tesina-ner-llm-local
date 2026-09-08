@@ -527,7 +527,7 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 [27] E. J. Hu et al., "LoRA: Low-Rank Adaptation of Large Language Models," in *Proc. Int. Conf. on Learning Representations (ICLR)*, 2022. [En línea]. Disponible: https://iclr.cc/virtual/2022/poster/6319
 
-[28] W. Kwon et al., "Efficient Memory Management for Large Language Model Serving with PagedAttention," in *Proc. 29th ACM Symp. on Operating Systems Principles (SOSP)*, 2023, pp. 611-626. doi: 10.1145/3600006.3613165.
+[28] W. Kwon et al., "Efficient Memory Management for Large Language Model Serving with PagedAttention," in *Proc. 29th ACM Symp. on Operating Systems Principles (SOSP)*, 2023, pp. 611-626. doi: 10.1145/3600006.3613165. [En línea]. Disponible: https://doi.org/10.1145/3600006.3613165
 
 [29] Ollama. *Ollama* [Online]. Available: https://github.com/ollama/ollama (accedido: 8 sep. 2026).
 
