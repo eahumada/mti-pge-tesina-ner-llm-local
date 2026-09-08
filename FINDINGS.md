@@ -1742,6 +1742,33 @@ sistemáticamente el beneficio atribuido al RAG**, que es justo la conclusión c
 `benchmark_summary.json` y comprobar que coincide con el número de filas que se están promediando. En N=15 y
 N=30 coinciden (15 y 30); en N=120 no, y son 113.
 
+### §F65.bis — Las cifras `+10,01` y `+2,19` no reproducen; el resultado sí
+
+**2026-09-08, 20:22.** Tercer hallazgo del repaso de `§L54`, y el más matizado de los tres.
+
+`§F65` cita del manifiesto de artículos contaminados que el KB RAG aporta **+10,01 pp** sobre esos siete
+artículos frente a **+2,19 pp** sobre los ciento trece restantes. Esa cifra **se citó sin comprobarla**, y al
+calcularla sobre el consolidado publicado —promediando el Δ por modelo y luego entre los trece— sale distinta:
+
+| Población | Manifiesto | Calculado aquí |
+|:---|---:|---:|
+| Los 7 contaminados | +10,01 pp | **+11,89 pp** |
+| Los 113 restantes | +2,19 pp | **+3,16 pp** |
+| Razón entre ambas | ×4,57 | **×3,76** |
+
+**El resultado que sostiene la decisión no cambia:** el efecto de la recuperación es entre **tres y cuatro
+veces mayor** sobre los artículos que son a la vez ejemplares del RAG, y por tanto excluirlos de la métrica
+sigue siendo lo correcto. Lo que no se sostiene es citar dos decimales que no se han reproducido.
+
+**Por qué difieren, probablemente.** El manifiesto no documenta su método, y hay al menos tres formas
+razonables de promediar esto que dan resultados distintos: por modelo y luego entre modelos —lo que se ha
+hecho aquí—, agrupando todos los registros a la vez, o restringiendo a las configuraciones `kb_combined`
+frente a todas. No se puede decidir cuál usó sin su código.
+
+**Qué hacer.** Cuando el informe cite esta comparación, debe hacerlo con la cifra que este repositorio pueda
+reproducir y declarando el método, no con la del manifiesto. Y conviene pedir al equipo de 48 GB el cálculo
+que produjo el `_comment` de ese fichero, porque una cifra sin método es una cifra que no se puede defender.
+
 **Nota de método.** Este defecto se destapó porque el desglose por categoría no cuadraba con el corpus: la
 matriz de confusión daba 1 098 personas de referencia donde el corpus tiene 594, una razón de 1,85 en las
 tres categorías. Cuadrar dos fuentes que deberían decir lo mismo es más barato que revisar cualquiera de las

@@ -40,3 +40,20 @@ regímenes. Antes de decidir preferimos entender el mecanismo, porque sustituir 
 otras no mejora nada.
 
 El F1 no está en cuestión: la comparación de calidad entre corridas es válida y ya está verificada.
+
+---
+
+## Segunda pregunta, de paso: el `+10,01` frente a `+2,19` del manifiesto de contaminados
+
+El `_comment` de `data/knowledge_base/contaminated_exemplar_articles.json` dice que el KB RAG aporta
+**+10,01 pp** sobre los siete artículos contaminados frente a **+2,19 pp** sobre los ciento trece restantes.
+Es la cifra que justifica la exclusión y la hemos citado en `FINDINGS §F65`.
+
+Al recalcularla aquí sobre el consolidado publicado —promediando el Δ de cada modelo y luego entre los
+trece— sale **+11,89 y +3,16**. La conclusión es la misma y hasta un poco más fuerte, así que **la decisión
+de excluirlos no está en cuestión**. Pero nos gustaría poder reproducir la cifra exacta antes de que aparezca
+en el informe.
+
+**¿Con qué método la calculasteis?** Hay al menos tres formas razonables que dan números distintos: promediar
+por modelo y luego entre modelos, agrupar todos los registros a la vez, o restringir a las configuraciones
+`kb_combined` frente a todas. Con vuestro script o una línea explicando el criterio nos basta.
