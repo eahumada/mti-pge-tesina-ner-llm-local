@@ -182,7 +182,7 @@ _Tabla 3. Arquitectura del sistema por capas, con sus módulos y su detalle téc
 
 | Capa | Módulo(s) | Detalle técnico |
 |:---|:---|:---|
-| 1. Capa de datos | `data_loader.py` + validador | Kleptotrace/CoNLL-2002 JSON → validación de esquema → registros |
+| 1. Capa de datos | `data_loader.py` + validador | Kleptotrace/CoNLL-2002 JSON → validación contra el esquema FollowTheMoney [38] → registros |
 | 2. Orquestación | `main.py` + `pub_sub.py` | Cola pub/sub → controlador AIMD → gestor de lotes |
 | 3. Proveedores LLM | Factory / Facade | `OllamaProvider`, `OpenAIProvider`, `AnthropicProvider` |
 | 4. Evaluación | `evaluator.py` + `statistics.py` | F1 / Precisión / Recall / ANOVA / Tukey HSD |
@@ -260,7 +260,7 @@ El aprendizaje en contexto es la capacidad de un modelo de adaptarse a una tarea
 
 Esos ejemplos cumplen tres funciones que conviene distinguir. Fijan el **formato de salida**, mostrando qué estructura JSON se espera con sus campos y tipos; sin ese anclaje los modelos varían la forma de la respuesta entre artículos y complican el análisis automático. Calibran el **umbral semántico**, delimitando qué menciones cuentan como entidad —personas nombradas y no cargos genéricos como «el presidente», organizaciones con nombre propio y no referencias como «la empresa»—, criterio que es difícil de especificar de forma exhaustiva en prosa pero que dos o tres ejemplos contrastivos transmiten sin ambigüedad. Y **adaptan al dominio**: funcionan como un micro-corpus en memoria de trabajo que inclina la distribución de probabilidad del modelo hacia la terminología regulatoria en lugar del lenguaje general.
 
-Los tres ejemplos empleados en la configuración few-shot en español cubren un caso de persona sancionada, uno de organización y uno de mención ambigua; se reproducen íntegros en el Anexo B.
+Los dos ejemplos empleados en la configuración few-shot en español cubren un caso con persona y organización y otro sin persona nombrada; se reproducen íntegros en el Anexo B.
 
 Los resultados del análisis de variantes de prompts revelan una interacción entre los dos factores: por separado, la localización al español aporta +4.38 pp de F1 y los ejemplos *few-shot* en inglés no aportan nada (−0.72 pp), pero su combinación alcanza +10.40 pp (FS-ES: 74.44% frente al 64.05% del baseline ZS-EN). Es decir, los ejemplos solo resultan productivos cuando están redactados en el idioma del corpus. La configuración FS-ES lidera además en Precisión (66.78%) y Recall (86.87%) sin penalización en alucinaciones (0.20%, idéntica a ZS-ES). Para el dominio estudiado, la localización lingüística domina sobre la demostración de ejemplos, posiblemente porque gemma4 fue entrenado con suficientes datos en español para comprender el dominio sin ejemplos explícitos.
 
@@ -423,7 +423,7 @@ Frente a esos USD 0,052, la revisión manual cuesta unos USD 8,75 por artículo,
 
 ### 5.6 De los diccionarios de entidades a la base de conocimientos contextual
 
-La primera versión del módulo de recuperación indexaba **nombres de entidades** —3 605 personas y 1 848 organizaciones de las listas de sanciones de OpenSanctions [19], más 12 000 nombres personales sintéticos de aumento: 17 453 documentos en total— y anteponía al *prompt* los más próximos al artículo según similitud vectorial. El resultado fue el contrario del esperado: sobre el corpus N=120, doce de los catorce modelos con par completo de resultados empeoraron al activarlo (los quince solicitados menos `gpt-oss:20b`, que no llegó a ejecutarse), y entre ellos los de mejor desempeño base; solo mejoraron los dos servidos en la nube.
+La primera versión del módulo de recuperación indexaba **nombres de entidades** —3 605 personas y 1 848 organizaciones de la lista de Nacionales Especialmente Designados (SDN) del Departamento del Tesoro de los Estados Unidos [19], más 12 000 nombres personales sintéticos de aumento: 17 453 documentos en total— y anteponía al *prompt* los más próximos al artículo según similitud vectorial. El resultado fue el contrario del esperado: sobre el corpus N=120, doce de los catorce modelos con par completo de resultados empeoraron al activarlo (los quince solicitados menos `gpt-oss:20b`, que no llegó a ejecutarse), y entre ellos los de mejor desempeño base; solo mejoraron los dos servidos en la nube.
 
 El diagnóstico apunta a un **desajuste semántico estructural**. La consulta es un artículo completo de varios centenares de palabras y los documentos indexados son cadenas nominales de dos o tres términos, de modo que la similitud coseno entre ambos carece de significado: para una noticia política española, el sistema recuperaba razones sociales colombianas sin relación alguna con el texto. A ello se sumaba la formulación restrictiva de la plantilla de inyección («no extraigas entidades salvo que aparezcan explícitamente»), que ante un contexto irrelevante inhibía la extracción en lugar de orientarla. Recuperar nombres, en definitiva, sugiere al modelo qué esperar y lo penaliza cuando lo sugerido no viene al caso.
 
@@ -550,7 +550,9 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 [18] Proyecto KLEPTOTRACE, "Kleptotrace-micro-dataset," conjunto de datos, Zenodo, 2024 (15 artículos y 441 frases sobre corrupción financiera, con listas de personas y organizaciones anotadas). doi: 10.5281/zenodo.14027005. [En línea]. Disponible: https://doi.org/10.5281/zenodo.14027005
 
-[19] OpenSanctions. (2024). *OpenSanctions: Open Data on Sanctions Lists and Politically Exposed Persons* [Online]. Available: https://www.opensanctions.org (accedido: 8 sep. 2026).
+[38] OpenSanctions, *FollowTheMoney: an ontology and data model for anti-corruption and due diligence data* [En línea]. Disponible: https://followthemoney.tech
+
+[19] U.S. Department of the Treasury, Office of Foreign Assets Control, *Specially Designated Nationals and Blocked Persons List (SDN)*, instantánea del 27 de julio de 2026. [En línea]. Disponible: https://www.treasury.gov/ofac/downloads/sdn.csv
 
 [20] T. Dettmers, A. Pagnoni, A. Holtzman, and L. Zettlemoyer, "QLoRA: Efficient Finetuning of Quantized LLMs," *Advances in Neural Information Processing Systems*, vol. 36, pp. 10088-10115, 2023. [En línea]. Disponible: https://doi.org/10.52202/075280-0441
 
@@ -645,27 +647,30 @@ _Tabla 9. Estructura del repositorio de código._
 
 ### Anexo B — Prompt del Sistema (Versión Few-Shot Español)
 
-El prompt de sistema en español (few-shot) incluye: (1) instrucciones de rol (analista de cumplimiento normativo), (2) formato de salida JSON estricto con tipos de entidades, (3) 3 ejemplos completos de artículo → extracción correcta, y (4) reglas de comportamiento ante ambigüedad (no alucinar, preferir omisión a invención).
+El prompt de sistema en español (few-shot) incluye: (1) instrucciones de rol (analista de cumplimiento normativo), (2) formato de salida JSON estricto con tipos de entidades, (3) dos ejemplos completos de texto y extracción esperada, y (4) reglas de comportamiento ante ambigüedad (no alucinar, preferir omisión a invención).
 
-**Ejemplos *few-shot* de la configuración FS-ES** (§4.3):
+**Ejemplos *few-shot* de la configuración FS-ES** (§4.3), transcritos literalmente de
+`SYSTEM_PROMPT_ES_FEWSHOT.md`, que es el fichero que la corrida cargó:
 
-**Ejemplo few-shot 1 (caso persona sancionada):**
+**Ejemplo 1:**
 ```
-Texto: "El empresario ruso Roman Abramovich fue incluido en las listas de sanciones de la Unión Europea por sus vínculos con el régimen del Kremlin a través de su empresa Evraz PLC."
-Respuesta: {"Persons": ["Roman Abramovich"], "Organizations": ["Evraz PLC"]}
-```
-
-**Ejemplo few-shot 2 (caso organización sancionada):**
-```
-Texto: "El Departamento del Tesoro de los Estados Unidos sancionó al banco Rossiya, señalándolo como banco personal de altos funcionarios del gobierno ruso."
-Respuesta: {"Persons": [], "Organizations": ["Banco Rossiya", "Departamento del Tesoro"]}
+Texto: "La Superintendencia de Bancos de Panamá multó a Juan Pérez por transacciones sospechosas en Ciudad de Panamá."
+Salida: {"Persons": ["Juan Pérez"],
+         "Organizations": ["Superintendencia de Bancos de Panamá"],
+         "Locations": ["Ciudad de Panamá", "Panamá"]}
 ```
 
-**Ejemplo few-shot 3 (caso PEP complejo):**
+**Ejemplo 2:**
 ```
-Texto: "Isabel dos Santos, hija del expresidente angoleño José Eduardo dos Santos, figura en investigaciones de la empresa estatal Sonangol por presunto desvío de fondos."
-Respuesta: {"Persons": ["Isabel dos Santos", "José Eduardo dos Santos"], "Organizations": ["Sonangol"]}
+Texto: "El Ministerio Público de Chile formalizó la investigación por fraude fiscal en contra de ejecutivos de ACME SpA en Santiago."
+Salida: {"Persons": [],
+         "Organizations": ["Ministerio Público", "ACME SpA"],
+         "Locations": ["Chile", "Santiago"]}
 ```
+
+Merece la pena detenerse en un detalle de estos ejemplos, porque documenta el defecto de medición que se
+discute en §3.3: ambos enseñan al modelo a devolver un campo `Locations`, y ninguno de los tres corpus anota
+esa categoría. El *prompt* pide sistemáticamente algo que la anotación de referencia no puede premiar.
 
 **Prompt de generación del corpus sintético N=30** (§4.1.1), ejecutado sobre `gemma4:31b`:
 
@@ -779,7 +784,7 @@ _Tabla 15. Procedencia de cada fila del benchmark exploratorio: correspondencia 
 
 Paso 1 — Definición de la distribución temática: Se analizaron los 15 artículos reales de Kleptotrace/CoNLL-2002 e identificaron sus categorías temáticas recurrentes: (a) sanciones internacionales a personas y empresas, (b) investigaciones por lavado de activos, (c) vínculos con Personas Políticamente Expuestas (PEP), y (d) corrupción en empresas públicas. Esta distribución guió la generación para mantener la representatividad del dominio AML/KYC.
 
-Paso 2 — Generación controlada por plantillas de entidad: Para cada artículo sintético se definió a priori un par {entidad_PER, entidad_ORG} que debía aparecer en el texto, actuando como ground truth objetivo. Las entidades fueron seleccionadas de la base de datos OpenSanctions [19] para garantizar realismo regulatorio (personas y organizaciones sancionadas reales).
+Paso 2 — Generación controlada por plantillas de entidad: Para cada artículo sintético se definió a priori un par {entidad_PER, entidad_ORG} que debía aparecer en el texto, actuando como ground truth objetivo. Las entidades fueron seleccionadas de la lista SDN del Departamento del Tesoro de los Estados Unidos [19] para garantizar realismo regulatorio (personas y organizaciones sancionadas reales).
 
 Paso 3 — Instrucción al LLM generador: El modelo gemma4:31b recibió el siguiente prompt de generación:
 
