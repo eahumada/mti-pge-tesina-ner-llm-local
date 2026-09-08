@@ -1851,3 +1851,29 @@ legítima para no versionarlos. Las otras diez reglas del fichero no se tocaron.
 
 **Pendiente del equipo de 48 GB:** commitear los `detailed_results.json` de las seis corridas de
 `recorrida_20260908/`, que ahora ya no están bloqueados por `.gitignore`.
+
+### §F67.bis — Los respaldos previos a la corrección de puntuación, aplicando la misma lección
+
+`§L51` termina pidiendo que, al escribir una regla de conservación, se revise **en el mismo turno** qué otras
+clases de artefacto cumplen el mismo criterio. Aplicado de inmediato a lo que sigue ignorado bajo `results/`:
+
+| Clase | Ignorada | ¿Reconstruible? | Decisión |
+|:---|:---|:---|:---|
+| `.checkpoint.json` (26) | sí | sí, desde el CSV | se deja ignorada |
+| `.bak_prescore` (36) | sí | **según el fichero** | ver abajo |
+| Duplicados « 2» de macOS | sí | sí, son copias | se deja ignorada |
+
+Los `.bak_prescore` son la instantánea de cada corrida **antes de la corrección de la convención de
+puntuación** del 2026-09-06. Comprobados uno a uno contra el historial de git:
+
+- **15 ficheros (1,3 MB)** ya se recuperan del historial: no aportan nada y siguen ignorados.
+- **12 ficheros (6,8 MB)** son la **única copia** y **no contienen modelos excluidos**. Se versionan con
+  `git add -f`. Nueve de los doce son `detailed_results.json.bak_prescore`, es decir, el detalle por registro
+  anterior a la corrección: exactamente lo que el informe lamenta haber perdido para la ejecución de julio,
+  donde «sus datos por registro se perdieron por sobrescritura, de modo que no podía recalcularse».
+- **9 ficheros (14,5 MB)** contienen nombres de modelos excluidos. **No se versionan**: la política los
+  prohíbe en ficheros de datos, y decidir si un respaldo histórico cuenta como dato o como testimonio es
+  criterio del autor. Quedan en disco, sin respaldo, a la espera de esa decisión.
+
+La regla genérica `*.bak_*` **no se toca**, para no arrastrar respaldos de editor; los doce entran de forma
+explícita y el `.gitignore` deja constancia de por qué.

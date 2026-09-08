@@ -15,6 +15,11 @@ env/
 # ---------------------------------------------------------------------------
 # Respaldos de trabajo de agentes
 # ---------------------------------------------------------------------------
+# Los respaldos genericos siguen ignorados, PERO doce ficheros «.bak_prescore» se anadieron a
+# mano con `git add -f` el 2026-09-08: son la unica copia del estado por registro ANTERIOR a la
+# correccion de puntuacion del 2026-09-06, y no se pueden reconstruir. Los otros quince que hay
+# se recuperan del historial y no aportan nada; los nueve restantes contienen modelos excluidos y
+# quedan pendientes de decision del autor. Ver FINDINGS §F67.bis.
 *.bak_*
 
 # ---------------------------------------------------------------------------
