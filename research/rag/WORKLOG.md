@@ -813,3 +813,23 @@ dentro de sesión, respetando la política aditiva y la integridad de medición.
 - §2.bis.1 exemplars contaminados: decisión de excluir 7 `article_id` de la métrica kb_fewshot/kb_combined;
   manifiesto en `data/knowledge_base/contaminated_exemplar_articles.json`; falta cablear al pipeline.
 - §2.bis.4 (repuntuar JSON viejos) y §2.bis.5a (filas nemotron) se regeneran en la re-corrida.
+
+### 2026-09-08 (cont.) — Avances paralelos mientras el equipo remoto decide
+
+**§5 verificación de corrida.** Creado `repos/ner-llm-entity-benchmark/tools/verificar_corrida.py`: aplica
+las seis comprobaciones obligatorias sobre el directorio de una corrida (fn>0 por categoría, cero
+`recall>1.0`, F1 coherente con precisión/exhaustividad, recuento de fallos por modelo con causa, cotejo de
+los nueve parámetros de `run_config.json`). Probado sobre `results/benchmark_n120_REMOTO/`: veredicto NO
+VÁLIDA por `Locations` (fn=0, fp=4993) y 21 registros con `recall>1.0`, los defectos que las correcciones
+resuelven. Compuerta objetiva para las corridas nuevas.
+
+**§3.1 investigación del idioma del generador N=30 (read-only, sin cambios de datos).** El Anexo F
+(`doc/versions/informe_final/_sync2/anexos_DEFG.md:154-162`) transcribe un prompt generador redactado EN
+ESPAÑOL ("Redacta un párrafo corto ... en español"), pero el corpus versionado
+`data/kleptotrace_augmented_30.json` está ÍNTEGRO EN INGLÉS (confirma FINDINGS §F54). No existen en el
+repositorio ni los registros de ejecución de julio del generador ni un script generador
+(`augment`/`synthetic`) versionado, de modo que la invocación real NO puede verificarse con los artefactos
+disponibles. La evidencia presente es internamente contradictoria (prompt español / salida inglesa). **No se
+resuelve por criterio propio: se escala al autor con esta evidencia.** Si el generador se lanzó en inglés por
+error, la tarea derivada (regenerar N=30 en español, §3.1 del encargo) cambia el sentido del experimento del
+dominio y debe decidirla el autor.
