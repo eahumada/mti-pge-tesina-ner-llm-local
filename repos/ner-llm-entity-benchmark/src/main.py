@@ -737,7 +737,7 @@ def main():
     parser.add_argument("--results-dir", type=str, default=None, help="Explicit results directory. Required for --resume to find its checkpoint; without it a new timestamped directory is created each run.")
     parser.add_argument("--generate-sample-data", action="store_true", help="Generate 20-record sample dataset and exit")
     parser.add_argument("--temperature", type=float, default=0.1, help="LLM temperature configuration")
-    parser.add_argument("--max-tokens", type=int, default=2048, help="LLM max output tokens limit")
+    parser.add_argument("--max-tokens", type=int, default=4096, help="LLM max output tokens limit (§2.bis.3: presupuesto unificado 4096 para que ningún modelo agote el tope)")
     parser.add_argument("--seed", type=int, default=42, help="Seed value for reproducibility")
     parser.add_argument("--system-prompt-file", type=str, default="SYSTEM_PROMPT.md", help="Path to system prompt MD file")
     parser.add_argument("--compare-annotators", nargs=2, metavar=("FILE1", "FILE2"), help="Compute Cohen's Kappa inter-annotator agreement between two ground truth files")
