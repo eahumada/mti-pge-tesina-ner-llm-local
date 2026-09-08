@@ -18,10 +18,18 @@ Hemos descartado dos explicaciones: **no es el modo de razonamiento** —los dos
 tienen desactivado en ambas corridas— y **no es solo la concurrencia**, porque más consumidores suben la
 latencia por petición y aquí la mayoría baja.
 
-**La pregunta concreta:** ¿en qué máquina se ejecutaron las corridas publicadas de `gemma4:31b-mlx` y
-`gemma4:12b-mlx` sobre N=120? Si fueron en el equipo de 16 GB, con paginación a disco, eso explicaría las
-caídas grandes. Y si es así, ¿se os ocurre por qué `gemma4:latest` con KB RAG **sube** un 61 % en lugar de
-bajar?
+**Actualización: no es la máquina, ya lo hemos comprobado.** Los CSV guardan memoria del sistema y VRAM
+por registro, y `gemma4:31b-mlx` corrió con **30 539 MB de sistema y 26 606 de VRAM** en la publicada frente
+a **30 331 y 26 720** en la vuestra. Misma máquina, misma huella, latencia 52 veces menor. Descartado.
+
+**Y una parte ya se explica.** Los aumentos ocurren solo en modo KB RAG —`gemma4:latest` sube de 489,6 a
+790,9 s mientras su *baseline* baja de 98,0 a 46,3—, que es el modo que más texto genera, y la re-corrida
+duplicó el presupuesto de salida de 2 048 a 4 096. Una respuesta que antes se truncaba ahora se completa.
+
+**La pregunta que queda, acotada: ¿por qué bajan tanto los *baseline*?** De 1 066 a 20,5 segundos en
+`gemma4:31b-mlx` y de 99 a 4,7 en `gemma4:12b-mlx`, en la misma máquina. ¿Cambió algo en cómo se mide
+`latency_sec` —por ejemplo, si antes incluía la carga del modelo en un barrido que encadenaba varios y ahora
+cada uno corre en su propio proceso—, o hay otra explicación que se nos escapa?
 
 **Por qué importa.** El informe publica una tabla de eficiencia con VRAM, tokens/s y un índice por
 parámetro. Si la rehacemos sobre la re-corrida, las cifras cambian mucho; si la dejamos, mezcla dos

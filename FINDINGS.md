@@ -2076,3 +2076,25 @@ suba un 61 %.
 **Acción: preguntar al equipo de 48 GB**, que es quien conoce las condiciones de ejecución de ambas. No se
 propone ninguna corrección al informe hasta entender el mecanismo: cambiar la Tabla 8 sin saber por qué
 cambiaron los números sería sustituir unas cifras inexplicadas por otras.
+
+### §F71.bis — La hipótesis de la máquina queda refutada por la propia telemetría
+
+Antes de esperar respuesta se comprobó con los datos, y **no era la máquina**. Los CSV guardan memoria del
+sistema y VRAM por registro:
+
+| Corrida | Modelo | Memoria del sistema | VRAM | Latencia |
+|:---|:---|---:|---:|---:|
+| publicada | `gemma4:31b-mlx` baseline | 30 539 MB | 26 606 MB | 1 066,2 s |
+| re-corrida | `gemma4:31b-mlx` baseline | **30 331 MB** | **26 720 MB** | **20,5 s** |
+
+**La misma máquina y la misma huella de memoria, con la latencia 52 veces menor.** La explicación de los
+16 GB con paginación queda descartada: ambas corridas usaron ~30 GB de sistema y ~26,7 GB de VRAM.
+
+Eso desplaza la causa al **arnés o a la propia medición**, no al hardware. Y hay una pieza que sí encaja: los
+aumentos ocurren **solo en modo KB RAG** —`gemma4:latest` sube de 489,6 a 790,9 s mientras su *baseline* baja
+de 98,0 a 46,3—, que es justo el modo que genera más texto, y la re-corrida **duplicó el presupuesto de
+salida** de 2 048 a 4 096 tokens. Una respuesta que antes se truncaba ahora se completa, y eso cuesta tiempo.
+
+Queda sin explicar la otra mitad: por qué los *baseline* bajan tanto. La pregunta al equipo de 48 GB se
+mantiene, pero **acotada**: no es la máquina, y la parte que sube tiene explicación. Lo que falta entender es
+la bajada.
