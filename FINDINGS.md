@@ -1892,7 +1892,17 @@ signo en los dos de mayor capacidad**:
 |:---|---:|---:|:---:|
 | `gemma4:31b-cloud` | −0,53 pp | **+0,81 pp** | sí |
 | `gemma4:31b-mlx` | −0,18 pp | **+0,97 pp** | sí |
+| `gemma4:latest` | −1,17 pp | **+2,53 pp** | sí |
 | `gemma4:12b-mlx` | +2,28 pp | +2,29 pp | no |
+
+> **Actualización con el cuarto modelo (2026-09-08 19:13).** `gemma4:latest` se suma a los que cambian de
+> signo, y con el salto mayor de los tres: de −1,17 a +2,53 pp. **De los cuatro modelos rehechos, tres
+> invierten el signo del efecto y el cuarto ya era positivo.** Ninguno empeora. El único que no cambia,
+> `gemma4:12b-mlx`, se mueve una centésima: +2,28 a +2,29.
+>
+> El patrón se refuerza en lugar de diluirse, que es lo que importa: no son tres casos sueltos sino los
+> cuatro primeros de la serie, y los cuatro apuntan igual. Con nueve modelos por delante, sigue siendo
+> provisional, pero cada uno que llega hace más probable que §5.3.1 haya de reformularse.
 
 El informe afirma hoy, en §5.3.1, que el beneficio del RAG «**se anula o revierte en los de mayor
 capacidad** (−0,54 y −0,18 puntos en los dos de 31B)». Con estos datos esa frase no se sostendría: en los dos
