@@ -156,7 +156,7 @@ _Tabla 2. Estado del arte en reconocimiento de entidades para dominios financier
 | FiNER-139 [15] | SEC 10-K/10-Q (etiquetado XBRL) | SEC-BERT-SHAPE | 82,1 % micro-F1 | Local | Inglés |
 | Cañete et al. [7] | CoNLL-2002 (ES) | BETO (BERT español) | 88,43 % F1 | Local | Español |
 | FinanceBench [9] | 361 informes SEC | GPT-4-Turbo + RAG | 50 % exactitud | Cloud | Inglés |
-| **Este trabajo** | **Kleptotrace/CoNLL-2002 (AML), corpus sintético N=30** | **gemma4:31b local** | **79 % F1** | **100% Local** | **Español** |
+| **Este trabajo** | **CoNLL-2002 y Kleptotrace (N=120)** | **gemma4:31b-mlx local** | **76,85 % F1** | **100 % Local** | **Español (105/120)** |
 
 Las cifras de la última columna no son directamente comparables entre sí, porque cada trabajo mide una tarea distinta: FiNER-139 etiqueta magnitudes numéricas según la taxonomía XBRL y FinanceBench evalúa exactitud de respuesta sobre preguntas abiertas, no identificación de personas y organizaciones. Aun así, de la comparación se desprende una brecha: los trabajos que alcanzan el mejor F1 lo hacen sobre corpus en inglés y con infraestructura en la nube, mientras que los que preservan la privacidad no abordan el dominio de cumplimiento en español. Este trabajo se sitúa en esa intersección.
 
@@ -459,9 +459,9 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 1. **Viabilidad demostrada:** Es técnicamente viable implementar un sistema NER soberano para cumplimiento AML/KYC con modelos de lenguaje de código abierto ejecutados localmente sobre hardware Apple Silicon M4, alcanzando F1=80.57% sin extracciones fallidas sobre el corpus AML N=30 (59.25% sobre el corpus real N=120).
 
-2. Localización lingüística como factor crítico: el idioma del prompt y los ejemplos *few-shot* **interactúan**: por separado aportan +4.38 pp y −0.72 pp de F1 respectivamente, pero combinados alcanzan **+10.40 pp**. Los ejemplos solo resultan productivos redactados en el idioma del corpus, lo que tiene implicaciones directas para despliegues en mercados hispanohablantes.
+2. Localización lingüística como tendencia no replicada: sobre el corpus de quince artículos, el idioma de la instrucción y el de los ejemplos *few-shot* parecen **interactuar**, pues por separado aportan +4,38 y −0,72 puntos de F1 mientras combinados alcanzan +10,40. El efecto, sin embargo, **no replica**: una segunda ejecución sobre el mismo corpus y modelo lo reduce a +3,11 puntos, y sobre el corpus de ciento veinte artículos se anula, con una diferencia de −0,43 puntos y p = 0,9328. La conclusión defendible es por tanto más débil de lo que sugería la primera medición, y además el mecanismo que se le atribuía —que los ejemplos rinden en el idioma del corpus— no puede ser el correcto, porque la mejora se obtuvo sobre artículos redactados en inglés. Determinarlo exige el diseño con réplicas que se propone en §7.2.
 
-3. Soberanía de datos sin costo de rendimiento: El sistema local iguala o supera el rendimiento de la variante cloud (69.12% vs. 66.99% F1 sobre N=15) mientras garantiza privacidad total.
+3. Soberanía de datos con un coste de rendimiento acotado: sobre el corpus de quince artículos la ejecución local supera a la alojada (69,12 % frente a 66,99 % de F1), pero ese experimento es el de menor potencia estadística y el estudio principal lo contradice: sobre los ciento veinte artículos, y con la medición restringida a las categorías anotadas, la variante en la nube del mismo modelo obtiene 81,45 % frente al 76,85 % del mejor local. La conclusión sostenible no es la equivalencia sino que **la soberanía cuesta unos cinco puntos de F1**, un precio que en un entorno regulado puede resultar razonable, y que se paga a cambio de no transferir texto de clientes a un tercero.
 
 4. **Reducción de costos operativos:** El costo unitario del sistema soberano ($0.052/artículo) versus revisión manual ($8.75/artículo) representa una reducción del 99.4% en el costo unitario directo (60–80% del costo operativo total, que incluye la supervisión humana), con potencial de procesamiento de cientos de artículos diarios sin personal analista dedicado.
 

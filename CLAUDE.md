@@ -163,3 +163,79 @@ Declara **qué agente está trabajando en qué y sobre qué archivos**, con secc
 
 Este protocolo es la contrapartida operativa de la sección *Concurrencia entre Sesiones*: aquella describe
 cómo escribir sin destruir trabajo ajeno; ésta, cómo evitar el solapamiento antes de que ocurra.
+
+---
+
+## Integridad de la medición
+
+Estas reglas se añaden el 2026-09-08, después de que una segunda pasada de revisión independiente encontrara
+que el 65 % de los falsos positivos del estudio procedía de una categoría que ningún corpus anotaba. El
+defecto sobrevivió dos meses porque las cifras eran internamente coherentes: bajas, pero consistentes entre
+sí. Ver `FINDINGS.md §F53` y `LEARNING.md §L44`.
+
+- **Toda categoría que se puntúe debe existir en la anotación de referencia.** Si el prompt pide una
+  categoría que el corpus no anota, cada acierto del modelo se contabiliza como error. El indicador barato
+  es el **`fn` agregado por categoría**: si vale cero mientras `fp` crece, esa categoría está puntuando
+  contra el vacío. Comprobarlo antes de dar por buena cualquier métrica nueva.
+- **Una cifra baja pero estable no acredita que la medición sea correcta.** Acredita que el defecto es
+  sistemático. La coherencia interna de un conjunto de resultados no es prueba de validez.
+- **Cuando existan varias corridas del mismo experimento, el informe declara todas.** Se explica cuál se
+  toma como referencia y por qué. Citar la más favorable sin mencionar las demás es indistinguible de
+  seleccionar el resultado, aunque no haya intención de hacerlo, y es lo que un tribunal juzga. La política
+  aditiva ya obliga a conservarlas; esta regla obliga a **mencionarlas**. Antes de escribir una cifra, buscar
+  en `results/` si hay más corridas del mismo experimento.
+- **Ninguna cifra entra en una tabla comparativa sin que su fuente esté abierta y leída**, y ninguna columna
+  agrupa métricas de tareas distintas bajo un mismo encabezado. Si las filas miden cosas distintas, la
+  columna se titula de forma neutra y una glosa advierte que no son comparables.
+- **El idioma del corpus se comprueba, no se supone.** Los dos corpus del dominio de este trabajo resultaron
+  estar íntegramente en inglés mientras el informe declaraba validación en español (`§F54`).
+
+## Verificación antes de comprometer un cambio en el informe
+
+Comprobaciones mecánicas que hay que pasar sobre el Markdown canónico antes de cada commit. Todas surgieron
+de defectos reales encontrados en la revisión final:
+
+1. **Referencias cruzadas**: ninguna llamada a `§x.y`, a `Tabla N` o a `Anexo X` puede apuntar a algo que no
+   exista. Atención al escribir: al añadir una referencia se contrae la obligación de crear su destino en el
+   mismo commit. Los encabezados del informe llegan al **cuarto nivel** (`#### 5.3.5`), de modo que un patrón
+   que solo busque `##` y `###` da falsos positivos.
+2. **Tablas**: numeradas de forma contigua **en orden de aparición**, cada una con su leyenda
+   `_Tabla N. Texto._` **inmediatamente encima** —a dos líneas o menos, sin párrafos interpuestos—, y con un
+   texto que describa lo que la tabla contiene. Una leyenda heredada puede describir otra tabla.
+3. **Bibliografía**: entradas contiguas desde `[1]`, toda cita con entrada y toda entrada citada, y **URL
+   verificada** en cada una. Una URL no abierta no cuenta como verificada; si el servidor la bloquea (ACM
+   devuelve 403 al lector automático), se acredita por resolución del DOI y se deja constancia.
+4. **Resumen y abstract**: por debajo de 200 palabras cada uno y corregidos **en el mismo commit**.
+5. **Higiene del entregable**: cero emojis, cero arte ASCII, y recuento de guiones largos y negritas del
+   cuerpo. Los recuentos absolutos anotados en este documento **no son reproducibles entre métodos de conteo
+   distintos**: tres auditores dieron 19/108, 28/127 y 31/150 sobre el mismo texto, según incluyeran o no
+   tablas, citas y encabezados. Lo que importa es que el documento generado no añada énfasis respecto de la
+   fuente, no acertar con una cifra concreta.
+6. **Identificadores**: antes de escribir `§F<n>`, `§L<n>` o `§<n>.<n>`, comprobar que el número no está
+   usado. Ha habido **tres colisiones**, dos de ellas posteriores a escribir la lección que advierte de
+   ellas, de modo que el recordatorio no basta: hay que comprobarlo con un `grep` en el mismo turno.
+
+## Secretos y publicación del repositorio
+
+- **Reescribir el historial de git no borra un secreto de GitHub.** `git filter-repo` purgó una clave de API
+  de los veinte commits afectados y el force-push dejó el remoto limpio, pero el commit antiguo seguía
+  respondiendo HTTP 200 y su versión del fichero **todavía contenía la clave en claro**: los objetos quedan
+  sin referencia y GitHub los sigue sirviendo por SHA directo. Ver `LEARNING.md §L43`.
+- **El remedio es revocar la credencial, y va primero.** Después se pide a GitHub Support la purga de objetos
+  inalcanzables. La reescritura es mitigación, no remedio.
+- **No hacer público un repositorio que tuvo un secreto** sin haber completado los dos pasos anteriores.
+  Publicar convierte una clave recuperable-si-conoces-el-SHA en una clave indexable.
+- **Antes de cualquier `--force` sobre el remoto**: respaldo en `git bundle --all`, comprobar que los refs
+  remotos coinciden con los locales —para no destruir trabajo de otra sesión— y avisar de que los clones
+  existentes quedan incompatibles.
+- Los secretos viven en `.setenv.sh`, que está en `.gitignore`. **Ese fichero no está en git**, de modo que
+  un clon nuevo no lo tiene.
+
+## Concurrencia: el directorio de trabajo puede cambiar de nombre
+
+El 2026-09-08 a las 03:49 el directorio del proyecto apareció renombrado a `…​.old.bak` por un agente externo
+a la sesión que trabajaba en él. **No revertirlo sin comprobar antes qué se perdería.** El repositorio tenía
+**274 entradas no rastreadas o ignoradas** que un clon nuevo no habría recuperado, entre ellas `.setenv.sh`
+con las credenciales y el directorio `Instrucciones Informe Final de Tesina/` con las normas institucionales.
+Renombrar de vuelta conserva todo; clonar de cero, no. El orden correcto es: comprobar que el contenido está
+íntegro y sincronizado con el remoto, enumerar lo que no está en git, y solo entonces decidir.
