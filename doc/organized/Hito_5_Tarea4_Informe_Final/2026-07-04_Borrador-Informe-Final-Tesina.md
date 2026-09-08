@@ -613,42 +613,44 @@ _Tabla 9. Estructura del repositorio de código_
 |:---|:---|
 | `repos/ner-llm-entity-benchmark/` | Raíz del sistema de evaluación |
 | `src/` | Código de la aplicación, organizado por capas |
-|     `main.py` | Orquestador principal (+--rag-mode CLI, v1.1) |
-|     `config.py` | Configuración global (+rag_mode field, v1.1) |
-|     `data_loader.py` | Carga y validación del corpus |
-|     `llm_runner.py` | Runner LLM con parseo en cascada |
-|     `evaluator.py` | Métricas F1 + taxonomía de errores |
-|     `pub_sub.py` | Cola Pub/Sub multithreading |
-|     `adaptive_workers.py` | Controlador AIMD |
-|     `checkpoint.py` | Persistencia de estado |
-|     `rag_manager.py` | RAGManager: Dict-RAG legacy (v1.0) |
-|     `kb_rag_manager.py` | KBRAGManager: KB RAG contextual (v1.1, NUEVO) |
-|     `dashboard.py` | Interfaz Streamlit (7 pestañas) |
-|     `statistics.py` | ANOVA + Tukey HSD + IC95 |
-|     `providers/` |  |
-|         `base.py` | LLMProvider ABC |
-|         `factory.py` | LLMProviderFactory |
-|         `ollama_provider.py` | Proveedor Ollama (+template KB RAG, v1.1) |
-|         `openai_provider.py` | Proveedor OpenAI (cloud) |
-|         `__init__.py` | Facade get_provider() |
+| `src/main.py` | Orquestador principal, con la opción `--rag-mode` en la interfaz de línea de órdenes |
+| `src/config.py` | Configuración global, incluido el modo de recuperación |
+| `src/data_loader.py` | Carga y validación del corpus |
+| `src/llm_runner.py` | Runner LLM con parseo en cascada |
+| `src/evaluator.py` | Métricas F1 + taxonomía de errores |
+| `src/pub_sub.py` | Cola Pub/Sub multithreading |
+| `src/adaptive_workers.py` | Controlador AIMD |
+| `src/checkpoint.py` | Persistencia de estado |
+| `src/rag_manager.py` | Gestor del RAG por diccionario, la primera versión del módulo |
+| `src/kb_rag_manager.py` | Gestor del RAG contextual sobre la base de conocimientos |
+| `src/dashboard.py` | Interfaz Streamlit (7 pestañas) |
+| `src/statistics.py` | ANOVA + Tukey HSD + IC95 |
+| `src/providers/` | Capa de abstracción de proveedores de modelo, con su factoría |
+| `src/providers/base.py` | LLMProvider ABC |
+| `src/providers/factory.py` | LLMProviderFactory |
+| `src/providers/ollama_provider.py` | Proveedor Ollama, con la plantilla del RAG contextual |
+| `src/providers/openai_provider.py` | Proveedor OpenAI (alojado) |
+| `src/providers/anthropic_provider.py` | Proveedor Anthropic (alojado) |
+| `src/providers/vertexai_provider.py` | Proveedor Vertex AI (alojado) |
+| `src/providers/__init__.py` | Facade get_provider() |
 | `data/` | Corpus, diccionarios y base de conocimientos |
-|     `benchmark_balanced_120.json` | Corpus N=120 (Gold Standard real) |
-|     `dictionaries/` |  |
-|         `persons.json` | Diccionario de personas (v1.0) |
-|         `organizations.json` | Diccionario de organizaciones (v1.0) |
-|         `augmented_persons.json` | Personas aumentadas (v1.0) |
-|     `knowledge_base/` | Base de Conocimientos KB RAG (v1.1, NUEVO) |
-|         `domain_guidelines.json` | 5 dominios con reglas NER tipológicas |
-|         `few_shot_exemplars.json` | 7 ejemplares anotados (artículos reales) |
+| `data/benchmark_balanced_120.json` | Corpus N=120 (Gold Standard real) |
+| `data/dictionaries/` | Diccionarios de entidades del RAG por diccionario, con su fichero de procedencia |
+| `data/dictionaries/persons.json` | Diccionario de personas (v1.0) |
+| `data/dictionaries/organizations.json` | Diccionario de organizaciones (v1.0) |
+| `data/dictionaries/augmented_persons.json` | Personas aumentadas (v1.0) |
+| `data/knowledge_base/` | Base de Conocimientos KB RAG (v1.1, NUEVO) |
+| `data/knowledge_base/domain_guidelines.json` | 5 dominios con reglas NER tipológicas |
+| `data/knowledge_base/few_shot_exemplars.json` | 7 ejemplares anotados (artículos reales) |
 | `results/` | Salidas del benchmark |
-|     `benchmark_results.csv` |  |
-|     `statistical_report.md` |  |
-|     `benchmark_balanced_120_<timestamp>/` | Resultados por ejecución |
+| `results/benchmark_results.csv` | Métricas por artículo y modelo, una fila por registro evaluado |
+| `results/statistical_report.md` | Informe de ANOVA, Tukey e intervalos de confianza derivado del CSV |
+| `results/benchmark_balanced_120_<timestamp>/` | Resultados por ejecución |
 | `research/` | Documentos de investigación y registros de trabajo |
-|     `rag/` |  |
-|         `2026-08-31_analisis_contenido_rag_base_conocimientos.md` | Investigación RAG |
-|         `TODO-RAG-20260901.md` | Tracking implementación |
-|         `WORKLOG.md` | Bitácora de trabajo |
+| `research/rag/` | Estudio del módulo de recuperación y su registro de trabajo vigente |
+| `research/rag/2026-08-31_analisis_contenido_rag_base_conocimientos.md` | Investigación RAG |
+| `research/rag/TODO-RAG-20260901.md` | Tracking implementación |
+| `research/rag/WORKLOG.md` | Bitácora de trabajo |
 | `SYSTEM_PROMPT.md` | Prompt maestro, zero-shot en inglés; es la celda de referencia del diseño factorial y el que cargaron las corridas principales |
 | `SYSTEM_PROMPT_ES.md` | Zero-shot en español |
 | `SYSTEM_PROMPT_EN_FEWSHOT.md` | Few-shot en inglés |
