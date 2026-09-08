@@ -1,0 +1,229 @@
+2026-09-08 20:46:23,855 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-08 20:46:23,874 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-08 20:46:23,874 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-09-08 20:46:23,874 [INFO] ner_benchmark: Corpus loaded: 15 articles split into 2 batches.
+2026-09-08 20:46:23,874 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-08 20:46:23,917 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-08 20:46:23,920 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-08 20:46:23,920 [INFO] ner_benchmark: [RAG] Using Knowledge Base mode: 'kb_combined'
+2026-09-08 20:46:23,934 [INFO] ner_benchmark.pub_sub: Published task qwen3:8b_baseline-b0-1788911183 for batch 0 to memory queue.
+2026-09-08 20:46:23,934 [INFO] ner_benchmark.pub_sub: Published task qwen3:8b_baseline-b1-1788911183 for batch 1 to memory queue.
+2026-09-08 20:46:23,934 [INFO] ner_benchmark.pub_sub: Published task qwen3:8b_kb_rag-b0-1788911183 for batch 0 to memory queue.
+2026-09-08 20:46:23,934 [INFO] ner_benchmark.pub_sub: Published task qwen3:8b_kb_rag-b1-1788911183 for batch 1 to memory queue.
+2026-09-08 20:46:23,934 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=1 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-09-08 20:46:23,936 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-08 20:46:23,936 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-08 20:46:23,936 [INFO] ner_benchmark: [RAG] Worker phase — Knowledge Base mode: 'kb_combined'
+2026-09-08 20:46:23,950 [INFO] ner_benchmark.pub_sub: Published task qwen3:8b_baseline-b0-1788911183 for batch 0 to memory queue.
+2026-09-08 20:46:23,950 [INFO] ner_benchmark.pub_sub: Published task qwen3:8b_baseline-b1-1788911183 for batch 1 to memory queue.
+2026-09-08 20:46:23,950 [INFO] ner_benchmark: Running RAG study 'qwen3:8b_baseline' with 1 workers...
+2026-09-08 20:46:23,950 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task qwen3:8b_baseline-b0-1788911183 from memory queue.
+2026-09-08 20:46:23,950 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-08 20:46:23,950 [INFO] ner_benchmark: [Worker 1] Model 'qwen3:8b' (Mapped: 'qwen3:8b_baseline') -> Extracting entities for record '1'...
+2026-09-08 20:46:23,951 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:46:23,954 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:46:23,954 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:46:33,473 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:46:33,559 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:46:33,582 [INFO] ner_benchmark: [Worker 2] Model 'qwen3:8b' (Mapped: 'qwen3:8b_baseline') -> Extracting entities for record '2'...
+2026-09-08 20:46:33,582 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:46:33,585 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:46:33,586 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:46:37,792 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:46:38,160 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:46:38,174 [INFO] ner_benchmark: [Worker 3] Model 'qwen3:8b' (Mapped: 'qwen3:8b_baseline') -> Extracting entities for record '3'...
+2026-09-08 20:46:38,175 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:46:38,179 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:46:38,179 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:46:47,504 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:46:47,851 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:46:47,887 [INFO] ner_benchmark: [Worker 4] Model 'qwen3:8b' (Mapped: 'qwen3:8b_baseline') -> Extracting entities for record '4'...
+2026-09-08 20:46:47,887 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:46:47,892 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:46:47,892 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:46:56,716 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:46:57,050 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:46:57,085 [INFO] ner_benchmark: [Worker 5] Model 'qwen3:8b' (Mapped: 'qwen3:8b_baseline') -> Extracting entities for record '5'...
+2026-09-08 20:46:57,085 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:46:57,089 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:46:57,089 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:46:59,478 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:46:59,641 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:46:59,649 [INFO] ner_benchmark: [Worker 6] Model 'qwen3:8b' (Mapped: 'qwen3:8b_baseline') -> Extracting entities for record '6'...
+2026-09-08 20:46:59,649 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:46:59,653 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:46:59,653 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:47:01,464 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:47:01,696 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:47:01,701 [INFO] ner_benchmark: [Worker 7] Model 'qwen3:8b' (Mapped: 'qwen3:8b_baseline') -> Extracting entities for record '7'...
+2026-09-08 20:47:01,702 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:47:01,707 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:47:01,707 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:47:08,509 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:47:08,816 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:47:08,827 [INFO] ner_benchmark: [Worker 8] Model 'qwen3:8b' (Mapped: 'qwen3:8b_baseline') -> Extracting entities for record '8'...
+2026-09-08 20:47:08,827 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:47:08,831 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:47:08,831 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:47:11,117 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:47:11,384 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:47:11,389 [INFO] ner_benchmark: [Worker 9] Model 'qwen3:8b' (Mapped: 'qwen3:8b_baseline') -> Extracting entities for record '9'...
+2026-09-08 20:47:11,390 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:47:11,398 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:47:11,398 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:47:17,482 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:47:17,997 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:47:18,010 [INFO] ner_benchmark: [Worker 10] Model 'qwen3:8b' (Mapped: 'qwen3:8b_baseline') -> Extracting entities for record '10'...
+2026-09-08 20:47:18,010 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:47:18,015 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:47:18,015 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:47:28,315 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:47:28,670 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:47:28,702 [INFO] ner_benchmark.pub_sub: Acknowledged task qwen3:8b_baseline-b0-1788911183 in memory queue.
+2026-09-08 20:47:28,705 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task qwen3:8b_baseline-b1-1788911183 from memory queue.
+2026-09-08 20:47:28,705 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-08 20:47:28,705 [INFO] ner_benchmark: [Worker 1] Model 'qwen3:8b' (Mapped: 'qwen3:8b_baseline') -> Extracting entities for record '11'...
+2026-09-08 20:47:28,705 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:47:28,710 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:47:28,710 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:47:41,971 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:47:42,401 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:47:42,443 [INFO] ner_benchmark: [Worker 2] Model 'qwen3:8b' (Mapped: 'qwen3:8b_baseline') -> Extracting entities for record '12'...
+2026-09-08 20:47:42,444 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:47:42,447 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:47:42,447 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:47:50,924 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:47:51,066 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:47:51,110 [INFO] ner_benchmark: [Worker 3] Model 'qwen3:8b' (Mapped: 'qwen3:8b_baseline') -> Extracting entities for record '13'...
+2026-09-08 20:47:51,110 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:47:51,114 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:47:51,114 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:47:57,411 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:47:57,715 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:47:57,741 [INFO] ner_benchmark: [Worker 4] Model 'qwen3:8b' (Mapped: 'qwen3:8b_baseline') -> Extracting entities for record '14'...
+2026-09-08 20:47:57,741 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:47:57,745 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:47:57,745 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:48:04,048 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:48:04,348 [DEBUG] ner_benchmark.llm_runner: Successfully extracted entities via regex key fallback.
+2026-09-08 20:48:04,369 [INFO] ner_benchmark: [Worker 5] Model 'qwen3:8b' (Mapped: 'qwen3:8b_baseline') -> Extracting entities for record '15'...
+2026-09-08 20:48:04,370 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:48:04,374 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:48:04,374 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:48:11,397 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:48:11,462 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:48:11,476 [INFO] ner_benchmark.pub_sub: Acknowledged task qwen3:8b_baseline-b1-1788911183 in memory queue.
+2026-09-08 20:48:11,485 [INFO] ner_benchmark.pub_sub: Published task qwen3:8b_kb_rag-b0-1788911291 for batch 0 to memory queue.
+2026-09-08 20:48:11,485 [INFO] ner_benchmark.pub_sub: Published task qwen3:8b_kb_rag-b1-1788911291 for batch 1 to memory queue.
+2026-09-08 20:48:11,485 [INFO] ner_benchmark: Running RAG study 'qwen3:8b_kb_rag' with 1 workers...
+2026-09-08 20:48:11,485 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task qwen3:8b_kb_rag-b0-1788911291 from memory queue.
+2026-09-08 20:48:11,485 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-08 20:48:11,485 [INFO] ner_benchmark: [Worker 1] Model 'qwen3:8b' (Mapped: 'qwen3:8b_kb_rag') -> Extracting entities for record '1'...
+2026-09-08 20:48:11,612 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:48:11,615 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:48:11,615 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:48:19,864 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:48:20,249 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:48:20,275 [INFO] ner_benchmark: [Worker 2] Model 'qwen3:8b' (Mapped: 'qwen3:8b_kb_rag') -> Extracting entities for record '2'...
+2026-09-08 20:48:20,365 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:48:20,368 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:48:20,368 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:48:24,855 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:48:24,935 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:48:24,957 [INFO] ner_benchmark: [Worker 3] Model 'qwen3:8b' (Mapped: 'qwen3:8b_kb_rag') -> Extracting entities for record '3'...
+2026-09-08 20:48:25,052 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:48:25,056 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:48:25,056 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:48:34,172 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:48:34,692 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:48:34,729 [INFO] ner_benchmark: [Worker 4] Model 'qwen3:8b' (Mapped: 'qwen3:8b_kb_rag') -> Extracting entities for record '4'...
+2026-09-08 20:48:34,823 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:48:34,827 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:48:34,827 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:48:42,400 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:48:42,417 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:48:42,434 [INFO] ner_benchmark: [Worker 5] Model 'qwen3:8b' (Mapped: 'qwen3:8b_kb_rag') -> Extracting entities for record '5'...
+2026-09-08 20:48:42,517 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:48:42,520 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:48:42,520 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:48:45,871 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:48:46,096 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:48:46,108 [INFO] ner_benchmark: [Worker 6] Model 'qwen3:8b' (Mapped: 'qwen3:8b_kb_rag') -> Extracting entities for record '6'...
+2026-09-08 20:48:46,205 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:48:46,208 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:48:46,208 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:48:47,821 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:48:48,255 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:48:48,265 [INFO] ner_benchmark: [Worker 7] Model 'qwen3:8b' (Mapped: 'qwen3:8b_kb_rag') -> Extracting entities for record '7'...
+2026-09-08 20:48:48,367 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:48:48,371 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:48:48,371 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:48:55,368 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:48:55,499 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:48:55,516 [INFO] ner_benchmark: [Worker 8] Model 'qwen3:8b' (Mapped: 'qwen3:8b_kb_rag') -> Extracting entities for record '8'...
+2026-09-08 20:48:55,609 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:48:55,612 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:48:55,613 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:48:57,467 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:48:57,650 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:48:57,652 [INFO] ner_benchmark: [Worker 9] Model 'qwen3:8b' (Mapped: 'qwen3:8b_kb_rag') -> Extracting entities for record '9'...
+2026-09-08 20:48:57,740 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:48:57,743 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:48:57,744 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:49:03,098 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:49:03,319 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:49:03,331 [INFO] ner_benchmark: [Worker 10] Model 'qwen3:8b' (Mapped: 'qwen3:8b_kb_rag') -> Extracting entities for record '10'...
+2026-09-08 20:49:03,425 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:49:03,429 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:49:03,429 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:49:13,730 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:49:14,062 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:49:14,082 [INFO] ner_benchmark.pub_sub: Acknowledged task qwen3:8b_kb_rag-b0-1788911291 in memory queue.
+2026-09-08 20:49:14,091 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task qwen3:8b_kb_rag-b1-1788911291 from memory queue.
+2026-09-08 20:49:14,091 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-08 20:49:14,091 [INFO] ner_benchmark: [Worker 1] Model 'qwen3:8b' (Mapped: 'qwen3:8b_kb_rag') -> Extracting entities for record '11'...
+2026-09-08 20:49:14,183 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:49:14,186 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:49:14,186 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:49:25,812 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:49:25,831 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:49:25,867 [INFO] ner_benchmark: [Worker 2] Model 'qwen3:8b' (Mapped: 'qwen3:8b_kb_rag') -> Extracting entities for record '12'...
+2026-09-08 20:49:25,958 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:49:25,961 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:49:25,961 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:49:34,241 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:49:34,588 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:49:34,637 [INFO] ner_benchmark: [Worker 3] Model 'qwen3:8b' (Mapped: 'qwen3:8b_kb_rag') -> Extracting entities for record '13'...
+2026-09-08 20:49:34,726 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:49:34,730 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:49:34,730 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:49:40,824 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:49:41,343 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:49:41,377 [INFO] ner_benchmark: [Worker 4] Model 'qwen3:8b' (Mapped: 'qwen3:8b_kb_rag') -> Extracting entities for record '14'...
+2026-09-08 20:49:41,469 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:49:41,472 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:49:41,472 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:49:48,093 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:49:48,588 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:49:48,604 [INFO] ner_benchmark: [Worker 5] Model 'qwen3:8b' (Mapped: 'qwen3:8b_kb_rag') -> Extracting entities for record '15'...
+2026-09-08 20:49:48,691 [DEBUG] ner_benchmark.providers.factory: Factory: model 'qwen3:8b' → OllamaProvider (default)
+2026-09-08 20:49:48,695 [DEBUG] ner_benchmark.providers.ollama: Thinking DISABLED for 'qwen3:8b': su razonamiento agota num_predict y vacia content.
+2026-09-08 20:49:48,695 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=qwen3:8b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=False cloud=False
+2026-09-08 20:49:55,198 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 20:49:55,284 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 20:49:55,307 [INFO] ner_benchmark.pub_sub: Acknowledged task qwen3:8b_kb_rag-b1-1788911291 in memory queue.
+2026-09-08 20:49:55,315 [INFO] ner_benchmark: Unloading model weights for qwen3:8b to protect VRAM.
+2026-09-08 20:49:55,357 [INFO] ner_benchmark.llm_runner: Successfully unloaded weights for qwen3:8b from VRAM.
+2026-09-08 20:49:57,366 [INFO] ner_benchmark: ==================================================
+2026-09-08 20:49:57,367 [INFO] ner_benchmark: BENCHMARK EXTRACTIONS COMPLETE. PROCESSING METRICS...
+2026-09-08 20:49:57,367 [INFO] ner_benchmark: ==================================================
+2026-09-08 20:49:57,462 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.
+
+==================================================
+      FINAL BENCHMARK PERFORMANCE RESULTS
+==================================================
+                         f1  precision    recall  hallucination_rate  latency_sec
+qwen3:8b_baseline  0.676750   0.659126  0.732822            0.012865     7.141337
+qwen3:8b_kb_rag    0.730446   0.703209  0.785109            0.031058     6.800942
+==================================================
+Full reports saved under: results/ directory.
