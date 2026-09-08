@@ -1,0 +1,178 @@
+{
+ "descripcion": "Anotacion manual de localizaciones para los corpus cuya fuente no las aporta.",
+ "fecha": "2026-09-08",
+ "motivo": "CoNLL-2002 anota localizaciones y se recuperan con tools/recuperar_locations_n120.py, pero los quince articulos de Kleptotrace y los treinta sinteticos no las tienen en su origen. Sin esta anotacion, medir la categoria seguiria penalizando al modelo en esos articulos, que es el defecto que FINDINGS §F53 documenta.",
+ "criterio": "Se sigue la convencion observada en las 482 localizaciones recuperadas de CoNLL-2002: entidades geograficas con nombre propio —paises, ciudades, estados, regiones, continentes— y tambien instalaciones con nombre cuando el corpus original las incluye. No se anota el toponimo cuando aparece unicamente dentro del nombre de una organizacion, porque ahi la entidad es la organizacion. Cada toponimo se verifico presente en el texto del articulo antes de anotarlo.",
+ "corpora": {
+  "data/kleptotrace.json": {
+   "articulos": 15,
+   "anotados": 15,
+   "localizaciones": 63,
+   "por_article_id": {
+    "1": [
+     "Iran",
+     "United States",
+     "United Arab Emirates",
+     "Michigan",
+     "Canada",
+     "Ontario",
+     "Chicago"
+    ],
+    "2": [
+     "Iran",
+     "United States",
+     "United Arab Emirates",
+     "Michigan",
+     "Canada",
+     "Ontario"
+    ],
+    "3": [
+     "Philadelphia",
+     "Palm Beach",
+     "Florida",
+     "Williamstown",
+     "New Jersey",
+     "Pennsylvania"
+    ],
+    "4": [
+     "Angola",
+     "Africa",
+     "Luanda",
+     "London",
+     "Portugal",
+     "Lisbon",
+     "Dubai",
+     "Switzerland",
+     "Brazil"
+    ],
+    "5": [
+     "Angola",
+     "Africa",
+     "Amsterdam"
+    ],
+    "6": [
+     "Angola",
+     "Africa",
+     "Luanda"
+    ],
+    "7": [
+     "Liberia",
+     "Buchanan"
+    ],
+    "8": [
+     "Liberia"
+    ],
+    "9": [
+     "Liberia"
+    ],
+    "10": [
+     "Liberia"
+    ],
+    "11": [
+     "Russia",
+     "Ukraine",
+     "Moscow",
+     "New York",
+     "Venezuela",
+     "Germany",
+     "Italy",
+     "Europe"
+    ],
+    "12": [
+     "Russia",
+     "Ukraine",
+     "Netherlands",
+     "Boston"
+    ],
+    "13": [
+     "Congo",
+     "Africa",
+     "South Africa",
+     "New York",
+     "Washington",
+     "Kinshasa"
+    ],
+    "14": [
+     "Congo",
+     "China",
+     "Africa"
+    ],
+    "15": [
+     "Congo",
+     "Africa",
+     "Kinshasa"
+    ]
+   }
+  },
+  "data/kleptotrace_augmented_30.json": {
+   "articulos": 30,
+   "anotados": 13,
+   "localizaciones": 20,
+   "por_article_id": {
+    "1": [
+     "Dubai",
+     "Russia",
+     "UAE",
+     "United States"
+    ],
+    "2": [
+     "New York"
+    ],
+    "3": [
+     "Belarus"
+    ],
+    "4": [],
+    "5": [
+     "Syria"
+    ],
+    "6": [
+     "South Africa",
+     "Zimbabwe"
+    ],
+    "7": [
+     "South Africa"
+    ],
+    "8": [
+     "Switzerland",
+     "Panama"
+    ],
+    "9": [
+     "Germany"
+    ],
+    "10": [],
+    "11": [],
+    "12": [],
+    "13": [
+     "Malta"
+    ],
+    "14": [
+     "Congo"
+    ],
+    "15": [],
+    "16": [],
+    "17": [
+     "Iran",
+     "Sudan"
+    ],
+    "18": [],
+    "19": [],
+    "20": [],
+    "21": [
+     "New York",
+     "Iran"
+    ],
+    "22": [],
+    "23": [],
+    "24": [
+     "Kazakhstan"
+    ],
+    "25": [],
+    "26": [],
+    "27": [],
+    "28": [],
+    "29": [],
+    "30": []
+   }
+  }
+ }
+}

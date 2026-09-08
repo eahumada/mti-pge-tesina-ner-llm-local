@@ -1412,3 +1412,66 @@ cuando la media es de 1,2 y 2,3, y solo 2 de los 30 artículos cumplen el par ex
 > redacta para ilustrar. Y antes de interpretar el recuento de una categoría de error, hay que leer qué
 > incluye: un nombre plausible como «error de límite» puede estar agrupando el acierto del modelo frente a una
 > referencia corrupta.
+
+---
+
+## §F58 — Las localizaciones se recuperan y se anotan: cierre completo del defecto de §F53
+
+**Fecha:** 2026-09-08. **Decisión del autor.** Cierra la vía de solución que `§F53` dejaba abierta.
+
+`§F53` documentó que los *prompts* piden tres categorías de entidad y la anotación solo tiene dos, de modo
+que **toda localización extraída era un falso positivo inevitable** —el 67,5 % de los falsos positivos del
+estudio—. `§F56` y la revisión global precisaron después que el defecto no estaba en el corpus sino en la
+cadena de preparación: **CoNLL-2002 sí anota localizaciones** y el conversor las descartaba.
+
+La solución tiene dos pasos, y **el orden importa**.
+
+### Paso 1 — recuperar lo que la fuente ya anota
+
+El equipo remoto corrigió `download_conll2002.py` para que capture las etiquetas `LOC`. Faltaba trasladarlas
+al corpus del estudio, y no existe el script que muestreó los 105 artículos de CoNLL. **No hace falta:** la
+correspondencia está en el propio texto, que es único.
+
+`tools/recuperar_locations_n120.py` empareja por texto y recupera **482 localizaciones en 104 de los 105
+artículos** de ese origen. Dos precauciones que el script documenta porque no son evidentes: hay que
+**normalizar antes de comparar**, porque el corpus del estudio tiene la codificación reparada y una descarga
+fresca de la fuente la trae cruda —comparando literalmente empareja **1 de 120**, normalizando empareja
+**105**—, y hay que reparar también las localizaciones recuperadas, que llegan como `TarancÃ³n`.
+
+### Paso 2 — anotar a mano lo que ninguna fuente aporta
+
+Quedaban fuera los **quince artículos de Kleptotrace** y los **treinta del corpus sintético**, cuyas fuentes
+no anotan esa categoría. Anotarlos era la única forma de que la medición de las tres categorías dejara de
+penalizar en el 13 % restante del corpus principal y en todo el corpus del dominio.
+
+| Corpus | Artículos | Anotados | Localizaciones |
+|:---|---:|---:|---:|
+| `kleptotrace.json` | 15 | **15** | **63** |
+| `kleptotrace_augmented_30.json` | 30 | 13 | 20 |
+
+**Criterio de anotación**, tomado de las 482 localizaciones recuperadas para que ambos orígenes sean
+homogéneos: entidades geográficas con nombre propio —países, ciudades, estados, regiones, continentes— y
+también instalaciones con nombre cuando el corpus original las incluye; la convención de CoNLL-2002 llega a
+anotar un aeropuerto (`Barajas`), un río (`Riánsares`) y un colegio. **No se anota el topónimo que aparece
+solo dentro del nombre de una organización**, porque ahí la entidad es la organización: `Chicago Field
+Office` es organización y no aporta `Chicago`.
+
+**Cada topónimo se verificó presente en el texto antes de anotarlo**, y ese filtro descartó nueve propuestas
+que la intuición daba por buenas: `Detroit` y `Washington` en dos artículos que no los mencionan, `Monrovia`
+en los tres de Liberia, `Kinshasa` en uno de los del Congo, y `Cyprus`, `Switzerland` y `Netherlands` en
+artículos donde el país aparecía solo como gentilicio.
+
+La anotación vive en `data/anotaciones/locations_manuales.json`, **versionada aparte del código** y con su
+criterio declarado, para que sea auditable. La aplica `tools/aplicar_locations_manuales.py`, que respeta
+cualquier anotación existente y no la pisa.
+
+### Lo que hay que declarar en el informe
+
+Que la categoría de localizaciones tiene **dos procedencias distintas**: 482 recuperadas de la anotación
+original de CoNLL-2002 y 83 anotadas a mano para este trabajo. No es un defecto, pero es una diferencia de
+método entre partes del corpus y un lector tiene derecho a saberlo.
+
+> **Regla operativa.** Cuando un corpus se compone de varias fuentes, cada categoría de entidad tiene que
+> existir en **todas** ellas antes de puntuarla. Si una fuente no la aporta, se anota o se excluye esa
+> categoría de la métrica, pero no se mide contra el vacío en una parte del corpus y contra la anotación real
+> en otra.

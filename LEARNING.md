@@ -562,3 +562,23 @@ indistinguible de haberlo hecho, y eso es lo que un tribunal juzga.
 > **Aplicación:** al escribir una cifra, buscar en `results/` si hay más corridas del mismo experimento antes
 > de citarla. Si las hay, declararlas y explicar cuál se toma como referencia y por qué. La política aditiva
 > del proyecto ya obliga a conservarlas; lo que faltaba era obligarse a **mencionarlas**.
+
+### L46. Un defecto de datos puede tener la solución en los datos mismos
+
+El corpus del estudio perdía las localizaciones que CoNLL-2002 sí anota, y el equipo remoto planteó tres
+salidas: recuperar el script de construcción perdido, renunciar a la categoría, o pagar anotación experta.
+Las tres asumían que la correspondencia entre el corpus y su fuente se había perdido con el script.
+
+No era así. **El texto de cada artículo es su propia clave.** Emparejando por texto se recuperaron 482
+localizaciones sin necesitar el script, y el resto se anotó a mano en una tarde: quince artículos y treinta
+párrafos cortos.
+
+> **Aplicación:** antes de aceptar que un dato es irrecuperable, preguntar qué campo del propio dato podría
+> servir de clave. Y antes de pedir anotación experta, medir cuánto queda realmente por anotar: aquí eran
+> 45 documentos, no un corpus.
+
+**Corolario sobre la normalización.** El emparejamiento por texto **falló al primer intento**, con 1 de 120
+coincidencias, y estuve a punto de concluir que la vía no servía. La causa era que un lado tenía la
+codificación reparada y el otro no. Normalizando ambos, 105 de 120. Cuando un emparejamiento por contenido
+da casi cero, la hipótesis más probable no es que el contenido difiera, sino que **difiera su
+representación**.
