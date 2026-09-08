@@ -437,7 +437,7 @@ Los resultados de esta segunda versión sobre el corpus completo se recogen en l
 
 La hipótesis fijaba un F1 igual o superior al 70 % como umbral de viabilidad. El umbral se alcanza sobre el corpus del dominio —`gemma4:31b-mlx` obtiene 80,57 % con intervalo de confianza al 95 % de [74,22 %, 86,92 %] y ninguna extracción fallida sobre N=30— y no se alcanza sobre el corpus periodístico general, cuyo mejor resultado local es 59,25 % (`gemma4:31b-mlx`) sobre N=120. La hipótesis queda por tanto confirmada para el dominio específico de sanciones financieras y no confirmada para corpus periodísticos heterogéneos. La brecha de unos veinte puntos no obedece a un fallo del sistema sino a la naturaleza del material: los artículos de CoNLL-2002 son más largos, mencionan más entidades por texto y mezclan dominios, mientras que el corpus AML está compuesto por textos breves y temáticamente homogéneos. Una meta interna más ambiciosa (85 % de F1, nunca formalizada como hipótesis) queda a 4,43 puntos sobre N=30, distancia abordable mediante ajuste fino supervisado, modelos de mayor capacidad o combinación de varios modelos locales.
 
-Tres factores explican la distribución de resultados observada. El primero es el idioma del prompt y de sus ejemplos. Redactar ambos en español aporta 10,40 puntos de F1 sin cambiar de modelo, mejora que ninguno de los dos factores consigue por separado: traducir solo el prompt aporta 4,38 puntos y añadir ejemplos en inglés resta 0,72. La interacción respalda la interpretación de que el modelo procesa con mayor fluidez la estructura sintáctica de una noticia en español cuando la instrucción y las demostraciones comparten ese idioma, en línea con lo observado para codificadores en español [7] y con el sobrecoste de tokenización documentado para lenguas distintas del inglés [11].
+Tres factores explican la distribución de resultados observada. El primero es el idioma del prompt y de sus ejemplos. Redactar ambos en español aporta 10,40 puntos de F1 sin cambiar de modelo, mejora que ninguno de los dos factores consigue por separado: traducir solo el prompt aporta 4,38 puntos y añadir ejemplos en inglés resta 0,72. La interpretación de esa interacción exige cuidado, porque la que sugiere la intuición no se sostiene: el corpus sobre el que se midió está redactado **en inglés**, de modo que la instrucción en español no puede estar ayudando al modelo a leer el texto. Lo que sí caracteriza a ese corpus es una minoría de entidades ibéricas, doce de sus ochenta y cuatro personas, procedentes en su mayoría de un caso de corrupción angoleño y por tanto de grafía portuguesa: `Isabel dos Santos`, `José Eduardo dos Santos`, `Hélder Pitta Grós` o `Mario Leite da Silva`. Son nombres con partículas y acentos cuya delimitación es precisamente donde un tokenizador anglocéntrico falla, partiendo la entidad en dos, y donde una instrucción en español orienta mejor al modelo, en línea con el sobrecoste de tokenización documentado para lenguas distintas del inglés [11]. La explicación es entonces más estrecha que la que se suponía, y predice un efecto proporcional a esa minoría, no una mejora general; predicción compatible con que la corrida que replica el experimento arroje 3,11 puntos y no 10,40, y con que el efecto se anule sobre el corpus mayor por la razón que se expone a continuación.
 
 El segundo factor es el compromiso entre tamaño y eficiencia. `llama3.2`, con 3 000 millones de parámetros, alcanza 63,19 % de F1 con un índice de eficiencia de 26,44 tokens por segundo y por cada mil millones de parámetros, frente a los 0,33 de `gemma4:31b`: una relación de ochenta a uno. Esa asimetría habilita una arquitectura operativa en dos niveles —un modelo compacto para el cribado masivo inicial y uno grande para la validación de los casos de alto riesgo regulatorio— que aprovecha el hecho de que el coste de un falso negativo en cribado es muy inferior al de un falso positivo confirmado.
 
@@ -469,7 +469,7 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 6. El RAG contextual supera al RAG por diccionario: La implementación de la Base de Conocimientos Contextual (KB RAG) demuestra que el reconocimiento de entidades mediante LLMs locales es un problema de **comprensión sintáctico-contextual**, no de búsqueda en bases de datos cerradas. En el estudio N=120 sobre 13 modelos, el KB RAG (`--rag-mode kb_combined`) mejoró el F1-Score de forma **estadísticamente significativa** (Tukey HSD) en dos de los trece modelos (`nemotron-mini:4b` **+14,52 pp**, p<0,001, y `llama3.2:latest` **+10,82 pp**, p=0,007; conviene precisar que este último no es el segundo más débil del estudio sino el tercero por la cola, y que el segundo, `deepseek-r1:1.5b`, empeora 0,90 puntos con KB RAG), con ganancias positivas pero no concluyentes en la franja intermedia y efecto nulo en los modelos de 31B, versus el dict-RAG (v1.0), que en un sondeo exploratorio N=5 sobre el mismo modelo, no persistido en `results/`, degradó el F1 hasta 0.2367 (−57.8% respecto de su propio baseline), degradación confirmada después en la corrida reproducible N=120, donde ese mismo modelo cae de 0.3611 a 0.3113. Su efectividad parece modularse por la capacidad paramétrica, beneficiando sobre todo a los modelos de 3 a 14 mil millones de parámetros, donde actúa como memoria externa de conocimiento lingüístico sin coste adicional de hardware. La relación es una **tendencia y no un resultado significativo**: la correlación por rangos entre capacidad y beneficio da ρ = −0,52 con p = 0,071, que no alcanza el nivel de significación que este trabajo fija, con trece modelos como tamaño de muestra. Este hallazgo tiene implicaciones directas para el diseño de sistemas RAG en dominio abierto con LLMs soberanos.
 
-7. La codificación del corpus condiciona la medición, y no de forma neutra: el corpus N=120 almacena los nombres con *mojibake* (`JosÃ© Bono` donde el nombre real es **José Bono**), un defecto presente a la vez en las entidades de referencia (20,1 %) y en el texto de entrada (87 % de los artículos). Al ser **coherente entre ambos**, no introduce el sesgo uniforme que cabría suponer: favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía, con un efecto que oscila entre −0.070 y +0.025 de F1 según el modelo. La implicación metodológica excede a este trabajo: en una evaluación de NER, un defecto de codificación no es ruido de fondo sino una variable que interactúa con el comportamiento del modelo, y verificar la codificación de la entrada (no solo la de la referencia) debe formar parte del protocolo antes de dar por válida cualquier cifra. El detalle se desarrolla en el **Anexo H**.
+7. La codificación del corpus condiciona la medición, y no de forma neutra: el corpus N=120 almacena los nombres con *mojibake* (`JosÃ© Bono` donde el nombre real es **José Bono**), un defecto presente a la vez en las entidades de referencia (20,1 %) y en el texto de entrada (87 % de los artículos). Al ser **coherente entre ambos**, no introduce el sesgo uniforme que cabría suponer: favorece a los modelos que transcriben literalmente y penaliza a los que normalizan la ortografía, con un efecto cuyo **signo depende de dónde esté la corrupción**, y esa dependencia es el resultado. Cuando está en la anotación de referencia, diecinueve de las veinticuatro configuraciones medidas puntúan **mejor** en los artículos afectados, porque el cotejo premia transcribir los bytes literalmente y penaliza al modelo que escribe el nombre correctamente. Cuando está en el texto de entrada, diecinueve de veinticuatro puntúan **peor**, porque la corrupción dificulta la extracción para todos. Los dos efectos se contraponen, y su cancelación explica que la ventaja de la instrucción en español desaparezca precisamente sobre el corpus con más entidades hispanas: allí la competencia lingüística se vuelve desventaja frente a una referencia corrompida. La implicación metodológica excede a este trabajo: en una evaluación de NER un defecto de codificación no es ruido de fondo sino una variable que interactúa con el comportamiento del modelo, y verificar la codificación **de la entrada y de la referencia por separado** debe formar parte del protocolo antes de dar por válida cualquier cifra. El detalle, con el script que permite reproducirlo, se desarrolla en el **Anexo H**.
 
 ### 7.2 Trabajo Futuro
 
@@ -852,23 +852,57 @@ El dato determinante es que el defecto **alcanza también al texto de entrada**,
 
 #### H.3 Evidencia empírica del efecto diferencial
 
-Diferencia de F1 entre los 88 artículos afectados y los 31 no afectados, sobre los mismos registros para todos los modelos:
+El efecto se midió sobre las 24 configuraciones del corpus N=120 que aportan los ciento veinte registros
+completos, con el script `tools/analisis_mojibake.py`, que se publica para que la tabla sea reproducible. La
+medición obliga a declarar el criterio de «artículo afectado», porque **el signo del efecto depende de cuál se
+elija**, y esa dependencia es en sí misma el resultado:
 
-_Tabla 18. Efecto diferencial del *mojibake* sobre el F1, por modelo._
+- **Por entidad de referencia corrupta**: 89 artículos afectados y 31 no.
+- **Por texto de entrada corrupto**: 104 artículos afectados y 16 no.
 
-| Modelo | Δ F1 (con *mojibake* − sin) |
-|:---|--:|
-| `gemma4:latest` (baseline) | **−0.0695** |
-| `gemma4:12b-mlx` (baseline) | −0.0422 |
-| `gemma4:31b-mlx` (baseline) | −0.0395 |
-| `llama3.1:8b` (KB RAG) | −0.0004 |
-| `mistral-nemo:latest` (KB RAG) | +0.0122 |
-| `deepseek-r1:1.5b` (baseline) | +0.0199 |
-| `gemma:latest` (KB RAG) | **+0.0249** |
+_Tabla 18. Efecto diferencial del *mojibake* sobre el F1 según el criterio de artículo afectado._
 
-El rango entre extremos alcanza **9,4 puntos porcentuales**.
+| Configuración | Δ F1 por entidad de referencia | Δ F1 por texto de entrada |
+|:---|--:|--:|
+| `gemma4:31b-cloud_baseline` | +0.1418 | +0.0029 |
+| `gemma4:31b-cloud_kb_rag` | +0.1131 | -0.0433 |
+| `gemma4:31b-mlx_kb_rag` | +0.0999 | -0.0102 |
+| `gemma4:latest_kb_rag` | +0.0976 | -0.0666 |
+| `gemma:latest_kb_rag` | +0.0965 | -0.0845 |
+| `gemma4:31b-mlx_baseline` | +0.0873 | -0.0613 |
+| `nuextract:latest_baseline` | +0.0865 | +0.0532 |
+| `gpt-oss:20b_baseline` | +0.0819 | -0.0438 |
+| `mistral-nemo:latest_baseline` | +0.0684 | -0.1122 |
+| `qwen2.5:14b_baseline` | +0.0681 | -0.0821 |
+| `gemma4:latest_baseline` | +0.0620 | -0.0958 |
+| `llama3.1:8b_baseline` | +0.0514 | -0.0709 |
+| `gpt-oss:20b_kb_rag` | +0.0511 | -0.0997 |
+| `gemma:latest_baseline` | +0.0409 | -0.1678 |
+| `gemma4:12b-mlx_baseline` | +0.0385 | +0.1795 |
+| `qwen2.5:14b_kb_rag` | +0.0380 | -0.0887 |
+| `llama3.2:latest_kb_rag` | +0.0254 | -0.1130 |
+| `llama3.1:8b_kb_rag` | +0.0186 | -0.1428 |
+| `mistral-nemo:latest_kb_rag` | +0.0122 | -0.1256 |
+| `deepseek-r1:1.5b_baseline` | -0.0124 | +0.0028 |
+| `gemma4:12b-mlx_kb_rag` | -0.0214 | +0.0448 |
+| `deepseek-r1:1.5b_kb_rag` | -0.0717 | -0.1796 |
+| `nuextract:latest_kb_rag` | -0.0769 | -0.0556 |
+| `llama3.2:latest_baseline` | -0.0816 | -0.2665 |
 
-> **Cautela metodológica.** Los artículos afectados podrían ser además más largos o intrínsecamente más difíciles, lo que confundiría la magnitud absoluta de cada Δ. Sin embargo, la dificultad desplazaría a todos los modelos en la misma dirección; **la dispersión entre modelos sobre registros idénticos** es lo que acredita una interacción específica de cada modelo. Una versión previa de esta tabla situaba a `gpt-oss:20b` en el extremo positivo con +0,091, y se advirtió entonces que esa fila era la menos fiable por estar dominada por un artefacto del arnés. Corregido el artefacto y repetida la medición, su valor real es **−0,034**, dentro del rango del resto. El episodio ilustra la necesidad de descartar defectos de ejecución antes de interpretar un valor extremo.
+Los dos criterios apuntan en direcciones opuestas, y de forma sistemática: **19 de las 24 configuraciones
+puntúan mejor** en los artículos cuya anotación de referencia está corrompida, y **5 de las 24 puntúan peor**
+en aquellos cuyo texto lo está. La lectura es coherente con el mecanismo del cotejo difuso. Cuando la
+corrupción está en la referencia, el corpus premia la transcripción literal de los bytes y penaliza al modelo
+que escribe el nombre correctamente, porque `José Bono` no casa con `JosÃ© Bono`. Cuando está en el texto de
+entrada, en cambio, dificulta la extracción para todos, y ahí el efecto es de signo negativo.
+
+> **Cautela metodológica, y una advertencia sobre la versión anterior de esta tabla.** Los artículos afectados
+> podrían ser además más largos o intrínsecamente más difíciles, lo que confundiría la magnitud absoluta de
+> cada diferencia; el sentido del efecto, sin embargo, es consistente dentro de cada criterio. Una versión
+> anterior de este anexo declaraba una partición de 88 artículos afectados y 31 no —cuya suma es 119 y no
+> 120— y unas diferencias que no se reproducen con ninguno de los dos criterios: para `gemma4:latest`
+> reportaba −0,0695 donde la medición da +0,0620 por entidad y −0,0958 por texto. Se sustituye por la tabla
+> presente, obtenida con el script publicado, y se conserva esta nota para que la corrección quede trazable.
 
 #### H.4 Cómo debe repararse
 
