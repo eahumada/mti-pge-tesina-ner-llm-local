@@ -611,8 +611,8 @@ _Tabla 9. Estructura del repositorio de código_
 
 | Ruta | Descripción |
 |:---|:---|
-| `repos/ner-llm-entity-benchmark/` |  |
-| `src/` |  |
+| `repos/ner-llm-entity-benchmark/` | Raíz del sistema de evaluación |
+| `src/` | Código de la aplicación, organizado por capas |
 |     `main.py` | Orquestador principal (+--rag-mode CLI, v1.1) |
 |     `config.py` | Configuración global (+rag_mode field, v1.1) |
 |     `data_loader.py` | Carga y validación del corpus |
@@ -631,7 +631,7 @@ _Tabla 9. Estructura del repositorio de código_
 |         `ollama_provider.py` | Proveedor Ollama (+template KB RAG, v1.1) |
 |         `openai_provider.py` | Proveedor OpenAI (cloud) |
 |         `__init__.py` | Facade get_provider() |
-| `data/` |  |
+| `data/` | Corpus, diccionarios y base de conocimientos |
 |     `benchmark_balanced_120.json` | Corpus N=120 (Gold Standard real) |
 |     `dictionaries/` |  |
 |         `persons.json` | Diccionario de personas (v1.0) |
@@ -644,14 +644,15 @@ _Tabla 9. Estructura del repositorio de código_
 |     `benchmark_results.csv` |  |
 |     `statistical_report.md` |  |
 |     `benchmark_balanced_120_<timestamp>/` | Resultados por ejecución |
-| `research/` |  |
+| `research/` | Documentos de investigación y registros de trabajo |
 |     `rag/` |  |
 |         `2026-08-31_analisis_contenido_rag_base_conocimientos.md` | Investigación RAG |
 |         `TODO-RAG-20260901.md` | Tracking implementación |
 |         `WORKLOG.md` | Bitácora de trabajo |
-| `SYSTEM_PROMPT.md` | Prompt del sistema (few-shot español) |
-| `SYSTEM_PROMPT_EN.md` | Prompt del sistema (inglés) |
-| `SYSTEM_PROMPT_ES.md` | Prompt del sistema (español) |
+| `SYSTEM_PROMPT.md` | Prompt maestro, zero-shot en inglés; es la celda de referencia del diseño factorial y el que cargaron las corridas principales |
+| `SYSTEM_PROMPT_ES.md` | Zero-shot en español |
+| `SYSTEM_PROMPT_EN_FEWSHOT.md` | Few-shot en inglés |
+| `SYSTEM_PROMPT_ES_FEWSHOT.md` | Few-shot en español; se reproduce íntegro en el Anexo B |
 
 ### Anexo B — Prompt del Sistema (Versión Few-Shot Español)
 
@@ -981,7 +982,7 @@ _Tabla 19. Desempeño publicado y desempeño restringido a personas y organizaci
 | gemma:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 49.87 | 40.04 | 44.42 | 71.36 | 51.30 | +6.88 |
 | nemotron-mini:4b_kb_rag | nemotron_rerun_n120_REMOTO | 41.06 | 36.90 | 38.87 | 55.48 | 44.32 | +5.46 |
 | llama3.2:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 41.63 | 30.46 | 35.18 | 78.10 | 43.83 | +8.65 |
-| gemma4:12b-mlx_baseline | benchmark_n120_REMOTO | 57.66 | 26.08 | 35.91 | 86.21 | 40.04 | +4.13 |
+| gemma4:12b-mlx_baseline | afectados_thinking_n120_REMOTO | 54.34 | 66.62 | 59.85 | 83.78 | 74.22 | +14.37 |
 | mistral-nemo:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 48.59 | 25.82 | 33.72 | 87.05 | 39.82 | +6.10 |
 | gemma4:31b-cloud_rag_enhanced | benchmark_balanced_120_20260824_173036 | 62.47 | 20.78 | 31.19 | 92.14 | 33.91 | +2.73 |
 | deepseek-r1:1.5b_baseline | benchmark_n120_REMOTO | 28.78 | 21.82 | 24.82 | 39.29 | 28.05 | +3.23 |
@@ -989,7 +990,9 @@ _Tabla 19. Desempeño publicado y desempeño restringido a personas y organizaci
 | nemotron-mini:4b_baseline | nemotron_rerun_n120_REMOTO | 26.69 | 18.21 | 21.65 | 44.85 | 25.91 | +4.26 |
 | nemotron-mini:4b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 28.71 | 14.72 | 19.46 | 41.15 | 21.69 | +2.22 |
 | deepseek-r1:1.5b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 21.48 | 14.74 | 17.48 | 29.07 | 19.56 | +2.08 |
-| gemma4:12b-mlx_kb_rag | benchmark_n120_REMOTO | 51.72 | 8.50 | 14.60 | 83.92 | 15.43 | +0.84 |
+| gemma4:12b-mlx_kb_rag | afectados_thinking_n120_REMOTO | 56.34 | 70.72 | 62.72 | 81.49 | 75.73 | +13.01 |
+
+Dos advertencias de lectura antes de las cifras. Las dos primeras filas de `llama3.2:latest` reproducen **la misma medición** bajo dos etiquetas de corrida: coinciden en los siete valores y, comprobado registro a registro, en los aciertos y errores de los ciento veinte artículos, de modo que la tabla tiene cuarenta y dos filas pero cuarenta y una configuraciones distintas. Y las dos filas de `gemma4:12b-mlx` proceden de `afectados_thinking_n120_REMOTO` y no de `benchmark_n120_REMOTO`, porque esta última quedó averiada por el modo de razonamiento —sesenta y ocho y noventa y ocho de sus ciento veinte registros no recuperan ninguna entidad— y sus cifras no representan la capacidad del modelo.
 
 En conjunto, 20946 de los 32201 falsos positivos del estudio (65.0 %) proceden de la categoría no anotada. El mejor modelo local sobre este corpus, `gemma4:31b-mlx`, pasa de 62,67 % a **76,85 %** de F1 y supera el umbral de 70 % que fija la hipótesis sobre material periodístico mayoritariamente en español. La variante en la nube del mismo modelo conserva su ventaja (81,45 % frente a 76,85 %), de modo que la corrección **no** altera la conclusión sobre la comparación entre ejecución local y alojada.
 
