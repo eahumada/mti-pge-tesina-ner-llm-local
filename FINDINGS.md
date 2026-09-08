@@ -2035,3 +2035,44 @@ que no cuadra al comprobarla resta credibilidad a la explicación entera.
 La cita de `§F65` a `+10,01` y `+2,19` pp procede del manifiesto de artículos contaminados, que **aún vive
 solo en la rama del equipo de 48 GB** y llegará a `main` con su fusión. No es un error, pero conviene saber
 que hoy esa referencia no se puede seguir desde `main`.
+
+---
+
+## §F71 — Las latencias de la re-corrida no son comparables con las publicadas, y la causa no está clara
+
+**Fecha:** 2026-09-08. **Observación, no diagnóstico.** Cuatro modelos rehechos.
+
+Comparada la latencia media por artículo entre la corrida publicada y la re-corrida, sobre los mismos
+modelos y el mismo corpus N=120:
+
+| Modelo | Modo | Publicada | Re-corrida | Factor |
+|:---|:---|---:|---:|---:|
+| `gemma4:31b-mlx` | baseline | 1 066,2 s | **20,5 s** | ×0,02 |
+| `gemma4:12b-mlx` | baseline | 99,1 s | **4,7 s** | ×0,05 |
+| `gemma4:31b-mlx` | KB RAG | 1 408,5 s | 308,8 s | ×0,22 |
+| `gemma4:12b-mlx` | KB RAG | 157,8 s | 11,3 s | ×0,07 |
+| `gemma4:latest` | baseline | 98,0 s | 46,3 s | ×0,47 |
+| `gemma4:31b-cloud` | KB RAG | 2,9 s | 2,3 s | ×0,79 |
+| `gemma4:latest` | KB RAG | 489,6 s | **790,9 s** | **×1,61** |
+| `gemma4:31b-cloud` | baseline | 1,2 s | 3,1 s | ×2,58 |
+
+**No hay dirección consistente.** Los factores van de **×0,02 a ×2,58**, y dentro del mismo modelo cambian
+de sentido según el modo. Un cambio uniforme —más presupuesto de salida, otra concurrencia, otra máquina—
+produciría un sesgo en una sola dirección, y aquí no lo hay.
+
+**Lo que sí se puede afirmar, y basta para lo que importa:** las latencias de la re-corrida **no son
+comparables** con las publicadas. La **Tabla 8** del informe, la de eficiencia, no puede rehacerse mezclando
+ambas, y si se rehace enteramente sobre la re-corrida dará cifras muy distintas de las actuales
+—`gemma4:31b-mlx` pasaría de 22,80 tok/s a otra cosa—. El F1 no está afectado: la comparación de calidad
+sigue siendo válida.
+
+**Lo que no se puede afirmar es por qué.** Se descartan dos explicaciones fáciles: no es el modo de
+razonamiento, porque los dos modelos con mayor caída lo tienen desactivado en ambas corridas; y no es solo la
+concurrencia, porque más consumidores concurrentes suben la latencia por petición y aquí la mayoría baja. La
+hipótesis restante —que las corridas publicadas se ejecutaron en la máquina de 16 GB con paginación a disco y
+la re-corrida en la de 48 GB sin ella— explicaría las caídas grandes pero no que `gemma4:latest` con RAG
+suba un 61 %.
+
+**Acción: preguntar al equipo de 48 GB**, que es quien conoce las condiciones de ejecución de ambas. No se
+propone ninguna corrección al informe hasta entender el mecanismo: cambiar la Tabla 8 sin saber por qué
+cambiaron los números sería sustituir unas cifras inexplicadas por otras.
