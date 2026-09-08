@@ -194,7 +194,13 @@ sí. Ver `FINDINGS.md §F53` y `LEARNING.md §L44`.
 ## Verificación antes de comprometer un cambio en el informe
 
 Comprobaciones mecánicas que hay que pasar sobre el Markdown canónico antes de cada commit. Todas surgieron
-de defectos reales encontrados en la revisión final:
+de defectos reales encontrados en la revisión final.
+
+> **Están implementadas en `tools/verificar_informe.py`.** Ejecutarlo antes de cada commit sobre el informe;
+> devuelve 0 si no hay fallos. Cada comprobación declara **cuántos elementos examinó**, y una que examina
+> cero se marca como VACÍA y no como superada: el informe ya documenta una prueba de sensibilidad que no
+> podía marcar nada por construcción (§5.3), y una comprobación que no mira nada es indistinguible de una
+> que pasa. Al añadir una comprobación nueva, comprobar que su recuento no es cero.
 
 1. **Referencias cruzadas**: ninguna llamada a `§x.y`, a `Tabla N` o a `Anexo X` puede apuntar a algo que no
    exista. Atención al escribir: al añadir una referencia se contrae la obligación de crear su destino en el
