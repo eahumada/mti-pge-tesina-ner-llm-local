@@ -422,6 +422,45 @@ def c_protocolo(s):
             print('           - %s: %s' % (p, DIVERGENCIAS_DECLARADAS[p]))
 
 
+# --- 15. El Anexo I cuadra con la Tabla 7 ---------------------------------------------------------
+def c_anexo_vs_tabla7(s):
+    """Las mismas cifras aparecen en el cuerpo y en el anexo, y deben coincidir.
+
+    Se comprobo a mano en una sesion anterior y nunca se automatizo, de modo que cualquier
+    correccion posterior en una de las dos podia desincronizarlas sin aviso.
+    """
+    i = s.find('_Tabla 7.')
+    j = s.find('_Tabla 19.')
+    if i < 0 or j < 0:
+        check('el Anexo I cuadra con la Tabla 7', 0, ['no se encuentran las tablas 7 o 19'])
+        return
+    t7 = {}
+    for l in s[i:i + 3000].split('\n'):
+        m = re.match(r'^\|\s*([^|]+?)\s*\|\s*\*{0,2}([\d.]+)%\*{0,2}\s*\|\s*\*{0,2}([\d.]+)%\*{0,2}\s*\|', l)
+        if m and not m.group(1).startswith('Modelo'):
+            t7[m.group(1).strip()] = (float(m.group(2)), float(m.group(3)))
+    ai = {}
+    for l in s[j:j + 12000].split('\n'):
+        m = re.match(r'^\|\s*([\w.:\-]+)_(baseline|kb_rag|rag_enhanced)\s*\|\s*([^|]+)\|'
+                     r'\s*([\d.]+)\s*\|\s*([\d.]+)\s*\|\s*([\d.]+)\s*\|', l)
+        if m:
+            ai.setdefault(m.group(1), {})[m.group(2)] = float(m.group(6))
+    fallos = []
+    for mod, (b, r) in t7.items():
+        a = ai.get(mod)
+        if not a:
+            fallos.append('%s no aparece en el Anexo I' % mod)
+            continue
+        for modo, val in (('baseline', b), ('kb_rag', r)):
+            v = a.get(modo)
+            if v is None:
+                fallos.append('%s: falta la fila %s en el Anexo I' % (mod, modo))
+            elif abs(v - val) > 0.011:
+                fallos.append('%s %s: Tabla 7 da %.2f y el Anexo I %.2f' % (mod, modo, val, v))
+    check('el Anexo I cuadra con la Tabla 7', 2 * len(t7), fallos,
+          'las mismas cifras en el cuerpo y en el anexo deben coincidir')
+
+
 def main():
     s = texto()
     c_vacios()
@@ -437,6 +476,7 @@ def main():
     c_aritmetica(s)
     c_recuentos(s)
     c_protocolo(s)
+    c_anexo_vs_tabla7(s)
     if '--red' in sys.argv:
         c_urls(s)
 
