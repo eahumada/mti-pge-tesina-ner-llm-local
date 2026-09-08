@@ -1663,3 +1663,157 @@ paralelismo para modelos sujetos a cuota, descrito en §3.2 del informe.
 protocolo advierte para el promediado, y aquí apareció en el volcado. La regla vale para cualquier lectura de
 un número que puede ser cero, no solo para promediar: **comparar contra `None`, nunca contra la veracidad del
 valor.**
+
+---
+
+## §F64 — La métrica restringida anticipa la magnitud pero se queda corta de forma sistemática
+
+**Fecha:** 2026-09-08. **Observación provisional**, con 4 puntos de comparación de los 26 posibles. No debe
+escribirse en el informe hasta tener la re-corrida completa.
+
+El Anexo I acompaña cada cifra publicada de una **métrica restringida**, recalculada desde el desglose por
+tipo ya almacenado, que excluye la categoría *Locations* porque el corpus no la anotaba. Se presentó como la
+estimación de lo que el estudio habría medido sin ese defecto. La re-corrida, ya con las 545 localizaciones
+anotadas, permite por primera vez **contrastar esa estimación contra una medición real**:
+
+| Grupo | F1 restringido (recálculo) | F1 medido (re-corrida) | Diferencia |
+|:---|---:|---:|---:|
+| `gemma4:31b-cloud` baseline | 80,42 | 82,13 | +1,71 |
+| `gemma4:31b-cloud` KB RAG | 78,89 | 82,94 | +4,05 |
+| `gemma4:12b-mlx` baseline | 73,81 | 77,67 | +3,86 |
+| `gemma4:12b-mlx` KB RAG | 74,30 | 79,96 | +5,66 |
+
+> **Cifras corregidas el mismo día.** La primera versión de esta tabla daba 81,73 · 82,82 · 77,16 · 79,97,
+> promediadas sobre las **120** filas del CSV crudo. Son incorrectas: la métrica publicada de la re-corrida
+> excluye los **7 artículos contaminados** y se calcula sobre **113**. El CSV conserva los 120 a propósito,
+> de modo que promediarlo entero produce un número que no es el del estudio. Ver el apartado siguiente.
+
+**La estimación acierta el orden de magnitud y falla el detalle**, siempre por defecto: entre 1,3 y 5,7
+puntos por debajo, en los cuatro casos en la misma dirección.
+
+**Por qué era esperable, y por qué conviene decirlo así.** Las dos cifras **no miden lo mismo**. La
+restringida **elimina** *Locations* del cómputo; la re-corrida **la puntúa** contra una anotación real. Un
+modelo que acierta localizaciones gana puntos que la métrica restringida no puede concederle, porque para
+ella esa categoría no existe. La diferencia no es error de la estimación: es el crédito por acertar en una
+categoría que antes no se podía acertar.
+
+**Corrección de una afirmación propia.** Al ver el primer caso —el cloud, con 1,31 puntos— se dijo que la
+metodología del Anexo I quedaba «validada contra una medición posterior». Con cuatro puntos la formulación
+correcta es más modesta: **corrobora la magnitud del efecto y subestima su tamaño de forma sistemática**. La
+diferencia importa, porque el informe apoya en esa métrica su afirmación de superar el umbral del 70 %, y una
+estimación conservadora refuerza esa conclusión en lugar de debilitarla — pero eso hay que decirlo, no
+suponerlo.
+
+**Qué hacer:** esperar a los trece modelos. Si la subestimación se mantiene en el mismo sentido, el Anexo I
+puede declararla como cota inferior, que es una afirmación más fuerte y más defendible que la actual.
+
+---
+
+## §F65 — El CSV crudo de una corrida no es la métrica publicada: los 7 artículos contaminados
+
+**Fecha:** 2026-09-08. Encontrado al cuadrar el desglose por categoría de la re-corrida contra el corpus.
+
+Los siete ejemplares *few-shot* de la base de conocimientos **son artículos del propio corpus de
+evaluación**, con su anotación de oro como salida esperada. En los modos `kb_fewshot` y `kb_combined` eso es
+contaminación del conjunto de prueba: al modelo se le enseña la respuesta del examen. La magnitud está
+medida y no es despreciable: el KB RAG aporta **+10,01 pp** sobre esos siete artículos frente a **+2,19 pp**
+sobre los ciento trece restantes.
+
+Por decisión del autor del 2026-09-08 esos siete se **excluyen de la métrica publicada** y la exclusión se
+declara; los ejemplares no se borran. El manifiesto está en
+`data/knowledge_base/contaminated_exemplar_articles.json`.
+
+**La consecuencia operativa es la que importa aquí.** El `benchmark_results.csv` de cada corrida conserva
+los **120** registros a propósito —es el crudo, y atestigua—, mientras que `benchmark_summary.json` publica
+la métrica sobre **113**. Promediar el CSV entero produce un número que **no es el del estudio**, y es
+exactamente lo que se hizo al informar las primeras cifras de la re-corrida:
+
+| Grupo | promedio sobre 120 (incorrecto) | métrica publicada, 113 | diferencia |
+|:---|---:|---:|---:|
+| `gemma4:31b-cloud` baseline | 81,73 | **82,13** | 0,40 |
+| `gemma4:31b-cloud` KB RAG | 82,82 | **82,94** | 0,12 |
+| `gemma4:12b-mlx` baseline | 77,16 | **77,67** | 0,51 |
+| `gemma4:12b-mlx` KB RAG | 79,97 | **79,96** | 0,01 |
+
+Las diferencias son pequeñas, pero el error no lo es: incluir los artículos contaminados **infla
+sistemáticamente el beneficio atribuido al RAG**, que es justo la conclusión central del trabajo.
+
+**Comprobación que se incorpora:** antes de citar un F1 de una corrida, leer `total_records` de su
+`benchmark_summary.json` y comprobar que coincide con el número de filas que se están promediando. En N=15 y
+N=30 coinciden (15 y 30); en N=120 no, y son 113.
+
+**Nota de método.** Este defecto se destapó porque el desglose por categoría no cuadraba con el corpus: la
+matriz de confusión daba 1 098 personas de referencia donde el corpus tiene 594, una razón de 1,85 en las
+tres categorías. Cuadrar dos fuentes que deberían decir lo mismo es más barato que revisar cualquiera de las
+dos por separado, y encuentra lo que ninguna de las dos delata sola.
+
+---
+
+## §F66 — El ANOVA consolidado incluía los artículos contaminados, y `merge_and_analyze.py` no sabía excluirlos
+
+**Fecha:** 2026-09-08. Consecuencia directa de `§F65`, encontrada al comprobar si la herramienta de fusión
+estaría lista para cerrar la re-corrida.
+
+`main.py` descuenta los 7 artículos contaminados al calcular el resumen de cada corrida
+(`_excluir_contaminados`), pero **`src/merge_and_analyze.py` no lo hacía**: fusionaba los
+`benchmark_results.csv` crudos, que conservan los 120 registros a propósito, y ejecutaba el ANOVA sobre
+todos. La exclusión existía en un punto de la cadena y se perdía en el siguiente.
+
+**Alcance medido.** Rehecho el consolidado de las ocho corridas sin los 7 artículos:
+
+| | Con contaminados (publicado) | Sin contaminados |
+|:---|:---|:---|
+| Observaciones | 3 120 (26 × 120) | **2 938** (26 × 113) |
+| ANOVA | F = 38,2222 · p = 3,4453e-160 | **F = 35,5557 · p = 3,6729e-148** |
+
+**La conclusión del estudio resiste, y esto es lo importante:** de los trece modelos, **ninguno cambia de
+veredicto**. Siguen siendo `nemotron-mini:4b` y `llama3.2:latest` los dos únicos cuya mejora por
+recuperación supera la corrección por comparaciones múltiples, y los otros once siguen sin alcanzarla.
+
+**Pero el efecto se encoge en doce de los trece.** La mejora atribuida al KB RAG baja en todos menos
+`gemma4:latest`, y los dos casos significativos pierden potencia:
+
+| Modelo | Δ con contaminados | Δ sin contaminados | p con | p sin |
+|:---|---:|---:|---:|---:|
+| `nemotron-mini:4b` | +0,1452 | **+0,1348** | 0,0000 | 1,0e-4 |
+| `llama3.2:latest` | +0,1082 | **+0,1006** | 6,9e-3 | 3,6e-2 |
+
+Es exactamente lo que anticipaba la medición de `§F65`: sobre los siete contaminados el KB RAG aporta
++10,01 pp frente a +2,19 pp sobre los ciento trece restantes, de modo que incluirlos infla el efecto que el
+estudio mide.
+
+**Lectura para la defensa.** Que el veredicto no cambie convierte esto en un **resultado de robustez** y no
+en un problema: la conclusión del trabajo se sostiene sobre la población limpia, con tamaños de efecto algo
+menores. Declararlo es más fuerte que omitirlo.
+
+**Corrección aplicada.** `src/merge_and_analyze.py` excluye ahora los artículos del manifiesto por defecto,
+lo declara en la salida y lo deja escrito en `merge_manifest.json`. La exclusión alcanza a **ambos modos**,
+no solo al contaminado: comparar un *baseline* sobre 120 con un `kb_rag` sobre 113 sería comparar
+poblaciones distintas, y la diferencia entre modos es justo lo que se publica. Existe
+`--incluir-contaminados` para reproducir análisis antiguos, con su advertencia.
+
+**Pendiente de decisión del autor:** si el informe adopta ya las cifras sin contaminados (F = 35,5557) o
+espera a la re-corrida completa, que sustituirá el consolidado entero. La segunda evita rehacer el trabajo
+dos veces; la primera deja el documento coherente desde hoy.
+
+### §F66.bis — Validación de extremo a extremo del arreglo
+
+Probada la herramienta corregida contra el formato nuevo de la re-corrida (`recorrida_20260908/`), con las
+dos corridas de N=120 disponibles: 480 filas pasan a 452, que son 4 grupos × 113, la comprobación de
+integridad da conforme y el ANOVA se ejecuta.
+
+Lo que cierra el asunto es la comparación con la otra vía de cálculo. El F1 que produce la fusión coincide
+**exactamente, a cuatro decimales**, con el que publica el `benchmark_summary.json` de cada corrida:
+
+| Grupo | Fusión (113) | Resumen de la corrida |
+|:---|---:|---:|
+| `gemma4:31b-cloud` baseline | 0,8213 | 0,8213 |
+| `gemma4:31b-cloud` KB RAG | 0,8294 | 0,8294 |
+| `gemma4:12b-mlx` baseline | 0,7767 | 0,7767 |
+| `gemma4:12b-mlx` KB RAG | 0,7996 | 0,7996 |
+
+Antes del arreglo las dos vías habrían divergido, porque una promediaba 120 registros y la otra 113. Que
+ahora coincidan **es la comprobación de que la cadena entera aplica la misma convención**, que es lo que
+faltaba: la exclusión estaba en un extremo y se perdía en el otro.
+
+Se hizo en un directorio de trabajo aparte; el consolidado publicado no se ha tocado.

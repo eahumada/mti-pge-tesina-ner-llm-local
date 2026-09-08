@@ -201,6 +201,44 @@ def detect_duplicates(sources: list[dict], on_duplicate: str) -> tuple[dict[str,
     return seen, notes
 
 
+MANIFIESTO_CONTAMINADOS = "data/knowledge_base/contaminated_exemplar_articles.json"
+
+
+def excluir_contaminados(df: pd.DataFrame, manifiesto: str) -> tuple[pd.DataFrame, list[str], list[str]]:
+    """Descuenta de los modos con recuperacion los articulos que son a la vez ejemplares del RAG.
+
+    Los ejemplares few-shot de la base de conocimientos son articulos del propio corpus de
+    evaluacion, con su anotacion de oro como salida esperada: en `kb_fewshot` y `kb_combined` eso
+    es contaminacion del conjunto de prueba. `main.py` ya los descuenta al calcular el resumen de
+    cada corrida, pero ESTE script no lo hacia, de modo que el ANOVA consolidado los reincorporaba
+    en silencio. El efecto no es neutro: sobre esos siete articulos el KB RAG aporta +10,01 pp
+    frente a +2,19 pp sobre los restantes, justo el efecto que el estudio mide.
+    Ver FINDINGS §F65 y §F66.
+
+    Se excluyen de AMBOS modos, no solo del contaminado: comparar un baseline sobre 120 con un
+    kb_rag sobre 113 seria comparar poblaciones distintas, y la diferencia entre modos es
+    precisamente lo que se publica.
+    """
+    if not os.path.exists(manifiesto):
+        return df, [], [f"manifiesto no encontrado en '{manifiesto}': no se excluye nada"]
+    with open(manifiesto, encoding="utf-8") as fh:
+        datos = json.load(fh)
+    ids = [str(x) for x in (datos.get("article_ids") or datos.get("contaminated") or [])]
+    if not ids:
+        return df, [], [f"manifiesto '{manifiesto}' sin article_ids: no se excluye nada"]
+    presentes = sorted(set(ids) & set(df["record_id"].astype(str)))
+    ausentes = sorted(set(ids) - set(presentes))
+    fuera = df[~df["record_id"].astype(str).isin(presentes)].copy()
+    notas = [
+        f"excluidos {len(presentes)} articulos contaminados de los {len(ids)} del manifiesto: "
+        f"{presentes}",
+        f"filas: {len(df)} -> {len(fuera)}",
+    ]
+    if ausentes:
+        notas.append(f"AVISO: {len(ausentes)} del manifiesto no estan en el corpus fusionado: {ausentes}")
+    return fuera, presentes, notas
+
+
 def check_integrity(df: pd.DataFrame, expected_n: int) -> tuple[list[str], pd.DataFrame]:
     """Verifica que cada grupo model+modo tenga `expected_n` registros unicos."""
     problems: list[str] = []
@@ -340,6 +378,17 @@ def main(argv: list[str] | None = None) -> int:
         ),
     )
     parser.add_argument(
+        "--incluir-contaminados",
+        action="store_true",
+        help="NO excluir los articulos que son ejemplares del RAG. Solo para reproducir "
+             "analisis antiguos: sesga al alza el efecto atribuido a la recuperacion.",
+    )
+    parser.add_argument(
+        "--manifiesto-contaminados",
+        default=MANIFIESTO_CONTAMINADOS,
+        help=f"Ruta del manifiesto de articulos contaminados (por defecto {MANIFIESTO_CONTAMINADOS}).",
+    )
+    parser.add_argument(
         "--expected-n",
         type=int,
         default=None,
@@ -419,6 +468,18 @@ def main(argv: list[str] | None = None) -> int:
     merged["model"] = merged["model"].astype(str)
     merged["record_id"] = merged["record_id"].astype(str)
 
+    # 4.bis Exclusion de los articulos contaminados -------------------------
+    excluidos: list[str] = []
+    notas_contaminados: list[str] = []
+    if not args.incluir_contaminados:
+        merged, excluidos, notas_contaminados = excluir_contaminados(merged, args.manifiesto_contaminados)
+        for n in notas_contaminados:
+            print(f"[INFO] contaminados: {n}")
+    else:
+        notas_contaminados = ["EXCLUSION DESACTIVADA por --incluir-contaminados: el ANOVA incluye "
+                              "los articulos que son ejemplares del RAG"]
+        print(f"[WARN] contaminados: {notas_contaminados[0]}")
+
     # 5. Integridad ---------------------------------------------------------
     expected_n = args.expected_n or merged["record_id"].nunique()
     integrity_problems, integrity_df = check_integrity(merged, expected_n)
@@ -462,6 +523,8 @@ def main(argv: list[str] | None = None) -> int:
     manifest = {
         "corpus": data_file,
         "expected_n_per_group": expected_n,
+        "contaminados_excluidos": excluidos,
+        "contaminados_notas": notas_contaminados,
         "num_sources": len(sources),
         "sources": [
             {

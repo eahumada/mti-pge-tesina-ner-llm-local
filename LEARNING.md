@@ -627,3 +627,20 @@ separado. Cuando no puedan serlo, declararlo en el informe como reserva de compa
 Emparenta con `§L47`: comprobar que algo existe no es comprobar que tenga contenido, y comprobar cada parte
 no es comprobar el conjunto. Las dos son la misma debilidad, que la comprobación mire menos de lo que su
 nombre promete.
+
+### L50. El fichero crudo y la métrica publicada no son el mismo número, y el crudo es el que está a mano
+
+La re-corrida guarda 120 registros por corrida en el CSV y publica la métrica sobre 113, porque siete
+artículos del corpus son a la vez ejemplares de la base de conocimientos y contaminan el conjunto de prueba
+(`§F65`). Las dos cosas son correctas: el crudo atestigua, el resumen afirma.
+
+El problema es que **el crudo es el que invita a promediarlo**. Está en formato tabular, se lee con dos
+líneas y da un número plausible. El resumen exige abrir otro fichero y confiar en que su convención sea la
+que declara el informe. Al informar las primeras cifras se promedió el crudo, y el resultado infla
+justamente el efecto que el trabajo mide.
+
+La regla es corta: **antes de citar una métrica agregada, comprobar sobre cuántos registros se calculó y que
+ese número sea el que corresponde.** `total_records` está en el resumen precisamente para eso.
+
+Emparenta con `§L47` y `§L49`: las tres son la misma debilidad, que una comprobación mire menos de lo que su
+nombre promete. Aquí lo que se mira de menos es *sobre qué población* se calculó el número.
