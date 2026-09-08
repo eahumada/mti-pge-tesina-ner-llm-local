@@ -818,6 +818,15 @@ _Tabla 15. Procedencia de cada fila del benchmark exploratorio: correspondencia 
 | gemma4:31b-cloud | cloud_n15_limpio_20260905 |
 | Resto de configuraciones | results/benchmark_results.csv (N=15, modo entities) |
 
+Las tres primeras filas proceden de una corrida propia por un motivo distinto en cada caso, y el de
+`gemma4:31b-cloud` conviene declararlo. Su primera medición quedó invalidada el 3 de septiembre de 2026 por
+la cuota semanal del servicio alojado, que devolvió HTTP 429 en seis de los quince artículos de cada modo;
+esas seis peticiones no llegaron a atenderse, de modo que registran latencia y rendimiento nulos y ninguna
+entidad. La corrida `cloud_n15_limpio_20260905` la sustituye y resuelve los quince por análisis directo del
+JSON. Sus cifras invalidadas no se recogen en este informe, por la razón expuesta en el Anexo I: un número
+que no mide lo que dice medir no es un resultado. La contramedida quedó incorporada al sistema como el
+limitador de tasa descrito en §3.2.
+
 ### Anexo F — Metodología Detallada de Generación del Corpus Sintético N=30
 
 Paso 1 — Definición de la distribución temática: Se analizaron los 15 artículos reales de Kleptotrace/CoNLL-2002 e identificaron sus categorías temáticas recurrentes: (a) sanciones internacionales a personas y empresas, (b) investigaciones por lavado de activos, (c) vínculos con Personas Políticamente Expuestas (PEP), y (d) corrupción en empresas públicas. Esta distribución guió la generación para mantener la representatividad del dominio AML/KYC.
@@ -1030,33 +1039,44 @@ _Tabla 19. Desempeño publicado y desempeño restringido a personas y organizaci
 
 Cuatro de los trece modelos se midieron **más de una vez** sobre el corpus N=120, de modo que ocho de los
 veintiséis grupos disponen de dos o tres corridas. La columna «Corrida» de la tabla anterior indica cuál
-sostiene cada fila; este apartado declara las restantes, porque publicar una cifra sin mencionar las demás
-sería indistinguible de seleccionar el resultado aunque no haya intención de hacerlo. La Tabla 20 las recoge
-todas.
+sostiene cada fila; este apartado declara las restantes. La Tabla 20 las recoge todas.
 
-_Tabla 20. Grupos con más de una corrida sobre N=120, con la publicada, la sustituida y el motivo_
+Conviene separar dos situaciones que no son la misma. Seis de esos ocho grupos tienen una corrida previa que
+**no es una medición alternativa sino una medición inválida**: el modelo no llegó a responder en una parte
+sustancial del corpus, de modo que sus cifras no describen su desempeño sino el de un arnés mal configurado.
+Esas cifras **no se publican en ninguna parte de este informe**, porque un número que no mide lo que dice
+medir no es un resultado y ofrecerlo junto al bueno invitaría a leerlos como dos estimaciones entre las que
+se ha elegido. Lo que sí se declara es que la corrida existió, por qué se descartó y con qué evidencia. Los
+dos grupos restantes sí son repeticiones válidas, y ahí se dan ambas cifras.
 
-| Grupo | Corrida publicada | F1 | Corrida no publicada | F1 | Motivo de la sustitución |
-|:---|:---|:---:|:---|:---:|:---|
-| gemma4:12b-mlx (baseline) | afectados_thinking | 56,18 | P3 | 27,31 | modo de razonamiento activo |
-| gemma4:12b-mlx (KB RAG) | afectados_thinking | 58,46 | P3 | 11,21 | modo de razonamiento activo |
-| qwen3:8b (baseline) | qwen3_nothink | 48,21 | P3 / 12b-mlx | 44,83 / 44,38 | modo de razonamiento activo; cobertura parcial |
-| qwen3:8b (KB RAG) | qwen3_nothink | 51,46 | 12b-mlx / P3 | 43,51 / 42,59 | modo de razonamiento activo; cobertura parcial |
-| gpt-oss:20b (baseline) | gptoss_rerun | 52,39 | excluidos | 43,84 | presupuesto de salida ampliado |
-| gpt-oss:20b (KB RAG) | gptoss_rerun | 55,67 | excluidos | 34,19 | presupuesto de salida ampliado |
-| nemotron-mini:4b (baseline) | nemotron_rerun | 22,59 | P3 | 21,30 | repetición del diagnóstico de vacíos |
-| nemotron-mini:4b (KB RAG) | nemotron_rerun | 37,12 | P3 | 37,33 | repetición del diagnóstico de vacíos |
+_Tabla 20. Grupos con más de una corrida sobre N=120, con el motivo de la sustitución y la evidencia_
 
-El criterio aplicado no es el resultado sino la validez de la medición, y la última fila de la tabla lo
-acredita: en `nemotron-mini:4b` con KB RAG la corrida publicada da **menos** que la sustituida (37,12 frente
-a 37,33), y aun así es la que se toma, porque es la que repite el diagnóstico de los vacíos esporádicos.
+| Grupo | Corrida publicada | F1 | Corrida sustituida | Situación y evidencia |
+|:---|:---|:---:|:---|:---|
+| gemma4:12b-mlx (baseline) | afectados_thinking | 56,18 | P3 | inválida: 68 de 120 artículos sin extraer nada |
+| gemma4:12b-mlx (KB RAG) | afectados_thinking | 58,46 | P3 | inválida: 98 de 120 artículos sin extraer nada |
+| qwen3:8b (baseline) | qwen3_nothink | 48,21 | P3 y 12b-mlx | inválida: 19 de 120 sin extraer nada; cobertura parcial |
+| qwen3:8b (KB RAG) | qwen3_nothink | 51,46 | 12b-mlx y P3 | inválida: 31 de 120 sin extraer nada; cobertura parcial |
+| gpt-oss:20b (baseline) | gptoss_rerun | 52,39 | excluidos | inválida: 27 de 120 sin extraer nada por presupuesto agotado |
+| gpt-oss:20b (KB RAG) | gptoss_rerun | 55,67 | excluidos | inválida: 49 de 120 sin extraer nada por presupuesto agotado |
+| nemotron-mini:4b (baseline) | nemotron_rerun | 22,59 | P3 (F1 21,30) | válida: repetición del diagnóstico de vacíos |
+| nemotron-mini:4b (KB RAG) | nemotron_rerun | 37,12 | P3 (F1 37,33) | válida: repetición del diagnóstico de vacíos |
 
-Dos motivos merecen precisión. El **modo de razonamiento activo** hacía que el modelo consumiera el
-presupuesto de salida en su deliberación y devolviera una respuesta vacía o truncada; desactivarlo es lo que
-separa 11,21 de 58,46 en `gemma4:12b-mlx` con KB RAG, y por eso la corrida antigua no mide el desempeño del
-modelo sino el de un arnés mal configurado.
+La última fila acredita que el criterio fue la validez de la medición y no su resultado: en
+`nemotron-mini:4b` con KB RAG la corrida publicada da **menos** que la sustituida (37,12 frente a 37,33), y
+aun así es la que se toma.
 
-El **presupuesto de salida ampliado** exige una salvedad de comparabilidad que conviene no minimizar:
+Los motivos de invalidez son dos. El **modo de razonamiento activo** hacía que el modelo consumiera el
+presupuesto de salida deliberando y devolviera una respuesta vacía; el síntoma es inequívoco, porque
+precisión y exhaustividad caen **a cero a la vez**, que es la firma de no haber contestado y no la de haberse
+equivocado. En `gemma4:12b-mlx` con KB RAG eso ocurrió en 98 de los 120 artículos, con una latencia media de
+967 s frente a los 158 s de la corrida válida. Desactivado el razonamiento, los 120 registros resuelven por
+análisis directo del JSON.
+
+El **presupuesto de salida agotado** produce el mismo efecto por otra vía: `gpt-oss:20b` es un modelo de
+razonamiento, y con 2048 tokens no alcanzaba a emitir el JSON tras deliberar. Ampliarlo a 4096 baja los
+artículos sin extracción de 27 y 49 a 6 y 5. Eso exige una salvedad de comparabilidad que conviene no
+minimizar:
 `gpt-oss:20b` es el único de los trece cuya cifra publicada procede de una corrida con **4096** tokens de
 salida, mientras los otros doce se midieron con **2048**. Su ventaja sobre `qwen2.5:14b` o `llama3.1:8b`, por
 tanto, no es enteramente atribuible al modelo. La re-corrida completa pendiente unifica el presupuesto en

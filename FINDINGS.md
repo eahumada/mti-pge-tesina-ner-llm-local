@@ -807,10 +807,11 @@ revertido.
 - **`gemma4:latest`** oscila entre **+0.066 (`fs-en`) y −0.051 (`fs-es`)**: el signo cambia entre condiciones
   del **mismo modelo**. Eso es ruido de N=15, no efecto.
 - **`gemma4:31b`** hace lo mismo: −0.029 en baseline, +0.037 en RAG.
-- **``** presenta una anomalía sin explicar: con `think` apagado va **más lento**
+- **El tercer caso** presenta una anomalía sin explicar: con `think` apagado va **más lento**
   (×0.3, de 7 s a 25 s), lo que **contradice el modelo causal** del hallazgo (el razonamiento genera tokens;
-  no puede acelerar). Además una mediana de 7 s para un 26B es llamativamente rápida. Su +0.021 **no debe
-  darse por bueno** hasta explicar ese dato.
+  no puede acelerar). Además una mediana de 7 s es llamativamente rápida para su tamaño. Su +0.021 **no debe
+  darse por bueno** hasta explicar ese dato. (El nombre del modelo se retiró al quedar fuera del estudio;
+  la anomalía se conserva porque es una advertencia de método, no un resultado.)
 
 **Contraste con el único caso sólido.** `qwen3:8b` se decidió sobre **N=120**, con **+4,2 pp** y `recall=0`
 cayendo de **15 a 1**. Aquí no hay nada de esa magnitud ni de esa consistencia.
@@ -1597,3 +1598,68 @@ reserva queda declarada en el Anexo I.
 con la corrida de referencia». Se venía aplicando **dentro** de cada corrida y no **entre** corridas
 fusionadas. Un consolidado que une ocho fuentes hereda las diferencias de las ocho, y ninguna comprobación
 las miraba.
+
+---
+
+## §F62 — Decisión del autor: una medición inválida no es un resultado y sus cifras no se publican
+
+**Fecha:** 2026-09-08. **Decisión del autor**, que corrige el criterio con que se había redactado `§F61`.
+
+`§F61` añadió al informe una tabla de «corrida publicada frente a corrida sustituida» con las cifras de
+ambas. El autor objetó que la cifra sustituida de `gemma4:12b-mlx` con KB RAG, **11,21 %**, no es un
+resultado alternativo sino **un resultado incorrecto**, y que presentarlo junto al bueno sugiere que hubo dos
+mediciones válidas y se eligió una.
+
+La objeción es exacta, y el propio mecanismo la sostiene: en esa corrida el modelo **no llegó a responder**
+en 98 de los 120 artículos —precisión y exhaustividad caen a cero a la vez, que es la firma de no contestar y
+no la de equivocarse—, con una latencia media de 967 s frente a los 158 s de la corrida válida. Esa cifra no
+mide al modelo: mide un arnés que consumía el presupuesto de salida en el razonamiento.
+
+**Criterio aplicado, que queda como norma del proyecto:**
+
+- **De una medición inválida se declara que existió, por qué se descartó y con qué evidencia. Su F1 no se
+  publica.** La evidencia sí, porque es lo que acredita la invalidez: cuántos artículos quedaron sin
+  extracción, la latencia y el modo de análisis de la respuesta.
+- **De una repetición válida se publican ambas cifras**, porque las dos miden lo mismo y el lector tiene
+  derecho a ver la dispersión.
+
+Aplicado a los ocho grupos con más de una corrida, seis resultan inválidos (`gemma4:12b-mlx` y `qwen3:8b` por
+razonamiento activo, `gpt-oss:20b` por presupuesto agotado) y dos son repeticiones válidas
+(`nemotron-mini:4b`), cuyas dos cifras se conservan. Retiradas del informe las ocho cifras inválidas:
+27,31 · 11,21 · 44,83 · 44,38 · 43,51 · 42,59 · 43,84 · 34,19.
+
+**Esto no contradice la regla de declarar todas las corridas, la precisa.** Lo que la regla persigue es que
+nadie pueda elegir en silencio entre resultados; se cumple declarando la corrida y su motivo de descarte. Lo
+que no exige es dar rango de resultado a un número que no lo es.
+
+**Los artefactos que atestiguan se conservan íntegros.** Los CSV de las corridas descartadas, sus
+`benchmark.log` y sus `run_config.json` siguen en `results/` sin tocar: son la prueba de la invalidez, y sin
+ellos la declaración del informe no sería verificable.
+
+## §F63 — La primera medición de `gemma4:31b-cloud` sobre N=15 la invalidó la cuota del servicio
+
+**Fecha del incidente:** 2026-09-03, 14:06. Encontrado el 2026-09-08 al barrer N=15 en busca de más
+mediciones inválidas, a petición del autor.
+
+Seis de los quince artículos de cada modo devolvieron HTTP 429:
+
+```
+2026-09-03 14:06:49 [WARNING] Attempt 1/3 failed for model 'gemma4:31b-cloud':
+you (eahumada) have reached your weekly usage limit (status code: 429)
+```
+
+Las seis filas registran `parse_method='failed'`, **latencia 0 y 0 tokens/s**: rechazo de infraestructura, no
+fallo del modelo. Arrastran el F1 de la corrida a 0,3973 y 0,4272.
+
+**El informe no publica esas cifras.** La Tabla 4 usa `cloud_n15_limpio_20260905`, que resuelve los quince
+por análisis directo del JSON (0,6699 y 0,6850), y la Tabla 15 declaraba ya su procedencia. Lo que faltaba
+era **el motivo**, que se añade al Anexo con la fecha y la evidencia.
+
+La contramedida se incorporó al sistema el 2026-09-06 a las 09:56 (`466efe5`): limitador de tasa y tope de
+paralelismo para modelos sujetos a cuota, descrito en §3.2 del informe.
+
+**Nota sobre el barrido.** Al listar esas filas, el código de presentación usó `valor or -1` y mostró
+«ausente» donde había un **0,0**, que es *falsy*. Es exactamente la trampa que la cuarta verificación del
+protocolo advierte para el promediado, y aquí apareció en el volcado. La regla vale para cualquier lectura de
+un número que puede ser cero, no solo para promediar: **comparar contra `None`, nunca contra la veracidad del
+valor.**
