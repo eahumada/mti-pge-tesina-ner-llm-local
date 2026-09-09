@@ -901,3 +901,32 @@ exista una.
   demás cifras y pasaba en verde. Es la cuarta vez en dos días que una comprobación escrita hace minutos
   resulta no comprobar nada, y la cuarta que la prueba de mutación lo dice en un segundo. Ver `[[L47]]`,
   `[[L57]]` y `[[L58]]`.
+
+---
+
+## §L60 — Una autoprueba que solo pregunta «¿falla algo?» no dice cuál comprobación protege
+
+**2026-09-09, 07:4x.** `tools/autoprueba_verificador.py` esconde cada artefacto por turno y exige que el
+verificador se entere. Pasaba **8 de 8**, y aun así una comprobación estaba ciega.
+
+La razón es que la autoprueba pregunta si **alguna** comprobación falla, no si falla **la que depende de ese
+artefacto**. Varios ficheros los leen dos o tres comprobaciones distintas, de modo que basta con que una se
+entere para que la autoprueba dé el visto bueno mientras las otras siguen saltándoselo en silencio.
+
+Comprobado: escondiendo `correlacion.json`, la comprobación del índice de defensa bajaba de **13 a 9
+elementos** y seguía diciendo **ok**. Lo mismo con el post-hoc y con Friedman, de 13 a 12. La autoprueba no lo
+veía porque el artefacto también lo lee la comprobación de la correlación, que sí fallaba.
+
+**Corregido en la comprobación**, no en la autoprueba: las cinco fuentes del índice de defensa se cargan ahora
+en un bucle que **declara cada ausencia como fallo** y cuenta cada intento, de modo que el recuento sube de 13
+a 18 y ninguna puede desaparecer sin nombre. Verificado por mutación con dos de ellas.
+
+### La regla
+
+- **Un recuento que baja es un síntoma que nadie mira.** Ya lo dijo `[[L47]]` para el caso de cero; aquí baja
+  de trece a nueve, que es peor, porque parece un estado normal.
+- **Una autoprueba de cobertura debe atribuir**: no basta con «algo falló», hay que saber **qué** falló y que
+  sea lo que corresponde. Mientras no lo haga, su «8 de 8» acredita menos de lo que parece.
+- Y el corolario incómodo: **esta autoprueba se escribió ayer para detectar exactamente esta clase de
+  ceguera**, y era ciega a una variante suya. Ver `[[L57]]`, `[[L58]]` y `[[L59]]` — la familia ya tiene
+  cuatro miembros y todos se descubrieron probando, ninguno leyendo.

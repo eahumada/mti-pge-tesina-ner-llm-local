@@ -1070,11 +1070,26 @@ def c_defensa(s):
         p = os.path.join(RES, rel)
         return _json.load(open(p, encoding='utf-8')) if os.path.exists(p) else None
 
-    fr = carga('ROBUSTEZ_ESTADISTICA_20260908/friedman.json')
-    co = carga('CORRELACION_CAPACIDAD_20260908/correlacion.json')
-    ph = carga('ROBUSTEZ_ESTADISTICA_20260908/posthoc_pareado.json')
-    fp = carga('COMPOSICION_FP_20260908/composicion_fp_26_grupos.json')
+    # Cada artefacto ausente es un FALLO, no un silencio. Sin esto, el bloque `if fr:` se saltaba sus
+    # cifras y la comprobacion seguia diciendo «ok» con menos elementos: comprobado el 2026-09-09,
+    # escondiendo `correlacion.json` bajaba de 13 a 9 y pasaba igual. La autoprueba no lo veia porque
+    # OTRAS comprobaciones leen esos mismos ficheros y si fallaban. Es el defecto de §L47 y §F82.
     fallos, mirados = [], 0
+    FUENTES = [('friedman', 'ROBUSTEZ_ESTADISTICA_20260908/friedman.json'),
+               ('correlacion', 'CORRELACION_CAPACIDAD_20260908/correlacion.json'),
+               ('post-hoc pareado', 'ROBUSTEZ_ESTADISTICA_20260908/posthoc_pareado.json'),
+               ('composicion de falsos positivos', 'COMPOSICION_FP_20260908/composicion_fp_26_grupos.json'),
+               ('robustez de la re-corrida', 'ROBUSTEZ_ESTADISTICA_20260909/robustez.json')]
+    cargados = {}
+    for nombre, rel in FUENTES:
+        mirados += 1
+        cargados[rel] = carga(rel)
+        if cargados[rel] is None:
+            fallos.append('falta el artefacto de %s (%s), del que el indice toma cifras' % (nombre, rel))
+    fr = cargados['ROBUSTEZ_ESTADISTICA_20260908/friedman.json']
+    co = cargados['CORRELACION_CAPACIDAD_20260908/correlacion.json']
+    ph = cargados['ROBUSTEZ_ESTADISTICA_20260908/posthoc_pareado.json']
+    fp = cargados['COMPOSICION_FP_20260908/composicion_fp_26_grupos.json']
     esperadas = []
     if fr:
         esperadas.append(('chi2 de Friedman', '{:,.2f}'.format(fr['friedman_medidas_repetidas']['chi2'])
@@ -1109,15 +1124,7 @@ def c_defensa(s):
     # Las cifras de la re-corrida, que son las que el indice cita primero desde el 2026-09-09.
     # Se anaden porque el error de escribir «dos modelos significativos» cuando son tres estuvo en
     # ese documento y no lo detecto nada: la comprobacion solo miraba los artefactos antiguos.
-    rb = carga('ROBUSTEZ_ESTADISTICA_20260909/robustez.json')
-    if not rb:
-        # Sin este `else` la comprobacion se saltaba en silencio las cifras de la re-corrida cuando
-        # el artefacto faltaba, y seguia diciendo «ok» con menos elementos: el defecto de §L47 en
-        # codigo escrito para prevenirlo. Lo destapo `tools/autoprueba_verificador.py` el mismo dia.
-        fallos.append('falta results/ROBUSTEZ_ESTADISTICA_20260909/robustez.json, del que dependen '
-                      'las cifras de la re-corrida que el indice cita; regenerar con '
-                      'tools/robustez_estadistica.py')
-        mirados += 1
+    rb = cargados['ROBUSTEZ_ESTADISTICA_20260909/robustez.json']
     if rb:
         co2 = rb.get('correlacion_capacidad_beneficio') or {}
         mi = rb.get('modelo_mas_influyente')
