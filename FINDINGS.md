@@ -2642,7 +2642,21 @@ por artículo comparable.
 
 ---
 
-## §F78 — Las veinticuatro comprobaciones, sometidas a prueba de mutación
+## §F78 — Las comprobaciones, sometidas a prueba de mutación
+
+> **Nota de vigencia, 2026-09-09.** Cuando se escribió esto eran **veinticuatro** y hoy son **veintiséis**. Las
+> dos nuevas se sometieron a mutación al añadirlas: la **25**, «cada grupo se lee de la corrida que el
+> consolidado usa» —falla ante un descuadre y se marca VACÍA si el artefacto no declara el control—, y la
+> **26**, «referencias a Anexo X y a Tabla N» —detecta un `Anexo Z` y una `Tabla 44` inventados—.
+>
+> **Y cuatro de las veinticuatro originales se modificaron después**, todas re-probadas por mutación al
+> tocarlas: la **17** y la **16**, que dejaban caer en silencio una fila ilegible de la Tabla 4 y de la Tabla 7
+> (`§F82`); la **19**, con dos variantes del mismo defecto en las tablas 5, 6 y 8 (`§F82.bis`); y la **24**,
+> que comprobaba un recuento por presencia de la palabra y no distinguía «tres» de «dos» (`LEARNING §L59`), y
+> que además se saltaba en silencio los artefactos ausentes (`§L60`).
+>
+> El recuento de «catorce mutaciones» de abajo se refiere a la tanda original y **no incluye** las de esos
+> seis casos posteriores, que están documentadas en sus propios hallazgos.
 
 **Fecha:** 2026-09-08, 22:23. Aplicada al propio verificador la regla que él impone: **una comprobación que
 nunca se ha visto fallar no está comprobada** (`§L48`).
