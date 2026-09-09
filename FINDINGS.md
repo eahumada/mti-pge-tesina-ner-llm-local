@@ -4370,3 +4370,42 @@ El documento de defensa cita el máximo de alucinación en **15,61 %** con «21 
 documento etiqueta esas segundas cifras como **«de la re-corrida sobre el corpus corregido, con doce de los
 trece modelos y por tanto provisionales»**. Las dos poblaciones están declaradas, que es exactamente lo que
 la regla de `CLAUDE.md` sobre corridas múltiples exige.
+
+## §F103 — Seis de los siete capítulos abren sin una línea de texto
+
+**2026-09-09.** Segunda parte de la revisión de fondo, esta vez sobre el desarrollo. El profesor guía
+objetó, entre otras cosas, «poco desarrollo, con secciones que son un título y un párrafo» y «demasiados
+bloques en blanco y saltos de página entre capítulos». Medidas las **38 secciones del cuerpo**, palabra por
+palabra, los dos reparos se tocan en un punto concreto:
+
+**Los capítulos 1, 3, 4, 5, 6 y 7 tienen cero palabras entre su título y la primera subsección.** No es un
+párrafo corto: es un encabezado seguido de una línea en blanco y otro encabezado. Verificado leyendo el
+texto directamente en cuatro de ellos. Solo el capítulo 2 abre, con 82 palabras.
+
+Eso explica de paso la impresión de «bloques en blanco entre capítulos» que el profesor describió: cuando un
+título de capítulo no tiene texto debajo, la maquetación deja el hueco a la vista.
+
+### El resto del desarrollo está sano
+
+Salvo las aperturas, ninguna sección es «un título y un párrafo». Las más breves tienen motivo:
+
+| Sección | Palabras | Por qué es breve |
+|:---|---:|:---|
+| 1.3 Hipótesis de Trabajo | 98 | una hipótesis se enuncia, no se desarrolla |
+| 4.1 Corpus de Evaluación | 129 | es la entradilla de 4.1.1 y 4.1.2 |
+| 4.2 Modelos evaluados | 136 | la única sin tabla ni subsecciones: candidata a ampliar |
+| 5.2 Análisis de Variantes | 145 | lleva su tabla |
+| 2.5 Estado del arte | 210 | lleva su tabla |
+
+Y las de más peso están bien servidas: 4.4 Métricas con 1 032 palabras, 7.1 Conclusiones con 1 131, 3.3
+Módulo de evaluación con 954, 5.3.1 con 991.
+
+### El coste de corregirlo, que es lo que hace la decisión tomable
+
+El cuerpo son **16 926 palabras**, unas **23,0 páginas de las 25**, con **1 335 palabras de margen**. Abrir
+los seis capítulos con dos o tres frases cuesta unas **270 palabras** y deja el margen en **1 065**. Es
+decir: **cabe de sobra**, y es la clase de corrección que responde a un reparo explícito del profesor guía
+con coste casi nulo.
+
+Queda como **decisión 15**. No lo redacto por iniciativa propia: una entradilla de capítulo fija el tono de
+lo que sigue y es del autor.

@@ -544,3 +544,32 @@ un lector del documento solo no puede saber si el objetivo se alcanzó.
 60–80 %», y lo que el trabajo aporta es una **estimación** con sus parámetros declarados — algo que el propio
 documento de defensa reconoce al advertir que «presentarlas como medición sería lo indefendible». Si se toca
 el objetivo, conviene tocar el verbo. Ver `FINDINGS §F102`.
+
+
+## 15. Seis capítulos abren sin una línea de texto
+
+**Qué pasa.** Los capítulos **1, 3, 4, 5, 6 y 7** no tienen ni una palabra entre su título y la primera
+subsección: encabezado, línea en blanco, encabezado. Solo el capítulo 2 abre, con 82 palabras. Verificado
+leyendo el texto, no solo contando.
+
+Esto toca **dos** de los cuatro reparos del profesor guía a la vez: el de «poco desarrollo, con secciones que
+son un título y un párrafo» —aquí es un título y nada— y el de «demasiados bloques en blanco entre
+capítulos», porque un título sin texto debajo deja el hueco a la vista en la maquetación.
+
+**El resto del desarrollo está sano.** Medidas las 38 secciones del cuerpo, ninguna otra es «un título y un
+párrafo»: las breves lo son con motivo —la hipótesis se enuncia, 4.1 es entradilla de sus subsecciones, 5.2 y
+2.5 llevan tabla— y las de peso están bien servidas, con 1 032 palabras en 4.4 y 1 131 en 7.1. La única
+candidata suelta a ampliar es **4.2 Modelos evaluados**, con 136 palabras y sin tabla ni subsecciones.
+
+**El coste, que es lo que hace tomable la decisión.** El cuerpo son 16 926 palabras, unas **23,0 páginas de
+las 25**, con **1 335 de margen**. Seis entradillas de dos o tres frases cuestan unas **270 palabras** y
+dejan el margen en **1 065**.
+
+| Opción | Qué implica |
+|:---|:---|
+| **a) Añadir entradilla a los seis** | ~270 palabras, cabe de sobra, y responde a un reparo explícito del profesor guía. Es la que recomiendo |
+| b) Añadirla solo a los de resultados (5, 6, 7) | ~135 palabras; atiende el reparo donde más se nota, al abrir los capítulos que el tribunal lee con más atención |
+| c) Dejarlo | Defendible: es una convención tipográfica frecuente. Pero el reparo ya se formuló una vez y no se ha respondido |
+
+**No lo redacto por iniciativa propia:** una entradilla fija el tono de lo que sigue y eso es del autor. Ver
+`FINDINGS §F103`.
