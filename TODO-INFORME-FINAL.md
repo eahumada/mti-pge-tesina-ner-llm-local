@@ -897,3 +897,18 @@ Conviene pasarla por los documentos de estado antes de fiarse de ellos. Aplicada
 `CURRENT-TASKS.md` iba cuatro commits por detrás, este setenta, `INVENTARIO-DATOS-INCORRECTOS` setenta y
 seis, `DECISIONES-PENDIENTES` dieciséis y `ESTADO-RECORRIDA` veinte, aunque estos tres últimos describen
 estados que no han cambiado.
+
+### Bloqueante 6 — rastreado el 2026-09-09, y su recomendación cambia
+
+El único bloqueante que la revisión del 2026-09-09 dejaba **abierto** queda documentado con evidencia. Las
+cuatro cifras no están en ningún dato del repositorio, pero la corrida `kleptotrace_20260727_110454` (N=15)
+queda a **menos de 0,02 en las tres columnas** de las cuatro filas, y **las tres fuentes dan el mismo orden**:
+`fs-es > zs-es > zs-en > fs-en`.
+
+De modo que la conclusión que la tabla sostiene —few-shot en español es la mejor configuración, few-shot en
+inglés la peor— **se reproduce desde dos corridas independientes**; lo que no reproduce son los decimales.
+
+**Recomendación actualizada: sustituir las cuatro filas por las cifras de `kleptotrace`.** La tabla pasa a
+ser trazable, no cambia ninguna conclusión y la fila se conserva. Ver `FINDINGS §F90` y la **decisión 4** de
+`DECISIONES-PENDIENTES-20260908.md`. Sigue siendo decisión del autor; lo que cambia es que ahora hay una
+fuente reproducible con el mismo orden, que antes no se sabía que existiera.

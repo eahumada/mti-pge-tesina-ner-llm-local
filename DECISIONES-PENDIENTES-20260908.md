@@ -135,6 +135,47 @@ defendible; lo que no lo sería es publicarlas sin la advertencia, y eso ya est�
 
 ---
 
+> ### Rastreadas hasta su corrida más probable — 2026-09-09
+>
+> Buscadas las cuatro cifras en **todo** el repositorio: no están en ningún dato. Las apariciones de
+> `0.7169` y `0.6482` en CSV son valores de registros sueltos, no agregados, y las demás son documentos que
+> hablan de este mismo problema. La corrida candidata **no tiene respaldos** `.bak`.
+>
+> Pero la comparación con las corridas que sí existen las sitúa: la más cercana es
+> **`kleptotrace_20260727_110454`** (N=15), a **menos de 0,02 en las tres columnas** de las cuatro filas.
+>
+> | Config | `BENCHMARKS` F1 / P / R | `kleptotrace` (N=15) | `ablacion_n15_REMOTO` |
+> |:---|:---|:---|:---|
+> | fs-es | 0,7169 / 0,6320 / 0,8500 | 0,6987 / 0,6162 / 0,8416 | 0,7444 / 0,6678 / 0,8687 |
+> | zs-es | 0,6640 / 0,5817 / 0,8108 | 0,6793 / 0,6055 / 0,8180 | 0,6843 / 0,6068 / 0,8349 |
+> | zs-en | 0,6482 / 0,6601 / 0,7810 | 0,6676 / 0,6791 / 0,7852 | 0,6405 / 0,5769 / 0,7717 |
+> | fs-en | 0,5874 / 0,6535 / 0,7073 | 0,5817 / 0,6436 / 0,7076 | 0,6332 / 0,5581 / 0,7581 |
+>
+> Las latencias siguen el mismo patrón: 256,61 · 191,87 · 84,70 · 84,56 frente a 248,27 · 185,80 · 80,41 ·
+> 87,78. **No es un desplazamiento uniforme** —en las de *few-shot* la cifra publicada es más alta y en las
+> de *zero-shot* más baja—, de modo que no es el delta de la corrección de puntuación. Las cifras proceden de
+> un estado de esos datos que ya no existe, y el resumen de la propia corrida no las respalda.
+>
+> **Y aquí está lo que hace decidible el asunto: las tres fuentes dan el MISMO orden.**
+>
+> ```
+> BENCHMARKS (sin origen) :  fs-es > zs-es > zs-en > fs-en
+> kleptotrace   (N=15)    :  fs-es > zs-es > zs-en > fs-en
+> ablacion_n15_REMOTO     :  fs-es > zs-es > zs-en > fs-en
+> ```
+>
+> Es decir: **la conclusión que la tabla sostiene —few-shot en español es la mejor configuración y few-shot en
+> inglés la peor— se reproduce desde dos corridas independientes.** Lo que no reproduce son los decimales.
+>
+> | Opción | Qué implica |
+> |:---|:---|
+> | **a) Sustituir por las cifras de `kleptotrace`** | La tabla pasa a ser reproducible y **ninguna conclusión cambia**, porque el orden es el mismo. Es la opción que recomiendo ahora |
+> | b) Dejarlas con su advertencia | Es el estado actual y no bloquea la defensa. Pero obliga a defender en la sala por qué se publica una cifra que no reproduce |
+> | c) Retirarlas | Contraria a la política aditiva y requiere autorización expresa. Innecesaria: (a) conserva la fila y la vuelve trazable |
+>
+> **La recomendación de arriba cambia a (a)**, y no por un criterio distinto sino porque antes no se sabía que
+> existiera una fuente reproducible con el mismo orden. Detalle en `FINDINGS §F90`.
+
 ## 5. Quién propaga los commits pendientes a los tres `.docx`, y cuándo
 
 > **Recuento actualizado el 2026-09-09: son 27, no 22.** Los `.docx` siguen congelados en `6299d13`

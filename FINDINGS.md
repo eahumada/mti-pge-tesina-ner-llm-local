@@ -3554,3 +3554,44 @@ una cifra reportada contra su fuente primaria**, que es el criterio 2 del protoc
 **Reparto.** `acceptance_status.json` **afirma**, no atestigua, de modo que se corrige y no se conserva como
 está; pero es artefacto de la corrida y lo rehace quien la ejecutó. Encargado al equipo remoto en
 `CURRENT-TASKS §3.bis.18`, con el contenido exacto que cada uno debe declarar. La herramienta no escribe.
+
+## §F90 — Las cuatro cifras sin origen no reproducen, pero la conclusión que sostienen sí
+
+**2026-09-09.** El único bloqueante del `TODO §10` que seguía abierto son cuatro filas de configuraciones de
+prompt en `BENCHMARKS.md` cuyas cifras «no son trazables a ningún artefacto». Rastreadas hoy hasta donde
+llega la evidencia.
+
+**No están en ningún dato.** Buscadas en todo el repositorio: las apariciones de `0.7169` y `0.6482` en CSV
+son valores de registros sueltos, no agregados; las demás son documentos que discuten este mismo problema.
+La corrida candidata no tiene respaldos `.bak`, y su propio `benchmark_summary.json` coincide con el CSV al
+cuarto decimal, de modo que tampoco hay un desajuste interno que las explique.
+
+**Pero se pueden situar.** La corrida más cercana es `kleptotrace_20260727_110454` (N=15), a **menos de 0,02
+en las tres columnas** de las cuatro filas, y las latencias siguen el mismo patrón (256,61 · 191,87 · 84,70 ·
+84,56 frente a 248,27 · 185,80 · 80,41 · 87,78).
+
+**No es el delta de la corrección de puntuación.** El desplazamiento no es uniforme: en las dos filas de
+*few-shot* la cifra publicada es **más alta** que la reproducible y en las de *zero-shot* **más baja**. Una
+corrección de puntuación mueve todas en el mismo sentido, como se ve en las siete corridas de §F89. Éstas
+proceden de un estado de los datos que ya no existe.
+
+### Lo que decide el asunto
+
+Las tres fuentes dan el **mismo orden**:
+
+| Fuente | Orden |
+|:---|:---|
+| `BENCHMARKS` (sin origen) | fs-es > zs-es > zs-en > fs-en |
+| `kleptotrace_20260727_110454` | fs-es > zs-es > zs-en > fs-en |
+| `ablacion_n15_REMOTO` | fs-es > zs-es > zs-en > fs-en |
+
+**La conclusión que la tabla sostiene se reproduce desde dos corridas independientes; lo que no reproduce son
+los decimales.** Eso convierte el bloqueante en una elección barata: sustituir las cuatro filas por las
+cifras de `kleptotrace` deja la tabla trazable **sin cambiar ninguna conclusión**, y conserva la fila, que es
+lo que la política aditiva exige. Es la **decisión 4**, cuya recomendación se actualiza a esa opción.
+
+**Lo que hay que retener del caso.** Una cifra que no reproduce no implica que la afirmación que sostiene sea
+falsa, y conviene comprobar las dos cosas por separado. Aquí el reflejo defensivo —retirar la tabla— habría
+sido la peor de las tres opciones: destruye una conclusión que los datos sí respaldan. El orden de las
+comprobaciones importa: primero si el **dato** reproduce, después si la **conclusión** reproduce, y solo
+entonces se decide qué hacer con la fila.
