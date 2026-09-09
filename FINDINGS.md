@@ -3112,3 +3112,67 @@ Porque «hay respaldos» no significa nada por sí solo, y el número puede leer
 un fallo del modelo, como un rescate del arnés o como un rasgo del formato de salida. Aquí se dan las tres a
 la vez en modelos distintos. **La única lectura válida es cruzarlo con el resultado**, que es exactamente lo
 que el protocolo de seguimiento pide y lo que ninguna cifra agregada de `parse_method` puede sustituir.
+
+---
+
+## §F85 — Un `TypeError` hundió la línea base de `nemotron-mini` y un tercio de su mejora es artefacto
+
+**2026-09-09, 04:4x.** El barrido de sustitución terminó a las 01:06 con los trece modelos, y el equipo de
+48 GB publicó el consolidado `ANALISIS_CONJUNTO_20260909` (F = 121,56) declarando **«39/39 válidas»**. La
+primera verificación del protocolo dice otra cosa.
+
+`nemotron-mini_4b__N120` tiene **18 filas con `parse_method='failed'`**, las primeras de todo el barrido, y
+**no están repartidas: las dieciocho caen en `_baseline` y ninguna en `_kb_rag`**. Todas con latencia 0, cero
+tokens por segundo y dos reintentos.
+
+### No es infraestructura, es un fallo de código
+
+El registro de la corrida lo dice literalmente:
+
+```
+Attempt 1/3 failed for model 'nemotron-mini:4b': 'list' object has no attribute 'items'   (x22)
+Attempt 2/3 failed ...                                                                    (x18)
+Attempt 3/3 failed ...                                                                    (x18)
+```
+
+Es un `TypeError` en `providers/ollama.py`: el modelo devuelve una lista donde el código espera un
+diccionario y llama a `.items()`. Veintidós registros lo encontraron, cuatro se recuperaron al reintentar y
+dieciocho agotaron los tres intentos. **La quinta verificación del protocolo lo habría clasificado mal**: la
+firma —latencia 0 y cero tokens— es la del rechazo de infraestructura, y no lo es; hay que abrir el registro
+para verlo.
+
+### El efecto, y va todo en la misma dirección
+
+| | Con las fallidas | Sin ellas |
+|:---|---:|---:|
+| `nemotron-mini:4b_baseline` | 26,31 | **30,97** |
+| `nemotron-mini:4b_kb_rag` | 40,55 | 40,55 |
+| **Δ del RAG** | **+14,23 pp** | **+9,72 pp** |
+
+Las dieciocho puntúan 0,00 y entran en la media. Como caen todas en un solo brazo, **el sesgo no se cancela**:
+**un tercio de la mejora atribuida a la recuperación en este modelo es la línea base hundida por un fallo de
+software**. Y `nemotron-mini:4b` es el mayor efecto del estudio y uno de los dos significativos.
+
+El consolidado publicado **incluye 17 de esas 18 filas** —la decimoctava es un ejemplar contaminado y ya se
+excluía—, de modo que F = 121,56 y cuanto cuelgue de ella arrastran el defecto.
+
+### Lo que sí se sostiene
+
+Comprobado con el post-hoc pareado en los dos escenarios: **`nemotron-mini` sigue siendo significativo**, con
+Holm ≈ 0 incluyendo las fallidas y **0,0016** excluyéndolas. Sigue siendo el mayor efecto. **La conclusión no
+cambia; la magnitud sí**, y es una cifra que el informe publica.
+
+Conviene decir también qué no acredita la comprobación: excluir las fallidas deja el diseño en **96**
+registros completos en lugar de 113, lo que debilita todos los contrastes. Sirve como diagnóstico del sesgo,
+**no como sustituto de la medición**. El remedio es re-ejecutar ese brazo.
+
+### La lección, y ya es la tercera de la misma familia
+
+El commit de cierre declaró «39/39 válidas» sin comprobar la primera verificación del protocolo, que es
+contar `parse_method='failed'` y es una línea de código. Un barrido que termina no es un barrido válido, y el
+único momento en que ese recuento cuesta algo es cuando no se hace.
+
+Y una precisión sobre `§F84`: allí concluí que el respaldo «rescata casi siempre». Sigue siendo cierto —los
+respaldos no son el problema aquí—, pero aquel análisis se hizo **antes** de que llegara este modelo y por
+tanto no incluía sus 18 fallos. `parse_method='failed'` es una categoría distinta del respaldo, y es la que
+hay que mirar primero.
