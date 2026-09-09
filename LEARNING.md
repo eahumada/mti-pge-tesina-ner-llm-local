@@ -746,3 +746,25 @@ concluye que las cifras del trabajo no se comprueban.
 La regla operativa que se deriva: **cuando una frase contiene un recuento, obtenerlo en el mismo turno en que
 se escribe**, aunque parezca obvio. Y al terminar una tanda de documentación, repasar los recuentos contra
 los datos, que es lo que hizo aparecer estos cinco.
+
+### L56. Un criterio de medida que cambia entre dos llamadas produce una cifra falsa y plausible
+
+Al calcular cuánto había crecido el cuerpo del informe usé dos veces la misma idea —«contar palabras hasta
+donde empiezan los anexos»— con dos detectores ligeramente distintos. Uno reconocía `### Anexo A` y el otro
+solo `## Anexos`. En la versión antigua, que usaba el primer formato, el segundo detector no encontró
+frontera y contó el documento entero como cuerpo.
+
+El resultado fue que el cuerpo había **encogido 2 673 palabras** cuando en realidad había **crecido 2 084**.
+La cifra tenía el signo contrario y era perfectamente creíble: encajaba con la idea de que las correcciones
+del día habían sido de precisión y no de adición.
+
+Lo que falla aquí no es el conteo sino **la frontera**. Cualquier medida que dependa de dónde se corta un
+documento —cuerpo frente a anexos, capítulo frente a capítulo, corrida frente a corrida— hereda la fragilidad
+de ese corte, y dos implementaciones «equivalentes» del mismo corte no lo son.
+
+La regla: **cuando una medida dependa de una frontera, escribir la frontera una vez y reutilizarla**, en
+lugar de reimplementarla en cada cálculo. Y si el resultado sorprende, sospechar de la frontera antes que del
+dato.
+
+Es hermana de `§L47` y `§L52`: las tres describen medidas que fallan sin dar ningún síntoma, porque devuelven
+un número en lugar de un error.

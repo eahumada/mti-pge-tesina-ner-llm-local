@@ -1008,6 +1008,42 @@ def c_defensa(s):
           'fallara cuando la re-corrida cambie los datos, y entonces hay que actualizarlo')
 
 
+# --- 25. Extension del cuerpo frente al limite institucional ------------------------------------
+DENSIDAD = 684        # palabras por pagina, medida sobre el PDF entregado al profesor guia
+CUERPO_ENTREGADO = 14842   # palabras del cuerpo en la version entregada (commit 6299d13)
+PAGINAS_ENTREGADO = 20     # paginas que ocupaba ese cuerpo, contadas sobre el PDF
+LIMITE = 25
+
+
+def frontera_anexos(L):
+    """Primer encabezado de anexo, sea cual sea su nivel.
+
+    Criterio unico y explicito porque no serlo ya produjo una cifra falsa: un detector que solo
+    reconocia «## Anexos» conto el documento entero como cuerpo en una version que usaba
+    «### Anexo A», y dio un crecimiento negativo de 2.673 palabras que no existia.
+    """
+    for k, l in enumerate(L):
+        if re.match(r'^#{2,4}\s*(Anexos?\b|Anexo\s+[A-I]\b)', l.strip(), re.I):
+            return k
+    return len(L)
+
+
+def c_extension(s):
+    """El cuerpo no puede exceder 25 paginas. La estimacion se declara como tal."""
+    L = s.split('\n')
+    i = frontera_anexos(L)
+    cuerpo = len(' '.join(L[:i]).split())
+    pags = PAGINAS_ENTREGADO + (cuerpo - CUERPO_ENTREGADO) / DENSIDAD
+    fallos = []
+    if i == len(L):
+        fallos.append('no se encuentra el comienzo de los anexos: la estimacion no vale')
+    elif pags > LIMITE:
+        fallos.append('el cuerpo estimado son %.1f paginas y el limite institucional es %d' % (pags, LIMITE))
+    check('el cuerpo cabe en el limite de %d paginas' % LIMITE, 1, fallos,
+          'estimacion: %d palabras -> ~%.1f pp; margen %d palabras. No sustituye a contar el PDF'
+          % (cuerpo, pags, int((LIMITE - pags) * DENSIDAD)))
+
+
 def main():
     s = texto()
     c_vacios()
@@ -1033,6 +1069,7 @@ def main():
     c_correlacion(s)
     c_alucinaciones(s)
     c_defensa(s)
+    c_extension(s)
     if '--red' in sys.argv:
         c_urls(s)
 
