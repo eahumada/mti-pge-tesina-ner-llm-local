@@ -10,7 +10,13 @@ capítulo de resultados.
 
 ---
 
-## 1. ¿El informe adopta ya F = 35,5557, o espera al consolidado nuevo?
+## 1. ¿El informe adopta ya F = 35,5557, o espera al consolidado nuevo? — **SUPERADA**
+
+> **Resuelta por los hechos el 2026-09-09.** Se recomendaba esperar al consolidado nuevo y **ya existe**:
+> `ANALISIS_CONJUNTO_20260909`, trece modelos sobre el corpus corregido, **F = 121,5602**, verificado de
+> forma independiente reproduciéndolo desde las corridas. El F = 35,5557 era el recálculo del corpus
+> **antiguo** sin los contaminados, y ha dejado de ser una opción: el informe irá con las cifras del
+> consolidado nuevo. Lo único que retiene esa adopción es `§F85`, los diecisiete ceros de `nemotron-mini`.
 
 **Qué pasa.** El ANOVA publicado (F = 38,2222, p = 3,4453e-160) se calculó **incluyendo los siete artículos
 contaminados** que la propia decisión del 2026-09-08 manda excluir. Sin ellos: **F = 35,5557,
@@ -85,7 +91,13 @@ propagar dos veces, **salvo** que haya entrega antes.
 
 ---
 
-## 6. ¿Se re-ejecuta `gpt-oss:20b` sobre el corpus corregido?
+## 6. ¿Se re-ejecuta `gpt-oss:20b` sobre el corpus corregido? — **HECHO**
+
+> **Ejecutada el 2026-09-08 a las 23:44** y verificada con las cinco comprobaciones del protocolo: cero
+> `parse_method='failed'` en 330 registros, cero violaciones de `F1 ≤ (P+R)/2`, cero rechazos de
+> infraestructura y firma del corpus correcta en los tres. **N=120: 75,41 base y 77,08 con RAG, Δ +1,67**,
+> frente al +3,28 publicado; el signo se mantiene. Un solo respaldo frente a los 67 que producía el
+> presupuesto de 2048 *tokens*, que era lo que el equipo quería demostrar. **No queda nada que decidir.**
 
 **Qué pasa.** No está en el barrido: ni `START`, ni `END`, ni `SKIP`. La causa probable es una lectura literal
 de `§F44`, donde usted lo congeló «con think ON, sin re-ejecutar».
@@ -103,7 +115,15 @@ fusionar cuesta otra tanda de horas de máquina.
 
 ---
 
-## 7. ¿Cambia el informe su post-hoc al contraste apropiado al diseño?
+## 7. ¿Cambia el informe su post-hoc al contraste apropiado al diseño? — *cifras nuevas*
+
+> **Actualización del 2026-09-09.** La pregunta sigue viva, pero las cifras que la motivaban han cambiado.
+> El «ocho de trece» de más abajo es sobre el corpus **antiguo**. Sobre el **corregido**, el mismo contraste
+> pareado da **tres de trece** —`nemotron-mini:4b`, `llama3.2:latest` y `gemma4:12b-mlx`—, con
+> `gemma4:latest` y `mistral-nemo:latest` al borde (Holm 0,0595 y 0,0577). El argumento metodológico se
+> mantiene intacto: Tukey sobre 325 comparaciones responde a otra pregunta. Lo que cambia es que **ya no
+> reclasifica ocho modelos, sino uno**, y por tanto pesa menos en la decisión. Artefacto:
+> `results/ROBUSTEZ_ESTADISTICA_20260909/robustez.json`.
 
 **Qué pasa.** §5.3.1 concluye que solo dos modelos mejoran de forma significativa. Con el contraste que
 corresponde al diseño —Wilcoxon pareado sobre los mismos registros, con corrección de Holm sobre las **trece**
