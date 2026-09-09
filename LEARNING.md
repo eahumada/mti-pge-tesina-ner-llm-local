@@ -1310,3 +1310,56 @@ y hay que verificarlo contra la fuente antes de convertirlo en instrucción. Con
 faltaba: **verificar no es solo confirmar que el defecto existe, es confirmar que es el defecto que se
 cree**. Y cuando una divergencia resulta ser una convención deliberada, la salida correcta es
 **declararla como tal**, no igualar los documentos.
+
+## §L78 — Dos cifras correctas para el mismo benchmark y el mismo N confunden igual que una incorrecta
+
+Citando `CURRENT-TASKS.md §1.187` le dije al autor que «el informe ya cita las correctas (56,18 y
+58,46)» para `gemma4:12b-mlx_kb_rag`. Esa entrada era cierta cuando se escribió, esa misma mañana,
+**antes** de que la decisión 1 cambiara qué consolidado sostiene la Tabla 7 esa tarde a 77,67 %/
+79,96 % para el mismo modelo. Cité la cifra vieja sin la fecha que la volvía obsoleta. Buscando
+«problemas similares» a instancia del autor, apareció una segunda instancia — esta sí en el propio
+informe: el apartado de `gpt-oss:20b` en el Anexo I seguía afirmando «la de referencia es la
+primera [corrida a 2048 tokens]... las cifras de la Tabla 7 deben leerse con la reserva anterior»,
+cuando la re-corrida adoptada ya usa 4096 tokens para los trece modelos por igual y esa reserva
+dejó de aplicar (`§F160`).
+
+**La lección no es solo «citar con fecha».** Es que **una cifra históricamente correcta, presentada
+sin la marca inequívoca de que quedó superada, produce la misma confusión que un error** — el
+lector, o quien cita el documento, no tiene forma de distinguir «superada» de «vigente» a partir del
+número solo. Por eso, cuando un benchmark y un N acumulan más de una medición válida a lo largo del
+proyecto, el estudio presenta **una sola cifra como vigente, la última**, y el resto pasa a anécdota
+de prosa sobre el proceso evolutivo — nunca a una tabla que las ponga una junto a otra con apariencia
+de resultados entre los que elegir. La historia completa se conserva en los archivos y los anexos que
+la documentan; lo que no debe sobrevivir es una segunda cifra con aspecto de resultado final. Ver
+`FINDINGS §F160` y la actualización de `CLAUDE.md` del mismo día.
+
+**Y una segunda mitad de la misma lección**: `tools/verificar_informe.py` tenía una comprobación
+(`c_protocolo`) que ya no encontraba la divergencia que `DIVERGENCIAS_DECLARADAS` seguía
+declarando — la corrida que la resolvía ya estaba hecha, tal como la propia entrada anticipaba
+(«se retira en cuanto se rehaga el consolidado desde la re-corrida»), pero nadie volvió a
+comprobarlo. La comprobación 55 («las declaraciones no silencian más de lo que les toca») audita
+`FALLOS_DECLARADOS`, no este diccionario aparte: una declaración puede caducar en un mecanismo que
+el propio proyecto ya audita y sobrevivir en otro que no. Toda lista de excepciones declaradas
+necesita su propia auditoría de caducidad, no solo la que ya se construyó para una de ellas.
+
+## §L79 — Antes de simplificar un párrafo denso, verificar sus cifras: la densidad puede estar ocultando un error, no solo mala redacción
+
+Al reescribir el párrafo del ANOVA/Tukey/Levene/Friedman de §5.3.1 para que fuera más legible,
+comprobé cada cifra contra la Tabla 7 antes de tocar la prosa (`FINDINGS §F161`). Aparecieron tres
+errores reales que la densidad del párrafo original escondía: un recuento de modelos que mejoran
+(nueve declarados, once reales), dos deltas con el signo cambiado (−0,54/−0,18 declarados,
++0,81/+0,97 reales) y una contradicción interna entre dos frases del mismo párrafo (un modelo
+significativo según una frase, dos según la otra). Un párrafo difícil de leer no es solo un
+problema de estilo — es más difícil de auditar, y eso es precisamente donde un error sobrevive más
+tiempo sin que nadie lo note. **Simplificar y verificar deben ir juntos**: la orden de "solo
+simplificar" habría producido una versión más legible del mismo error.
+
+**Y una lección operativa aparte, sobre cómo se rompió la reescritura misma**: dos comprobaciones
+del verificador (`c_tukey_recuento`, `c_levene`) leen una frase exacta del informe por expresión
+regular, con un espacio literal entre palabras clave (`Levene sí detecta`, `Tukey identifica ... de
+las ... posibles`). El ajuste manual del ancho de línea de un párrafo reescrito puede introducir un
+salto de línea **dentro** de esa frase exacta sin que la prosa se vea afectada a simple vista — el
+texto se lee igual, pero el regex, que no usa `\s+` sino un espacio literal, deja de matchear en
+silencio. Al reescribir cualquier párrafo que el verificador cite por regex, comprobar con
+`tools/verificar_informe.py` **después de ajustar el ancho de línea**, no solo después de redactar
+el contenido: son dos pasadas distintas y cada una puede romper algo que la otra no toca.

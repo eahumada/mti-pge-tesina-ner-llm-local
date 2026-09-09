@@ -7748,3 +7748,96 @@ paralela que el lector espera tras leer «tres». Añadido un párrafo breve «C
 Balanceado (N=120, Estudio Principal)» inmediatamente después del Corpus 2, con una frase de
 resumen y remisión a §4.1.2 para el detalle — sin duplicar ni recortar el contenido que §4.1.2 ya
 desarrolla.
+
+## §F160 — Dos cifras para el mismo modelo y el mismo N confunden aunque ambas sean correctas: hay que dejar una sola vigente
+
+**Fecha:** 2026-09-09 · **Origen:** el autor preguntó por qué el informe parecía dar dos cifras
+distintas para `gemma4:12b-mlx_kb_rag` sobre N=120
+
+### El incidente que lo disparó no era del informe, era mío
+
+Al responder sobre este modelo cité, textualmente, `CURRENT-TASKS.md §1.187`: «el informe ya cita
+las correctas (56,18 y 58,46)». Esa frase era cierta **cuando se escribió**, esa misma mañana,
+**antes** de la decisión 1. Por la tarde la re-corrida adoptada (`ANALISIS_CONJUNTO_20260909_FIX`)
+sustituyó a qué consolidado sostiene la Tabla 7, y esta pasó a dar **77,67 %/79,96 %** para el mismo
+modelo. Repetí la cifra vieja sin la salvedad de fecha. El informe mismo no tenía el defecto —el
+Anexo I marca 56,18/58,46 explícitamente como la corrida del consolidado publicado, con una sección
+propia («Corridas múltiples del mismo modelo») que dice sin ambigüedad cuál es la de referencia—,
+pero la confusión que le atribuí al informe era real y evitable: dos cifras correctas, sin la
+diferencia de vigencia expuesta con la fuerza suficiente, generan la misma duda que un error.
+Corregido con una nota fechada en `§1.187` y una fila nueva `§1.284` en `CURRENT-TASKS.md`.
+
+### Y una segunda instancia, encontrada al buscar «problemas similares»: `gpt-oss:20b`, y esta sí era un error del informe
+
+El apartado «Corridas múltiples del mismo modelo» (Anexo I, antes de la Tabla 20) afirmaba, sobre
+`gpt-oss:20b`: «existen **dos mediciones del mismo experimento**... la de referencia es la
+**primera** [2048 tokens de salida, 120 artículos]... mientras la referencia sea la primera, las
+cifras de `gpt-oss:20b` de la Tabla 7 deben leerse con la reserva anterior». Esto describía el
+estado **antes** de la decisión 1, cuando la única corrección disponible para `gpt-oss:20b` era un
+re-run aislado (`gptoss_rerun_REMOTO`, 4096 tokens) mientras los otros doce modelos seguían a 2048.
+**Nunca se actualizó cuando la re-corrida completa se adoptó.** Comprobado contra el manifiesto
+vigente (`ANALISIS_CONJUNTO_20260909_FIX/merge_manifest.json`): la fuente de `gpt-oss:20b` es
+`recorrida_20260908/gpt-oss_20b__N120/`, la misma campaña que los otros doce modelos, con
+`max_tokens=4096` idéntico (verificado en su `run_config.json`). La «reserva de comparabilidad»
+que el informe pedía leer junto a la Tabla 7 **ya no existe**: los trece modelos comparten
+protocolo desde la re-corrida. La afirmación «la de referencia es la primera» es hoy sencillamente
+falsa. `tools/verificar_informe.py` tampoco la detectaba: `DIVERGENCIAS_DECLARADAS['max_tokens']`
+seguía declarando una divergencia que `c_protocolo` ya no encuentra desde que `MANIFIESTO` apunta al
+consolidado adoptado — una declaración caducada que la propia comprobación 55 no capta porque mira
+`FALLOS_DECLARADOS`, no este diccionario aparte.
+
+### La corrección, y el principio general que deja fijado
+
+Reescrito el apartado completo: se retira la Tabla 20 (ocho filas con el F1 de corridas
+descartadas, replicando exactamente el patrón de esta sección) y se sustituye por una nota breve
+que declara que los cuatro modelos tuvieron una re-ejecución parcial, por qué, y que la re-corrida
+adoptada la resolvió sin dejar reserva pendiente. El punto metodológico de `nemotron-mini:4b`
+—que el criterio fue la validez y no el resultado favorable— se conserva como anécdota de una
+frase, sin imprimir las dos cifras históricas que ya no hacen falta para sostenerlo. Retirada
+también la entrada `max_tokens` de `DIVERGENCIAS_DECLARADAS` en el verificador, con nota de por qué
+ya no aplica.
+
+**El principio, para no repetir esto**: cuando un benchmark y un N tienen más de una cifra correcta
+en la historia del proyecto, el estudio presenta **una sola como vigente** — la última — y las
+demás quedan como anécdota del proceso evolutivo, sin imprimirse en una tabla que invite a leerlas
+como dos resultados entre los que elegir. La historia completa se conserva en los archivos
+(`results/`, `benchmark.log`, los propios anexos ya existentes) y puede mencionarse en prosa; lo
+que no debe ocurrir es que dos números con apariencia de resultado final convivan en el cuerpo del
+informe. Ver `LEARNING §L78` y la actualización de `CLAUDE.md` del mismo día.
+
+## §F161 — El párrafo del «hallazgo central» de §5.3.1 tenía tres cifras equivocadas, no solo redacción densa
+
+**Fecha:** 2026-09-09 · **Origen:** el autor pidió simplificar el párrafo del ANOVA/Tukey/Levene/Friedman
+y de correlación de §5.3.1, «sin perder significado»
+
+Antes de simplificar, verifiqué cada cifra contra la Tabla 7 y el CSV del consolidado adoptado, por la
+misma razón que motivó `§F160` unos minutos antes: un párrafo puede llevar tiempo sin tocarse mientras el
+resto del documento avanza. Aparecieron tres discrepancias reales, no solo de redacción:
+
+1. **«Nueve de los trece modelos mejoran»**: contando los signos de la columna «Δ RAG» de la Tabla 7,
+   mejoran **once**, no nueve (solo `qwen3:8b` y `mistral-nemo:latest` empeoran).
+2. **«Se anula o revierte en los de mayor capacidad (−0,54 y −0,18 puntos en los dos de 31B)»**:
+   recalculado directamente del CSV consolidado (`ANALISIS_CONJUNTO_20260909_FIX/merged_results.csv`),
+   `gemma4:31b-cloud` mejora **+0,81** puntos y `gemma4:31b-mlx` mejora **+0,97**, ambos con RAG — positivos,
+   no negativos, y coincidentes con la Tabla 7 al céntimo. La afirmación «se anula o revierte» no describe
+   ningún dato vigente.
+3. **Contradicción interna**: el mismo párrafo decía, dos frases antes, que la mejora «solo supera la
+   corrección por comparaciones múltiples en `nemotron-mini:4b`» (**un** modelo), y más abajo que «solo dos
+   [modelos] lo hagan de manera estadísticamente sólida». Ambas no pueden ser ciertas a la vez; la Tabla 7
+   (columna «Δ significativo») confirma que es **uno**.
+
+Las tres apuntan a la misma causa que `§F154`/`§F158`/`§F159`: un párrafo redactado en un momento anterior
+del análisis (probablemente sobre una versión intermedia de la re-corrida, antes de fijar la Tabla 7
+definitiva) que nunca se recontrastó cuando el cálculo final estuvo listo. A diferencia de esos hallazgos,
+aquí las cifras en sí eran las equivocadas, no solo su encuadre temporal.
+
+**Corregido junto con la simplificación pedida**: el párrafo se reestructuró en cinco unidades más cortas,
+cada una abriendo con la pregunta que responde (significancia global, salvedad de diseño y prueba robusta,
+hallazgo central, alcance de la correlación), sin perder ninguna cifra ni prueba estadística del original
+—F, p, Tukey, Levene, Friedman, Spearman, Pearson y el control de retirar `nemotron-mini:4b`—, y corrigiendo
+las tres cifras de arriba. Verificado con `tools/verificar_informe.py` tras dos rondas de ajuste: dos
+comprobaciones (`c_tukey_recuento`, `c_levene`) leen frases con una redacción textual concreta por regex, y
+la primera pasada de la reescritura introdujo, sin querer, saltos de línea manuales **dentro** de esas
+frases (`"...de Levene\nsí detecta..."`), que el regex no salva porque exige un espacio literal y no
+`\s+`. Ambos se corrigieron desplazando el salto de línea fuera de la frase exacta que cada comprobación
+matchea. 56 comprobaciones, 0 fallos nuevos tras la corrección final.

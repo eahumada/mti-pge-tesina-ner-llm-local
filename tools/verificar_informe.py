@@ -2687,14 +2687,13 @@ PARAMS = ('rag_mode', 'data_file', 'max_tokens', 'temperature', 'batch_size', 'f
 # comprobación no falle indefinidamente: una comprobación que siempre falla se acaba desactivando
 # (LEARNING §L48). Añadir una entrada exige haberla declarado antes en el informe, y retirarla cuando
 # la corrida que la resuelve esté hecha.
-DIVERGENCIAS_DECLARADAS = {
-    'max_tokens': ('4096 en gptoss_rerun frente a 2048 en las demás; declarado en el Anexo I, '
-                   'apartado «Corridas múltiples». **Ya resuelto en la re-corrida**, comprobado el '
-                   '2026-09-09: las 39 corridas de recorrida_20260908/ declaran max_tokens=4096 sin '
-                   'una sola excepción. La divergencia sigue siendo real en el consolidado PUBLICADO, '
-                   'que es lo que esta comprobación lee, y esta entrada se retira en cuanto se rehaga '
-                   'el consolidado desde la re-corrida. Ver FINDINGS §F61.bis'),
-}
+# Retirada 2026-09-09: la entrada 'max_tokens' (4096 en gptoss_rerun frente a 2048 en las demás,
+# FINDINGS §F61.bis) se declaró mientras esta comprobación leía MANIFIESTO_PUBLICADO. Desde que
+# MANIFIESTO apunta a ANALISIS_CONJUNTO_20260909_FIX (decisión 1), las 13 fuentes vienen de
+# recorrida_20260908/ con max_tokens=4096 sin excepción: la condición de retiro que la propia
+# entrada fijaba ("en cuanto se rehaga el consolidado desde la re-corrida") ya se cumplió, y
+# `c_protocolo` no vuelve a detectar la divergencia (comprobado antes de retirarla). Ver §F160.
+DIVERGENCIAS_DECLARADAS = {}
 
 
 def c_protocolo(s):

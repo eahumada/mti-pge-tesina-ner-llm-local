@@ -417,11 +417,45 @@ _Tabla 7. Efecto de la base de conocimientos contextual sobre el corpus real (N=
 
 > **Salvedad de procedencia.** La latencia de `gemma4:31b-cloud` **no mide inferencia**: quedó cuantizada por el `--request-delay` introducido para sortear el límite de peticiones del servicio. Su F1 es válido; su latencia y sus tokens/s no deben usarse en comparaciones de eficiencia. La re-corrida corrigió además el fallo de contexto de `nemotron-mini:4b` que en el corpus publicado dejaba siete filas sin telemetría: en el consolidado adoptado las 113 filas de cada grupo tienen latencia y tokens/s reales.
 
-El ANOVA de una vía sobre los veintiséis grupos arroja **F = 119,7502** con p < 10⁻³⁰⁰ —el valor exacto subdesborda la precisión de doble coma flotante y no es representable—, de modo que se rechaza la hipótesis nula con un margen mayor que sobre el corpus del dominio, donde la comparación entre las dos compilaciones de 31B no alcanzaba significancia. El post-hoc de Tukey identifica 217 comparaciones significativas de las 325 posibles; pero al contrastar cada modelo consigo mismo (extracción directa frente a KB RAG) la mejora solo supera la corrección por comparaciones múltiples en `nemotron-mini:4b`, con 12,26 puntos. `llama3.2:latest`, que sobre el corpus publicado alcanzaba significancia con 10,82 puntos, queda sobre este corpus en 6,73 puntos y p=0,2334: dentro del margen de comparaciones múltiples, la mejora deja de distinguirse del azar. Conviene declarar una limitación del contraste: los veintiséis grupos evalúan los mismos 113 artículos, de modo que las observaciones están apareadas y un modelo de medidas repetidas sería el procedimiento estrictamente correcto. La prueba de Levene sí detecta heterocedasticidad (p = 1,39 × 10⁻¹¹), a diferencia de sobre el corpus publicado: con el defecto de anotación de Locations corregido, la dispersión entre modelos deja de ser uniforme. No invalida el ANOVA por sí sola —el diseño está balanceado, con 2 938 observaciones repartidas en 113 por grupo, lo que hace robusto el estadístico F—, pero refuerza la limitación anterior: el procedimiento apropiado no es este ANOVA de una vía. Y tratar como independientes unas observaciones apareadas hace el contraste conservador: repetido con la prueba de Friedman, que es la que corresponde a un diseño de medidas repetidas, el rechazo se sostiene con holgura (χ² = 1 802,3671), de modo que la conclusión no depende de esa elección.
+Este apartado responde a cuatro preguntas: si el efecto del KB RAG es significativo en conjunto, si esa
+conclusión resiste el matiz de que las observaciones no son independientes, qué modelos concretos mejoran
+de forma significativa y si existe un patrón real entre la capacidad del modelo y el beneficio de la
+recuperación.
 
-Ese resultado dibuja el hallazgo central del estudio: el beneficio del KB RAG es inversamente proporcional a la capacidad del modelo. Aporta de forma demostrable en los dos modelos más débiles, es positivo pero no concluyente en la franja intermedia y se anula o revierte en los de mayor capacidad (−0,54 y −0,18 puntos en los dos de 31B), que ya siguen correctamente las instrucciones sin contexto adicional. Nueve de los trece modelos mejoran, aunque solo dos lo hagan de manera estadísticamente sólida. La Figura 2 recoge ambas lecturas: el desplazamiento de cada modelo al añadir la recuperación y la relación entre esa mejora y el desempeño de partida.
+El ANOVA de una vía sobre los veintiséis grupos arroja **F = 119,7502** con p < 10⁻³⁰⁰ —el valor exacto
+subdesborda la precisión de doble coma flotante—, y rechaza la hipótesis nula con un margen mayor que sobre
+el corpus del dominio.
+El post-hoc de Tukey identifica 217 comparaciones significativas de las 325 posibles entre pares de
+modelos, pero la pregunta que importa es otra: cuántos modelos mejoran de forma
+significativa respecto
+de sí mismos al añadir RAG. Solo uno, `nemotron-mini:4b`, con +12,26 puntos. `llama3.2:latest`,
+significativo sobre el corpus publicado (+10,82 puntos), queda en +6,73 puntos (p=0,2334) y ya no se
+distingue del azar tras la corrección por comparaciones múltiples.
 
-Conviene cuantificar esa relación y declarar hasta dónde llega su respaldo, porque de ella depende el hallazgo. Correlacionando el F1 base de cada modelo con la mejora que le aporta la recuperación se obtiene un coeficiente de **Spearman de −0,0879** (p = 0,7752) y uno de **Pearson de −0,4816** (p = 0,0956). A diferencia de sobre el corpus publicado, donde los dos coeficientes discrepaban en el veredicto, aquí **coinciden**: ninguno alcanza significancia al umbral convencional del 5 %. Retirado `nemotron-mini:4b` de la muestra, el Pearson pasa a +0,0120 (p = 0,971), lo que confirma que la relación con la capacidad depende casi enteramente de ese modelo y no es un patrón generalizable a los otros doce. La afirmación que sigue debe leerse, por tanto, no como una relación con la capacidad sino como el beneficio demostrable de un único modelo, el más débil del estudio.
+Una salvedad de diseño: los veintiséis grupos evalúan los mismos 113 artículos, de modo que las
+observaciones están apareadas, y el procedimiento estrictamente correcto sería un modelo de medidas
+repetidas, no este ANOVA. Tratarlas como independientes hace además el contraste conservador.
+La prueba de Levene sí detecta heterocedasticidad (p = 1,39 × 10⁻¹¹) —a diferencia de sobre el corpus publicado, ahora que
+el defecto de anotación de Locations está corregido—, lo que refuerza esa salvedad sin invalidar el ANOVA
+(el diseño está balanceado: 2 938 observaciones, 113 por grupo). Repetido con la prueba de Friedman, la que
+corresponde a un diseño de medidas repetidas, el rechazo se sostiene con holgura (χ² = 1 802,3671): la
+conclusión no depende de qué prueba se elija.
+
+El hallazgo central del estudio es que el beneficio del KB RAG decrece con la capacidad del modelo, aunque
+no de forma perfectamente monótona. Once de los trece modelos mejoran con RAG, aunque solo uno lo haga de
+forma estadísticamente sólida: la mejora es alta en el modelo más débil del estudio (`nemotron-mini:4b`,
++12,26 puntos) y marginal en los dos de mayor capacidad (+0,81 y +0,97 puntos en las dos variantes de 31B),
+que ya siguen las instrucciones correctamente sin necesitar contexto adicional. La Figura 2 recoge ambas
+lecturas: el desplazamiento de cada modelo al añadir la recuperación y su relación con el desempeño de
+partida.
+
+Queda por saber hasta dónde llega ese patrón, porque de eso depende el hallazgo. Correlacionando el F1 base
+de cada modelo con la mejora que le aporta el RAG se obtiene un **Spearman de −0,0879** (p = 0,7752) y un
+**Pearson de −0,4816** (p = 0,0956): a diferencia de sobre el corpus publicado, donde discrepaban, aquí
+ninguno alcanza significancia al 5 %. Retirado `nemotron-mini:4b` de la muestra, el Pearson pasa a +0,0120
+(p = 0,971): la relación depende casi enteramente de ese modelo y no es un patrón generalizable a los otros
+doce. La conclusión correcta no es, por tanto, que el RAG beneficie a los modelos débiles en general, sino
+que beneficia de forma demostrable a uno solo, el más débil del estudio.
 
 ![Efecto de la base de conocimientos contextual sobre el F1 de los trece modelos](../../figuras/efecto-kb-rag.png)
 
@@ -1066,58 +1100,25 @@ _Tabla 19. Desempeño publicado y desempeño restringido a personas y organizaci
 
 **La corrida del 8 de septiembre es la de referencia** y es la que cita la Tabla 7 y el cuerpo del informe desde §5.3.1. El consolidado del 7 de septiembre se conserva íntegro en su directorio, porque es el que sostuvo el trabajo hasta esa fecha y el que documenta, en el resto de este Anexo, el defecto de medición y su corrección.
 
-Cuatro de los trece modelos se midieron **más de una vez** sobre el corpus N=120, de modo que ocho de los
-veintiséis grupos disponen de dos o tres corridas. La columna «Corrida» de la tabla anterior indica cuál
-sostiene cada fila; este apartado declara las restantes. La Tabla 20 las recoge todas.
+Cuatro de los trece modelos se midieron **más de una vez** sobre el corpus N=120. La columna «Corrida» de
+la tabla anterior indica cuál sostiene cada fila. Antes de la re-corrida completa, requirieron una
+re-ejecución parcial por motivos operativos, hoy resueltos: `gemma4:12b-mlx` y `qwen3:8b` sufrían un fallo
+del **modo de razonamiento activo**, que consumía el presupuesto de salida deliberando y devolvía una
+respuesta vacía —precisión y exhaustividad caían a cero a la vez, la firma de no haber contestado y no la
+de haberse equivocado—; en `gemma4:12b-mlx` con KB RAG eso ocurrió en 98 de los 120 artículos de aquella
+corrida parcial. `gpt-oss:20b`, también un modelo de razonamiento, agotaba con 2048 tokens el presupuesto
+de salida antes de emitir el JSON. `nemotron-mini:4b` requirió repetir el diagnóstico de un lote de
+respuestas vacías para confirmar que el defecto era del arnés y no del modelo; el criterio para preferir
+una corrida sobre otra fue siempre la validez de la medición y no su resultado, incluso cuando la corrida
+elegida dio una décima menos que la descartada.
 
-Conviene separar dos situaciones que no son la misma. Seis de esos ocho grupos tienen una corrida previa que
-**no es una medición alternativa sino una medición inválida**: el modelo no llegó a responder en una parte
-sustancial del corpus, de modo que sus cifras no describen su desempeño sino el de un arnés mal configurado.
-Esas cifras **no se publican en ninguna parte de este informe**, porque un número que no mide lo que dice
-medir no es un resultado y ofrecerlo junto al bueno invitaría a leerlos como dos estimaciones entre las que
-se ha elegido. Lo que sí se declara es que la corrida existió, por qué se descartó y con qué evidencia. Los
-dos grupos restantes sí son repeticiones válidas, y ahí se dan ambas cifras.
-
-_Tabla 20. Grupos con más de una corrida sobre N=120, con el motivo de la sustitución y la evidencia_
-
-| Grupo | Corrida publicada | F1 | Corrida sustituida | Situación y evidencia |
-|:---|:---|:---:|:---|:---|
-| gemma4:12b-mlx (baseline) | afectados_thinking | 56,18 | P3 | inválida: 68 de 120 artículos sin extraer nada |
-| gemma4:12b-mlx (KB RAG) | afectados_thinking | 58,46 | P3 | inválida: 98 de 120 artículos sin extraer nada |
-| qwen3:8b (baseline) | qwen3_nothink | 48,21 | P3 y 12b-mlx | inválida: 19 de 120 sin extraer nada; cobertura parcial |
-| qwen3:8b (KB RAG) | qwen3_nothink | 51,46 | 12b-mlx y P3 | inválida: 31 de 120 sin extraer nada; cobertura parcial |
-| gpt-oss:20b (baseline) | gptoss_rerun | 52,39 | excluidos | inválida: 27 de 120 sin extraer nada por presupuesto agotado |
-| gpt-oss:20b (KB RAG) | gptoss_rerun | 55,67 | excluidos | inválida: 49 de 120 sin extraer nada por presupuesto agotado |
-| nemotron-mini:4b (baseline) | nemotron_rerun | 22,59 | P3 (F1 21,30) | válida: repetición del diagnóstico de vacíos |
-| nemotron-mini:4b (KB RAG) | nemotron_rerun | 37,12 | P3 (F1 37,33) | válida: repetición del diagnóstico de vacíos |
-
-La última fila acredita que el criterio fue la validez de la medición y no su resultado: en
-`nemotron-mini:4b` con KB RAG la corrida publicada da **menos** que la sustituida (37,12 frente a 37,33), y
-aun así es la que se toma.
-
-Los motivos de invalidez son dos. El **modo de razonamiento activo** hacía que el modelo consumiera el
-presupuesto de salida deliberando y devolviera una respuesta vacía; el síntoma es inequívoco, porque
-precisión y exhaustividad caen **a cero a la vez**, que es la firma de no haber contestado y no la de haberse
-equivocado. En `gemma4:12b-mlx` con KB RAG eso ocurrió en 98 de los 120 artículos, con una latencia media de
-967 s frente a los 158 s de la corrida válida. Desactivado el razonamiento, los 120 registros resuelven por
-análisis directo del JSON.
-
-El **presupuesto de salida agotado** produce el mismo efecto por otra vía: `gpt-oss:20b` es un modelo de
-razonamiento, y con 2048 tokens no alcanzaba a emitir el JSON tras deliberar. Ampliarlo a 4096 baja los
-artículos sin extracción de 27 y 49 a 6 y 5. Eso exige una salvedad de comparabilidad que conviene no
-minimizar:
-`gpt-oss:20b` es el único de los trece cuya cifra publicada procede de una corrida con **4096** tokens de
-salida, mientras los otros doce se midieron con **2048**. Su ventaja sobre `qwen2.5:14b` o `llama3.1:8b`, por
-tanto, no es enteramente atribuible al modelo. Esa asimetría la resuelve una re-corrida completa que
-unifica el presupuesto en 4096 tokens para los trece modelos, ejecutada el 8 de septiembre de 2026 y
-consolidada aparte. Existen por tanto **dos mediciones del mismo experimento**, y este informe declara las
-dos. La de referencia es la primera, que es la que sostiene todas las cifras del capítulo de resultados y
-los contrastes de §5.3, y lo es por dos razones. La segunda se completó una vez cerrado ese análisis, de
-modo que adoptarla obligaría a rehacerlo entero. Y las dos no difieren solo en el presupuesto de salida:
-la segunda excluye además siete artículos cuya codificación estaba contaminada, de modo que aporta ciento
-trece registros por grupo y no los ciento veinte de la primera. Mientras la referencia sea la primera, las
-cifras de `gpt-oss:20b` de la Tabla 7 deben leerse con la reserva anterior. Los nueve parámetros restantes —modo de recuperación `kb_combined`, corpus,
-temperatura 0,1, tamaño de lote y los demás— coinciden en las ocho corridas fusionadas.
+Esas corridas parciales no describían el desempeño del modelo sino el de un arnés mal configurado, y sus
+cifras no se publican en ninguna parte de este informe: un número que no mide lo que dice medir no es un
+resultado, y ofrecerlo junto al vigente invitaría a leerlos como dos estimaciones entre las que se ha
+elegido. La re-corrida completa del 8 de septiembre de 2026, adoptada en §5.3.1, ejecutó los trece modelos
+de una sola vez con un presupuesto de salida uniforme de 4096 tokens, sin ninguno de estos tres defectos:
+las cifras vigentes de los cuatro modelos son las que publica la Tabla 7, sin reserva de comparabilidad
+pendiente.
 
 Tres advertencias de lectura antes de las cifras. Las columnas publicadas se toman del campo almacenado por registro, que es lo que publican las tablas del cuerpo, y las restringidas se recalculan desde el desglose por tipo. En `nemotron-mini:4b_baseline` los dos no cuadran en **siete de sus ciento veinte registros**, los que se reextrajeron fuera del arnés de lotes tras un fallo de contexto (§5.3.1), de modo que su columna restringida arrastra esa incoherencia y conviene leerla con esa reserva. Las dos primeras filas de `llama3.2:latest` reproducen **la misma medición** bajo dos etiquetas de corrida: coinciden en los siete valores y, comprobado registro a registro, en los aciertos y errores de los ciento veinte artículos, de modo que la tabla tiene cuarenta y dos filas pero cuarenta y una configuraciones distintas. Y las dos filas de `gemma4:12b-mlx` proceden de `afectados_thinking_n120_REMOTO` y no de `benchmark_n120_REMOTO`, porque esta última quedó averiada por el modo de razonamiento —sesenta y ocho y noventa y ocho de sus ciento veinte registros no recuperan ninguna entidad— y sus cifras no representan la capacidad del modelo.
 

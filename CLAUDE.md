@@ -249,6 +249,20 @@ sí. Ver `FINDINGS.md §F53` y `LEARNING.md §L44`.
   seleccionar el resultado, aunque no haya intención de hacerlo, y es lo que un tribunal juzga. La política
   aditiva ya obliga a conservarlas; esta regla obliga a **mencionarlas**. Antes de escribir una cifra, buscar
   en `results/` si hay más corridas del mismo experimento.
+  > **Precisión del 2026-09-09 (`FINDINGS §F160`, `LEARNING §L78`): «declarar todas» no es «imprimir
+  > todas como si compitieran».** Una cifra correcta pero superada, mostrada junto a la vigente sin que
+  > la diferencia de vigencia salte a la vista, confunde exactamente igual que un error — al autor le
+  > pasó con `gemma4:12b-mlx` (56,18/58,46, del consolidado publicado, citada como si fuera la de la
+  > Tabla 7 vigente) y el informe mismo lo tenía con `gpt-oss:20b` (una reserva de comparabilidad que la
+  > re-corrida adoptada ya había resuelto sin que el texto se actualizara). Por eso, para un mismo
+  > benchmark y un mismo N, el **cuerpo del estudio presenta una sola cifra como vigente: la última**.
+  > Las demás quedan como **nota anecdótica de la historia del proceso evolutivo** —una frase que
+  > declara que existió una corrida distinta y por qué se descartó o se sustituyó—, nunca como una
+  > tabla que ponga dos números junto al mismo modelo y el mismo N invitando a leerlos como resultados
+  > alternativos. Esto no reduce la política aditiva: los datos íntegros de toda corrida histórica
+  > siguen conservándose en `results/`, en los `benchmark.log` y en los anexos ya construidos para
+  > documentar un defecto ya corregido (Anexo H, Anexo I); lo que cambia es que el cuerpo del informe
+  > no repite esas cifras en una tabla de resultados una vez que dejaron de ser la referencia.
 - **Ninguna cifra entra en una tabla comparativa sin que su fuente esté abierta y leída**, y ninguna columna
   agrupa métricas de tareas distintas bajo un mismo encabezado. Si las filas miden cosas distintas, la
   columna se titula de forma neutra y una glosa advierte que no son comparables.
