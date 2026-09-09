@@ -129,9 +129,16 @@ el conjunto de prueba?»**
 reales anotados del propio corpus de evaluación»— pero lo dice como **procedencia** en el anexo de uso de IA,
 no como **limitación de la medición**, y no dice cuántos son ni qué efecto tienen.
 
-**Son siete de ciento veinte**, y el efecto está medido: en los modos `kb_fewshot` y `kb_combined` el KB RAG
-aporta **+10,01 pp** sobre esos siete artículos, frente a **+2,19 pp** sobre los ciento trece restantes
-(`FINDINGS §F65`). Es decir, en esos siete se le está enseñando al modelo la respuesta del examen.
+**Son siete de ciento veinte**, y el efecto está medido —con una salvedad que hay que dar antes de que la
+pidan—. `FINDINGS §F65` declara **+10,01 pp** de mejora del KB RAG sobre esos siete artículos frente a
+**+2,19 pp** sobre los ciento trece restantes. **Recalculado de forma independiente el 2026-09-09 sobre el
+detalle por registro, sale +11,89 y +3,16**, y la diferencia de método no está resuelta: se preguntó al
+equipo que produjo la primera cifra y no ha contestado.
+
+**Lo honesto es dar las dos y señalar cuál es peor para el trabajo.** Las mías lo son: un sesgo de +11,89 pp
+sobre los contaminados es mayor que uno de +10,01. En los dos casos la conclusión es la misma —en esos siete
+se le está enseñando al modelo la respuesta del examen, y el efecto ahí es entre tres y cuatro veces el del
+resto del corpus— pero citar solo la cifra menor sería indistinguible de haber elegido el resultado.
 
 **Lo que hay que poder decir con precisión:** las cifras que publica el informe **incluyen** los siete, de
 modo que el efecto del RAG está algo sobrestimado; la re-corrida los **excluye** y publica sobre **113**
