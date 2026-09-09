@@ -607,6 +607,8 @@ def c_figura1_vs_artefacto(s):
     with open(ARTEFACTO_FP, encoding='utf-8') as fh:
         a = _json.load(fh)
     loc, tot, pct = a['fp_locations'], a['fp_total'], a['pct_fp_locations']
+    # el complemento tambien se dibuja en la Figura 1 y debe cuadrar con el artefacto
+    comp = a.get('fp_no_locations')
     fallos, mirados = [], 0
     # el artefacto debe declarar su propia cobertura y haberla completado
     mirados += 1
@@ -631,6 +633,9 @@ def c_figura1_vs_artefacto(s):
             fallos.append('generar_figuras_informe.py no rotula %s %%' % esp.replace('.', ','))
     except Exception as e:
         fallos.append('no se puede leer el script de figuras: %s' % e)
+    mirados += 1
+    if comp is None or comp + loc != tot:
+        fallos.append('el artefacto no declara fp_no_locations o no suma: %s + %s != %s' % (comp, loc, tot))
     check('la Figura 1 y la prosa reproducen desde el artefacto de composicion', mirados, fallos,
           'ata las tres apariciones de la cifra al fichero que la computa')
 

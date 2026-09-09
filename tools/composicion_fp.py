@@ -73,6 +73,9 @@ def calcular(dir_cons):
         'grupos': len(grupos), 'grupos_cubiertos': len(detalle), 'grupos_sin_cubrir': sin_cubrir,
         'fp_por_categoria': dict(fp), 'tp_por_categoria': dict(tp), 'fn_por_categoria': dict(fn),
         'fp_total': total, 'fp_locations': fp.get('Locations', 0),
+        # El complemento se expone explicito porque la Figura 1 lo dibuja como cifra propia, y una
+        # cifra del entregable debe tener fuente directa y no solo ser derivable (FINDINGS §F74).
+        'fp_no_locations': total - fp.get('Locations', 0),
         'pct_fp_locations': round(100 * fp.get('Locations', 0) / total, 1) if total else None,
         'locations_tp_mas_fn': tp.get('Locations', 0) + fn.get('Locations', 0),
         'detalle': detalle,
