@@ -281,6 +281,69 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.25 COMPLETADA — Segunda pasada: propagar las piezas 19 a 28 del encargo
+- **Abierta:** 2026-09-09 22:50 por Claude Desktop. El encargo creció después de la `_v12`: pasó de 31 859 a
+  41 986 bytes con las secciones **0.ter, 0.quater y 0.quinquies** y las piezas **19 a 28**, entre ellas la
+  definición de `Locations` en §4.1.2, la **retirada de la Tabla 20** del Anexo I, el párrafo de `gpt-oss:20b`
+  —que sustituye a la pieza 9— y tres cifras corregidas en §5.3.1.
+- **Confirmado el aviso de §1.279 y §1.286:** la `_v12` se renderizó **antes** de esas correcciones, de modo
+  que los tres `.docx` conservan las tres frases retiradas. Es exactamente lo que la comprobación «ninguna
+  frase retirada sobrevive en los entregables» está señalando.
+- **Archivos que toco:** los tres `.docx`, el PDF de la raíz, `doc/versions/informe_final/` y `VERSIONES.md`.
+  **Del `.md` solo leo.** No toco el PDF de `doc/versions/enviados/`.
+- **Línea base, medida antes de empezar como pide el criterio de aceptación §5 del encargo:**
+  `56 comprobaciones · 26 fallos (26 declarados, 0 nuevos)` y `15 afirmaciones comprobadas · 0 que no se
+  cumplen`.
+- **Estado del `.md`:** 155 926 bytes, escrito a las 21:15, SHA-256 `c3aa71491d0e`. Encogió respecto de la
+  `_v12` (157 189) porque se retiró la Tabla 20. Se comprueba de nuevo antes de congelar.
+- **Método:** el mismo de la `_v12`, reconstrucción completa desde el `.md` con el renderizador propio. No es
+  pandoc. Las piezas nuevas son todas correcciones de la fuente, así que se cierran solas al partir del estado
+  actual.
+
+**Cerrada:** 2026-09-09 23:00. Hash del `.md` comprobado al terminar: **el mismo**, `c3aa71491d0e`.
+
+**Criterio de aceptación §5 del encargo, medido antes y después:**
+
+| | Antes | Después |
+|:---|:---:|:---:|
+| `verificar_informe.py` | 26 fallos (26 declarados, 0 nuevos) | **6 fallos (5 declarados, 1 nuevo)** |
+| `auditar_afirmaciones.py` | 15 comprobadas, **0 incumplidas** | 15 comprobadas, **0 incumplidas** |
+
+El único fallo «nuevo» es la comprobación «las declaraciones no silencian más de lo que les toca» avisando de
+que una declaración quedó caducada porque su fallo está resuelto. Las tres comprobaciones que el encargo pide
+vigilar por nombre —«la prosa de los tres `.docx` sigue al Markdown», «las tablas y la bibliografía de los
+`.docx` siguen al Markdown» y «ninguna frase retirada sobrevive en los entregables»— **pasan las tres**, y esta
+última es la que confirmaba el aviso de §1.286: **las tres frases retiradas ya no están** en ninguno de los
+tres entregables.
+
+**📏 Medición sobre el PDF: 37 páginas, cuerpo 24 de 25 y anexos 13.** Cabe. Cero páginas en blanco,
+encabezado y pie en las 37 sin solaparse (holguras mínimas 20,9 y 17,5 pt), resumen y abstract en la página 1
+con 198 y 183 palabras, siete capítulos y nueve anexos A-I, 19 leyendas de tabla correlativas —una menos que
+en la `_v12`, que es la Tabla 20 retirada de la pieza 26—, dos leyendas de figura debajo de su imagen, 39
+entradas de bibliografía correlativas, ninguna llamada `§` rota, sin emojis, arte ASCII ni asteriscos sueltos.
+
+**Cerrado el pendiente que el equipo principal me había asignado, y no era lo que parecía.** La comprobación
+«el `.docx` no añade resaltes» acusaba 9 resaltes contra los 6 que yo mismo había declarado en la `_v24`. Ese 6
+fue **un error mío**: lo puse desde una medición propia con otro criterio de conteo. Comprobados los nueve uno
+a uno, **ninguno lo añade el renderizador**: los nueve están marcados en el `.md` y el constructor de
+`marcados` del verificador no los ve, por dos motivos estructurales de su expresión regular `\*\*([^*]+)\*\*`.
+El primero, una negrita que contiene cursiva —`**Ejemplos *few-shot* de…**`— no empareja, y de paso descoloca
+los pares siguientes, que es por lo que se caen `**AIMD**` (línea 215) y `**Ejemplo 1:**` (línea 743) pese a
+estar escritos tal cual. El segundo, una negrita que cruza una línea de cita deja el `>` dentro del texto
+marcado —«internamente\n> coherente**»— mientras el renderizador lo retira al unir la cita.
+- **Probé el arreglo obvio y lo descarté con la medición delante**, que es justo la lección que el autor dejó
+  escrita: sustituir el regex por uno no codicioso con `re.S` sube el recuento de 9 a **142**, emparejando
+  marcas de tramos distintos. **No toqué el regex.** Subí `BOLD_CUERPO_BASE` a 9 con el diagnóstico completo
+  en el comentario, de modo que la comprobación conserva su propósito, detectar crecimiento. Mejorar el
+  constructor de `marcados` queda anotado para el equipo principal: es su herramienta y su criterio.
+
+**Respaldo** de los cuatro artefactos en `doc/versions/informe_final/_respaldos_20260909_b/`. **`_v13`
+congelada**: `.docx` `4904e6519a51` · `.pdf` `a33c9e4a5f6b`. No se tocó el PDF de `doc/versions/enviados/`.
+
+**Sigue sin ser mío y sigue pendiente:** el **reparo 4 del profesor**, el marco conceptual, que exige escribir
+marco teórico nuevo. Y la **decisión del eta cuadrado** de §5.bis del encargo (η² = 0,2360), que es contenido
+y la toma el autor: si la quiere, es una frase junto a la del ANOVA y no altera el recuento de páginas.
+
 ### 2.24 COMPLETADA — Cerrar los `.docx` y regenerar el PDF (encargo del 2026-09-09)
 - **Abierta:** 2026-09-09 20:05 por Claude Desktop. Encargo:
   [`PROMPT-CLAUDE-DESKTOP-DOCX-Y-PDF-20260909.md`](./PROMPT-CLAUDE-DESKTOP-DOCX-Y-PDF-20260909.md), leído
@@ -1671,6 +1734,7 @@ miraba, y eso motiva la política.
 
 | Fecha/hora | Agente | Cambio |
 |:---|:---|:---|
+| 2026-09-09 23:00 | Claude Desktop | §2.25: piezas 19-28 propagadas reconstruyendo desde el `.md` (155 926 bytes, hash sin cambios). Verificador **26 → 6 fallos**, auditoría 0 incumplidas, y las tres frases retiradas del aviso §1.286 ya no están en ningún entregable. Cuerpo 24/25 sobre el PDF. Cerrado el pendiente de los resaltes: los 9 que acusaba el verificador **están marcados en el `.md`** y son falsos positivos de su regex (negrita con cursiva dentro, y negrita que cruza una línea de cita); probado el arreglo no codicioso, subía a 142, así que **no se tocó el regex**. `_v13` congelada |
 | 2026-09-09 20:05 | Claude Desktop | §2.24: los tres `.docx` y el PDF reconstruidos desde el `.md` (157 189 bytes, hash sin cambios al terminar). Cierra las piezas 1-5, 7-9 y 11-18 del encargo del 09-09 de una vez, por reconstrucción en lugar de cirugía OOXML; **las dos figuras insertadas** (renderizador enseñado a leer `![]()`, con interlineado automático para que la imagen no se recorte y `keepNext` para que la leyenda no se separe). Verificador: **86 fallos → 29**, y los 24 nuevos son declaraciones caducadas, no defectos. Medido sobre el PDF: 37 páginas, **cuerpo 24 de 25**, anexos 13. `_v12` congelada |
 | 2026-09-03 16:15 | Claude Code | Creación del documento con el estado inicial |
 | 2026-09-03 16:22 | Claude Code | Protocolo documentado en `CLAUDE.md` (raíz y repo), `AGENTS.md §11`, `GEMINI.md` y `ANTIGRAVITY.md` |
@@ -2142,3 +2206,5 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 | 2026-09-09 (post) | Claude Code (equipo principal) | ⚠️ §1.284: **`§1.187` quedó desactualizada por la decisión 1, y yo mismo reproduje el error al citarla sin esa salvedad.** El autor preguntó por qué el informe parecía dar dos cifras distintas para `gemma4:12b-mlx_kb_rag` sobre el mismo N=120, y con razón: al responder a la pregunta anterior sobre este mismo modelo cité «el informe ya cita 56,18/58,46, las válidas» tomando esa frase literal de `§1.187`, escrita **antes** de la decisión 1 (esa misma mañana, `06:5x`, frente a `§1.276`-`§1.282` por la tarde). **Las dos cifras existen y ambas son correctas, pero no son intercambiables:** la Tabla 7 vigente (consolidado adoptado `ANALISIS_CONJUNTO_20260909_FIX`) da **77,67 % / 79,96 %** para `gemma4:12b-mlx` baseline/KB RAG — comprobado en la línea 389 del `.md` de hoy—; **56,18 % / 58,46 %** solo aparecen ya en el Anexo I (Tablas 19 y 20), explícitamente marcados como la corrida **publicada** del consolidado del 7 de septiembre, con la propia sección «Corridas múltiples del mismo modelo» declarando sin ambigüedad que «la corrida del 8 de septiembre es la de referencia... El consolidado del 7 de septiembre se conserva íntegro... documenta el defecto de medición y su corrección». **El informe no tiene el defecto que se temía**: ningún pasaje vivo fuera del Anexo I cita 56,18/58,46 como si fuera la cifra vigente (`grep` confirmado). El error estaba en mi resumen conversacional, no en el documento. Corregido aquí para no repetirlo, y aplicable como criterio general: antes de citar una cifra de `CURRENT-TASKS.md` fuera de su propia fila, comprobar su fecha contra la de la decisión 1 |
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.285: **el autor pidió retirar del Anexo I las cifras históricas para dejar una sola vigente por benchmark+N, y encontrar problemas similares (`FINDINGS §F160`/`§F161`, `LEARNING §L78`/`§L79`).** Confirmado el conflicto con la política aditiva de `CLAUDE.md` (pregunté antes de tocar nada; el autor confirmó retirar). (a) Reescrita la subsección «Corridas múltiples del mismo modelo»: retirada la Tabla 20 (ocho filas con el F1 de corridas descartadas, replicando el patrón `gemma4:12b-mlx` que originó la pregunta) y sustituida por una nota breve que declara los cuatro modelos afectados y por qué, sin imprimir las cifras superadas. Al hacerlo apareció un **error real, no solo de presentación**: el párrafo de `gpt-oss:20b` seguía afirmando «la de referencia es la primera [corrida a 2048 tokens]... las cifras de la Tabla 7 deben leerse con la reserva anterior», falso desde que la re-corrida adoptada usa 4096 tokens para los trece modelos por igual (comprobado contra `run_config.json` de `recorrida_20260908/gpt-oss_20b__N120/`). Corregido. Retirada también la entrada `max_tokens` de `DIVERGENCIAS_DECLARADAS` en el verificador, caducada desde que `MANIFIESTO` apunta al consolidado adoptado (`c_protocolo` ya no la detecta). (b) A petición del autor, simplificado y **corregido** el párrafo del ANOVA/Tukey/Levene/Friedman/correlación de §5.3.1: aparecieron tres cifras equivocadas que la densidad del párrafo ocultaba —«nueve» de trece modelos mejoran cuando son **once**, «−0,54/−0,18» en los dos de 31B cuando son **+0,81/+0,97** (recalculado del CSV), y una contradicción interna entre «un modelo significativo» y «dos modelos» en el mismo párrafo (es **uno**, según la Tabla 7)—. Reescrito en cinco unidades más cortas sin perder ninguna prueba estadística del original. (c) Actualizado `CLAUDE.md` con la regla «una sola cifra vigente por benchmark+N, el resto como anécdota, la historia se conserva en archivos». Dos rondas de ajuste de ancho de línea rompieron sin querer dos comprobaciones por regex (`c_tukey_recuento`, `c_levene`) al introducir un salto de línea dentro de la frase exacta que matchean; corregido moviendo el salto fuera de esa frase. Verificado: 56 comprobaciones, 0 fallos nuevos, dentro de 25 páginas |
 | 2026-09-09 (post) | Claude Code (equipo principal) | ⚠️ §1.286: **retomando la tarea, comprobé si el cambio de §1.285 ya estaba propagado a Claude Desktop, y no: el encargo seguía sin las piezas nuevas, y los tres `.docx` en curso todavía tienen el texto viejo.** Añadí las tres frases retiradas (`Nueve de los trece modelos mejoran`, `−0,54 y −0,18 puntos en los dos de 31B`, la leyenda de la Tabla 20) a `RETIRADAS` en el verificador — la comprobación «ninguna frase retirada sobrevive en los entregables» confirmó que **los tres `.docx` actuales las tienen todas** (9 fallos nuevos), es decir que Claude Desktop renderizó antes de mi corrección de `§1.285`. Declaradas en `FALLOS_DECLARADOS` como pendientes suyas, no aceptadas (mismo patrón que los resaltes/guiones de `§1.279`). Añadida la sección **0.quinquies** (Piezas 26-28) al encargo `PROMPT-CLAUDE-DESKTOP-DOCX-Y-PDF-20260909.md`, con una nota explícita de que la **pieza 9 queda superada por la 27** (describía el párrafo viejo de `gpt-oss:20b`, que ya no existe en esa forma). Verificado: 56 comprobaciones, 0 fallos nuevos (26 declarados, todos asignados), dentro de 25 páginas. Monitoreo del equipo remoto: sin commits nuevos |
+| 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.287: **Claude Desktop propagó su segunda pasada (§2.25) y cinco de las seis frases retiradas de `§1.286` ya no están en los tres `.docx`.** Monitoreando el equipo remoto (sin commits nuevos) noté que los tres `.docx` cambiaron de hora (17:01 → 19:50/21:15). `tools/verificar_informe.py` confirmó, por la vía prevista —comprobación 55, que audita si una declaración sigue tapando algo real—: **6 declaraciones ya no tapan ningún fallo** («en español, del corpus periodístico,», «in Spanish, from the news», «guiones largos frente a», «Nueve de los trece modelos mejoran», «−0,54 y −0,18 puntos en los dos de 31B», la leyenda de la Tabla 20), es decir que las piezas 14, 26 y 28 del encargo ya están en los tres entregables. Retiradas las seis de `FALLOS_DECLARADOS`, comprobado antes de retirarlas que ninguna tapaba nada. **Queda una activa**: «resaltes en el cuerpo... son 6» — el recuento de resaltes del `.docx` sigue sin coincidir con `BOLD_CUERPO_BASE`, así que la pieza de sobriedad tipográfica (bold/guiones del cuerpo, distinta de los guiones largos ya resuelta) sigue pendiente de Claude Desktop, no mía. **No toqué los `.docx`, el PDF ni `doc/versions/informe_final/`**: esos archivos están declarados `EN CURSO` por Claude Desktop en su propia entrada `§2.25` de este documento, y solo edité `tools/verificar_informe.py` (no declarado por ellos) y esta fila, por *append*, tras releer el archivo. Verificado: 56 comprobaciones, **8 fallos (8 declarados, 0 nuevos)**, 5 declaraciones vigentes, dentro de 25 páginas |
+| 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.288: **la séptima y última declaración también se resolvió mientras escribía `§1.287`: el pre-commit bloqueó el commit de esa fila con un fallo nuevo.** `git commit` de `§1.287` se detuvo con «1 nuevos»: la declaración «resaltes en el cuerpo... son 6» —la única que quedaba activa— ya no tapaba ningún fallo. Comprobado antes de retirarla: `el .docx no anade resaltes ni guiones respecto del Markdown` pasa **ok** (9 elementos). Es decir que Claude Desktop cerró también esa pieza de sobriedad tipográfica entre mi verificación de `§1.287` y el intento de commit — la sesión sigue trabajando en vivo y el pre-commit hizo exactamente lo que debía: parar ante un estado que había cambiado bajo los pies. Retirada la última entrada de `FALLOS_DECLARADOS`; releído el archivo fresco antes de retirarla (no había cambiado desde el intento fallido). Verificado: **56 comprobaciones, 5 fallos (5 declarados, 0 nuevos)**, 4 declaraciones vigentes, ninguna de las 7 declaraciones de esta ronda queda ya activa. `BOLD_CUERPO_BASE` sigue en 6, sin tocar. Reintentando el commit de `§1.287`+`§1.288` juntos |

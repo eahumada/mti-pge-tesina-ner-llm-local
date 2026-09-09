@@ -62,38 +62,14 @@ EXCLUIDOS = ['nuextract', 'minimax-m3', 'gemini-3.1-flash-lite', 'q8-64k', 'sonc
 # No se renumera: las citas de FINDINGS son registro fechado y renumerar las invalidaria todas.
 # ─────────────────────────────────────────────────────────────────────────────────────────────────
 
+# Retiradas 2026-09-09 (segunda pasada de Claude Desktop, §2.25, en dos tandas): 'en español, del
+# corpus periodistico,' / 'in Spanish, from the news' / 'guiones largos frente a' / 'Nueve de los
+# trece modelos mejoran' / '−0,54 y −0,18 puntos en los dos de 31B' / 'Grupos con mas de una
+# corrida...' / 'resaltes en el cuerpo...' ya no tapan ningun fallo (comprobacion 55 las marco
+# caducadas, una tras otra, en la misma sesion de monitoreo: Claude Desktop seguia trabajando en
+# vivo). Comprobado antes de retirar cada una: el .docx de turno ya no contenia esa frase ni ese
+# recuento. Ver CURRENT-TASKS §1.287/§1.288.
 FALLOS_DECLARADOS = {
-'en español, del corpus periodístico,': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop: el resumen y el '
-        'abstract se aclararon a peticion del autor («no es claro decir en el dominio») '
-        'para nombrar el corpus AML/KYC explicitamente en lugar de la etiqueta interna «el '
-        'dominio». Va con la pieza 14 del encargo.'),
-    'in Spanish, from the news': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop; version en ingles '
-        'de la misma aclaracion, misma causa.'),
-    'resaltes en el cuerpo que el Markdown no marca, y el estado declarado son 6': ('2026-09-09',
-        'EN CURSO por Claude Desktop (§2.24, reconstruccion de los .docx con renderizador '
-        'propio): esa sesion ya bajo BOLD_CUERPO_BASE de 14 a 6 esperando que el recuento nuevo '
-        'diera 6, pero el estado actual del .docx da 13. No es aceptado por el equipo principal: '
-        'se declara para no bloquear ediciones ajenas al render mientras esa sesion sigue '
-        'trabajando; corresponde a Claude Desktop cerrarlo.'),
-    'guiones largos frente a': ('2026-09-09',
-        'EN CURSO por Claude Desktop, misma causa que el resalte: el renderizador propio no ha '
-        'terminado de igualar el recuento de guiones largos del cuerpo. No aceptado, solo '
-        'declarado para no bloquear.'),
-    'Nueve de los trece modelos mejoran': ('2026-09-09',
-        'PENDIENTE de propagar a los tres .docx (§F161): el equipo principal corrigio el recuento '
-        '(nueve -> once) en el Markdown el 2026-09-09, en curso de sincronizacion con el '
-        'renderizador propio de Claude Desktop. No aceptado, solo declarado para no bloquear.'),
-    '−0,54 y −0,18 puntos en los dos de 31B': ('2026-09-09',
-        'PENDIENTE de propagar a los tres .docx (§F161): mismo commit que el recuento de '
-        'modelos, corrige el signo de los dos deltas de 31B (negativos -> +0,81/+0,97). No '
-        'aceptado, solo declarado para no bloquear.'),
-    'Grupos con más de una corrida sobre N=120, con el motivo de la sustitución y la evidencia': (
-        '2026-09-09',
-        'PENDIENTE de propagar a los tres .docx (§F160): la Tabla 20 se retiro del Markdown el '
-        '2026-09-09 y sustituyo por una nota breve; los .docx aun conservan la tabla vieja. No '
-        'aceptado, solo declarado para no bloquear.'),
     '.rebuild_venv.log': ('2026-09-09',
                           'fichero vacio del commit 880f4f9; decision del autor '
                           '(CURRENT-TASKS §1.103)'),
@@ -1455,15 +1431,22 @@ def _texto_docx(ruta):
 
 # 17 el 2026-09-09 al medirlo por primera vez; 16 tras partir el run de §3.3, que era el
 # unico de los 17 introducido por una edicion propia. Baja segun se propague la limpieza.
-BOLD_CUERPO_BASE = 6    # 14 -> 6 el 2026-09-09 (Claude Desktop, §2.24): los tres .docx se
-                        # reconstruyeron desde el .md y heredan su sobriedad tipografica, asi que
-                        # el resalte del cuerpo baja de 14 a 6. La propia comprobacion pidio bajar
-                        # la base para seguir vigilando desde el estado nuevo.
-                        # entre runs y el nuevo texto heredo el formato del primero, que no
-                        # estaba en negrita. Son dos cifras derivadas de una tabla, que segun
-                        # CLAUDE.md no llevan resalte, de modo que la perdida va en la
-                        # direccion correcta. Se baja la base para que la comprobacion siga
-                        # vigilando que no CREZCAN desde el estado nuevo.
+BOLD_CUERPO_BASE = 9    # 6 -> 9 el 2026-09-09 (Claude Desktop, §2.25). El 6 fue un error mio:
+                        # lo puse desde una medicion propia con otro criterio de conteo. Con el
+                        # criterio de esta comprobacion el estado real es 9, y los NUEVE son
+                        # falsos positivos del constructor de `marcados`, no resaltes anadidos.
+                        # Verificado uno a uno: `**AIMD**` esta en el .md (linea 215) y
+                        # `**Ejemplo 1:**` tambien (linea 743), pero no entran en `marcados`
+                        # porque `\*\*([^*]+)\*\*` no representa dos casos: (a) una negrita que
+                        # contiene cursiva —`**Ejemplos *few-shot* de...**`—, que parte el
+                        # emparejamiento y descoloca los pares siguientes; y (b) una negrita que
+                        # cruza una linea de cita, donde el `>` queda dentro del texto marcado
+                        # —«internamente\n> coherente**»— mientras el renderizador lo retira.
+                        # NO se toco el regex: se probo sustituirlo por uno no codicioso con
+                        # re.S y el recuento subio de 9 a 142, emparejando marcas de tramos
+                        # distintos. Es el defecto del que avisa el autor. Queda anotado para
+                        # el equipo principal por si quiere abordarlo. La comprobacion conserva
+                        # su proposito, que es detectar CRECIMIENTO desde el estado conocido.
 
 
 PDF_RAIZ = 'Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.pdf'
