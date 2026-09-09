@@ -2663,3 +2663,43 @@ sin verificar que la mutación era realmente un defecto.
 
 **Verificado que el informe queda intacto** tras las catorce mutaciones: `diff` sin diferencias frente al
 original.
+
+---
+
+## §F79 — La duración de una corrida no es estimable con la telemetría que el estudio guarda
+
+**Fecha:** 2026-09-08, 22:26. Segundo intento fallido, por causa distinta del primero. **Se documenta para
+no intentarlo una tercera vez.**
+
+**Primer intento** (esta tarde): estimar el tiempo de cada modelo a partir de las latencias de la corrida
+publicada. Descartado porque los dos anclajes medidos daban factores que diferían casi cuatro veces, y porque
+`§F71.ter` demostró después que esas latencias incluyen espera en cola y no miden generación.
+
+**Segundo intento** (ahora): usar los **tokens por segundo**, que `§F71.ter` acreditó como estables entre
+corridas y por tanto característicos del modelo. La hipótesis era que si cada artículo requiere un trabajo
+parecido, el producto `minutos × (tokens/s)` sería aproximadamente constante entre modelos.
+
+**No lo es.** Sobre los siete modelos ya rehechos:
+
+| Modelo | Minutos (N=120) | Tokens/s | Producto |
+|:---|---:|---:|---:|
+| `gemma4:latest` | 74,5 | 50,8 | **3 784** |
+| `gemma4:31b-mlx` | 45,4 | 24,3 | 1 104 |
+| `gemma4:12b-mlx` | 18,2 | 53,8 | 980 |
+| `qwen3:8b` | 18,4 | 39,8 | 730 |
+| `llama3.1:8b` | 17,0 | 42,4 | 722 |
+| `gemma:latest` | 17,4 | 40,5 | 703 |
+| `qwen2.5:14b` | 27,5 | 23,3 | **643** |
+
+De 643 a 3 784: un factor de **5,9**. `gemma4:latest` se dispara porque su modo KB RAG genera muchísimo más
+texto que los demás, y esa variable —**cuántos tokens produce cada modelo por artículo**— no está registrada
+en ninguna parte: el CSV guarda `tokens_per_sec` pero **no el recuento de tokens**.
+
+**Conclusión: con la telemetría disponible no se puede estimar cuánto tardará una corrida.** Falta
+precisamente el dato que la determina. Registrarlo sería barato y útil para el futuro, pero no cambia el
+presente.
+
+**Consecuencia práctica para la monitorización:** el único criterio válido para juzgar si un barrido sigue
+vivo es su propio registro de progreso, y por eso se pidió el script al equipo de 48 GB. Un silencio largo
+**no es evidencia de nada**, y hoy ya llevó una vez a estar a punto de declarar caído un barrido que
+funcionaba.
