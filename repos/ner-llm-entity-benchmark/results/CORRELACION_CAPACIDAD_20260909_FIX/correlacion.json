@@ -1,0 +1,88 @@
+{
+ "nota": "Correlacion entre el F1 baseline de cada modelo y la mejora que le aporta el KB RAG, sobre los trece modelos de la Tabla 7 (N=120), consolidado de la re-corrida completa (decision 1, adoptado el 2026-09-09, FINDINGS §F154). Sostiene la afirmacion de §5.3.1 sobre el beneficio del RAG y la capacidad, y la cifra que muestra el panel (b) de la Figura 2. El artefacto del consolidado publicado, con sus coeficientes discrepantes y su analisis de robustez, se conserva en results/CORRELACION_CAPACIDAD_20260908/.",
+ "fecha": "2026-09-09",
+ "n_modelos": 13,
+ "modelos": [
+  "gemma4:31b-cloud",
+  "gemma4:31b-mlx",
+  "gemma4:12b-mlx",
+  "gpt-oss:20b",
+  "gemma4:latest",
+  "qwen2.5:14b",
+  "llama3.1:8b",
+  "qwen3:8b",
+  "llama3.2:latest",
+  "mistral-nemo:latest",
+  "gemma:latest",
+  "deepseek-r1:1.5b",
+  "nemotron-mini:4b"
+ ],
+ "f1_baseline": [
+  82.13,
+  81.47,
+  77.67,
+  75.41,
+  75.33,
+  69.61,
+  69.17,
+  69.03,
+  63.25,
+  60.63,
+  59.55,
+  28.73,
+  28.29
+ ],
+ "f1_kb_rag": [
+  82.94,
+  82.44,
+  79.96,
+  77.08,
+  77.86,
+  70.31,
+  71.48,
+  68.98,
+  69.98,
+  56.35,
+  59.58,
+  30.8,
+  40.55
+ ],
+ "delta": [
+  0.81,
+  0.97,
+  2.29,
+  1.67,
+  2.53,
+  0.7,
+  2.31,
+  -0.05,
+  6.73,
+  -4.28,
+  0.03,
+  2.07,
+  12.26
+ ],
+ "spearman": {
+  "rho": -0.0879,
+  "p": 0.7752,
+  "significativo_005": false
+ },
+ "pearson": {
+  "r": -0.4816,
+  "p": 0.0956,
+  "significativo_005": false
+ },
+ "n_necesaria_para_p005": {
+  "spearman": 15,
+  "pearson": 12
+ },
+ "advertencia": "A diferencia del consolidado publicado, aqui los dos coeficientes COINCIDEN: ninguno alcanza p<0,05. No hay discrepancia de veredicto que declarar.",
+ "punto_mas_influyente": {
+  "modelo": "nemotron-mini:4b",
+  "pearson_sin_el": {
+   "r": 0.012,
+   "p": 0.9706
+  },
+  "lectura": "Retirado nemotron-mini:4b, el Pearson pasa de -0,4816 a +0,0120 y pierde toda significancia: la relacion depende casi enteramente de ese modelo y no es un patron generalizable a los otros doce."
+ }
+}

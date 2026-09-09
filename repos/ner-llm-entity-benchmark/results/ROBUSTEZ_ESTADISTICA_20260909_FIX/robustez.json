@@ -1,0 +1,197 @@
+{
+ "correlacion_capacidad_beneficio": {
+  "n": 13,
+  "spearman": {
+   "rho": -0.0879,
+   "p": 0.7752
+  },
+  "pearson": {
+   "r": -0.4816,
+   "p": 0.0956
+  }
+ },
+ "influencia_al_retirar_cada_modelo": {
+  "deepseek-r1:1.5b": {
+   "pearson_r": -0.6151,
+   "pearson_p": 0.0333,
+   "spearman_rho": -0.007
+  },
+  "gemma4:12b-mlx": {
+   "pearson_r": -0.4964,
+   "pearson_p": 0.1006,
+   "spearman_rho": -0.1259
+  },
+  "gemma4:31b-cloud": {
+   "pearson_r": -0.4746,
+   "pearson_p": 0.119,
+   "spearman_rho": -0.0559
+  },
+  "gemma4:31b-mlx": {
+   "pearson_r": -0.4773,
+   "pearson_p": 0.1166,
+   "spearman_rho": -0.0559
+  },
+  "gemma4:latest": {
+   "pearson_r": -0.4955,
+   "pearson_p": 0.1014,
+   "spearman_rho": -0.1259
+  },
+  "gemma:latest": {
+   "pearson_r": -0.5047,
+   "pearson_p": 0.0942,
+   "spearman_rho": -0.2238
+  },
+  "gpt-oss:20b": {
+   "pearson_r": -0.4832,
+   "pearson_p": 0.1115,
+   "spearman_rho": -0.0699
+  },
+  "llama3.1:8b": {
+   "pearson_r": -0.484,
+   "pearson_p": 0.1108,
+   "spearman_rho": -0.0839
+  },
+  "llama3.2:latest": {
+   "pearson_r": -0.5063,
+   "pearson_p": 0.093,
+   "spearman_rho": -0.007
+  },
+  "mistral-nemo:latest": {
+   "pearson_r": -0.5971,
+   "pearson_p": 0.0404,
+   "spearman_rho": -0.2378
+  },
+  "nemotron-mini:4b": {
+   "pearson_r": 0.012,
+   "pearson_p": 0.9706,
+   "spearman_rho": 0.1608
+  },
+  "qwen2.5:14b": {
+   "pearson_r": -0.4767,
+   "pearson_p": 0.1171,
+   "spearman_rho": -0.1469
+  },
+  "qwen3:8b": {
+   "pearson_r": -0.4771,
+   "pearson_p": 0.1168,
+   "spearman_rho": -0.1678
+  }
+ },
+ "modelo_mas_influyente": "nemotron-mini:4b",
+ "csv": "repos/ner-llm-entity-benchmark/results/ANALISIS_CONJUNTO_20260909_FIX/merged_results.csv",
+ "grupos": 26,
+ "registros_completos": 113,
+ "friedman": {
+  "chi2": 1802.3671,
+  "p": 0.0,
+  "gl": 25
+ },
+ "n_comparaciones": 13,
+ "significativos_pareado": 3,
+ "filas": [
+  {
+   "modelo": "nemotron-mini:4b",
+   "n": 113,
+   "delta_pp": 12.26,
+   "p_crudo": 1.3925214165254048e-06,
+   "p_holm": 1.810277841483026e-05,
+   "significativo": true
+  },
+  {
+   "modelo": "llama3.2:latest",
+   "n": 113,
+   "delta_pp": 6.73,
+   "p_crudo": 9.94308953454614e-05,
+   "p_holm": 0.0010937398488000754,
+   "significativo": true
+  },
+  {
+   "modelo": "gemma4:latest",
+   "n": 113,
+   "delta_pp": 2.53,
+   "p_crudo": 0.006607585598285407,
+   "p_holm": 0.059468270384568665,
+   "significativo": false
+  },
+  {
+   "modelo": "llama3.1:8b",
+   "n": 113,
+   "delta_pp": 2.31,
+   "p_crudo": 0.17942671336665073,
+   "p_holm": 0.8971335668332536,
+   "significativo": false
+  },
+  {
+   "modelo": "gemma4:12b-mlx",
+   "n": 113,
+   "delta_pp": 2.29,
+   "p_crudo": 4.33244532426464e-05,
+   "p_holm": 0.0005198934389117568,
+   "significativo": true
+  },
+  {
+   "modelo": "deepseek-r1:1.5b",
+   "n": 113,
+   "delta_pp": 2.07,
+   "p_crudo": 0.48376438217733086,
+   "p_holm": 1.0,
+   "significativo": false
+  },
+  {
+   "modelo": "gpt-oss:20b",
+   "n": 113,
+   "delta_pp": 1.67,
+   "p_crudo": 0.015451584353073962,
+   "p_holm": 0.12361267482459169,
+   "significativo": false
+  },
+  {
+   "modelo": "gemma4:31b-mlx",
+   "n": 113,
+   "delta_pp": 0.97,
+   "p_crudo": 0.02871608620129411,
+   "p_holm": 0.20101260340905877,
+   "significativo": false
+  },
+  {
+   "modelo": "gemma4:31b-cloud",
+   "n": 113,
+   "delta_pp": 0.81,
+   "p_crudo": 0.0999823267802174,
+   "p_holm": 0.5998939606813044,
+   "significativo": false
+  },
+  {
+   "modelo": "qwen2.5:14b",
+   "n": 113,
+   "delta_pp": 0.69,
+   "p_crudo": 0.2764428249956843,
+   "p_holm": 1.0,
+   "significativo": false
+  },
+  {
+   "modelo": "gemma:latest",
+   "n": 113,
+   "delta_pp": 0.03,
+   "p_crudo": 0.354716890871943,
+   "p_holm": 1.0,
+   "significativo": false
+  },
+  {
+   "modelo": "qwen3:8b",
+   "n": 113,
+   "delta_pp": -0.05,
+   "p_crudo": 0.6945719490139326,
+   "p_holm": 1.0,
+   "significativo": false
+  },
+  {
+   "modelo": "mistral-nemo:latest",
+   "n": 113,
+   "delta_pp": -4.29,
+   "p_crudo": 0.005774145018382616,
+   "p_holm": 0.05774145018382616,
+   "significativo": false
+  }
+ ]
+}

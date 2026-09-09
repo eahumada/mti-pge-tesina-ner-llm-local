@@ -7404,3 +7404,195 @@ Dos defectos menores en el Anexo I, Tabla 19 (42 filas):
 pasar a las formalidades. Queda para quien maquete: añadir el sufijo `_baseline` a la fila 33 y el
 nombre del modelo a las cuatro filas de ablación, sin tocar ninguna cifra. Es aditivo y de una
 palabra por fila; no cambia ningún resultado del estudio.
+
+---
+
+## §F154 — Decisión 1 ejecutada: adoptado el consolidado de la re-corrida completa
+
+**Fecha:** 2026-09-09 · **Origen:** instrucción explícita del autor («tomar el consolidado nuevo»),
+sobre la decisión que `§F113`/`§1.246` dejaban reabierta y recomendada
+
+### Qué cambió mecánicamente
+
+`CSV_CONSOLIDADO` y `MANIFIESTO` en `tools/verificar_informe.py` pasan de
+`ANALISIS_CONJUNTO_20260907` (publicado, 3 120 filas, 8 corridas heterogéneas) a
+`ANALISIS_CONJUNTO_20260909_FIX` (re-corrida completa, 2 938 filas = 26×113, trece corridas
+homogéneas de `recorrida_20260908/`, todas con `max_tokens=4096` y `rag_mode=kb_combined`). El
+publicado **no se borra**: sigue en su directorio, es el que sostuvo el informe hasta hoy y el que
+un tribunal puede pedir ver.
+
+**Cuatro defectos de infraestructura, corregidos antes de adoptar y no después:**
+
+1. **Rutas absolutas no portables.** El manifiesto del consolidado nuevo declara sus trece fuentes
+   con rutas de otra máquina (`§F148`). Cuatro sitios de `tools/verificar_informe.py` las trataban
+   como locales sin reanclar, y dos consumidores más —`tools/sensibilidad_combinada.py`— tenían el
+   mismo defecto. Los seis, corregidos con la misma técnica: recortar por la cola conocida
+   `repos/ner-llm-entity-benchmark/`.
+2. **Cinco constantes hardcodeadas** al consolidado publicado en `verificar_informe.py` (`c_levene`,
+   `c_tukey`, `c_titulares`, `c_conclusion1`, la de telemetría) se reescribieron para derivar de
+   `CSV_CONSOLIDADO`, una sola fuente de verdad — el mismo mecanismo que evitó el desfase de
+   `§F149`, aplicado antes de que ocurriera aquí.
+3. **`tools/sensibilidad_combinada.py` cargaba los 120 registros crudos contra un CSV de 113**
+   (contaminados excluidos) y por eso declaraba **los 26 grupos incoherentes**, no solo
+   `nemotron-mini:4b`. Corregido filtrando los siete artículos contaminados que el manifiesto
+   declara. Verificado tras el arreglo: **los 26 grupos coinciden**, incluido `nemotron-mini:4b`,
+   cuya exclusión ya no hace falta.
+4. **`levene.json` y `friedman.json` no existían** para el consolidado nuevo. Generados con el mismo
+   método —biblioteca estándar, verificado contra `scipy` del venv del proyecto— y persistidos en
+   `results/ROBUSTEZ_ESTADISTICA_20260909_FIX/`.
+
+### Las cifras que cambian, todas desde el verificador y no de memoria
+
+| | Publicado | Adoptado |
+|:---|---:|---:|
+| ANOVA F (p) | 38,2222 (3,4453e-160) | **119,7502** (subdesborda a 0,0; el informe debe escribir «p < 10⁻³⁰⁰») |
+| Tukey, significativos de 13 | 2 (`nemotron-mini:4b` +14,52 pp, `llama3.2:latest` +10,82 pp) | **1** (`nemotron-mini:4b` +12,26 pp; `llama3.2:latest` +6,73 pp, p=0,2334, **ya no significativo**) |
+| Tukey, pares significativos de 325 | 158 | **217** |
+| Friedman χ² | 1 169,2327 | **1 802,3671** |
+| Levene (Brown-Forsythe) p | 0,1842 (no detecta) | **1,394e-11** (sí detecta) |
+| Correlación capacidad-beneficio, Spearman | −0,5165 (p=0,0707) | **−0,0879** (p=0,7752) |
+| Correlación, Pearson | −0,6004 (p=0,0300) | **−0,4816** (p=0,0956) |
+
+### Y el hallazgo que importa más que cualquier número: la categoría fantasma de `§F53` se corrigió
+
+`§F64` y `CURRENT-TASKS §1.246` ya lo habían establecido y aquí se **reverifica**: el defecto que
+motivó toda la sección «Integridad de la medición» de `CLAUDE.md` —una categoría que el corpus no
+anotaba, con el 65 % de los falsos positivos cayendo ahí— era **Locations**, y en el corpus de la
+re-corrida **está corregido**. Comprobado con el indicador que `CLAUDE.md` fija: `tp+fn` agregado
+por categoría, sobre `gemma4:31b-mlx_baseline` de la re-corrida:
+
+| Categoría | tp | fp | fn | tp+fn |
+|:---|---:|---:|---:|---:|
+| Persons | 509 | 17 | 85 | 594 |
+| Organizations | 565 | 162 | 247 | 812 |
+| **Locations** | **477** | 134 | **68** | **545** |
+
+`tp+fn = 545`, no cero: el corpus **sí anota Locations** ahora (119 de 120 artículos, 545 entidades),
+tras los commits `eb97af0`/`c776fe0`/`f49c03c` («Locations recuperadas», «63 locations embebidas de
+Kleptotrace»). Es la explicación real del salto de F1 —de 22-62 % a 22-82 % en la Tabla 7—: no es
+solo excluir siete artículos contaminados, es que una categoría entera dejó de penalizarse contra el
+vacío.
+
+**Y esto tiene una consecuencia sobre el Anexo I que `§F64` ya adelantaba y que aquí se ejecuta.** La
+«medición restringida a Personas y Organizaciones» existe **para compensar** la ausencia de anotación
+de Locations. Con Locations ya anotadas en la re-corrida, seguir restringiendo **no corrige nada: solo
+descarta información válida**, y `§F64` ya lo había medido con cuatro puntos de comparación: la
+restringida **subestima** el valor real entre 1,3 y 5,7 puntos, siempre en la misma dirección, «no es
+error de la estimación: es el crédito por acertar en una categoría que antes no se podía acertar».
+
+**Por tanto, las cifras titulares del resumen y del §6 —que citaban la métrica restringida
+precisamente para sortear el defecto— pasan a citar la métrica completa de la Tabla 7**, que ya es
+válida sobre la re-corrida:
+
+| Titular | Restringida (lo que decía) | Completa (lo que pasa a decir) |
+|:---|---:|---:|
+| F1 en español, N=120 (`gemma4:31b-mlx_baseline`) | 76,55 % | **81,47 %** |
+| F1 de la variante alojada, N=120 (`gemma4:31b-cloud_baseline`) | 80,42 % | **82,13 %** |
+| F1 sobre el dominio, N=30 (`gemma4:31b-mlx`) | 90,16 % | **90,16 % (sin cambio: corpus N=30, no afectado por la decisión 1)** |
+
+**El Anexo I no se borra**: sigue siendo la evidencia de que el defecto existió y de cuánto costaba,
+y de que su estimación era conservadora. Lo que deja de tener sentido es **calcularla de nuevo sobre
+la re-corrida**, porque ahí no hay nada que restringir.
+
+### Lo que queda pendiente, y es del autor
+
+**Decisión 11** (reformular la tesis central) se ejecuta con estas cifras: el hallazgo pasa de «dos
+modelos pequeños» a **un modelo** (`nemotron-mini:4b`) con mejora estadísticamente sólida por Tukey,
+y `llama3.2:latest` como el mayor delta bruto entre los que no alcanzan la corrección por
+comparaciones múltiples. **Decisión 13** (convención de agregación de la conclusión 1) se resuelve
+con las cifras de este consolidado, no las del publicado.
+
+---
+
+## §F155 — Decisión 1 completada: el Markdown reescrito, verificado en 0 fallos nuevos
+
+**Fecha:** 2026-09-09 · **Origen:** continuación de §F154, instrucción del autor de terminar y
+completar la adopción
+
+`§F154` dejó hecho el cambio mecánico —`CSV_CONSOLIDADO` y `MANIFIESTO` apuntando al consolidado
+adoptado— y las cifras que cambiarían, todas verificadas. Esta entrada cierra el trabajo: el
+Markdown canónico reescrito con esas cifras, el verificador generalizado para que no vuelva a
+desfasarse, y las dos figuras regeneradas.
+
+### Lo que se reescribió en el Markdown, todo verificado por el propio verificador
+
+- **Tabla 7** (26 celdas): sustituida por los valores del consolidado adoptado.
+- **§5.3.1**, párrafo del ANOVA/Tukey/Levene/Friedman: F=119,7502 con `p < 10⁻³⁰⁰` (cota, porque
+  subdesborda); Tukey **uno** de trece significativo (`nemotron-mini:4b` +12,26 pp), no dos —
+  `llama3.2:latest` pasa de +10,82 pp significativo a +6,73 pp sin serlo (p=0,2334); 217 de 325
+  comparaciones significativas (antes 158); Levene **sí** detecta heterocedasticidad
+  (p=1,39×10⁻¹¹, antes no la detectaba); Friedman χ²=1802,3671 (antes 1169,23).
+- **§5.3.1**, párrafo de correlación: Spearman −0,0879 (p=0,7752) y Pearson −0,4816 (p=0,0956); los
+  dos coeficientes **coinciden** ahora en el veredicto —antes discrepaban—; retirado
+  `nemotron-mini:4b`, el Pearson pasa a +0,0120: la relación con la capacidad depende casi
+  enteramente de ese modelo.
+- **Conclusión 6** (§7.1) y **resumen/abstract**: reformulados de «dos modelos, tendencia con la
+  capacidad» a «un modelo, sin relación general con la capacidad» — es la **decisión 11**,
+  ejecutada con las cifras que la sostienen.
+- **Titulares** (`c_titulares` reescrito): 76,55 %→**81,47 %**, 80,42 %→**82,13 %**. Dejan de citar
+  la métrica restringida porque el defecto que la motivaba —Locations sin anotar— está corregido
+  en el consolidado adoptado, y `§F64` ya había medido que la restringida **subestima** el valor
+  real. El 90,16 % (dominio, N=30) no cambia: ese corpus nunca tuvo el defecto.
+- **Conclusiones 1 y 3, §6, §5.3.5** (decisión 13, resuelta): retirada la comparación «bajo la
+  convención original» de la conclusión 1 —quedó sin sentido al dejar de restringir N=120—, con lo
+  que sus dos citas erróneas (62,67/80,51 en vez de 59,25/80,57) se retiran con ella. El coste de
+  la soberanía pasa de «cuatro puntos» a **«menos de un punto»** (82,13 − 81,47 = 0,66 pp).
+- **Anexo I**: mantenido como registro **histórico** del corpus publicado y su defecto —por
+  decisión explícita, ver más abajo—; solo se corrige su propio error de convención (62,67→59,25,
+  decisión 13) y se añade, en la subsección de corridas múltiples, la declaración de que hubo
+  **dos corridas completas** del estudio, cuál es la de referencia y por qué.
+- **Figura 2**: regenerada con `tools/generar_figuras_informe.py` desde la Tabla 7 ya corregida;
+  corregida además la anotación y el título del panel (b), que citaban la correlación vieja.
+
+### La pregunta de fondo, y la respuesta que queda escrita
+
+El autor preguntó, con razón, si describir el dato histórico complica el informe. La respuesta
+aplicada: el **cuerpo** afirma el resultado definitivo de forma directa, sin relitigar la historia
+en cada frase; las comparaciones con el dato viejo se conservan solo donde explican un **hallazgo**
+que cambia (`llama3.2:latest` deja de ser significativo, el coste de soberanía casi desaparece). El
+**Anexo I entero** queda como el único lugar dedicado a la historia del defecto, que es exactamente
+su propósito declarado y lo que exige la regla de integridad de `CLAUDE.md` sobre declarar todas
+las corridas.
+
+### El verificador, generalizado para que la adopción no lo rompiera en silencio
+
+Seis constantes y funciones estaban **hardcodeadas** al consolidado publicado (`c_levene`,
+`c_tukey`, `c_titulares`, `c_agregacion`, la de telemetría, `c_anexo_vs_tabla7`) y se reescribieron
+para derivar de `CSV_CONSOLIDADO`/`MANIFIESTO` — una sola fuente de verdad, el mismo mecanismo que
+evitó el desfase de `§F149` aplicado antes de que ocurriera aquí. Y una constante nueva,
+`MANIFIESTO_PUBLICADO`, para las dos únicas comprobaciones (`c_agregacion`, `c_anexo_vs_tabla7`)
+que **no** deben seguir la adopción, porque verifican el Anexo I contra su propia fuente histórica.
+
+**Cuatro comprobaciones tenían además regex o listas hardcodeadas** al contenido exacto de la
+frase publicada, no solo a la ruta del consolidado:
+
+- `c_anova`: buscaba la p en **todo el documento**, no en una ventana tras la F; con el ANOVA
+  subdesbordando encontraba la p de Levene en su lugar. Corregido con ventana y aceptación de
+  «p < 10^-300».
+- `c_tukey`: exigía una tupla fija de **dos** modelos con sus p literales. Generalizado para
+  derivar los modelos y sus p del propio artefacto (`sig`), no de una lista escrita a mano.
+- `c_levene`: exigía el verbo «no detecta» y notación decimal. Generalizado a los dos verbos y a
+  notación científica cuando la p es extrema.
+- `c_redondeos`: el par de «llama3.2:latest» dejó de tener sentido —ya no hay una forma redondeada
+  de su delta en el resumen— y se retiró en lugar de dejarlo fallando contra un texto que no tiene
+  por qué existir; el de «p de Spearman» tenía el valor **0707** escrito en el regex, y se ancló a
+  la misma frase que el de Spearman en vez de a una constante.
+
+Los cuatro son la misma lección: **una comprobación que verifica un texto tiene que leer ese
+texto**, no una copia suya congelada en el código. Es exactamente lo que el propio `c_tukey` ya
+advertía en su docstring sobre el delta de `nemotron-mini:4b` —«la primera versión comparaba el
+artefacto contra un 0.1452 puesto a mano»— y que hoy alcanzó a cuatro comprobaciones más porque
+nadie había cambiado el consolidado desde que se escribieron.
+
+### Verificación final
+
+`tools/verificar_informe.py`: 56 comprobaciones, **0 fallos nuevos** tras cada edición, verificado
+paso a paso y no solo al final. `tools/auditar_afirmaciones.py`: 15/15. El cuerpo sigue dentro del
+límite de 25 páginas. `tools/auditar_borrados.py`: sin cambios respecto de antes de esta sesión.
+
+### Lo que queda, y es de Claude Desktop
+
+Todos los `.docx` quedan por detrás del Markdown en los mismos sitios de siempre, más los que esta
+adopción añadió: la Tabla 7 entera, la fila comparativa de la Tabla 1, el resumen y el abstract, y
+el número de resaltes sin propagar (14→18). Todo declarado en el verificador con su responsable;
+el encargo de maquetación se actualiza junto con esta entrada.

@@ -10,6 +10,12 @@ aceptación de §5 se reescribió para no citar cifras absolutas: se comparan an
 trabajo, porque un número fijo escrito en este documento se desfasa en cuanto alguien corrija el
 Markdown — ya le pasó dos veces a documentos parecidos (`FINDINGS §F134`, `§F149`).
 
+**Ampliado el mismo día, más tarde: el autor adoptó un consolidado nuevo (decisión 1).**
+Ocho piezas más, la 11 a la 18, en la nueva sección **0.bis**, y son las que más texto tocan —
+toda la Tabla 7, el párrafo estadístico entero de §5.3.1, el resumen y el abstract. Van
+**primero** en la prioridad si el espacio aprieta: son la comprobación más visible para un
+tribunal, porque tocan la cifra titular del trabajo. Detalle en `FINDINGS §F154`/`§F155`.
+
 ---
 
 ## 0. Lo primero, y ahorra la mitad del trabajo
@@ -72,6 +78,71 @@ empezar** y trabaja contra la salida del verificador, que reflejará lo ya aplic
 > tres rutas del Markdown no tienen su hoja en el árbol del `.docx` y añadirlas **en la convención
 > del `.docx`**. Y si decides que la convención del entregable es la buena —lo es, para un lector—,
 > di que la divergencia es **deliberada** y quedará declarada como tal en lugar de como defecto.
+
+---
+
+## 0.bis Se adoptó un consolidado nuevo el 2026-09-09: la Tabla 7 entera cambió
+
+**Esto es nuevo desde que se escribió este encargo y va primero, porque toca más texto que
+cualquier otra pieza.** El autor decidió la decisión 1: el estudio se mide ahora sobre
+`ANALISIS_CONJUNTO_20260909_FIX` (re-corrida completa, 113 artículos por grupo, sin el defecto de
+`Locations` sin anotar) en lugar de `ANALISIS_CONJUNTO_20260907` (publicado). Detalle completo en
+`FINDINGS §F154` y `§F155`.
+
+**Lo que cambia, y por tanto lo que hay que copiar al `.docx` tal cual está en el Markdown, no
+reconstruir de memoria:**
+
+### Pieza 11 — La Tabla 7 entera (26 celdas) y su párrafo introductorio
+
+Las 26 celdas de F1 cambian, y con ellas la columna «Δ significativo»: **solo uno** de los trece
+modelos es significativo ahora (`nemotron-mini:4b`), no dos. `llama3.2:latest` pierde el resalte en
+negrita y su «sí (p=0,007)».
+
+### Pieza 12 — El párrafo de §5.3.1 con el ANOVA, Tukey, Levene y Friedman
+
+F pasa de 38,2222 a **119,7502**, y la p ya no se escribe como número: se escribe **«p < 10⁻³⁰⁰»**,
+porque subdesborda. Tukey pasa de «dos de los trece» a **«uno de los trece»**. Levene **cambia de
+verbo**: pasaba de «no detecta» a «sí detecta» heterocedasticidad. Friedman pasa de 1 169,23 a
+**1 802,3671**. Es un párrafo largo y denso; cópialo entero, no lo edites cifra a cifra.
+
+### Pieza 13 — El párrafo de correlación de §5.3.1 y la conclusión 6 (§7.1)
+
+Los dos coeficientes **coinciden** ahora en el veredicto —antes discrepaban—, y ninguno alcanza
+significancia. La conclusión 6 pasa de «dos modelos» a **«uno»**, con la explicación de por qué
+`llama3.2:latest` ya no cuenta.
+
+### Pieza 14 — El resumen y el abstract, sincronizados
+
+Cambian en el mismo punto los dos: «dos de los trece» → «el más débil de los trece»; «76,55 % / 
+90,16 %» → «81,47 % / 90,16 %» (el 90,16 % del dominio **no cambia**). Cópialos **enteros y a la
+vez**: la regla de `CLAUDE.md` exige que digan exactamente lo mismo en los dos idiomas.
+
+### Pieza 15 — Las conclusiones 1 y 3, y el párrafo de soberanía de §6
+
+La conclusión 1 pierde la cláusula «bajo la convención original…» —ya no aplica— y cita 81,47 % en
+vez de 76,55 %. El coste de soberanía (conclusión 3 y §6) pasa de **«cuatro puntos»** a **«menos de
+un punto»** (82,13 − 81,47 = 0,66 pp). Es un cambio de conclusión, no solo de cifra: revisa que no
+quede ninguna mención suelta a «cuatro puntos» en el entregable.
+
+### Pieza 16 — La fila de este trabajo en la Tabla 1 (comparación con la literatura)
+
+Su celda de F1 pasa de 76,55 % a **81,47 %**.
+
+### Pieza 17 — La Figura 2
+
+Se **regeneró** (`tools/generar_figuras_informe.py`), no solo cambió el dato: el título del panel
+(b) y su anotación de correlación son distintos. Sustituye el PNG entero, no lo retoques.
+
+### Pieza 18 — El párrafo de corridas múltiples del Anexo I, ampliado
+
+Se le añadieron dos párrafos nuevos al principio, declarando que hubo **dos corridas completas**
+del estudio y cuál es la de referencia. Va con la pieza 1 si decides insertar esa subsección.
+
+**El resto del Anexo I NO cambia**: se mantiene deliberadamente histórico, describiendo el corpus
+publicado. No propagues los números de la Tabla 7 nueva hacia la Tabla 19 del Anexo I.
+
+**El resaltado creció de 14 a 18** por estos cambios de prosa; la comprobación ya lo sabe y está
+declarado, pero anótalo si tu recuento propio da otro número.
 
 ---
 

@@ -24,6 +24,8 @@ capítulo de resultados.
 
 ## 1. ¿El informe adopta el consolidado nuevo? — **REABIERTA el 2026-09-09, y es la decisión más grande del cierre**
 
+> **EJECUTADA el 2026-09-09, por instrucción explícita del autor («tomar el consolidado nuevo»).** `CSV_CONSOLIDADO` y `MANIFIESTO` apuntan a `ANALISIS_CONJUNTO_20260909_FIX`; el publicado se conserva en su directorio. El Markdown se reescribió por completo con las cifras nuevas, verificado paso a paso: `tools/verificar_informe.py` en 0 fallos nuevos. Detalle completo en `FINDINGS §F154` y `§F155`.
+
 > **Reabierta.** Se declaró **SUPERADA** el 2026-09-09 con el argumento de que lo único que retenía la
 > adopción del consolidado nuevo era `§F85`, y `§F85` ya está arreglado — el equipo de 48 GB lo entregó
 > ese mismo día. Pero al verificar la entrega apareció que **adoptarlo no es refrescar cifras**
@@ -502,6 +504,8 @@ tres filas y dejar la tercera con datos de otra corrida sería peor que no tocar
 
 ## 11. Cómo se reformula la tesis central — *la decisión de fondo*
 
+> **EJECUTADA el 2026-09-09, con la opción (a) recomendada.** Al adoptar el consolidado nuevo (decisión 1), la cifra cambió de fondo: no son «dos modelos pequeños» sino **uno**  (`nemotron-mini:4b`, +12,26 pp, único significativo por Tukey); `llama3.2:latest` deja de ser significativo (p pasa de 0,007 a 0,2334). La correlación con la capacidad, que era una tendencia no confirmada, **se anula por completo**: los dos coeficientes ahora coinciden en no alcanzar significancia. Reescritos §5.3.1, la conclusión 6, el resumen y el abstract. Detalle en `FINDINGS §F154`/`§F155`.
+
 `FINDINGS §F86` deja establecido que la proporcionalidad inversa entre capacidad y beneficio del RAG **no se
 sostiene sobre el corpus corregido**: Spearman cae de −0,5165 a **−0,0879 (p = 0,7752)**, el Pearson que queda
 **descansa en un solo punto** —sin `nemotron-mini:4b` es +0,0120 con p = 0,971— y los cinco modelos de mayor
@@ -567,6 +571,8 @@ la plataforma. Tampoco lo está `results/HISTORICO_20260630/`, que el inventario
 ---
 
 ## 13. La conclusión 1 cita cifras micro donde el informe declara macro
+
+> **RESUELTA el 2026-09-09, y no por sustitución.** Al adoptar el consolidado nuevo (decisión 1), la comparación «bajo la convención original…» de la conclusión 1 dejó de tener sentido —N=120 ya no se mide restringido— y se retiró entera, con lo que sus dos citas erróneas (62,67/80,51) se retiran con ella. La tercera instancia, la del Anexo I, se corrigió por sustitución simple (62,67→59,25), porque ese párrafo se mantiene histórico. `tools/verificar_informe.py` verifica ambas rutas. Detalle en `FINDINGS §F154`/`§F155`.
 
 **Hallado el 2026-09-09** verificando la afirmación de viabilidad. Detalle completo en `FINDINGS §F87`; el
 resumen es que la conclusión 1 dice:

@@ -44,10 +44,13 @@ import collections
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BENCH = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark')
-CONS = os.path.join(BENCH, 'results/ANALISIS_CONJUNTO_20260907')
+CONS = os.path.join(BENCH, 'results/ANALISIS_CONJUNTO_20260909_FIX')
+# Adoptado el 2026-09-09 (decision 1). El publicado sigue en
+# results/ANALISIS_CONJUNTO_20260907/ y no se borra.
 CATS = ('Persons', 'Organizations', 'Locations')
 # Ver el docstring: se quita en cuanto su per_type reproduzca su CSV.
-EXCLUIDOS = {'nemotron-mini:4b_baseline'}
+EXCLUIDOS = set()  # 2026-09-09: la re-corrida corrigio el TypeError de nemotron-mini y su
+# per_type ya reproduce el CSV (verificado con coherente_con_el_csv). Ver F154.
 
 
 def _efd():
@@ -75,15 +78,28 @@ def f1_desde_per_type(r):
 def cargar():
     efd = _efd()
     with open(os.path.join(CONS, 'merge_manifest.json'), encoding='utf-8') as fh:
-        fuentes = json.load(fh)['sources']
+        _man = json.load(fh)
+        fuentes = _man['sources']
+    # Los articulos contaminados que el consolidado nuevo excluye NO estan en su merged_results.csv,
+    # pero detailed_results.json si los trae: sin filtrarlos aqui, esta funcion promedia sobre 120
+    # registros contra un CSV de 113 y CUALQUIER grupo sale "incoherente" por una diferencia que no
+    # es del dato, es del filtro. Detectado el 2026-09-09 al dar False en los 26 grupos.
+    contaminados = set(_man.get('contaminados_excluidos') or [])
     with open(os.path.join(CONS, 'merged_results.csv'), encoding='utf-8') as fh:
         pm = {(r['model'], r['record_id']): r.get('parse_method') for r in csv.DictReader(fh)}
     visto, datos = set(), collections.defaultdict(list)
     for s in fuentes:
         rel = os.path.dirname(s['csv_path'])          # con `results/`, que es lo que BENCH espera
+        # El manifiesto del consolidado nuevo trae rutas ABSOLUTAS de otra maquina. Reancladas por
+        # la cola conocida, igual que tools/manifiesto_local.py (F148).
+        if os.path.isabs(rel):
+            _cola = 'repos/ner-llm-entity-benchmark/'
+            _i = rel.find(_cola)
+            if _i >= 0:
+                rel = rel[_i + len(_cola):]
         for r in efd.registros(rel):
             g, rid = r.get('model'), r.get('record_id')
-            if (g, rid) in visto:
+            if (g, rid) in visto or rid in contaminados:
                 continue
             if not ((r.get('metrics') or {}).get('per_type')):
                 continue

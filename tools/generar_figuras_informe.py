@@ -119,9 +119,9 @@ def figura_1():
     b.set_axisbelow(True)
     for s in ('top', 'right'):
         b.spines[s].set_visible(False)
-    b.set_title('(b) Tendencia, no significativa: la ganancia\ndecrece conforme mejor es el modelo de partida',
+    b.set_title('(b) Sin relación general con la capacidad:\nel beneficio se concentra en el modelo más débil',
                 fontsize=8.4, pad=8, loc='left')
-    b.text(0.97, 0.95, 'ρ de Spearman = −0,5165\n(p = 0,0707)', transform=b.transAxes,
+    b.text(0.97, 0.95, 'ρ de Spearman = −0,0879\n(p = 0,7752)', transform=b.transAxes,
            ha='right', va='top', fontsize=7, color='#333333')
 
     fig.tight_layout()

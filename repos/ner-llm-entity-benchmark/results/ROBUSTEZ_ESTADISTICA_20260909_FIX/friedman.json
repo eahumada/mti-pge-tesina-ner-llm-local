@@ -1,0 +1,19 @@
+{
+ "nota": "Contraste de robustez del ANOVA de una via que publica §5.3.1, sobre el consolidado de la re-corrida completa (decision 1, adoptado el 2026-09-09). Las 2.938 observaciones no son independientes: los veintiseis grupos evaluan los mismos 113 articulos (los 120 menos los siete contaminados), de modo que el diseno es de medidas repetidas y el informe lo declara. Aqui se comprueba que tratarlas como independientes es conservador, en lugar de solo argumentarlo.",
+ "fecha": "2026-09-09",
+ "grupos": 26,
+ "registros_completos": 113,
+ "diseno": "completamente cruzado y equilibrado: los 113 registros tienen los 26 grupos",
+ "anova_una_via_publicado": {
+  "F": 119.7502,
+  "p": 0.0,
+  "nota_p": "subdesborda a 0,0 en doble precision; el informe debe escribir una cota, p < 10^-300"
+ },
+ "friedman_medidas_repetidas": {
+  "chi2": 1802.3671,
+  "p": 0.0,
+  "gl": 25
+ },
+ "lectura": "El contraste apareado NO debilita la conclusion: la refuerza. Los dos estadisticos no son directamente comparables de modo que no procede decir que un p menor signifique mas potencia. Lo que si se puede afirmar es que el rechazo de la hipotesis nula se sostiene con el metodo apropiado al diseno.",
+ "para_la_defensa": "Si se pregunta por que se uso un ANOVA de una via sobre datos apareados, la respuesta es que el informe lo declara como limitacion y que se ha verificado que la conclusion no depende de esa eleccion."
+}

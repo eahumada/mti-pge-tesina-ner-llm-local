@@ -127,7 +127,7 @@ calendario.
 | A | ¿Se publica el η² ya calculado? | **abierta**, y es barata: una cifra y una frase |
 | B | Wilcoxon fuera del estudio, a trabajo futuro | **decidida**; falta el punto en §7 del `.md` |
 | C | Modelo logístico con Wald | **decidida**: trabajo futuro, con el dato acreditado |
-| D | ¿Se adopta el consolidado nuevo? | **abierta** — es la decisión 1, con su precio en `§F131` |
+| D | ¿Se adopta el consolidado nuevo? | **EJECUTADA el 2026-09-09** — decisión 1, adoptado. Ver `§F154`/`§F155` |
 | E | ¿Cuál es «el N de 13», 3 o 4? | **abierta** — solo si se adopta el marco pareado, o sea probablemente **no aplica** dado B |
 
 **La E se cae con la B**, y conviene notarlo: si el Wilcoxon queda fuera del estudio, no hay «N de

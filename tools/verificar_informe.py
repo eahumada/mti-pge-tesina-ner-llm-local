@@ -63,6 +63,36 @@ EXCLUIDOS = ['nuextract', 'minimax-m3', 'gemini-3.1-flash-lite', 'q8-64k', 'sonc
 # ─────────────────────────────────────────────────────────────────────────────────────────────────
 
 FALLOS_DECLARADOS = {
+    'Y una segunda escala de la misma declaraci': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo nuevo del Anexo I '
+        'que declara las DOS corridas completas del estudio (decision 1, F154). Va con el mismo '
+        'bloque de F121; no llego a los tres .docx por la misma razon que los otros diez.'),
+    'La corrida del 8 de septiembre es la de referenc': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision del autor; misma causa que la entrada '
+        'anterior. Ver §F154 y §F121.'),
+    'resaltes en el cuerpo que el Markdown no marca, y el estado declarado son 14': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion. La adopcion de la decision 1 (F154) reescribio '
+        'prosa en varios sitios y el recuento subio de 14 a 18; sigue siendo la MISMA causa '
+        'declarada, propagacion de la limpieza de sobriedad sin terminar, no un defecto nuevo. '
+        'Ver §F154'),
+    'el resumen difiere del Markdown en la palabra 128': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop. El resumen y el '
+        'abstract se reescribieron al adoptar el consolidado nuevo (decision 1, F154): '
+        '"significancia en dos de los" (dos modelos) pasa a "significancia en el mas debil" '
+        '(uno), porque llama3.2:latest deja de ser significativo con el consolidado adoptado. '
+        'Va con la pieza 8 del encargo. Ver §F154'),
+    'el abstract difiere del Markdown en la palabra 117': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop; misma causa que el '
+        'resumen. Ver §F154'),
+    'Tabla 2, fila 5 difiere': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop: la fila comparativa '
+        'de este trabajo en la Tabla 1 (indice interno "Tabla 2" del comparador) paso de '
+        '76,55 % F1 a 81,47 % F1 al adoptar el consolidado nuevo. Ver §F154'),
+    'Tabla 7, fila 1 difiere': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop: las 26 celdas de la '
+        'Tabla 7 cambiaron al adoptar el consolidado de la re-corrida completa (decision 1, '
+        'F154). Es la pieza mas grande de la resincronizacion; va primero en el encargo. '
+        'Ver FINDINGS §F154'),
     'le faltan las entradas de bibliografia [39]': ('2026-09-10',
         'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop: la entrada [39] '
         '(Dror et al., ACL 2018) se anadio al Markdown canonico el 2026-09-09 junto al punto 11 '
@@ -88,32 +118,12 @@ FALLOS_DECLARADOS = {
                           'fichero vacio del commit 880f4f9; decision del autor '
                           '(CURRENT-TASKS §1.103)'),
     '.restore_results.log': ('2026-09-09', 'idem'),
-    'cita 62.67': ('2026-09-09', 'decision 13, pendiente del autor (FINDINGS §F87)'),
-    'cita 80.51': ('2026-09-09', 'decision 13, pendiente del autor (FINDINGS §F87)'),
-    'sin contenido**, que no es telemetria': ('2026-09-10',
-        'PENDIENTE del autor: de las siete filas con telemetria ausente, UNA '
-        '(real_mixed_70) tiene recall y precision a cero, de modo que la salvedad de §5.3.1 '
-        '—«sus valores de precision, recall y F1 son reales»— es imprecisa para ella: sus '
-        'valores son cero, y no consta si son cero reales o cero por perdida. Ver §F108.bis'),
-    'el Anexo I dice': ('2026-09-09',
-                        'decision 13, ampliada a la tercera instancia del defecto '
-                        '(FINDINGS §F87.bis)'),
     'hay que regenerarlo desde el .docx': ('2026-09-09',
                                            'PENDIENTE, no aceptado: el PDF de la raiz es del '
                                            '2026-09-08 y los .docx se corrigieron el 09. Exige '
                                            'Word y no hay conversor aqui; es de la pasada de '
                                            'maquetacion (FINDINGS §F98). El PDF de enviados/ se '
                                            'conserva y no se toca'),
-    'publicado 22.59, per_type': ('2026-09-09',
-        'PENDIENTE del autor, ya NO del equipo remoto: los dos artefactos de '
-        'nemotron-mini:4b_baseline discrepan porque seis registros se re-extrajeron fuera del '
-        'arnes y solo el CSV recibio las metricas (§F110). Se declaro esperando que lo cerrara '
-        'la re-corrida de §3.bis.15; la re-corrida LLEGO el 2026-09-09 y NO lo cierra, porque '
-        'fue a un consolidado distinto (ANALISIS_CONJUNTO_20260909_FIX) y el publicado, que es '
-        'el que esta comprobacion lee, sigue intacto. Lo cierra la DECISION 1 —adoptar o no el '
-        'consolidado nuevo—, que es del autor y esta reabierta (§F113). Si se adopta, hay que '
-        'apuntar CSV_CONSOLIDADO al nuevo y levantar la exclusion de '
-        'tools/sensibilidad_combinada.py'),
     'Dos rasgos del problema explican': ('2026-09-09',
         'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
     'La carencia de datos etiquetados no es': ('2026-09-09',
@@ -253,7 +263,7 @@ def c_tukey_recuento(s):
     comprobacion **no recalcula Tukey**: verifica el recuento y la coherencia. Se declara aqui para
     que nadie la lea como mas fuerte de lo que es.
     """
-    cons = os.path.join(BENCH_DIR, 'results/ANALISIS_CONJUNTO_20260907')
+    cons = os.path.dirname(CSV_CONSOLIDADO)  # una sola fuente de verdad; ver F149
     art = os.path.join(cons, 'statistical_report.md')
     if not os.path.exists(art):
         check('el recuento de Tukey del informe cuadra con el artefacto', 0,
@@ -386,7 +396,9 @@ def c_friedman(s):
         if abs(pub - chi) > 0.011:
             fallos.append('el informe publica χ² = %s y el recalculo da %.4f' % (pub, chi))
     # 2) contra el artefacto, y su gl
-    art = os.path.join(BENCH_DIR, 'results/ROBUSTEZ_ESTADISTICA_20260908/friedman.json')
+    art = os.path.join(BENCH_DIR, 'results/ROBUSTEZ_ESTADISTICA_20260909_FIX/friedman.json')
+    # Adoptado el 2026-09-09 junto con CSV_CONSOLIDADO (decision 1). El artefacto del
+    # publicado (2026-09-08) se conserva en su directorio y no se borra.
     if not os.path.exists(art):
         fallos.append('falta %s, del que el indice de defensa toma esta misma cifra'
                       % os.path.relpath(art, RAIZ))
@@ -519,14 +531,22 @@ def c_redondeos(s):
 
     # (nombre, regex de la precisa, regex de la redondeada, decimales)
     PARES = [
-        ('mejora de nemotron-mini:4b', r'\*\*\+?(14),(\d{2}) pp\*\*', r'\+(14),(\d) y \+10,8', 1),
-        ('mejora de llama3.2:latest', r'\*\*\+?(10),(82) pp\*\*', r'\+14,5 y \+(10),(\d)', 1),
+        # `llama3.2:latest` dejo de citarse en el resumen con un numero pareado desde que la
+        # decision 1 lo saco de los modelos significativos (F154): no hay ya una forma "redondeada"
+        # de su delta en el resumen, de modo que ese par se retiro de esta lista en lugar de
+        # dejarlo fallando contra un texto que ya no tiene por que existir.
+        ('mejora de nemotron-mini:4b', r'\*\*\+?(\d+),(\d{2}) pp\*\*.{0,20}modelo m[aá]s d[eé]bil',
+         r'el m[aá]s d[eé]bil de los trece \(\+(\d+),(\d) puntos', 1),
         ('efecto del idioma', r'aporta (10),(40) puntos', r'aporta \+(10),(\d) puntos', 1),
         # El signo va DENTRO de la negrita: «**Spearman de −0,5165**». Y la p redondeada hay que
         # anclarla a su propia frase: «con p = (0),(\d{3})» a secas casaba con la p = 0,6382 de
         # un ANOVA secundario, que esta en otro sitio y no tiene nada que ver.
         ('rho de Spearman', r'\*\*Spearman de −?(0),(\d{4})\*\*', r'ρ = −(0),(\d{2}) con p', 2),
-        ('p de Spearman', r'\(p = (0),(0707)\)', r'ρ = −0,\d+ con p = (0),(\d{3})', 3),
+        # La p precisa se ancla A LA MISMA FRASE que la de Spearman en lugar de un literal fijo:
+        # con el consolidado publicado era 0,0707 y con el adoptado es 0,7752, y una constante
+        # aqui repetiria el defecto que esta comprobacion existe para evitar.
+        ('p de Spearman', r'\*\*Spearman de −?0,\d{4}\*\* \(p = (0),(\d{4})\)',
+         r'ρ = −0,\d+ con p = (0),(\d{3})', 3),
     ]
     for nombre, p_pre, p_red, dec in PARES:
         mirados += 1
@@ -1528,9 +1548,13 @@ def c_numeral_soberania(s):
     # segunda. Un patron con un solo verbo encuentra el Markdown y NO los entregables, que es justo
     # donde estaba el defecto: la comprobacion habria dado por bueno el documento roto mientras
     # verificaba el que estaba bien. Se aceptan los dos verbos.
+    # Dos formas de resolucion: «cuesta N puntos» (numeral en palabras) o, cuando la resta es
+    # menor que un punto entero, «cuesta menos de un punto». La segunda aparecio el 2026-09-09 al
+    # adoptar el consolidado nuevo, donde la diferencia baja a 0,66 pp y ningun numeral entero la
+    # describe con precision sin exagerar.
     pat = re.compile(r'(?:alcanza|obtiene)\s+(\d+),(\d+)\s*%\s*frente al\s+(\d+),(\d+)\s*%\s*'
-                     r'del mejor local(.{0,200}?)cuesta[^.]{0,28}?\b('
-                     + '|'.join(NUMERALES) + r')\s+puntos', re.S)
+                     r'del mejor local(.{0,200}?)cuesta[^.]{0,28}?\b(?:('
+                     + '|'.join(NUMERALES) + r')\s+puntos|menos de un punto)', re.S)
     fuentes = [('el Markdown', s)]
     for rel in DOCX_ENTREGABLES:
         ruta = os.path.join(RAIZ, rel)
@@ -1556,8 +1580,15 @@ def c_numeral_soberania(s):
             mirados += 1
             alto = float('%s.%s' % (m.group(1), m.group(2)))
             bajo = float('%s.%s' % (m.group(3), m.group(4)))
-            dicho = NUMERALES[m.group(6)]
             real = alto - bajo
+            if m.group(6) is None:
+                # se dijo «menos de un punto»: valido solo si la resta real es, en efecto, < 1
+                if real >= 1.0 or real < 0.0:
+                    fallos.append('%s: dice «menos de un punto» y la resta que lo precede da %.2f '
+                                  '(%.2f - %.2f), que no es menor que uno'
+                                  % (etiq, real, alto, bajo))
+                continue
+            dicho = NUMERALES[m.group(6)]
             if abs(real - dicho) > 0.5:
                 fallos.append('%s: dice «%s puntos» y la resta que lo precede da %.2f '
                               '(%.2f - %.2f). Propagar una cifra sin su prosa dependiente deja el '
@@ -1810,14 +1841,14 @@ def c_telemetria_ausente(s):
     # PIERDEN la fusion —`benchmark_n120_REMOTO` trae ocho filas de nemotron que el consolidado
     # descarta en favor de la re-corrida—. Contarlas aqui daba 15 donde el informe declara 7, y la
     # discrepancia era del contador, no del documento.
-    ruta = os.path.join(BENCH_DIR, 'results/ANALISIS_CONJUNTO_20260907/merged_results.csv')
+    ruta = CSV_CONSOLIDADO  # una sola fuente de verdad; ver F149/F154
     con, sin, mirados, fallos = 0, [], 0, []
     mirados += 1
     if not os.path.exists(ruta):
         check('las filas sin telemetria estan declaradas en el informe', mirados,
               ['no existe el CSV del consolidado'])
         return
-    rel = 'results/ANALISIS_CONJUNTO_20260907/merged_results.csv'
+    rel = os.path.relpath(CSV_CONSOLIDADO, RAIZ)
     if True:
         with open(ruta, encoding='utf-8') as fh:
             for r in _csv.DictReader(fh):
@@ -1838,17 +1869,23 @@ def c_telemetria_ausente(s):
                 else:
                     con += 1
     mirados += 1
-    m = re.search(r'(\w+) filas de `nemotron-mini:4b` tienen `latencia = 0`', s)
-    PAL = {'Siete': 7, 'siete': 7, 'Ocho': 8, 'ocho': 8, 'Seis': 6, 'seis': 6,
-           'Nueve': 9, 'nueve': 9, 'Diez': 10, 'diez': 10}
-    declaradas = PAL.get(m.group(1)) if m else None
-    if declaradas is None:
-        fallos.append('no se encuentra en el informe la salvedad de las filas con latencia 0, o '
-                      'su numeral no se puede leer. Los datos traen %d con contenido' % con)
-    elif declaradas != con + len(sin):
-        fallos.append('el informe declara %d filas con latencia 0 y los datos traen %d '
-                      '(%d con contenido, %d sin el): la salvedad deja de describirlos'
-                      % (declaradas, con + len(sin), con, len(sin)))
+    if con + len(sin) == 0:
+        # Nada que declarar: el consolidado adoptado no trae ni una fila con latencia 0 y 0
+        # tokens, de modo que exigir una frase «N filas de nemotron-mini:4b tienen latencia = 0»
+        # obligaria al informe a afirmar un defecto que ya no existe.
+        pass
+    else:
+        m = re.search(r'(\w+) filas de `nemotron-mini:4b` tienen `latencia = 0`', s)
+        PAL = {'Siete': 7, 'siete': 7, 'Ocho': 8, 'ocho': 8, 'Seis': 6, 'seis': 6,
+               'Nueve': 9, 'nueve': 9, 'Diez': 10, 'diez': 10}
+        declaradas = PAL.get(m.group(1)) if m else None
+        if declaradas is None:
+            fallos.append('no se encuentra en el informe la salvedad de las filas con latencia 0, '
+                          'o su numeral no se puede leer. Los datos traen %d con contenido' % con)
+        elif declaradas != con + len(sin):
+            fallos.append('el informe declara %d filas con latencia 0 y los datos traen %d '
+                          '(%d con contenido, %d sin el): la salvedad deja de describirlos'
+                          % (declaradas, con + len(sin), con, len(sin)))
     mirados += 1
     if sin:
         fallos.append('%d fila(s) con latencia 0, 0 tokens y **sin contenido**, que no es '
@@ -2669,8 +2706,38 @@ def c_urls(s):
 
 # --- 14. Protocolo homogéneo ENTRE las corridas fusionadas ---------------------------------------
 MANIFIESTO = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark/results/'
-                                'ANALISIS_CONJUNTO_20260907/merge_manifest.json')
+                                'ANALISIS_CONJUNTO_20260909_FIX/merge_manifest.json')
+# Adoptado el 2026-09-09 (decision 1, autorizada por el autor). El consolidado publicado
+# queda en results/ANALISIS_CONJUNTO_20260907/ y NO se borra: es el que sostenia el informe
+# hasta hoy y el que un tribunal puede pedir ver. Ver FINDINGS §F154.
+MANIFIESTO_PUBLICADO = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark/results/'
+                                          'ANALISIS_CONJUNTO_20260907/merge_manifest.json')
+# Fijo al publicado A PROPOSITO, y nunca sigue a la decision 1. El Anexo I describe un
+# defecto del corpus PUBLICADO (Locations sin anotar) y su estimacion restringida; ese
+# parrafo no se actualiza con la adopcion, es historico por diseno. Si `c_agregacion`
+# resolviera su comparacion contra `MANIFIESTO` (el adoptado), compararia el numero
+# historico del Anexo I contra el macro del consolidado NUEVO, que no es lo que describe.
 BENCH = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark')
+
+
+def _reancla_manifiesto(ruta_o_dir):
+    """Una ruta declarada por un `csv_path` del manifiesto, reanclada a este repositorio.
+
+    Con el consolidado publicado, `csv_path` es relativo (`results/gptoss_rerun_REMOTO/...`) y basta
+    unirlo a `BENCH`. Con el consolidado nuevo son rutas ABSOLUTAS de otra maquina
+    (`/Users/eahumada1/Projects/.../repos/ner-llm-entity-benchmark/results/...`), y unir con `BENCH`
+    las descarta silenciosamente porque `os.path.join` con un segundo argumento absoluto ignora el
+    primero: el resultado es la ruta literal de la otra maquina, que no existe aqui. Es el mismo
+    defecto que `tools/manifiesto_local.py` corrigio para el ensayo de adopcion (`FINDINGS §F148`),
+    aplicado aqui a los tres sitios que leen `csv_path` como ruta de fichero.
+    """
+    COLA = 'repos/ner-llm-entity-benchmark/'
+    if os.path.isabs(ruta_o_dir):
+        i = ruta_o_dir.find(COLA)
+        if i < 0:
+            return ruta_o_dir
+        return os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark', ruta_o_dir[i + len(COLA):])
+    return os.path.join(BENCH, ruta_o_dir)
 # Parámetros que afectan a la medición y deben ser idénticos en todas las fuentes de un consolidado.
 PARAMS = ('rag_mode', 'data_file', 'max_tokens', 'temperature', 'batch_size', 'fuzzy_threshold')
 
@@ -2702,7 +2769,7 @@ def c_protocolo(s):
     man = json.load(open(MANIFIESTO, encoding='utf-8'))
     vistos, fallos = {}, []
     for f in man.get('sources', []):
-        cfg = os.path.join(BENCH, os.path.dirname(f['csv_path']), 'run_config.json')
+        cfg = os.path.join(_reancla_manifiesto(os.path.dirname(f['csv_path'])), 'run_config.json')
         if not os.path.exists(cfg):
             fallos.append('%s sin run_config.json' % f['label'])
             continue
@@ -2734,21 +2801,33 @@ def c_protocolo(s):
 
 # --- 15. El Anexo I cuadra con la Tabla 7 ---------------------------------------------------------
 def c_anexo_vs_tabla7(s):
-    """Las mismas cifras aparecen en el cuerpo y en el anexo, y deben coincidir.
-
-    Se comprobo a mano en una sesion anterior y nunca se automatizo, de modo que cualquier
-    correccion posterior en una de las dos podia desincronizarlas sin aviso.
+    """El Anexo I (Tabla 19) es HISTORICO por diseno: documenta el corpus PUBLICADO y su defecto
+    de Locations sin anotar, y su columna «publicado» no sigue a la decision 1 (§F154). Por eso ya
+    no se contrasta contra la Tabla 7 del cuerpo, que desde la decision 1 cita el consolidado
+    adoptado: contrastarla contra la Tabla 7 actual comparia dos consolidados distintos y marcaria
+    como fallo una divergencia que es exactamente la que se pretende documentar. Se contrasta,
+    en su lugar, contra el CSV del consolidado PUBLICADO directamente — la misma fuente de la que
+    salio cuando se escribio, fijada con MANIFIESTO_PUBLICADO y no con CSV_CONSOLIDADO.
     """
-    i = s.find('_Tabla 7.')
     j = s.find('_Tabla 19.')
-    if i < 0 or j < 0:
-        check('el Anexo I cuadra con la Tabla 7', 0, ['no se encuentran las tablas 7 o 19'])
+    if j < 0:
+        check('el Anexo I cuadra con la Tabla 7', 0, ['no se encuentra la Tabla 19'])
         return
+    cons_pub = os.path.dirname(MANIFIESTO_PUBLICADO)
+    csv_pub = os.path.join(cons_pub, 'merged_results.csv')
+    if not os.path.exists(csv_pub):
+        check('el Anexo I cuadra con la Tabla 7', 0, ['no existe %s' % csv_pub])
+        return
+    g_pub = _grupos_f1(csv_pub)
     t7 = {}
-    for l in s[i:i + 3000].split('\n'):
-        m = re.match(r'^\|\s*([^|]+?)\s*\|\s*\*{0,2}([\d.]+)%\*{0,2}\s*\|\s*\*{0,2}([\d.]+)%\*{0,2}\s*\|', l)
-        if m and not m.group(1).startswith('Modelo'):
-            t7[m.group(1).strip()] = (float(m.group(2)), float(m.group(3)))
+    for grupo, vals in g_pub.items():
+        if not grupo.endswith('_baseline') or not vals:
+            continue
+        mod = grupo[:-len('_baseline')]
+        kb = g_pub.get(mod + '_kb_rag')
+        if not kb:
+            continue
+        t7[mod] = (100 * sum(vals) / len(vals), 100 * sum(kb) / len(kb))
     ai = {}
     for l in s[j:j + 12000].split('\n'):
         m = re.match(r'^\|\s*([\w.:\-]+)_(baseline|kb_rag|rag_enhanced)\s*\|\s*([^|]+)\|'
@@ -2768,12 +2847,13 @@ def c_anexo_vs_tabla7(s):
             elif abs(v - val) > 0.011:
                 fallos.append('%s %s: Tabla 7 da %.2f y el Anexo I %.2f' % (mod, modo, val, v))
     check('el Anexo I cuadra con la Tabla 7', 2 * len(t7), fallos,
-          'las mismas cifras en el cuerpo y en el anexo deben coincidir')
+          'contra el consolidado publicado, no contra la Tabla 7 actual: el Anexo I es historico '
+          'por diseno desde la decision 1 (§F154)')
 
 
 # --- 16. La Tabla 7 reproduce desde los datos ----------------------------------------------------
 CSV_CONSOLIDADO = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark/results/'
-                                     'ANALISIS_CONJUNTO_20260907/merged_results.csv')
+                                     'ANALISIS_CONJUNTO_20260909_FIX/merged_results.csv')
 
 
 def c_tabla7_vs_datos(s):
@@ -3199,7 +3279,9 @@ def c_json_parsea(s):
 
 # --- 22. La correlacion de capacidad, atada a su artefacto -------------------------------------
 ARTEFACTO_CORR = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark/results/'
-                                    'CORRELACION_CAPACIDAD_20260908/correlacion.json')
+                                    'CORRELACION_CAPACIDAD_20260909_FIX/correlacion.json')
+# Adoptado con la decision 1. El del publicado se conserva en
+# results/CORRELACION_CAPACIDAD_20260908/ y no se borra.
 
 
 def c_correlacion(s):
@@ -3492,13 +3574,16 @@ def c_agregacion(s):
     falla hasta que se complete la purga. Su mensaje dice que sustituir.
     """
     import json as _json
-    if not os.path.exists(MANIFIESTO):
+    # SIEMPRE el publicado, nunca MANIFIESTO (que sigue la decision 1): el Anexo I, unico
+    # consumidor real de este calculo desde que la decision 1 volvio moot la comparacion de
+    # conclusion 1, describe el defecto del corpus PUBLICADO. Ver MANIFIESTO_PUBLICADO arriba.
+    if not os.path.exists(MANIFIESTO_PUBLICADO):
         check('la conclusion 1 usa la agregacion declarada en §3.3', 0,
-              ['no existe el manifiesto, del que sale la corrida de referencia'])
+              ['no existe el manifiesto publicado, del que sale la corrida de referencia'])
         return
-    with open(MANIFIESTO, encoding='utf-8') as fh:
+    with open(MANIFIESTO_PUBLICADO, encoding='utf-8') as fh:
         srcs = _json.load(fh)['sources']
-    d120 = next((os.path.dirname(x['csv_path']) for x in srcs
+    d120 = next((_reancla_manifiesto(os.path.dirname(x['csv_path'])) for x in srcs
                  if 'gemma4:31b-mlx_baseline' in x.get('models', [])), None)
     CASOS = ((d120, 'gemma4:31b-mlx_baseline', 'N=120'),
              ('results/n30_rerun_REMOTO', 'gemma4:31b-mlx', 'dominio'))
@@ -3518,6 +3603,10 @@ def c_agregacion(s):
         if not R:
             fallos.append('%s no trae el grupo %s' % (rel, grupo))
             continue
+        # Esta funcion esta fijada a MANIFIESTO_PUBLICADO (nunca sigue la decision 1), y el
+        # consolidado publicado NO excluye articulos contaminados: ese filtro es propio de la
+        # re-corrida, por un defecto de codificacion distinto (mojibake), y aplicarlo aqui quitaria
+        # 7 de los 120 registros que el propio CSV publicado SI cuenta. Se calcula sobre los 120.
         T3 = ('Persons', 'Organizations', 'Locations')
 
         def _macro(cats):
@@ -3549,9 +3638,15 @@ def c_agregacion(s):
 
         ma, mi = _macro(T3), _micro(T3)
         agreg[etiq] = (ma, mi)
-        # la conclusion 1 debe citar la macro; si cita la micro, esta mezclando agregaciones
+        # la conclusion 1 debe citar la macro; si cita la micro, esta mezclando agregaciones.
+        # Y si la conclusion 1 YA NO comenta un equivalente "bajo la convencion original" —lo hizo
+        # hasta que la decision 1 volvio moot esa comparacion para N=120 y de paso se quito tambien
+        # la de dominio, que iba en la misma frase—, no hay nada que verificar aqui: no es un
+        # fallo que la frase no exista, solo lo seria que existiera con el numero equivocado.
         i7 = s.find('1. **Viabilidad demostrada')
         concl = s[i7:i7 + 1200] if i7 >= 0 else ''
+        if re.search(r'convenci[oó]n original', concl) is None:
+            continue
         mirados += 1
         pat_mi = r'%s[.,]%s' % (int(mi), ('%.2f' % mi).split('.')[1])
         pat_ma = r'%s[.,]%s' % (int(ma), ('%.2f' % ma).split('.')[1])
@@ -3690,7 +3785,7 @@ def c_anova(s):
     Se comprueba tambien contra el `statistical_report.md` del consolidado, que es el que
     `tools/generar_tabla7.py` lee, y contra el numero de grupos que el informe declara en palabras.
     """
-    cons = os.path.join(BENCH_DIR, 'results/ANALISIS_CONJUNTO_20260907')
+    cons = os.path.dirname(CSV_CONSOLIDADO)  # una sola fuente de verdad; ver F149
     csv_path = os.path.join(cons, 'merged_results.csv')
     if not os.path.exists(csv_path):
         check('el ANOVA titular se recalcula desde el CSV', 0, ['no existe %s' % csv_path])
@@ -3705,19 +3800,32 @@ def c_anova(s):
 
     # 1) la F que publica el informe
     mirados += 1
-    m = re.search(r'ANOVA de una v\u00eda sobre los \w+ grupos arroja \*\*F = (\d+),(\d+)\*\*', s)
-    if m is None:
+    m1 = re.search(r'ANOVA de una v\u00eda sobre los \w+ grupos arroja \*\*F = (\d+),(\d+)\*\*', s)
+    if m1 is None:
         fallos.append('no se encuentra en el informe la frase del ANOVA con su F: '
                       'revisar si se reformulo')
     else:
-        pub = float('%s.%s' % (m.group(1), m.group(2)))
+        pub = float('%s.%s' % (m1.group(1), m1.group(2)))
         if abs(pub - F) >= 5e-5:
             fallos.append('el informe publica F = %s y el CSV da %.4f' % (pub, F))
 
-    # 2) la p, con el exponente en superindices
-    mirados += 1
-    m = re.search(r'p = (\d+),(\d+) \u00d7 10([\u2070-\u2079\u00b9\u00b2\u00b3\u207b]+)', s)
-    if m is None:
+    # 2) la p, con el exponente en superindices. Se busca en una VENTANA corta despues de la F, no
+    # en todo el documento: buscar en `s` entero hace que esta comprobacion case con la PRIMERA
+    # «p = mantisa x 10^exp» del informe, que puede ser la de Levene o la de otra prueba, no la del
+    # ANOVA. Paso con el consolidado nuevo: la p del ANOVA subdesborda y se escribe «p < 10^-300»,
+    # sin mantisa, y el regex encontro en su lugar la frase de Levene, cien caracteres mas adelante.
+    ventana = s[m1.end():m1.end() + 200] if m1 else s
+    m = re.search(r'p = (\d+),(\d+) \u00d7 10([\u2070-\u2079\u00b9\u00b2\u00b3\u207b]+)', ventana)
+    # Si la p subdesborda, lo correcto es que el informe escriba una COTA («p < 10^-300») y no una
+    # mantisa: eso es una ausencia legitima de `m`, no un fallo. Solo hace falta comprobar que la
+    # cota este ahi.
+    if pv <= 0.0:
+        mirados += 1
+        if not re.search(r'p\s*<\s*10', ventana):
+            fallos.append('la p del ANOVA subdesborda a 0,0 en doble precision y el informe no '
+                          'escribe una cota del tipo «p < 10^-300» junto a la F')
+        m = None  # nada mas que comprobar: no hay mantisa que contrastar
+    elif m is None:
         fallos.append('no se encuentra en el informe la p del ANOVA en notacion cientifica')
     else:
         mant = float('%s.%s' % (m.group(1), m.group(2)))
@@ -3726,24 +3834,10 @@ def c_anova(s):
             fallos.append('no se puede leer el exponente de la p del ANOVA: %r' % m.group(3))
         else:
             pub = mant * (10.0 ** ex)
-            # se compara la mantisa a los decimales con que se publica, y el exponente exacto
+            # se compara la mantisa a los decimales con que se publica, y el exponente exacto.
+            # El caso pv<=0 (subdesbordamiento) ya se filtro arriba: si m no es None aqui, pv>0.
             import math
-            # La p puede SUBDESBORDAR a 0,0 en doble precision, y entonces `log10` lanza
-            # ValueError. No es hipotetico: pasa con el consolidado nuevo —F = 119,7502 sobre
-            # df = (25, 2912)— y por tanto pasaria el dia que se adopte, en la comprobacion que
-            # vigila el estadistico titular. Encontrado por un ensayo en seco de la adopcion
-            # (§F131), no en produccion.
-            if pv <= 0.0:
-                fallos.append('la p del ANOVA subdesborda a 0,0 en doble precision, de modo que '
-                              'no tiene exponente que comparar, y el informe publica '
-                              '«%s,%s x 10^%d». Con una p asi el informe no puede dar una cifra: '
-                              'tiene que escribir una cota, del tipo «p < 10^-300», y decir que el '
-                              'valor exacto no es representable. Ver §F131'
-                              % (m.group(1), m.group(2), ex))
-                del pub
-                ex_calc = None
-            else:
-                ex_calc = math.floor(math.log10(pv))
+            ex_calc = math.floor(math.log10(pv))
         if ex is not None and ex_calc is not None:
             mant_calc = pv / (10.0 ** ex_calc)
             dec = len(m.group(2))
@@ -3904,7 +3998,7 @@ def c_tukey(s):
     segundo por dentro —`gemma4:31b-mlx_kb` y `rag`—, con lo que no empareja ni una y la
     comprobacion da cero en silencio. Se recortan los sufijos completos.
     """
-    cons = os.path.join(BENCH_DIR, 'results/ANALISIS_CONJUNTO_20260907')
+    cons = os.path.dirname(CSV_CONSOLIDADO)  # una sola fuente de verdad; ver F149
     rep = os.path.join(cons, 'statistical_report.md')
     if not os.path.exists(rep):
         check('el «dos de los trece» de Tukey se cuenta desde el artefacto', 0,
@@ -3942,8 +4036,8 @@ def c_tukey(s):
     # 1) el recuento que publica el informe, en palabras
     mirados += 1
     m = re.search(r'\(Tukey HSD\) en (\w+) de los (\w+) modelos', s)
-    PAL = {'dos': 2, 'tres': 3, 'cuatro': 4, 'cinco': 5, 'seis': 6, 'siete': 7, 'ocho': 8,
-           'trece': 13, 'doce': 12}
+    PAL = {'uno': 1, 'dos': 2, 'tres': 3, 'cuatro': 4, 'cinco': 5, 'seis': 6, 'siete': 7,
+           'ocho': 8, 'trece': 13, 'doce': 12}
     if m is None:
         fallos.append('no se encuentra en el informe la frase del recuento de Tukey')
     else:
@@ -3959,22 +4053,18 @@ def c_tukey(s):
                 fallos.append('el informe dice «de los %d modelos» y el artefacto empareja %d'
                               % (tot_pub, len(pares)))
 
-    # 2) los dos modelos nombrados, con su delta y su p
+    # 2) los modelos SIGNIFICATIVOS, con su delta y su p, derivados del artefacto y no de una
+    # lista fija.
     #
     # El delta se LEE DEL INFORME, no se escribe aqui. La primera version comparaba el artefacto
     # contra un 0.1452 puesto a mano en el codigo, de modo que alterar la cifra del informe no
-    # hacia fallar nada: la comprobacion no miraba el documento que dice comprobar. Lo destapo la
-    # prueba por mutacion —cuatro de cinco mutaciones se detectaban y esta no—, que es exactamente
-    # para lo que sirve.
-    for nombre, p_pat in (('nemotron-mini:4b', r'p<0,001'), ('llama3.2:latest', r'p=0,007')):
-        mirados += 1
-        if nombre not in pares:
-            fallos.append('el artefacto no trae la comparacion de %s' % nombre)
-            continue
-        d, pa, es = pares[nombre]
-        if not es:
-            fallos.append('el informe nombra %s como significativo y el artefacto dice que no'
-                          % nombre)
+    # hacia fallar nada. Lo destapo la prueba por mutacion.
+    #
+    # Y la lista de NOMBRES tambien se leia a mano —('nemotron-mini:4b', 'llama3.2:latest')—, de
+    # modo que al adoptar un consolidado donde solo el primero sigue siendo significativo, esta
+    # comprobacion seguia exigiendo una frase sobre el segundo que el informe, correctamente, ya
+    # no escribe. Se deriva de `sig`, que es lo que el artefacto declara.
+    for nombre, d, pa in sig:
         mirados += 1
         m2 = re.search(r'`%s`\s*\*\*([+-]?\d+),(\d+) pp\*\*' % re.escape(nombre), s)
         if m2 is None:
@@ -3985,12 +4075,9 @@ def c_tukey(s):
                 fallos.append('el informe publica %+.2f pp para %s y el artefacto da %+.2f pp'
                               % (100 * d_pub, nombre, 100 * d))
         mirados += 1
-        if re.search(p_pat, s) is None:
+        p_pat = r'p<0,001' if pa < 0.001 else (r'p=%s' % ('%.3f' % pa).replace('.', ','))
+        if re.search(re.escape(p_pat), s) is None:
             fallos.append('el informe no publica «%s» junto a %s' % (p_pat, nombre))
-        elif p_pat == 'p<0,001' and pa >= 0.001:
-            fallos.append('el informe dice p<0,001 para %s y el artefacto da %.4g' % (nombre, pa))
-        elif p_pat == 'p=0,007' and abs(round(pa, 3) - 0.007) >= 5e-4:
-            fallos.append('el informe dice p=0,007 para %s y el artefacto da %.4g' % (nombre, pa))
 
     check('el «dos de los trece» de Tukey se cuenta desde el artefacto', mirados, fallos)
 
@@ -4014,7 +4101,7 @@ def c_levene(s):
     import csv as _csv
     import statistics as _st
     from collections import defaultdict as _dd
-    cons = os.path.join(BENCH_DIR, 'results/ANALISIS_CONJUNTO_20260907')
+    cons = os.path.dirname(CSV_CONSOLIDADO)  # una sola fuente de verdad; ver F149
     csv_path = os.path.join(cons, 'merged_results.csv')
     art_path = os.path.join(cons, 'levene.json')
     fallos, mirados = [], 0
@@ -4066,22 +4153,53 @@ def c_levene(s):
         except (ValueError, OSError) as e:
             fallos.append('levene.json no se puede leer: %s' % e)
 
-    # 2) contra lo que el informe publica, a los dos decimales con que lo cita
+    # 2) contra lo que el informe publica. Con el consolidado publicado la p de Levene se escribe
+    # en decimal («p = 0,18») porque no es extrema; con el nuevo sube a heterocedasticidad real y
+    # el p baja a magnitudes que solo caben en notacion cientifica («p = 1,39 x 10^-11»), igual que
+    # la del ANOVA. Y el verbo cambia: «no detecta» pasa a «detecta». Se aceptan ambas formas.
     mirados += 1
-    m = re.search(r'prueba de Levene no detecta heterocedasticidad \(p = (\d+),(\d+)\)', s)
-    if m is None:
-        fallos.append('no se encuentra en el informe la frase de Levene con su p: '
-                      'revisar si se reformulo')
-    else:
+    m = re.search(r'prueba de Levene,? (?:no detecta|s\u00ed detecta|detecta) heterocedasticidad'
+                  r',? \(p = (\d+),(\d+)\)', s)
+    m_cient = re.search(r'prueba de Levene,? (?:no detecta|s\u00ed detecta|detecta) '
+                        r'heterocedasticidad,? \(p = (\d+),(\d+) \u00d7 10'
+                        r'([\u2070-\u2079\u00b9\u00b2\u00b3\u207b]+)\)', s)
+    if m is not None:
         pub = float('%s.%s' % (m.group(1), m.group(2)))
         dec = len(m.group(2))
         if abs(round(pv, dec) - pub) >= 10 ** (-dec) / 2:
             fallos.append('el informe publica p = %s y el CSV da %.4f (a %d decimales, %.*f)'
                           % (pub, pv, dec, dec, round(pv, dec)))
-    # 3) y que el numero de observaciones que cita el informe sea el del CSV
+    elif m_cient is not None:
+        mant = float('%s.%s' % (m_cient.group(1), m_cient.group(2)))
+        ex = _exp_super(m_cient.group(3))
+        if ex is None:
+            fallos.append('no se puede leer el exponente de la p de Levene: %r' % m_cient.group(3))
+        else:
+            import math
+            ex_calc = math.floor(math.log10(pv)) if pv > 0 else None
+            if ex_calc is None:
+                fallos.append('la p de Levene subdesborda a 0,0: revisar la cota que escribe')
+            elif ex_calc != ex:
+                fallos.append('el informe publica exponente %d para Levene y el CSV da %d'
+                              % (ex, ex_calc))
+            else:
+                dec = len(m_cient.group(2))
+                mant_calc = pv / (10.0 ** ex_calc)
+                if abs(round(mant_calc, dec) - mant) >= 10 ** (-dec) / 2:
+                    fallos.append('el informe publica p = %s x 10^%d para Levene y el CSV da '
+                                  '%.*f x 10^%d' % (m_cient.group(1) + ',' + m_cient.group(2), ex,
+                                                     dec, round(mant_calc, dec), ex_calc))
+    else:
+        fallos.append('no se encuentra en el informe la frase de Levene con su p: '
+                      'revisar si se reformulo')
+    # 3) y que el numero de observaciones que cita el informe sea el del CSV. Formateado con
+    # espacio como separador de miles («2 938», «3 120»); se acepta espacio normal, de no separacion
+    # o ninguno, porque el informe usa el primero y algunos editores lo normalizan al segundo.
     mirados += 1
-    if re.search(r'3\s*120 observaciones', s) is None and N == 3120:
-        fallos.append('el informe no cita las 3 120 observaciones que da el CSV')
+    miles = '{:,}'.format(N).replace(',', ' ')
+    patron_num = re.escape(miles).replace(r'\ ', r'[\s\u00a0]?')
+    if re.search(patron_num + r' observaciones', s) is None:
+        fallos.append('el informe no cita las %s observaciones que da el CSV' % miles)
 
     check('el supuesto de homocedasticidad se recalcula desde el CSV', mirados, fallos)
 
@@ -4089,80 +4207,72 @@ def c_levene(s):
 def c_titulares(s):
     """Las cifras titulares, atadas a su corrida: las dos del resumen y la de la soberania.
 
-    «El mejor modelo local alcanza **76,55 %** de F1 en espanol y **90,16 %** en el dominio.» Son
-    las cifras con las que se abre el trabajo y **no las cubria ninguna comprobacion**: la primera
-    aparece diez veces en el informe y la segunda tres.
+    Hasta el consolidado publicado, las dos cifras de N=120 eran la **metrica restringida**
+    —puntuando solo Personas y Organizaciones, porque el corpus no anotaba Locations—, calculada a
+    mano del detalle por registro. Adoptado el consolidado de la re-corrida (decision 1, `§F154`),
+    Locations SI esta anotada (545 entidades, verificado por `tp+fn` != 0), de modo que restringir
+    ya no corrige nada: `§F64` midio que la restringida SUBESTIMA el valor real entre 1,3 y 5,7
+    puntos. Las dos cifras de N=120 pasan a citar la metrica COMPLETA de la Tabla 7 —el mismo `f1`
+    del CSV consolidado, no un recalculo aparte—, que es la unica manera de que esta comprobacion no
+    diverja de `c_tabla7_vs_datos` por construccion.
 
-    Ambas son la **metrica restringida** —puntuando solo Personas y Organizaciones, las categorias
-    que el corpus anota— de `gemma4:31b-mlx`, y se calculan del detalle por registro. Dos avisos
-    que costaron encontrarlas: el 76,55 se computa sobre los **120** registros y no sobre los 113
-    del manifiesto de contaminados —con 113 sale 76,78— y el del dominio es sobre `n30_rerun_REMOTO`
-    con el nombre de grupo `gemma4:31b-mlx`, sin sufijo `_baseline`.
+    La del dominio (N=30) no cambia: ese corpus no tiene el defecto de Locations sin anotar, `§F64`
+    no le aplica, y sigue siendo la metrica restringida de siempre sobre `n30_rerun_REMOTO`.
     """
     import json as _json
-    # La corrida del 76,55 se resuelve DESDE EL MANIFIESTO y no se escribe aqui: es el grupo
-    # `gemma4:31b-mlx_baseline` y el consolidado se queda con la primera fuente que lo trae
-    # (`--on-duplicate=first`). Fijar la ruta a mano fue el primer intento y apuntaba a la corrida
-    # equivocada, que es el defecto de `FINDINGS §F81.bis` repetido.
-    dir_n120 = None
-    if os.path.exists(MANIFIESTO):
-        with open(MANIFIESTO, encoding='utf-8') as fh:
-            for src in _json.load(fh)['sources']:
-                if 'gemma4:31b-mlx_baseline' in src.get('models', []):
-                    dir_n120 = os.path.dirname(src['csv_path'])
-                    break
-    dir_cloud = None
-    if os.path.exists(MANIFIESTO):
-        with open(MANIFIESTO, encoding='utf-8') as fh:
-            for src in _json.load(fh)['sources']:
-                if 'gemma4:31b-cloud_baseline' in src.get('models', []):
-                    dir_cloud = os.path.dirname(src['csv_path'])
-                    break
-    CASOS = (('76,55', r'76[.,]55', dir_n120, 'gemma4:31b-mlx_baseline',
-              None, 'F1 en espanol sobre N=120'),
-             ('90,16', r'90[.,]16', 'results/n30_rerun_REMOTO', 'gemma4:31b-mlx',
-              None, 'F1 sobre el corpus del dominio'),
-             # La cifra que sostiene la conclusion de soberania: la variante alojada frente al mejor
-             # local, ambas con la medicion restringida. §6 y §7.1 la citan tres veces.
-             ('80,42', r'80[.,]42', dir_cloud, 'gemma4:31b-cloud_baseline',
-              None, 'F1 de la variante alojada sobre N=120'))
+    g = _grupos_f1(CSV_CONSOLIDADO)
+    CASOS_N120 = (('81,47', r'81[.,]47', 'gemma4:31b-mlx_baseline', 'F1 en espanol sobre N=120'),
+                  ('82,13', r'82[.,]13', 'gemma4:31b-cloud_baseline',
+                   'F1 de la variante alojada sobre N=120'))
     fallos, mirados = [], 0
-    for etiq, patron, rel, grupo, _x, desc in CASOS:
+    for etiq, patron, grupo, desc in CASOS_N120:
         mirados += 1
-        if rel is None:
-            fallos.append('el manifiesto no dice de que corrida sale el %s %%' % etiq)
+        if grupo not in g or not g[grupo]:
+            fallos.append('%s no tiene f1 en %s' % (grupo, os.path.relpath(CSV_CONSOLIDADO, RAIZ)))
             continue
-        ruta = os.path.join(BENCH_DIR, rel, 'detailed_results.json')
-        if not os.path.exists(ruta):
-            fallos.append('no existe %s, del que sale el %s %%' % (rel, etiq))
-            continue
-        with open(ruta, encoding='utf-8') as fh:
-            R = [r for r in _json.load(fh) if r.get('model') == grupo]
-        if not R:
-            fallos.append('la corrida %s no trae el grupo %s' % (rel, grupo))
-            continue
-        vals = []
-        for r in R:
-            pt = ((r.get('metrics') or {}).get('per_type')) or {}
-            tp = sum((pt.get(c, {}).get('tp', 0) or 0) for c in ('Persons', 'Organizations'))
-            fp = sum((pt.get(c, {}).get('fp', 0) or 0) for c in ('Persons', 'Organizations'))
-            fn = sum((pt.get(c, {}).get('fn', 0) or 0) for c in ('Persons', 'Organizations'))
-            if tp + fp + fn == 0:
-                vals.append(1.0)
-                continue
-            pr = tp / (tp + fp) if tp + fp else 0.0
-            rc = tp / (tp + fn) if tp + fn else 0.0
-            vals.append(2 * pr * rc / (pr + rc) if pr + rc else 0.0)
-        obt = 100 * sum(vals) / len(vals)
+        obt = 100 * sum(g[grupo]) / len(g[grupo])
         esp = float(etiq.replace(',', '.'))
         if abs(obt - esp) > 0.006:
-            fallos.append('%s: el informe dice %s %% y el dato da %.2f %% sobre %d registros'
-                          % (desc, etiq, obt, len(R)))
+            fallos.append('%s: el informe dice %s %% y el CSV consolidado da %.2f %% sobre %d '
+                          'registros' % (desc, etiq, obt, len(g[grupo])))
         mirados += 1
         if not re.search(patron, s):
             fallos.append('el informe ya no cita el %s %% (%s)' % (etiq, desc))
+
+    # El del dominio (N=30), sin cambios: sigue restringido, porque ese corpus no tiene el defecto.
+    import json as _json2
+    ruta = os.path.join(BENCH_DIR, 'results/n30_rerun_REMOTO/detailed_results.json')
+    mirados += 1
+    if not os.path.exists(ruta):
+        fallos.append('no existe results/n30_rerun_REMOTO, del que sale el 90,16 %')
+    else:
+        with open(ruta, encoding='utf-8') as fh:
+            R = [r for r in _json2.load(fh) if r.get('model') == 'gemma4:31b-mlx']
+        if not R:
+            fallos.append('n30_rerun_REMOTO no trae el grupo gemma4:31b-mlx')
+        else:
+            vals = []
+            for r in R:
+                pt = ((r.get('metrics') or {}).get('per_type')) or {}
+                tp = sum((pt.get(c, {}).get('tp', 0) or 0) for c in ('Persons', 'Organizations'))
+                fp = sum((pt.get(c, {}).get('fp', 0) or 0) for c in ('Persons', 'Organizations'))
+                fn = sum((pt.get(c, {}).get('fn', 0) or 0) for c in ('Persons', 'Organizations'))
+                if tp + fp + fn == 0:
+                    vals.append(1.0)
+                    continue
+                pr = tp / (tp + fp) if tp + fp else 0.0
+                rc = tp / (tp + fn) if tp + fn else 0.0
+                vals.append(2 * pr * rc / (pr + rc) if pr + rc else 0.0)
+            obt = 100 * sum(vals) / len(vals)
+            if abs(obt - 90.16) > 0.006:
+                fallos.append('F1 sobre el corpus del dominio: el informe dice 90,16 %% y el dato '
+                              'da %.2f %% sobre %d registros' % (obt, len(R)))
+            mirados += 1
+            if not re.search(r'90[.,]16', s):
+                fallos.append('el informe ya no cita el 90,16 % (F1 sobre el corpus del dominio)')
+
     check('las cifras titulares del resumen y de la soberania reproducen', mirados, fallos,
-          'metrica restringida a Personas y Organizaciones; el 76,55 va sobre 120 registros, no 113')
+          'N=120 cita la metrica completa desde la decision 1; N=30 sigue restringido, sin cambio')
 
 
 def c_ablacion(s):
