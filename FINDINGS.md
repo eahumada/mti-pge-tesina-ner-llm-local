@@ -3166,6 +3166,24 @@ Conviene decir también qué no acredita la comprobación: excluir las fallidas 
 registros completos en lugar de 113, lo que debilita todos los contrastes. Sirve como diagnóstico del sesgo,
 **no como sustituto de la medición**. El remedio es re-ejecutar ese brazo.
 
+### Hasta dónde llega el defecto, comprobado
+
+Tres comprobaciones acotan el daño, y conviene tenerlas porque un defecto sin contorno se contagia a la
+lectura de todo lo demás.
+
+1. **Los datos publicados no están afectados.** El consolidado `ANALISIS_CONJUNTO_20260907`, con sus 3 120
+   filas, tiene **cero** `parse_method='failed'`; sus rutas son `direct_json` (2 556), `codeblock` (452) y
+   `fallback` (112). El Δ de +14,52 pp que publica la Tabla 7 **no arrastra este problema**.
+2. **Ningún otro modelo de la re-corrida lo sufre.** Buscado el mensaje en los registros de las treinta y
+   nueve corridas: **58 ocurrencias, todas en `nemotron-mini_4b__N120`**. Es además el **único** error
+   repetido de todo el barrido; los demás registros no traen ni uno.
+3. **Ningún otro corpus del mismo modelo lo sufre.** Sus corridas de N=30 y N=15 tienen cero fallos, lo que
+   es coherente con la explicación del prompt: son pocas muestras y el fallo aparece en torno al 15 % de los
+   artículos.
+
+De modo que el remedio es acotado: **un brazo de un modelo de un corpus**, ciento veinte artículos de
+inferencia.
+
 ### La lección, y ya es la tercera de la misma familia
 
 El commit de cierre declaró «39/39 válidas» sin comprobar la primera verificación del protocolo, que es

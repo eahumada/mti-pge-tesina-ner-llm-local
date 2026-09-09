@@ -76,3 +76,14 @@ mayor efecto del estudio. **La conclusión no cambia; la magnitud sí**, y en un
 
 **No hace falta rehacer nada más.** Los otros doce modelos están verificados y limpios: cero `failed` en las
 2 730 filas restantes.
+
+Y lo hemos acotado más, para que no haya dudas sobre el alcance:
+
+- Los **datos publicados** del estudio no están afectados: el consolidado de septiembre 7 tiene **cero**
+  `failed` en sus 3 120 filas.
+- El mensaje aparece **58 veces y todas en `nemotron-mini_4b__N120`**. Es el **único error repetido de las
+  treinta y nueve corridas**; los demás registros están limpios.
+- Las corridas de **N=30 y N=15 del mismo modelo** tampoco fallan, lo que encaja con la explicación: el
+  fallo aparece en torno al 15 % de los artículos y esas muestras son pequeñas.
+
+**El remedio es un brazo, de un modelo, de un corpus**: ciento veinte artículos de inferencia.
