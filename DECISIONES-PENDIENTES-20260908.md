@@ -715,7 +715,28 @@ asunto es solo la prosa.
 convención, y se corrigió en el Markdown y en los tres `.docx`. Ver `FINDINGS §F105`.
 
 
-## 17. El 50 % que la Tabla 1 atribuye a FinanceBench no existe en el artículo
+## 17. El 50 % de FinanceBench — **CERRADA el 2026-09-09 SIN CAMBIO: la cifra es correcta**
+
+> **No hay nada que decidir, y era urgente saberlo.** El 50 % **sí aparece** en FinanceBench, dos
+> veces, verificado contra la fuente primaria por un workflow y **recomprobado** por el equipo
+> principal:
+>
+> - Tabla 2 del artículo: «**GPT-4-Turbo Single Vector Store 75 (50%)** 17 (11%) 58 (39%) 150»
+> - Prosa de §5: «…with a single vector store for all documents **(50% vs 19%)**»
+>
+> **El hallazgo que abrió esta decisión leyó la tabla desplazada una fila:** el 41 % que atribuía a
+> «GPT-4-Turbo con almacén único» es la fila de **`Llama2 Single Vector Store`**.
+>
+> **Las cuatro opciones de abajo habrían introducido un error donde no lo hay**, y la que yo
+> recomendaba —«19 % exactitud»— era la peor: sustituye un dato correcto por el del almacén
+> compartido, **subestima el estado del arte** y con ello habría hecho parecer mejor al trabajo de lo
+> que le corresponde. Lo contrario de lo que la decisión pretendía.
+>
+> **Es el caso de manual de la regla del proyecto:** un hallazgo de auditoría es una **hipótesis**, y
+> aquí la auditoría se equivocó y el informe tenía razón. Ver `FINDINGS §F144` y la rectificación en
+> `§F106`.
+>
+> **Planteamiento original, conservado y rectificado:**
 
 **Qué pasa.** La Tabla 1 del estado del arte dice «FinanceBench [9] | 361 informes SEC | GPT-4-Turbo + RAG |
 **50 % exactitud**». Leído el artículo: el «361 informes SEC» es correcto, y **el 50 % no aparece en ninguna

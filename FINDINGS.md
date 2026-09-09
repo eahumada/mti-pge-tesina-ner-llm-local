@@ -4487,7 +4487,35 @@ principal, ni un párrafo que dice lo contrario de lo que pretende. De esto últ
 de fondo de §F102 y §F103; de lo primero, nada de lo que hay aquí da garantías, y conviene decirlo en lugar
 de dejar que «pasada de corrección: limpio» suene a más de lo que es.
 
-## §F106 — El 50 % que la Tabla 1 atribuye a FinanceBench no existe en FinanceBench
+## §F106 — ~~El 50 % que la Tabla 1 atribuye a FinanceBench no existe en FinanceBench~~ — RECTIFICADO: sí existe
+
+> ## ⚠ RECTIFICACIÓN DEL 2026-09-09 — ESTE HALLAZGO ERA FALSO
+>
+> **El 50 % sí aparece en FinanceBench, dos veces.** Verificado contra el artículo por un workflow de
+> revisión de fuentes y **recomprobado por mí** en la fuente primaria
+> (`ar5iv.labs.arxiv.org/html/2311.11944`):
+>
+> - Tabla 2 del artículo, fila literal: «**GPT-4-Turbo Single Vector Store 75 (50%)** 17 (11%) 58 (39%) 150»
+> - Prosa de §5, literal: «…had a higher success rate than the configuration with a single vector
+>   store for all documents **(50% vs 19%)**»
+>
+> **El error de este hallazgo fue leer la tabla desplazada una fila.** El 41 % que atribuye abajo a
+> «GPT-4-Turbo con almacén único» es en realidad la fila de **`Llama2 Single Vector Store 62 (41%)`**.
+>
+> **Consecuencia: la Tabla 1 del informe está bien y no hay que tocarla.** Y la **decisión 17**, que
+> se derivaba de aquí, se cierra sin cambio: sus cuatro opciones habrían introducido un error donde
+> no lo había, y la recomendada —bajar la celda a 19 %— habría sustituido un dato correcto por uno
+> que **subestima el estado del arte** y, con ello, habría hecho parecer mejor al trabajo de lo que
+> le corresponde.
+>
+> **Rectificación de la afirmación de cierre de este hallazgo:** decía «de las cinco cifras que el
+> informe atribuye a una fuente, cuatro están verificadas y solo ésta es falsa». **Las cinco están
+> verificadas.** Ver `§F144`.
+>
+> El texto original se conserva íntegro debajo, tachado en el título, porque la política es aditiva y
+> porque el registro de un error mal diagnosticado vale más que su borrado.
+
+
 
 **2026-09-09.** El verificador comprueba que las URL de la bibliografía respondan y que cada cita tenga
 entrada y cada entrada esté citada, pero **no** que la fuente sostenga lo que el texto le atribuye. Acotado
@@ -6820,3 +6848,68 @@ débil de lo que afirma**, y que las dos cosas se declaran juntas.
 
 **Nada de esto está en el informe**, y las dos son decisión del autor. La primera lleva pendiente
 desde el 8 de septiembre en `§F76`.
+
+---
+
+## §F144 — La auditoría se equivocó y el informe tenía razón: el 50 % de FinanceBench existe
+
+**Fecha:** 2026-09-09 · **Origen:** el workflow de revisión de las 38 fuentes lo señaló y se
+recomprobó en la fuente primaria
+
+**Este es el hallazgo más importante del día, y consiste en que un hallazgo anterior era falso.**
+
+[§F106](#f106) declaró el 2026-09-09 que «el 50 % que la Tabla 1 atribuye a FinanceBench no existe en
+FinanceBench», y de ahí salió la **decisión 17**, abierta, con cuatro opciones para sustituir la
+cifra y una recomendación concreta: bajarla a «19 % exactitud».
+
+**El 50 % sí existe, dos veces.** Verificado por el workflow y **recomprobado por mí** en
+`ar5iv.labs.arxiv.org/html/2311.11944`, en una consulta independiente:
+
+| Dónde | Texto literal |
+|:---|:---|
+| Tabla 2 del artículo | «**GPT-4-Turbo Single Vector Store 75 (50%)** 17 (11%) 58 (39%) 150» |
+| Prosa de §5 | «…had a higher success rate than the configuration with a single vector store for all documents **(50% vs 19%)**» |
+
+**El error fue leer la tabla desplazada una fila.** El 41 % que §F106 atribuye a «GPT-4-Turbo con
+almacén único» es la fila de **`Llama2 Single Vector Store 62 (41%)`**.
+
+### Lo que esto habría costado
+
+Las cuatro opciones de la decisión 17 **habrían introducido un error donde no lo había**. Y la
+recomendada era la peor de las cuatro: sustituir el 50 % por el 19 % del almacén compartido
+**subestima el estado del arte** y, al hacerlo, **habría hecho parecer mejor al trabajo de lo que le
+corresponde**. Exactamente lo contrario de lo que la decisión pretendía, que era corregir un dato en
+contra del propio interés.
+
+Dicho de otro modo: una revisión que se preciaba de corregir en contra de su interés estuvo a punto
+de mejorar su posición relativa con un dato peor.
+
+### Por qué importa más allá del caso
+
+Es el caso de manual de la regla que `CLAUDE.md` fija desde el incidente de la Tabla 2: **un hallazgo
+de auditoría es una hipótesis, no un hecho**, y hay que verificarlo contra la fuente primaria antes
+de convertirlo en instrucción de corrección. Aquí la auditoría se equivocó y **el informe tenía
+razón**, y la única razón por la que no se aplicó es que la decisión estaba **reservada al autor** en
+lugar de ejecutada por un agente.
+
+Y añade un matiz a [§L77](#l77), que decía que un hallazgo puede detectar bien y encuadrar mal: **a
+veces no detecta nada**, y el defecto es entero. La diferencia entre las dos situaciones solo se ve
+abriendo la fuente.
+
+**Rectificado** en §F106, de forma aditiva y con el texto original conservado, y la **decisión 17
+cerrada sin cambio**. Y rectificada su afirmación de cierre: decía «de las cinco cifras que el
+informe atribuye a una fuente, cuatro están verificadas y solo ésta es falsa». **Las cinco están
+verificadas.**
+
+### Y un defecto pequeño y real que el mismo workflow encontró, este sí
+
+La glosa que sigue a la Tabla 1 dice «las cifras de **la última columna** no son directamente
+comparables entre sí». Verificado sobre el Markdown: la tabla tiene seis columnas —Trabajo, Dataset,
+Modelo, **Desempeño publicado**, Privacidad, Idioma— y **la última es «Idioma»**. Las cifras están en
+la **cuarta**.
+
+La glosa es correcta en el fondo, y de hecho es una de las declaraciones más honestas del capítulo.
+Solo apunta a la columna equivocada. **Pendiente de corregir «última» por «de desempeño publicado»**,
+que es más claro que «cuarta» y no se rompe si alguien reordena. **No lo aplico ahora**: hay un
+workflow de consistencia leyendo el Markdown en este momento y sus citas se apoyan en él; se aplica
+cuando cierre.
