@@ -56,6 +56,11 @@ comprobación que no examina nada se marca como **vacía**, no como superada.
 python3 tools/verificar_informe.py
 ```
 
+`tools/autoprueba_verificador.py` comprueba lo contrario: que el verificador **no apruebe a ciegas**. Esconde
+cada artefacto por turno y exige que se entere. Si alguno pudiera faltar sin que ninguna comprobación lo
+notase, esa comprobación estaría devolviendo el valor del éxito por haber mirado el sitio equivocado
+(`LEARNING.md §L57`).
+
 Los demás scripts de `tools/` regeneran artefactos concretos: figuras, Tabla 7, composición de falsos
 positivos y estado de la re-corrida. Todos leen de las fuentes primarias, para que el documento y los datos
 no puedan divergir en silencio.
