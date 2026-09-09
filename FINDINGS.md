@@ -4840,3 +4840,58 @@ esto no necesita trabajo aparte: necesita **no olvidarse de comprobarlo después
 La sensibilidad de §F109 se calculó desde el **CSV consolidado** y por tanto **sigue siendo válida**. La que
 intenté aquí —combinar las dos sensibilidades— usaba `overall.f1` y **queda descartada**; para hacerla bien
 hay que partir de `per_type`, y solo es homogénea en 25 de los 26 grupos. No la publico a medias.
+
+## §F111 — Un delta cambia de signo solo cuando las dos sensibilidades se aplican juntas
+
+**2026-09-10.** Rehecha desde `per_type` la combinación de sensibilidades que §F110 obligó a descartar. La
+columna base reproduce ahora los deltas publicados —`gemma4:31b-mlx` −0,1801, `llama3.2:latest` +10,8229,
+`deepseek-r1:1.5b` −0,8966—, de modo que el dato es homogéneo con lo que el informe dice.
+
+`nemotron-mini:4b_baseline` **queda excluido**, porque su `per_type` no reproduce su CSV (§F110) y meterlo
+compararía estados distintos del dato.
+
+| Modelo | Publicado | Sin parseo alterno | Sin duplicados | Las dos |
+|:---|---:|---:|---:|---:|
+| `deepseek-r1:1.5b` | −0,8966 | −0,0431 | −0,9806 | −0,1420 |
+| `gemma4:12b-mlx` | +2,2770 | +2,2770 | +2,1742 | +2,1742 |
+| `gemma4:31b-cloud` | −0,5371 | −0,5371 | −0,5552 | −0,5552 |
+| **`gemma4:31b-mlx`** | **−0,1801** | **+1,4051** | −0,2844 | **+1,4073** |
+| **`gemma4:latest`** | **−1,1698** | −0,2963 | −0,2545 | **+0,4739** |
+| `gemma:latest` | +7,3609 | +7,3609 | +7,2929 | +7,2929 |
+| `gpt-oss:20b` | +3,2803 | +3,3079 | +3,2806 | +3,3082 |
+| `llama3.1:8b` | +1,9880 | +1,9880 | +2,4104 | +2,4104 |
+| `llama3.2:latest` | +10,8229 | +11,6782 | +10,9060 | +11,6741 |
+| `mistral-nemo:latest` | +2,3717 | +3,9830 | +2,3854 | +3,9961 |
+| `qwen2.5:14b` | +4,6213 | +4,6213 | +4,6047 | +4,6047 |
+| `qwen3:8b` | +3,2491 | +3,4904 | +3,2551 | +3,4729 |
+
+### El hallazgo: `gemma4:latest` solo cambia de signo con las dos
+
+`gemma4:31b-mlx` ya se sabía (§F109). Lo nuevo es **`gemma4:latest`**, que el informe publica **empeorando
+1,17 puntos** con recuperación:
+
+| Escenario | Δ |
+|:---|---:|
+| Publicado | **−1,1698** |
+| Aislando el parseo alterno | −0,2963 |
+| Corrigiendo el emparejamiento duplicado | −0,2545 |
+| **Las dos a la vez** | **+0,4739** |
+
+**Ninguna de las dos por separado le da la vuelta.** Juntas, sí. Es exactamente el fenómeno que justificaba
+hacer la combinación: dos efectos individualmente insuficientes cuyo efecto conjunto cruza el cero, y que
+**ningún análisis de sensibilidad de una sola variable habría encontrado**.
+
+### Las cautelas, que siguen siendo las mismas y en el mismo sitio
+
+1. **La significación no cambia para ninguno de los dos.** Ni `gemma4:31b-mlx` ni `gemma4:latest` alcanzan el
+   umbral de Tukey en el informe, y no lo alcanzan tampoco en ningún escenario. Lo que se mueve es el signo
+   de la estimación puntual.
+2. **Las dos correcciones no tienen el mismo estatus.** Corregir el emparejamiento duplicado va **hacia** la
+   medida correcta —cuenta cada referencia una vez, y el propio informe reconoce el defecto—; aislar el
+   parseo alterno es **hipotético**, porque descarta mediciones reales de la tubería.
+3. **Es una fila de veintiséis y dos modelos de doce.** El resto se mueve por debajo de medio punto, y los
+   dos significativos siguen intactos: `llama3.2:latest` de +10,82 a +11,67.
+
+**Lo que esto añade a la decisión 18:** ya no es un modelo sino **dos**, y uno de ellos solo aparece al
+combinar. Si se declara la sensibilidad, conviene declararla **como combinación** y no como dos notas
+sueltas, porque por separado ninguna de las dos habría mostrado el caso de `gemma4:latest`.
