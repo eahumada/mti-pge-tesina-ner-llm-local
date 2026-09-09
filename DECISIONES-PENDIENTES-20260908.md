@@ -75,9 +75,17 @@ capítulo de resultados.
 > negociables porque las dos afectan a lo que el documento afirma. **Primera:** la significación se
 > declara sobre la **métrica restringida**, que es la que el informe ya presenta como corregida en el
 > Anexo I; sobre la de tres categorías la conclusión pasaría a un solo modelo. **Segunda:** la frase
-> de la prueba del supuesto cambia, porque la homocedasticidad **no se cumple en ninguna** de las
-> tres variantes corregidas (p entre 1,4e-11 y 1e-09) y hay que acompañarla de una prueba robusta.
-> Esa segunda condición hay que aplicarla **incluso si decides no adoptar nada**.
+> de la prueba del supuesto cambia, porque el ANOVA titular pasaría a calcularse sobre datos donde
+> Brown-Forsythe da **p = 1,39e-11**, y hay que acompañarlo de una prueba robusta —Alexander-Govern
+> o Kruskal-Wallis, las dos con p abrumadora—.
+>
+> **Rectificación del mismo día:** escribí que esa segunda condición había que aplicarla «incluso si
+> decides no adoptar nada», y **no es cierto**. Contradecía a `FINDINGS §F115`, donde ya se había
+> comprobado que la frase está bien: es cierta para la métrica sobre la que se computa —la de tres
+> categorías, la misma del ANOVA publicado—, ya viene matizada con «aunque no equivalga a demostrar
+> que las varianzas son iguales», y el informe hace **cero** afirmaciones inferenciales sobre la
+> métrica restringida. **Si no adoptas el consolidado nuevo, el documento queda coherente como
+> está** y no hay nada que tocar.
 >
 > **Recomendación anterior, conservada:**
 >

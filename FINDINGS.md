@@ -5672,7 +5672,24 @@ cambiar de prueba, no a retirar la conclusión**.
 
 **Consecuencia para la decisión 1.** Ya no hay nada pendiente de calcular: adoptar el consolidado
 nuevo es seguro para la conclusión del capítulo de resultados **si la significación se declara sobre
-la métrica restringida**, que es la que el informe ya presenta como corregida en el Anexo I. Lo que
-sí hay que cambiar en cualquier caso es la frase de la prueba del supuesto.
+la métrica restringida**, que es la que el informe ya presenta como corregida en el Anexo I.
+
+### Corrección del mismo día: la frase de Levene NO hay que cambiarla si no se adopta nada
+
+Escribí arriba que la frase de la prueba del supuesto «hay que cambiarla en cualquier caso», y eso
+**contradice [§F115](#f115)**, donde dos turnos antes me había retractado justamente de esa
+recomendación. Comprobado otra vez: el informe hace **cero** afirmaciones inferenciales sobre la
+métrica restringida —el Anexo I es descriptivo—, y el ANOVA publicado se calcula sobre la métrica de
+tres categorías, que es la misma sobre la que se calcula la p = 0,18. **La frase es cierta para la
+métrica sobre la que se computa, y ya viene matizada** con «aunque no equivalga a demostrar que las
+varianzas son iguales».
+
+De modo que la condición correcta es más estrecha: **cambiar la frase del supuesto es obligatorio
+solo si se adopta el consolidado nuevo**, porque entonces el ANOVA titular pasa a calcularse sobre
+datos donde Brown-Forsythe da p = 1,39e-11. Si no se adopta, el documento queda coherente como está.
+
+Es el defecto de [§L69](#l69) en mi propio registro: una recomendación retirada que reaparece en un
+hallazgo posterior porque no releí el anterior. Y es la segunda vez en la sesión que ocurre con esta
+misma frase.
 
 **Estado del verificador:** 51 comprobaciones, 40 fallos (40 declarados, **0 nuevos**), 0 vacías.

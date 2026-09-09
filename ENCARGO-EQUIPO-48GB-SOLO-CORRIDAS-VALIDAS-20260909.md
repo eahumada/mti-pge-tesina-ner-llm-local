@@ -148,6 +148,12 @@ restringida), de modo que la prueba adecuada pasa a ser Alexander-Govern o Krusk
 dan p abrumadora, así que la conclusión no está en riesgo; lo que está mal es la prueba, y conviene
 que el informe estadístico lo diga.
 
+**Una precisión para que no la apliquéis de más:** eso vale para **vuestro** `statistical_report.md`
+del consolidado nuevo, no para el informe de tesina. El informe calcula su ANOVA sobre la métrica de
+tres categorías del consolidado **publicado**, donde Brown-Forsythe sí da p = 0,18, de modo que su
+frase es correcta tal como está. Cambiarla solo hace falta si el autor decide adoptar el consolidado
+nuevo, y esa decisión no es vuestra.
+
 ---
 
 ## 7. Rama
