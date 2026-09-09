@@ -8,6 +8,23 @@
 > verificación de `HISTORIAL-CONSOLIDADO.md §9`. *Corrección 2026-09-05: este documento afirmaba antes un
 > margen de 1 página basado en una medición de 24 pp. que quedó superada por la corrección de estilos.*
 
+> ### Aviso sobre los recuentos de este documento (2026-09-09)
+>
+> **Las cifras del cuerpo son históricas y varias han quedado muy atrás.** Se conservan porque la política es
+> aditiva y porque documentan el estado en que se escribió cada apartado, pero no describen el presente:
+>
+> | Dice el cuerpo | Es hoy |
+> |:---|:---|
+> | «25 hallazgos» y «22 lecciones» | **103 hallazgos** y **60 lecciones** |
+> | «12 modelos» (varias veces) | **13**, y el estudio cerró con esos trece |
+> | «margen real: 5 páginas», cuerpo de 20 pp. | cuerpo de **23,0 pp.**, margen de **1 336 palabras** |
+> | 8 bloqueantes del §10, uno marcado resuelto | **seis resueltos**, uno abierto y uno declarado (ver la adenda del §10) |
+>
+> Los recuentos vigentes se obtienen sin copiarlos: los hallazgos y lecciones con un `grep` sobre
+> `FINDINGS.md` y `LEARNING.md`, la extensión con `python3 tools/verificar_informe.py`, y el estado de la
+> re-corrida con `python3 tools/estado_recorrida.py`. **Una cifra que hay que mantener a mano acaba estando
+> mal**, y este documento lo demuestra tres veces.
+
 **Última actualización:** 2026-09-03
 
 ---
