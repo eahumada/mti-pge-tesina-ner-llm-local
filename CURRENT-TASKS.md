@@ -180,6 +180,35 @@ Para **cada tarea** que ejecutes:
 
 ## 2. Claude Desktop
 
+> ### Encargo vigente para Claude Desktop, 2026-09-09: cerrar los `.docx` y el PDF
+>
+> **`PROMPT-CLAUDE-DESKTOP-DOCX-Y-PDF-20260909.md`**, que sustituye al de resincronización del 08
+> —conservado como registro—. Lo que cambia y ahorra la mitad del trabajo: **ya no hay que
+> reconstruir a mano la lista de lo que falta**; la producen las comprobaciones **51 a 54** del
+> verificador, fichero por fichero, y se actualiza sola a medida que se inserta.
+>
+> **Alcance:** 51 de los 61 fallos declarados, en seis piezas. La primera es una **subsección entera
+> de §5** —encabezado, cinco párrafos y la Tabla 20—, que es la declaración de corridas múltiples
+> que la regla de integridad exige. Después las **dos figuras**, que van con su prosa o no van
+> —insertar la prosa sin las imágenes convierte el entregable de incompleto en defectuoso—, la
+> referencia [38] con sus cuatro citas y la celda de la Tabla 3, y las filas de la Tabla 9.
+>
+> **Y el PDF de la raíz, que es lo que se entrega y está desfasado:** los `.docx` son de hoy a las
+> 11:26 y el PDF del 8 a las 04:31. Exige Word, que Claude Code no tiene. El PDF de
+> `doc/versions/enviados/` **no se toca**: atestigua qué se entregó.
+>
+> **Criterio de aceptación mecánico:** el recuento de fallos declarados baja de 61, las
+> comprobaciones 51 a 54 pasan a `ok`, cero fallos **nuevos**, la auditoría sigue en 15 predicados y
+> los tres `.docx` siguen siendo OOXML sano.
+>
+> **⚠️ Concurrencia declarada.** Dos workflows de Claude Code están en marcha:
+> `wf_6f71302e-12d` (comité revisor y profesor guía, **solo lectura**, sin conflicto) y
+> `wf_6c354e11-560` (**intenta estas mismas inserciones por cirugía OOXML**, con una puerta de
+> factibilidad que se detiene si no son viables). Lo más probable es que se detenga, porque ninguna
+> herramienta de `tools/` inserta párrafos ni imágenes. **Antes de empezar, mirar aquí y la salida
+> del verificador**, que reflejará lo que el workflow hubiera aplicado.
+
+
 > **Responsable de la edición y el formato de los `.docx`.** Detalle completo en
 > [`TODO-INFORME-FINAL.md §7`](./TODO-INFORME-FINAL.md).
 > ⚠️ **No regenerar los `.docx` con pandoc**: destruiría correcciones manuales de numeración multinivel,
@@ -1904,3 +1933,4 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 | 2026-09-09 (sesión loop, 48 GB) | Claude Code (48 GB) | 📋 **Dictamen sobre la prueba estadística (workflow + comité + profesor guía, investigación web).** Recomendación **unánime**: el defecto no es la heterocedasticidad (con diseño balanceado n=113 el F es robusto y con N grande Brown-Forsythe es sobre-potente), es **el diseño pareado ignorado** — el ANOVA de una vía sobre 26 celdas confunde MODELO con MODO. **Titular recomendado = Wilcoxon pareado por modelo + Holm** (el recuento de rechazos ES el «N de 13»); omnibus = modelo mixto 2 vías con interacción modelo×modo + Friedman; F=119,75 pasa a descriptivo; Welch convergente; Games-Howell en vez de Tukey. **Evidencia mecánica aportada** (`tools/wilcoxon_pareado.py`): en 3-categorías salen **3 de 13** (nemotron +0,154, llama3.2 +0,051, gemma4:12b-mlx **+0,0095 diminuto**), falta la restringida. La conclusión del estudio **sobrevive**. **No se tocó `CSV_CONSOLIDADO` ni el informe.** Dictamen completo con fuentes en `remote_48g/DICTAMEN-PRUEBA-ESTADISTICA-20260909.md`. **Decisión final: del autor.** |
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.257: **verificado el dictamen estadístico del equipo de 48 GB, y calculada la pieza que declaraban pendiente (§F137)**. Su conclusión de fondo es correcta y **la confirmé por mi cuenta antes de leerla**: el defecto atacable **no es la heterocedasticidad sino el diseño pareado ignorado** —la intersección de identificadores de artículo entre los 26 grupos es completa, así que el ANOVA de una vía confunde el efecto MODELO con el efecto MODO y su F=119,75 no aísla el efecto del RAG—. **Su Wilcoxon verifica cifra por cifra**, recalculado **sin su herramienta** y por **dos vías** (columna `f1` del CSV y reagregación desde `per_type`): los 13 p, medianas y valores de Holm coinciden. **3 de 13** en tres categorías. **Calculada la métrica restringida, que ellos declaraban pendiente: 4 de 13**, entra `llama3.1:8b`. Dos consecuencias: (1) **favorece al trabajo** — `mistral-nemo:latest` pierde el signo negativo (−0,0206 → +0,0000, p 0,111), así que el «efecto adverso en los mayores» es más débil de lo que la métrica de tres categorías sugiere; (2) **advertencia** — **dos de los cuatro significativos tienen mediana exactamente +0,0000**, y no es «sin efecto» sino efecto concentrado en una minoría: `gemma4:12b-mlx` mejora en 52 y empeora en 20 de sus 72 pares no nulos, media +0,0255. Trasladada la petición de reportar **tres cifras y no una** (mediana, media y no nulos con su reparto), porque con solo la mediana dos de los cuatro parecen no tener efecto. **Decisión nueva para el autor:** cuál de los dos recuentos es «el N de 13», 3 o 4 — las dos son correctas sobre métricas distintas. **Nada incorporado al informe**: `CSV_CONSOLIDADO` sigue en el publicado |
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.258: **mecanizado el contraste pareado (`tools/contraste_pareado.py`), y corregida una frase mía que se pasó**. Calculé el Wilcoxon a mano dos veces —una por métrica— y habrá que rehacerlo cuando lleguen los tamaños de efecto: §L61. La herramienta hace las **dos métricas** y **tres cifras de tamaño de efecto en vez de una** (mediana, media y no nulos con su reparto), que es lo que el dictamen del equipo pedía y su herramienta no cubría; reproduce las dos vías de la métrica de tres categorías y avisa sola de los significativos con mediana cero. **Y al ver el reparto completo encontré que me había pasado:** escribí que en la restringida `mistral-nemo:latest` «pierde el signo negativo», y eso vale para la **mediana** y no para el resto — su **media sigue en −0,0272** y **46 artículos empeoran frente a 36 que mejoran**. Lo correcto es que el efecto adverso **deja de ser significativo**, no que deje de existir. Corregido en §F137 y en la respuesta al equipo. Es el mismo argumento por el que hay que dar tres cifras y no una, aplicado contra mi propia frase, y no lo vi hasta mecanizar el cálculo |
+| 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.259: **encargo nuevo a Claude Desktop para cerrar los `.docx` y el PDF, y dos workflows lanzados**. `git pull`: sin novedades del remoto. **Clasificados los 61 fallos declarados**: **51 son la decisión 19** —30 prosa, 12 tablas/bibliografía, 6 figuras, 3 encabezados—, 3 el PDF (exige Word), 3 la decisión 13, 2 los logs vacíos, 1 la telemetría y 1 el `per_type`; **cero sin declarar**. **Encargo escrito** (`PROMPT-CLAUDE-DESKTOP-DOCX-Y-PDF-20260909.md`), que sustituye al del 08 y cuya novedad es que **el inventario ya no se reconstruye a mano**: lo producen las comprobaciones 51 a 54. Incluye el orden de prioridad si no cabe en 25 páginas, la regla de que los espacios se recortan por estilo y nunca por contenido, la advertencia de que **las figuras van con su prosa o no van** —insertar la prosa sin las imágenes convierte el entregable de incompleto en **defectuoso**—, el PDF de la raíz que está un día desfasado, y la prohibición de tocar el de `enviados/`. **Criterio de aceptación mecánico**: los declarados bajan de 61, las 51 a 54 pasan a `ok`, cero nuevos. **Dos workflows en marcha**, declarados arriba con su riesgo de concurrencia. **Y un hecho que encontré antes del cambio de prioridad y no debe perderse: `metrics.per_entity` existe** en los `detailed_results.json` —con `verdict` tp/fp/fn, la cadena extraída y la de referencia, entidad por entidad—, de modo que un modelo logístico a nivel de entidad con **test de Wald sí es factible**, que era la pregunta abierta |
