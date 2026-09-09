@@ -1,0 +1,6356 @@
+[
+  {
+    "batch_idx": 0,
+    "record_id": "1",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 4.075878143310547,
+    "tokens_per_sec": 52.73,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 18.3,
+    "cpu_peak_pct": 32.5,
+    "proc_cpu_avg_pct": 13.3,
+    "mem_avg_mb": 244.2,
+    "mem_peak_mb": 244.2,
+    "sys_mem_avg_mb": 22781.7,
+    "sys_mem_avg_pct": 62.5,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 4,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 8,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Alexey Shevchenko",
+            "reference": "Alexey Shevchenko"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "US Department of the Treasury",
+            "reference": "Department of the Treasury"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "OFAC",
+            "reference": "OFAC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Al-Sahra Electronics",
+            "reference": "Al-Sahra Electronics"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "United States",
+            "reference": "United States"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Dubai",
+            "reference": "Dubai"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "UAE",
+            "reference": "UAE"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Russia",
+            "reference": "Russia"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Dubai",
+          "ground_truth_target": "UAE",
+          "ratio": 50.0
+        },
+        {
+          "entity": "UAE",
+          "ground_truth_target": "Dubai",
+          "ratio": 50.0
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:23.284314+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "2",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5260529518127441,
+    "tokens_per_sec": 52.49,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 0.8333333333333334,
+    "f1": 0.9090909090909091,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 27.0,
+    "cpu_peak_pct": 30.1,
+    "proc_cpu_avg_pct": 36.2,
+    "mem_avg_mb": 245.4,
+    "mem_peak_mb": 245.4,
+    "sys_mem_avg_mb": 25867.8,
+    "sys_mem_avg_pct": 68.7,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.8333333333333334,
+        "f1": 0.9090909090909091,
+        "tp": 5,
+        "fp": 0,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Stephen Murphy",
+            "reference": "Stephen Murphy"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Kenneth A. Polite Jr.",
+            "reference": "Kenneth A. Polite Jr."
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "HSBC",
+            "reference": "HSBC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sinaloa Cartel",
+            "reference": "Sinaloa Cartel"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "DOJ"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "New York",
+            "reference": "New York"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "DOJ",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:24.820518+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "3",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5413191318511963,
+    "tokens_per_sec": 53.36,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.8,
+    "recall": 1.0,
+    "f1": 0.888888888888889,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 19.0,
+    "cpu_peak_pct": 22.0,
+    "proc_cpu_avg_pct": 35.4,
+    "mem_avg_mb": 246.0,
+    "mem_peak_mb": 246.0,
+    "sys_mem_avg_mb": 26059.1,
+    "sys_mem_avg_pct": 69.0,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "tp": 4,
+        "fp": 1,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Dmitry Kovalev",
+            "reference": "Dmitry Kovalev"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "European Council",
+            "reference": "European Council"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Belneftekhim",
+            "reference": "Belneftekhim"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Belarus",
+            "reference": "Belarus"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Russian",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:26.373545+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "4",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5427038669586182,
+    "tokens_per_sec": 53.42,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 0.75,
+    "f1": 0.8571428571428571,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 19.2,
+    "cpu_peak_pct": 22.8,
+    "proc_cpu_avg_pct": 35.2,
+    "mem_avg_mb": 246.8,
+    "mem_peak_mb": 246.8,
+    "sys_mem_avg_mb": 25990.2,
+    "sys_mem_avg_pct": 68.9,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571428571428571,
+        "tp": 3,
+        "fp": 0,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Arthur Chan",
+            "reference": "Arthur Chan"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Sun Hung Kai Securities",
+            "reference": "Sun Hung Kai Securities"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Securities and Futures Commission",
+            "reference": "Securities and Futures Commission"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "SFC"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "SFC",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:27.929304+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "5",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 2.050909996032715,
+    "tokens_per_sec": 52.89,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 25.1,
+    "cpu_peak_pct": 30.5,
+    "proc_cpu_avg_pct": 26.7,
+    "mem_avg_mb": 247.4,
+    "mem_peak_mb": 247.4,
+    "sys_mem_avg_mb": 25917.8,
+    "sys_mem_avg_pct": 68.8,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 5,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Maher Al-Assad",
+            "reference": "Maher Al-Assad"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "OFSI",
+            "reference": "OFSI"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Barclays Bank",
+            "reference": "Barclays Bank"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "UK Office of Financial Sanctions Implementation",
+            "reference": "Office of Financial Sanctions Implementation"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Syria",
+            "reference": "Syria"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:29.994841+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "6",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5324311256408691,
+    "tokens_per_sec": 53.11,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 0.8333333333333334,
+    "f1": 0.9090909090909091,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 21.2,
+    "cpu_peak_pct": 22.7,
+    "proc_cpu_avg_pct": 35.9,
+    "mem_avg_mb": 248.2,
+    "mem_peak_mb": 248.2,
+    "sys_mem_avg_mb": 26007.7,
+    "sys_mem_avg_pct": 68.9,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.8333333333333334,
+        "f1": 0.9090909090909091,
+        "tp": 5,
+        "fp": 0,
+        "fn": 1,
+        "oov_recall": 0.8333333333333334
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Cyril Ramaphosa",
+            "reference": "Cyril Ramaphosa"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Standard Bank",
+            "reference": "Standard Bank"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Financial Action Task Force",
+            "reference": "Financial Action Task Force"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "FATF"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Zimbabwe",
+            "reference": "Zimbabwe"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "South Africa",
+            "reference": "South Africa"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "FATF",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:31.548781+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "7",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5333058834075928,
+    "tokens_per_sec": 53.75,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 9.7,
+    "cpu_peak_pct": 17.1,
+    "proc_cpu_avg_pct": 35.3,
+    "mem_avg_mb": 248.8,
+    "mem_peak_mb": 248.8,
+    "sys_mem_avg_mb": 25902.3,
+    "sys_mem_avg_pct": 68.7,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Marc Dufour",
+            "reference": "Marc Dufour"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "SEC",
+            "reference": "SEC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "ABB Ltd",
+            "reference": "ABB Ltd"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "South Africa",
+            "reference": "South Africa"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:33.097426+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "8",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 2.0355911254882812,
+    "tokens_per_sec": 52.61,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.7142857142857143,
+    "recall": 1.0,
+    "f1": 0.8333333333333333,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 22.6,
+    "cpu_peak_pct": 25.9,
+    "proc_cpu_avg_pct": 26.6,
+    "mem_avg_mb": 249.5,
+    "mem_peak_mb": 249.5,
+    "sys_mem_avg_mb": 25854.2,
+    "sys_mem_avg_pct": 68.6,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.7142857142857143,
+        "recall": 1.0,
+        "f1": 0.8333333333333333,
+        "tp": 5,
+        "fp": 2,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Nicolas Maduro Guerra",
+            "reference": "Nicolas Maduro Guerra"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "U.S. Treasury",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "PDVSA",
+            "reference": "PDVSA"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "OFAC",
+            "reference": "OFAC"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Switzerland",
+            "reference": "Switzerland"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Venezuela",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Panama",
+            "reference": "Panama"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:35.144326+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "9",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5395479202270508,
+    "tokens_per_sec": 53.65,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.8,
+    "recall": 1.0,
+    "f1": 0.888888888888889,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 22.0,
+    "cpu_peak_pct": 27.0,
+    "proc_cpu_avg_pct": 34.9,
+    "mem_avg_mb": 250.2,
+    "mem_peak_mb": 250.2,
+    "sys_mem_avg_mb": 26058.8,
+    "sys_mem_avg_pct": 69.0,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "tp": 4,
+        "fp": 1,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Christian Sewing",
+            "reference": "Christian Sewing"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Deutsche Bank",
+            "reference": "Deutsche Bank"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "BaFin",
+            "reference": "BaFin"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Russian",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Germany",
+            "reference": "Germany"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:36.693789+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "10",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5295510292053223,
+    "tokens_per_sec": 53.51,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.75,
+    "recall": 1.0,
+    "f1": 0.8571428571428571,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 9.4,
+    "cpu_peak_pct": 16.7,
+    "proc_cpu_avg_pct": 35.4,
+    "mem_avg_mb": 250.9,
+    "mem_peak_mb": 250.9,
+    "sys_mem_avg_mb": 25994.9,
+    "sys_mem_avg_pct": 68.8,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571428571428571,
+        "tp": 3,
+        "fp": 1,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Georgios Pavlidis",
+            "reference": "Georgios Pavlidis"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Justice Department",
+            "reference": "Justice Department"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Suez Rajan Ltd",
+            "reference": "Suez Rajan Ltd"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Greek",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:38.236454+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "11",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5448508262634277,
+    "tokens_per_sec": 52.97,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 26.4,
+    "cpu_peak_pct": 30.8,
+    "proc_cpu_avg_pct": 36.7,
+    "mem_avg_mb": 251.6,
+    "mem_peak_mb": 251.6,
+    "sys_mem_avg_mb": 25926.7,
+    "sys_mem_avg_pct": 68.6,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Heather Morgan",
+            "reference": "Heather Morgan"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Ilya Lichtenstein",
+            "reference": "Ilya Lichtenstein"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Lisa O. Monaco",
+            "reference": "Lisa O. Monaco"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Bitfinex",
+            "reference": "Bitfinex"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:39.796023+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "12",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5337488651275635,
+    "tokens_per_sec": 52.99,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.4,
+    "recall": 1.0,
+    "f1": 0.5714285714285715,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 22.2,
+    "cpu_peak_pct": 24.9,
+    "proc_cpu_avg_pct": 35.8,
+    "mem_avg_mb": 252.3,
+    "mem_peak_mb": 252.3,
+    "sys_mem_avg_mb": 26378.8,
+    "sys_mem_avg_pct": 69.5,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "fp": 3,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Thomas Borgen",
+            "reference": "Thomas Borgen"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "State Prosecutor for Serious Economic and International Crime",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Danske Bank",
+            "reference": "Danske Bank"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Denmark",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Estonian",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:41.341988+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "13",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5472021102905273,
+    "tokens_per_sec": 53.29,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.8,
+    "recall": 1.0,
+    "f1": 0.888888888888889,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 15.8,
+    "cpu_peak_pct": 18.6,
+    "proc_cpu_avg_pct": 35.9,
+    "mem_avg_mb": 253.1,
+    "mem_peak_mb": 253.1,
+    "sys_mem_avg_mb": 26173.4,
+    "sys_mem_avg_pct": 69.0,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "tp": 4,
+        "fp": 1,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Muammar Gaddafi",
+            "reference": "Muammar Gaddafi"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Mutassim Gaddafi",
+            "reference": "Mutassim Gaddafi"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Bank of Valletta",
+            "reference": "Bank of Valletta"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Malta",
+            "reference": "Malta"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Libyan",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Muammar Gaddafi",
+          "ground_truth_target": "Mutassim Gaddafi",
+          "ratio": 77.41935483870968
+        },
+        {
+          "entity": "Mutassim Gaddafi",
+          "ground_truth_target": "Muammar Gaddafi",
+          "ratio": 77.41935483870968
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:42.906640+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "14",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5324079990386963,
+    "tokens_per_sec": 52.72,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.75,
+    "recall": 0.75,
+    "f1": 0.75,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 23.5,
+    "cpu_peak_pct": 29.5,
+    "proc_cpu_avg_pct": 35.6,
+    "mem_avg_mb": 253.8,
+    "mem_peak_mb": 253.8,
+    "sys_mem_avg_mb": 26112.5,
+    "sys_mem_avg_pct": 68.9,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.75,
+        "recall": 0.75,
+        "f1": 0.75,
+        "tp": 3,
+        "fp": 1,
+        "fn": 1,
+        "oov_recall": 0.6666666666666666
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Willy Ngoma",
+            "reference": "Willy Ngoma"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "United Nations Security Council",
+            "reference": "United Nations Security Council"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "M23",
+            "reference": "M23"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Democratic Republic of Congo",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Congo"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "Congo",
+          "category": "Locations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:44.454597+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "15",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5460288524627686,
+    "tokens_per_sec": 53.0,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.75,
+    "recall": 1.0,
+    "f1": 0.8571428571428571,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 28.3,
+    "cpu_peak_pct": 30.4,
+    "proc_cpu_avg_pct": 35.7,
+    "mem_avg_mb": 254.5,
+    "mem_peak_mb": 254.5,
+    "sys_mem_avg_mb": 26291.0,
+    "sys_mem_avg_pct": 69.2,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571428571428571,
+        "tp": 3,
+        "fp": 1,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Evelin Banev",
+            "reference": "Evelin Banev"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Credit Suisse Group AG",
+            "reference": "Credit Suisse Group AG"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Swiss Federal Criminal Court",
+            "reference": "Swiss Federal Criminal Court"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Bulgarian",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:46.011849+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "16",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5488200187683105,
+    "tokens_per_sec": 53.7,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 13.9,
+    "cpu_peak_pct": 24.4,
+    "proc_cpu_avg_pct": 36.2,
+    "mem_avg_mb": 255.2,
+    "mem_peak_mb": 255.2,
+    "sys_mem_avg_mb": 26292.1,
+    "sys_mem_avg_pct": 69.2,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Christian Larsen",
+            "reference": "Christian Larsen"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Brad Garlinghouse",
+            "reference": "Brad Garlinghouse"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "SEC",
+            "reference": "SEC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Ripple Labs Inc",
+            "reference": "Ripple Labs Inc"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:47.577180+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "17",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5248048305511475,
+    "tokens_per_sec": 53.41,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 17.5,
+    "cpu_peak_pct": 19.2,
+    "proc_cpu_avg_pct": 35.7,
+    "mem_avg_mb": 255.9,
+    "mem_peak_mb": 255.9,
+    "sys_mem_avg_mb": 26104.0,
+    "sys_mem_avg_pct": 68.8,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 5,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Lars Machen",
+            "reference": "Lars Machen"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "DOJ",
+            "reference": "DOJ"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "BNP Paribas SA",
+            "reference": "BNP Paribas SA"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Sudan",
+            "reference": "Sudan"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Iran",
+            "reference": "Iran"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:49.116203+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "18",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5449070930480957,
+    "tokens_per_sec": 53.61,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.75,
+    "recall": 1.0,
+    "f1": 0.8571428571428571,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 17.5,
+    "cpu_peak_pct": 27.7,
+    "proc_cpu_avg_pct": 35.4,
+    "mem_avg_mb": 256.6,
+    "mem_peak_mb": 256.6,
+    "sys_mem_avg_mb": 26179.9,
+    "sys_mem_avg_pct": 68.9,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571428571428571,
+        "tp": 3,
+        "fp": 1,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Sani Abacha",
+            "reference": "Sani Abacha"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Citibank",
+            "reference": "Citibank"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "U.S. Department of Justice",
+            "reference": "Department of Justice"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Nigerian",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:50.671889+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "19",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5364141464233398,
+    "tokens_per_sec": 53.43,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6,
+    "recall": 1.0,
+    "f1": 0.7499999999999999,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 11.5,
+    "cpu_peak_pct": 15.0,
+    "proc_cpu_avg_pct": 35.2,
+    "mem_avg_mb": 257.3,
+    "mem_peak_mb": 257.3,
+    "sys_mem_avg_mb": 26152.9,
+    "sys_mem_avg_pct": 68.9,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "tp": 3,
+        "fp": 2,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Sarah Johnston",
+            "reference": "Sarah Johnston"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "U.S. Treasury",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "OFAC",
+            "reference": "OFAC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Airbnb Inc",
+            "reference": "Airbnb Inc"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Cuba",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:52.219084+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "20",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5527629852294922,
+    "tokens_per_sec": 53.37,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 16.5,
+    "cpu_peak_pct": 17.9,
+    "proc_cpu_avg_pct": 35.3,
+    "mem_avg_mb": 258.1,
+    "mem_peak_mb": 258.1,
+    "sys_mem_avg_mb": 26035.6,
+    "sys_mem_avg_pct": 68.6,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Denny Chin",
+            "reference": "Denny Chin"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Bernard L. Madoff",
+            "reference": "Bernard L. Madoff"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Bernard L. Madoff Investment Securities LLC",
+            "reference": "Bernard L. Madoff Investment Securities LLC"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:53.782640+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "21",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5320899486541748,
+    "tokens_per_sec": 53.28,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.8,
+    "recall": 0.5714285714285714,
+    "f1": 0.6666666666666666,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 22.0,
+    "cpu_peak_pct": 33.4,
+    "proc_cpu_avg_pct": 34.5,
+    "mem_avg_mb": 258.1,
+    "mem_peak_mb": 258.1,
+    "sys_mem_avg_mb": 26042.5,
+    "sys_mem_avg_pct": 68.6,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.75,
+          "f1": 0.8571428571428571,
+          "tp": 3,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 2
+        }
+      },
+      "overall": {
+        "precision": 0.8,
+        "recall": 0.5714285714285714,
+        "f1": 0.6666666666666666,
+        "tp": 4,
+        "fp": 1,
+        "fn": 3,
+        "oov_recall": 0.6666666666666666
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Mahmoud Bahmani",
+            "reference": "Mahmoud Bahmani"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Central Bank of Iran",
+            "reference": "Central Bank of Iran"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "New York Department of Financial Services",
+            "reference": "Department of Financial Services"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Standard Chartered Bank",
+            "reference": "Standard Chartered Bank"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "DFS"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Iranian",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "New York"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Iran"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Iranian",
+          "ground_truth_target": "Iran",
+          "ratio": 72.72727272727273
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "DFS",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "Iran",
+          "category": "Locations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:55.330851+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "22",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.544071912765503,
+    "tokens_per_sec": 53.61,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 12.0,
+    "cpu_peak_pct": 13.9,
+    "proc_cpu_avg_pct": 35.6,
+    "mem_avg_mb": 258.1,
+    "mem_peak_mb": 258.1,
+    "sys_mem_avg_mb": 26112.4,
+    "sys_mem_avg_pct": 68.7,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Jho Low",
+            "reference": "Jho Low"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "DOJ",
+            "reference": "DOJ"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Goldman Sachs Group Inc",
+            "reference": "Goldman Sachs Group Inc"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "1MDB",
+            "reference": "1MDB"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:56.885878+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "23",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 2.037468194961548,
+    "tokens_per_sec": 53.26,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6,
+    "recall": 0.75,
+    "f1": 0.6666666666666665,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 18.3,
+    "cpu_peak_pct": 21.1,
+    "proc_cpu_avg_pct": 26.9,
+    "mem_avg_mb": 258.1,
+    "mem_peak_mb": 258.1,
+    "sys_mem_avg_mb": 26041.4,
+    "sys_mem_avg_pct": 68.6,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6,
+        "recall": 0.75,
+        "f1": 0.6666666666666665,
+        "tp": 3,
+        "fp": 2,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Erik Thedeen",
+            "reference": "Erik Thedeen"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Skandinaviska Enskilda Banken (SEB)",
+            "reference": "Skandinaviska Enskilda Banken"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Finansinspektionen",
+            "reference": "Finansinspektionen"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "SEB"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Sweden",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Baltic",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "SEB",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:13:58.938155+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "24",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5345251560211182,
+    "tokens_per_sec": 53.42,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 0.75,
+    "f1": 0.8571428571428571,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 24.0,
+    "cpu_peak_pct": 33.4,
+    "proc_cpu_avg_pct": 35.3,
+    "mem_avg_mb": 258.1,
+    "mem_peak_mb": 258.1,
+    "sys_mem_avg_mb": 26084.6,
+    "sys_mem_avg_pct": 68.7,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571428571428571,
+        "tp": 3,
+        "fp": 0,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Timur Kulibaev",
+            "reference": "Timur Kulibaev"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "National Bank of Kazakhstan",
+            "reference": "National Bank of Kazakhstan"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Eurasian Bank",
+            "reference": "Eurasian Bank"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Kazakhstan"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:14:00.487773+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "25",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5380008220672607,
+    "tokens_per_sec": 47.59,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 0.6666666666666666,
+    "f1": 0.8,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 35.5,
+    "cpu_peak_pct": 64.9,
+    "proc_cpu_avg_pct": 34.6,
+    "mem_avg_mb": 258.1,
+    "mem_peak_mb": 258.1,
+    "sys_mem_avg_mb": 26403.5,
+    "sys_mem_avg_pct": 68.7,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6,
+          "f1": 0.7499999999999999,
+          "tp": 3,
+          "fp": 0,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.6666666666666666,
+        "f1": 0.8,
+        "tp": 4,
+        "fp": 0,
+        "fn": 2,
+        "oov_recall": 0.6666666666666666
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Jane Watson",
+            "reference": "Jane Watson"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Royal Bank of Scotland",
+            "reference": "Royal Bank of Scotland"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "OFAC",
+            "reference": "OFAC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Financial Conduct Authority",
+            "reference": "Financial Conduct Authority"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "FCA"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "RBS"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "OFAC",
+          "ground_truth_target": "FCA",
+          "ratio": 57.14285714285714
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "FCA",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "RBS",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:14:02.042484+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "26",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5453987121582031,
+    "tokens_per_sec": 50.3,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 64.6,
+    "cpu_peak_pct": 71.3,
+    "proc_cpu_avg_pct": 35.6,
+    "mem_avg_mb": 258.1,
+    "mem_peak_mb": 258.1,
+    "sys_mem_avg_mb": 26717.3,
+    "sys_mem_avg_pct": 68.8,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Najib Razak",
+            "reference": "Najib Razak"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "SRC International",
+            "reference": "SRC International"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "1MDB",
+            "reference": "1MDB"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:14:03.595987+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "27",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5496909618377686,
+    "tokens_per_sec": 53.91,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 20.3,
+    "cpu_peak_pct": 42.5,
+    "proc_cpu_avg_pct": 35.0,
+    "mem_avg_mb": 258.1,
+    "mem_peak_mb": 258.1,
+    "sys_mem_avg_mb": 26712.7,
+    "sys_mem_avg_pct": 68.8,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Jian Liu",
+            "reference": "Jian Liu"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "SEC",
+            "reference": "SEC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Luckin Coffee Inc",
+            "reference": "Luckin Coffee Inc"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:14:05.155632+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "28",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5384681224822998,
+    "tokens_per_sec": 53.6,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 0.75,
+    "f1": 0.8571428571428571,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 15.4,
+    "cpu_peak_pct": 19.6,
+    "proc_cpu_avg_pct": 34.7,
+    "mem_avg_mb": 258.1,
+    "mem_peak_mb": 258.1,
+    "sys_mem_avg_mb": 26804.2,
+    "sys_mem_avg_pct": 69.0,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571428571428571,
+        "tp": 3,
+        "fp": 0,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Brian Hartzer",
+            "reference": "Brian Hartzer"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Australian Transaction Reports and Analysis Centre",
+            "reference": "Australian Transaction Reports and Analysis Centre"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Westpac Banking Corporation",
+            "reference": "Westpac Banking Corporation"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "AUSTRAC"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:14:06.707695+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "29",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5326118469238281,
+    "tokens_per_sec": 53.56,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.5,
+    "recall": 1.0,
+    "f1": 0.6666666666666666,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 13.8,
+    "cpu_peak_pct": 16.5,
+    "proc_cpu_avg_pct": 35.5,
+    "mem_avg_mb": 258.1,
+    "mem_peak_mb": 258.1,
+    "sys_mem_avg_mb": 26702.5,
+    "sys_mem_avg_pct": 68.8,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "tp": 2,
+        "fp": 2,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Jacob Aarup-Andersen",
+            "reference": "Jacob Aarup-Andersen"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "Copenhagen police",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Danske Bank",
+            "reference": "Danske Bank"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Baltic",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:14:08.250753+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "30",
+    "model": "gemma4:latest_baseline",
+    "latency_sec": 1.5384209156036377,
+    "tokens_per_sec": 53.84,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 0.75,
+    "f1": 0.8571428571428571,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 20.6,
+    "cpu_peak_pct": 21.9,
+    "proc_cpu_avg_pct": 35.9,
+    "mem_avg_mb": 258.1,
+    "mem_peak_mb": 258.1,
+    "sys_mem_avg_mb": 26650.5,
+    "sys_mem_avg_pct": 68.7,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571428571428571,
+        "tp": 3,
+        "fp": 0,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Susan Mauldin",
+            "reference": "Susan Mauldin"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Equifax Inc",
+            "reference": "Equifax Inc"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Federal Trade Commission",
+            "reference": "Federal Trade Commission"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "FTC"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "FTC",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:14:09.803252+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "1",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 2.5493171215057373,
+    "tokens_per_sec": 52.96,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.8571428571428571,
+    "recall": 0.75,
+    "f1": 0.7999999999999999,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 7.2,
+    "cpu_peak_pct": 15.3,
+    "proc_cpu_avg_pct": 21.4,
+    "mem_avg_mb": 470.0,
+    "mem_peak_mb": 470.0,
+    "sys_mem_avg_mb": 26877.6,
+    "sys_mem_avg_pct": 69.1,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5,
+          "recall": 0.3333333333333333,
+          "f1": 0.4,
+          "tp": 1,
+          "fp": 1,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 4,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.8571428571428571,
+        "recall": 0.75,
+        "f1": 0.7999999999999999,
+        "tp": 6,
+        "fp": 1,
+        "fn": 2,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Alexey Shevchenko",
+            "reference": "Alexey Shevchenko"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "US Department of the Treasury's OFAC",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Al-Sahra Electronics",
+            "reference": "Al-Sahra Electronics"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Department of the Treasury"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "OFAC"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "United States",
+            "reference": "United States"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Dubai",
+            "reference": "Dubai"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "UAE",
+            "reference": "UAE"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Russia",
+            "reference": "Russia"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "US Department of the Treasury's OFAC",
+          "ground_truth_target": "Department of the Treasury",
+          "ratio": 83.87096774193549
+        },
+        {
+          "entity": "Dubai",
+          "ground_truth_target": "UAE",
+          "ratio": 50.0
+        },
+        {
+          "entity": "UAE",
+          "ground_truth_target": "Dubai",
+          "ratio": 50.0
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "OFAC",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:14:12.522174+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "2",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 11.161979913711548,
+    "tokens_per_sec": 51.38,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.8333333333333334,
+    "recall": 0.8333333333333334,
+    "f1": 0.8333333333333334,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 22.0,
+    "cpu_peak_pct": 40.1,
+    "proc_cpu_avg_pct": 5.4,
+    "mem_avg_mb": 494.8,
+    "mem_peak_mb": 498.2,
+    "sys_mem_avg_mb": 26873.4,
+    "sys_mem_avg_pct": 69.0,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.6666666666666666,
+          "recall": 0.6666666666666666,
+          "f1": 0.6666666666666666,
+          "tp": 2,
+          "fp": 1,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.8333333333333334,
+        "recall": 0.8333333333333334,
+        "f1": 0.8333333333333334,
+        "tp": 5,
+        "fp": 1,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Stephen Murphy",
+            "reference": "Stephen Murphy"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Kenneth A. Polite Jr.",
+            "reference": "Kenneth A. Polite Jr."
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "HSBC",
+            "reference": "HSBC"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "New York federal court",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sinaloa Cartel",
+            "reference": "Sinaloa Cartel"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "DOJ"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "New York",
+            "reference": "New York"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "DOJ",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:14:23.787788+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "3",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 2.5595767498016357,
+    "tokens_per_sec": 53.4,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.8,
+    "recall": 1.0,
+    "f1": 0.888888888888889,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 15.7,
+    "cpu_peak_pct": 19.8,
+    "proc_cpu_avg_pct": 21.7,
+    "mem_avg_mb": 499.4,
+    "mem_peak_mb": 499.4,
+    "sys_mem_avg_mb": 26975.4,
+    "sys_mem_avg_pct": 69.2,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "tp": 4,
+        "fp": 1,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Dmitry Kovalev",
+            "reference": "Dmitry Kovalev"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "European Council",
+            "reference": "European Council"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Belneftekhim",
+            "reference": "Belneftekhim"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Belarus",
+            "reference": "Belarus"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Russian",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:14:26.445848+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "4",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 2.0479021072387695,
+    "tokens_per_sec": 53.48,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 0.75,
+    "f1": 0.8571428571428571,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 15.2,
+    "cpu_peak_pct": 21.5,
+    "proc_cpu_avg_pct": 26.8,
+    "mem_avg_mb": 499.4,
+    "mem_peak_mb": 499.5,
+    "sys_mem_avg_mb": 26949.2,
+    "sys_mem_avg_pct": 69.1,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571428571428571,
+        "tp": 3,
+        "fp": 0,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Arthur Chan",
+            "reference": "Arthur Chan"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Sun Hung Kai Securities",
+            "reference": "Sun Hung Kai Securities"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Securities and Futures Commission",
+            "reference": "Securities and Futures Commission"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "SFC"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "SFC",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:14:28.611720+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "5",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 1.5535199642181396,
+    "tokens_per_sec": 53.14,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 0.8,
+    "f1": 0.888888888888889,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 16.2,
+    "cpu_peak_pct": 17.0,
+    "proc_cpu_avg_pct": 36.2,
+    "mem_avg_mb": 499.7,
+    "mem_peak_mb": 499.7,
+    "sys_mem_avg_mb": 26949.7,
+    "sys_mem_avg_pct": 69.1,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.8,
+        "f1": 0.888888888888889,
+        "tp": 4,
+        "fp": 0,
+        "fn": 1,
+        "oov_recall": 0.8
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Maher Al-Assad",
+            "reference": "Maher Al-Assad"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Barclays Bank",
+            "reference": "Barclays Bank"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "UK Office of Financial Sanctions Implementation",
+            "reference": "Office of Financial Sanctions Implementation"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "OFSI"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Syria",
+            "reference": "Syria"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "OFSI",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:14:30.276433+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "6",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 8.603657007217407,
+    "tokens_per_sec": 51.64,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 0.8333333333333334,
+    "f1": 0.9090909090909091,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 17.8,
+    "cpu_peak_pct": 31.9,
+    "proc_cpu_avg_pct": 6.4,
+    "mem_avg_mb": 496.3,
+    "mem_peak_mb": 499.8,
+    "sys_mem_avg_mb": 27025.5,
+    "sys_mem_avg_pct": 69.2,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.8333333333333334,
+        "f1": 0.9090909090909091,
+        "tp": 5,
+        "fp": 0,
+        "fn": 1,
+        "oov_recall": 0.8333333333333334
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Cyril Ramaphosa",
+            "reference": "Cyril Ramaphosa"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Standard Bank",
+            "reference": "Standard Bank"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Financial Action Task Force",
+            "reference": "Financial Action Task Force"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "FATF"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Zimbabwe",
+            "reference": "Zimbabwe"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "South Africa",
+            "reference": "South Africa"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "FATF",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:14:38.989130+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "7",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 10.647074937820435,
+    "tokens_per_sec": 51.42,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.8,
+    "recall": 1.0,
+    "f1": 0.888888888888889,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 19.3,
+    "cpu_peak_pct": 32.3,
+    "proc_cpu_avg_pct": 5.9,
+    "mem_avg_mb": 500.9,
+    "mem_peak_mb": 500.9,
+    "sys_mem_avg_mb": 27112.9,
+    "sys_mem_avg_pct": 69.3,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "tp": 4,
+        "fp": 1,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Marc Dufour",
+            "reference": "Marc Dufour"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "Foreign Corrupt Practices Act (FCPA)",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "SEC",
+            "reference": "SEC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "ABB Ltd",
+            "reference": "ABB Ltd"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "South Africa",
+            "reference": "South Africa"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:14:49.734583+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "8",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 1.5326509475708008,
+    "tokens_per_sec": 52.79,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6666666666666666,
+    "recall": 0.8,
+    "f1": 0.7272727272727272,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 16.3,
+    "cpu_peak_pct": 20.4,
+    "proc_cpu_avg_pct": 36.6,
+    "mem_avg_mb": 502.4,
+    "mem_peak_mb": 502.4,
+    "sys_mem_avg_mb": 27214.7,
+    "sys_mem_avg_pct": 69.5,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 1,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6666666666666666,
+        "recall": 0.8,
+        "f1": 0.7272727272727272,
+        "tp": 4,
+        "fp": 2,
+        "fn": 1,
+        "oov_recall": 0.8
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Nicolas Maduro Guerra",
+            "reference": "Nicolas Maduro Guerra"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "PDVSA",
+            "reference": "PDVSA"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "U.S. Treasury's OFAC",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "OFAC"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Switzerland",
+            "reference": "Switzerland"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Venezuela",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Panama",
+            "reference": "Panama"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "OFAC",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:14:51.369646+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "9",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 2.0496881008148193,
+    "tokens_per_sec": 53.73,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.75,
+    "recall": 0.75,
+    "f1": 0.75,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 22.2,
+    "cpu_peak_pct": 25.4,
+    "proc_cpu_avg_pct": 26.9,
+    "mem_avg_mb": 502.4,
+    "mem_peak_mb": 502.4,
+    "sys_mem_avg_mb": 27097.7,
+    "sys_mem_avg_pct": 69.2,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.75,
+        "recall": 0.75,
+        "f1": 0.75,
+        "tp": 3,
+        "fp": 1,
+        "fn": 1,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Christian Sewing",
+            "reference": "Christian Sewing"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Deutsche Bank",
+            "reference": "Deutsche Bank"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "BaFin",
+            "reference": "BaFin"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Russia",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Germany"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:14:53.517170+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "10",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 2.0418827533721924,
+    "tokens_per_sec": 53.5,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.75,
+    "recall": 1.0,
+    "f1": 0.8571428571428571,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 18.9,
+    "cpu_peak_pct": 28.7,
+    "proc_cpu_avg_pct": 26.8,
+    "mem_avg_mb": 502.5,
+    "mem_peak_mb": 502.6,
+    "sys_mem_avg_mb": 27049.7,
+    "sys_mem_avg_pct": 69.1,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571428571428571,
+        "tp": 3,
+        "fp": 1,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Georgios Pavlidis",
+            "reference": "Georgios Pavlidis"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Justice Department",
+            "reference": "Justice Department"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Suez Rajan Ltd",
+            "reference": "Suez Rajan Ltd"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Greek",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:14:55.663290+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "11",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 12.202059030532837,
+    "tokens_per_sec": 51.34,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 19.6,
+    "cpu_peak_pct": 39.4,
+    "proc_cpu_avg_pct": 4.5,
+    "mem_avg_mb": 503.2,
+    "mem_peak_mb": 503.2,
+    "sys_mem_avg_mb": 27127.4,
+    "sys_mem_avg_pct": 69.2,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Heather Morgan",
+            "reference": "Heather Morgan"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Ilya Lichtenstein",
+            "reference": "Ilya Lichtenstein"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Lisa O. Monaco",
+            "reference": "Lisa O. Monaco"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Bitfinex",
+            "reference": "Bitfinex"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:15:07.979676+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "12",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 2.546281099319458,
+    "tokens_per_sec": 53.3,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.4,
+    "recall": 1.0,
+    "f1": 0.5714285714285715,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 23.4,
+    "cpu_peak_pct": 34.4,
+    "proc_cpu_avg_pct": 21.6,
+    "mem_avg_mb": 503.2,
+    "mem_peak_mb": 503.2,
+    "sys_mem_avg_mb": 27122.9,
+    "sys_mem_avg_pct": 69.2,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "fp": 3,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Thomas Borgen",
+            "reference": "Thomas Borgen"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "State Prosecutor for Serious Economic and International Crime",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Danske Bank",
+            "reference": "Danske Bank"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Estonia",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Denmark",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:15:10.633091+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "13",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 2.031883955001831,
+    "tokens_per_sec": 53.39,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 14.2,
+    "cpu_peak_pct": 17.4,
+    "proc_cpu_avg_pct": 27.7,
+    "mem_avg_mb": 503.2,
+    "mem_peak_mb": 503.2,
+    "sys_mem_avg_mb": 27192.0,
+    "sys_mem_avg_pct": 69.3,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Muammar Gaddafi",
+            "reference": "Muammar Gaddafi"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Mutassim Gaddafi",
+            "reference": "Mutassim Gaddafi"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Bank of Valletta",
+            "reference": "Bank of Valletta"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Malta",
+            "reference": "Malta"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Muammar Gaddafi",
+          "ground_truth_target": "Mutassim Gaddafi",
+          "ratio": 77.41935483870968
+        },
+        {
+          "entity": "Mutassim Gaddafi",
+          "ground_truth_target": "Muammar Gaddafi",
+          "ratio": 77.41935483870968
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:15:12.761029+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "14",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 2.0289688110351562,
+    "tokens_per_sec": 53.11,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.75,
+    "recall": 0.75,
+    "f1": 0.75,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 20.1,
+    "cpu_peak_pct": 29.6,
+    "proc_cpu_avg_pct": 26.8,
+    "mem_avg_mb": 503.2,
+    "mem_peak_mb": 503.2,
+    "sys_mem_avg_mb": 27091.2,
+    "sys_mem_avg_pct": 69.1,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.75,
+        "recall": 0.75,
+        "f1": 0.75,
+        "tp": 3,
+        "fp": 1,
+        "fn": 1,
+        "oov_recall": 0.6666666666666666
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Willy Ngoma",
+            "reference": "Willy Ngoma"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "United Nations Security Council",
+            "reference": "United Nations Security Council"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "M23",
+            "reference": "M23"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Democratic Republic of Congo",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Congo"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "Congo",
+          "category": "Locations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:15:14.893362+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "15",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 11.687387943267822,
+    "tokens_per_sec": 51.33,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 20.0,
+    "cpu_peak_pct": 38.8,
+    "proc_cpu_avg_pct": 4.8,
+    "mem_avg_mb": 503.3,
+    "mem_peak_mb": 503.4,
+    "sys_mem_avg_mb": 27194.5,
+    "sys_mem_avg_pct": 69.3,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Evelin Banev",
+            "reference": "Evelin Banev"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Credit Suisse Group AG",
+            "reference": "Credit Suisse Group AG"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Swiss Federal Criminal Court",
+            "reference": "Swiss Federal Criminal Court"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:15:26.688974+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "16",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 2.0361061096191406,
+    "tokens_per_sec": 53.25,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 14.4,
+    "cpu_peak_pct": 21.9,
+    "proc_cpu_avg_pct": 27.1,
+    "mem_avg_mb": 503.5,
+    "mem_peak_mb": 503.5,
+    "sys_mem_avg_mb": 27326.9,
+    "sys_mem_avg_pct": 69.5,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Christian Larsen",
+            "reference": "Christian Larsen"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Brad Garlinghouse",
+            "reference": "Brad Garlinghouse"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "SEC",
+            "reference": "SEC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Ripple Labs Inc",
+            "reference": "Ripple Labs Inc"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:15:28.836193+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "17",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 9.13499116897583,
+    "tokens_per_sec": 51.48,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 20.3,
+    "cpu_peak_pct": 40.7,
+    "proc_cpu_avg_pct": 6.0,
+    "mem_avg_mb": 503.6,
+    "mem_peak_mb": 503.7,
+    "sys_mem_avg_mb": 27278.1,
+    "sys_mem_avg_pct": 69.4,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 5,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Lars Machen",
+            "reference": "Lars Machen"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "DOJ",
+            "reference": "DOJ"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "BNP Paribas SA",
+            "reference": "BNP Paribas SA"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Sudan",
+            "reference": "Sudan"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Iran",
+            "reference": "Iran"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:15:38.077365+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "18",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 1.5398328304290771,
+    "tokens_per_sec": 53.27,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.75,
+    "recall": 1.0,
+    "f1": 0.8571428571428571,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 17.7,
+    "cpu_peak_pct": 23.6,
+    "proc_cpu_avg_pct": 35.7,
+    "mem_avg_mb": 503.2,
+    "mem_peak_mb": 503.2,
+    "sys_mem_avg_mb": 27202.9,
+    "sys_mem_avg_pct": 69.2,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571428571428571,
+        "tp": 3,
+        "fp": 1,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Sani Abacha",
+            "reference": "Sani Abacha"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Citibank",
+            "reference": "Citibank"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "U.S. Department of Justice",
+            "reference": "Department of Justice"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Nigerian",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:15:39.714507+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "19",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 1.5320088863372803,
+    "tokens_per_sec": 52.93,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.5,
+    "recall": 0.6666666666666666,
+    "f1": 0.5714285714285715,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 29.8,
+    "cpu_peak_pct": 37.7,
+    "proc_cpu_avg_pct": 35.9,
+    "mem_avg_mb": 503.4,
+    "mem_peak_mb": 503.4,
+    "sys_mem_avg_mb": 27381.5,
+    "sys_mem_avg_pct": 69.6,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 1,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5,
+        "recall": 0.6666666666666666,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "fp": 2,
+        "fn": 1,
+        "oov_recall": 0.6666666666666666
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Sarah Johnston",
+            "reference": "Sarah Johnston"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "U.S. Treasury's OFAC",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Airbnb Inc",
+            "reference": "Airbnb Inc"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "OFAC"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Cuba",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "OFAC",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:15:41.348903+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "20",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 1.5394470691680908,
+    "tokens_per_sec": 53.11,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 16.5,
+    "cpu_peak_pct": 23.7,
+    "proc_cpu_avg_pct": 35.8,
+    "mem_avg_mb": 503.7,
+    "mem_peak_mb": 503.7,
+    "sys_mem_avg_mb": 27317.8,
+    "sys_mem_avg_pct": 69.4,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Denny Chin",
+            "reference": "Denny Chin"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Bernard L. Madoff",
+            "reference": "Bernard L. Madoff"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Bernard L. Madoff Investment Securities LLC",
+            "reference": "Bernard L. Madoff Investment Securities LLC"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:15:42.997947+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "21",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 1.5290470123291016,
+    "tokens_per_sec": 53.04,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.8,
+    "recall": 0.5714285714285714,
+    "f1": 0.6666666666666666,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 17.3,
+    "cpu_peak_pct": 20.4,
+    "proc_cpu_avg_pct": 35.6,
+    "mem_avg_mb": 507.0,
+    "mem_peak_mb": 507.0,
+    "sys_mem_avg_mb": 27257.2,
+    "sys_mem_avg_pct": 69.3,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.75,
+          "f1": 0.8571428571428571,
+          "tp": 3,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 2
+        }
+      },
+      "overall": {
+        "precision": 0.8,
+        "recall": 0.5714285714285714,
+        "f1": 0.6666666666666666,
+        "tp": 4,
+        "fp": 1,
+        "fn": 3,
+        "oov_recall": 0.6666666666666666
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Mahmoud Bahmani",
+            "reference": "Mahmoud Bahmani"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Central Bank of Iran",
+            "reference": "Central Bank of Iran"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "New York Department of Financial Services",
+            "reference": "Department of Financial Services"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Standard Chartered Bank",
+            "reference": "Standard Chartered Bank"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "DFS"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Iranian",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "New York"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Iran"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Iranian",
+          "ground_truth_target": "Iran",
+          "ratio": 72.72727272727273
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "DFS",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "Iran",
+          "category": "Locations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:15:44.657998+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "22",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 1.0211150646209717,
+    "tokens_per_sec": 52.13,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 0.75,
+    "f1": 0.8571428571428571,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 33.9,
+    "cpu_peak_pct": 35.1,
+    "proc_cpu_avg_pct": 54.2,
+    "mem_avg_mb": 507.0,
+    "mem_peak_mb": 507.1,
+    "sys_mem_avg_mb": 27443.6,
+    "sys_mem_avg_pct": 69.7,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571428571428571,
+        "tp": 3,
+        "fp": 0,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Jho Low",
+            "reference": "Jho Low"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "DOJ",
+            "reference": "DOJ"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Goldman Sachs Group Inc",
+            "reference": "Goldman Sachs Group Inc"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "1MDB"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "1MDB",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:15:45.780891+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "23",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 2.5600881576538086,
+    "tokens_per_sec": 52.95,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6666666666666666,
+    "recall": 1.0,
+    "f1": 0.8,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 25.9,
+    "cpu_peak_pct": 45.0,
+    "proc_cpu_avg_pct": 21.6,
+    "mem_avg_mb": 507.2,
+    "mem_peak_mb": 507.2,
+    "sys_mem_avg_mb": 27547.3,
+    "sys_mem_avg_pct": 69.9,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8,
+        "tp": 4,
+        "fp": 2,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Erik Thedeen",
+            "reference": "Erik Thedeen"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Skandinaviska Enskilda Banken",
+            "reference": "Skandinaviska Enskilda Banken"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Finansinspektionen",
+            "reference": "Finansinspektionen"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "SEB",
+            "reference": "SEB"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Sweden",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Baltic",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:15:48.437616+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "24",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 9.640942096710205,
+    "tokens_per_sec": 51.55,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 23.3,
+    "cpu_peak_pct": 36.5,
+    "proc_cpu_avg_pct": 5.8,
+    "mem_avg_mb": 504.9,
+    "mem_peak_mb": 505.0,
+    "sys_mem_avg_mb": 27760.3,
+    "sys_mem_avg_pct": 70.3,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Timur Kulibaev",
+            "reference": "Timur Kulibaev"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "The National Bank of Kazakhstan",
+            "reference": "National Bank of Kazakhstan"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Eurasian Bank",
+            "reference": "Eurasian Bank"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Kazakhstan",
+            "reference": "Kazakhstan"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:15:58.193723+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "25",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 2.0454518795013428,
+    "tokens_per_sec": 53.4,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 0.8333333333333334,
+    "f1": 0.9090909090909091,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 27.5,
+    "cpu_peak_pct": 28.8,
+    "proc_cpu_avg_pct": 27.0,
+    "mem_avg_mb": 504.2,
+    "mem_peak_mb": 504.2,
+    "sys_mem_avg_mb": 27249.8,
+    "sys_mem_avg_pct": 69.1,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1": 0.888888888888889,
+          "tp": 4,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.8333333333333334,
+        "f1": 0.9090909090909091,
+        "tp": 5,
+        "fp": 0,
+        "fn": 1,
+        "oov_recall": 0.8333333333333334
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Jane Watson",
+            "reference": "Jane Watson"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "RBS",
+            "reference": "RBS"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Royal Bank of Scotland",
+            "reference": "Royal Bank of Scotland"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "OFAC",
+            "reference": "OFAC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Financial Conduct Authority",
+            "reference": "Financial Conduct Authority"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "FCA"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "OFAC",
+          "ground_truth_target": "FCA",
+          "ratio": 57.14285714285714
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "FCA",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:16:00.355268+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "26",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 2.0519800186157227,
+    "tokens_per_sec": 53.87,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 26.6,
+    "cpu_peak_pct": 37.9,
+    "proc_cpu_avg_pct": 27.1,
+    "mem_avg_mb": 504.2,
+    "mem_peak_mb": 504.2,
+    "sys_mem_avg_mb": 27000.8,
+    "sys_mem_avg_pct": 68.6,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Najib Razak",
+            "reference": "Najib Razak"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "SRC International",
+            "reference": "SRC International"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "1MDB",
+            "reference": "1MDB"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:16:02.501127+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "27",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 8.646309852600098,
+    "tokens_per_sec": 51.46,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 27.3,
+    "cpu_peak_pct": 49.6,
+    "proc_cpu_avg_pct": 6.4,
+    "mem_avg_mb": 504.2,
+    "mem_peak_mb": 504.2,
+    "sys_mem_avg_mb": 27646.1,
+    "sys_mem_avg_pct": 69.9,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Jian Liu",
+            "reference": "Jian Liu"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "SEC",
+            "reference": "SEC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Luckin Coffee Inc",
+            "reference": "Luckin Coffee Inc"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:16:11.243984+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "28",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 1.0225269794464111,
+    "tokens_per_sec": 53.57,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 0.75,
+    "f1": 0.8571428571428571,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 24.9,
+    "cpu_peak_pct": 28.7,
+    "proc_cpu_avg_pct": 56.2,
+    "mem_avg_mb": 504.3,
+    "mem_peak_mb": 504.3,
+    "sys_mem_avg_mb": 27490.5,
+    "sys_mem_avg_pct": 69.5,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571428571428571,
+        "tp": 3,
+        "fp": 0,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Brian Hartzer",
+            "reference": "Brian Hartzer"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Australian Transaction Reports and Analysis Centre",
+            "reference": "Australian Transaction Reports and Analysis Centre"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Westpac Banking Corporation",
+            "reference": "Westpac Banking Corporation"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "AUSTRAC"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:16:12.374792+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "29",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 7.616918087005615,
+    "tokens_per_sec": 51.76,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.4,
+    "recall": 1.0,
+    "f1": 0.5714285714285715,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 21.2,
+    "cpu_peak_pct": 31.7,
+    "proc_cpu_avg_pct": 7.4,
+    "mem_avg_mb": 504.4,
+    "mem_peak_mb": 504.4,
+    "sys_mem_avg_mb": 27640.6,
+    "sys_mem_avg_pct": 69.8,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "fp": 3,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Jacob Aarup-Andersen",
+            "reference": "Jacob Aarup-Andersen"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "Copenhagen police",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Danske Bank",
+            "reference": "Danske Bank"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Copenhagen",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Baltic",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:16:20.090352+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "30",
+    "model": "gemma4:latest_kb_rag",
+    "latency_sec": 2.047743082046509,
+    "tokens_per_sec": 53.28,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 0.75,
+    "f1": 0.8571428571428571,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 19.4,
+    "cpu_peak_pct": 21.7,
+    "proc_cpu_avg_pct": 27.4,
+    "mem_avg_mb": 504.4,
+    "mem_peak_mb": 504.4,
+    "sys_mem_avg_mb": 27682.5,
+    "sys_mem_avg_pct": 69.8,
+    "vram_mb": 9192.1,
+    "model_disk_mb": 9163.2,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571428571428571,
+        "tp": 3,
+        "fp": 0,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Susan Mauldin",
+            "reference": "Susan Mauldin"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Equifax Inc",
+            "reference": "Equifax Inc"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Federal Trade Commission",
+            "reference": "Federal Trade Commission"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "FTC"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "FTC",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T22:16:22.251883+00:00",
+      "model_version": "gemma4:latest",
+      "prompt_hash": "a6af280e"
+    }
+  }
+]

@@ -1,0 +1,6978 @@
+[
+  {
+    "batch_idx": 0,
+    "record_id": "1",
+    "model": "gemma4:31b-mlx_baseline",
+    "latency_sec": 29.412107944488525,
+    "tokens_per_sec": 27.19,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6470588235294118,
+    "recall": 0.8461538461538461,
+    "f1": 0.7333333333333334,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 17.5,
+    "cpu_peak_pct": 56.6,
+    "proc_cpu_avg_pct": 1.8,
+    "mem_avg_mb": 92.5,
+    "mem_peak_mb": 244.7,
+    "sys_mem_avg_mb": 32026.3,
+    "sys_mem_avg_pct": 72.6,
+    "vram_mb": 19107.8,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5625,
+          "recall": 1.0,
+          "f1": 0.72,
+          "tp": 9,
+          "fp": 7,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.7,
+          "recall": 0.7,
+          "f1": 0.7,
+          "tp": 7,
+          "fp": 3,
+          "fn": 3
+        },
+        "Locations": {
+          "precision": 0.75,
+          "recall": 0.8571428571428571,
+          "f1": 0.7999999999999999,
+          "tp": 6,
+          "fp": 2,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.6470588235294118,
+        "recall": 0.8461538461538461,
+        "f1": 0.7333333333333334,
+        "tp": 22,
+        "fp": 12,
+        "fn": 4,
+        "oov_recall": 0.8333333333333334
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "John C. Demers",
+            "reference": "John C. Demers"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Adam Barry",
+            "reference": "Adam Barry"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Amin Jam",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Matthew Schneider",
+            "reference": "Matthew Schneider"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Dan Clutch",
+            "reference": "Dan Clutch"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Amin Yousefi Jam",
+            "reference": "Amin Yousefi Jam"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Abdollah Momeni",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Arash Yousefi Jam",
+            "reference": "Arash Yousefi Jam"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Ab Momeni",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Amir Amiri",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Arash Jam",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Vance R. Callender",
+            "reference": "Vance R. Callender"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Abdollah Momeni Roustani",
+            "reference": "Abdollah Momeni Roustani"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Arash Yousefijam",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Amin Yousefijam",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Hank Moon",
+            "reference": "Hank Moon"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "HSI",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "OEE",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Department of Commerce",
+            "reference": "Department of Commerce"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Office of Export Enforcement",
+            "reference": "Office of Export Enforcement"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "U.S. Immigration and Customs Enforcement",
+            "reference": "U.S. Immigration and Customs Enforcements"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Homeland Security Investigations",
+            "reference": "Homeland Security Investigations"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Counterintelligence and Export Control Section of the National Security Division",
+            "reference": "Counterintelligence and Export Control Section of the National Security Division"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Justice Department\u2019s Office of International Affairs",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Justice Department",
+            "reference": "Justice Department"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Eastern District of Michigan",
+            "reference": "Eastern District of Michigan"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "International Emergency Economic Powers Act"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Iranian Transactions and Sanctions Regulations"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Office of International Affairs"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Michigan",
+            "reference": "Michigan"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Ohio",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Canada",
+            "reference": "Canada"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "United Arab Emirates",
+            "reference": "United Arab Emirates"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Iran",
+            "reference": "Iran"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "United States",
+            "reference": "United States"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "UAE",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Ontario",
+            "reference": "Ontario"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Chicago"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Amin Jam",
+          "ground_truth_target": "Amin Yousefi Jam",
+          "ratio": 66.66666666666667
+        },
+        {
+          "entity": "Amin Yousefi Jam",
+          "ground_truth_target": "Arash Yousefi Jam",
+          "ratio": 78.78787878787878
+        },
+        {
+          "entity": "Abdollah Momeni",
+          "ground_truth_target": "Abdollah Momeni Roustani",
+          "ratio": 76.92307692307692
+        },
+        {
+          "entity": "Arash Yousefi Jam",
+          "ground_truth_target": "Amin Yousefi Jam",
+          "ratio": 78.78787878787878
+        },
+        {
+          "entity": "Ab Momeni",
+          "ground_truth_target": "Abdollah Momeni Roustani",
+          "ratio": 54.54545454545454
+        },
+        {
+          "entity": "Amir Amiri",
+          "ground_truth_target": "Adam Barry",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Arash Jam",
+          "ground_truth_target": "Arash Yousefi Jam",
+          "ratio": 69.23076923076923
+        },
+        {
+          "entity": "Arash Yousefijam",
+          "ground_truth_target": "Amin Yousefi Jam",
+          "ratio": 75.0
+        },
+        {
+          "entity": "Amin Yousefijam",
+          "ground_truth_target": "Arash Yousefi Jam",
+          "ratio": 75.0
+        },
+        {
+          "entity": "Department of Commerce",
+          "ground_truth_target": "Justice Department",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Office of Export Enforcement",
+          "ground_truth_target": "Justice Department",
+          "ratio": 52.17391304347826
+        },
+        {
+          "entity": "Justice Department\u2019s Office of International Affairs",
+          "ground_truth_target": "Justice Department",
+          "ratio": 51.42857142857142
+        },
+        {
+          "entity": "Justice Department",
+          "ground_truth_target": "Department of Commerce",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Michigan",
+          "ground_truth_target": "Iran",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Ohio",
+          "ground_truth_target": "Ontario",
+          "ratio": 54.54545454545454
+        },
+        {
+          "entity": "United Arab Emirates",
+          "ground_truth_target": "United States",
+          "ratio": 66.66666666666667
+        },
+        {
+          "entity": "Iran",
+          "ground_truth_target": "Michigan",
+          "ratio": 50.0
+        },
+        {
+          "entity": "United States",
+          "ground_truth_target": "United Arab Emirates",
+          "ratio": 66.66666666666667
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:49:46.465113+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "2",
+    "model": "gemma4:31b-mlx_baseline",
+    "latency_sec": 12.230954885482788,
+    "tokens_per_sec": 25.14,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 0.8421052631578947,
+    "f1": 0.9142857142857143,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 18.4,
+    "cpu_peak_pct": 42.0,
+    "proc_cpu_avg_pct": 4.4,
+    "mem_avg_mb": 99.8,
+    "mem_peak_mb": 102.6,
+    "sys_mem_avg_mb": 33288.9,
+    "sys_mem_avg_pct": 79.1,
+    "vram_mb": 19107.8,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 5,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.625,
+          "f1": 0.7692307692307693,
+          "tp": 5,
+          "fp": 0,
+          "fn": 3
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 6,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.8421052631578947,
+        "f1": 0.9142857142857143,
+        "tp": 16,
+        "fp": 0,
+        "fn": 3,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Stephen J. Murphy",
+            "reference": "Stephen J. Murphy"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Arash Yousefi Jam",
+            "reference": "Arash Yousefi Jam"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Adam Barry",
+            "reference": "Adam Barry"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Abdollah Momeni Roustani",
+            "reference": "Abdollah Momeni Roustani"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Hank Moon",
+            "reference": "Hank Moon"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Justice Department\u2019s National Security Division",
+            "reference": "Justice Department\u2019s National Security Division"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Commerce Department\u2019s Office of Export Enforcement",
+            "reference": "Commerce Department\u2019s Office of Export Enforcement"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Homeland Security Investigations",
+            "reference": "Homeland Security Investigations"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Criminal Division\u2019s Office of International Affairs",
+            "reference": "Criminal Division\u2019s Office of International Affairs"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Eastern District of Michigan",
+            "reference": "Eastern District of Michigan"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "International Emergency Economic Powers Act"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Iranian Transactions and Sanctions Regulations"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "District Court"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Michigan",
+            "reference": "Michigan"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Canada",
+            "reference": "Canada"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "United Arab Emirates",
+            "reference": "United Arab Emirates"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Iran",
+            "reference": "Iran"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "United States",
+            "reference": "United States"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Ontario",
+            "reference": "Ontario"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Justice Department\u2019s National Security Division",
+          "ground_truth_target": "Homeland Security Investigations",
+          "ratio": 50.63291139240506
+        },
+        {
+          "entity": "Commerce Department\u2019s Office of Export Enforcement",
+          "ground_truth_target": "Justice Department\u2019s National Security Division",
+          "ratio": 51.546391752577314
+        },
+        {
+          "entity": "Homeland Security Investigations",
+          "ground_truth_target": "Justice Department\u2019s National Security Division",
+          "ratio": 50.63291139240506
+        },
+        {
+          "entity": "Michigan",
+          "ground_truth_target": "Iran",
+          "ratio": 50.0
+        },
+        {
+          "entity": "United Arab Emirates",
+          "ground_truth_target": "United States",
+          "ratio": 66.66666666666667
+        },
+        {
+          "entity": "Iran",
+          "ground_truth_target": "Michigan",
+          "ratio": 50.0
+        },
+        {
+          "entity": "United States",
+          "ground_truth_target": "United Arab Emirates",
+          "ratio": 66.66666666666667
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:49:58.719894+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "3",
+    "model": "gemma4:31b-mlx_baseline",
+    "latency_sec": 24.710599899291992,
+    "tokens_per_sec": 28.47,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.8787878787878788,
+    "recall": 0.90625,
+    "f1": 0.8923076923076922,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 15.2,
+    "cpu_peak_pct": 30.8,
+    "proc_cpu_avg_pct": 2.2,
+    "mem_avg_mb": 103.0,
+    "mem_peak_mb": 103.1,
+    "sys_mem_avg_mb": 30700.0,
+    "sys_mem_avg_pct": 70.7,
+    "vram_mb": 22239.4,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 14,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.6923076923076923,
+          "recall": 0.75,
+          "f1": 0.7199999999999999,
+          "tp": 9,
+          "fp": 4,
+          "fn": 3
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 6,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.8787878787878788,
+        "recall": 0.90625,
+        "f1": 0.8923076923076922,
+        "tp": 29,
+        "fp": 4,
+        "fn": 3,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Paul L. Gray",
+            "reference": "Paul L. Gray"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Edward J. Hanko",
+            "reference": "Edward J. Hanko"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "T. Patrick Martin",
+            "reference": "T. Patrick Martin"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Chaka Fattah Sr.",
+            "reference": "Chaka Fattah Sr."
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Bonnie Bowser",
+            "reference": "Bonnie Bowser"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Eric L. Gibson",
+            "reference": "Eric L. Gibson"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Robert Brand",
+            "reference": "Robert Brand"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Herbert Vederman",
+            "reference": "Herbert Vederman"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Jonathan Kravis",
+            "reference": "Jonathan Kravis"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Zane David Memeger",
+            "reference": "Zane David Memeger"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Bob Dalton",
+            "reference": "Bob Dalton"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Akeia Conner",
+            "reference": "Akeia Conner"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Karen Nicholas",
+            "reference": "Karen Nicholas"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Leslie R. Caldwell",
+            "reference": "Leslie R. Caldwell"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Criminal Division\u2019s Organized Crime and Gang Section",
+            "reference": "Criminal Division\u2019s Organized Crime and Gang Section"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Criminal Division\u2019s Public Integrity Section",
+            "reference": "Criminal Division\u2019s Public Integrity Section"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Department of Justice\u2019s Office of the Inspector General",
+            "reference": "Department of Justice\u2019s Office of the Inspector General"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "IRS-CI",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Educational Advancement Alliance",
+            "reference": "Educational Advancement Alliance"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Internal Revenue Service-Criminal Investigation",
+            "reference": "Internal Revenue Service-Criminal Investigation"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Department of Commerce\u2019s Office of Inspector General",
+            "reference": "Department of Commerce\u2019s Office of Inspector General"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "EAA",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Eastern District of Pennsylvania",
+            "reference": "Eastern District of Pennsylvania"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Justice Department",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "U.S. Trade Commission",
+            "reference": "U.S. Trade Commission"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "FBI",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "NASA Office of Inspector General",
+            "reference": "NASA Office of Inspector General"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Congress"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Department of Justice\u2019s Criminal Division"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "FBI\u2019s Philadelphia Division"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Philadelphia",
+            "reference": "Philadelphia"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "New Jersey",
+            "reference": "New Jersey"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Williamstown",
+            "reference": "Williamstown"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Florida",
+            "reference": "Florida"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Pennsylvania",
+            "reference": "Pennsylvania"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Palm Beach",
+            "reference": "Palm Beach"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Robert Brand",
+          "ground_truth_target": "Herbert Vederman",
+          "ratio": 64.28571428571428
+        },
+        {
+          "entity": "Herbert Vederman",
+          "ground_truth_target": "Robert Brand",
+          "ratio": 64.28571428571428
+        },
+        {
+          "entity": "Criminal Division\u2019s Organized Crime and Gang Section",
+          "ground_truth_target": "Criminal Division\u2019s Public Integrity Section",
+          "ratio": 68.75
+        },
+        {
+          "entity": "Criminal Division\u2019s Public Integrity Section",
+          "ground_truth_target": "Criminal Division\u2019s Organized Crime and Gang Section",
+          "ratio": 68.75
+        },
+        {
+          "entity": "Department of Justice\u2019s Office of the Inspector General",
+          "ground_truth_target": "Department of Justice\u2019s Criminal Division",
+          "ratio": 62.5
+        },
+        {
+          "entity": "Internal Revenue Service-Criminal Investigation",
+          "ground_truth_target": "Department of Justice\u2019s Criminal Division",
+          "ratio": 56.81818181818181
+        },
+        {
+          "entity": "Department of Commerce\u2019s Office of Inspector General",
+          "ground_truth_target": "Department of Justice\u2019s Criminal Division",
+          "ratio": 53.76344086021505
+        },
+        {
+          "entity": "NASA Office of Inspector General",
+          "ground_truth_target": "Department of Justice\u2019s Office of the Inspector General",
+          "ratio": 68.96551724137932
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:50:23.467921+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "4",
+    "model": "gemma4:31b-mlx_baseline",
+    "latency_sec": 19.64858388900757,
+    "tokens_per_sec": 29.8,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.896551724137931,
+    "recall": 0.9629629629629629,
+    "f1": 0.9285714285714286,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 19.6,
+    "cpu_peak_pct": 35.9,
+    "proc_cpu_avg_pct": 2.7,
+    "mem_avg_mb": 103.6,
+    "mem_peak_mb": 103.6,
+    "sys_mem_avg_mb": 33362.1,
+    "sys_mem_avg_pct": 75.4,
+    "vram_mb": 23950.6,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 8,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.9090909090909091,
+          "recall": 1.0,
+          "f1": 0.9523809523809523,
+          "tp": 10,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.8,
+          "recall": 0.8888888888888888,
+          "f1": 0.8421052631578948,
+          "tp": 8,
+          "fp": 2,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.896551724137931,
+        "recall": 0.9629629629629629,
+        "f1": 0.9285714285714286,
+        "tp": 26,
+        "fp": 3,
+        "fn": 1,
+        "oov_recall": 0.8888888888888888
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Gabriela Figueredo",
+            "reference": "Gabriela Figueredo"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Nuno Ribeiro da Cunha",
+            "reference": "Nuno Ribeiro da Cunha"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Carlos Saturnino",
+            "reference": "Carlos Saturnino"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Mario Leite da Silva",
+            "reference": "Mario Leite da Silva"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Helder Pitta Gros",
+            "reference": "Helder Pitta Gros"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Isabel dos Santos",
+            "reference": "Isabel dos Santos"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Paula Oliveira",
+            "reference": "Paula Oliveira"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sarju Raikundalia",
+            "reference": "Sarju Raikundalia"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Portuguese Securities Market Commission",
+            "reference": "Portuguese Securities Market Commission"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "BBC News",
+            "reference": "BBC News"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sonangol",
+            "reference": "Sonagol"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Galp Energia",
+            "reference": "Galp Energia"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "NOS",
+            "reference": "NOS"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "ICIJ",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "International Consortium of Investigative Journalists",
+            "reference": "International Consortium of Investigative Journalists"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Lusa news agency",
+            "reference": "Lusa news agency"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Eurobic",
+            "reference": "Eurobic"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Expresso",
+            "reference": "Expresso"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Banco de Fomento Angola",
+            "reference": "Banco de Fomento Angola"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Dubai",
+            "reference": "Dubai"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "U.K.",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Luanda",
+            "reference": "Luanda"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "London",
+            "reference": "London"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Lisbon",
+            "reference": "Lisbon"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "U.S.",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Brazil",
+            "reference": "Brazil"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Portugal",
+            "reference": "Portugal"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Switzerland",
+            "reference": "Switzerland"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Angola",
+            "reference": "Angola"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Africa"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Carlos Saturnino",
+          "ground_truth_target": "Isabel dos Santos",
+          "ratio": 54.54545454545454
+        },
+        {
+          "entity": "Isabel dos Santos",
+          "ground_truth_target": "Carlos Saturnino",
+          "ratio": 54.54545454545454
+        },
+        {
+          "entity": "Dubai",
+          "ground_truth_target": "Brazil",
+          "ratio": 54.54545454545454
+        },
+        {
+          "entity": "Luanda",
+          "ground_truth_target": "Angola",
+          "ratio": 50.0
+        },
+        {
+          "entity": "London",
+          "ground_truth_target": "Luanda",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Lisbon",
+          "ground_truth_target": "London",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Brazil",
+          "ground_truth_target": "Dubai",
+          "ratio": 54.54545454545454
+        },
+        {
+          "entity": "Angola",
+          "ground_truth_target": "Luanda",
+          "ratio": 50.0
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:50:43.154896+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "5",
+    "model": "gemma4:31b-mlx_baseline",
+    "latency_sec": 6.107689142227173,
+    "tokens_per_sec": 22.41,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.625,
+    "recall": 0.625,
+    "f1": 0.625,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 22.2,
+    "cpu_peak_pct": 38.3,
+    "proc_cpu_avg_pct": 8.8,
+    "mem_avg_mb": 101.5,
+    "mem_peak_mb": 104.4,
+    "sys_mem_avg_mb": 33250.4,
+    "sys_mem_avg_pct": 80.2,
+    "vram_mb": 23950.6,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.25,
+          "recall": 0.3333333333333333,
+          "f1": 0.28571428571428575,
+          "tp": 1,
+          "fp": 3,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.625,
+        "recall": 0.625,
+        "f1": 0.625,
+        "tp": 5,
+        "fp": 3,
+        "fn": 3,
+        "oov_recall": 0.5
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Isabel dos Santos",
+            "reference": "Isabel dos Santos"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Jose Eduardo dos Santos",
+            "reference": "Jose Eduardo dos Santos"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "Angola's national oil company",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Exem Energy BV",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Amsterdam Court of Appeal",
+            "reference": "Amsterdam Court of Appeal"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Chamber of Companies",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Exem Energy BV, the Chamber of Companies"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Dutch court"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Africa",
+            "reference": "Africa"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Angola",
+            "reference": "Angola"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Amsterdam"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Isabel dos Santos",
+          "ground_truth_target": "Jose Eduardo dos Santos",
+          "ratio": 65.0
+        },
+        {
+          "entity": "Jose Eduardo dos Santos",
+          "ground_truth_target": "Isabel dos Santos",
+          "ratio": 65.0
+        },
+        {
+          "entity": "Exem Energy BV",
+          "ground_truth_target": "Exem Energy BV, the Chamber of Companies",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Chamber of Companies",
+          "ground_truth_target": "Exem Energy BV, the Chamber of Companies",
+          "ratio": 66.66666666666667
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:50:49.273081+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "6",
+    "model": "gemma4:31b-mlx_baseline",
+    "latency_sec": 3.5356950759887695,
+    "tokens_per_sec": 26.3,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 22.1,
+    "cpu_peak_pct": 44.0,
+    "proc_cpu_avg_pct": 15.2,
+    "mem_avg_mb": 100.1,
+    "mem_peak_mb": 100.3,
+    "sys_mem_avg_mb": 29392.7,
+    "sys_mem_avg_pct": 81.0,
+    "vram_mb": 25852.0,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 5,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Isabel dos Santos",
+            "reference": "Isabel dos Santos"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "H\u00e9lder Pitta Gr\u00f3s",
+            "reference": "H\u00e9lder Pitta Gr\u00f3s"
+          }
+        ],
+        "Organizations": [],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Luanda",
+            "reference": "Luanda"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Africa",
+            "reference": "Africa"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Angola",
+            "reference": "Angola"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Luanda",
+          "ground_truth_target": "Angola",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Angola",
+          "ground_truth_target": "Luanda",
+          "ratio": 50.0
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:50:52.817783+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "7",
+    "model": "gemma4:31b-mlx_baseline",
+    "latency_sec": 22.192349910736084,
+    "tokens_per_sec": 25.75,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.5,
+    "recall": 0.5833333333333334,
+    "f1": 0.5384615384615384,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 16.9,
+    "cpu_peak_pct": 39.8,
+    "proc_cpu_avg_pct": 2.5,
+    "mem_avg_mb": 99.4,
+    "mem_peak_mb": 101.4,
+    "sys_mem_avg_mb": 31159.0,
+    "sys_mem_avg_pct": 84.3,
+    "vram_mb": 26719.2,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 5,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.2,
+          "recall": 0.2,
+          "f1": 0.20000000000000004,
+          "tp": 1,
+          "fp": 4,
+          "fn": 4
+        },
+        "Locations": {
+          "precision": 0.25,
+          "recall": 0.5,
+          "f1": 0.3333333333333333,
+          "tp": 1,
+          "fp": 3,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.5,
+        "recall": 0.5833333333333334,
+        "f1": 0.5384615384615384,
+        "tp": 7,
+        "fp": 7,
+        "fn": 5,
+        "oov_recall": 0.5
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Brian E. Nelson",
+            "reference": "Brian E. Nelson"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "George Weah",
+            "reference": "George Weah"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Nathaniel McGill",
+            "reference": "Nathaniel McGill"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Bill Twehway",
+            "reference": "Bill Twehway"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sayma Syrenius Cephus",
+            "reference": "Sayma Syrenius Cephus"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "U.S. Department of the Treasury",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "NPA",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Office of Foreign Assets Control",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "National Port Authority",
+            "reference": "National Port Authority"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "OFAC",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "U.S. Department of the Treasury\u2019s Office of Foreign Assets Control"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Treasury for Terrorism and Financial Intelligence"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Global Magnitsky Human Rights Accountability Act"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Port of Buchanan"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "WASHINGTON",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Liberia",
+            "reference": "Liberia"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "United States",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Port of Buchanan",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Buchanan"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "U.S. Department of the Treasury",
+          "ground_truth_target": "U.S. Department of the Treasury\u2019s Office of Foreign Assets Control",
+          "ratio": 63.91752577319587
+        },
+        {
+          "entity": "Office of Foreign Assets Control",
+          "ground_truth_target": "U.S. Department of the Treasury\u2019s Office of Foreign Assets Control",
+          "ratio": 65.3061224489796
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "Port of Buchanan",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Port of Buchanan"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:51:15.025775+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "8",
+    "model": "gemma4:31b-mlx_baseline",
+    "latency_sec": 5.064439058303833,
+    "tokens_per_sec": 24.59,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6666666666666666,
+    "recall": 1.0,
+    "f1": 0.8,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 18.1,
+    "cpu_peak_pct": 44.2,
+    "proc_cpu_avg_pct": 10.4,
+    "mem_avg_mb": 97.9,
+    "mem_peak_mb": 100.0,
+    "sys_mem_avg_mb": 29565.5,
+    "sys_mem_avg_pct": 86.6,
+    "vram_mb": 26247.9,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8,
+        "tp": 4,
+        "fp": 2,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Bill Twehway",
+            "reference": "Bill Twehway"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Bill Teah TWEHWAY",
+            "reference": null
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Creative Developers Inc",
+            "reference": "Creative Developers Inc"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "National Port Authority",
+            "reference": "National Port Authority"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "River Cess Town",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Liberia",
+            "reference": "Liberia"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Bill Teah TWEHWAY",
+          "ground_truth_target": "Bill Twehway",
+          "ratio": 82.75862068965517
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:51:20.099201+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "9",
+    "model": "gemma4:31b-mlx_baseline",
+    "latency_sec": 15.681347131729126,
+    "tokens_per_sec": 27.84,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6666666666666666,
+    "recall": 0.8571428571428571,
+    "f1": 0.75,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 18.6,
+    "cpu_peak_pct": 34.5,
+    "proc_cpu_avg_pct": 3.4,
+    "mem_avg_mb": 97.3,
+    "mem_peak_mb": 100.5,
+    "sys_mem_avg_mb": 29303.1,
+    "sys_mem_avg_pct": 87.0,
+    "vram_mb": 26247.9,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 7,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5555555555555556,
+          "recall": 0.8333333333333334,
+          "f1": 0.6666666666666667,
+          "tp": 5,
+          "fp": 4,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.6666666666666666,
+        "recall": 0.8571428571428571,
+        "f1": 0.75,
+        "tp": 12,
+        "fp": 6,
+        "fn": 2,
+        "oov_recall": 0.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Kanio Bai Gbala",
+            "reference": "Kanio Bai Gbala"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Charles MacArthur D. Gull",
+            "reference": "Charles MacArthur D. Gull"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Peter Twehway",
+            "reference": "Peter Twehway"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Zarylee Gbala",
+            "reference": "Zarylee Gbala"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sidiki Fofana",
+            "reference": "Sidiki Fofana"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Christian D. Brownell",
+            "reference": "Christian D. Brownell"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Bill Twehway",
+            "reference": "Bill Twehway"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Liberia Anti-Corruption Commission",
+            "reference": "Liberia Anti-Corruption Commission"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Global Tracking Management Service",
+            "reference": "Global Tracking Management Service"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "NPA",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "National Port Authority",
+            "reference": "National Port Authority"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "FPA",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "FrontPageAfrica",
+            "reference": "FrontPageAfrica"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "LACC",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "CDI",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Creative Developers Inc.",
+            "reference": "Creative Developers Inc."
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Port of Buchanan"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "MONROVIA",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Port of Buchanan",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Liberia"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Kanio Bai Gbala",
+          "ground_truth_target": "Zarylee Gbala",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Peter Twehway",
+          "ground_truth_target": "Bill Twehway",
+          "ratio": 64.0
+        },
+        {
+          "entity": "Zarylee Gbala",
+          "ground_truth_target": "Kanio Bai Gbala",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Bill Twehway",
+          "ground_truth_target": "Peter Twehway",
+          "ratio": 64.0
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "Port of Buchanan",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Port of Buchanan"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:51:35.797472+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "10",
+    "model": "gemma4:31b-mlx_baseline",
+    "latency_sec": 27.744757890701294,
+    "tokens_per_sec": 27.69,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.7307692307692307,
+    "recall": 0.8636363636363636,
+    "f1": 0.7916666666666666,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 19.4,
+    "cpu_peak_pct": 53.2,
+    "proc_cpu_avg_pct": 2.0,
+    "mem_avg_mb": 81.4,
+    "mem_peak_mb": 100.1,
+    "sys_mem_avg_mb": 29555.0,
+    "sys_mem_avg_pct": 89.2,
+    "vram_mb": 27204.2,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.875,
+          "recall": 1.0,
+          "f1": 0.9333333333333333,
+          "tp": 7,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.8,
+          "recall": 0.8571428571428571,
+          "f1": 0.8275862068965518,
+          "tp": 12,
+          "fp": 3,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 3,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.7307692307692307,
+        "recall": 0.8636363636363636,
+        "f1": 0.7916666666666666,
+        "tp": 19,
+        "fp": 7,
+        "fn": 3,
+        "oov_recall": 0.8
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Peter Twehway",
+            "reference": "Peter Twehway"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Zarylee M. Gbala",
+            "reference": "Zarylee M. Gbala"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sidiki Fofana",
+            "reference": "Sidiki Fofana"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Christian D. Brownell",
+            "reference": "Christian D. Brownell"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Christian Deah Brownell",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Kanio Bai-Gbala",
+            "reference": "Kanio Bai-Gbala"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Bill Twehway",
+            "reference": "Bill Twehway"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Malcom Scott",
+            "reference": "Malcolm Scott"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Liberia Anti-Corruption Commission",
+            "reference": "Liberia Anti-Corruption Commission"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Alpha Logging",
+            "reference": "Alpha Logging"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "WAFDI",
+            "reference": "WAFDI"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "SINOTRANS",
+            "reference": "SINOTRANS"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Flaton",
+            "reference": "Flaton"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "BRILLIANT MAJU",
+            "reference": "BRILLIANT MAJU"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Global Tracking Management Service",
+            "reference": "Global Tracking Management Service"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "NPA",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Booming Green",
+            "reference": "Booming Green"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "National Port Authority",
+            "reference": "National Port Authority"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "ICC",
+            "reference": "ICC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "FrontPageAfrica",
+            "reference": "FrontPageAfrica"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "LACC",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "CDI",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Creative Developers Inc.",
+            "reference": "Creative Developers Inc."
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Port of Buchanan"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Financial Intelligence Regulations"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Grand Bassa County",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "MONROVIA",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Buchanan",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Liberia"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Peter Twehway",
+          "ground_truth_target": "Bill Twehway",
+          "ratio": 64.0
+        },
+        {
+          "entity": "Bill Twehway",
+          "ground_truth_target": "Peter Twehway",
+          "ratio": 64.0
+        },
+        {
+          "entity": "LACC",
+          "ground_truth_target": "ICC",
+          "ratio": 57.14285714285714
+        },
+        {
+          "entity": "CDI",
+          "ground_truth_target": "WAFDI",
+          "ratio": 50.0
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:52:03.568672+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "11",
+    "model": "gemma4:31b-mlx_baseline",
+    "latency_sec": 31.756464958190918,
+    "tokens_per_sec": 29.75,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.627906976744186,
+    "recall": 0.75,
+    "f1": 0.6835443037974683,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 22.1,
+    "cpu_peak_pct": 42.7,
+    "proc_cpu_avg_pct": 1.8,
+    "mem_avg_mb": 89.4,
+    "mem_peak_mb": 102.0,
+    "sys_mem_avg_mb": 29914.0,
+    "sys_mem_avg_pct": 87.1,
+    "vram_mb": 27268.5,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.8571428571428571,
+          "recall": 1.0,
+          "f1": 0.923076923076923,
+          "tp": 12,
+          "fp": 2,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.6153846153846154,
+          "recall": 0.5,
+          "f1": 0.5517241379310345,
+          "tp": 8,
+          "fp": 5,
+          "fn": 8
+        },
+        "Locations": {
+          "precision": 0.4375,
+          "recall": 0.875,
+          "f1": 0.5833333333333334,
+          "tp": 7,
+          "fp": 9,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.627906976744186,
+        "recall": 0.75,
+        "f1": 0.6835443037974683,
+        "tp": 27,
+        "fp": 16,
+        "fn": 9,
+        "oov_recall": 0.7741935483870968
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Christopher Wray",
+            "reference": "Christopher Wray"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sergey Tulyakov",
+            "reference": "Sergey Tulyakov"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Svetlana Kuzurgasheva",
+            "reference": "Svetlana Kuzurgasheva"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Merrick B. Garland",
+            "reference": "Merrick B. Garland"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Breon Peace",
+            "reference": "Breon Peace"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Juan Carlos Soto",
+            "reference": "Juan Carlos Soto"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Lana Neumann",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Artie McConnell",
+            "reference": "Artie McConnell"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Scott A. Claffee",
+            "reference": "Scott A. Claffee"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Timofey Telegin",
+            "reference": "Timofey Telegin"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Yury Orekhov",
+            "reference": "Yury Orekhov"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Juanfe Serrano",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Artem Uss",
+            "reference": "Artem Uss"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Juan Fernando Serrano Ponce",
+            "reference": "Juan Fernando Serrano Ponce"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "PDVSA",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Nord-Deutsche Industrieanlagenbau GmbH",
+            "reference": "Nord-Deutsche Industrieanlagenbau GmbH"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Department\u2019s Task Force KleptoCapture",
+            "reference": "Department\u2019s Task Force KleptoCapture"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "U.S. Attorneys\u2019 Offices for the Eastern District of New York",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "National Security Division\u2019s Counterintelligence and Export Control Section",
+            "reference": "National Security Division\u2019s Counterintelligence and Export Control Section"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "U.S. Attorneys\u2019 Offices for the District of Connecticut",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "NDA GmbH",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Justice Department\u2019s Office of International Affairs",
+            "reference": "Justice Department\u2019s Office of International Affairs"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Justice Department",
+            "reference": "Justice Department"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "U.S. Department of Commerce",
+            "reference": "U.S. Department of Commerce"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "U.S. District Court for the District of Connecticut",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "FBI",
+            "reference": "FBI"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Petroleos de Venezuela S.A.",
+            "reference": "Petroleos de Venezuela S.A."
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Offices for the Eastern District of New York"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Offices for the District of Connecticut"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Eastern District of New York"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "District of Connecticut"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "U.S District Court"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "International Emergency Economic Powers Act"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Italian law enforcement authorities"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "German law enforcement authorities"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Latin America",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Connecticut",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Russia",
+            "reference": "Russia"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Moscow",
+            "reference": "Moscow"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Hamburg",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "New York",
+            "reference": "New York"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Germany",
+            "reference": "Germany"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Krasnoyarsk Krai",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Italy",
+            "reference": "Italy"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "United States",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Beijing",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Venezuela",
+            "reference": "Venezuela"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Latvia",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Estonia",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Emirates",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Ukraine",
+            "reference": "Ukraine"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Europe"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Juan Carlos Soto",
+          "ground_truth_target": "Juan Fernando Serrano Ponce",
+          "ratio": 51.162790697674424
+        },
+        {
+          "entity": "Juanfe Serrano",
+          "ground_truth_target": "Juan Fernando Serrano Ponce",
+          "ratio": 68.29268292682926
+        },
+        {
+          "entity": "Juan Fernando Serrano Ponce",
+          "ground_truth_target": "Juan Carlos Soto",
+          "ratio": 51.162790697674424
+        },
+        {
+          "entity": "Department\u2019s Task Force KleptoCapture",
+          "ground_truth_target": "U.S. Department of Commerce",
+          "ratio": 50.0
+        },
+        {
+          "entity": "U.S. Attorneys\u2019 Offices for the Eastern District of New York",
+          "ground_truth_target": "Offices for the Eastern District of New York",
+          "ratio": 84.61538461538461
+        },
+        {
+          "entity": "U.S. Attorneys\u2019 Offices for the District of Connecticut",
+          "ground_truth_target": "Offices for the Eastern District of New York",
+          "ratio": 60.60606060606061
+        },
+        {
+          "entity": "Justice Department\u2019s Office of International Affairs",
+          "ground_truth_target": "Justice Department",
+          "ratio": 51.42857142857142
+        },
+        {
+          "entity": "Justice Department",
+          "ground_truth_target": "Justice Department\u2019s Office of International Affairs",
+          "ratio": 51.42857142857142
+        },
+        {
+          "entity": "U.S. Department of Commerce",
+          "ground_truth_target": "Department\u2019s Task Force KleptoCapture",
+          "ratio": 50.0
+        },
+        {
+          "entity": "U.S. District Court for the District of Connecticut",
+          "ground_truth_target": "Offices for the Eastern District of New York",
+          "ratio": 52.63157894736843
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:52:35.398487+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "12",
+    "model": "gemma4:31b-mlx_baseline",
+    "latency_sec": 21.16882610321045,
+    "tokens_per_sec": 29.76,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6756756756756757,
+    "recall": 0.8928571428571429,
+    "f1": 0.7692307692307693,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 20.7,
+    "cpu_peak_pct": 47.2,
+    "proc_cpu_avg_pct": 2.5,
+    "mem_avg_mb": 87.4,
+    "mem_peak_mb": 100.0,
+    "sys_mem_avg_mb": 29686.8,
+    "sys_mem_avg_pct": 87.7,
+    "vram_mb": 26591.0,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 8,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.8666666666666667,
+          "recall": 0.8125,
+          "f1": 0.8387096774193549,
+          "tp": 13,
+          "fp": 2,
+          "fn": 3
+        },
+        "Locations": {
+          "precision": 0.2857142857142857,
+          "recall": 1.0,
+          "f1": 0.4444444444444445,
+          "tp": 4,
+          "fp": 10,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6756756756756757,
+        "recall": 0.8928571428571429,
+        "f1": 0.7692307692307693,
+        "tp": 25,
+        "fp": 12,
+        "fn": 3,
+        "oov_recall": 0.88
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Vanessa Roberts Avery",
+            "reference": "Vanessa Roberts Avery"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Rahul Kale",
+            "reference": "Rahul Kale"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Vadims Ananics",
+            "reference": "Vadims Ananics"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Konstantin Lantsman",
+            "reference": "Konstantin Lantsman"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Stanislav Romanyuk",
+            "reference": "Stanislav Romanyuk"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Janis Uzbalis",
+            "reference": "Janis Uzbalis"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Eriks Mamonovs",
+            "reference": "Eriks Mamonovs"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Matthew Anzaldi",
+            "reference": "Matthew Anzaldi"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Latvian State Revenue Service",
+            "reference": "Latvian State Revenue Service"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Prosecutor-General\u2019s Offices of the Republic of Latvia and Estonia",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "BY Trade OU",
+            "reference": "BY Trade OU"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Justice Department\u2019s Task Force KleptoCapture",
+            "reference": "Justice Department\u2019s Task Force KleptoCapture"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Office of the Deputy Attorney General",
+            "reference": "Office of the Deputy Attorney General"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Department of Commerce",
+            "reference": "U.S. Department of Commerce"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "National Security Division\u2019s Counterintelligence and Export Control Section",
+            "reference": "National Security Division\u2019s Counterintelligence and Export Control"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "CNC Weld",
+            "reference": "CNC Weld"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Justice Department",
+            "reference": "Justice Department"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Latvian State Police",
+            "reference": "Latvian State Police"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "HSI",
+            "reference": "HSI"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "U.S. Department of Commerce",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Justice Department\u2019s Office of International Affairs",
+            "reference": "Justice Department\u2019s Office of International Affairs"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "FBI",
+            "reference": "FBI"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Estonian Tax and Customs Board",
+            "reference": "Estonian Tax and Customs Board"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "District of Connecticut"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "European union"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "U.S. Department of Commerce\u2019s Office of Export Enforcement"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "the Hague",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "New Haven",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Boston",
+            "reference": "Boston"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Connecticut",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Russia",
+            "reference": "Russia"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Tallinn",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Netherlands",
+            "reference": "Netherlands"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Portland (Ore.)",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "United States",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Riga",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Latvia",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Estonia",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "European Union",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Ukraine",
+            "reference": "Ukraine"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Vadims Ananics",
+          "ground_truth_target": "Janis Uzbalis",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Konstantin Lantsman",
+          "ground_truth_target": "Stanislav Romanyuk",
+          "ratio": 54.054054054054056
+        },
+        {
+          "entity": "Stanislav Romanyuk",
+          "ground_truth_target": "Konstantin Lantsman",
+          "ratio": 54.054054054054056
+        },
+        {
+          "entity": "Janis Uzbalis",
+          "ground_truth_target": "Vadims Ananics",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Latvian State Revenue Service",
+          "ground_truth_target": "Latvian State Police",
+          "ratio": 69.38775510204081
+        },
+        {
+          "entity": "Justice Department\u2019s Task Force KleptoCapture",
+          "ground_truth_target": "U.S. Department of Commerce",
+          "ratio": 52.77777777777778
+        },
+        {
+          "entity": "Department of Commerce",
+          "ground_truth_target": "Justice Department",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Justice Department",
+          "ground_truth_target": "U.S. Department of Commerce",
+          "ratio": 57.77777777777777
+        },
+        {
+          "entity": "Latvian State Police",
+          "ground_truth_target": "Latvian State Revenue Service",
+          "ratio": 69.38775510204081
+        },
+        {
+          "entity": "U.S. Department of Commerce",
+          "ground_truth_target": "Justice Department",
+          "ratio": 57.77777777777777
+        },
+        {
+          "entity": "Justice Department\u2019s Office of International Affairs",
+          "ground_truth_target": "U.S. Department of Commerce",
+          "ratio": 50.63291139240506
+        },
+        {
+          "entity": "New Haven",
+          "ground_truth_target": "Netherlands",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Riga",
+          "ground_truth_target": "Russia",
+          "ratio": 60.0
+        },
+        {
+          "entity": "Estonia",
+          "ground_truth_target": "Boston",
+          "ratio": 61.53846153846154
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "European Union",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "European union"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:52:56.601808+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "13",
+    "model": "gemma4:31b-mlx_baseline",
+    "latency_sec": 14.168346881866455,
+    "tokens_per_sec": 27.54,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.7272727272727273,
+    "recall": 0.8,
+    "f1": 0.761904761904762,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 20.8,
+    "cpu_peak_pct": 39.5,
+    "proc_cpu_avg_pct": 4.3,
+    "mem_avg_mb": 72.3,
+    "mem_peak_mb": 99.9,
+    "sys_mem_avg_mb": 30577.8,
+    "sys_mem_avg_pct": 87.3,
+    "vram_mb": 26591.0,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.9166666666666666,
+          "recall": 0.9166666666666666,
+          "f1": 0.9166666666666666,
+          "tp": 11,
+          "fp": 1,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.375,
+          "recall": 0.5,
+          "f1": 0.42857142857142855,
+          "tp": 3,
+          "fp": 5,
+          "fn": 3
+        }
+      },
+      "overall": {
+        "precision": 0.7272727272727273,
+        "recall": 0.8,
+        "f1": 0.761904761904762,
+        "tp": 16,
+        "fp": 6,
+        "fn": 4,
+        "oov_recall": 0.8888888888888888
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Joseph Kabila",
+            "reference": "Joseph Kabila"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Francis Selemani",
+            "reference": "Francis Selemani"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Mediapart",
+            "reference": "Mediapart"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sud Oil",
+            "reference": "Sud Oil"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "G\u00e9camines",
+            "reference": "G\u00e9camines"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "BGFIBank Group",
+            "reference": "BGFIBank Group"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "BGFIBank DRC",
+            "reference": "BGFIBank DRC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Congo Hold-up consortium",
+            "reference": "Congo Hold-up consortium"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Congo Research Group",
+            "reference": "Congo Research Group"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "DRC\u2019s permanent mission to the United Nations",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Central Bank of Congo",
+            "reference": "Central Bank of Congo"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "The Sentry",
+            "reference": "The Sentry"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Platform to Protect Whistleblowers in Africa (PPLAAF)",
+            "reference": "Platform to Protect Whistleblowers in Africa"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "European Investigative Collaborations (EIC)",
+            "reference": "European Investigative Collaborations"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "United Nations"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "New York",
+            "reference": "New York"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Democratic Republic of Congo (DRC)",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "South Africa",
+            "reference": "South Africa"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "United States",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Washington, DC",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Gabon",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Kinshasa",
+            "reference": "Kinshasa"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Johannesburg",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Congo"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Africa"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Washington"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "BGFIBank Group",
+          "ground_truth_target": "BGFIBank DRC",
+          "ratio": 76.92307692307692
+        },
+        {
+          "entity": "BGFIBank DRC",
+          "ground_truth_target": "BGFIBank Group",
+          "ratio": 76.92307692307692
+        },
+        {
+          "entity": "South Africa",
+          "ground_truth_target": "Africa",
+          "ratio": 66.66666666666667
+        },
+        {
+          "entity": "Washington, DC",
+          "ground_truth_target": "Washington",
+          "ratio": 83.33333333333334
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "Congo",
+          "category": "Locations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:53:10.793813+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "14",
+    "model": "gemma4:31b-mlx_baseline",
+    "latency_sec": 16.64983606338501,
+    "tokens_per_sec": 26.35,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.7058823529411765,
+    "recall": 0.8,
+    "f1": 0.7500000000000001,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 12.0,
+    "cpu_peak_pct": 34.6,
+    "proc_cpu_avg_pct": 3.2,
+    "mem_avg_mb": 49.3,
+    "mem_peak_mb": 49.3,
+    "sys_mem_avg_mb": 29593.7,
+    "sys_mem_avg_pct": 78.7,
+    "vram_mb": 27272.8,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.7692307692307693,
+          "recall": 0.9090909090909091,
+          "f1": 0.8333333333333333,
+          "tp": 10,
+          "fp": 3,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.3333333333333333,
+          "recall": 0.3333333333333333,
+          "f1": 0.3333333333333333,
+          "tp": 1,
+          "fp": 2,
+          "fn": 2
+        }
+      },
+      "overall": {
+        "precision": 0.7058823529411765,
+        "recall": 0.8,
+        "f1": 0.7500000000000001,
+        "tp": 12,
+        "fp": 5,
+        "fn": 3,
+        "oov_recall": 0.7857142857142857
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Joseph Kabila",
+            "reference": "Joseph Kabila"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "China Railway Group",
+            "reference": "China Railway Group"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Mediapart",
+            "reference": "Mediapart"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "BGFIBank DRC",
+            "reference": "BGFIBank DRC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Citibank",
+            "reference": "Citibank"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "European Investigative Collaborations",
+            "reference": "European Investigative Collaborations"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "PPLAAF",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Congo Construction Company",
+            "reference": "Congo Construction Company"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sinohydro",
+            "reference": "Sinohydro"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Commerzbank",
+            "reference": "Commerzbank"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Platform to Protect Whistleblowers in Africa",
+            "reference": "Platform to Protect Whistleblowers in Africa"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "CCC",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "The Sentry",
+            "reference": "The Sentry"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "EIC",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Sicomines"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "China",
+            "reference": "China"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Democratic Republic of Congo",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "DRC",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Congo"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Africa"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "BGFIBank DRC",
+          "ground_truth_target": "Citibank",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Citibank",
+          "ground_truth_target": "BGFIBank DRC",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Commerzbank",
+          "ground_truth_target": "Citibank",
+          "ratio": 52.63157894736843
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "Congo",
+          "category": "Locations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:53:27.478029+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "15",
+    "model": "gemma4:31b-mlx_baseline",
+    "latency_sec": 17.665409088134766,
+    "tokens_per_sec": 25.71,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6666666666666666,
+    "recall": 0.8571428571428571,
+    "f1": 0.75,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 12.7,
+    "cpu_peak_pct": 29.7,
+    "proc_cpu_avg_pct": 3.1,
+    "mem_avg_mb": 50.6,
+    "mem_peak_mb": 50.6,
+    "sys_mem_avg_mb": 31466.4,
+    "sys_mem_avg_pct": 81.5,
+    "vram_mb": 27067.5,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.4,
+          "recall": 0.6666666666666666,
+          "f1": 0.5,
+          "tp": 2,
+          "fp": 3,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.6666666666666666,
+        "recall": 0.8571428571428571,
+        "f1": 0.75,
+        "tp": 6,
+        "fp": 3,
+        "fn": 1,
+        "oov_recall": 0.8571428571428571
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Joseph Kabila",
+            "reference": "Joseph Kabila"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Kwanza Capital",
+            "reference": "Kwanza Capital"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Financial Action Task Force (FATF)",
+            "reference": "Financial Action Task Force"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "The Sentry",
+            "reference": "The Sentry"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "sub-Saharan Africa",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Swiss-Angolan",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Congo",
+            "reference": "Congo"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Democratic Republic of Congo",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Kinshasa",
+            "reference": "Kinshasa"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Africa"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "sub-Saharan Africa",
+          "ground_truth_target": "Africa",
+          "ratio": 50.0
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:53:45.163309+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "1",
+    "model": "gemma4:31b-mlx_kb_rag",
+    "latency_sec": 25.265812158584595,
+    "tokens_per_sec": 23.59,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.7352941176470589,
+    "recall": 0.9615384615384616,
+    "f1": 0.8333333333333333,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 32.6,
+    "cpu_peak_pct": 95.1,
+    "proc_cpu_avg_pct": 2.3,
+    "mem_avg_mb": 125.3,
+    "mem_peak_mb": 294.5,
+    "sys_mem_avg_mb": 29638.4,
+    "sys_mem_avg_pct": 88.5,
+    "vram_mb": 27067.5,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5625,
+          "recall": 1.0,
+          "f1": 0.72,
+          "tp": 9,
+          "fp": 7,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 10,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.75,
+          "recall": 0.8571428571428571,
+          "f1": 0.7999999999999999,
+          "tp": 6,
+          "fp": 2,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.7352941176470589,
+        "recall": 0.9615384615384616,
+        "f1": 0.8333333333333333,
+        "tp": 25,
+        "fp": 9,
+        "fn": 1,
+        "oov_recall": 0.8333333333333334
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "John C. Demers",
+            "reference": "John C. Demers"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Adam Barry",
+            "reference": "Adam Barry"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Amin Jam",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Matthew Schneider",
+            "reference": "Matthew Schneider"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Dan Clutch",
+            "reference": "Dan Clutch"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Amin Yousefi Jam",
+            "reference": "Amin Yousefi Jam"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Abdollah Momeni",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Arash Yousefi Jam",
+            "reference": "Arash Yousefi Jam"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Ab Momeni",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Amir Amiri",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Arash Jam",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Vance R. Callender",
+            "reference": "Vance R. Callender"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Abdollah Momeni Roustani",
+            "reference": "Abdollah Momeni Roustani"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Arash Yousefijam",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Amin Yousefijam",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Hank Moon",
+            "reference": "Hank Moon"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "International Emergency Economic Powers Act",
+            "reference": "International Emergency Economic Powers Act"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Iranian Transactions and Sanctions Regulations",
+            "reference": "Iranian Transactions and Sanctions Regulations"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Office of International Affairs",
+            "reference": "Office of International Affairs"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Department of Commerce",
+            "reference": "Department of Commerce"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Office of Export Enforcement",
+            "reference": "Office of Export Enforcement"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Homeland Security Investigations",
+            "reference": "Homeland Security Investigations"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "U.S. Immigration and Customs Enforcement",
+            "reference": "U.S. Immigration and Customs Enforcements"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Counterintelligence and Export Control Section of the National Security Division",
+            "reference": "Counterintelligence and Export Control Section of the National Security Division"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Justice Department",
+            "reference": "Justice Department"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Eastern District of Michigan",
+            "reference": "Eastern District of Michigan"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Michigan",
+            "reference": "Michigan"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Ohio",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Canada",
+            "reference": "Canada"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "United Arab Emirates",
+            "reference": "United Arab Emirates"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Iran",
+            "reference": "Iran"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "United States",
+            "reference": "United States"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "UAE",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Ontario",
+            "reference": "Ontario"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Chicago"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Amin Jam",
+          "ground_truth_target": "Amin Yousefi Jam",
+          "ratio": 66.66666666666667
+        },
+        {
+          "entity": "Amin Yousefi Jam",
+          "ground_truth_target": "Arash Yousefi Jam",
+          "ratio": 78.78787878787878
+        },
+        {
+          "entity": "Abdollah Momeni",
+          "ground_truth_target": "Abdollah Momeni Roustani",
+          "ratio": 76.92307692307692
+        },
+        {
+          "entity": "Arash Yousefi Jam",
+          "ground_truth_target": "Amin Yousefi Jam",
+          "ratio": 78.78787878787878
+        },
+        {
+          "entity": "Ab Momeni",
+          "ground_truth_target": "Abdollah Momeni Roustani",
+          "ratio": 54.54545454545454
+        },
+        {
+          "entity": "Amir Amiri",
+          "ground_truth_target": "Adam Barry",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Arash Jam",
+          "ground_truth_target": "Arash Yousefi Jam",
+          "ratio": 69.23076923076923
+        },
+        {
+          "entity": "Arash Yousefijam",
+          "ground_truth_target": "Amin Yousefi Jam",
+          "ratio": 75.0
+        },
+        {
+          "entity": "Amin Yousefijam",
+          "ground_truth_target": "Arash Yousefi Jam",
+          "ratio": 75.0
+        },
+        {
+          "entity": "Iranian Transactions and Sanctions Regulations",
+          "ground_truth_target": "U.S. Immigration and Customs Enforcements",
+          "ratio": 50.57471264367817
+        },
+        {
+          "entity": "Office of International Affairs",
+          "ground_truth_target": "Office of Export Enforcement",
+          "ratio": 54.23728813559322
+        },
+        {
+          "entity": "Department of Commerce",
+          "ground_truth_target": "Justice Department",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Office of Export Enforcement",
+          "ground_truth_target": "Justice Department",
+          "ratio": 52.17391304347826
+        },
+        {
+          "entity": "Justice Department",
+          "ground_truth_target": "Department of Commerce",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Michigan",
+          "ground_truth_target": "Iran",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Ohio",
+          "ground_truth_target": "Ontario",
+          "ratio": 54.54545454545454
+        },
+        {
+          "entity": "United Arab Emirates",
+          "ground_truth_target": "United States",
+          "ratio": 66.66666666666667
+        },
+        {
+          "entity": "Iran",
+          "ground_truth_target": "Michigan",
+          "ratio": 50.0
+        },
+        {
+          "entity": "United States",
+          "ground_truth_target": "United Arab Emirates",
+          "ratio": 66.66666666666667
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:54:11.006205+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "2",
+    "model": "gemma4:31b-mlx_kb_rag",
+    "latency_sec": 16.198416709899902,
+    "tokens_per_sec": 26.44,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 0.9473684210526315,
+    "f1": 0.972972972972973,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 33.1,
+    "cpu_peak_pct": 51.2,
+    "proc_cpu_avg_pct": 3.4,
+    "mem_avg_mb": 191.6,
+    "mem_peak_mb": 272.0,
+    "sys_mem_avg_mb": 29834.2,
+    "sys_mem_avg_pct": 87.2,
+    "vram_mb": 27062.8,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 5,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.875,
+          "f1": 0.9333333333333333,
+          "tp": 7,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 6,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.9473684210526315,
+        "f1": 0.972972972972973,
+        "tp": 18,
+        "fp": 0,
+        "fn": 1,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Stephen J. Murphy",
+            "reference": "Stephen J. Murphy"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Arash Yousefi Jam",
+            "reference": "Arash Yousefi Jam"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Adam Barry",
+            "reference": "Adam Barry"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Abdollah Momeni Roustani",
+            "reference": "Abdollah Momeni Roustani"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Hank Moon",
+            "reference": "Hank Moon"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "International Emergency Economic Powers Act",
+            "reference": "International Emergency Economic Powers Act"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Iranian Transactions and Sanctions Regulations",
+            "reference": "Iranian Transactions and Sanctions Regulations"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Justice Department\u2019s National Security Division",
+            "reference": "Justice Department\u2019s National Security Division"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Commerce Department\u2019s Office of Export Enforcement",
+            "reference": "Commerce Department\u2019s Office of Export Enforcement"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Homeland Security Investigations",
+            "reference": "Homeland Security Investigations"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Criminal Division\u2019s Office of International Affairs",
+            "reference": "Criminal Division\u2019s Office of International Affairs"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Eastern District of Michigan",
+            "reference": "Eastern District of Michigan"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "District Court"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Michigan",
+            "reference": "Michigan"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Canada",
+            "reference": "Canada"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "United Arab Emirates",
+            "reference": "United Arab Emirates"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Iran",
+            "reference": "Iran"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "United States",
+            "reference": "United States"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Ontario",
+            "reference": "Ontario"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Justice Department\u2019s National Security Division",
+          "ground_truth_target": "Homeland Security Investigations",
+          "ratio": 50.63291139240506
+        },
+        {
+          "entity": "Commerce Department\u2019s Office of Export Enforcement",
+          "ground_truth_target": "Justice Department\u2019s National Security Division",
+          "ratio": 51.546391752577314
+        },
+        {
+          "entity": "Homeland Security Investigations",
+          "ground_truth_target": "Justice Department\u2019s National Security Division",
+          "ratio": 50.63291139240506
+        },
+        {
+          "entity": "Michigan",
+          "ground_truth_target": "Iran",
+          "ratio": 50.0
+        },
+        {
+          "entity": "United Arab Emirates",
+          "ground_truth_target": "United States",
+          "ratio": 66.66666666666667
+        },
+        {
+          "entity": "Iran",
+          "ground_truth_target": "Michigan",
+          "ratio": 50.0
+        },
+        {
+          "entity": "United States",
+          "ground_truth_target": "United Arab Emirates",
+          "ratio": 66.66666666666667
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:54:27.336976+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "3",
+    "model": "gemma4:31b-mlx_kb_rag",
+    "latency_sec": 25.203911066055298,
+    "tokens_per_sec": 27.62,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.78125,
+    "recall": 0.78125,
+    "f1": 0.78125,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 20.8,
+    "cpu_peak_pct": 45.2,
+    "proc_cpu_avg_pct": 2.2,
+    "mem_avg_mb": 120.7,
+    "mem_peak_mb": 292.4,
+    "sys_mem_avg_mb": 29475.2,
+    "sys_mem_avg_pct": 88.7,
+    "vram_mb": 26792.5,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 14,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.6666666666666666,
+          "recall": 0.8333333333333334,
+          "f1": 0.7407407407407408,
+          "tp": 10,
+          "fp": 5,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.3333333333333333,
+          "recall": 0.16666666666666666,
+          "f1": 0.2222222222222222,
+          "tp": 1,
+          "fp": 2,
+          "fn": 5
+        }
+      },
+      "overall": {
+        "precision": 0.78125,
+        "recall": 0.78125,
+        "f1": 0.78125,
+        "tp": 25,
+        "fp": 7,
+        "fn": 7,
+        "oov_recall": 0.16666666666666666
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Paul L. Gray",
+            "reference": "Paul L. Gray"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Edward J. Hanko",
+            "reference": "Edward J. Hanko"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "T. Patrick Martin",
+            "reference": "T. Patrick Martin"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Chaka Fattah Sr.",
+            "reference": "Chaka Fattah Sr."
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Bonnie Bowser",
+            "reference": "Bonnie Bowser"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Eric L. Gibson",
+            "reference": "Eric L. Gibson"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Robert Brand",
+            "reference": "Robert Brand"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Herbert Vederman",
+            "reference": "Herbert Vederman"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Jonathan Kravis",
+            "reference": "Jonathan Kravis"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Zane David Memeger",
+            "reference": "Zane David Memeger"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Bob Dalton",
+            "reference": "Bob Dalton"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Akeia Conner",
+            "reference": "Akeia Conner"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Karen Nicholas",
+            "reference": "Karen Nicholas"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Leslie R. Caldwell",
+            "reference": "Leslie R. Caldwell"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "Justice Department\u2019s Criminal Division",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Criminal Division\u2019s Organized Crime and Gang Section",
+            "reference": "Criminal Division\u2019s Organized Crime and Gang Section"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Criminal Division\u2019s Public Integrity Section",
+            "reference": "Criminal Division\u2019s Public Integrity Section"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "IRS",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Department of Justice\u2019s Office of the Inspector General",
+            "reference": "Department of Justice\u2019s Office of the Inspector General"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "FBI\u2019s Philadelphia Division",
+            "reference": "FBI\u2019s Philadelphia Division"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Educational Advancement Alliance (EAA)",
+            "reference": "Educational Advancement Alliance"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Department of Commerce\u2019s Office of Inspector General",
+            "reference": "Department of Commerce\u2019s Office of Inspector General"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Department of Justice",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "U.S. Trade Commission",
+            "reference": "U.S. Trade Commission"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Eastern District of Pennsylvania",
+            "reference": "Eastern District of Pennsylvania"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Congress",
+            "reference": "Congress"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "FBI",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "NASA Office of Inspector General",
+            "reference": "NASA Office of Inspector General"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Internal Revenue Service-Criminal Investigation (IRS-CI) Philadelphia Field Office",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Department of Justice\u2019s Criminal Division"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Internal Revenue Service-Criminal Investigation"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Philadelphia",
+            "reference": "Philadelphia"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Palm Beach, Florida",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Williamstown, New Jersey",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Palm Beach"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Florida"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Williamstown"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "New Jersey"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Pennsylvania"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Robert Brand",
+          "ground_truth_target": "Herbert Vederman",
+          "ratio": 64.28571428571428
+        },
+        {
+          "entity": "Herbert Vederman",
+          "ground_truth_target": "Robert Brand",
+          "ratio": 64.28571428571428
+        },
+        {
+          "entity": "Justice Department\u2019s Criminal Division",
+          "ground_truth_target": "Department of Justice\u2019s Criminal Division",
+          "ratio": 75.9493670886076
+        },
+        {
+          "entity": "Criminal Division\u2019s Organized Crime and Gang Section",
+          "ground_truth_target": "Criminal Division\u2019s Public Integrity Section",
+          "ratio": 68.75
+        },
+        {
+          "entity": "Criminal Division\u2019s Public Integrity Section",
+          "ground_truth_target": "Criminal Division\u2019s Organized Crime and Gang Section",
+          "ratio": 68.75
+        },
+        {
+          "entity": "Department of Justice\u2019s Office of the Inspector General",
+          "ground_truth_target": "Department of Justice\u2019s Criminal Division",
+          "ratio": 62.5
+        },
+        {
+          "entity": "FBI\u2019s Philadelphia Division",
+          "ground_truth_target": "Department of Justice\u2019s Criminal Division",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Department of Commerce\u2019s Office of Inspector General",
+          "ground_truth_target": "Department of Justice\u2019s Criminal Division",
+          "ratio": 53.76344086021505
+        },
+        {
+          "entity": "Department of Justice",
+          "ground_truth_target": "Department of Justice\u2019s Criminal Division",
+          "ratio": 67.74193548387098
+        },
+        {
+          "entity": "NASA Office of Inspector General",
+          "ground_truth_target": "Department of Justice\u2019s Office of the Inspector General",
+          "ratio": 68.96551724137932
+        },
+        {
+          "entity": "Internal Revenue Service-Criminal Investigation (IRS-CI) Philadelphia Field Office",
+          "ground_truth_target": "Internal Revenue Service-Criminal Investigation",
+          "ratio": 72.86821705426357
+        },
+        {
+          "entity": "Palm Beach, Florida",
+          "ground_truth_target": "Palm Beach",
+          "ratio": 68.96551724137932
+        },
+        {
+          "entity": "Williamstown, New Jersey",
+          "ground_truth_target": "Williamstown",
+          "ratio": 66.66666666666667
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:54:52.692528+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "4",
+    "model": "gemma4:31b-mlx_kb_rag",
+    "latency_sec": 18.253679275512695,
+    "tokens_per_sec": 25.45,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.896551724137931,
+    "recall": 0.9629629629629629,
+    "f1": 0.9285714285714286,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 17.2,
+    "cpu_peak_pct": 28.4,
+    "proc_cpu_avg_pct": 3.0,
+    "mem_avg_mb": 209.8,
+    "mem_peak_mb": 298.0,
+    "sys_mem_avg_mb": 29996.8,
+    "sys_mem_avg_pct": 87.5,
+    "vram_mb": 26821.3,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 8,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.9090909090909091,
+          "recall": 1.0,
+          "f1": 0.9523809523809523,
+          "tp": 10,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.8,
+          "recall": 0.8888888888888888,
+          "f1": 0.8421052631578948,
+          "tp": 8,
+          "fp": 2,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.896551724137931,
+        "recall": 0.9629629629629629,
+        "f1": 0.9285714285714286,
+        "tp": 26,
+        "fp": 3,
+        "fn": 1,
+        "oov_recall": 0.8888888888888888
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Gabriela Figueredo",
+            "reference": "Gabriela Figueredo"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Nuno Ribeiro da Cunha",
+            "reference": "Nuno Ribeiro da Cunha"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Carlos Saturnino",
+            "reference": "Carlos Saturnino"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Mario Leite da Silva",
+            "reference": "Mario Leite da Silva"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Helder Pitta Gros",
+            "reference": "Helder Pitta Gros"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Isabel dos Santos",
+            "reference": "Isabel dos Santos"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Paula Oliveira",
+            "reference": "Paula Oliveira"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sarju Raikundalia",
+            "reference": "Sarju Raikundalia"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Portuguese Securities Market Commission",
+            "reference": "Portuguese Securities Market Commission"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "BBC News",
+            "reference": "BBC News"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sonangol",
+            "reference": "Sonagol"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Galp Energia",
+            "reference": "Galp Energia"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "NOS",
+            "reference": "NOS"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "ICIJ",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "International Consortium of Investigative Journalists",
+            "reference": "International Consortium of Investigative Journalists"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Lusa news agency",
+            "reference": "Lusa news agency"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Eurobic",
+            "reference": "Eurobic"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Expresso",
+            "reference": "Expresso"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Banco de Fomento Angola",
+            "reference": "Banco de Fomento Angola"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Dubai",
+            "reference": "Dubai"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "U.K.",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Luanda",
+            "reference": "Luanda"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "London",
+            "reference": "London"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Lisbon",
+            "reference": "Lisbon"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "U.S.",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Brazil",
+            "reference": "Brazil"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Portugal",
+            "reference": "Portugal"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Switzerland",
+            "reference": "Switzerland"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Angola",
+            "reference": "Angola"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Africa"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Carlos Saturnino",
+          "ground_truth_target": "Isabel dos Santos",
+          "ratio": 54.54545454545454
+        },
+        {
+          "entity": "Isabel dos Santos",
+          "ground_truth_target": "Carlos Saturnino",
+          "ratio": 54.54545454545454
+        },
+        {
+          "entity": "Dubai",
+          "ground_truth_target": "Brazil",
+          "ratio": 54.54545454545454
+        },
+        {
+          "entity": "Luanda",
+          "ground_truth_target": "Angola",
+          "ratio": 50.0
+        },
+        {
+          "entity": "London",
+          "ground_truth_target": "Luanda",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Lisbon",
+          "ground_truth_target": "London",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Brazil",
+          "ground_truth_target": "Dubai",
+          "ratio": 54.54545454545454
+        },
+        {
+          "entity": "Angola",
+          "ground_truth_target": "Luanda",
+          "ratio": 50.0
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:55:11.089424+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "5",
+    "model": "gemma4:31b-mlx_kb_rag",
+    "latency_sec": 13.248038053512573,
+    "tokens_per_sec": 20.03,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.625,
+    "recall": 0.625,
+    "f1": 0.625,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 19.4,
+    "cpu_peak_pct": 53.1,
+    "proc_cpu_avg_pct": 4.2,
+    "mem_avg_mb": 221.4,
+    "mem_peak_mb": 284.8,
+    "sys_mem_avg_mb": 30855.4,
+    "sys_mem_avg_pct": 86.7,
+    "vram_mb": 26821.3,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.25,
+          "recall": 0.3333333333333333,
+          "f1": 0.28571428571428575,
+          "tp": 1,
+          "fp": 3,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.625,
+        "recall": 0.625,
+        "f1": 0.625,
+        "tp": 5,
+        "fp": 3,
+        "fn": 3,
+        "oov_recall": 0.5
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Isabel dos Santos",
+            "reference": "Isabel dos Santos"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Jose Eduardo dos Santos",
+            "reference": "Jose Eduardo dos Santos"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "Angola's national oil company",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Exem Energy BV",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Amsterdam Court of Appeal",
+            "reference": "Amsterdam Court of Appeal"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Chamber of Companies",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Exem Energy BV, the Chamber of Companies"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Dutch court"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Africa",
+            "reference": "Africa"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Angola",
+            "reference": "Angola"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Amsterdam"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Isabel dos Santos",
+          "ground_truth_target": "Jose Eduardo dos Santos",
+          "ratio": 65.0
+        },
+        {
+          "entity": "Jose Eduardo dos Santos",
+          "ground_truth_target": "Isabel dos Santos",
+          "ratio": 65.0
+        },
+        {
+          "entity": "Exem Energy BV",
+          "ground_truth_target": "Exem Energy BV, the Chamber of Companies",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Chamber of Companies",
+          "ground_truth_target": "Exem Energy BV, the Chamber of Companies",
+          "ratio": 66.66666666666667
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:55:24.451586+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "6",
+    "model": "gemma4:31b-mlx_kb_rag",
+    "latency_sec": 4.597864866256714,
+    "tokens_per_sec": 18.59,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 30.7,
+    "cpu_peak_pct": 50.5,
+    "proc_cpu_avg_pct": 11.7,
+    "mem_avg_mb": 263.9,
+    "mem_peak_mb": 270.8,
+    "sys_mem_avg_mb": 29864.8,
+    "sys_mem_avg_pct": 80.4,
+    "vram_mb": 26757.7,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 5,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Isabel dos Santos",
+            "reference": "Isabel dos Santos"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "H\u00e9lder Pitta Gr\u00f3s",
+            "reference": "H\u00e9lder Pitta Gr\u00f3s"
+          }
+        ],
+        "Organizations": [],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Luanda",
+            "reference": "Luanda"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Africa",
+            "reference": "Africa"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Angola",
+            "reference": "Angola"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Luanda",
+          "ground_truth_target": "Angola",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Angola",
+          "ground_truth_target": "Luanda",
+          "ratio": 50.0
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:55:29.180404+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "7",
+    "model": "gemma4:31b-mlx_kb_rag",
+    "latency_sec": 22.855825901031494,
+    "tokens_per_sec": 22.68,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.7272727272727273,
+    "recall": 0.6666666666666666,
+    "f1": 0.6956521739130435,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 23.9,
+    "cpu_peak_pct": 51.3,
+    "proc_cpu_avg_pct": 2.7,
+    "mem_avg_mb": 289.0,
+    "mem_peak_mb": 302.5,
+    "sys_mem_avg_mb": 30070.3,
+    "sys_mem_avg_pct": 82.4,
+    "vram_mb": 27119.9,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 5,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.4,
+          "f1": 0.5714285714285715,
+          "tp": 2,
+          "fp": 0,
+          "fn": 3
+        },
+        "Locations": {
+          "precision": 0.25,
+          "recall": 0.5,
+          "f1": 0.3333333333333333,
+          "tp": 1,
+          "fp": 3,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.7272727272727273,
+        "recall": 0.6666666666666666,
+        "f1": 0.6956521739130435,
+        "tp": 8,
+        "fp": 3,
+        "fn": 4,
+        "oov_recall": 0.5
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Brian E. Nelson",
+            "reference": "Brian E. Nelson"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "George Weah",
+            "reference": "George Weah"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Nathaniel McGill",
+            "reference": "Nathaniel McGill"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Bill Twehway",
+            "reference": "Bill Twehway"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sayma Syrenius Cephus",
+            "reference": "Sayma Syrenius Cephus"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "U.S. Department of the Treasury\u2019s Office of Foreign Assets Control",
+            "reference": "U.S. Department of the Treasury\u2019s Office of Foreign Assets Control"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "National Port Authority",
+            "reference": "National Port Authority"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Treasury for Terrorism and Financial Intelligence"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Global Magnitsky Human Rights Accountability Act"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Port of Buchanan"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "WASHINGTON",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Liberia",
+            "reference": "Liberia"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "United States",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Port of Buchanan",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Buchanan"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Port of Buchanan",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Port of Buchanan"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:55:52.163309+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "8",
+    "model": "gemma4:31b-mlx_kb_rag",
+    "latency_sec": 9.622820138931274,
+    "tokens_per_sec": 20.36,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6666666666666666,
+    "recall": 1.0,
+    "f1": 0.8,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 24.3,
+    "cpu_peak_pct": 38.2,
+    "proc_cpu_avg_pct": 5.7,
+    "mem_avg_mb": 245.4,
+    "mem_peak_mb": 285.5,
+    "sys_mem_avg_mb": 30920.0,
+    "sys_mem_avg_pct": 85.8,
+    "vram_mb": 27578.9,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8,
+        "tp": 4,
+        "fp": 2,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Bill Twehway",
+            "reference": "Bill Twehway"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Bill Teah TWEHWAY",
+            "reference": null
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Creative Developers Inc",
+            "reference": "Creative Developers Inc"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "National Port Authority",
+            "reference": "National Port Authority"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "River Cess Town",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Liberia",
+            "reference": "Liberia"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Bill Teah TWEHWAY",
+          "ground_truth_target": "Bill Twehway",
+          "ratio": 82.75862068965517
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:56:01.900856+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "9",
+    "model": "gemma4:31b-mlx_kb_rag",
+    "latency_sec": 15.284629821777344,
+    "tokens_per_sec": 26.23,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.8571428571428571,
+    "recall": 0.8571428571428571,
+    "f1": 0.8571428571428571,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 19.1,
+    "cpu_peak_pct": 47.2,
+    "proc_cpu_avg_pct": 3.6,
+    "mem_avg_mb": 274.0,
+    "mem_peak_mb": 296.9,
+    "sys_mem_avg_mb": 30516.3,
+    "sys_mem_avg_pct": 83.6,
+    "vram_mb": 27578.9,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 7,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.8333333333333334,
+          "f1": 0.9090909090909091,
+          "tp": 5,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.8571428571428571,
+        "recall": 0.8571428571428571,
+        "f1": 0.8571428571428571,
+        "tp": 12,
+        "fp": 2,
+        "fn": 2,
+        "oov_recall": 0.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Kanio Bai Gbala",
+            "reference": "Kanio Bai Gbala"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Charles MacArthur D. Gull",
+            "reference": "Charles MacArthur D. Gull"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Peter Twehway",
+            "reference": "Peter Twehway"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Zarylee Gbala",
+            "reference": "Zarylee Gbala"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sidiki Fofana",
+            "reference": "Sidiki Fofana"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Christian D. Brownell",
+            "reference": "Christian D. Brownell"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Bill Twehway",
+            "reference": "Bill Twehway"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Liberia Anti-Corruption Commission",
+            "reference": "Liberia Anti-Corruption Commission"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Global Tracking Management Service",
+            "reference": "Global Tracking Management Service"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "National Port Authority",
+            "reference": "National Port Authority"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "FrontPageAfrica",
+            "reference": "FrontPageAfrica"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Creative Developers Inc.",
+            "reference": "Creative Developers Inc."
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Port of Buchanan"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "MONROVIA",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Port of Buchanan",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Liberia"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Kanio Bai Gbala",
+          "ground_truth_target": "Zarylee Gbala",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Peter Twehway",
+          "ground_truth_target": "Bill Twehway",
+          "ratio": 64.0
+        },
+        {
+          "entity": "Zarylee Gbala",
+          "ground_truth_target": "Kanio Bai Gbala",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Bill Twehway",
+          "ground_truth_target": "Peter Twehway",
+          "ratio": 64.0
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "Port of Buchanan",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Port of Buchanan"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:56:17.315566+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "10",
+    "model": "gemma4:31b-mlx_kb_rag",
+    "latency_sec": 32.08180284500122,
+    "tokens_per_sec": 28.08,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.8260869565217391,
+    "recall": 0.8636363636363636,
+    "f1": 0.8444444444444444,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 22.7,
+    "cpu_peak_pct": 42.8,
+    "proc_cpu_avg_pct": 1.7,
+    "mem_avg_mb": 95.6,
+    "mem_peak_mb": 297.6,
+    "sys_mem_avg_mb": 29971.6,
+    "sys_mem_avg_pct": 88.5,
+    "vram_mb": 26491.0,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.875,
+          "recall": 1.0,
+          "f1": 0.9333333333333333,
+          "tp": 7,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.8571428571428571,
+          "f1": 0.923076923076923,
+          "tp": 12,
+          "fp": 0,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 3,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.8260869565217391,
+        "recall": 0.8636363636363636,
+        "f1": 0.8444444444444444,
+        "tp": 19,
+        "fp": 4,
+        "fn": 3,
+        "oov_recall": 0.8
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Peter Twehway",
+            "reference": "Peter Twehway"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Zarylee M. Gbala",
+            "reference": "Zarylee M. Gbala"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sidiki Fofana",
+            "reference": "Sidiki Fofana"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Christian D. Brownell",
+            "reference": "Christian D. Brownell"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Christian Deah Brownell",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Kanio Bai-Gbala",
+            "reference": "Kanio Bai-Gbala"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Bill Twehway",
+            "reference": "Bill Twehway"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Malcom Scott",
+            "reference": "Malcolm Scott"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Liberia Anti-Corruption Commission",
+            "reference": "Liberia Anti-Corruption Commission"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Alpha Logging",
+            "reference": "Alpha Logging"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "WAFDI",
+            "reference": "WAFDI"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "SINOTRANS",
+            "reference": "SINOTRANS"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Flaton",
+            "reference": "Flaton"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "BRILLIANT MAJU",
+            "reference": "BRILLIANT MAJU"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Global Tracking Management Service",
+            "reference": "Global Tracking Management Service"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Booming Green",
+            "reference": "Booming Green"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "National Port Authority",
+            "reference": "National Port Authority"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "ICC",
+            "reference": "ICC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "FrontPageAfrica",
+            "reference": "FrontPageAfrica"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Creative Developers Inc.",
+            "reference": "Creative Developers Inc."
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Port of Buchanan"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Financial Intelligence Regulations"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Grand Bassa County",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "MONROVIA",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Port of Buchanan",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Liberia"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Peter Twehway",
+          "ground_truth_target": "Bill Twehway",
+          "ratio": 64.0
+        },
+        {
+          "entity": "Bill Twehway",
+          "ground_truth_target": "Peter Twehway",
+          "ratio": 64.0
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "Port of Buchanan",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Port of Buchanan"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:56:49.528274+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "11",
+    "model": "gemma4:31b-mlx_kb_rag",
+    "latency_sec": 33.438801765441895,
+    "tokens_per_sec": 26.87,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6,
+    "recall": 0.75,
+    "f1": 0.6666666666666665,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 22.4,
+    "cpu_peak_pct": 42.3,
+    "proc_cpu_avg_pct": 1.6,
+    "mem_avg_mb": 119.2,
+    "mem_peak_mb": 296.8,
+    "sys_mem_avg_mb": 29676.5,
+    "sys_mem_avg_pct": 88.7,
+    "vram_mb": 26834.7,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.8571428571428571,
+          "recall": 1.0,
+          "f1": 0.923076923076923,
+          "tp": 12,
+          "fp": 2,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5333333333333333,
+          "recall": 0.5,
+          "f1": 0.5161290322580646,
+          "tp": 8,
+          "fp": 7,
+          "fn": 8
+        },
+        "Locations": {
+          "precision": 0.4375,
+          "recall": 0.875,
+          "f1": 0.5833333333333334,
+          "tp": 7,
+          "fp": 9,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.6,
+        "recall": 0.75,
+        "f1": 0.6666666666666665,
+        "tp": 27,
+        "fp": 18,
+        "fn": 9,
+        "oov_recall": 0.7419354838709677
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Christopher Wray",
+            "reference": "Christopher Wray"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sergey Tulyakov",
+            "reference": "Sergey Tulyakov"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Svetlana Kuzurgasheva",
+            "reference": "Svetlana Kuzurgasheva"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Merrick B. Garland",
+            "reference": "Merrick B. Garland"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Breon Peace",
+            "reference": "Breon Peace"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Juan Carlos Soto",
+            "reference": "Juan Carlos Soto"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Lana Neumann",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Artie McConnell",
+            "reference": "Artie McConnell"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Scott A. Claffee",
+            "reference": "Scott A. Claffee"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Timofey Telegin",
+            "reference": "Timofey Telegin"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Yury Orekhov",
+            "reference": "Yury Orekhov"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Juanfe Serrano",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Artem Uss",
+            "reference": "Artem Uss"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Juan Fernando Serrano Ponce",
+            "reference": "Juan Fernando Serrano Ponce"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "PDVSA",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Nord-Deutsche Industrieanlagenbau GmbH",
+            "reference": "Nord-Deutsche Industrieanlagenbau GmbH"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "International Emergency Economic Powers Act",
+            "reference": "International Emergency Economic Powers Act"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Office of International Affairs",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "U.S. Attorneys\u2019 Offices for the Eastern District of New York",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "District of Connecticut",
+            "reference": "District of Connecticut"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "National Security Division\u2019s Counterintelligence and Export Control Section",
+            "reference": "National Security Division\u2019s Counterintelligence and Export Control Section"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Task Force KleptoCapture",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Export Control Reform Act",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "NDA GmbH",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Justice Department",
+            "reference": "Justice Department"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "U.S. Department of Commerce",
+            "reference": "U.S. Department of Commerce"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "U.S. District Court for the District of Connecticut",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "FBI",
+            "reference": "FBI"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Petroleos de Venezuela S.A.",
+            "reference": "Petroleos de Venezuela S.A."
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Offices for the Eastern District of New York"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Offices for the District of Connecticut"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Department\u2019s Task Force KleptoCapture"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Eastern District of New York"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "U.S District Court"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Justice Department\u2019s Office of International Affairs"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Italian law enforcement authorities"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "German law enforcement authorities"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Latin America",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Connecticut",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Russia",
+            "reference": "Russia"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Moscow",
+            "reference": "Moscow"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Hamburg",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "New York",
+            "reference": "New York"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Germany",
+            "reference": "Germany"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Krasnoyarsk Krai",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Italy",
+            "reference": "Italy"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "United States",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Beijing",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Venezuela",
+            "reference": "Venezuela"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Latvia",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Estonia",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Emirates",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Ukraine",
+            "reference": "Ukraine"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Europe"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Juan Carlos Soto",
+          "ground_truth_target": "Juan Fernando Serrano Ponce",
+          "ratio": 51.162790697674424
+        },
+        {
+          "entity": "Juanfe Serrano",
+          "ground_truth_target": "Juan Fernando Serrano Ponce",
+          "ratio": 68.29268292682926
+        },
+        {
+          "entity": "Juan Fernando Serrano Ponce",
+          "ground_truth_target": "Juan Carlos Soto",
+          "ratio": 51.162790697674424
+        },
+        {
+          "entity": "Office of International Affairs",
+          "ground_truth_target": "Offices for the Eastern District of New York",
+          "ratio": 50.66666666666666
+        },
+        {
+          "entity": "U.S. Attorneys\u2019 Offices for the Eastern District of New York",
+          "ground_truth_target": "Offices for the Eastern District of New York",
+          "ratio": 84.61538461538461
+        },
+        {
+          "entity": "District of Connecticut",
+          "ground_truth_target": "Offices for the District of Connecticut",
+          "ratio": 74.19354838709677
+        },
+        {
+          "entity": "Task Force KleptoCapture",
+          "ground_truth_target": "Department\u2019s Task Force KleptoCapture",
+          "ratio": 78.68852459016394
+        },
+        {
+          "entity": "Justice Department",
+          "ground_truth_target": "Justice Department\u2019s Office of International Affairs",
+          "ratio": 51.42857142857142
+        },
+        {
+          "entity": "U.S. Department of Commerce",
+          "ground_truth_target": "Department\u2019s Task Force KleptoCapture",
+          "ratio": 50.0
+        },
+        {
+          "entity": "U.S. District Court for the District of Connecticut",
+          "ground_truth_target": "Offices for the Eastern District of New York",
+          "ratio": 52.63157894736843
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:57:23.115501+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "12",
+    "model": "gemma4:31b-mlx_kb_rag",
+    "latency_sec": 27.386940002441406,
+    "tokens_per_sec": 28.83,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6190476190476191,
+    "recall": 0.9285714285714286,
+    "f1": 0.742857142857143,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 14.9,
+    "cpu_peak_pct": 41.3,
+    "proc_cpu_avg_pct": 2.0,
+    "mem_avg_mb": 221.3,
+    "mem_peak_mb": 273.9,
+    "sys_mem_avg_mb": 30875.6,
+    "sys_mem_avg_pct": 83.9,
+    "vram_mb": 27412.5,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 8,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.7,
+          "recall": 0.875,
+          "f1": 0.7777777777777777,
+          "tp": 14,
+          "fp": 6,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.2857142857142857,
+          "recall": 1.0,
+          "f1": 0.4444444444444445,
+          "tp": 4,
+          "fp": 10,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6190476190476191,
+        "recall": 0.9285714285714286,
+        "f1": 0.742857142857143,
+        "tp": 26,
+        "fp": 16,
+        "fn": 2,
+        "oov_recall": 0.92
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Vanessa Roberts Avery",
+            "reference": "Vanessa Roberts Avery"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Rahul Kale",
+            "reference": "Rahul Kale"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Vadims Ananics",
+            "reference": "Vadims Ananics"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Konstantin Lantsman",
+            "reference": "Konstantin Lantsman"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Stanislav Romanyuk",
+            "reference": "Stanislav Romanyuk"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Janis Uzbalis",
+            "reference": "Janis Uzbalis"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Eriks Mamonovs",
+            "reference": "Eriks Mamonovs"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Matthew Anzaldi",
+            "reference": "Matthew Anzaldi"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Justice Department\u2019s Office of International Affairs",
+            "reference": "Justice Department\u2019s Office of International Affairs"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Office of Export Enforcement",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "HSI",
+            "reference": "HSI"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "U.S. Department of Commerce",
+            "reference": "U.S. Department of Commerce"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "FBI",
+            "reference": "FBI"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Export Control Reform Act",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Latvian State Revenue Service",
+            "reference": "Latvian State Revenue Service"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Prosecutor-General\u2019s Offices of the Republic of Latvia and Estonia",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "BY Trade OU",
+            "reference": "BY Trade OU"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Office of the Deputy Attorney General",
+            "reference": "Office of the Deputy Attorney General"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Export Administration Regulations",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Justice Department",
+            "reference": "Justice Department"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Export Control Reform Act of 2018",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "District of Connecticut",
+            "reference": "District of Connecticut"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Department of Commerce",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Estonian Tax and Customs Board",
+            "reference": "Estonian Tax and Customs Board"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "National Security Division\u2019s Counterintelligence and Export Control Section",
+            "reference": "National Security Division\u2019s Counterintelligence and Export Control"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "CNC Weld",
+            "reference": "CNC Weld"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Latvian State Police",
+            "reference": "Latvian State Police"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Justice Department\u2019s Task Force KleptoCapture",
+            "reference": "Justice Department\u2019s Task Force KleptoCapture"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "European union"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "U.S. Department of Commerce\u2019s Office of Export Enforcement"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "the Hague",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "New Haven",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Boston",
+            "reference": "Boston"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Connecticut",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Russia",
+            "reference": "Russia"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Tallinn",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Netherlands",
+            "reference": "Netherlands"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Portland (Ore.)",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "United States",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Riga",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Latvia",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Estonia",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "European Union",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Ukraine",
+            "reference": "Ukraine"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Vadims Ananics",
+          "ground_truth_target": "Janis Uzbalis",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Konstantin Lantsman",
+          "ground_truth_target": "Stanislav Romanyuk",
+          "ratio": 54.054054054054056
+        },
+        {
+          "entity": "Stanislav Romanyuk",
+          "ground_truth_target": "Konstantin Lantsman",
+          "ratio": 54.054054054054056
+        },
+        {
+          "entity": "Janis Uzbalis",
+          "ground_truth_target": "Vadims Ananics",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Justice Department\u2019s Office of International Affairs",
+          "ground_truth_target": "U.S. Department of Commerce",
+          "ratio": 50.63291139240506
+        },
+        {
+          "entity": "Office of Export Enforcement",
+          "ground_truth_target": "Justice Department",
+          "ratio": 52.17391304347826
+        },
+        {
+          "entity": "U.S. Department of Commerce",
+          "ground_truth_target": "Justice Department",
+          "ratio": 57.77777777777777
+        },
+        {
+          "entity": "Latvian State Revenue Service",
+          "ground_truth_target": "Latvian State Police",
+          "ratio": 69.38775510204081
+        },
+        {
+          "entity": "Justice Department",
+          "ground_truth_target": "U.S. Department of Commerce",
+          "ratio": 57.77777777777777
+        },
+        {
+          "entity": "Department of Commerce",
+          "ground_truth_target": "Justice Department",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Latvian State Police",
+          "ground_truth_target": "Latvian State Revenue Service",
+          "ratio": 69.38775510204081
+        },
+        {
+          "entity": "Justice Department\u2019s Task Force KleptoCapture",
+          "ground_truth_target": "U.S. Department of Commerce",
+          "ratio": 52.77777777777778
+        },
+        {
+          "entity": "New Haven",
+          "ground_truth_target": "Netherlands",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Riga",
+          "ground_truth_target": "Russia",
+          "ratio": 60.0
+        },
+        {
+          "entity": "Estonia",
+          "ground_truth_target": "Boston",
+          "ratio": 61.53846153846154
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "European Union",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "European union"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:57:50.638836+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "13",
+    "model": "gemma4:31b-mlx_kb_rag",
+    "latency_sec": 14.737545013427734,
+    "tokens_per_sec": 28.51,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.64,
+    "recall": 0.8,
+    "f1": 0.7111111111111111,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 20.9,
+    "cpu_peak_pct": 43.3,
+    "proc_cpu_avg_pct": 3.9,
+    "mem_avg_mb": 195.1,
+    "mem_peak_mb": 287.3,
+    "sys_mem_avg_mb": 30762.0,
+    "sys_mem_avg_pct": 85.4,
+    "vram_mb": 26780.6,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.7857142857142857,
+          "recall": 0.9166666666666666,
+          "f1": 0.8461538461538461,
+          "tp": 11,
+          "fp": 3,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.3333333333333333,
+          "recall": 0.5,
+          "f1": 0.4,
+          "tp": 3,
+          "fp": 6,
+          "fn": 3
+        }
+      },
+      "overall": {
+        "precision": 0.64,
+        "recall": 0.8,
+        "f1": 0.7111111111111111,
+        "tp": 16,
+        "fp": 9,
+        "fn": 4,
+        "oov_recall": 0.8888888888888888
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Joseph Kabila",
+            "reference": "Joseph Kabila"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Francis Selemani",
+            "reference": "Francis Selemani"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Sud Oil",
+            "reference": "Sud Oil"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Mediapart",
+            "reference": "Mediapart"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "G\u00e9camines",
+            "reference": "G\u00e9camines"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "BGFIBank Group",
+            "reference": "BGFIBank Group"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "BGFIBank DRC",
+            "reference": "BGFIBank DRC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Congo Hold-up consortium",
+            "reference": "Congo Hold-up consortium"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "European Investigative Collaborations",
+            "reference": "European Investigative Collaborations"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "PPLAAF",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Platform to Protect Whistleblowers in Africa",
+            "reference": "Platform to Protect Whistleblowers in Africa"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Congo Research Group",
+            "reference": "Congo Research Group"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "DRC\u2019s permanent mission to the United Nations",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Central Bank of Congo",
+            "reference": "Central Bank of Congo"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "The Sentry",
+            "reference": "The Sentry"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "EIC",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "United Nations"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "DRC",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "New York",
+            "reference": "New York"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Democratic Republic of Congo",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "South Africa",
+            "reference": "South Africa"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "United States",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Washington, DC",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Gabon",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Kinshasa",
+            "reference": "Kinshasa"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Johannesburg",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Congo"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Africa"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Washington"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "BGFIBank Group",
+          "ground_truth_target": "BGFIBank DRC",
+          "ratio": 76.92307692307692
+        },
+        {
+          "entity": "BGFIBank DRC",
+          "ground_truth_target": "BGFIBank Group",
+          "ratio": 76.92307692307692
+        },
+        {
+          "entity": "South Africa",
+          "ground_truth_target": "Africa",
+          "ratio": 66.66666666666667
+        },
+        {
+          "entity": "Washington, DC",
+          "ground_truth_target": "Washington",
+          "ratio": 83.33333333333334
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "Congo",
+          "category": "Locations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:58:05.518526+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "14",
+    "model": "gemma4:31b-mlx_kb_rag",
+    "latency_sec": 16.729277849197388,
+    "tokens_per_sec": 18.92,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.7222222222222222,
+    "recall": 0.8666666666666667,
+    "f1": 0.7878787878787877,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 26.1,
+    "cpu_peak_pct": 45.5,
+    "proc_cpu_avg_pct": 3.3,
+    "mem_avg_mb": 148.6,
+    "mem_peak_mb": 276.2,
+    "sys_mem_avg_mb": 30028.1,
+    "sys_mem_avg_pct": 87.9,
+    "vram_mb": 26791.6,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.7692307692307693,
+          "recall": 0.9090909090909091,
+          "f1": 0.8333333333333333,
+          "tp": 10,
+          "fp": 3,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.5,
+          "recall": 0.6666666666666666,
+          "f1": 0.5714285714285715,
+          "tp": 2,
+          "fp": 2,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.7222222222222222,
+        "recall": 0.8666666666666667,
+        "f1": 0.7878787878787877,
+        "tp": 13,
+        "fp": 5,
+        "fn": 2,
+        "oov_recall": 0.8571428571428571
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Joseph Kabila",
+            "reference": "Joseph Kabila"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "China Railway Group",
+            "reference": "China Railway Group"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Mediapart",
+            "reference": "Mediapart"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "BGFIBank DRC",
+            "reference": "BGFIBank DRC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Citibank",
+            "reference": "Citibank"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "European Investigative Collaborations",
+            "reference": "European Investigative Collaborations"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "PPLAAF",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Congo Construction Company",
+            "reference": "Congo Construction Company"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sinohydro",
+            "reference": "Sinohydro"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Commerzbank",
+            "reference": "Commerzbank"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Platform to Protect Whistleblowers in Africa",
+            "reference": "Platform to Protect Whistleblowers in Africa"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "CCC",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "The Sentry",
+            "reference": "The Sentry"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "EIC",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Sicomines"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "DRC",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Democratic Republic of Congo",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "China",
+            "reference": "China"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Africa",
+            "reference": "Africa"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Congo"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "BGFIBank DRC",
+          "ground_truth_target": "Citibank",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Citibank",
+          "ground_truth_target": "BGFIBank DRC",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Commerzbank",
+          "ground_truth_target": "Citibank",
+          "ratio": 52.63157894736843
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "Congo",
+          "category": "Locations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:58:22.380954+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "15",
+    "model": "gemma4:31b-mlx_kb_rag",
+    "latency_sec": 22.843417167663574,
+    "tokens_per_sec": 11.51,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.75,
+    "recall": 0.8571428571428571,
+    "f1": 0.7999999999999999,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 21.1,
+    "cpu_peak_pct": 42.4,
+    "proc_cpu_avg_pct": 2.4,
+    "mem_avg_mb": 110.1,
+    "mem_peak_mb": 275.1,
+    "sys_mem_avg_mb": 29317.1,
+    "sys_mem_avg_pct": 89.4,
+    "vram_mb": 26791.6,
+    "model_disk_mb": 17768.0,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.5,
+          "recall": 0.6666666666666666,
+          "f1": 0.5714285714285715,
+          "tp": 2,
+          "fp": 2,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.75,
+        "recall": 0.8571428571428571,
+        "f1": 0.7999999999999999,
+        "tp": 6,
+        "fp": 2,
+        "fn": 1,
+        "oov_recall": 0.8571428571428571
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Joseph Kabila",
+            "reference": "Joseph Kabila"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Kwanza Capital",
+            "reference": "Kwanza Capital"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Financial Action Task Force (FATF)",
+            "reference": "Financial Action Task Force"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "The Sentry",
+            "reference": "The Sentry"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "sub-Saharan Africa",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Democratic Republic of Congo",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Kinshasa",
+            "reference": "Kinshasa"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Congo",
+            "reference": "Congo"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Africa"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "sub-Saharan Africa",
+          "ground_truth_target": "Africa",
+          "ratio": 50.0
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-08T20:58:45.341618+00:00",
+      "model_version": "gemma4:31b-mlx",
+      "prompt_hash": "a6af280e"
+    }
+  }
+]
