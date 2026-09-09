@@ -894,6 +894,53 @@ def c_correlacion(s):
           'una cifra que solo vive dentro de un PNG no se puede comprobar')
 
 
+# --- 23. La taxonomia de errores (§5.4) reproduce desde los datos --------------------------------
+def c_alucinaciones(s):
+    """Las cinco cifras de alucinacion de §5.4, contra la poblacion que el propio parrafo declara.
+
+    §5.4 no habla de los 26 grupos publicados sino de los 61 «que aportan los ciento veinte registros
+    completos, contando todas las corridas conservadas». Comprobarlo contra el consolidado da un falso
+    positivo: el maximo de 21,59 % es de una configuracion de RAG por diccionario que el consolidado
+    no incluye. La poblacion hay que tomarla de donde el texto dice.
+    """
+    import csv as _csv
+    import collections as _c
+    import glob as _glob
+    g = {}
+    rutas = _glob.glob(os.path.join(BENCH_DIR, 'results/*/benchmark_results.csv'))
+    rutas.append(os.path.join(BENCH_DIR, 'results/benchmark_results.csv'))
+    for f in rutas:
+        if not os.path.exists(f):
+            continue
+        por = _c.defaultdict(list)
+        try:
+            with open(f, encoding='utf-8') as fh:
+                for r in _csv.DictReader(fh):
+                    v = r.get('hallucination_rate')
+                    if v not in (None, ''):
+                        por[r['model']].append(float(v))
+        except Exception:
+            continue
+        for k, v in por.items():
+            if len(v) == 120:
+                g[(os.path.basename(os.path.dirname(f)), k)] = 100 * sum(v) / len(v)
+    fallos, mirados = [], 0
+    mirados += 1
+    if len(g) != 61:
+        fallos.append('§5.4 declara 61 grupos de 120 registros y se encuentran %d' % len(g))
+    if g:
+        mirados += 1
+        mx = max(g.values())
+        if abs(mx - 21.59) > 0.011:
+            fallos.append('el maximo de alucinacion es %.2f %% y §5.4 dice 21,59 %%' % mx)
+        mirados += 1
+        bajo = sum(1 for v in g.values() if v < 1.0)
+        if bajo != 28:
+            fallos.append('§5.4 dice que 28 grupos quedan por debajo del 1 %% y son %d' % bajo)
+    check('la taxonomia de errores de §5.4 reproduce desde los datos', mirados, fallos,
+          'la poblacion son los 61 grupos con 120 registros, no los 26 publicados')
+
+
 def main():
     s = texto()
     c_vacios()
@@ -917,6 +964,7 @@ def main():
     c_tabla18_vs_artefacto(s)
     c_json_parsea(s)
     c_correlacion(s)
+    c_alucinaciones(s)
     if '--red' in sys.argv:
         c_urls(s)
 
