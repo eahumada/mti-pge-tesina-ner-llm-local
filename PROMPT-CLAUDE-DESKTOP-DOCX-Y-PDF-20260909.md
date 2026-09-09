@@ -115,6 +115,11 @@ Ver el aviso del apartado 0: hay que averiguar qué tres rutas no tienen hoja en
 **en la convención del `.docx`**, o declarar la divergencia como deliberada. Lo que **no** hay que
 hacer es pegar tres filas con ruta completa.
 
+> **Y una celda mas de la misma Tabla 8, corregida hoy en el Markdown:** el indice Tok/s/B de
+> `llama3.2 (3B)` pasa de **26.5** a **26.44**, para unificarlo con las otras tres apariciones del
+> mismo dato (Tabla 4, Hallazgo 4, §5.5). El 26.5 redondeaba un Tok/s que ya venia redondeado; el
+> valor real es 79,3453 / 3 = 26,4484. Ver `FINDINGS §F152`.
+
 ### Pieza 5 — Una celda de la Tabla 3
 
 El `.docx` dice «validación de esquema» donde el Markdown dice «validación contra el esquema

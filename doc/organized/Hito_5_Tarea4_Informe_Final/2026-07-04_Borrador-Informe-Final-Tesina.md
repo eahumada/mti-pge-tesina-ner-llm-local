@@ -438,7 +438,7 @@ _Tabla 8. Eficiencia en hardware soberano: memoria, rendimiento y coste estimado
 |:---|:---:|:---:|:---:|:---:|:---:|
 | gemma4:31b | 18,795 | 10.23 | 31 | 0.33 | $0.052 |
 | gemma4:31b-mlx | 24,607 | 22.80 | 31 | 0.74 | $0.052 |
-| llama3.2 (3B) | 4,018 | 79.35 | 3 | 26.5 | $0.052 |
+| llama3.2 (3B) | 4,018 | 79.35 | 3 | 26.44 | $0.052 |
 
 > Valores medidos sobre `benchmark_results.csv` (subconjunto `_baseline`, N=15; columnas `vram_mb` y
 > `tokens_per_sec`), salvo la fila de `gemma4:31b`, medida sobre

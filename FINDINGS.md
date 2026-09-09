@@ -7359,3 +7359,27 @@ Las tres primeras son la **pieza 7** del encargo de maquetación y la correcció
 asignadas. La cuarta no aparece porque **ese pasaje del Anexo I nunca llegó al entregable**: es uno
 de los diez párrafos ausentes de [§F121]. De modo que el entregable no afirma la falsedad, pero solo
 porque tampoco afirma nada sobre eso. No es un consuelo: es la misma deuda por otra vía.
+
+---
+
+## §F152 — El índice Tok/s/B de `llama3.2` circulaba con dos valores, y uno redondeaba un redondeo
+
+**Fecha:** 2026-09-09 · **Origen:** el lote de tablas de `wf_348f89e2-43b`, confianza alta
+
+`llama3.2:latest` aparecía con **26.44** en la Tabla 4, el Hallazgo 4 y §5.5, y con **26.5** en la
+Tabla 8. Es el mismo índice del mismo modelo.
+
+**El valor real, recalculado desde `benchmark_results.csv` sobre el subconjunto `_baseline` de
+N=15:** el Tok/s medio es 79,3453 y el índice, 79,3453 / 3 = **26,4484**, que redondea a 26,44. La
+Tabla 8 había calculado el índice sobre el **Tok/s ya redondeado** a 79,35, es decir 79,35 / 3 = 26,5:
+redondeó dos veces, y la segunda ronda perdió precisión que la primera no debía haber gastado.
+
+**Corregido en el Markdown**, unificando las cuatro apariciones en 26,44. **Y comprobado que nadie lo
+vigilaba:** la comprobación de la Tabla 8 valida VRAM y Tok/s contra los datos, pero no el índice
+derivado, que es aritmética sobre columnas ya validadas y por eso parecía no necesitar comprobación
+propia. Es el mismo mecanismo que [§F134](#f134): una cifra que se calcula a mano y no contra su
+artefacto se desfasa sin que nada avise.
+
+**Y el desfase de siempre con los `.docx`:** al corregir el Markdown, dos de los tres entregables
+siguen con 26.5 en la Tabla 8. Declarado con su responsable, junto a la pieza 7 del encargo de
+maquetación, que ya corrige la misma tabla.

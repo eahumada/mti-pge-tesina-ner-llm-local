@@ -78,6 +78,12 @@ FALLOS_DECLARADOS = {
         'entrada [19] de la bibliografia, que tambien nombra al proveedor equivocado. La cuarta '
         'frase retirada, la re-corrida «pendiente», NO aparece en los .docx porque ese pasaje del '
         'Anexo I es uno de los diez que nunca llegaron al entregable (F121). Ver FINDINGS §F151'),
+    'Tabla 8, fila 3 difiere': ('2026-09-10',
+        'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop, y va con la pieza 7 de '
+        'su encargo. El indice Tok/s/B de llama3.2 en la Tabla 8 se corrigio de 26.5 a 26.44 en el '
+        'Markdown, para unificarlo con la Tabla 4, el Hallazgo 4 y §5.5, que ya decian 26.44. El '
+        '26.5 salia de redondear el Tok/s YA redondeado (79,35/3=26,5 en vez de 79,3453/3=26,4484). '
+        'Ver FINDINGS §F152'),
     '.rebuild_venv.log': ('2026-09-09',
                           'fichero vacio del commit 880f4f9; decision del autor '
                           '(CURRENT-TASKS §1.103)'),
