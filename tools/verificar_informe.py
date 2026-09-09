@@ -66,6 +66,11 @@ FALLOS_DECLARADOS = {
                                            'Word y no hay conversor aqui; es de la pasada de '
                                            'maquetacion (FINDINGS §F98). El PDF de enviados/ se '
                                            'conserva y no se toca'),
+    'publicado 22.59, per_type': ('2026-09-09',
+        'PENDIENTE del equipo remoto: los dos artefactos de nemotron-mini:4b_baseline '
+        'discrepan porque seis registros se re-extrajeron fuera del arnes y solo el CSV '
+        'recibio las metricas. Lo cierra la re-corrida de §3.bis.15, y al cerrarse hay que '
+        'levantar la exclusion de tools/sensibilidad_combinada.py (FINDINGS §F110)'),
     'github.com/eahumada/mti-pge-tesina': ('2026-09-09',
                                            'referencia [37]: el repositorio es privado hasta la '
                                            'purga (SEGURIDAD-CLAVE-GOOGLE-20260908.md)'),
@@ -92,6 +97,56 @@ def _motivo_declarado(clave):
     return FALLOS_DECLARADOS[clave][1] + _edad_declarado(clave)
 
 resultados = []
+
+
+# --- 45. La Tabla 7 tambien reproduce desde los recuentos crudos --------------------------------
+def c_tabla7_desde_per_type(s):
+    """La misma tabla, por la OTRA ruta: `per_type` en lugar de la columna `f1` del CSV.
+
+    `c_tabla7_vs_datos` la ata al CSV consolidado, que es la fuente de la que se escribio. Esta la
+    ata a los **recuentos** de los que ese CSV sale, y por tanto puede discrepar de la anterior.
+    Discrepa: en `nemotron-mini:4b_baseline` los dos artefactos del grupo dicen cosas distintas,
+    porque seis de sus registros se re-extrajeron fuera del arnes y solo el CSV recibio las
+    metricas (§F110). Los otros 25 grupos coinciden por las dos rutas.
+
+    No es redundante con la anterior: dos rutas que coinciden acreditan la cifra, y la unica que
+    no coincide es precisamente la que hay que volver a mirar cuando llegue la re-corrida de
+    `§3.bis.15`. Cuando este fallo declarado desaparezca, la exclusion de
+    `tools/sensibilidad_combinada.py` se puede levantar.
+    """
+    import importlib.util as _iu
+    ruta = os.path.join(RAIZ, 'tools/sensibilidad_combinada.py')
+    if not os.path.exists(ruta):
+        check('la Tabla 7 reproduce tambien desde per_type', 0,
+              ['no existe tools/sensibilidad_combinada.py'])
+        return
+    _sp = _iu.spec_from_file_location('_sc', ruta)
+    _sc = _iu.module_from_spec(_sp)
+    _sp.loader.exec_module(_sc)
+    datos = _sc.cargar()
+    i = s.find('_Tabla 7.')
+    if i < 0:
+        check('la Tabla 7 reproduce tambien desde per_type', 0, ['no se encuentra la Tabla 7'])
+        return
+    t7 = {}
+    for l in s[i:i + 3000].split('\n'):
+        m = re.match(r'^\|\s*([^|]+?)\s*\|\s*\*{0,2}([\d.]+)%\*{0,2}\s*\|'
+                     r'\s*\*{0,2}([\d.]+)%\*{0,2}\s*\|', l)
+        if m and not m.group(1).startswith('Modelo'):
+            t7[m.group(1).strip()] = (float(m.group(2)), float(m.group(3)))
+    fallos, n = [], 0
+    for mod, (b, r) in sorted(t7.items()):
+        for suf, pub in (('_baseline', b), ('_kb_rag', r)):
+            g = mod + suf
+            if g not in datos:
+                fallos.append('%s no tiene per_type en ninguna fuente' % g)
+                continue
+            n += 1
+            got = 100 * sum(x[0] for x in datos[g]) / len(datos[g])
+            if abs(got - pub) > 0.05:
+                fallos.append('%s: publicado %.2f, per_type %.4f (%+.4f)' % (g, pub, got, got - pub))
+    check('la Tabla 7 reproduce tambien desde per_type', n, fallos,
+          'ruta independiente de c_tabla7_vs_datos; su unico fallo cierra con §3.bis.15')
 
 
 def check(nombre, examinados, fallos, nota=''):
@@ -3049,6 +3104,7 @@ def main():
     ejecutar(c_protocolo, s)
     ejecutar(c_anexo_vs_tabla7, s)
     ejecutar(c_tabla7_vs_datos, s)
+    ejecutar(c_tabla7_desde_per_type, s)
     ejecutar(c_tabla4_vs_datos, s)
     ejecutar(c_figura1_vs_artefacto, s)
     ejecutar(c_tablas_menores, s)
