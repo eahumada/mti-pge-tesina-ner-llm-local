@@ -48,22 +48,38 @@ Estos documentos describen dónde está el trabajo hoy y son los que hay que lee
 
 ## Verificación
 
-`tools/verificar_informe.py` pasa 24 comprobaciones sobre el Markdown canónico: referencias cruzadas, tablas,
-bibliografía, higiene del entregable, coherencia entre cifras publicadas y datos crudos, y extensión. Una
-comprobación que no examina nada se marca como **vacía**, no como superada.
+`tools/verificar_informe.py` pasa **25 comprobaciones** sobre el Markdown canónico: referencias cruzadas,
+tablas, bibliografía, higiene del entregable, coherencia entre cifras publicadas y datos crudos, y extensión.
+Una comprobación que no examina nada se marca como **vacía**, no como superada.
 
 ```
-python3 tools/verificar_informe.py
+python3 tools/verificar_informe.py          # las 25, sin red
+python3 tools/verificar_informe.py --red    # además abre las URL de la bibliografía
 ```
+
+**La forma corta no comprueba la bibliografía.** Verificar que las URL responden exige salir a la red y vive
+tras `--red`; sin esa bandera se informa de cero fallos sin haber abierto una sola (`FINDINGS §F80`). Hoy
+`--red` deja un fallo vivo y debe seguir así: la referencia [37] apunta al repositorio, que es privado hasta
+que se complete la purga.
 
 `tools/autoprueba_verificador.py` comprueba lo contrario: que el verificador **no apruebe a ciegas**. Esconde
 cada artefacto por turno y exige que se entere. Si alguno pudiera faltar sin que ninguna comprobación lo
 notase, esa comprobación estaría devolviendo el valor del éxito por haber mirado el sitio equivocado
 (`LEARNING.md §L57`).
 
-Los demás scripts de `tools/` regeneran artefactos concretos: figuras, Tabla 7, composición de falsos
-positivos y estado de la re-corrida. Todos leen de las fuentes primarias, para que el documento y los datos
-no puedan divergir en silencio.
+Los demás scripts de `tools/` regeneran artefactos concretos, y todos leen de las fuentes primarias para que
+el documento y los datos no puedan divergir en silencio:
+
+| Script | Qué produce |
+|:---|:---|
+| `generar_figuras_informe.py` | Las dos figuras del informe |
+| `generar_tabla7.py` | La Tabla 7; con `--validar` comprueba que reproduce la publicada |
+| `composicion_fp.py` | La composición de los falsos positivos por categoría, con control contra el consolidado |
+| `estado_recorrida.py` | `ESTADO-RECORRIDA-20260908.md`, con la firma del corpus calculada y no escrita a mano |
+| `robustez_estadistica.py` | Friedman y post-hoc pareado; con `--validar` reproduce los artefactos publicados |
+| `efecto_emparejamiento_duplicado.py` | El efecto del doble conteo del emparejamiento sobre las cifras antiguas |
+| `desfase_documentos.py` | Qué documentos de estado han envejecido respecto de lo que describen |
+| `docx_replace_terms.py` | Ediciones de texto en los `.docx` preservando el formato |
 
 ## Documentos fechados
 
