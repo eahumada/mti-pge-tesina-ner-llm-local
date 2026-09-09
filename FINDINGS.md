@@ -3741,3 +3741,44 @@ Tukey comparaba el delta del artefacto contra un `0.1452` **escrito a mano en el
 `+14,52 pp` del informe no hacía fallar nada: la comprobación no miraba el documento que decía comprobar.
 De cinco mutaciones, cuatro se detectaban y esa no. Corregida para leer el delta del informe, ahora falla en
 los dos modelos.
+
+## §F91.ter — Cerrada la cobertura estadística: las cuatro p secundarias también reproducen
+
+**2026-09-09.** Al cerrar §F91.bis quedaron declaradas abiertas cuatro p secundarias. Las cuatro reproducen,
+y cada una desde una corrida distinta, que es lo que costó identificar:
+
+| Dónde | Cifra publicada | Corrida | Reproduce |
+|:---|:---|:---|:---|
+| §5.2 | F = 1,1379 · p = 0,3417 | `ablacion_n15_REMOTO`, 4 configuraciones, N=60 | sí |
+| §5.2 | F = 0,2235 · p = 0,6382 | `n30_rerun_REMOTO`, `gemma4:31b` vs `-mlx`, N=60 | sí |
+| §5.3 y §6 | Δ = −0,43 pp · p = 0,9328 | `benchmark_balanced_120_…071207`, 4 config., N=480 | sí |
+| §5.3 | ρ = −0,52 · p = 0,071 | ya cubierta por la comprobación 26 | sí |
+
+**La tercera exigió trabajo, y el resultado conviene retenerlo.** El Δ de −0,43 pp reproduce de inmediato
+como el contraste `fs-es` frente a `zs-en`, pero **la p no salía de ninguna prueba sobre ese par**: ni t
+apareada (0,7019), ni t independiente ni Welch (0,8673), ni Wilcoxon (0,8661), ni Mann-Whitney (0,6287), ni
+Kruskal (0,6280), ni Tukey ajustada (0,9982). Sale del **ANOVA de los cuatro grupos**, F = 0,1451 con
+p = 0,9328 sobre N=480.
+
+Es decir, el informe empareja en una frase un Δ de un contraste con la p de un ANOVA global. **No es un
+error** —`FINDINGS §F31` ya lo declara y da también la t apareada de 0,7019, que esta comprobación
+reproduce—, pero es un emparejamiento de alcances distintos y un tribunal puede preguntarlo. La comprobación
+verifica las dos cosas **por separado**, para que quede visible cuál sostiene qué.
+
+De paso: la t apareada que §F31 declara, 0,7019, la reprodujo mi cálculo antes de saber que estaba
+documentada. Es la clase de coincidencia que da confianza en las dos.
+
+### Y un hueco en mi propia comprobación, otra vez destapado por la mutación
+
+La frase del efecto que se anula está **dos veces** en el informe, en §5.3 y en §6, con las mismas cifras.
+La primera versión de la comprobación usaba `re.search`, que ve solo la primera: si la segunda divergiera,
+nadie lo notaría. Es §L59 —«las mutaciones deben cubrir todas las apariciones»— aplicado a la comprobación
+en lugar de a la prueba, y se detectó porque el helper de mutación **se negó a mutar** al encontrar dos
+ocurrencias donde esperaba una.
+
+Corregida con `re.finditer`, la comprobación pasa de 7 a **10 elementos** y cada fallo dice de qué aparición
+habla. Probada mutando cada una por separado: las dos se detectan.
+
+**Estado de la cobertura estadística del informe:** el ANOVA principal, Levene, el recuento de Tukey con sus
+dos p, las tres ANOVA secundarias y la correlación de capacidad se recalculan todos desde los datos. No
+queda ninguna afirmación estadística publicada sin comprobación.

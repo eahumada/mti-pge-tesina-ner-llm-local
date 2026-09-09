@@ -1573,6 +1573,104 @@ def c_anova(s):
     check('el ANOVA titular se recalcula desde el CSV', mirados, fallos)
 
 
+def c_anovas_secundarios(s):
+    """Las tres ANOVA secundarias del informe se recalculan desde su corrida.
+
+    Cerradas la principal y Levene, quedaban tres F publicadas sin nadie que las recalculara. Las
+    tres reproducen, y cada una desde una corrida distinta, que es lo que costo identificar:
+
+      §5.2  F = 1,1379 · p = 0,3417   `ablacion_n15_REMOTO`, 4 configuraciones, N=60
+      §5.2  F = 0,2235 · p = 0,6382   `n30_rerun_REMOTO`, `gemma4:31b` vs `-mlx`, N=60
+      §5.3  F = 0,1451 · p = 0,9328   `benchmark_balanced_120_...071207`, 4 config., N=480
+
+    La tercera merece una nota. El informe la cita como «una diferencia de −0,43 puntos y
+    p = 0,9328», y ahi hay dos cosas de alcance distinto: el **−0,43** es el contraste
+    `fs-es` frente a `zs-en`, mientras la **p** es la del ANOVA de los cuatro grupos. No es un
+    error —`FINDINGS §F31` ya lo declara y da tambien la t pareada, p = 0,7019, que esta
+    comprobacion reproduce—, pero conviene no leer esa p como si probara ese contraste. Por eso se
+    comprueban las dos cosas por separado.
+
+    Ninguna cifra esperada esta escrita en este codigo: todas se leen del informe (§L63).
+    """
+    CASOS = (
+        ('results/ablacion_n15_REMOTO', {'fs-en', 'fs-es', 'zs-en', 'zs-es'},
+         r'\(F = (\d+),(\d+); p = (\d+),(\d+)\)', 'la del corpus de quince'),
+        ('results/n30_rerun_REMOTO', None,
+         r'arroja F = (\d+),(\d+) con p = (\d+),(\d+)', 'la de las dos compilaciones'),
+        ('results/benchmark_balanced_120_20260825_071207', {'fs-en', 'fs-es', 'zs-en', 'zs-es'},
+         None, 'la del corpus de ciento veinte'),
+    )
+    fallos, mirados = [], 0
+    for rel, filtro, patron, etiq in CASOS:
+        csv_path = os.path.join(BENCH_DIR, rel, 'benchmark_results.csv')
+        mirados += 1
+        if not os.path.exists(csv_path):
+            fallos.append('no existe la corrida de %s: %s' % (etiq, rel))
+            continue
+        g = _grupos_f1(csv_path)
+        if filtro:
+            g = {k: v for k, v in g.items() if k in filtro}
+        if not g:
+            fallos.append('la corrida de %s no trae los grupos esperados' % etiq)
+            continue
+        F, df1, df2, pv, eta2, k, N = _anova_una_via(g)
+        if patron is None:
+            continue
+        mirados += 1
+        m = re.search(patron, s)
+        if m is None:
+            fallos.append('no se encuentra en el informe %s con su F y su p' % etiq)
+            continue
+        f_pub = float('%s.%s' % (m.group(1), m.group(2)))
+        p_pub = float('%s.%s' % (m.group(3), m.group(4)))
+        if abs(f_pub - F) >= 5e-5:
+            fallos.append('%s: el informe publica F = %s y la corrida da %.4f'
+                          % (etiq, f_pub, F))
+        dec = len(m.group(4))
+        if abs(round(pv, dec) - p_pub) >= 10 ** (-dec) / 2:
+            fallos.append('%s: el informe publica p = %s y la corrida da %.4f'
+                          % (etiq, p_pub, pv))
+
+    # La tercera: su p es la del ANOVA de los cuatro grupos, y su Δ es un contraste concreto.
+    csv3 = os.path.join(BENCH_DIR, 'results/benchmark_balanced_120_20260825_071207',
+                        'benchmark_results.csv')
+    if os.path.exists(csv3):
+        g3 = {k: v for k, v in _grupos_f1(csv3).items()
+              if k in ('fs-en', 'fs-es', 'zs-en', 'zs-es')}
+        if len(g3) == 4:
+            F3, _, _, p3, _, _, _ = _anova_una_via(g3)
+            # La frase esta DOS veces en el informe, en §5.3 y en §6. `re.search` solo ve la
+            # primera, y si la segunda divergiera nadie lo notaria: es §L59, «las mutaciones
+            # deben cubrir todas las apariciones», aplicado a la comprobacion misma. Se
+            # recorren todas y se declara cada una como elemento examinado.
+            ocur = list(re.finditer(r'se anula, con una diferencia de \u2212(\d+),(\d+) puntos y '
+                                    r'p = (\d+),(\d+)', s))
+            mirados += 1
+            if not ocur:
+                fallos.append('no se encuentra en el informe la frase del efecto que se anula '
+                              'con su diferencia y su p')
+            ma = sum(g3['fs-es']) / len(g3['fs-es'])
+            mb = sum(g3['zs-en']) / len(g3['zs-en'])
+            d_calc = 100 * (mb - ma)
+            for idx, m in enumerate(ocur, 1):
+                donde = 'aparicion %d de %d' % (idx, len(ocur))
+                mirados += 1
+                p_pub = float('%s.%s' % (m.group(3), m.group(4)))
+                dec = len(m.group(4))
+                if abs(round(p3, dec) - p_pub) >= 10 ** (-dec) / 2:
+                    fallos.append('el efecto que se anula (%s): el informe publica p = %s y el '
+                                  'ANOVA de los cuatro grupos da %.4f' % (donde, p_pub, p3))
+                mirados += 1
+                d_pub = float('%s.%s' % (m.group(1), m.group(2)))
+                dd = len(m.group(2))
+                if abs(round(d_calc, dd) - d_pub) >= 10 ** (-dd) / 2:
+                    fallos.append('el efecto que se anula (%s): el informe publica una diferencia '
+                                  'de -%s puntos y fs-es frente a zs-en da -%.2f'
+                                  % (donde, d_pub, d_calc))
+
+    check('las tres ANOVA secundarias reproducen desde su corrida', mirados, fallos)
+
+
 def c_tukey(s):
     """El "dos de los trece" de Tukey se cuenta, y sus dos p se leen del artefacto.
 
@@ -1967,6 +2065,7 @@ def main():
     ejecutar(c_agregacion, s)
     ejecutar(c_anova, s)
     ejecutar(c_tukey, s)
+    ejecutar(c_anovas_secundarios, s)
     ejecutar(c_levene, s)
     ejecutar(c_titulares, s)
     ejecutar(c_ablacion, s)
