@@ -372,7 +372,11 @@ que es de aritmética elemental— concluirá que los datos no fueron calculados
 - **Requiere decisión del autor:** recalcular desde datos que ya no existen es imposible; las opciones son
   retirar esas filas del informe, o marcarlas explícitamente como no verificables.
 
-### F28. Dos modelos distintos con métricas byte-idénticas
+### F28. ✅ RESUELTO — Dos modelos distintos con métricas byte-idénticas
+
+> **Resuelto, comprobado el 2026-09-09.** Las cifras que denunciaba —67.83, 57.29 y 114.20— **no aparecen
+> ni una vez en el informe actual**. Es además el bloqueante **#2** del `TODO §10`, verificado allí con la
+> misma evidencia. Su causa era `§F33`, hoy también resuelto.
 **Severidad: alta.** En la Tabla 2 del informe:
 
 ```
@@ -426,7 +430,12 @@ con pesos + KV cache bajo over-commit—, y **480 muestras** superan los 16 GB f
 **Corrección para el informe:** sustituir «VRAM» por «memoria unificada asignada por Ollama (`size_vram`)»
 y añadir que macOS permite over-commit. La cifra deja de ser contradictoria.
 
-### F32. ⚠️ DIAGNOSTICADO — Ningún esquema de promediado explica los F1 imposibles
+### F32. ✅ RESUELTO — Ningún esquema de promediado explicaba los F1 imposibles
+
+> **Resuelto, comprobado el 2026-09-09.** Los valores que denunciaba —0.8783 y 0.7667— **no están en el
+> informe**, y la comprobación aritmética del verificador examina **61 filas sin una sola violación** de
+> `F1 ≤ (P+R)/2`. La demostración de abajo sigue siendo válida y es la que sostiene esa comprobación: la cota
+> se conserva bajo cualquier esquema de promediado.
 Se consideró que los F1 fuera de rango pudieran deberse a macro-promediado. **No es posible.**
 
 **Demostración:** para cada registro *i*, `F1_i ≤ (P_i + R_i)/2` (la media armónica nunca supera a la
@@ -444,7 +453,13 @@ Por tanto los valores son incorrectos, sin explicación metodológica posible:
 como no verificables. Los datos crudos no sobreviven, así que no se puede determinar si el error está en F1
 o en P/R. **Requiere decisión del autor.**
 
-### F33. 🔴 CRÍTICO — El modelo `gemma4:31b` no tiene datos crudos en ninguna corrida
+### F33. ✅ RESUELTO — El modelo `gemma4:31b` no tenía datos crudos en ninguna corrida
+
+> **Resuelto, comprobado el 2026-09-09.** El equipo de 48 GB lo midió después de escribirse este hallazgo:
+> `gemma4:31b` aparece hoy con datos crudos en **cuatro corridas** —`gemma4_31b_n15_REMOTO` (15+15 filas),
+> `n30_rerun_REMOTO` (30) y `test_nothink` (15+15)—. La Tabla 8 del informe declara expresamente que su fila
+> procede de `results/gemma4_31b_n15_REMOTO/benchmark_results.csv`. El texto original se conserva porque
+> documenta el estado en que se detectó.
 Verificado exhaustivamente: **`gemma4:31b` (sin sufijo `-mlx` ni `-cloud`) no aparece en ningún
 `benchmark_results.csv` del proyecto.** Solo existen `gemma4:31b-mlx` y `gemma4:31b-cloud`.
 
