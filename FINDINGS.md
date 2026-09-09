@@ -6678,3 +6678,58 @@ mecánica.
 otras cuatro exigen insertar `<w:p>`, tablas, imágenes con sus relaciones y una declaración
 `Default Extension="png"` en `[Content_Types].xml`, y ninguna herramienta de `tools/` lo hace. Van a
 Word, y el encargo lo dice pieza por pieza con el motivo.
+
+---
+
+## §F142 — Mi `git add -A` barrió los cambios en vuelo de un workflow, y el commit miente por omisión
+
+**Fecha:** 2026-09-09 · **Origen:** comprobar si el workflow de propagación había escrito
+
+El workflow de propagación aplicó sus inserciones a los tres `.docx` entre las 13:38:40 y las
+13:39:04. Mi commit `7646147`, hecho a las 13:38 y titulado **«docs(LEARNING): siete lecciones de la
+sesión, §L71 a §L77»**, lleva dentro:
+
+```
+ Informe_Final_Tesina_NER.docx                      | Bin 68597 -> 68685 bytes
+ ...na_NER_plantilla_revision_final_2026-09-03.docx | Bin 222720 -> 222807 bytes
+ .../2026-07-04_Borrador-Informe-Final-Tesina.docx  | Bin 68779 -> 68896 bytes
+```
+
+**Tres entregables modificados en un commit que dice ser sobre lecciones.** Los barrió `git add -A`
+sin que yo los revisara, y está empujado.
+
+**El contenido está bien**, verificado antes de escribir esto: los tres tienen **XML sano**, **38
+entradas de bibliografía de [1] a [38]**, las dos citas de [38] en el texto, `FollowTheMoney` y la
+celda de la Tabla 3 corregida; el número de partes del paquete no cambió y el recuento de palabras
+sube en lo que cabe esperar de una entrada más. **No se perdió nada.** Lo que está mal es **el
+registro**: el mensaje del commit no describe lo que el commit contiene.
+
+**Se corrige de forma aditiva**, que es la política del proyecto: no se reescribe la historia —está
+empujada, y las reglas del proyecto sobre `--force` exigen respaldo en `bundle`, comprobación de
+refs y avisar de que los clones quedan incompatibles, que es desproporcionado para un mensaje
+inexacto—. Queda este hallazgo, y la entrada del registro de coordinación, diciendo qué contiene de
+verdad `7646147`.
+
+### Y dos defectos de método que sí hay que arreglar
+
+**Primero: `git add -A` mientras un workflow escribe es un error.** Un workflow que aplica cambios a
+ficheros del repositorio y un `git add -A` en paralelo se pisan por construcción. **Lo correcto es
+añadir por ruta** —`git add FINDINGS.md CURRENT-TASKS.md`— cuando hay agentes escribiendo, y dejar
+que sus cambios se comprometan aparte, revisados. Lo he hecho con `-A` toda la sesión sin
+consecuencia porque nada más escribía; en cuanto algo escribió, ocurrió esto.
+
+**Segundo, y es peor: la puerta de commit pasó sobre un estado que ya no existía.** El gancho ejecutó
+el verificador a las 13:38 y dijo «sin fallos nuevos», y era cierto **en ese instante**. Segundos
+después el workflow terminó de aplicar y aparecieron dos fallos nuevos —dos declaraciones que habían
+quedado **caducadas** porque su defecto se arregló—. La puerta no falló: **midió un estado que estaba
+cambiando**. Es el mismo defecto de `§L72` en otra forma: la comprobación era correcta para lo que
+midió, y lo que midió ya no era el repositorio.
+
+**Los dos fallos nuevos eran buenas noticias**, y conviene subrayarlo porque la comprobación 55 hizo
+exactamente su trabajo: avisó de que `Tabla 3, fila 1 difiere` y `le faltan las entradas de
+bibliografia [38]` ya no tapaban nada, o sea que **el defecto que declaraban estaba resuelto**.
+Retiradas las dos; las declaraciones bajan de 25 a 23 y los fallos de 61 a **55**.
+
+**La regla que sale:** cuando un agente o un workflow tiene permiso de escritura sobre el
+repositorio, **no se comparte el índice de git con él**. Se añade por ruta, y se comprueba el estado
+**después** de que termine, no mientras corre.
