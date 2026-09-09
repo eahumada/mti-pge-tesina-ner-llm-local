@@ -1,11 +1,11 @@
 # Estado de la re-corrida completa
 
-**Actualizado: 2026-09-08 23:19.** Regenerar con `python3 tools/estado_recorrida.py`; no editar a mano.
+**Actualizado: 2026-09-08 23:53.** Regenerar con `python3 tools/estado_recorrida.py`; no editar a mano.
 
 Todas las corridas listadas han pasado las cinco verificaciones del protocolo —cero
 `parse_method='failed'`, cero violaciones de `F1 ≤ (P+R)/2`, cero rechazos de infraestructura— y
 llevan la firma del corpus corregido **1098 / 1500 / 1034** en N=120, calculada desde los
-`confusion_matrix.json` de las 8 corridas y no escrita a mano. Las cifras se toman de
+`confusion_matrix.json` de las 9 corridas y no escrita a mano. Las cifras se toman de
 `benchmark_summary.json`, que publica sobre **113** registros: los siete artículos contaminados se
 descuentan (`FINDINGS §F65`).
 
@@ -17,7 +17,7 @@ descuentan (`FINDINGS §F65`).
 | `gemma4:31b-mlx` | 59.25 / 59.07 | **81.47 / 82.44** | -0.18 | +0.97 | **cambia** |
 | `gemma4:12b-mlx` | 56.18 / 58.46 | **77.67 / 79.96** | +2.28 | +2.29 | igual |
 | `gemma4:latest` | 55.91 / 54.74 | **75.33 / 77.86** | -1.17 | +2.53 | **cambia** |
-| `gpt-oss:20b` | 52.39 / 55.67 | *pendiente* | +3.28 | — | — |
+| `gpt-oss:20b` | 52.39 / 55.67 | **75.41 / 77.08** | +3.28 | +1.67 | igual |
 | `qwen2.5:14b` | 50.22 / 54.84 | **69.61 / 70.31** | +4.62 | +0.69 | igual |
 | `llama3.1:8b` | 48.76 / 50.75 | **69.17 / 71.48** | +1.99 | +2.31 | igual |
 | `qwen3:8b` | 48.21 / 51.46 | **69.03 / 68.98** | +3.25 | -0.05 | **cambia** |
@@ -27,7 +27,7 @@ descuentan (`FINDINGS §F65`).
 | `deepseek-r1:1.5b` | 24.83 / 23.94 | *pendiente* | -0.89 | — | — |
 | `nemotron-mini:4b` | 22.59 / 37.12 | *pendiente* | +14.53 | — | — |
 
-**8 de 13 modelos** rehechos en N=120. **4 cambian el signo** del efecto del RAG.
+**9 de 13 modelos** rehechos en N=120. **4 cambian el signo** del efecto del RAG.
 
 ## N=30 y N=15
 
@@ -37,6 +37,7 @@ descuentan (`FINDINGS §F65`).
 | `gemma4:31b-mlx` | 85.60 / 85.51 | 77.92 / 80.31 |
 | `gemma4:12b-mlx` | 89.83 / 86.30 | 73.62 / 76.84 |
 | `gemma4:latest` | 87.30 / 85.56 | 71.77 / 79.59 |
+| `gpt-oss:20b` | 79.53 / 79.21 | 77.14 / 77.21 |
 | `qwen2.5:14b` | 84.46 / 86.62 | 68.41 / 70.00 |
 | `llama3.1:8b` | 80.96 / 82.67 | 68.60 / 73.34 |
 | `qwen3:8b` | 76.85 / 79.97 | 67.68 / 73.04 |
@@ -90,6 +91,12 @@ de 48 GB:
 [21:09:33] START gemma:latest N15
 [21:13:16] END   gemma:latest N15 rc=0
 [21:13:16] START gpt-oss:20b N120
+[23:19:55] END   gpt-oss:20b N120 rc=0
+[23:19:55] START gpt-oss:20b N30
+[23:27:49] END   gpt-oss:20b N30 rc=0
+[23:27:49] START gpt-oss:20b N15
+[23:44:27] END   gpt-oss:20b N15 rc=0
+[23:44:27] START mistral-nemo:latest N120
 ```
 
 ## Salvedades vigentes
