@@ -6242,6 +6242,23 @@ que la única mención que quedaba en `CURRENT-TASKS.md` es una fila del registr
 **Predicado 14 de la auditoría de afirmaciones**, que caza la clase en lugar del caso: los
 documentos de norma no pueden contener «N comprobaciones», «N fallos (N declarados…», «N
 declaraciones» ni «sus N comprobaciones». Probado por mutación: devuelta a `CLAUDE.md` una frase con
-los dos recuentos, el predicado la señala con el contexto.
+los dos recuentos, la auditoría pasa de código 0 a 1 y señala el recuento con su contexto.
+
+### Y la cuarta vez que el ensayo era el defecto, que ya es un patrón
+
+La primera tentativa de esa mutación **no imprimió nada**, y no porque el predicado fallara: mi
+`grep` buscaba «recuentos de las herramientas» y la salida **trunca la descripción a 52
+caracteres**, de modo que el patrón no casaba con nada. Repetida mirando el **código de salida**,
+funciona.
+
+Van cuatro en la misma sesión, y las cuatro con la misma forma: mutaciones que buscaban una cifra
+**en negrita** cuando el informe la escribe sin resalte ([§F117](#f117)); una que omitía los
+asteriscos y el `>` de una cita en bloque ([§F120](#f120)); una que apuntaba a un espejo que **ya se
+había separado de `main`**, de modo que la premisa había desaparecido; y esta.
+
+**La regla que sale de las cuatro:** un ensayo se juzga por el **código de salida o por el recuento
+de fallos**, no por si un `grep` encuentra una cadena en la salida. Un `grep` que no casa se parece
+demasiado a una comprobación que no detecta, y confundirlos hace dar por validada una comprobación
+vacua — que es exactamente lo que este proyecto lleva toda la revisión intentando no hacer.
 
 **Auditoría de afirmaciones:** 14 predicados, 0 que no se cumplen.
