@@ -101,6 +101,33 @@ pregunte por el 60–80 % está señalando una limitación declarada, no un erro
 **Lo que no conviene hacer** es defender el 60–80 % como si tuviera respaldo empírico. No lo tiene, y sostenerlo
 convierte una limitación honesta en una cifra atacable.
 
+## Sobre defectos de la medición que el propio trabajo encontró
+
+**«He mirado sus datos crudos y hay registros con exhaustividad mayor que 1. ¿Cómo lo explica?»**
+Es correcto, hay **197**, y el máximo es **2,444**. La causa está localizada en el código: el emparejamiento
+incrementa los aciertos **por cada entidad extraída que casa**, mientras cuenta los fallos sobre las
+referencias **distintas** casadas. Cuando dos extracciones casan con la misma referencia —«John Smith» y
+«Smith, John», iguales para el emparejamiento difuso al 85 %— el acierto se cuenta dos veces. La precisión no
+está afectada, porque cada entidad extraída contribuye como mucho una vez.
+
+**Y está cuantificado.** Recalculado contando cada referencia una sola vez, sin reejecutar inferencia: el F1
+está inflado **+0,160 pp de media** y **+1,287 pp** como máximo, siempre al alza; **ninguna** de las trece
+mejoras cambia de signo, y **los dos únicos Δ significativos crecen** —`llama3.2` de +10,82 a +10,91 y
+`nemotron-mini` de +14,52 a +15,75—. Queda muy por debajo del umbral de 0,02 en F1 que el proyecto declara
+tolerable. La tabla completa está calculada.
+→ `FINDINGS §F81`, `§F81.bis` · `results/EMPAREJAMIENTO_DUPLICADO_20260908/tabla7_recalculada.md`
+
+**«¿Por qué no lo corrigieron y volvieron a medir?»**
+Porque el barrido de sustitución estaba en marcha con ese mismo evaluador. Corregirlo a mitad habría dejado
+los modelos ya terminados medidos con un criterio y los restantes con otro, y **la homogeneidad del barrido
+vale más que la corrección de la métrica, porque la corrección se puede aplicar después y la homogeneidad no
+se recupera**. La corrección no necesita reejecutar inferencia: se despeja del propio dato.
+
+**«La Tabla 4 y el resto del capítulo, ¿están medidas igual?»**
+No, y la glosa de la tabla lo declara: la Tabla 4 se midió sobre N=15 en modo `entities`, mientras el estudio
+principal usa `kb_combined` sobre N=120. Son dos conjuntos de evaluación distintos y el §5.1 lo advierte
+expresamente al presentarlos.
+
 ## Sobre la reproducibilidad
 
 **«¿Puedo reproducir sus cifras?»**

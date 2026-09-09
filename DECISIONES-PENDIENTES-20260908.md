@@ -194,6 +194,37 @@ sin resolver es el respaldo del rango, no su coherencia.
 
 ---
 
+## 10. ¿Qué se hace con la Tabla 4, que la re-corrida no puede sustituir?
+
+La Tabla 4 publica el benchmark exploratorio de N=15 y su glosa declara expresamente que las cifras se
+midieron «sobre `results/benchmark_results.csv` (N=15, modo `entities`)». **La re-corrida mide sus N=15 en
+modo `kb_combined`**, en las veintisiete corridas, porque así lo encargó
+`remote_48g/LANZAMIENTO-RECORRIDA-20260908.md`.
+
+No es un error de nadie: el encargo unificó el modo a propósito para que el barrido fuera homogéneo. Pero
+tiene una consecuencia que conviene ver ahora y no el último día: **los N=15 de la re-corrida no sustituyen a
+la Tabla 4**, porque miden otra cosa. Ni siquiera son comparables fila a fila.
+
+Además hay un segundo desajuste, anterior: la Tabla 4 cubre **doce modelos en trece configuraciones**
+—`gemma4:latest` aparece en dos variantes de prompt— mientras la re-corrida hace **trece modelos en una sola
+configuración**. Las dos poblaciones no coinciden.
+
+| Opción | Qué implica |
+|:---|:---|
+| **a) Dejar la Tabla 4 como está** | Publica lo medido en modo `entities` sobre el corpus antiguo, con su glosa declarándolo. Es coherente consigo misma. Riesgo: el informe acabaría con una tabla sobre el corpus viejo y otras sobre el corregido, y hay que decirlo en algún sitio |
+| **b) Retirar la Tabla 4** | **Se desaconseja.** Es el único material del capítulo exploratorio y su retirada dejaría §5.1 sin datos |
+| **c) Encargar un N=15 en modo `entities`** | Trece corridas más de quince artículos, baratas en máquina. Daría una Tabla 4 sobre el corpus corregido y comparable con la publicada |
+
+**Recomendación: (a), y añadir una línea que declare la asimetría** —que la Tabla 4 procede del corpus y del
+modo anteriores mientras el resto del capítulo usa el corregido—, que es lo que el informe ya hace con sus
+otras corridas múltiples en el Anexo I. La opción (c) solo merece la pena si al cerrar la re-corrida sobra
+tiempo de máquina.
+
+**Lo que no debe hacerse** es sustituir las cifras de la Tabla 4 por las de la re-corrida sin más: parecen la
+misma medición y no lo son.
+
+---
+
 ## Y un aviso que todavía no es decisión
 
 Con tres de los trece modelos rehechos, el efecto del KB RAG **cambia de signo en los dos de 31B**: de −0,53
