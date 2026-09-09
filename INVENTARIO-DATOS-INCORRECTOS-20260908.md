@@ -157,3 +157,26 @@ cada vez que alguien lo abre, y en el peor caso invita a ejecutar dos veces algo
 defecto que el desfase de `PROPAGACION-PENDIENTE-DOCX-20260908.md` y el de `TODO-INFORME-FINAL.md`: un
 documento de estado que no se actualiza sigue leyéndose como si fuera actual, porque nada en él avisa de lo
 contrario.
+
+
+---
+
+## Grupo 5 — Los diecisiete ceros de `nemotron-mini` en el consolidado nuevo (2026-09-09)
+
+Añadido al cerrarse la re-corrida. El consolidado `ANALISIS_CONJUNTO_20260909` incluye **17 filas de
+`nemotron-mini:4b_baseline` que puntúan 0,00 por un `TypeError` del arnés** (`llm_runner.py:167`), no por el
+modelo. Detalle en `FINDINGS §F85`.
+
+- **Impacto: alto, y es el único de esta lista que lo tiene.** Hunden la línea base de 30,97 a 26,31 e inflan
+  el Δ de ese modelo de +9,58 a +14,23 pp. Como `nemotron-mini` es el punto de mayor influencia del análisis
+  —retirarlo anula la correlación central, `§F86`—, el defecto no se queda en su fila.
+- **Sustituto disponible: no todavía.** Exige arreglar el fallo y re-ejecutar ese brazo, ciento veinte
+  artículos. Pedido en `remote_48g/ALERTA-NEMOTRON-BASELINE-20260909.md`.
+- **Recomendación: no retirar las filas, re-ejecutarlas.** Descontarlas deja el diseño en 96 registros
+  completos en lugar de 113 y debilita todos los contrastes; sirve como diagnóstico del sesgo, no como
+  medición. Y los registros crudos y el `benchmark.log` **se conservan en todo caso**: son la prueba de qué
+  ocurrió.
+
+**No forma parte de la propuesta original de este documento**, que era del 2026-09-08 y ya se ejecutó. Se
+añade aquí porque es el sitio donde alguien buscará «qué datos incorrectos hay», y dejarlo fuera obligaría a
+descubrirlo dos veces.

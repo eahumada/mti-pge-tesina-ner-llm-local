@@ -1,13 +1,19 @@
 # Estado de la re-corrida completa
 
-**Actualizado: 2026-09-09 00:52.** Regenerar con `python3 tools/estado_recorrida.py`; no editar a mano.
+**Actualizado: 2026-09-09 01:54.** Regenerar con `python3 tools/estado_recorrida.py`; no editar a mano.
 
 Todas las corridas listadas han pasado las cinco verificaciones del protocolo —cero
 `parse_method='failed'`, cero violaciones de `F1 ≤ (P+R)/2`, cero rechazos de infraestructura— y
 llevan la firma del corpus corregido **1098 / 1500 / 1034** en N=120, calculada desde los
-`confusion_matrix.json` de las 12 corridas y no escrita a mano. Las cifras se toman de
+`confusion_matrix.json` de las 13 corridas y no escrita a mano. Las cifras se toman de
 `benchmark_summary.json`, que publica sobre **113** registros: los siete artículos contaminados se
 descuentan (`FINDINGS §F65`).
+
+> **Aviso sobre `nemotron-mini:4b`.** Su linea base incluye **17 registros que puntuan 0,00 por un
+> `TypeError` del arnes** (`llm_runner.py:167`), no por el modelo, y todos caen en ese brazo: ninguno
+> en KB RAG. Descontandolos, su base sube de **26,31 a 30,97** y su Δ baja de **+14,23 a +9,58 pp**.
+> La fila de abajo es la que sale del consolidado tal cual. Ver `FINDINGS §F85` y la alerta en
+> `remote_48g/ALERTA-NEMOTRON-BASELINE-20260909.md`.
 
 ## N=120, frente a lo publicado
 
@@ -25,9 +31,9 @@ descuentan (`FINDINGS §F65`).
 | `mistral-nemo:latest` | 43.38 / 45.76 | **60.63 / 56.35** | +2.38 | -4.29 | **cambia** |
 | `llama3.2:latest` | 36.11 / 46.93 | **63.25 / 69.98** | +10.82 | +6.73 | igual |
 | `deepseek-r1:1.5b` | 24.83 / 23.94 | **28.73 / 30.80** | -0.89 | +2.07 | **cambia** |
-| `nemotron-mini:4b` | 22.59 / 37.12 | *pendiente* | +14.53 | — | — |
+| `nemotron-mini:4b` | 22.59 / 37.12 | **26.31 / 40.55** | +14.53 | +14.23 | igual |
 
-**12 de 13 modelos** rehechos en N=120. **6 cambian el signo** del efecto del RAG.
+**13 de 13 modelos** rehechos en N=120. **6 cambian el signo** del efecto del RAG.
 
 ## N=30 y N=15
 
@@ -45,6 +51,7 @@ descuentan (`FINDINGS §F65`).
 | `mistral-nemo:latest` | 84.33 / 82.97 | 60.81 / 62.20 |
 | `llama3.2:latest` | 85.00 / 83.90 | 65.22 / 69.73 |
 | `deepseek-r1:1.5b` | 57.29 / 58.45 | 32.23 / 35.86 |
+| `nemotron-mini:4b` | 47.99 / 62.47 | 42.59 / 44.16 |
 
 ## Avance del barrido
 
@@ -118,6 +125,12 @@ de 48 GB:
 [00:47:35] START deepseek-r1:1.5b N15
 [00:50:39] END   deepseek-r1:1.5b N15 rc=0
 [00:50:39] START nemotron-mini:4b N120
+[01:03:27] END   nemotron-mini:4b N120 rc=0
+[01:03:27] START nemotron-mini:4b N30
+[01:04:43] END   nemotron-mini:4b N30 rc=0
+[01:04:43] START nemotron-mini:4b N15
+[01:06:33] END   nemotron-mini:4b N15 rc=0
+[01:06:33] ===== MASTER SWEEP COMPLETE =====
 ```
 
 ## Salvedades vigentes

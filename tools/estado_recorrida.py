@@ -129,6 +129,14 @@ def main():
         w('')
     w('`benchmark_summary.json`, que publica sobre **113** registros: los siete artículos contaminados se')
     w('descuentan (`FINDINGS §F65`).\n')
+    # Aviso que la tabla no puede dar por si sola: la fila de nemotron-mini arrastra 17 registros
+    # que puntuan cero por un TypeError del arnes, no por el modelo. Sin el, quien lea la tabla toma
+    # su +14,23 por bueno. Retirar este bloque cuando el equipo re-ejecute ese brazo (FINDINGS §F85).
+    w('> **Aviso sobre `nemotron-mini:4b`.** Su linea base incluye **17 registros que puntuan 0,00 por un')
+    w('> `TypeError` del arnes** (`llm_runner.py:167`), no por el modelo, y todos caen en ese brazo: ninguno')
+    w('> en KB RAG. Descontandolos, su base sube de **26,31 a 30,97** y su Δ baja de **+14,23 a +9,58 pp**.')
+    w('> La fila de abajo es la que sale del consolidado tal cual. Ver `FINDINGS §F85` y la alerta en')
+    w('> `remote_48g/ALERTA-NEMOTRON-BASELINE-20260909.md`.\n')
     w('## N=120, frente a lo publicado\n')
     w('| Modelo | Publicado base / RAG | Re-corrida base / RAG | Δ publicado | Δ re-corrida | Signo |')
     w('|:---|:---|:---|---:|---:|:---:|')
