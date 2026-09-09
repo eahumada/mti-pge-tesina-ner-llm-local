@@ -4783,3 +4783,60 @@ modelos con y sin las filas de parseo alterno:
 de +14,52 a +14,05, porque sus siete filas de parseo alterno están en la **línea base** y la deprimen. La
 re-corrida, al arreglarlas, previsiblemente **reducirá** el +14,52 que el informe publica. Conviene esperarlo
 en lugar de descubrirlo.
+
+## §F110 — El bloque `overall` de `detailed_results.json` es inservible, y en un grupo el `per_type` tampoco cuadra
+
+**2026-09-10.** Intentando combinar las dos sensibilidades del estudio —el parseo alterno de §F109 y el
+emparejamiento duplicado— la tabla salió con cifras que **no reproducían el CSV consolidado**:
+`nemotron-mini:4b` daba un delta de +6,19 donde el CSV da +14,52. Perseguido el origen, aparecen dos defectos
+distintos en `detailed_results.json`, y conviene separarlos porque su gravedad no es la misma.
+
+### 1. El bloque `overall` contiene valores imposibles
+
+Para `nemotron-mini:4b_baseline`, **77 de 120 registros** discrepan entre el CSV y el `overall.f1` del
+`detailed`. El patrón es siempre el mismo: el CSV dice **0** y el `detailed` dice **100**. Un ejemplo íntegro:
+
+```json
+"overall": {"precision": 0.0, "recall": 0.0, "f1": 1.0, "tp": 0, "fp": 2, "fn": 6}
+```
+
+**F1 de 1,0 con precisión 0 y exhaustividad 0 es imposible.** Es la vieja convención de extracción vacía —que
+§3.3 declara corregida— sobreviviendo en el bloque `overall`, y aplicada además a un registro que **no está
+vacío**: extrajo dos falsos positivos.
+
+**Nada publicado lo lee** —las tablas salen del CSV—, de modo que ninguna cifra del informe está afectada.
+Pero es una trampa para quien calcule desde ahí, y me atrapó a mí durante veinte minutos.
+
+### 2. En un grupo, el `per_type` tampoco reproduce el CSV
+
+Esto es más relevante, porque **el Anexo I sí se calcula desde `per_type`**. Comprobados los 26 grupos:
+
+| | |
+|:---|---:|
+| Grupos donde `per_type` reproduce el CSV a precisión de máquina | **25 de 26** |
+| Grupos donde no | **1**: `nemotron-mini:4b_baseline`, −1,0936 pp |
+
+La causa son **seis registros** —`real_mixed_101`, `106`, `30`, `32`, `50` y `53`—, que son exactamente seis
+de las siete filas re-extraídas fuera del arnés de lotes que §5.3.1 declara. Su `per_type` quedó **a cero** en
+el `detailed` mientras el CSV recibió sus métricas reales: se actualizó un artefacto y no el otro.
+
+**La consecuencia en el Anexo I**, y es acotada: la fila de ese grupo publica F1 **22,59** —del CSV— y F1
+restringido **25,28** —de `per_type`, y reproduce exacto—, de modo que su **Δ de +2,68 compara dos estados
+distintos del dato**. Calculado como comparación homogénea desde `per_type`, el Δ sería 21,50 → 25,28 =
+**+3,78**. Un punto y once centésimas de diferencia, en una fila de veintiséis.
+
+### Lo que esto no es
+
+**No es un defecto de las cifras publicadas.** Las 25 filas restantes del Anexo I comparan estados
+homogéneos, la Tabla 7 sale del CSV, y §5.3.1 ya declara que esas siete filas se re-extrajeron. Lo que no
+declara —porque nadie lo había mirado— es que su `per_type` no se actualizó con ellas.
+
+**Y lo arregla la re-corrida pendiente.** `§3.bis.15` regenerará los dos artefactos del grupo, de modo que
+esto no necesita trabajo aparte: necesita **no olvidarse de comprobarlo después**, cosa que la comparación de
+26 grupos de este hallazgo permite repetir en un minuto.
+
+### Y una advertencia sobre mi propio análisis
+
+La sensibilidad de §F109 se calculó desde el **CSV consolidado** y por tanto **sigue siendo válida**. La que
+intenté aquí —combinar las dos sensibilidades— usaba `overall.f1` y **queda descartada**; para hacerla bien
+hay que partir de `per_type`, y solo es homogénea en 25 de los 26 grupos. No la publico a medias.
