@@ -3367,3 +3367,54 @@ conclusión más modesta y perfectamente defendible; presentarla como la publica
 
 **Y hay que esperar a que se resuelva `§F85` antes de escribir las cifras definitivas**, porque el punto que
 más pesa en el análisis es justamente el afectado.
+
+---
+
+## §F87 — La conclusión 1 empareja cifras macro con cifras micro y las llama equivalentes
+
+**2026-09-09, 14:2x.** Verificando la afirmación de viabilidad —el umbral de F1 ≥ 70 % que fija la hipótesis—
+aparecen las cuatro variantes que se pueden calcular sobre el mismo modelo y el mismo corpus:
+
+| Variante | N=120 (`gemma4:31b-mlx_baseline`) | Dominio N=30 (`gemma4:31b-mlx`) |
+|:---|---:|---:|
+| Tres categorías, **macro** | **59,25** | **80,57** |
+| Tres categorías, micro | 62,67 | 80,51 |
+| Dos categorías, **macro** | **76,55** | **90,16** |
+| Dos categorías, micro | 76,85 | 90,91 |
+
+Las cuatro reproducen exactamente desde el detalle por registro.
+
+### El problema
+
+§3.3 declara la agregación por artículo —macro— como la **única** convención del trabajo: «se agregan dentro
+de cada artículo y después se promedian entre artículos… Esa es la única convención». Y advierte, con la
+cifra, de que la alternativa daría otro valor: «para el mejor modelo local sobre el corpus real, **62,67 %
+frente al 59,25 % que aquí se publica**».
+
+La **conclusión 1**, en cambio, dice: «con la medición restringida… **76,55 %** … y **90,16 %** … Bajo la
+convención original, que puntúa también una categoría sin anotar, las cifras equivalentes son **62,67 %** y
+**80,51 %**».
+
+Pero **76,55 y 90,16 son macro, mientras 62,67 y 80,51 son micro**. No son «equivalentes»: cambian a la vez
+el conjunto de categorías **y** la agregación, cuando la frase presenta solo el primer cambio. Bajo la
+convención que el propio informe declara, los valores equivalentes serían **59,25 %** y **80,57 %**.
+
+### Por qué importa más de lo que sugiere la magnitud
+
+- **La discrepancia con la Tabla 7 es de 3,42 pp.** La conclusión dice 62,67 donde la Tabla 7 publica 59,25
+  para el mismo modelo y la misma convención de categorías. Quien compare las dos páginas ve dos cifras.
+- **Va en la dirección favorable.** El 62,67 hace que la convención original parezca menos mala de lo que la
+  tabla dice, y por tanto que la corrección de `§F53` parezca aportar menos. No es una manipulación —§3.3
+  publica el 62,67 abiertamente y explica de dónde sale— pero el efecto de usarlo ahí es ese.
+- **El 80,51 contradice al cuerpo.** §5.3 y §5.4 usan **80,57** para el mismo dato. La misma cantidad aparece
+  con dos valores en el mismo documento.
+
+### Qué se propone, sin haberlo tocado
+
+Sustituir en la conclusión 1 el par **62,67 / 80,51** por **59,25 / 80,57**, que son los valores de la
+convención declarada y los que el cuerpo publica. Es neutro en extensión y elimina las dos discrepancias de
+un golpe. **No se ha modificado**: es una conclusión y la decisión es del autor —queda como la **decisión
+13**—, aunque conviene decir que aquí no hay criterio que ejercer, solo una inconsistencia que resolver.
+
+Si se prefiriera conservar el 62,67 por alguna razón, entonces habría que decir que cambia también la
+agregación, y §3.3 tendría que dejar de llamar «única» a la macro.

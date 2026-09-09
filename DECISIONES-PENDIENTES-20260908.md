@@ -383,6 +383,33 @@ la plataforma. Tampoco lo está `results/HISTORICO_20260630/`, que el inventario
 
 ---
 
+## 13. La conclusión 1 cita cifras micro donde el informe declara macro
+
+**Hallado el 2026-09-09** verificando la afirmación de viabilidad. Detalle completo en `FINDINGS §F87`; el
+resumen es que la conclusión 1 dice:
+
+> «con la medición restringida… **76,55 %** … y **90,16 %** … Bajo la convención original, que puntúa también
+> una categoría sin anotar, las cifras equivalentes son **62,67 %** y **80,51 %**»
+
+y **76,55 y 90,16 son macro mientras 62,67 y 80,51 son micro**. Los valores equivalentes bajo la convención
+que §3.3 declara **única** serían **59,25 %** y **80,57 %**. Las cuatro variantes se han calculado del detalle
+por registro y reproducen exactamente.
+
+**Dos discrepancias concretas:** el 62,67 difiere en **3,42 pp** del 59,25 que publica la Tabla 7 para el
+mismo modelo, y el 80,51 contradice al **80,57** que usan §5.3 y §5.4 para el mismo dato.
+
+| Opción | Qué implica |
+|:---|:---|
+| **a) Sustituir por 59,25 / 80,57** | Son los valores de la convención declarada y los que publica el cuerpo. Neutro en extensión, resuelve las dos discrepancias de un golpe |
+| **b) Conservar 62,67 / 80,51 y declarar el doble cambio** | Habría que decir que cambia también la agregación, y §3.3 tendría que dejar de llamar «única» a la macro |
+| **c) Dejarlo** | **Se desaconseja.** Quien compare la conclusión con la Tabla 7 encuentra dos cifras para lo mismo, y con la conclusión favoreciendo a la convención antigua |
+
+**Recomendación: (a).** Y con una salvedad sobre el resto de las decisiones de esta lista: **aquí no hay
+criterio que ejercer**, solo una inconsistencia que resolver. Se deja como decisión porque toca una conclusión
+y eso no se cambia sin el autor, no porque haya dos lecturas defendibles.
+
+---
+
 ## Y un aviso que todavía no es decisión
 
 Con tres de los trece modelos rehechos, el efecto del KB RAG **cambia de signo en los dos de 31B**: de −0,53
