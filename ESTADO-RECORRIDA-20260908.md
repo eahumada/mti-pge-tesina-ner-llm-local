@@ -1,11 +1,11 @@
 # Estado de la re-corrida completa
 
-**Actualizado: 2026-09-09 00:12.** Regenerar con `python3 tools/estado_recorrida.py`; no editar a mano.
+**Actualizado: 2026-09-09 00:22.** Regenerar con `python3 tools/estado_recorrida.py`; no editar a mano.
 
 Todas las corridas listadas han pasado las cinco verificaciones del protocolo —cero
 `parse_method='failed'`, cero violaciones de `F1 ≤ (P+R)/2`, cero rechazos de infraestructura— y
 llevan la firma del corpus corregido **1098 / 1500 / 1034** en N=120, calculada desde los
-`confusion_matrix.json` de las 10 corridas y no escrita a mano. Las cifras se toman de
+`confusion_matrix.json` de las 11 corridas y no escrita a mano. Las cifras se toman de
 `benchmark_summary.json`, que publica sobre **113** registros: los siete artículos contaminados se
 descuentan (`FINDINGS §F65`).
 
@@ -23,11 +23,11 @@ descuentan (`FINDINGS §F65`).
 | `qwen3:8b` | 48.21 / 51.46 | **69.03 / 68.98** | +3.25 | -0.05 | **cambia** |
 | `gemma:latest` | 44.00 / 51.36 | **59.55 / 59.58** | +7.36 | +0.03 | igual |
 | `mistral-nemo:latest` | 43.38 / 45.76 | **60.63 / 56.35** | +2.38 | -4.29 | **cambia** |
-| `llama3.2:latest` | 36.11 / 46.93 | *pendiente* | +10.82 | — | — |
+| `llama3.2:latest` | 36.11 / 46.93 | **63.25 / 69.98** | +10.82 | +6.73 | igual |
 | `deepseek-r1:1.5b` | 24.83 / 23.94 | *pendiente* | -0.89 | — | — |
 | `nemotron-mini:4b` | 22.59 / 37.12 | *pendiente* | +14.53 | — | — |
 
-**10 de 13 modelos** rehechos en N=120. **5 cambian el signo** del efecto del RAG.
+**11 de 13 modelos** rehechos en N=120. **5 cambian el signo** del efecto del RAG.
 
 ## N=30 y N=15
 
@@ -43,6 +43,7 @@ descuentan (`FINDINGS §F65`).
 | `qwen3:8b` | 76.85 / 79.97 | 67.68 / 73.04 |
 | `gemma:latest` | 80.08 / 77.15 | 65.72 / 68.88 |
 | `mistral-nemo:latest` | 84.33 / 82.97 | 60.81 / 62.20 |
+| `llama3.2:latest` | 85.00 / 83.90 | 65.22 / 69.73 |
 
 ## Avance del barrido
 
@@ -104,6 +105,12 @@ de 48 GB:
 [00:04:56] START mistral-nemo:latest N15
 [00:09:04] END   mistral-nemo:latest N15 rc=0
 [00:09:04] START llama3.2:latest N120
+[00:17:46] END   llama3.2:latest N120 rc=0
+[00:17:46] START llama3.2:latest N30
+[00:18:57] END   llama3.2:latest N30 rc=0
+[00:18:57] START llama3.2:latest N15
+[00:20:39] END   llama3.2:latest N15 rc=0
+[00:20:39] START deepseek-r1:1.5b N120
 ```
 
 ## Salvedades vigentes
