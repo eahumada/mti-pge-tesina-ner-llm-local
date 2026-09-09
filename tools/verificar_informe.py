@@ -57,6 +57,27 @@ def c_secciones(s):
           sorted(citadas - hay), 'los encabezados llegan al cuarto nivel')
 
 
+# --- 2.bis. Referencias a anexos y a tablas -----------------------------------------------------
+def c_refs_anexos_tablas(s):
+    """Toda llamada a «Anexo X» y a «Tabla N» debe apuntar a algo que exista.
+
+    `CLAUDE.md` lo exige junto con las referencias §x.y, pero solo estas ultimas se comprobaban.
+    Verificado por mutacion el 2026-09-09: insertar «el **Anexo Z**» o «la **Tabla 44**» en el
+    informe **no lo detectaba nada**, mientras «§9.9» si fallaba. Es el hueco de una comprobacion
+    que existia a medias, que es peor que no tenerla, porque su nombre sugiere cobertura completa.
+    """
+    anexos_hay = set(re.findall(r'^#{2,4}\s*Anexo\s+([A-Z])\b', s, re.M))
+    anexos_cit = set(re.findall(r'Anexo\s+([A-Z])\b', s))
+    tablas_hay = set(re.findall(r'^_Tabla (\d+)\.', s, re.M))
+    tablas_cit = set(re.findall(r'Tabla\s+(\d+)\b', s))
+    fallos = ['se cita el Anexo %s y no existe' % a for a in sorted(anexos_cit - anexos_hay)]
+    fallos += ['se cita la Tabla %s y no existe' % n
+               for n in sorted(tablas_cit - tablas_hay, key=lambda x: int(x))]
+    check('referencias a Anexo X y a Tabla N con destino existente',
+          len(anexos_cit) + len(tablas_cit), fallos,
+          'CLAUDE.md las exige igual que las §x.y, y antes solo se comprobaban estas')
+
+
 # --- 3. Tablas ----------------------------------------------------------------------------------
 def c_tablas(s):
     caps = [int(x) for x in re.findall(r'^_Tabla (\d+)\.', s, re.M)]
@@ -1229,6 +1250,7 @@ def main():
     s = texto()
     c_vacios()
     c_secciones(s)
+    c_refs_anexos_tablas(s)
     c_tablas(s)
     c_figuras(s)
     c_bibliografia(s)
