@@ -902,7 +902,7 @@ eficiencia en hardware.
 > **Protocolo:** el equipo remoto debe **leer este documento antes de empezar**, escribir su entrada al
 > iniciar cada tarea, actualizarla al terminar y **volver a leerlo** por si otro agente escribió mientras.
 
-### 3.bis.0 🔴 URGENTE — Re-corrida de `gemma4:12b-mlx` (SUBIR DE PRIORIDAD)
+### 3.bis.0 ✅ CERRADA — Re-corrida de `gemma4:12b-mlx` (era: URGENTE, SUBIR DE PRIORIDAD)
 > ✅ **Cerrada (nota de Claude Code, 2026-09-07 17:00; no se altera el texto original).** Completada el
 > 2026-09-06: 120+120, 0 `failed`, F1 **0,5618 / 0,5846**. Es la fuente oficial del modelo en el estudio.
 
@@ -1021,7 +1021,7 @@ Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **Invest
 > respaldo que funciona de uno que encubre un fallo. Y `latency_sec` con tokens generados distingue un
 > rechazo de infraestructura (latencia 0) de que el arnés pierda la respuesta (latencia alta, `content` vacío).
 
-### 3.bis.8 ▶️ EN CURSO — re-corridas de modelos afectados por bug thinking
+### 3.bis.8 ✅ CERRADA — re-corridas de modelos afectados por bug thinking (era: EN CURSO)
 > ✅ **Cerrada (nota de Claude Code, 2026-09-07 17:00; no se altera el texto original).** Ambas re-corridas
 > terminaron: `gemma4:12b-mlx` limpio y `qwen3:8b` sustituido por la corrida `think=false`
 > (`qwen3_nothink_n120_REMOTO`, F1 0,4821 / 0,5146), que es la fuente oficial.
@@ -1045,7 +1045,7 @@ Detectadas por el equipo principal al analizar `benchmark_n120_REMOTO`. **Invest
   marcar inválidas las filas qwen3 de P3/limpia; publicar los `run_config.json` que faltan; revisar
   `qwen3:14b/32b/latest`; enumerar modelos con capacidad `thinking`; no tocar `real_mixed_64`.
 
-### 3.bis.10 ▶️ EN CURSO — Test `think=off` sobre 5 modelos + verificación de las entregas B1-B4
+### 3.bis.10 ✅ CERRADA — Test `think=off` sobre 5 modelos + verificación B1-B4 (era: EN CURSO)
 > ✅ **Cerrada (nota de Claude Code, 2026-09-07 17:00).** El experimento concluyó y su resultado está en
 > `FINDINGS.md §F44` y **§F45**: efecto específico de cada modelo, `gpt-oss` se congela con thinking ON y los
 > otros cuatro no se re-ejecutan por ser ruido de N=15.
@@ -1516,3 +1516,4 @@ corpus.**
 | 2026-09-09 08:5x | Claude Code (equipo principal) | ✅ §1.136: **actualizado el `TODO §10`, que aparentaba seis bloqueantes abiertos cuando hay uno.** La tabla se dejó como se escribió el 2026-09-05 y solo marcaba resuelto el número 7. Añadida una adenda con el estado verificado de los ocho, uno a uno y con la evidencia de cada uno, **sin tocar la tabla original**. Balance real: **un bloqueante abierto** —el #6, que es la decisión 4— y **uno declarado** —el #8, con su advertencia de trazabilidad—. Importa antes de la defensa: una lista que aparenta seis problemas sin resolver pesa distinto que una con uno |
 | 2026-09-09 09:0x | Claude Code (equipo principal) | ✅ §1.137: **investigada una cifra que bajó sin causa aparente, y era buena noticia.** La verificación con `--red` daba «acreditadas por resolución del DOI: **3**» cuando la víspera eran 4. Causa: **Zenodo ha vuelto a responder** —la entrada [18] da HTTP 200 y aterriza en `zenodo.org/records/14027005`—, de modo que se verifica por la vía normal y ya no necesita acreditación. El 403 que documenta `§F80` era real cuando se midió, a las 23:0x del día 8. Actualizado el hallazgo, conservando `zenodo.org` entre los porteros porque solo actúa ante 401 o 403 y el episodio puede repetirse. **Sigue fallando solo [37]**, el repositorio privado, que debe seguir así |
 | 2026-09-09 09:1x | Claude Code (equipo principal) | ✅ §1.138: **la alerta de `nemotron` no estaba donde el equipo la lee.** Se menciona nueve veces en este documento pero **cero dentro de §3.bis**, que es su sección y la que su protocolo les manda consultar. Añadida como **§3.bis.15** con el encargo resumido: la causa en `llm_runner.py:167`, por qué solo falla la línea base, el efecto sobre su Δ, los cuatro pasos por orden —arreglar, re-ejecutar solo ese brazo, rehacer el consolidado **después**, y comprobar `failed=0` antes de declarar válida una corrida— y **el alcance comprobado**, para que no rehagan de más: es un brazo, de un modelo, de un corpus |
+| 2026-09-09 09:2x | Claude Code (equipo principal) | ✅ §1.139: **tres tareas del equipo remoto seguían anunciándose como abiertas en su encabezado y cerradas en su cuerpo.** La `3.bis.0` decía **🔴 URGENTE** y la `3.bis.8` y la `3.bis.10` **▶️ EN CURSO**, mientras sus propios textos llevaban desde el 2026-09-07 una nota «✅ Cerrada». Quien recorre una lista de tareas lee encabezados, de modo que el equipo veía tres urgencias falsas justo cuando la única real es la `3.bis.15`. Alineados los tres encabezados con lo que su cuerpo ya declaraba, **conservando entre paréntesis el estado anterior** para no borrar el rastro. Queda `3.bis.2` como parcial, y es sobre modelos que el estudio ya excluyó |
