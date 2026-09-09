@@ -87,7 +87,13 @@ def _literales(ruta):
         t = nodo.value
         if not 14 <= len(t) <= 400:
             continue
-        if not re.search(r'[a-záéíóúñ]{4}', t, re.I):
+        # Se admite un ancla si parece prosa (cuatro letras seguidas) **o** si es un patron
+        # numerico deliberado. Lo segundo hace falta: el ancla de la comprobacion 49
+        # «ρ = −(0),(\d{2}) con p» no tiene cuatro letras seguidas —«con» son tres— y quedaba
+        # fuera, de modo que sus dos cifras salian como descubiertas estando cubiertas.
+        prosa = re.search(r'[a-záéíóúñ]{4}', t, re.I)
+        patron = ('\\d' in t and '(' in t)
+        if not (prosa or patron):
             continue
         if t.startswith(('%', '  ')) or t.endswith(('.py', '.json', '.csv', '.md')):
             continue

@@ -5335,6 +5335,18 @@ dos casos la comprobación funcionaba y **el ensayo no ensayaba nada**. Vale la 
 una mutación que no encuentra su ancla es un ensayo fallido, no una comprobación validada, y hay que
 distinguirlo del caso en que la comprobación no detecta el cambio.
 
+### Corrección inmediata, y es el mismo defecto del que trata este hallazgo
+
+Escribí arriba que el barrido «queda en 12 candidatas». **Dejó de ser cierto en el mismo commit**:
+al añadirse la comprobación 49, sus anclas cuentan como cobertura y el barrido pasó a **5**. Luego
+a **3**, tras arreglar el filtro de anclas —exigía cuatro letras seguidas, y el ancla
+`ρ = −(0),(\d{2}) con p` no las tiene, de modo que sus dos cifras salían descubiertas estando
+cubiertas—. Anotar una cifra que la siguiente línea de trabajo invalida es exactamente lo que este
+hallazgo describe, y no lo evité escribiéndolo.
+
+**Estado final del barrido: 3 candidatas.** Dos son las cifras de la literatura, que no hay nada que
+recalcular, y la tercera es una aparición del `66,0 %` cubierta por otras dos comprobaciones y por
+la auditoría de afirmaciones. **Ninguna afirmación numérica del cuerpo del informe queda sin quien
+la mire.**
+
 **Estado del verificador:** 49 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
-El barrido queda en **12 candidatas, dos de ellas de la literatura y diez ya cubiertas** por esta
-comprobación.
