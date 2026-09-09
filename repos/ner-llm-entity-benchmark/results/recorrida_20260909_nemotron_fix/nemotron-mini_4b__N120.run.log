@@ -1340,3 +1340,12 @@
 2026-09-09 10:22:57,186 [INFO] ner_benchmark: ==================================================
 2026-09-09 10:22:57,187 [INFO] ner_benchmark: §2.bis.1: excluidos 14 registros contaminados de la métrica (modo 'kb_combined'); el crudo los conserva.
 2026-09-09 10:22:57,334 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.
+
+==================================================
+      FINAL BENCHMARK PERFORMANCE RESULTS
+==================================================
+                                 f1  precision    recall  hallucination_rate  latency_sec
+nemotron-mini:4b_baseline  0.282879   0.472140  0.240106            0.039841     1.987890
+nemotron-mini:4b_kb_rag    0.405456   0.608751  0.341821            0.048890     3.579744
+==================================================
+Full reports saved under: results/ directory.

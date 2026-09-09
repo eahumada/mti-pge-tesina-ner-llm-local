@@ -977,3 +977,20 @@ Resultados N=120 kb_combined: mejor nube `gemma4:31b-cloud` 0,829; mejor local `
 llama3.2 +0,067). `gpt-oss:20b` limpio con budget 4096 (1 respaldo vs 67). **Aviso §6:** distancia
 nube-mejor-local ~0,5 pp, no los ~5 pp anticipados —`gemma4:31b-mlx` es un local grande de la misma familia
 que el cloud—; declarada sin ajustar, a criterio del autor.
+
+### 2026-09-09 — Corrección §F85 (TypeError nemotron) y §F108 (failed bloqueante)
+
+Instrucción del equipo principal (`remote_48g/ALERTA-NEMOTRON-BASELINE-20260909.md`, §3.bis.15). Defecto:
+`nemotron-mini:4b` baseline devuelve un array JSON en ~15 % de artículos; `llm_runner.py:167` hacía
+`.items()` sobre una lista → TypeError, tres reintentos agotados, 18 filas perdidas con F1=0, solo en
+baseline (kb_rag lleva ejemplar que guía a objeto). Hundía la línea base y sobre-atribuía la mejora al RAG.
+
+- **Arreglo** `src/llm_runner.py`: `_normalize_keys` acepta arrays; fusiona `[{...}]`, registra formato
+  inesperado sin reventar. Probado.
+- **Re-corrida** `nemotron-mini:4b` N=120 con fix: 0 TypeErrors, failed=0, VÁLIDA, TP+FN 1098/1500/1034.
+  baseline 0,2629→0,2829, kb_rag 0,4055, ΔRAG +0,142→+0,123. Sigue siendo el mayor efecto y significativo.
+- **Consolidado** regenerado (`results/ANALISIS_CONJUNTO_20260909_FIX/`): **F=121,56→119,7502**, p≈0.
+  Conclusión intacta. El anterior queda superado; la corrida buggy se conserva como evidencia en
+  `nemotron-mini_4b__N120_F85_BUGGY/`.
+- **§F108** `tools/verificar_corrida.py`: `parse_method='failed'==0` pasa a comprobación BLOQUEANTE. La
+  corrida buggy que pasaba por VÁLIDA con 18 fallos ahora da NO VÁLIDA. Probado.
