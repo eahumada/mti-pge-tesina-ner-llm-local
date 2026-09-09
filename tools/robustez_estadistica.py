@@ -94,8 +94,54 @@ def calcular(ruta_csv):
         filas[m]['p_holm'] = pa
         filas[m]['significativo'] = bool(pa < 0.05)
 
+    # Correlacion entre capacidad base y beneficio del RAG: es la que sostiene la tesis central del
+    # informe.
+    #
+    # Sobre el consolidado antiguo esta funcion da Pearson -0,6002 y el artefacto publicado dice
+    # -0,6004. La diferencia esta explicada y no es un defecto: aquel se calculo sobre los valores
+    # REDONDEADOS de la Tabla 7 —dos decimales— y este sobre el CSV crudo. Comprobado el 2026-09-09
+    # reproduciendo ambos. Spearman coincide exactamente porque trabaja con rangos, a los que el
+    # redondeo no afecta. Se deja constancia para que nadie persiga esa diferencia como si fuera un
+    # error; por eso `--validar` tolera 0,001 en el coeficiente lineal. Se calculaba a mano, que es el mismo defecto que este script vino a arreglar para el
+    # Friedman y el post-hoc. Con el analisis de influencia, porque en el corpus corregido el
+    # coeficiente lineal depende de un solo punto (`FINDINGS §F86`).
+    pares = {}
+    for m in modelos:
+        b, k = m + '_baseline', m + '_kb_rag'
+        if b in datos and k in datos:
+            B = 100 * sum(datos[b].values()) / len(datos[b])
+            K = 100 * sum(datos[k].values()) / len(datos[k])
+            pares[m] = (B, K - B)
+
+    def coef(d):
+        if len(d) < 3:
+            return None
+        x = [v[0] for v in d.values()]
+        y = [v[1] for v in d.values()]
+        sp = stats.spearmanr(x, y)
+        pe = stats.pearsonr(x, y)
+        return {'n': len(x),
+                'spearman': {'rho': round(float(sp.statistic), 4), 'p': round(float(sp.pvalue), 4)},
+                'pearson': {'r': round(float(pe.statistic), 4), 'p': round(float(pe.pvalue), 4)}}
+
+    correlacion = coef(pares)
+    influencia = {}
+    if correlacion:
+        for m in pares:
+            c = coef({k: v for k, v in pares.items() if k != m})
+            if c:
+                influencia[m] = {'pearson_r': c['pearson']['r'], 'pearson_p': c['pearson']['p'],
+                                 'spearman_rho': c['spearman']['rho']}
+    mas_influyente = None
+    if influencia and correlacion:
+        mas_influyente = max(influencia, key=lambda m: abs(influencia[m]['pearson_r']
+                                                           - correlacion['pearson']['r']))
+
     orden = sorted(filas.values(), key=lambda f: -f['delta_pp'])
     return {
+        'correlacion_capacidad_beneficio': correlacion,
+        'influencia_al_retirar_cada_modelo': influencia,
+        'modelo_mas_influyente': mas_influyente,
         'csv': os.path.relpath(ruta_csv, RAIZ),
         'grupos': len(grupos),
         'registros_completos': len(comunes),
@@ -126,6 +172,17 @@ def main():
               % (r['friedman']['chi2'], r['friedman']['p'], r['friedman']['gl']))
     print('  post-hoc pareado: %d de %d significativos tras Holm'
           % (r['significativos_pareado'], r['n_comparaciones']))
+    c = r.get('correlacion_capacidad_beneficio')
+    if c:
+        print('  correlacion capacidad vs beneficio (n=%d): Spearman rho = %+.4f (p = %.4f) · '
+              'Pearson r = %+.4f (p = %.4f)'
+              % (c['n'], c['spearman']['rho'], c['spearman']['p'],
+                 c['pearson']['r'], c['pearson']['p']))
+        mi = r.get('modelo_mas_influyente')
+        if mi:
+            v = r['influencia_al_retirar_cada_modelo'][mi]
+            print('  punto mas influyente: %s — sin el, Pearson r = %+.4f (p = %.4f)'
+                  % (mi, v['pearson_r'], v['pearson_p']))
     for f in r['filas']:
         marca = 'si' if f['significativo'] else 'no'
         print('    %-24s Δ=%+7.2f pp  p=%.3e  Holm=%.4f  %s'

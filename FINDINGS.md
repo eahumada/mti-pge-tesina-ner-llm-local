@@ -3248,6 +3248,24 @@ modelos de mayor capacidad tienen **todos** mejora positiva:
 Ninguno revierte, ninguno se anula. Lo que ocurría en los datos antiguos —los grandes con Δ negativo— era del
 corpus defectuoso, y `§F68` ya lo había anticipado con los primeros modelos rehechos.
 
+### Reproducible, que al escribirlo no lo era
+
+Las cifras de este hallazgo se calcularon a mano, **el mismo defecto que `§F83` vino a corregir** para el
+Friedman y el post-hoc. Subsanado: `tools/robustez_estadistica.py` calcula ahora también la correlación y el
+análisis de influencia, y el artefacto está en
+`results/ROBUSTEZ_ESTADISTICA_20260909/robustez.json`.
+
+```sh
+repos/ner-llm-entity-benchmark/venv/bin/python tools/robustez_estadistica.py \
+    repos/ner-llm-entity-benchmark/results/ANALISIS_CONJUNTO_20260909/merged_results.csv
+```
+
+Validada además contra el consolidado antiguo con `--validar`: reproduce χ² = 1169,2327, los ocho de trece y
+la ρ de Spearman de −0,5165. **Una salvedad de 0,0002** que conviene conocer para no perseguirla: el Pearson
+publicado es −0,6004 y la herramienta da −0,6002, porque aquel se calculó sobre los valores **redondeados** de
+la Tabla 7 y esta lo hace sobre el CSV crudo. Comprobado reproduciendo ambos. Spearman coincide exactamente
+porque trabaja con rangos, insensibles al redondeo.
+
 ### Corrección del 2026-09-09: son tres, no dos
 
 Al escribir este hallazgo dije que los modelos con mejora significativa sobre el corpus corregido eran «los
