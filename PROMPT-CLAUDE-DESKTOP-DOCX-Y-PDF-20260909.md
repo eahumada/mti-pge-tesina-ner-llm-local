@@ -16,6 +16,20 @@ toda la Tabla 7, el párrafo estadístico entero de §5.3.1, el resumen y el abs
 **primero** en la prioridad si el espacio aprieta: son la comprobación más visible para un
 tribunal, porque tocan la cifra titular del trabajo. Detalle en `FINDINGS §F154`/`§F155`.
 
+**Ampliado una tercera vez, más tarde ese mismo día: seis pasajes más y una etiqueta que
+faltaba.** Piezas 19 a 24 en la nueva sección **0.ter**: un «Corpus 3 —» que faltaba en §4.1, dos
+frases de §3.3 y la leyenda de la Figura 1 que seguían describiendo el defecto de Locations como
+vigente, los puntos 7 y 8 de §7.2 que proponían como pendiente algo ya hecho, y una tercera
+reescritura del resumen/abstract porque «en el dominio» no se entendía sin contexto. Detalle en
+`FINDINGS §F158`/`§F159`. **Si estás en medio de aplicar la 0.bis, aplica también la 0.ter antes de
+dar el entregable por cerrado**: no son piezas alternativas, son dos rondas del mismo día.
+
+**Ampliado una cuarta vez, más tarde ese mismo día: un párrafo nuevo en §4.1.2.** Pieza 25 en la
+nueva sección **0.quater**: el autor pidió que el informe explique qué significa la categoría
+`Locations` y por qué importa, y no solo en §3.3 (donde ya se documenta el defecto) sino también
+donde se describe el corpus. Es un párrafo nuevo, no una edición de uno existente; no toca ninguna
+cifra de las rondas anteriores.
+
 ---
 
 ## 0. Lo primero, y ahorra la mitad del trabajo
@@ -141,8 +155,75 @@ del estudio y cuál es la de referencia. Va con la pieza 1 si decides insertar e
 **El resto del Anexo I NO cambia**: se mantiene deliberadamente histórico, describiendo el corpus
 publicado. No propagues los números de la Tabla 7 nueva hacia la Tabla 19 del Anexo I.
 
-**El resaltado creció de 14 a 18** por estos cambios de prosa; la comprobación ya lo sabe y está
-declarado, pero anótalo si tu recuento propio da otro número.
+**El resaltado creció de 14 a 18** por estos cambios de prosa cuando se escribió esta sección; ya
+había vuelto a moverse antes de que llegaras a esta pieza (ver 0.ter). **No copies este número**:
+usa el recuento en vivo de la comprobación «el .docx no anade resaltes ni guiones».
+
+---
+
+## 0.ter Seis correcciones más el mismo día (`FINDINGS §F158`, `§F159`), después de que empezaras
+
+Llegaron mientras la pieza anterior ya estaba escrita, y son más prosa que hay que resincronizar.
+Ninguna toca la Tabla 7 ni ninguna cifra de la 0.bis; son pasajes que quedaron describiendo un
+defecto ya corregido como si siguiera vigente, más una etiqueta que faltaba.
+
+### Pieza 19 — El «Corpus 3» que faltaba en §4.1
+
+El autor señaló que §4.1 promete «tres corpus complementarios» y solo etiqueta dos («Corpus 1»,
+«Corpus 2»); el de N=120 se describía después, sin la misma etiqueta, y quedaba confuso. Se añadió
+un párrafo breve, «Corpus 3 — Real Balanceado (N=120, Estudio Principal)», inmediatamente después
+del párrafo del Corpus 2 y antes de `#### 4.1.1`. Cópialo tal cual: es nuevo, no una edición de un
+párrafo existente.
+
+### Pieza 20 — Dos frases de §3.3, antes de la Figura 1
+
+La frase de la cifra del 66,0 % de falsos positivos y la frase de cierre del párrafo («…exige
+volver a inferir, que es lo que hará la re-corrida pendiente») cambiaron para decir que esa cifra
+es del **consolidado publicado** y que la re-corrida **ya se hizo**. Es el mismo párrafo largo de
+siempre, con dos frases reescritas dentro; no lo sustituyas entero, localiza las dos frases nuevas
+y reemplázalas donde correspondan dentro del párrafo que ya tienes.
+
+### Pieza 21 — La leyenda de la Figura 1
+
+Cambia de «los veintiséis grupos que sostienen la Tabla 7» (presente) a una redacción que aclara
+que describe el consolidado publicado, previo a la corrección. Es solo la leyenda bajo la imagen;
+la imagen misma no cambia.
+
+### Pieza 22 — La conclusión 7 de §7.1
+
+Pasa de presente («el corpus N=120 almacena…») a pasado, con la misma salvedad de «ya corregido»
+que ya lleva la conclusión 6 vecina sobre Locations. Las cifras (20,1 %, 87 %, los rangos de F1 por
+artículo afectado) no cambian, solo el tiempo verbal y una frase final nueva.
+
+### Pieza 23 — Los puntos 7 y 8 de §7.2
+
+Los dos dejaron de ser «trabajo futuro pendiente»: ambos pasan a título con **«ya realizada»** /
+**«ya realizado»**, sin la etiqueta «Prioridad Alta» que llevaba el punto 8 (ya no aplica a trabajo
+completado). El contenido y las cifras se conservan; cambia el encuadre de pendiente a hecho.
+
+### Pieza 24 — El resumen y el abstract, otra vez (`§F158`)
+
+Sobre la pieza 14 de la 0.bis: el autor pidió aclarar más «en el dominio», que no se entendía sin
+contexto en la primera página. El resumen y el abstract se reescribieron una tercera vez ese mismo
+día para nombrar el corpus AML/KYC explícitamente. **Cópialos enteros y a la vez** —la regla de
+`CLAUDE.md` exige que digan lo mismo en los dos idiomas—, no apliques solo la diferencia con tu
+versión anterior: es más seguro sustituir el párrafo completo.
+
+---
+
+## 0.quater Un párrafo nuevo en §4.1.2, sobre qué es `Locations` y por qué importa
+
+### Pieza 25 — Definición de la categoría `Locations` en la descripción del Corpus 3
+
+§3.3 ya documenta el defecto de anotación de `Locations` (por qué estaba vacía y cómo se corrigió),
+pero no dice en ningún sitio, con la claridad que pide un lector que llega sin ese contexto, qué es
+la categoría: lugares geográficos mencionados en el artículo (países, ciudades, sedes de organismos
+reguladores), relevantes para establecer la jurisdicción de un caso de cumplimiento normativo. Se
+añadió un párrafo nuevo en `#### 4.1.2 Extensión a Corpus Real N=120`, inmediatamente después del
+párrafo que cierra esa subsección («Los resultados sobre N=120 se presentan como complemento...») y
+antes de `### 4.2 Modelos evaluados`. Da la definición y remite a §3.3 para el defecto y su
+corrección; no repite esa narrativa. Cópialo tal cual, es nuevo, no una edición de un párrafo
+existente, y no toca ninguna cifra de las piezas anteriores.
 
 ---
 
