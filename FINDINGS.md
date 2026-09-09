@@ -4551,3 +4551,50 @@ correcto; pero si alguien pregunta «¿y no había algo mejor en ese mismo artí
 **Balance del frente de citas:** de las cinco cifras que el informe atribuye a una fuente, **cuatro están
 verificadas** —88,43 % de [7], 82,1 % de [15], las dos del [21] por su propio título, y este rango de [3]—
 y **una es falsa**, el 50 % de [9], que queda como decisión 17. Ninguna queda sin comprobar.
+
+## §F107 — El ejemplo del emparejamiento duplicado no resistía que alguien lo ejecutara
+
+**2026-09-10.** Verificadas las cifras de las citas, quedaban las **afirmaciones técnicas** atribuidas a
+fuentes, que son igual de falsables y nadie había mirado. La más consecuente es la de §3.3, porque define la
+función de emparejamiento de la que dependen todas las métricas del trabajo:
+
+> «…implementado con la función `ratio` de la biblioteca *rapidfuzz* [33], que normaliza la **distancia de
+> Indel** —el número mínimo de inserciones y supresiones necesarias…, variante de la distancia de Levenshtein
+> que excluye las sustituciones— a una escala de 0 a 100 mediante la expresión `100 × (1 − d / (|a| + |b|))`.»
+
+**Verificada ejecutando la biblioteca, no leyendo su documentación.** La fórmula se cumple **en 7 de 7 pares**
+a precisión de máquina, y el ejemplo que el propio informe da también: dice que `EFE` y `EFECOM` «designan la
+misma agencia con **66,7** de similitud», y `fuzz.ratio` da 66,6667. Correcto.
+
+### Pero de paso cayó otro ejemplo
+
+`DEFENSA-PREGUNTAS-Y-RESPUESTAS.md` explica el emparejamiento duplicado —el defecto que produce exhaustividad
+mayor que 1 en 197 registros— así:
+
+> «Cuando dos extracciones casan con la misma referencia —«John Smith» y «Smith, John», **iguales para el
+> emparejamiento difuso al 85 %**— el acierto se cuenta dos veces.»
+
+**`fuzz.ratio('John Smith', 'Smith, John')` da 47,62**, muy por debajo del umbral de 85. Con ese par la
+segunda extracción **no habría casado** y el duplicado no se produciría. El ejemplo elegido para ilustrar el
+defecto es justamente uno en el que el defecto no ocurre.
+
+**Lo que importa: el mecanismo es correcto y está cuantificado** —197 registros, máximo 2,444, inflación de
++0,160 pp de media y +1,287 pp como máximo, ninguna mejora cambia de signo—. Lo que fallaba era la
+ilustración. Pero es una ilustración destinada a decirse **en voz alta ante un tribunal**, donde cualquiera
+con un intérprete a mano la desmiente en diez segundos, y entonces lo que parece falso no es el ejemplo sino
+el hallazgo.
+
+**Sustituido por un par verificado:** sobre la referencia «José Bono», tanto «José Bono» como «Jose Bono»
+superan el umbral —100 y **88,89**—, de modo que el duplicado sí se produce. Comprobados también «Banco
+Santander» / «Banco Santander S.A.» (85,71), «Partido Popular» / «Partido Popular.» (96,77) y «José María
+Aznar» / «Jose Maria Aznar» (87,50); y descartado «Mariano Rajoy» / «Rajoy», que da 55,56.
+
+**El informe no está afectado:** «John Smith» aparece **cero veces** en él. El defecto estaba solo en la
+preparación de la defensa.
+
+### La regla que deja
+
+Un ejemplo ilustrativo es una **afirmación verificable**, no un adorno. Si ilustra un mecanismo con un
+umbral, hay que ejecutarlo con ese umbral. Y cuando el ejemplo vive en un documento pensado para decirse
+delante de alguien que puede comprobarlo, el coste de no haberlo ejecutado no lo paga el ejemplo: lo paga la
+credibilidad del hallazgo que pretendía apoyar.
