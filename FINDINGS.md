@@ -3855,3 +3855,49 @@ El primer intento del caso limpio **cortó**, y con razón: el fichero que habí
 **vacío**, y la comprobación de ficheros rastreados a cero bytes lo cazó entre 1 170 elementos. Es §F59
 funcionando sobre un fichero de dos minutos de vida, y la demostración más convincente de que la puerta
 sirve — no la que yo había preparado.
+
+## §F94 — Los tres `.docx` nombran cuatro modelos excluidos, y la comprobación que lo vigilaba miraba solo el Markdown
+
+**2026-09-09.** `CLAUDE.md` es tajante: los modelos excluidos «no pueden aparecer en el informe, en sus
+anexos, en los datos agregados ni en los artefactos derivados. **Tampoco en una glosa que los declare
+excluidos**: la exclusión se aplica, no se narra». La verdad de referencia es el PDF entregado al profesor
+guía.
+
+Comprobado hoy: el Markdown cumple —**cero** apariciones—, y los **tres `.docx`, el entregable canónico
+incluido, nombran cuatro modelos excluidos en quince sitios**:
+
+| Modelo | Apariciones en cada `.docx` |
+|:---|---:|
+| `nuextract` | 7 |
+| `minimax-m3` | 4 |
+| `gemini-3.1-flash-lite` | 2 |
+| `gemma4-12b-mlx-q8-64k` | 2 |
+
+**La exclusión se aplicó a la fuente y nunca se propagó.** Y la comprobación que existía para vigilarlo
+—«sin modelos excluidos del estudio»— **examinaba solo el Markdown** y daba «ok» con 8 elementos. Es §L47 en
+su versión más caro: la comprobación existía, pasaba, y miraba el artefacto que no se entrega. Extendida hoy
+a los tres `.docx`, examina **35 elementos** y delata las doce apariciones.
+
+### Inventario de las cuatro clases, que no se corrigen igual
+
+| Sitio | Qué hay | Qué dice el Markdown | Corrección |
+|:---|:---|:---|:---|
+| Nota de la Tabla 4 | «Quedan fuera de la tabla los modelos excluidos del estudio (`nuextract:latest`, `gemini-3.1-flash-lite`, `minimax-m3`)» | **nada**: la frase no existe | eliminar la frase entera |
+| Anexo, fila de fuentes | «Excluidos del estudio \| `nuextract:latest, gemini-3.1-flash-lite, minimax-m3`» | **nada** | eliminar la fila |
+| Tabla de deltas | 2 filas: `nuextract:latest_baseline` y `_kb_rag` | no están | eliminar las 2 filas |
+| **Tabla 19** | **7 filas** de modelos excluidos | no están | eliminar las 7 filas |
+
+El Markdown no reescribió la glosa: **la eliminó**. Cero apariciones de «Quedan fuera de la tabla», de
+«Excluidos del estudio» y de «modelos excluidos». La corrección del `.docx` es por tanto supresión, no
+reformulación.
+
+### Y de paso queda explicado el recuento de la Tabla 19
+
+El `.docx` tiene **49 filas de datos** donde el Markdown declara **42 configuraciones**. La diferencia son
+exactamente las **7** filas de modelos excluidos: 49 − 7 = 42. Es decir, la Tabla 19 del entregable no solo
+trae cifras sustituidas (§F88) sino **siete filas que no deben existir**, y las dos cosas se arreglan en la
+misma operación: reemplazar la tabla desde el Markdown la deja con 42 filas y con las cifras vigentes de una
+vez.
+
+**Estado:** declarado en `FALLOS_DECLARADOS` como **pendiente de corrección, no aceptado**, con su
+inventario y su tanda. Se retira de esa lista al corregirlo, que es lo que mantiene la lista útil.

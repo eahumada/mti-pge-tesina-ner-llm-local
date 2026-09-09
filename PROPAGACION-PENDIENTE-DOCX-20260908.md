@@ -284,3 +284,28 @@ texto; hará falta igual al reemplazar la Tabla 19, donde todas las celdas son n
 **Estado de la prosa:** tras corregir el 5,33, las únicas divergencias fuera de tablas son las **tres**
 acopladas a la Tabla 19 —76,85, 90,91, 81,45—, ya escritas en `tools/terms_restringido.json`. Es decir: la
 pasada de maquetación tiene delante un conjunto cerrado y verificado, no una búsqueda.
+
+---
+
+## Gravedad máxima, por encima de todo lo anterior — 2026-09-09
+
+**Los tres `.docx` nombran cuatro modelos excluidos en quince sitios**, mientras el Markdown tiene cero.
+`nuextract` (×7), `minimax-m3` (×4), `gemini-3.1-flash-lite` (×2) y `gemma4-12b-mlx-q8-64k` (×2). Incumple
+la lista cerrada de `CLAUDE.md`, que prohíbe esos nombres **incluso en una glosa que los declare excluidos**.
+
+Cuatro sitios, y **no se corrigen igual** — el Markdown no reescribió nada, **eliminó**:
+
+1. **Nota de la Tabla 4:** eliminar la frase «Quedan fuera de la tabla los modelos excluidos del estudio
+   (…)» completa. El Markdown no la tiene.
+2. **Fila «Excluidos del estudio»** de la tabla de fuentes del anexo: eliminar la fila.
+3. **Tabla de deltas:** eliminar las 2 filas de `nuextract:latest_baseline` y `_kb_rag`.
+4. **Tabla 19:** eliminar las **7** filas de modelos excluidos.
+
+**El punto 4 explica el recuento que quedaba abierto:** el `.docx` tiene 49 filas de datos y el Markdown
+declara 42 configuraciones, y la diferencia son exactamente esas 7. Reemplazar la Tabla 19 desde el Markdown
+resuelve **las dos cosas a la vez** —las cifras sustituidas y las filas que no deben existir—, de modo que
+no hay que suprimir filas a mano: se reemplaza la tabla y quedan 42.
+
+Verificable con `python3 tools/verificar_informe.py`, cuya comprobación «sin modelos excluidos del estudio,
+en el .md y en los tres .docx» examina 35 elementos y las enumera una a una. Está **declarada como pendiente
+de corrección, no aceptada**, y se retira de la lista al corregirla. Detalle en `FINDINGS §F94`.

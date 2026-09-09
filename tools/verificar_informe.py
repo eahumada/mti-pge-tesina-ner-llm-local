@@ -42,6 +42,10 @@ FALLOS_DECLARADOS = {
     'cita 80.51': 'decision 13, pendiente del autor (FINDINGS §F87)',
     'el Anexo I dice': 'decision 13, ampliada a la tercera instancia del defecto '
                        '(FINDINGS §F87.bis)',
+    '.docx: aparece': 'PENDIENTE DE CORRECCION, no aceptado: la exclusion no se propago a los '
+                       'tres .docx. Inventario en FINDINGS §F94 y tanda de correccion en '
+                       'PROPAGACION-PENDIENTE-DOCX-20260908.md. Se retira de esta lista al '
+                       'corregirlo, que es lo que la hace util',
     'github.com/eahumada/mti-pge-tesina': 'referencia [37]: el repositorio es privado hasta la purga '
                                           '(SEGURIDAD-CLAVE-GOOGLE-20260908.md)',
 }
@@ -196,10 +200,57 @@ def c_higiene(s):
 
 
 # --- 8. Modelos excluidos -----------------------------------------------------------------------
+DOCX_ENTREGABLES = (
+    'Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.docx',
+    'Informe_Final_Tesina_NER.docx',
+    'doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.docx',
+)
+
+
+def _texto_docx(ruta):
+    """Texto visible de un .docx, uniendo cada <w:t> con un espacio.
+
+    OJO: `<w:t[^>]*>` tambien encaja con `<w:tcPr>` y arrastra XML al texto (§F88). Hay que
+    exigir que tras `w:t` venga `>` o un espacio.
+    """
+    import zipfile
+    with zipfile.ZipFile(ruta) as z:
+        x = z.read('word/document.xml').decode('utf-8')
+    return ' '.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', x, re.S))
+
+
 def c_excluidos(s):
+    """Los modelos excluidos no pueden aparecer, y la regla alcanza a los `.docx`, no solo al `.md`.
+
+    Hasta el 2026-09-09 esta comprobacion miraba **solo el Markdown** y daba «ok» mientras los tres
+    `.docx` —el entregable canonico incluido— nombraban **cuatro** modelos excluidos en **quince**
+    sitios. La exclusion se habia aplicado a la fuente y nunca se propago. Es §L47 en su version
+    mas caro: la comprobacion existia, pasaba, y examinaba el artefacto que no se entrega.
+
+    Ver `FINDINGS §F94` para el inventario exacto de las cuatro clases de aparicion.
+    """
+    fallos = []
     b = s.lower()
-    check('sin modelos excluidos del estudio', len(EXCLUIDOS),
-          ['aparece «%s»' % e for e in EXCLUIDOS if e in b],
+    mirados = len(EXCLUIDOS)
+    fallos += ['el Markdown: aparece «%s»' % e for e in EXCLUIDOS if e in b]
+    for rel in DOCX_ENTREGABLES:
+        ruta = os.path.join(RAIZ, rel)
+        mirados += 1
+        if not os.path.exists(ruta):
+            fallos.append('no existe el entregable %s' % rel)
+            continue
+        try:
+            td = _texto_docx(ruta).lower()
+        except Exception as e:                                    # noqa: BLE001
+            fallos.append('%s no se puede leer: %s' % (os.path.basename(rel), e))
+            continue
+        for e in EXCLUIDOS:
+            mirados += 1
+            n = td.count(e)
+            if n:
+                fallos.append('%s: aparece «%s» %d vez/veces'
+                              % (os.path.basename(rel), e, n))
+    check('sin modelos excluidos del estudio, en el .md y en los tres .docx', mirados, fallos,
           'la exclusión se aplica, no se narra: tampoco en una glosa')
 
 
