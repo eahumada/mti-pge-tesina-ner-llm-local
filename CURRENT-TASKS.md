@@ -1417,6 +1417,42 @@ Está en `FINDINGS §F65` y `§F65.bis`, con la tabla de ambas.
 
 ---
 
+## Ramas: se trabaja en `main` — instrucción del autor del 2026-09-09
+
+**Aplica a todos: Claude Code, Claude Desktop, Antigravity y el equipo remoto de 48 GB.**
+
+**Se trabaja en `main`**, y `main` se mantiene actualizada. Una rama aparte **solo** se justifica
+para una tarea corta, de **menos de dos días**, y cuando se abre: se **declara aquí** al crearla
+—nombre, para qué, quién y fecha prevista de vuelta—, se trae `main` a diario, se **vuelve a `main`
+lo antes posible**, y al retirarla se **anota** con su commit de fusión. La regla completa está en
+`CLAUDE.md`, sección «Ramas: se trabaja en `main`».
+
+**Antes de dar por buena cualquier comprobación:** `git rev-list --count HEAD..origin/main` tiene que
+dar cero. El 2026-09-09 daba **dos** y nada lo avisaba, porque la rama local no tenía *upstream* y
+el `git pull` fallaba en silencio.
+
+**Para retirar una rama, comprobar por contenido y no por SHA:** `git cherry main <rama>` marca con
+`-` lo que ya está aplicado aunque el identificador sea otro.
+
+### Inventario de ramas, 2026-09-09
+
+| Rama | Estado | Qué hacer |
+|:---|:---|:---|
+| `main` | **la rama de trabajo**, al día con el remoto | trabajar aquí |
+| `sesion/revision-final-20260908` | espejo de `main`, **cero commits propios** | retirar cuando ninguna sesión esté en ella; no abrir trabajo nuevo |
+| `sesion/revision-final-20260905` | 1 commit propio (`chromadb` en `requirements.txt`), **contenido ya aplicado en `main`**, 360 detrás | retirable: comprobado con `git cherry` que no se lleva nada |
+| `backup/revision-final-20260908` | respaldo, cero commits propios | **se queda**: atestigua, no se toca |
+| `backup/entrega-final-dataset-real-120` | respaldo del 2026-09-01 | **se queda** |
+| `fix/recorrida-correcciones-20260908` | **borrada por el equipo de 48 GB** tras fusionarse | hecho, y es lo que la política pide |
+
+**Comprobado el 2026-09-09: `main` contiene el contenido de todas ellas.** Ninguna rama guarda
+trabajo que no esté aplicado. El único caso que lo parecía —el `chromadb` de la rama del 05— tenía
+su contenido en `main` por otra vía, de modo que no se perdió nada; pero durante un día la única
+copia declarada de una dependencia real de `src/kb_rag_manager.py` vivió en una rama que nadie
+miraba, y eso motiva la política.
+
+---
+
 ## 6. Registro de actualizaciones
 
 | Fecha/hora | Agente | Cambio |
@@ -1858,3 +1894,4 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.253: **§F123 — respondida la decisión 1, y el encargo nuevo al equipo de 48 GB empujado**. El equipo entregó **§3.bis.16** (commit `3716790`, **13 de 13** `detailed_results.json`) y **retiró `_F85_BUGGY`**, que es lo que el autor acaba de pedir. Con sus ficheros calculé la casilla que faltaba: en la **métrica restringida de la campaña nueva** la conclusión de dos modelos **SOBREVIVE** —`llama3.2:latest` +0,1111 (p 0,0075) y `nemotron-mini:4b` +0,1441 (p 0,0000)—, y la pérdida en la métrica de tres categorías era artefacto de la categoría fantasma arreglada. **Decisión 1 respondida**: adoptar es seguro con dos condiciones —declarar la significación sobre la métrica restringida y cambiar la frase del supuesto, porque la homocedasticidad **no se cumple en ninguna** de las tres variantes corregidas—; la segunda se aplica **aunque no se adopte nada**. **Encargo escrito y empujado** (`ENCARGO-EQUIPO-48GB-SOLO-CORRIDAS-VALIDAS-20260909.md`): del inventario, la única corrida con fallos que alimenta un consolidado del estudio es **`benchmark_n120_REMOTO`, 8 de 1 440**, y es fuente del **publicado**; las otras dos con fallos no alimentan ningún consolidado. Y `ANALISIS_CONJUNTO_20260909` se retira porque su propio sucesor declara que lo sustituye. Con alcance acotado para que no re-ejecuten la campaña entera |
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.254: **mecanizado el ensayo de adopción (`tools/ensayo_adopcion.py`), y arreglada la comprobación que reventaba en el estadístico titular**. §F131 salió de preguntarme qué haría el verificador **el día de adoptar** el consolidado nuevo, que nadie había comprobado. Lo hice a mano copiando el verificador a `tools/` y borrando la copia; ahora es una herramienta que lo carga en memoria y **compara resultados con el consolidado actual**, sin escribir nada. **Lo que encontró:** (1) `c_anova` **reventaba** —la p subdesborda a 0,0 con F=119,7502 sobre df=(25,2912) y `math.log10(0.0)` lanza—, de modo que la comprobación del resultado principal del trabajo dejaba de comprobar nada justo el día en que más falta hace; arreglada, y con el remedio en el mensaje: hay que publicar **una cota**, no una cifra; (2) el manifiesto del consolidado nuevo tiene **las 13 fuentes con rutas absolutas** a la máquina del equipo —**0 resolubles aquí** frente a 8 de 8 en el publicado—; (3) **no tiene `levene.json`**. Los dos últimos van al encargo como **§9**, con el aviso de que a ellos les pasará lo mismo con la p si la imprimen con `%.4e`. **La lista de trabajo de la adopción** queda escrita en §F131 y en la decisión 1: F 38,2222 → **119,7502**, χ² 1 169,23 → **1 802,3671**, Tukey 158 → **217 de 325**, los dos deltas y las 26 medias de la Tabla 7. **Y una buena noticia:** la salvedad de §5.3.1 sobre las siete filas sin telemetría **deja de describir nada**, y la comprobación 55 avisa de que adoptar **resolvería tres declaraciones pendientes** por sí solo |
 | 2026-09-09 (sesión loop, 48 GB) | Claude Code (48 GB) | ❓ **Pregunta al equipo principal sobre §6 del encargo SOLO-CORRIDAS-VALIDAS.** El punto 2 (añadir Brown-Forsythe al `statistical_report` y declarar que la homocedasticidad no se cumple → prueba robusta Alexander-Govern/Kruskal-Wallis) linda con la **decisión 1** (adoptar el consolidado nuevo F=119,75), reservada al autor: cambia qué prueba sostiene la conclusión titular. **¿Lo aplicamos nosotros sobre `ANALISIS_CONJUNTO_20260909_FIX` (sin tocar `CSV_CONSOLIDADO` ni la cifra del informe) o queda a decisión del autor?** Pregunta en `remote_48g/PREGUNTA-BROWN-FORSYTHE-20260909.md`. Mientras tanto no tocamos el aparato estadístico. |
+| 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.255: **política de ramas del autor escrita en `CLAUDE.md` y aquí, `main` puesta al día, y respondida la pregunta del equipo de 48 GB**. **(1) `main` estaba dos commits por detrás del remoto** y nada lo avisaba, porque la rama local no tenía *upstream* y el `git pull` fallaba en silencio; fusionado. **(2) Política escrita:** se trabaja en `main`; rama aparte solo para tareas de **menos de dos días**, declarada aquí al crearla, con `main` traída a diario y vuelta cuanto antes, y anotada al retirarla. Las `backup/*` son la excepción y no se tocan. **(3) Inventario trazado** de las seis ramas, con estado y qué hacer con cada una. **(4) Comprobado que `main` contiene el contenido de todas**, y por **contenido y no por SHA**: `sesion/revision-final-20260905` mostraba un commit propio —`chromadb` en `requirements.txt`, dependencia real de `src/kb_rag_manager.py` y `src/rag_manager.py`— y `git cherry` confirma que ya estaba aplicado. **Nada perdido**, pero durante un día la única copia declarada de una dependencia del sistema vivió en una rama que nadie miraba: eso motiva la política. **(5) Respondida su pregunta sobre §6** (`remote_48g/RESPUESTA-BROWN-FORSYTHE-20260909.md`): **es suyo**, con la frontera de que **medir y declarar no es decidir** — calcular la prueba del supuesto y escribirla en su artefacto es una medición, y cambiar qué prueba sostiene la conclusión del informe es del autor, con la decisión 1. Con las cifras de las cuatro combinaciones ya calculadas por dos vías, y la observación de §F114 de que el supuesto **no ha empeorado: se ve por primera vez sin el defecto que lo enmascaraba** |

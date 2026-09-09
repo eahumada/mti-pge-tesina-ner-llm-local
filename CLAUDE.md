@@ -107,6 +107,50 @@ de corrección debe validarse contra el documento y, si toca datos experimentale
 
 ---
 
+## Ramas: se trabaja en `main`
+
+**Instrucción del autor del 2026-09-09. Aplica a todos los equipos y a todas las sesiones: Claude
+Code, Claude Desktop, Antigravity y el equipo remoto de 48 GB.**
+
+**Se trabaja en `main` siempre que sea posible**, y `main` se mantiene actualizada. Es la rama que
+todos los agentes leen, la que el verificador y sus 55 comprobaciones toman como referencia, y la
+única sobre la que la puerta de commit tiene sentido.
+
+**Una rama aparte solo se justifica para una tarea corta, de menos de dos días.** Fuera de ese caso
+no se abre. Y cuando se abre:
+
+1. **Se declara en `CURRENT-TASKS.md`** al crearla: nombre, para qué, quién la usa y la fecha
+   prevista de vuelta. Una rama sin entrada en el documento de coordinación es una rama que nadie
+   sabe que existe.
+2. **Se vuelve a `main` lo antes posible.** Fusionar y retirarla es parte de la tarea, no un remate
+   opcional.
+3. **Se rebasa o se fusiona `main` a diario** mientras esté viva, para que la vuelta no sea una
+   negociación de conflictos.
+4. **Al retirarla se anota en `CURRENT-TASKS.md`** que se fusionó y se borró, con el commit de
+   fusión. Se anota; no se borra la entrada.
+
+**Por qué, y con el caso que lo motiva.** El 2026-09-09 había cinco ramas vivas y **`main` estaba
+dos commits por detrás del remoto**. Entre ellas, `sesion/revision-final-20260905` llevaba un
+commit propio desde el día anterior y **360 de retraso**: añadía `chromadb` a `requirements.txt`,
+que es una dependencia real de `src/kb_rag_manager.py` y `src/rag_manager.py`. Comprobado que su
+contenido **sí** había llegado a `main` por otra vía, de modo que no se perdió nada; pero durante un
+día la única copia declarada de una dependencia del sistema vivió en una rama que nadie miraba, y
+eso es cuestión de suerte y no de método.
+
+**Antes de dar por buena cualquier comprobación, `main` tiene que estar al día.** Un `git pull` que
+falla —por ejemplo, porque la rama no tiene *upstream*— deja trabajando sobre una copia vieja sin
+avisar. Comprobación barata: `git rev-list --count HEAD..origin/main` tiene que dar cero.
+
+**Comprobar que una rama no se lleva nada** antes de retirarla, y comprobarlo por **contenido** y no
+por SHA: `git cherry main <rama>` marca con `-` los commits cuyo contenido ya está aplicado en
+`main` aunque su identificador sea otro. Un `git rev-list --count main..<rama>` distinto de cero no
+prueba que haya trabajo pendiente; prueba que hay identificadores distintos.
+
+**Las ramas `backup/*` son la excepción y se quedan.** Existen para atestiguar un estado entregado,
+no para trabajar. No se rebasan, no se fusionan y no se retiran.
+
+---
+
 ## Concurrencia entre Sesiones
 
 **Otras sesiones (Claude Code, Claude Desktop u otro editor) pueden estar modificando estos archivos al
