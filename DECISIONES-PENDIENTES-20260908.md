@@ -10,7 +10,36 @@ capítulo de resultados.
 
 ---
 
-## 1. ¿El informe adopta ya F = 35,5557, o espera al consolidado nuevo? — **SUPERADA**
+## 1. ¿El informe adopta el consolidado nuevo? — **REABIERTA el 2026-09-09, y es la decisión más grande del cierre**
+
+> **Reabierta.** Se declaró **SUPERADA** el 2026-09-09 con el argumento de que lo único que retenía la
+> adopción del consolidado nuevo era `§F85`, y `§F85` ya está arreglado — el equipo de 48 GB lo entregó
+> ese mismo día. Pero al verificar la entrega apareció que **adoptarlo no es refrescar cifras**
+> (`FINDINGS §F113`):
+>
+> 1. La campaña nueva **arregla la categoría fantasma de `§F53`**: `Locations` pasa de `tp+fn = 0`
+>    con 720 falsos positivos a `tp+fn = 1 090`. Los datos **publicados** penalizan a todos los
+>    modelos por una categoría que su corpus no anota. Es la medición **corregida**, no otra corrida.
+> 2. **`llama3.2:latest` deja de ser significativo** (p ajustada 0,0069 → **0,2334**): el informe
+>    concluye que **dos** modelos mejoran de forma significativa, y con el consolidado nuevo es
+>    **uno**. Y no es por el N menor: `§F66` ya midió que excluir los contaminados le dejaba la
+>    significación intacta.
+> 3. **El supuesto de homocedasticidad se viola** en los datos nuevos (Brown-Forsythe p = 0,1842 →
+>    **1,39e-11**), de modo que el ANOVA de una vía deja de ser la prueba adecuada. **Aguanta con
+>    prueba robusta**: Alexander-Govern p = 9,89e-274, Kruskal-Wallis p = 3,52e-265.
+>
+> **Recomendación: adoptarlo, y con las tres consecuencias declaradas.** Publicar cifras que un
+> artefacto del propio repositorio demuestra calculadas con una categoría fantasma es lo que un
+> tribunal juzga, y la regla de integridad de `CLAUDE.md` ya obliga a declarar todas las corridas del
+> mismo experimento. Pero es **mucho trabajo** —toca casi todas las cifras, la Tabla 7, el Anexo I,
+> las figuras y una conclusión de `§5`— y **no se empieza sin autorización expresa**.
+>
+> Lo que **no** conviene es adoptarlo a medias: tomar el F nuevo y conservar el veredicto de dos
+> modelos significativos sería incoherente, y peor que cualquiera de las dos opciones enteras.
+
+### Planteamiento original (2026-09-08), conservado
+
+
 
 > **Resuelta por los hechos el 2026-09-09.** Se recomendaba esperar al consolidado nuevo y **ya existe**:
 > `ANALISIS_CONJUNTO_20260909`, trece modelos sobre el corpus corregido, **F = 121,5602**, verificado de

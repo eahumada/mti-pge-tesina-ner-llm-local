@@ -4936,3 +4936,108 @@ divergencia de −49,77. Y sobre la propia herramienta, invertida la detección 
 los modelos señalados pasan de 2 a 12.
 
 **Estado del verificador:** 45 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F113 — La campaña nueva no refresca cifras: arregla §F53, y con ello el estudio pierde una de sus dos conclusiones significativas
+
+**Fecha:** 2026-09-09 · **Origen:** verificar la entrega de `§3.bis.15` del equipo de 48 GB
+
+El equipo entregó el arreglo del `TypeError` de `§F85` y un consolidado nuevo,
+`ANALISIS_CONJUNTO_20260909_FIX`, con la nota «la conclusión no cambia; la magnitud sí». **El
+arreglo es correcto y su F reproduce exacto.** Lo que la nota no dice es todo lo demás, y es mucho.
+
+### El consolidado nuevo no comparte ni una fuente con el publicado
+
+No es el consolidado publicado con `nemotron` corregido: son **trece corridas de
+`recorrida_20260908/`**, una campaña completa distinta. El publicado se fusiona de **ocho** fuentes
+heterogéneas; el nuevo de **trece**, una por modelo, y **la intersección de las dos listas es
+vacía**.
+
+### Y la campaña nueva arregla la categoría fantasma de §F53
+
+Es el hecho decisivo, y ningún documento lo dice. El indicador barato que ordena `CLAUDE.md`
+—`tp + fn` agregado por categoría— sobre el `nemotron` de cada campaña:
+
+| Campaña | `Locations` tp | fp | fn | tp+fn |
+|:---|---:|---:|---:|---:|
+| Publicada (`nemotron_rerun_n120_REMOTO`) | 0 | 720 | 0 | **0** |
+| Nueva (`recorrida_20260909_nemotron_fix`) | 343 | 312 | 747 | **1 090** |
+
+En la campaña publicada `Locations` **puntúa contra el vacío**: cada acierto del modelo cuenta como
+falso positivo porque el corpus no anota una sola entidad de esa categoría. En la nueva, la
+referencia sí la anota. Es exactamente el defecto de [§F53](#f53), y **los datos publicados lo
+llevan dentro**.
+
+Eso explica la subida general del F1, que no es pequeña ni atribuible a la configuración
+—`max_tokens` sube de 2 048 a 4 096 y `num_workers` baja de 9 a 1, pero corpus, `rag_mode`,
+`fuzzy_threshold`, `system_prompt_file` y semilla son idénticos—:
+
+| Modelo (línea base) | Publicado | Nuevo |
+|:---|---:|---:|
+| `llama3.2:latest` | 0,3611 | **0,6325** |
+| `gemma:latest` | 0,4400 | **0,5955** |
+| `mistral-nemo:latest` | 0,4338 | **0,6063** |
+| `nemotron-mini:4b` | 0,2259 | **0,2829** |
+
+### Las tres consecuencias que la nota del equipo no recoge
+
+**Primera, y la que toca una conclusión del informe: `llama3.2:latest` deja de ser significativo.**
+El informe concluye que **dos** de los trece modelos mejoran de forma significativa. En el
+consolidado nuevo es **uno**.
+
+| Modelo | Publicado | p ajustada | Nuevo | p ajustada | Veredicto |
+|:---|---:|---:|---:|---:|:---|
+| `nemotron-mini:4b` | +0,1452 | 0,0000 | +0,1226 | 0,0000 | se mantiene |
+| `llama3.2:latest` | +0,1082 | 0,0069 | +0,0673 | **0,2334** | **se pierde** |
+
+Y la pérdida **no es por el N menor**. Las dos cosas iban entrelazadas —el consolidado nuevo excluye
+los 7 contaminados y el publicado no—, pero [§F66](#f66) ya midió el efecto de la exclusión por
+separado sobre el corpus antiguo: `llama3.2:latest` pasaba de +0,1082 a +0,1006 con p de 6,9e-3 a
+3,6e-2, **seguía siendo significativo**. Lo que le quita la significación es la **medición
+corregida**, no el tamaño de muestra.
+
+Dos modelos más cambian de signo, ninguno significativo: `mistral-nemo:latest` de +0,0237 a
+**−0,0429**, y `gemma:latest` se desploma de +0,0736 a **+0,0003**.
+
+**Segunda: el supuesto que sostiene el ANOVA titular se viola en los datos nuevos.** El informe
+publica que «la prueba de Levene no detecta heterocedasticidad (p = 0,18)». Sobre el consolidado
+nuevo, **no se sostiene**, y su `statistical_report.md` no menciona Levene ni una vez:
+
+| | Brown-Forsythe W | p |
+|:---|---:|---:|
+| Publicado | 1,2475 | 0,1842 |
+| Nuevo | **4,2124** | **1,394e-11** |
+
+**El remedio está y la conclusión general aguanta.** Bajo pruebas robustas a varianzas desiguales el
+resultado global es abrumador en los dos consolidados, de modo que esto obliga a **cambiar de prueba**,
+no a retirar la conclusión:
+
+| | Publicado | Nuevo |
+|:---|---:|---:|
+| ANOVA clásico | F = 38,2222 · p = 3,4453e-160 | F = 119,7502 · p ≈ 0 |
+| Alexander-Govern | A = 724,61 · p = 9,10e-137 | A = 1 369,97 · p = 9,89e-274 |
+| Kruskal-Wallis | H = 744,01 · p = 7,58e-141 | H = 1 329,91 · p = 3,52e-265 |
+
+**Tercera: η² se duplica.** De 0,2360 a **0,5069**. La campaña nueva separa los grupos mucho mejor,
+que es lo que cabe esperar al dejar de penalizar a todos los modelos por una categoría inexistente.
+
+### Verificación
+
+`F = 119,7502` reproducido por dos vías independientes —mi implementación en biblioteca estándar y
+`scipy` del venv— coincidiendo al cuarto decimal, igual que `F = 38,2222` del publicado. Brown-Forsythe
+comprobado con centrado en mediana y en media, y con las dos implementaciones. Los deltas y las p
+ajustadas de Tukey salen de `statsmodels`, y **la columna del publicado reproduce exactamente las
+cifras del informe** (+0,1452 y +0,1082), que es lo que acredita el método antes de leer la columna
+nueva.
+
+### Lo que esto NO es
+
+No es un fallo del equipo de 48 GB: su encargo era arreglar `§F85` y re-ejecutar un brazo, y eso lo
+hizo bien, con la corrida defectuosa conservada como prueba y con `failed == 0` ahora bloqueante. La
+nota se equivoca solo al generalizar «la conclusión no cambia» desde el único modelo que comprobaron.
+
+**Y no lo he tocado en el informe.** Adoptar el consolidado nuevo cambia prácticamente todas las
+cifras publicadas y una de las dos conclusiones del capítulo de resultados. Es **decisión del autor**,
+y está en la **decisión 1**, que hay que reabrir: se declaró superada suponiendo que lo único que
+retenía la adopción era `§F85`.
