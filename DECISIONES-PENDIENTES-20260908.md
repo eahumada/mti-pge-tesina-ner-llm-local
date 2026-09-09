@@ -153,6 +153,14 @@ mismo evaluador. Cada modelo que termina lo hace con la métrica actual.
 **Recomendación: (a) para el barrido en curso y (c) al cerrarlo.** Lo que **no** debe hacerse es tocar
 `evaluator.py` mientras el barrido corre, y por eso no se ha tocado.
 
+**La tabla ya está calculada, para que la decisión se tome mirando cifras.**
+`results/EMPAREJAMIENTO_DUPLICADO_20260908/tabla7_recalculada.md` trae la Tabla 7 completa con las dos
+columnas enfrentadas, modelo por modelo, y el recuento de emparejamientos duplicados de cada uno. Los
+extremos: `gemma4:latest` acumula **143** duplicados y su línea base baja de 55,91 a 54,98, mientras
+`nemotron-mini:4b` con solo **11** baja de 22,59 a 21,31 —más, porque su exhaustividad es pequeña y unos
+pocos aciertos repetidos pesan proporcionalmente más—. Los dos únicos Δ significativos del estudio,
+`llama3.2:latest` y `nemotron-mini:4b`, **crecen** al corregir: +10,82 → +10,91 y +14,52 → +15,75.
+
 **Y hay que decidir si el informe lo declara.** Declararlo es barato y protege: una exhaustividad de 2,444 en
 los datos crudos es justo lo que un tribunal encuentra si mira, y hallarla sin que el trabajo la mencione es
 peor que la propia cifra.
