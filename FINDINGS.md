@@ -5977,3 +5977,60 @@ no bastaba: `cita 62.67` tiene diez caracteres y cualquier corte a catorce la ha
 porque necesita los resultados de todas las demás.
 
 **Estado del verificador:** 55 comprobaciones, 62 fallos (62 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F130 — En un clon limpio la puerta anunciaba «código de salida 0» mientras devolvía 1
+
+**Fecha:** 2026-09-09 · **Origen:** comprobar que el aparato funciona donde no se ha construido
+
+Cincuenta y cinco comprobaciones, la autoprueba y la auditoría de afirmaciones corren en **esta**
+copia de trabajo. Nunca las había ejecutado en un clon, que es donde las ejecutaría otra persona.
+Clonado de verdad desde el remoto con `--depth 1`, aparecen **tres cosas que un clon no tiene**, y
+un defecto en cómo la puerta lo cuenta.
+
+### Lo que un clon no trae
+
+| | Consecuencia |
+|:---|:---|
+| `core.hooksPath` es configuración **local** | el clon **no tiene la puerta de commit**, aunque el gancho esté versionado (ya escrito en `§F93`) |
+| Un clon superficial no trae el commit **`df9b4c4`** | la comprobación **50 sale VACÍA**: no puede leer el corpus anterior a la corrección del *mojibake*, y el actual ya no tiene el defecto que la Tabla 17 mide |
+| `.setenv.sh` está en `.gitignore` | sin credenciales |
+
+### El defecto: la puerta decía lo contrario de lo que hacía
+
+El código de salida es correcto —`return 1 if (nuevos or vacias)`, y en el clon devolvía **1**—,
+pero la línea explicativa se imprimía comprobando solo los fallos:
+
+```
+if fallos_totales and not nuevos:
+    print('  (codigo de salida 0: no hay fallos nuevos...')
+```
+
+De modo que en el clon la salida terminaba con **«código de salida 0»** mientras el proceso
+devolvía **1**. Quien lo lea concluye que pasó, y su integración continua acaba de fallar. Es un
+defecto pequeño colocado en el peor sitio: la última línea que alguien lee para saber si puede
+seguir.
+
+**Arreglado**: la línea de «código de salida 0» solo se imprime cuando de verdad va a ser 0, y
+cuando hay vacías se imprime otra que dice **por qué** corta —«una comprobación que examina cero
+elementos no ha pasado, no se ha ejecutado»— y **cómo arreglarlo**: `git fetch --unshallow`.
+
+**El remedio está comprobado, no supuesto.** Aplicado sobre el clon: 510 commits, `df9b4c4`
+presente, **0 vacías**. Una instrucción de arreglo que nadie ha ejecutado no es un arreglo.
+
+### Y un preparador, porque tres pasos que no están escritos son tres pasos que se olvidan
+
+`tools/preparar_clon.sh` comprueba las tres, arregla las dos que se pueden arreglar —el
+`hooksPath` y la historia— y dice en voz alta la que no, porque `.setenv.sh` no puede salir de
+git. Después ejecuta el verificador y la auditoría para acreditar que el clon quedó operativo. No
+instala nada ni adivina nada.
+
+**Lo que esto dice del método.** El aparato de verificación estaba comprobado contra el documento,
+contra los datos, contra sí mismo y contra sus propias declaraciones, y no contra **el entorno**.
+Una comprobación que solo corre donde se escribió es la misma clase de defecto que una que solo
+corre con el venv, y este proyecto ya rehízo Levene, el ANOVA, Friedman y `fuzz.ratio` en biblioteca
+estándar por esa razón exacta.
+
+**Estado del verificador:** 55 comprobaciones, 63 fallos (63 declarados, **0 nuevos**), 0 vacías en
+esta copia; en un clon superficial, 1 vacía y salida 1 con su explicación.

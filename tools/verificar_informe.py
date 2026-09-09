@@ -4251,9 +4251,18 @@ def main():
     # anterior, para quien quiera que cualquier fallo, incluido el declarado, corte.
     if '--estricto' in sys.argv:
         return 1 if (fallos_totales or vacias) else 0
-    if fallos_totales and not nuevos:
+    # El mensaje se imprimia sin mirar `vacias`, de modo que en un clon superficial anunciaba
+    # «codigo de salida 0» mientras la funcion devolvia 1: la comprobacion 50 sale VACIA porque el
+    # clon no trae el commit `df9b4c4`. Quien lea eso cree que paso y su CI acaba de fallar. Ver
+    # FINDINGS §F130.
+    if fallos_totales and not nuevos and not vacias:
         print('  (codigo de salida 0: no hay fallos nuevos. Usar --estricto para que los declarados '
               'tambien corten)')
+    if vacias:
+        print('  (codigo de salida 1 POR LAS %d VACIAS, no por los fallos: una comprobacion que '
+              'examina cero elementos no ha pasado, no se ha ejecutado.' % vacias)
+        print('   Si es un clon superficial, le falta historia y la comprobacion 50 no puede '
+              'leer el corpus anterior a la correccion: `git fetch --unshallow`.)')
     return 1 if (nuevos or vacias) else 0
 
 
