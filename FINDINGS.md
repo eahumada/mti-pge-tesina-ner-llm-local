@@ -6351,3 +6351,67 @@ el encargo— y los de procedimiento quedaban fuera. Probado por mutación: devu
 comprobaciones» a un prompt, la auditoría pasa de código 0 a 1.
 
 **Auditoría de afirmaciones:** 15 predicados, 0 que no se cumplen.
+
+---
+
+## §F137 — El dictamen del equipo verifica, y la métrica restringida da 4 de 13 con dos medianas a cero
+
+**Fecha:** 2026-09-09 · **Origen:** verificar el dictamen estadístico del equipo de 48 GB antes de
+aceptar sus cifras
+
+El equipo entregó `remote_48g/DICTAMEN-PRUEBA-ESTADISTICA-20260909.md`, y su conclusión de fondo es
+que **el defecto atacable no es la heterocedasticidad sino el diseño pareado ignorado**: el ANOVA de
+una vía sobre 26 celdas trata como independientes registros pareados por artículo y **confunde el
+efecto MODELO con el efecto MODO**, de modo que su F = 119,75 no aísla el efecto del RAG, que es la
+pregunta del estudio. Recomiendan Wilcoxon pareado por modelo con corrección de Holm como titular,
+un modelo mixto de dos vías con la interacción MODELO × MODO como omnibus de encuadre, y conservar el
+ANOVA como descriptivo.
+
+**Verifica.** Recalculado **sin usar su herramienta**, con `scipy` y `statsmodels`, y por **dos vías
+independientes** —la columna `f1` del CSV y la reagregación desde `per_type`—: los trece p, las trece
+medianas y los trece valores de Holm coinciden con su tabla a la precisión impresa, por los dos
+caminos. **3 de 13 significativos** en la métrica de tres categorías. El único desacuerdo es de
+cuarto decimal en un p crudo y no mueve nada.
+
+**Y el análisis de fondo lo había confirmado por mi cuenta antes de leerlo**, al preparar el contexto
+de otro encargo: la intersección de identificadores de artículo entre los 26 grupos es completa, de
+modo que el diseño es de medidas repetidas totalmente cruzado. Que dos equipos lleguen a lo mismo por
+separado es la mejor señal disponible.
+
+### La pieza que ellos declaraban pendiente: 4 de 13, no 3
+
+Calculada la métrica restringida a las dos categorías que el corpus anota: **4 de 13**, y el que
+entra es `llama3.1:8b`. Con dos consecuencias:
+
+**Primera, y favorece al trabajo:** `mistral-nemo:latest` **pierde el signo negativo** que tenía en
+la métrica de tres categorías —de −0,0206 con p cruda 0,0058, el que más cerca quedaba de entrar, a
++0,0000 con p 0,111—. El «efecto adverso en los modelos mayores» es más débil de lo que la métrica de
+tres categorías sugiere.
+
+**Segunda, y es una advertencia:** **dos de los cuatro significativos tienen mediana exactamente
++0,0000.** El equipo ya avisaba de que `gemma4:12b-mlx` era significativo con una mediana de 1 pp; en
+la restringida el problema es peor. Y no significa «sin efecto»:
+
+| Modelo | pares con Δ ≠ 0 | mejoran | empeoran | mediana | **media** |
+|:---|--:|--:|--:|--:|--:|
+| `nemotron-mini:4b` | 99 de 113 | 74 | 25 | +0,1757 | +0,1441 |
+| `llama3.2:latest` | 91 de 113 | 64 | 27 | +0,0442 | +0,1111 |
+| `gemma4:12b-mlx` | 72 de 113 | 52 | 20 | **+0,0000** | +0,0255 |
+| `llama3.1:8b` | 88 de 113 | 55 | 33 | **+0,0000** | +0,0408 |
+
+Wilcoxon detecta **consistencia de signo** entre las diferencias no nulas, y con 52 mejoras frente a
+20 empeoramientos la significación es real. Lo que engaña es **la mediana como tamaño de efecto**
+cuando más de un tercio de los pares vale cero: el efecto existe y vive en una minoría de artículos.
+
+**La petición que se les traslada:** al reportar tamaños de efecto, **tres cifras y no una** —mediana,
+media y recuento de pares no nulos con su reparto mejora/empeora—. Con solo la mediana, dos de los
+cuatro modelos significativos parecen no tener efecto.
+
+### Lo que queda para el autor, y es nuevo
+
+**Cuál de los dos recuentos es «el N de 13» del informe: 3 o 4.** Las dos cifras son correctas sobre
+métricas distintas y el informe ya publica las dos mediciones, de modo que no es una cuestión
+técnica sino de qué se enuncia como resultado, y con qué matiz de relevancia práctica.
+
+**Nada de esto se ha incorporado al informe.** `CSV_CONSOLIDADO` sigue apuntando al consolidado
+publicado y la cifra titular sigue siendo F = 38,2222.
