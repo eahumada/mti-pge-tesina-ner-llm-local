@@ -106,6 +106,8 @@ FALLOS_DECLARADOS = {
         'PENDIENTE de la pasada de maquetacion, decision 19 del autor: el entregable refleja un estado anterior del Markdown. Insertar lo que falta afecta al limite duro de 25 paginas y no se aplica sin autorizacion expresa. Ver FINDINGS §F126'),
     'falta la seccion «corridas múltiples': ('2026-09-09',
         'PENDIENTE de la pasada de maquetacion, decision 19 del autor: al entregable le falta la subseccion ENTERA de las corridas multiples —encabezado, cinco parrafos y la Tabla 20—, que es la declaracion que exige la regla de integridad de CLAUDE.md. Insertarla afecta al limite duro de 25 paginas. Ver FINDINGS §F127'),
+    'del Markdown no esta (cero <w:drawing>': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision 19 del autor: las dos figuras del informe no estan en los entregables. Los PNG existen en doc/figuras/ y son reproducibles byte a byte; insertarlas es maquetacion y afecta al limite de 25 paginas. El entregable tampoco las cita, de modo que hoy es incompleto pero COHERENTE. Ver FINDINGS §F128'),
     'github.com/eahumada/mti-pge-tesina': ('2026-09-09',
                                            'referencia [37]: el repositorio es privado hasta la '
                                            'purga (SEGURIDAD-CLAVE-GOOGLE-20260908.md)'),
@@ -1075,6 +1077,60 @@ def c_encabezados_docx(s):
     check('los encabezados de los .docx siguen al Markdown', mirados, fallos,
           'los # de un bloque de codigo no cuentan, el numero lo pone la numeracion de Word y la '
           'comparacion va en casefold: sin las tres, 10 falsos positivos')
+
+
+# --- 54. Las FIGURAS del entregable, y que ninguna cita quede colgando ------------------------
+def c_figuras_docx(s):
+    """El ultimo tipo de contenido sin comparar entre fuente y entregable.
+
+    Las comprobaciones 51, 52 y 53 cerraron la prosa, las tablas, la bibliografia y los
+    encabezados. Faltaban las **imagenes**, y las dos figuras del informe **no estan en ninguno de
+    los tres entregables**: cero elementos `<w:drawing>` y cero leyendas «Figura N.» (`§F128`).
+
+    Se comprueban dos cosas, y la segunda es la que evita un defecto peor que la ausencia:
+
+    1. Que cada figura que el Markdown declara —por su leyenda `_Figura N._`— tenga una imagen
+       dibujada en el entregable.
+    2. Que **ninguna cita a «Figura N» quede colgando**. Hoy el entregable **no** las cita, de modo
+       que es incompleto pero coherente; si alguien inserta la prosa que las menciona sin insertar
+       las imagenes, el documento pasaria a prometer una figura que no muestra, y eso si es un
+       defecto y no una carencia.
+
+    Los ficheros de media del `.docx` con plantilla **no** son las figuras: son las siete
+    referencias del encabezado y el pie institucionales, y por eso se cuentan los `<w:drawing>` del
+    cuerpo y no los ficheros del paquete.
+    """
+    import zipfile as _z
+    leyendas = sorted({int(x) for x in re.findall(r'_Figura (\d+)\.', s)})
+    if not leyendas:
+        check('las figuras del Markdown estan en los tres .docx', 0,
+              ['el Markdown no declara ninguna figura con leyenda «_Figura N._»'])
+        return
+    fallos, mirados = [], 0
+    for rel in DOCX_ENTREGABLES:
+        base = os.path.basename(rel)
+        ruta = os.path.join(RAIZ, rel)
+        if not os.path.exists(ruta):
+            fallos.append('%s no existe' % base)
+            continue
+        with _z.ZipFile(ruta) as z:
+            x = z.read('word/document.xml').decode('utf-8')
+        dibujos = len(re.findall(r'<w:drawing>', x))
+        txt = ' '.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', x, re.S))
+        citadas = sorted({int(y) for y in re.findall(r'[Ff]igura (\d+)', txt)})
+        for n in leyendas:
+            mirados += 1
+            if dibujos == 0:
+                fallos.append('%s: la Figura %d del Markdown no esta (cero <w:drawing> en el '
+                              'cuerpo)' % (base, n))
+        # citas colgantes: prometidas en el texto y sin imagen que mostrar
+        mirados += 1
+        if citadas and dibujos == 0:
+            fallos.append('%s: cita las figuras %s y no tiene ninguna imagen en el cuerpo — una '
+                          'cita colgante es peor que la ausencia' % (base, citadas))
+    check('las figuras del Markdown estan en los tres .docx', mirados, fallos,
+          'se cuentan los <w:drawing> del cuerpo, no los ficheros de word/media: los del .docx '
+          'con plantilla son el encabezado y el pie institucionales')
 
 
 def check(nombre, examinados, fallos, nota=''):
@@ -4046,6 +4102,7 @@ def main():
     ejecutar(c_prosa_docx, s)
     ejecutar(c_tablas_y_biblio_docx, s)
     ejecutar(c_encabezados_docx, s)
+    ejecutar(c_figuras_docx, s)
     ejecutar(c_tabla4_vs_datos, s)
     ejecutar(c_figura1_vs_artefacto, s)
     ejecutar(c_tablas_menores, s)

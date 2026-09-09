@@ -768,9 +768,15 @@ una tercera no rompe ningún molde. Ver `FINDINGS §F109`.
 > toma como referencia`, sus cinco párrafos y su **Tabla 20**—. Tiene un sitio evidente donde va,
 > justo después de la tabla a cuya columna «Corrida» se refiere.
 >
-> Aparte de esa subsección quedan piezas menores, y ese es el orden de prioridad si el espacio
-> aprieta: cinco párrafos de declaraciones de límites, la referencia [38] con sus cuatro citas, tres
-> filas de la Tabla 9, una celda de la Tabla 3 y la frase de Friedman de `§F120`.
+> **Y las dos figuras** (`§F128`): tampoco están en ningún entregable, y sus PNG están en
+> `doc/figuras/` verificados como reproducibles byte a byte. Hoy el entregable **no las cita**, así
+> que es incompleto pero coherente; **si se inserta la prosa que las menciona sin insertar las
+> imágenes, pasa a ser defectuoso** —el párrafo del 66,0 % dice «según recoge la Figura 1»—. Las dos
+> cosas van juntas o no van.
+>
+> Aparte de esa subsección y de las figuras quedan piezas menores, y ese es el orden de prioridad si
+> el espacio aprieta: cinco párrafos de declaraciones de límites, la referencia [38] con sus cuatro
+> citas, tres filas de la Tabla 9, una celda de la Tabla 3 y la frase de Friedman de `§F120`.
 
 **Qué pasa.** Comparada la prosa de los tres `.docx` contra el Markdown canónico párrafo a párrafo,
 **diez párrafos de la fuente no están en el entregable**. Evidencia: `FINDINGS §F121`, comprobación

@@ -5885,3 +5885,55 @@ comparación y no en el documento.
 —uno por fichero— quedan declarados con el resto de la decisión 19.
 
 **Estado del verificador:** 53 comprobaciones, 55 fallos (55 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F128 — Las dos figuras del informe no están en ningún entregable, y la cobertura queda cerrada
+
+**Fecha:** 2026-09-09 · **Origen:** el último tipo de contenido sin comparar
+
+Las comprobaciones 51, 52 y 53 cerraron la prosa, las tablas, la bibliografía y los encabezados del
+entregable. Quedaban las **imágenes**, y las dos figuras del informe **no están en ninguno de los
+tres `.docx`**: cero elementos `<w:drawing>` en el cuerpo y cero leyendas «Figura N.».
+
+**Los ficheros de media no son las figuras.** El `.docx` con plantilla trae tres ficheros en
+`word/media/` y siete referencias en sus `.rels`, y son el encabezado y el pie institucionales.
+Contar ficheros del paquete habría dado la respuesta contraria a la verdadera, así que la
+comprobación cuenta los `<w:drawing>` **del cuerpo**.
+
+**Los originales están y son reproducibles.** `doc/figuras/falsos-positivos.png` y
+`doc/figuras/efecto-kb-rag.png`, generados el 8 de septiembre, y ya verificados como **idénticos
+byte a byte** al regenerarlos. No hay nada que rehacer: hay que insertarlos.
+
+### Hoy el entregable es incompleto pero coherente, y eso importa
+
+**No cita las figuras.** Cero apariciones de «Figura N» en los tres `.docx`. De modo que las
+imágenes y sus citas faltan **juntas**, y el documento no promete nada que no muestre.
+
+Eso convierte esto en una **carencia y no un defecto**, con una consecuencia práctica para la pasada
+de maquetación: si se inserta la prosa que menciona las figuras —el párrafo del 66,0 % dice «según
+recoge la Figura 1»— **sin** insertar las imágenes, el entregable pasa de incompleto a **defectuoso**.
+Por eso la comprobación 54 vigila las dos cosas: que cada figura declarada esté, y que **ninguna cita
+quede colgando**.
+
+**Probada por mutación sin tocar el entregable**: sobre una copia en el área de trabajo con una cita
+a «Figura 1» inyectada, la segunda rama dispara con su mensaje propio. Los entregables no se
+modificaron para probarlo, que es lo correcto cuando lo que se prueba es una rama y no el documento.
+
+### La cobertura del entregable, cerrada
+
+| Contenido | Comprobación |
+|:---|:---|
+| Prosa, párrafo a párrafo | 51 (234 elementos) |
+| Tablas, celda a celda, y bibliografía | 52 (63 elementos) |
+| Encabezados | 53 (198 elementos) |
+| Figuras y citas colgantes | **54** (9 elementos) |
+| Modelos excluidos, sobriedad, sanidad OOXML, dos tablas más | 39, 41, 44 y la auditoría de afirmaciones |
+
+**Ninguna divergencia nueva entre la fuente y el entregable puede pasar en silencio.** Las que hay
+están declaradas, todas a nombre de la decisión 19, y su inventario está cerrado: **una subsección de
+§5 completa** —encabezado, cinco párrafos y Tabla 20—, **las dos figuras**, la referencia [38] con
+sus cuatro citas, cinco párrafos de declaraciones de límites, tres filas de la Tabla 9, una celda de
+la Tabla 3 y la frase de Friedman.
+
+**Estado del verificador:** 54 comprobaciones, 61 fallos (61 declarados, **0 nuevos**), 0 vacías.
