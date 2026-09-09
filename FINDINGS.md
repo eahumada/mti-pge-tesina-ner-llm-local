@@ -4648,3 +4648,46 @@ corridas superadas—:
 
 En los tres gana la corrida buena, conforme al orden del manifiesto y a `--on-duplicate=first`. **El
 consolidado es sólido**, y ahora está comprobado por comparación de medias y no por inferencia.
+
+## §F108.bis — Corrección: no eran rechazos de infraestructura, y el informe ya lo explicaba
+
+**2026-09-10.** El hallazgo §F108 diagnosticó las siete filas de `nemotron-mini:4b_baseline` con latencia 0
+como **«rechazo de infraestructura»**, aplicando la regla del criterio 5 del protocolo. **Era falso**, y hay
+que decir cómo se llegó a ello porque el mecanismo del error es más instructivo que el error.
+
+**Lo que los datos dicen.** Las siete filas tienen `parse_method = direct_json` y **seis de las siete traen
+`recall > 0`**. Hay contenido: la ejecución no se rechazó. Lo que falta es la telemetría.
+
+**Y el informe ya lo explicaba**, en la salvedad de procedencia de §5.3.1, que no leí antes de diagnosticar:
+
+> «(ii) Siete filas de `nemotron-mini:4b` tienen `latencia = 0` y `0 tokens/s` porque **se re-extrajeron
+> fuera del arnés de lotes** tras un fallo de contexto; sus valores de precisión, *recall* y F1 son reales,
+> pero su telemetría no existe.»
+
+**Dos errores más, del mismo diagnóstico.** Escribí que las siete filas con latencia 0 «son las mismas 7» que
+las de `fallback`. **Son conjuntos disjuntos**: 7 + 7 = **14 registros distintos**. Y atribuí «3 de pérdida
+total» al grupo de latencia 0, cuando esas tres son del grupo de `fallback`; en el de latencia 0 hay **una**.
+
+| Grupo | Cuántas | `parse_method` | Con `recall > 0` | Qué es |
+|:---|---:|:---|---:|:---|
+| Latencia 0 y 0 tokens | 7 | `direct_json` | **6 de 7** | telemetría ausente, declarada en §5.3.1 |
+| `parse_method = fallback` | 7 | `fallback` | 4 de 7 | el arnés usó la vía alterna |
+
+**Lo escribí en cuatro sitios** —la comprobación, §F108, la alerta al equipo remoto y el informe de avance— y
+los cuatro quedan corregidos.
+
+### Lo que sí queda, y es del autor
+
+De las siete con telemetría ausente, **una** —`real_mixed_70`— tiene `recall` **y** `precision` a cero. Para
+esa fila la salvedad del informe es imprecisa: sus valores no «son reales» en el sentido de traer contenido;
+son cero, y no consta si son cero legítimos o cero por pérdida. Declarado con su dueño.
+
+### La lección, que es la más incómoda de la sesión
+
+**Apliqué una regla del protocolo sin comprobar su premisa, y sobre un documento que traía la explicación
+correcta.** El criterio 5 dice «latencia 0 y 0 tokens = rechazo de infraestructura», y eso presupone que no
+hay contenido. Aquí lo había en seis de siete casos, y bastaba mirar la columna `recall` —que estaba en la
+misma fila— o leer §5.3.1 —que estaba en el documento que audito— para no equivocarse.
+
+Una regla heredada es una hipótesis con buena reputación. Sigue necesitando que se compruebe su premisa en el
+caso concreto, y **el sitio donde comprobarla suele ser el propio documento que se está auditando**.

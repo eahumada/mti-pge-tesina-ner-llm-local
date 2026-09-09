@@ -117,3 +117,33 @@ registros que faltaban.
 rechazo de infraestructura— y **68 de los 69 rescatan contenido**, con `recall > 0`. El *fallback* ahí
 funciona como vía alternativa de parseo, no como tapadera. **Benigno, confirmado con la evidencia del
 criterio 5** y no solo por inspección de los logs.
+
+
+---
+
+## CORRECCIÓN del 2026-09-10: el refinamiento de arriba estaba mal
+
+El apartado anterior afirmaba que los siete registros con latencia 0 son «rechazo de infraestructura» y que
+son «los mismos 7» que están en `fallback`, con «3 de pérdida total». **Las tres cosas son falsas** y quedan
+retiradas. Lo correcto:
+
+| Grupo | Cuántas | `parse_method` | Con `recall > 0` | Qué es |
+|:---|---:|:---|---:|:---|
+| Latencia 0 y 0 tokens | 7 | `direct_json` | **6 de 7** | **telemetría ausente**, no rechazo |
+| `parse_method = fallback` | 7 | `fallback` | 4 de 7 | el arnés usó la vía alterna |
+
+**Son conjuntos disjuntos: 14 registros distintos, no 7.**
+
+Y las siete de latencia 0 **no son un fallo pendiente**: el informe ya las declara en la salvedad de
+procedencia de §5.3.1 —«se re-extrajeron fuera del arnés de lotes tras un fallo de contexto; sus valores de
+precisión, *recall* y F1 son reales, pero su telemetría no existe»—. Se aplicó la regla del criterio 5 sin
+comprobar su premisa, que exige que **no haya contenido**.
+
+**Lo que esto cambia para el encargo §3.bis.15.** Menos de lo que decía el apartado anterior: el defecto de
+`llm_runner.py:167` que motiva la re-corrida sigue en pie tal como lo describe `FINDINGS §F85`, pero **no hay
+siete registros rechazados que recuperar**. Lo que hay es siete filas cuya telemetría no existe —y que por
+tanto no deben usarse en comparaciones de latencia ni de tokens/s, cosa que el informe ya advierte— y siete
+más, distintas, que pasaron por el camino de excepción del parseo.
+
+Ver `FINDINGS §F108.bis`. Disculpas por el ruido: el apartado anterior se deja a la vista, tachado por este,
+porque retirarlo escondería que el error se cometió.

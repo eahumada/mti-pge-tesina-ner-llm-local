@@ -52,6 +52,11 @@ FALLOS_DECLARADOS = {
     '.restore_results.log': ('2026-09-09', 'idem'),
     'cita 62.67': ('2026-09-09', 'decision 13, pendiente del autor (FINDINGS §F87)'),
     'cita 80.51': ('2026-09-09', 'decision 13, pendiente del autor (FINDINGS §F87)'),
+    'sin contenido**, que no es telemetria': ('2026-09-10',
+        'PENDIENTE del autor: de las siete filas con telemetria ausente, UNA '
+        '(real_mixed_70) tiene recall y precision a cero, de modo que la salvedad de §5.3.1 '
+        '—«sus valores de precision, recall y F1 son reales»— es imprecisa para ella: sus '
+        'valores son cero, y no consta si son cero reales o cero por perdida. Ver §F108.bis'),
     'el Anexo I dice': ('2026-09-09',
                         'decision 13, ampliada a la tercera instancia del defecto '
                         '(FINDINGS §F87.bis)'),
@@ -558,6 +563,88 @@ def c_ninguna_comprobacion_huerfana(s):
           '%d definidas · %d por el orquestador · %d invocadas aparte (%s)'
           % (len(definidas), len(registradas), len(directas),
              ', '.join(sorted(directas)) or 'ninguna'))
+
+
+def c_telemetria_ausente(s):
+    """Las filas con latencia 0 y 0 tokens estan DECLARADAS, y se distingue perdida de rechazo.
+
+    **Esta comprobacion nacio mal y se corrigio el mismo dia; conviene que se lea.** La primera
+    version aplicaba el criterio 5 del protocolo —«latencia 0 y 0 tokens = rechazo de
+    infraestructura»— y reportaba como rechazadas las siete filas de `nemotron-mini:4b_baseline`.
+    Eso era **falso**: esas siete tienen `parse_method = direct_json` y **seis de las siete traen
+    `recall > 0`**. Hay contenido, de modo que la ejecucion no se rechazo.
+
+    Y el informe **ya lo declaraba**, en la salvedad de procedencia de §5.3.1: «siete filas de
+    `nemotron-mini:4b` tienen latencia 0 y 0 tokens/s porque **se re-extrajeron fuera del arnes de
+    lotes** tras un fallo de contexto; sus valores de precision, recall y F1 son reales, pero su
+    telemetria no existe». Se aplico la regla sin comprobar su premisa, sobre un documento que
+    traia la explicacion correcta.
+
+    Lo que la comprobacion hace ahora:
+
+    1. Cuenta, en las corridas que el consolidado usa, las filas con **latencia 0 y 0 tokens**.
+    2. Las separa en **sin contenido** —recall y precision a cero, que si es rechazo o perdida
+       total— y **con contenido** —telemetria ausente, que es lo que el informe declara—.
+    3. Exige que el recuento de las que tienen contenido **coincida con el que el informe declara**.
+       Si el numero cambia, la salvedad deja de describir los datos.
+    4. Las que **no** tienen contenido si son un fallo, y se reportan.
+
+    Comprobado el dia que se escribio: siete filas con telemetria ausente, seis con contenido y una
+    sin el, y el informe declara siete. La discrepancia de esa una queda a la vista en lugar de
+    diluirse.
+    """
+    import csv as _csv
+    # Se cuenta en el CONSOLIDADO, no en las fuentes. La salvedad del informe describe las filas
+    # que llegan a las cifras publicadas, y varias fuentes del manifiesto aportan grupos que
+    # PIERDEN la fusion —`benchmark_n120_REMOTO` trae ocho filas de nemotron que el consolidado
+    # descarta en favor de la re-corrida—. Contarlas aqui daba 15 donde el informe declara 7, y la
+    # discrepancia era del contador, no del documento.
+    ruta = os.path.join(BENCH_DIR, 'results/ANALISIS_CONJUNTO_20260907/merged_results.csv')
+    con, sin, mirados, fallos = 0, [], 0, []
+    mirados += 1
+    if not os.path.exists(ruta):
+        check('las filas sin telemetria estan declaradas en el informe', mirados,
+              ['no existe el CSV del consolidado'])
+        return
+    rel = 'results/ANALISIS_CONJUNTO_20260907/merged_results.csv'
+    if True:
+        with open(ruta, encoding='utf-8') as fh:
+            for r in _csv.DictReader(fh):
+                lat, tok = r.get('latency_sec'), r.get('tokens_per_sec')
+                if lat in (None, '') or tok in (None, ''):
+                    continue
+                if float(lat) != 0.0 or float(tok) != 0.0:
+                    continue
+                # `is not None` de facto: 0.0 es el valor buscado y `if x` lo descartaria
+                rc = r.get('recall')
+                pr = r.get('precision')
+                vacio = ((rc in (None, '') or float(rc) == 0.0)
+                         and (pr in (None, '') or float(pr) == 0.0))
+                if vacio:
+                    sin.append('%s / %s / %s'
+                               % (os.path.basename(os.path.dirname(rel)),
+                                  r.get('model'), r.get('record_id')))
+                else:
+                    con += 1
+    mirados += 1
+    m = re.search(r'(\w+) filas de `nemotron-mini:4b` tienen `latencia = 0`', s)
+    PAL = {'Siete': 7, 'siete': 7, 'Ocho': 8, 'ocho': 8, 'Seis': 6, 'seis': 6,
+           'Nueve': 9, 'nueve': 9, 'Diez': 10, 'diez': 10}
+    declaradas = PAL.get(m.group(1)) if m else None
+    if declaradas is None:
+        fallos.append('no se encuentra en el informe la salvedad de las filas con latencia 0, o '
+                      'su numeral no se puede leer. Los datos traen %d con contenido' % con)
+    elif declaradas != con + len(sin):
+        fallos.append('el informe declara %d filas con latencia 0 y los datos traen %d '
+                      '(%d con contenido, %d sin el): la salvedad deja de describirlos'
+                      % (declaradas, con + len(sin), con, len(sin)))
+    mirados += 1
+    if sin:
+        fallos.append('%d fila(s) con latencia 0, 0 tokens y **sin contenido**, que no es '
+                      'telemetria ausente sino perdida: %s' % (len(sin), ', '.join(sin[:4])))
+    check('las filas sin telemetria estan declaradas en el informe', mirados, fallos,
+          '%d con contenido —telemetria ausente, declarada en §5.3.1— y %d sin el. La regla del '
+          'criterio 5 no se aplica cuando hay contenido: eso no es rechazo' % (con, len(sin)))
 
 
 def c_corpus_idioma(s):
@@ -2949,6 +3036,7 @@ def main():
     ejecutar(c_resumen_docx, s)
     ejecutar(c_indice, s)
     ejecutar(c_ninguna_comprobacion_huerfana, s)
+    ejecutar(c_telemetria_ausente, s)
     ejecutar(c_corpus_idioma, s)
     ejecutar(c_firma_categorias, s)
     ejecutar(c_referencias_findings, s)
