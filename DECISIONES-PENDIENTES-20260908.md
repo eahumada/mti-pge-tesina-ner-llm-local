@@ -124,6 +124,37 @@ Evidencia: `FINDINGS §F76`.
 
 ---
 
+## 8. ¿Se corrige el emparejamiento duplicado del evaluador, y cuándo? — **urgente**
+
+`src/evaluator.py` cuenta `tp` por cada entidad extraída que casa, pero `fn` sobre las referencias
+**distintas** casadas. Cuando dos extracciones casan con la misma referencia —«John Smith» y «Smith, John»,
+iguales para el emparejamiento difuso al 85 %— `tp` sube dos veces y la referencia se cuenta una. Consecuencia
+medible: la exhaustividad por categoría **pasa de 1,0 en 197 registros**, con un máximo de 2,444. Evidencia
+completa en `FINDINGS §F81`; artefacto en `results/EMPAREJAMIENTO_DUPLICADO_20260908/efecto.json`.
+
+**El efecto está acotado y no cambia ninguna conclusión.** Recalculado contando cada referencia una vez: el F1
+publicado está inflado **+0,145 pp de media**, máximo **+0,936 pp**; **ninguna** de las trece mejoras cambia de
+signo y **el orden de los veintiséis grupos es idéntico**. Queda muy por debajo del umbral de 0,02 en F1 que
+`CLAUDE.md` declara tolerable.
+
+**Es urgente por una razón que no es la magnitud:** la re-corrida en marcha en el equipo de 48 GB usa este
+mismo evaluador. Cada modelo que termina lo hace con la métrica actual.
+
+| Opción | Qué implica |
+|:---|:---|
+| **a) No tocar nada y declararlo** | El barrido entero queda homogéneo, que es lo que permite compararlo. El informe declara la limitación con su efecto cuantificado. Es lo más defendible y no cuesta horas de máquina |
+| **b) Corregir ahora** | Los modelos ya terminados quedarían medidos con un criterio y los que faltan con otro. Obligaría a rehacer los ocho ya hechos. **Se desaconseja** |
+| **c) Corregir después, y rehacer la medición sin reejecutar** | Al terminar el barrido, recalcular todos los registros con `tools/efecto_emparejamiento_duplicado.py`, que no necesita inferencia. Da cifras corregidas y homogéneas, a coste cero de máquina |
+
+**Recomendación: (a) para el barrido en curso y (c) al cerrarlo.** Lo que **no** debe hacerse es tocar
+`evaluator.py` mientras el barrido corre, y por eso no se ha tocado.
+
+**Y hay que decidir si el informe lo declara.** Declararlo es barato y protege: una exhaustividad de 2,444 en
+los datos crudos es justo lo que un tribunal encuentra si mira, y hallarla sin que el trabajo la mencione es
+peor que la propia cifra.
+
+---
+
 ## Y un aviso que todavía no es decisión
 
 Con tres de los trece modelos rehechos, el efecto del KB RAG **cambia de signo en los dos de 31B**: de −0,53

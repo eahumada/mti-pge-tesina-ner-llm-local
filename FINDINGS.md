@@ -2761,3 +2761,73 @@ comprobación. Ver `SEGURIDAD-CLAVE-GOOGLE-20260908.md`.
 Antes de dar por buena la bibliografía hay que ejecutar `python3 tools/verificar_informe.py --red`, y no
 solamente la forma corta. Una comprobación que existe pero no se ejecuta es indistinguible de una que no
 existe. `LEARNING §L47` lo dice para las comprobaciones vacías; esto es lo mismo para las apagadas.
+
+---
+
+## §F81 — El emparejamiento cuenta dos veces una misma referencia, y la exhaustividad llega a pasar de 1,0
+
+**2026-09-08, 23:4x.** Ejecutando `tools/composicion_fp.py --resumen`, un modo de validación que existía y no
+formaba parte de la rutina, apareció un dato que no encaja: `tp + fn` agregado en personas vale 15 664 sobre
+26 grupos, y 15 664 entre 26 no da entero. Si los veintiséis grupos puntúan **los mismos 120 artículos contra
+la misma anotación de referencia**, ese recuento tendría que ser idéntico en todos.
+
+No lo es. Va de **594 a 675** en personas y de **812 a 869** en organizaciones. Descartada primero la
+explicación benigna —que hubiera registros sin métricas—: hay **cero** en los veintiséis grupos.
+
+### El mecanismo, en el código
+
+`src/evaluator.py::evaluate_extraction_by_type` incrementa `tp` **por cada entidad extraída que casa** con
+alguna de referencia, y a continuación calcula `fn = len(gt_list) - len(matched_gts)`, es decir, sobre el
+conjunto de referencias **distintas** casadas. Si dos entidades extraídas casan con la misma referencia
+—«John Smith» y «Smith, John», que el emparejamiento difuso da por iguales al umbral del 85 %— `tp` sube dos
+veces y la referencia se cuenta una sola.
+
+De ahí se siguen tres cosas, y las tres se comprueban en los datos:
+
+1. **`tp + fn` no vale `len(gt)`**, sino `len(gt)` más el número de emparejamientos duplicados. Por eso el
+   recuento de referencia varía entre grupos que puntúan el mismo corpus.
+2. **La exhaustividad por categoría puede pasar de 1,0**, porque es `tp / len(gt_list)`. Hay **197 registros**
+   con exhaustividad mayor que uno, y el máximo observado es **2,444**. Una exhaustividad por encima de uno es
+   imposible en una métrica correcta.
+3. **La precisión no está afectada.** Cada entidad extraída contribuye como mucho una vez —el bucle hace
+   `break` al primer casamiento—, que es justo lo que su denominador cuenta.
+
+### Cuánto afecta a lo publicado, con la cifra
+
+El recálculo no necesita reejecutar inferencia: de `recall = tp / len(gt)` se despeja `len(gt)`, y las
+referencias casadas son `len(gt) - fn`. Con eso se rehace cada registro contando cada referencia una sola vez.
+Artefacto en `results/EMPAREJAMIENTO_DUPLICADO_20260908/efecto.json`, reproducible con
+`tools/efecto_emparejamiento_duplicado.py`.
+
+- **410 emparejamientos duplicados** en los 26 grupos.
+- El F1 publicado está inflado **+0,145 pp de media**, con un máximo de **+0,936 pp** en
+  `gemma4:latest_baseline`. Siempre al alza, como predice el mecanismo.
+- **Ninguna mejora cambia de signo**: cero de trece.
+- **El orden de los veintiséis grupos es idéntico** antes y después.
+
+El efecto queda muy por debajo del umbral de 0,02 en F1 que `CLAUDE.md` declara tolerable, y **no cambia
+ninguna conclusión del trabajo**. La mayor variación es la de `gemma4:latest`, cuya mejora pasa de −1,17 a
+−0,25 puntos, y sigue siendo negativa.
+
+### Por qué importa igualmente
+
+Por dos razones que no dependen de la magnitud.
+
+**La primera es de defensa.** Una exhaustividad de 2,444 en los datos crudos es exactamente lo que un tribunal
+puede encontrar si mira, y encontrarla sin que el trabajo la haya declarado es peor que declararla con su
+efecto acotado. La declaración es barata: el defecto está cuantificado, es reproducible y no altera nada.
+
+**La segunda es operativa y urgente.** La re-corrida en marcha en el equipo de 48 GB **usa este mismo
+evaluador**. Corregirlo a mitad del barrido produciría datos no comparables entre los modelos ya terminados y
+los que faltan, de modo que **no se toca `evaluator.py`** sin decisión expresa. Queda como decisión 8 en
+`DECISIONES-PENDIENTES-20260908.md`.
+
+### Lo que enseña sobre el método
+
+El indicador que lo destapó es el mismo de `§F53`: mirar `tp + fn` agregado por categoría. Allí la señal era
+que valiera cero; aquí, que **no fuera constante entre grupos que puntúan el mismo corpus**. Ambas se ven en
+una línea de aritmética y ninguna necesita reejecutar nada.
+
+Y apareció al ejecutar un modo de validación que existía desde hacía días y que nadie había corrido, igual que
+`§F80` apareció al ejecutar `--red`. Dos hallazgos seguidos por la misma causa: **una capacidad que existe y
+no se ejecuta no está comprobando nada**.
