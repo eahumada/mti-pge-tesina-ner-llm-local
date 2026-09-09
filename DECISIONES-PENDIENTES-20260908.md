@@ -64,7 +64,24 @@ capítulo de resultados.
 > adoptar nada y conviene precisarlo en el informe, acompañado de una prueba robusta —Alexander-Govern
 > o Kruskal-Wallis, las dos con p abrumadora en todas las combinaciones—.
 >
-> **Recomendación: no adoptar todavía, y esperar a `§3.bis.16`.** La pregunta que de verdad decide
+> **RESPONDIDA el 2026-09-09: `§3.bis.16` llegó y la cifra que faltaba ya está.** En la métrica
+> **restringida de la campaña nueva** la conclusión de dos modelos **sobrevive**, con deltas algo
+> mayores que los publicados: `llama3.2:latest` **+0,1111 (p ajustada 0,0075)** y `nemotron-mini:4b`
+> **+0,1441 (p = 0,0000)**. Ningún tercer modelo entra. La pérdida en la métrica de tres categorías
+> era un artefacto de la categoría fantasma arreglada, que al aportar aciertos reales comprime la
+> diferencia entre modos en el modelo de margen más estrecho. Evidencia: `FINDINGS §F123`.
+>
+> **Recomendación revisada: adoptar el consolidado nuevo es seguro**, con dos condiciones que no son
+> negociables porque las dos afectan a lo que el documento afirma. **Primera:** la significación se
+> declara sobre la **métrica restringida**, que es la que el informe ya presenta como corregida en el
+> Anexo I; sobre la de tres categorías la conclusión pasaría a un solo modelo. **Segunda:** la frase
+> de la prueba del supuesto cambia, porque la homocedasticidad **no se cumple en ninguna** de las
+> tres variantes corregidas (p entre 1,4e-11 y 1e-09) y hay que acompañarla de una prueba robusta.
+> Esa segunda condición hay que aplicarla **incluso si decides no adoptar nada**.
+>
+> **Recomendación anterior, conservada:**
+>
+> **No adoptar todavía, y esperar a `§3.bis.16`.** La pregunta que de verdad decide
 > esto es si la conclusión de dos modelos sobrevive en la métrica **restringida de la campaña
 > nueva**. En la de tres categorías `llama3.2:latest` la pierde; en la restringida de los datos
 > publicados la conserva. **Esa cifra no se puede calcular hoy** porque 12 de las 13 corridas nuevas

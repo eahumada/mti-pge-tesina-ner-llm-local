@@ -5627,3 +5627,52 @@ entre las fallidas, que es imposible con todo en su sitio. La recuperación va c
 
 **Estado del verificador:** 51 comprobaciones, 40 fallos (40 declarados, **0 nuevos**), 0 vacías.
 Autoprueba en 1,66 s por corrida.
+
+---
+
+## §F123 — La pregunta que decidía la decisión 1, respondida: la conclusión sobrevive en la métrica restringida
+
+**Fecha:** 2026-09-09 · **Origen:** el equipo de 48 GB entregó `§3.bis.16`
+
+[§F114](#f114) dejó la decisión 1 esperando **una cifra que no se podía calcular**: si la conclusión
+de dos modelos significativos sobrevive en la métrica **restringida de la campaña nueva**. En la de
+tres categorías `llama3.2:latest` la pierde ([§F113](#f113)); en la restringida de los datos
+publicados la conserva. Las dos cosas eran compatibles y faltaba la tercera casilla, que exigía el
+`per_type` de las trece corridas nuevas.
+
+**El equipo lo entregó** en el commit `3716790`: 13 de 13 corridas N=120 con su
+`detailed_results.json`. Calculado el mismo día:
+
+| Métrica | ANOVA F | Brown-Forsythe p | Modelos significativos |
+|:---|---:|---:|:---|
+| Publicado, tres categorías | 38,2222 | 0,1842 | `llama3.2:latest`, `nemotron-mini:4b` |
+| Publicado, restringida | 70,2802 | 1,33e-09 | `llama3.2:latest`, `nemotron-mini:4b` |
+| Campaña nueva, tres categorías | 119,7502 | 1,39e-11 | solo `nemotron-mini:4b` |
+| **Campaña nueva, restringida** | **79,6730** | **9,99e-10** | **`llama3.2:latest`, `nemotron-mini:4b`** |
+
+**La conclusión del trabajo se sostiene en las tres de las cuatro casillas que miden lo que el
+informe presenta como corregido**, con deltas mayores que los publicados: `llama3.2:latest` pasa de
++0,1082 a **+0,1111** (p ajustada **0,0075**) y `nemotron-mini:4b` de +0,1452 a **+0,1441**
+(p = 0,0000). Y ningún tercer modelo entra en ninguna de las cuatro.
+
+**La pérdida de `llama3.2:latest` en la métrica de tres categorías de la campaña nueva es un
+artefacto**, y ahora se puede decir por qué: al arreglarse la categoría fantasma, `Locations` pasa
+de aportar solo falsos positivos —los mismos a los dos modos, línea base y KB RAG— a aportar
+aciertos reales, lo que **comprime la diferencia entre modos** en el modelo cuyo margen era más
+estrecho. La métrica restringida no tiene esa contaminación en ninguna de las dos campañas, y es la
+única de las cuatro casillas comparable consigo misma.
+
+**Lo que queda igual en todas las variantes corregidas: la homocedasticidad no se cumple.** Las tres
+casillas que no son la publicada dan p entre 1,4e-11 y 1e-09, de modo que el ANOVA de una vía deja
+de ser la prueba adecuada en cuanto se corrige la medición, con independencia de qué consolidado se
+adopte. Es `§F114` confirmado sobre datos nuevos: la p = 0,18 del informe no acreditaba homogeneidad
+de varianzas, acreditaba que un defecto común a los 26 grupos las estaba igualando. Bajo
+Alexander-Govern y Kruskal-Wallis el resultado global es abrumador en las cuatro, así que **obliga a
+cambiar de prueba, no a retirar la conclusión**.
+
+**Consecuencia para la decisión 1.** Ya no hay nada pendiente de calcular: adoptar el consolidado
+nuevo es seguro para la conclusión del capítulo de resultados **si la significación se declara sobre
+la métrica restringida**, que es la que el informe ya presenta como corregida en el Anexo I. Lo que
+sí hay que cambiar en cualquier caso es la frase de la prueba del supuesto.
+
+**Estado del verificador:** 51 comprobaciones, 40 fallos (40 declarados, **0 nuevos**), 0 vacías.
