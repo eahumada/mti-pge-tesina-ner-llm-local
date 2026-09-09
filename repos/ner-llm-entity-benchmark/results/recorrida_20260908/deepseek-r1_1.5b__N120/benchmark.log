@@ -1,0 +1,1346 @@
+2026-09-09 00:20:40,367 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-09 00:20:40,388 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-09 00:20:40,388 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-09-09 00:20:40,389 [INFO] ner_benchmark: Corpus loaded: 120 articles split into 12 batches.
+2026-09-09 00:20:40,389 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-09 00:20:40,435 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-09 00:20:40,437 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-09 00:20:40,437 [INFO] ner_benchmark: [RAG] Using Knowledge Base mode: 'kb_combined'
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b0-1788924040 for batch 0 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b1-1788924040 for batch 1 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b2-1788924040 for batch 2 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b3-1788924040 for batch 3 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b4-1788924040 for batch 4 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b5-1788924040 for batch 5 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b6-1788924040 for batch 6 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b7-1788924040 for batch 7 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b8-1788924040 for batch 8 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b9-1788924040 for batch 9 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b10-1788924040 for batch 10 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b11-1788924040 for batch 11 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b0-1788924040 for batch 0 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b1-1788924040 for batch 1 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b2-1788924040 for batch 2 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b3-1788924040 for batch 3 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b4-1788924040 for batch 4 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b5-1788924040 for batch 5 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b6-1788924040 for batch 6 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b7-1788924040 for batch 7 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b8-1788924040 for batch 8 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b9-1788924040 for batch 9 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b10-1788924040 for batch 10 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b11-1788924040 for batch 11 to memory queue.
+2026-09-09 00:20:40,450 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=1 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-09-09 00:20:40,453 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-09 00:20:40,453 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-09 00:20:40,453 [INFO] ner_benchmark: [RAG] Worker phase — Knowledge Base mode: 'kb_combined'
+2026-09-09 00:20:40,466 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b0-1788924040 for batch 0 to memory queue.
+2026-09-09 00:20:40,466 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b1-1788924040 for batch 1 to memory queue.
+2026-09-09 00:20:40,466 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b2-1788924040 for batch 2 to memory queue.
+2026-09-09 00:20:40,466 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b3-1788924040 for batch 3 to memory queue.
+2026-09-09 00:20:40,466 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b4-1788924040 for batch 4 to memory queue.
+2026-09-09 00:20:40,466 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b5-1788924040 for batch 5 to memory queue.
+2026-09-09 00:20:40,466 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b6-1788924040 for batch 6 to memory queue.
+2026-09-09 00:20:40,466 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b7-1788924040 for batch 7 to memory queue.
+2026-09-09 00:20:40,466 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b8-1788924040 for batch 8 to memory queue.
+2026-09-09 00:20:40,466 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b9-1788924040 for batch 9 to memory queue.
+2026-09-09 00:20:40,466 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b10-1788924040 for batch 10 to memory queue.
+2026-09-09 00:20:40,466 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_baseline-b11-1788924040 for batch 11 to memory queue.
+2026-09-09 00:20:40,466 [INFO] ner_benchmark: Running RAG study 'deepseek-r1:1.5b_baseline' with 1 workers...
+2026-09-09 00:20:40,466 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_baseline-b0-1788924040 from memory queue.
+2026-09-09 00:20:40,466 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-09 00:20:40,466 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_1'...
+2026-09-09 00:20:40,467 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:20:40,471 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:20:47,112 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:20:47,594 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:20:47,624 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_2'...
+2026-09-09 00:20:47,624 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:20:47,629 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:20:52,272 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:20:52,723 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:20:52,751 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_3'...
+2026-09-09 00:20:52,751 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:20:52,756 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:20:56,625 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:20:56,830 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:20:56,857 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_4'...
+2026-09-09 00:20:56,857 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:20:56,862 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:21:02,079 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:21:02,455 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:21:02,483 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_5'...
+2026-09-09 00:21:02,483 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:21:02,487 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:21:07,796 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:21:08,067 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:21:08,096 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_6'...
+2026-09-09 00:21:08,096 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:21:08,100 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:21:14,905 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:21:15,209 [DEBUG] ner_benchmark.llm_runner: Successfully parsed JSON via brace-scanner.
+2026-09-09 00:21:15,234 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_7'...
+2026-09-09 00:21:15,234 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:21:15,238 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:21:18,938 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:21:19,296 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:21:19,321 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_8'...
+2026-09-09 00:21:19,321 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:21:19,325 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:21:22,804 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:21:22,879 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:21:22,900 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_9'...
+2026-09-09 00:21:22,900 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:21:22,903 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:21:27,616 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:21:27,989 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:21:28,018 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_10'...
+2026-09-09 00:21:28,018 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:21:28,023 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:21:31,735 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:21:32,088 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:21:32,116 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_baseline-b0-1788924040 in memory queue.
+2026-09-09 00:21:32,119 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_baseline-b1-1788924040 from memory queue.
+2026-09-09 00:21:32,120 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-09 00:21:32,120 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_11'...
+2026-09-09 00:21:32,120 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:21:32,125 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:21:37,810 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:21:38,219 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:21:38,249 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_12'...
+2026-09-09 00:21:38,249 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:21:38,254 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:21:43,376 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:21:43,857 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:21:43,876 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_13'...
+2026-09-09 00:21:43,876 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:21:43,881 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:21:48,397 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:21:48,451 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:21:48,491 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_14'...
+2026-09-09 00:21:48,491 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:21:48,495 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:21:51,419 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:21:51,549 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:21:51,569 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_15'...
+2026-09-09 00:21:51,569 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:21:51,573 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:21:54,664 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:21:55,122 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:21:55,155 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_16'...
+2026-09-09 00:21:55,156 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:21:55,160 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:22:00,763 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:22:01,274 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:22:01,300 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_17'...
+2026-09-09 00:22:01,300 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:22:01,305 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:22:05,187 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:22:05,380 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:22:05,390 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_18'...
+2026-09-09 00:22:05,390 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:22:05,397 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:22:11,521 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:22:12,018 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:22:12,039 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_19'...
+2026-09-09 00:22:12,039 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:22:12,043 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:22:16,932 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:22:17,133 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:22:17,165 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_20'...
+2026-09-09 00:22:17,165 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:22:17,169 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:22:20,610 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:22:20,744 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:22:20,777 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_baseline-b1-1788924040 in memory queue.
+2026-09-09 00:22:20,782 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_baseline-b2-1788924040 from memory queue.
+2026-09-09 00:22:20,782 [INFO] ner_benchmark: Processing batch 3 with 1 parallel workers...
+2026-09-09 00:22:20,782 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_21'...
+2026-09-09 00:22:20,782 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:22:20,786 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:22:25,170 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:22:25,377 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:22:25,400 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_22'...
+2026-09-09 00:22:25,400 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:22:25,404 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:22:28,429 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:22:28,468 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:22:28,472 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_23'...
+2026-09-09 00:22:28,473 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:22:28,477 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:22:31,631 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:22:32,046 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:22:32,063 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_24'...
+2026-09-09 00:22:32,063 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:22:32,066 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:22:35,157 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:22:35,618 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:22:35,627 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_25'...
+2026-09-09 00:22:35,627 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:22:35,630 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:22:40,116 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:22:40,198 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:22:40,224 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_26'...
+2026-09-09 00:22:40,224 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:22:40,229 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:22:48,341 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:22:48,842 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:22:48,887 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_27'...
+2026-09-09 00:22:48,887 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:22:48,890 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:22:53,754 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:22:53,950 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:22:53,979 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_28'...
+2026-09-09 00:22:53,979 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:22:53,983 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:22:58,068 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:22:58,574 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:22:58,603 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_29'...
+2026-09-09 00:22:58,603 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:22:58,608 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:23:02,684 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:23:03,170 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:23:03,194 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_30'...
+2026-09-09 00:23:03,195 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:23:03,199 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:23:08,124 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:23:08,271 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:23:08,282 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_baseline-b2-1788924040 in memory queue.
+2026-09-09 00:23:08,287 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_baseline-b3-1788924040 from memory queue.
+2026-09-09 00:23:08,287 [INFO] ner_benchmark: Processing batch 4 with 1 parallel workers...
+2026-09-09 00:23:08,287 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_31'...
+2026-09-09 00:23:08,287 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:23:08,291 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:23:13,207 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:23:13,379 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:23:13,386 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_32'...
+2026-09-09 00:23:13,386 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:23:13,390 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:23:16,031 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:23:16,447 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:23:16,465 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_33'...
+2026-09-09 00:23:16,465 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:23:16,468 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:23:19,868 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:23:20,027 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:23:20,043 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_34'...
+2026-09-09 00:23:20,043 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:23:20,046 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:23:25,609 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:23:25,625 [DEBUG] ner_benchmark.llm_runner: Successfully extracted entities via regex key fallback.
+2026-09-09 00:23:25,647 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_35'...
+2026-09-09 00:23:25,647 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:23:25,650 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:23:29,338 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:23:29,717 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:23:29,734 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_36'...
+2026-09-09 00:23:29,734 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:23:29,738 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:23:34,252 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:23:34,282 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:23:34,314 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_37'...
+2026-09-09 00:23:34,314 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:23:34,319 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:23:38,211 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:23:38,392 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:23:38,410 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_38'...
+2026-09-09 00:23:38,410 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:23:38,415 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:23:43,391 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:23:43,499 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:23:43,522 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_39'...
+2026-09-09 00:23:43,522 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:23:43,525 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:23:50,191 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:23:50,629 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:23:50,647 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_40'...
+2026-09-09 00:23:50,647 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:23:50,653 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:23:58,499 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:23:58,765 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:23:58,793 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_baseline-b3-1788924040 in memory queue.
+2026-09-09 00:23:58,805 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_baseline-b4-1788924040 from memory queue.
+2026-09-09 00:23:58,805 [INFO] ner_benchmark: Processing batch 5 with 1 parallel workers...
+2026-09-09 00:23:58,806 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_41'...
+2026-09-09 00:23:58,806 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:23:58,810 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:24:05,869 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:24:05,927 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:24:05,961 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_42'...
+2026-09-09 00:24:05,961 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:24:05,965 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:24:08,688 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:24:09,011 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:24:09,053 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_43'...
+2026-09-09 00:24:09,053 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:24:09,057 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:24:14,582 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:24:14,651 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:24:14,683 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_44'...
+2026-09-09 00:24:14,683 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:24:14,688 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:24:17,434 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:24:17,745 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:24:17,778 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_45'...
+2026-09-09 00:24:17,778 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:24:17,782 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:24:27,362 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:24:27,428 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:24:27,449 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_46'...
+2026-09-09 00:24:27,450 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:24:27,453 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:24:33,937 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:24:34,057 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:24:34,077 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_47'...
+2026-09-09 00:24:34,077 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:24:34,081 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:24:41,023 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:24:41,199 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:24:41,245 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_48'...
+2026-09-09 00:24:41,245 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:24:41,249 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:24:48,143 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:24:48,378 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:24:48,396 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_49'...
+2026-09-09 00:24:48,396 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:24:48,402 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:24:54,708 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:24:55,002 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:24:55,037 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_50'...
+2026-09-09 00:24:55,037 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:24:55,041 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:24:59,281 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:24:59,602 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:24:59,635 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_baseline-b4-1788924040 in memory queue.
+2026-09-09 00:24:59,649 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_baseline-b5-1788924040 from memory queue.
+2026-09-09 00:24:59,650 [INFO] ner_benchmark: Processing batch 6 with 1 parallel workers...
+2026-09-09 00:24:59,650 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_51'...
+2026-09-09 00:24:59,650 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:24:59,654 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:25:07,367 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:25:07,776 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:25:07,804 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_52'...
+2026-09-09 00:25:07,804 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:25:07,808 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:25:11,355 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:25:11,873 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:25:11,908 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_53'...
+2026-09-09 00:25:11,908 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:25:11,913 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:25:17,391 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:25:17,491 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:25:17,511 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_54'...
+2026-09-09 00:25:17,511 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:25:17,515 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:25:23,979 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:25:24,105 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:25:24,121 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_55'...
+2026-09-09 00:25:24,121 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:25:24,127 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:25:29,398 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:25:29,708 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:25:29,732 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_56'...
+2026-09-09 00:25:29,732 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:25:29,736 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:25:37,746 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:25:37,838 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:25:37,864 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_57'...
+2026-09-09 00:25:37,865 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:25:37,868 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:25:43,169 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:25:43,439 [DEBUG] ner_benchmark.llm_runner: Successfully extracted entities via regex key fallback.
+2026-09-09 00:25:43,466 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_58'...
+2026-09-09 00:25:43,466 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:25:43,470 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:25:49,831 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:25:50,086 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:25:50,108 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_59'...
+2026-09-09 00:25:50,108 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:25:50,112 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:25:54,619 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:25:54,659 [DEBUG] ner_benchmark.llm_runner: Successfully extracted entities via regex key fallback.
+2026-09-09 00:25:54,683 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_60'...
+2026-09-09 00:25:54,683 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:25:54,686 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:25:59,361 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:25:59,765 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:25:59,794 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_baseline-b5-1788924040 in memory queue.
+2026-09-09 00:25:59,810 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_baseline-b6-1788924040 from memory queue.
+2026-09-09 00:25:59,811 [INFO] ner_benchmark: Processing batch 7 with 1 parallel workers...
+2026-09-09 00:25:59,811 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_61'...
+2026-09-09 00:25:59,811 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:25:59,815 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:26:06,668 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:26:06,917 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:26:06,971 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_62'...
+2026-09-09 00:26:06,971 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:26:06,975 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:26:10,085 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:26:10,528 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:26:10,552 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_63'...
+2026-09-09 00:26:10,552 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:26:10,556 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:26:13,473 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:26:13,617 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:26:13,642 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_64'...
+2026-09-09 00:26:13,643 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:26:13,647 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:26:16,450 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:26:16,688 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:26:16,695 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_65'...
+2026-09-09 00:26:16,695 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:26:16,700 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:26:21,436 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:26:21,745 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:26:21,760 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_66'...
+2026-09-09 00:26:21,760 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:26:21,764 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:26:26,069 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:26:26,335 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:26:26,377 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_67'...
+2026-09-09 00:26:26,377 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:26:26,381 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:26:34,156 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:26:34,503 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:26:34,546 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_68'...
+2026-09-09 00:26:34,546 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:26:34,550 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:26:37,299 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:26:37,617 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:26:37,639 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_69'...
+2026-09-09 00:26:37,640 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:26:37,644 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:26:40,979 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:26:41,207 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:26:41,250 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_70'...
+2026-09-09 00:26:41,251 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:26:41,255 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:26:43,864 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:26:44,311 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:26:44,349 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_baseline-b6-1788924040 in memory queue.
+2026-09-09 00:26:44,367 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_baseline-b7-1788924040 from memory queue.
+2026-09-09 00:26:44,367 [INFO] ner_benchmark: Processing batch 8 with 1 parallel workers...
+2026-09-09 00:26:44,367 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_71'...
+2026-09-09 00:26:44,367 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:26:44,371 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:26:48,875 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:26:48,947 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:26:48,975 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_72'...
+2026-09-09 00:26:48,975 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:26:48,980 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:26:54,078 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:26:54,569 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:26:54,596 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_73'...
+2026-09-09 00:26:54,596 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:26:54,601 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:26:58,778 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:26:59,182 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:26:59,211 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_74'...
+2026-09-09 00:26:59,212 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:26:59,216 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:27:03,613 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:27:03,804 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:27:03,826 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_75'...
+2026-09-09 00:27:03,826 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:27:03,831 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:27:07,158 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:27:07,400 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:27:07,406 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_76'...
+2026-09-09 00:27:07,406 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:27:07,410 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:27:12,064 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:27:12,470 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:27:12,471 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_77'...
+2026-09-09 00:27:12,471 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:27:12,474 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:27:44,817 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:27:44,882 [WARNING] ner_benchmark.llm_runner: Failed to parse JSON from raw response: ...
+2026-09-09 00:27:44,922 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_78'...
+2026-09-09 00:27:44,922 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:27:44,926 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:27:52,132 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:27:52,533 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:27:52,550 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_79'...
+2026-09-09 00:27:52,550 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:27:52,555 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:27:58,582 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:27:58,653 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:27:58,670 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_80'...
+2026-09-09 00:27:58,670 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:27:58,674 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:28:04,928 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:28:05,266 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:28:05,299 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_baseline-b7-1788924040 in memory queue.
+2026-09-09 00:28:05,316 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_baseline-b8-1788924040 from memory queue.
+2026-09-09 00:28:05,316 [INFO] ner_benchmark: Processing batch 9 with 1 parallel workers...
+2026-09-09 00:28:05,316 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_81'...
+2026-09-09 00:28:05,316 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:28:05,320 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:28:12,996 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:28:13,437 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:28:13,470 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_82'...
+2026-09-09 00:28:13,470 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:28:13,475 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:28:17,851 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:28:18,045 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:28:18,079 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_83'...
+2026-09-09 00:28:18,079 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:28:18,083 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:28:25,530 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:28:25,712 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:28:25,724 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_84'...
+2026-09-09 00:28:25,724 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:28:25,727 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:28:30,683 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:28:30,819 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:28:30,830 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_85'...
+2026-09-09 00:28:30,830 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:28:30,834 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:28:36,935 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:28:37,433 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:28:37,447 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_86'...
+2026-09-09 00:28:37,447 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:28:37,452 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:28:40,518 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:28:41,013 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:28:41,031 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_87'...
+2026-09-09 00:28:41,032 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:28:41,036 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:28:44,162 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:28:44,589 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:28:44,610 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_88'...
+2026-09-09 00:28:44,610 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:28:44,616 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:28:49,317 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:28:49,696 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:28:49,709 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_89'...
+2026-09-09 00:28:49,710 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:28:49,714 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:28:53,682 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:28:53,776 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:28:53,802 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_90'...
+2026-09-09 00:28:53,802 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:28:53,807 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:28:57,809 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:28:57,867 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:28:57,902 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_baseline-b8-1788924040 in memory queue.
+2026-09-09 00:28:57,920 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_baseline-b9-1788924040 from memory queue.
+2026-09-09 00:28:57,920 [INFO] ner_benchmark: Processing batch 10 with 1 parallel workers...
+2026-09-09 00:28:57,921 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_91'...
+2026-09-09 00:28:57,921 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:28:57,924 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:29:06,801 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:29:07,036 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:29:07,065 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_92'...
+2026-09-09 00:29:07,065 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:29:07,069 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:29:11,384 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:29:11,641 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:29:11,667 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_93'...
+2026-09-09 00:29:11,667 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:29:11,671 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:29:18,134 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:29:18,260 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:29:18,286 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_94'...
+2026-09-09 00:29:18,286 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:29:18,290 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:29:25,709 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:29:25,884 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:29:25,909 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_95'...
+2026-09-09 00:29:25,909 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:29:25,913 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:29:31,190 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:29:31,499 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:29:31,514 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_96'...
+2026-09-09 00:29:31,514 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:29:31,518 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:29:33,891 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:29:34,055 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:29:34,074 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_97'...
+2026-09-09 00:29:34,074 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:29:34,079 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:29:38,407 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:29:38,649 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:29:38,676 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_98'...
+2026-09-09 00:29:38,677 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:29:38,682 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:29:44,095 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:29:44,282 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:29:44,331 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_99'...
+2026-09-09 00:29:44,331 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:29:44,335 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:29:47,164 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:29:47,409 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:29:47,423 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_100'...
+2026-09-09 00:29:47,424 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:29:47,430 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:29:53,616 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:29:54,042 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:29:54,066 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_baseline-b9-1788924040 in memory queue.
+2026-09-09 00:29:54,084 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_baseline-b10-1788924040 from memory queue.
+2026-09-09 00:29:54,084 [INFO] ner_benchmark: Processing batch 11 with 1 parallel workers...
+2026-09-09 00:29:54,084 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_101'...
+2026-09-09 00:29:54,084 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:29:54,087 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:29:59,639 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:29:59,677 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:29:59,699 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_102'...
+2026-09-09 00:29:59,699 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:29:59,705 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:30:03,408 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:30:03,788 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:30:03,790 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_103'...
+2026-09-09 00:30:03,790 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:30:03,796 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:30:07,397 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:30:07,886 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:30:07,894 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_104'...
+2026-09-09 00:30:07,894 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:30:07,901 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:30:12,237 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:30:12,485 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:30:12,522 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_105'...
+2026-09-09 00:30:12,522 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:30:12,526 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:30:36,333 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:30:36,356 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:30:36,386 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_106'...
+2026-09-09 00:30:36,386 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:30:36,390 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:30:41,425 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:30:41,468 [DEBUG] ner_benchmark.llm_runner: Successfully parsed JSON after truncation repair.
+2026-09-09 00:30:41,477 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_107'...
+2026-09-09 00:30:41,477 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:30:41,483 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:30:47,173 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:30:47,592 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:30:47,612 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_108'...
+2026-09-09 00:30:47,612 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:30:47,618 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:30:50,277 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:30:50,677 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:30:50,694 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_109'...
+2026-09-09 00:30:50,695 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:30:50,700 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:30:55,757 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:30:55,797 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:30:55,840 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_110'...
+2026-09-09 00:30:55,840 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:30:55,844 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:30:59,857 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:30:59,914 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:30:59,941 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_baseline-b10-1788924040 in memory queue.
+2026-09-09 00:30:59,962 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 620s (≥600s) | workers 1 → 2 | ceiling=9 (75% of max=12)
+2026-09-09 00:30:59,962 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_baseline-b11-1788924040 from memory queue.
+2026-09-09 00:30:59,962 [INFO] ner_benchmark: Processing batch 12 with 2 parallel workers...
+2026-09-09 00:30:59,963 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_111'...
+2026-09-09 00:30:59,963 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:30:59,963 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_112'...
+2026-09-09 00:30:59,963 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:30:59,966 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:30:59,966 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:31:04,985 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:31:05,047 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:31:05,057 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_113'...
+2026-09-09 00:31:05,058 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:31:05,063 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:31:11,111 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:31:11,622 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:31:11,654 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_114'...
+2026-09-09 00:31:11,654 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:31:11,658 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:31:14,573 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:31:14,699 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:31:14,713 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_115'...
+2026-09-09 00:31:14,713 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:31:14,717 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:31:22,823 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:31:23,316 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:31:23,339 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_116'...
+2026-09-09 00:31:23,339 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:31:23,343 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:31:26,539 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:31:26,874 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:31:26,876 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_117'...
+2026-09-09 00:31:26,876 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:31:26,880 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:31:30,433 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:31:30,941 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:31:30,945 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_118'...
+2026-09-09 00:31:30,945 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:31:30,949 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:31:33,108 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:31:33,475 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:31:33,492 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_119'...
+2026-09-09 00:31:33,493 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:31:33,496 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:31:38,690 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:31:39,037 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:31:39,050 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_baseline') -> Extracting entities for record 'real_mixed_120'...
+2026-09-09 00:31:39,050 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:31:39,055 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:31:42,738 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:31:43,110 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:31:46,678 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:31:47,169 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:31:47,186 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_baseline-b11-1788924040 in memory queue.
+2026-09-09 00:31:47,211 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b0-1788924707 for batch 0 to memory queue.
+2026-09-09 00:31:47,211 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b1-1788924707 for batch 1 to memory queue.
+2026-09-09 00:31:47,211 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b2-1788924707 for batch 2 to memory queue.
+2026-09-09 00:31:47,211 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b3-1788924707 for batch 3 to memory queue.
+2026-09-09 00:31:47,211 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b4-1788924707 for batch 4 to memory queue.
+2026-09-09 00:31:47,211 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b5-1788924707 for batch 5 to memory queue.
+2026-09-09 00:31:47,211 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b6-1788924707 for batch 6 to memory queue.
+2026-09-09 00:31:47,211 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b7-1788924707 for batch 7 to memory queue.
+2026-09-09 00:31:47,211 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b8-1788924707 for batch 8 to memory queue.
+2026-09-09 00:31:47,211 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b9-1788924707 for batch 9 to memory queue.
+2026-09-09 00:31:47,211 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b10-1788924707 for batch 10 to memory queue.
+2026-09-09 00:31:47,211 [INFO] ner_benchmark.pub_sub: Published task deepseek-r1:1.5b_kb_rag-b11-1788924707 for batch 11 to memory queue.
+2026-09-09 00:31:47,211 [INFO] ner_benchmark: Running RAG study 'deepseek-r1:1.5b_kb_rag' with 2 workers...
+2026-09-09 00:31:47,211 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_kb_rag-b0-1788924707 from memory queue.
+2026-09-09 00:31:47,212 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_kb_rag-b1-1788924707 from memory queue.
+2026-09-09 00:31:47,212 [INFO] ner_benchmark: Processing batch 1 with 2 parallel workers...
+2026-09-09 00:31:47,212 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_1'...
+2026-09-09 00:31:47,212 [INFO] ner_benchmark: Processing batch 2 with 2 parallel workers...
+2026-09-09 00:31:47,212 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_2'...
+2026-09-09 00:31:47,212 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_12'...
+2026-09-09 00:31:47,212 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_11'...
+2026-09-09 00:31:47,572 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:31:47,583 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:31:47,591 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:31:47,612 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:31:47,625 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:31:47,625 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:31:47,626 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:31:47,629 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:31:55,070 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:31:55,220 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:31:55,254 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_13'...
+2026-09-09 00:31:55,353 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:31:55,356 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:31:59,637 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:31:59,795 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:31:59,816 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_14'...
+2026-09-09 00:31:59,912 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:31:59,916 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:32:04,918 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:32:05,360 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:32:05,390 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_3'...
+2026-09-09 00:32:05,488 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:32:05,492 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:32:09,869 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:32:09,956 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:32:09,984 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_4'...
+2026-09-09 00:32:10,074 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:32:10,077 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:32:15,445 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:32:15,644 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:32:15,681 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_15'...
+2026-09-09 00:32:15,768 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:32:15,771 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:32:31,649 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:32:31,861 [DEBUG] ner_benchmark.llm_runner: Successfully extracted entities via regex key fallback.
+2026-09-09 00:32:31,887 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_16'...
+2026-09-09 00:32:31,980 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:32:31,984 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:32:41,380 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:32:41,509 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:32:41,539 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_5'...
+2026-09-09 00:32:41,630 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:32:41,633 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:32:48,650 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:32:49,136 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:32:49,167 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_6'...
+2026-09-09 00:32:49,265 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:32:49,268 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:32:52,335 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:32:52,731 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:32:52,757 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_17'...
+2026-09-09 00:32:52,854 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:32:52,857 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:33:25,763 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:33:26,171 [DEBUG] ner_benchmark.llm_runner: Successfully extracted entities via regex key fallback.
+2026-09-09 00:33:26,194 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_18'...
+2026-09-09 00:33:26,294 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:33:26,297 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:33:31,106 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:33:31,292 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:33:31,322 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_7'...
+2026-09-09 00:33:31,421 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:33:31,425 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:33:35,843 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:33:35,935 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:33:35,964 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_8'...
+2026-09-09 00:33:36,068 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:33:36,072 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:33:39,138 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:33:39,500 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:33:39,507 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_19'...
+2026-09-09 00:33:39,612 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:33:39,616 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:33:43,926 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:33:44,036 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:33:44,060 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_20'...
+2026-09-09 00:33:44,155 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:33:44,158 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:33:48,412 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:33:48,703 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:33:48,735 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_9'...
+2026-09-09 00:33:48,833 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:33:48,837 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:33:53,384 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:33:53,841 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:33:53,865 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_10'...
+2026-09-09 00:33:53,963 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:33:53,967 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:33:56,264 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:33:56,377 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:33:58,809 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:33:58,877 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:33:58,909 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_kb_rag-b1-1788924707 in memory queue.
+2026-09-09 00:33:58,936 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 799s (≥600s) | workers 2 → 3 | ceiling=9 (75% of max=12)
+2026-09-09 00:33:58,936 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_kb_rag-b2-1788924707 from memory queue.
+2026-09-09 00:33:58,936 [INFO] ner_benchmark: Processing batch 3 with 3 parallel workers...
+2026-09-09 00:33:58,936 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_21'...
+2026-09-09 00:33:58,936 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_22'...
+2026-09-09 00:33:58,936 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_23'...
+2026-09-09 00:33:59,154 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:33:59,176 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:33:59,179 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:33:59,180 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:33:59,184 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:33:59,187 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:34:01,818 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:34:02,032 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:34:05,929 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:34:06,136 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:34:06,158 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_kb_rag-b0-1788924707 in memory queue.
+2026-09-09 00:34:06,184 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_kb_rag-b3-1788924707 from memory queue.
+2026-09-09 00:34:06,184 [INFO] ner_benchmark: Processing batch 4 with 3 parallel workers...
+2026-09-09 00:34:06,184 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_31'...
+2026-09-09 00:34:06,184 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_32'...
+2026-09-09 00:34:06,185 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_33'...
+2026-09-09 00:34:06,450 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:34:06,484 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:34:06,486 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:34:06,489 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:34:06,490 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:34:06,493 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:34:10,585 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:34:10,852 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:34:10,857 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_24'...
+2026-09-09 00:34:10,948 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:34:10,951 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:34:13,978 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:34:14,389 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:34:14,414 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_25'...
+2026-09-09 00:34:14,514 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:34:14,517 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:34:17,638 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:34:18,014 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:34:18,032 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_26'...
+2026-09-09 00:34:18,132 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:34:18,135 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:34:23,156 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:34:23,199 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:34:23,209 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_34'...
+2026-09-09 00:34:23,301 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:34:23,304 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:34:26,340 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:34:26,759 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:34:26,784 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_35'...
+2026-09-09 00:34:26,885 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:34:26,888 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:34:32,100 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:34:32,331 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:34:32,361 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_36'...
+2026-09-09 00:34:32,452 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:34:32,455 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:34:44,801 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:34:44,864 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:34:44,883 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_27'...
+2026-09-09 00:34:44,985 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:34:44,989 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:34:49,892 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:34:49,957 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:34:49,983 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_28'...
+2026-09-09 00:34:50,079 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:34:50,083 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:34:54,994 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:34:55,098 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:34:55,157 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_29'...
+2026-09-09 00:34:55,243 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:34:55,247 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:35:01,342 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:35:01,837 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:35:01,860 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_37'...
+2026-09-09 00:35:01,958 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:35:01,961 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:35:05,705 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:35:05,904 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:35:05,922 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_38'...
+2026-09-09 00:35:06,025 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:35:06,028 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:35:10,060 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:35:10,445 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:35:10,477 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_39'...
+2026-09-09 00:35:10,571 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:35:10,574 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:35:13,928 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:35:14,369 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:35:14,395 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_30'...
+2026-09-09 00:35:14,492 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:35:14,496 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:35:18,540 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:35:18,958 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:35:22,550 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:35:22,672 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:35:26,892 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:35:27,314 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:35:27,339 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_40'...
+2026-09-09 00:35:27,439 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:35:27,442 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:35:30,204 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:35:30,373 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:35:33,665 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:35:33,916 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:35:36,990 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:35:37,257 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:35:37,270 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_kb_rag-b2-1788924707 in memory queue.
+2026-09-09 00:35:37,296 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_kb_rag-b4-1788924707 from memory queue.
+2026-09-09 00:35:37,296 [INFO] ner_benchmark: Processing batch 5 with 3 parallel workers...
+2026-09-09 00:35:37,297 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_41'...
+2026-09-09 00:35:37,297 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_42'...
+2026-09-09 00:35:37,305 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_43'...
+2026-09-09 00:35:37,526 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:35:37,571 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:35:37,572 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:35:37,576 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:35:37,577 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:35:37,580 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:35:40,500 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:35:40,628 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:35:40,656 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_kb_rag-b3-1788924707 in memory queue.
+2026-09-09 00:35:40,687 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_kb_rag-b5-1788924707 from memory queue.
+2026-09-09 00:35:40,687 [INFO] ner_benchmark: Processing batch 6 with 3 parallel workers...
+2026-09-09 00:35:40,687 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_51'...
+2026-09-09 00:35:40,687 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_52'...
+2026-09-09 00:35:40,696 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_53'...
+2026-09-09 00:35:40,893 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:35:40,927 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:35:40,930 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:35:40,932 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:35:40,933 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:35:40,936 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:35:44,045 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:35:44,168 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:35:44,193 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_44'...
+2026-09-09 00:35:44,281 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:35:44,285 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:35:47,806 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:35:48,216 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:35:48,252 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_45'...
+2026-09-09 00:35:48,341 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:35:48,344 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:35:58,227 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:35:58,372 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:35:58,408 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_46'...
+2026-09-09 00:35:58,504 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:35:58,507 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:36:00,854 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:36:01,196 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:36:01,216 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_54'...
+2026-09-09 00:36:01,314 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:36:01,317 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:36:04,464 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:36:04,717 [DEBUG] ner_benchmark.llm_runner: Successfully extracted entities via regex key fallback.
+2026-09-09 00:36:04,735 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_55'...
+2026-09-09 00:36:04,828 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:36:04,832 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:36:08,022 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:36:08,319 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:36:08,348 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_56'...
+2026-09-09 00:36:08,445 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:36:08,449 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:36:12,719 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:36:13,169 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:36:13,189 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_47'...
+2026-09-09 00:36:13,288 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:36:13,292 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:36:16,166 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:36:16,197 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:36:16,219 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_48'...
+2026-09-09 00:36:16,310 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:36:16,314 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:36:22,131 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:36:22,362 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:36:22,385 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_49'...
+2026-09-09 00:36:22,488 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:36:22,491 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:36:26,476 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:36:26,655 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:36:26,662 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_57'...
+2026-09-09 00:36:26,751 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:36:26,754 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:36:30,982 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:36:31,172 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:36:31,193 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_58'...
+2026-09-09 00:36:31,279 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:36:31,283 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:36:37,990 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:36:38,325 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:36:38,353 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_59'...
+2026-09-09 00:36:38,452 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:36:38,456 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:36:42,939 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:36:43,193 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:36:43,229 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_50'...
+2026-09-09 00:36:43,330 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:36:43,333 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:36:46,748 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:36:47,218 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:36:52,086 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:36:52,378 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:36:55,874 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:36:56,144 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:36:56,176 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_60'...
+2026-09-09 00:36:56,279 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:36:56,283 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:37:04,840 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:37:05,190 [DEBUG] ner_benchmark.llm_runner: Successfully extracted entities via regex key fallback.
+2026-09-09 00:37:10,277 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:37:10,402 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:37:18,539 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:37:18,761 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:37:18,787 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_kb_rag-b4-1788924707 in memory queue.
+2026-09-09 00:37:18,818 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 998s (≥600s) | workers 3 → 4 | ceiling=9 (75% of max=12)
+2026-09-09 00:37:18,818 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_kb_rag-b6-1788924707 from memory queue.
+2026-09-09 00:37:18,818 [INFO] ner_benchmark: Processing batch 7 with 4 parallel workers...
+2026-09-09 00:37:18,818 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_61'...
+2026-09-09 00:37:18,818 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_62'...
+2026-09-09 00:37:18,819 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_63'...
+2026-09-09 00:37:18,840 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_64'...
+2026-09-09 00:37:19,147 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:37:19,171 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:37:19,172 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:37:19,175 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:37:19,175 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:37:19,176 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:37:19,176 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:37:19,179 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:37:20,862 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:37:21,063 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:37:21,080 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_kb_rag-b5-1788924707 in memory queue.
+2026-09-09 00:37:21,110 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_kb_rag-b7-1788924707 from memory queue.
+2026-09-09 00:37:21,110 [INFO] ner_benchmark: Processing batch 8 with 4 parallel workers...
+2026-09-09 00:37:21,110 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_71'...
+2026-09-09 00:37:21,111 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_72'...
+2026-09-09 00:37:21,111 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_73'...
+2026-09-09 00:37:21,126 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_74'...
+2026-09-09 00:37:21,427 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:37:21,435 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:37:21,471 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:37:21,473 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:37:21,474 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:37:21,476 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:37:21,477 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:37:21,480 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:37:25,826 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:37:26,288 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:37:26,309 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_65'...
+2026-09-09 00:37:26,408 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:37:26,411 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:37:30,725 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:37:30,858 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:37:30,868 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_66'...
+2026-09-09 00:37:30,967 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:37:30,970 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:37:38,419 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:37:38,440 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:37:38,457 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_67'...
+2026-09-09 00:37:38,544 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:37:38,547 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:37:45,496 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:37:46,002 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:37:46,056 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_68'...
+2026-09-09 00:37:46,155 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:37:46,158 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:38:18,767 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:38:19,163 [WARNING] ner_benchmark.llm_runner: Failed to parse JSON from raw response: ...
+2026-09-09 00:38:19,181 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_75'...
+2026-09-09 00:38:19,277 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:38:19,281 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:38:23,377 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:38:23,833 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:38:23,862 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_76'...
+2026-09-09 00:38:23,960 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:38:23,963 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:38:35,629 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:38:35,932 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:38:35,960 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_77'...
+2026-09-09 00:38:36,057 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:38:36,061 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:38:39,010 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:38:39,452 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:38:39,466 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_78'...
+2026-09-09 00:38:39,563 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:38:39,567 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:38:43,852 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:38:43,895 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:38:43,918 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_69'...
+2026-09-09 00:38:44,011 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:38:44,015 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:39:16,949 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:39:17,249 [WARNING] ner_benchmark.llm_runner: Failed to parse JSON from raw response: ...
+2026-09-09 00:39:17,283 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_70'...
+2026-09-09 00:39:17,391 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:39:17,394 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:39:23,949 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:39:24,460 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:39:27,992 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:39:28,428 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:39:31,766 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:39:32,214 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:39:32,224 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_79'...
+2026-09-09 00:39:32,334 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:39:32,338 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:39:34,039 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:39:34,367 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:39:34,367 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_80'...
+2026-09-09 00:39:34,470 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:39:34,473 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:39:39,288 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:39:39,320 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:39:44,913 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:39:45,330 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:39:49,061 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:39:49,402 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:39:52,718 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:39:52,899 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:39:52,936 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_kb_rag-b6-1788924707 in memory queue.
+2026-09-09 00:39:52,971 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 1153s (≥600s) | workers 4 → 5 | ceiling=9 (75% of max=12)
+2026-09-09 00:39:52,971 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_kb_rag-b8-1788924707 from memory queue.
+2026-09-09 00:39:52,971 [INFO] ner_benchmark: Processing batch 9 with 5 parallel workers...
+2026-09-09 00:39:52,972 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_81'...
+2026-09-09 00:39:52,972 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_82'...
+2026-09-09 00:39:52,989 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_83'...
+2026-09-09 00:39:53,008 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_84'...
+2026-09-09 00:39:53,017 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_85'...
+2026-09-09 00:39:53,310 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:39:53,348 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:39:53,382 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:39:53,383 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:39:53,383 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:39:53,387 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:39:53,388 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:39:53,391 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:39:53,391 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:39:53,392 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:40:01,548 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:40:01,706 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:40:05,462 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:40:05,908 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:40:05,942 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_kb_rag-b7-1788924707 in memory queue.
+2026-09-09 00:40:05,975 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_kb_rag-b9-1788924707 from memory queue.
+2026-09-09 00:40:05,976 [INFO] ner_benchmark: Processing batch 10 with 5 parallel workers...
+2026-09-09 00:40:05,976 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_91'...
+2026-09-09 00:40:05,976 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_92'...
+2026-09-09 00:40:05,984 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_93'...
+2026-09-09 00:40:06,017 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_94'...
+2026-09-09 00:40:06,027 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_95'...
+2026-09-09 00:40:06,306 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:40:06,362 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:40:06,383 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:40:06,395 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:40:06,395 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:40:06,409 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:40:06,433 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:40:06,434 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:40:06,438 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:40:06,441 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:40:08,546 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:40:08,572 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:40:08,596 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_86'...
+2026-09-09 00:40:08,691 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:40:08,694 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:40:12,559 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:40:12,651 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:40:12,679 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_87'...
+2026-09-09 00:40:12,777 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:40:12,780 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:40:16,211 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:40:16,692 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:40:16,706 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_88'...
+2026-09-09 00:40:16,809 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:40:16,813 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:40:19,192 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:40:19,684 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:40:19,708 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_89'...
+2026-09-09 00:40:19,808 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:40:19,811 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:40:22,409 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:40:22,730 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:40:22,750 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_90'...
+2026-09-09 00:40:22,851 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:40:22,855 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:40:26,872 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:40:27,187 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:40:27,209 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_96'...
+2026-09-09 00:40:27,310 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:40:27,314 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:40:36,685 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:40:36,882 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:40:36,895 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_97'...
+2026-09-09 00:40:37,000 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:40:37,003 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:40:40,278 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:40:40,373 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:40:40,393 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_98'...
+2026-09-09 00:40:40,493 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:40:40,496 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:40:50,511 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:40:51,006 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:40:51,038 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_99'...
+2026-09-09 00:40:51,140 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:40:51,143 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:41:23,640 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:41:23,930 [WARNING] ner_benchmark.llm_runner: Failed to parse JSON from raw response: ...
+2026-09-09 00:41:23,955 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_100'...
+2026-09-09 00:41:24,072 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:41:24,076 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:41:27,686 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:41:28,148 [DEBUG] ner_benchmark.llm_runner: Successfully extracted entities via regex key fallback.
+2026-09-09 00:41:31,563 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:41:31,689 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:41:36,288 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:41:36,743 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:41:38,779 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:41:39,295 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:41:44,185 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:41:44,400 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:41:44,435 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_kb_rag-b8-1788924707 in memory queue.
+2026-09-09 00:41:44,475 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_kb_rag-b10-1788924707 from memory queue.
+2026-09-09 00:41:44,475 [INFO] ner_benchmark: Processing batch 11 with 5 parallel workers...
+2026-09-09 00:41:44,475 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_101'...
+2026-09-09 00:41:44,475 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_102'...
+2026-09-09 00:41:44,475 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_103'...
+2026-09-09 00:41:44,495 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_104'...
+2026-09-09 00:41:44,517 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_105'...
+2026-09-09 00:41:44,796 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:41:44,909 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:41:44,930 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:41:44,935 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:41:44,935 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:41:44,939 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:41:44,940 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:41:44,940 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:41:44,940 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:41:44,943 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:41:47,261 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:41:47,384 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:41:50,712 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:41:50,967 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:41:54,878 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:41:55,020 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:41:57,743 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:41:58,059 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:42:01,997 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:42:02,111 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:42:02,144 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_kb_rag-b9-1788924707 in memory queue.
+2026-09-09 00:42:02,183 [INFO] ner_benchmark.adaptive_workers: [AIMD] ⬆  ADDITIVE INCREASE | stable for 1282s (≥600s) | workers 5 → 6 | ceiling=9 (75% of max=12)
+2026-09-09 00:42:02,183 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task deepseek-r1:1.5b_kb_rag-b11-1788924707 from memory queue.
+2026-09-09 00:42:02,184 [INFO] ner_benchmark: Processing batch 12 with 6 parallel workers...
+2026-09-09 00:42:02,184 [INFO] ner_benchmark: [Worker 1] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_111'...
+2026-09-09 00:42:02,184 [INFO] ner_benchmark: [Worker 2] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_112'...
+2026-09-09 00:42:02,184 [INFO] ner_benchmark: [Worker 4] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_114'...
+2026-09-09 00:42:02,184 [INFO] ner_benchmark: [Worker 3] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_113'...
+2026-09-09 00:42:02,243 [INFO] ner_benchmark: [Worker 5] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_115'...
+2026-09-09 00:42:02,290 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_116'...
+2026-09-09 00:42:02,586 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:42:02,640 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:42:02,652 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:42:02,652 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:42:02,683 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:42:02,717 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:42:02,720 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:42:02,720 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:42:02,727 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:42:02,727 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:42:02,728 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:42:02,731 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:42:07,447 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:42:07,756 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:42:07,775 [INFO] ner_benchmark: [Worker 6] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_106'...
+2026-09-09 00:42:07,876 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:42:07,880 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:42:10,864 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:42:11,326 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:42:11,358 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_107'...
+2026-09-09 00:42:11,457 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:42:11,460 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:42:18,582 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:42:18,906 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:42:18,911 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_108'...
+2026-09-09 00:42:19,015 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:42:19,018 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:42:22,105 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:42:22,448 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:42:22,467 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_109'...
+2026-09-09 00:42:22,569 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:42:22,572 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:42:26,736 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:42:27,072 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:42:27,076 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_110'...
+2026-09-09 00:42:27,183 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:42:27,186 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:42:30,841 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:42:31,205 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:42:31,220 [INFO] ner_benchmark: [Worker 7] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_117'...
+2026-09-09 00:42:31,324 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:42:31,328 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:42:36,432 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:42:36,773 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:42:36,815 [INFO] ner_benchmark: [Worker 8] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_118'...
+2026-09-09 00:42:36,914 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:42:36,917 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:42:41,348 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:42:41,686 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:42:41,692 [INFO] ner_benchmark: [Worker 9] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_119'...
+2026-09-09 00:42:41,793 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:42:41,809 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:42:44,710 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:42:44,872 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:42:44,876 [INFO] ner_benchmark: [Worker 10] Model 'deepseek-r1:1.5b' (Mapped: 'deepseek-r1:1.5b_kb_rag') -> Extracting entities for record 'real_mixed_120'...
+2026-09-09 00:42:44,969 [DEBUG] ner_benchmark.providers.factory: Factory: model 'deepseek-r1:1.5b' → OllamaProvider (default)
+2026-09-09 00:42:44,973 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=deepseek-r1:1.5b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:42:48,636 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:42:48,924 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:42:53,691 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:42:53,991 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:42:57,606 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:42:58,041 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:43:02,435 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:43:02,659 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:43:05,350 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:43:05,612 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:43:08,557 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:43:08,675 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:43:12,236 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:43:12,277 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:43:12,306 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_kb_rag-b10-1788924707 in memory queue.
+2026-09-09 00:43:16,878 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:43:16,940 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:43:29,831 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:43:30,106 [DEBUG] ner_benchmark.llm_runner: Successfully extracted entities via regex key fallback.
+2026-09-09 00:43:33,257 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:43:33,467 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:43:38,376 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:43:38,641 [DEBUG] ner_benchmark.llm_runner: Successfully parsed markdown code block JSON.
+2026-09-09 00:43:38,666 [INFO] ner_benchmark.pub_sub: Acknowledged task deepseek-r1:1.5b_kb_rag-b11-1788924707 in memory queue.
+2026-09-09 00:43:38,713 [INFO] ner_benchmark: Unloading model weights for deepseek-r1:1.5b to protect VRAM.
+2026-09-09 00:43:38,758 [INFO] ner_benchmark.llm_runner: Successfully unloaded weights for deepseek-r1:1.5b from VRAM.
+2026-09-09 00:43:40,767 [INFO] ner_benchmark: ==================================================
+2026-09-09 00:43:40,767 [INFO] ner_benchmark: BENCHMARK EXTRACTIONS COMPLETE. PROCESSING METRICS...
+2026-09-09 00:43:40,767 [INFO] ner_benchmark: ==================================================
+2026-09-09 00:43:40,767 [INFO] ner_benchmark: §2.bis.1: excluidos 14 registros contaminados de la métrica (modo 'kb_combined'); el crudo los conserva.
+2026-09-09 00:43:40,872 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.
