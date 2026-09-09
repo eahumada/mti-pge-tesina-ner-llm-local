@@ -1,0 +1,190 @@
+2026-09-09 01:04:44,173 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-09 01:04:44,190 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-09 01:04:44,190 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-09-09 01:04:44,192 [INFO] ner_benchmark: Corpus loaded: 15 articles split into 2 batches.
+2026-09-09 01:04:44,192 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-09 01:04:44,235 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-09 01:04:44,237 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-09 01:04:44,237 [INFO] ner_benchmark: [RAG] Using Knowledge Base mode: 'kb_combined'
+2026-09-09 01:04:44,256 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_baseline-b0-1788926684 for batch 0 to memory queue.
+2026-09-09 01:04:44,256 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_baseline-b1-1788926684 for batch 1 to memory queue.
+2026-09-09 01:04:44,256 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_kb_rag-b0-1788926684 for batch 0 to memory queue.
+2026-09-09 01:04:44,256 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_kb_rag-b1-1788926684 for batch 1 to memory queue.
+2026-09-09 01:04:44,256 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=1 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-09-09 01:04:44,258 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-09 01:04:44,259 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-09 01:04:44,259 [INFO] ner_benchmark: [RAG] Worker phase — Knowledge Base mode: 'kb_combined'
+2026-09-09 01:04:44,272 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_baseline-b0-1788926684 for batch 0 to memory queue.
+2026-09-09 01:04:44,272 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_baseline-b1-1788926684 for batch 1 to memory queue.
+2026-09-09 01:04:44,272 [INFO] ner_benchmark: Running RAG study 'nemotron-mini:4b_baseline' with 1 workers...
+2026-09-09 01:04:44,272 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task nemotron-mini:4b_baseline-b0-1788926684 from memory queue.
+2026-09-09 01:04:44,272 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-09 01:04:44,272 [INFO] ner_benchmark: [Worker 1] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record '1'...
+2026-09-09 01:04:44,273 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:04:44,276 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:04:47,492 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:04:47,830 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:04:47,850 [INFO] ner_benchmark: [Worker 2] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record '2'...
+2026-09-09 01:04:47,851 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:04:47,854 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:04:50,050 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:04:50,416 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:04:50,445 [INFO] ner_benchmark: [Worker 3] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record '3'...
+2026-09-09 01:04:50,445 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:04:50,450 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:04:53,659 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:04:54,019 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:04:54,060 [INFO] ner_benchmark: [Worker 4] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record '4'...
+2026-09-09 01:04:54,060 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:04:54,064 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:04:57,885 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:04:58,154 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:04:58,189 [INFO] ner_benchmark: [Worker 5] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record '5'...
+2026-09-09 01:04:58,189 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:04:58,193 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:04:59,630 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:04:59,724 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:04:59,739 [INFO] ner_benchmark: [Worker 6] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record '6'...
+2026-09-09 01:04:59,739 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:04:59,745 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:05:00,654 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:05:00,783 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:05:00,793 [INFO] ner_benchmark: [Worker 7] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record '7'...
+2026-09-09 01:05:00,793 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:05:00,800 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:05:03,325 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:05:03,850 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:05:03,868 [INFO] ner_benchmark: [Worker 8] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record '8'...
+2026-09-09 01:05:03,868 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:05:03,874 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:05:04,740 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:05:04,909 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:05:04,914 [INFO] ner_benchmark: [Worker 9] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record '9'...
+2026-09-09 01:05:04,915 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:05:04,921 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:05:10,242 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:05:10,513 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:05:10,525 [INFO] ner_benchmark: [Worker 10] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record '10'...
+2026-09-09 01:05:10,525 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:05:10,530 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:05:14,811 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:05:15,108 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:05:15,136 [INFO] ner_benchmark.pub_sub: Acknowledged task nemotron-mini:4b_baseline-b0-1788926684 in memory queue.
+2026-09-09 01:05:15,138 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task nemotron-mini:4b_baseline-b1-1788926684 from memory queue.
+2026-09-09 01:05:15,138 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-09 01:05:15,138 [INFO] ner_benchmark: [Worker 1] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record '11'...
+2026-09-09 01:05:15,139 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:05:15,143 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:05:18,978 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:05:19,222 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:05:19,266 [INFO] ner_benchmark: [Worker 2] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record '12'...
+2026-09-09 01:05:19,266 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:05:19,270 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:05:22,104 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:05:22,317 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:05:22,351 [INFO] ner_benchmark: [Worker 3] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record '13'...
+2026-09-09 01:05:22,351 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:05:22,355 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:05:26,081 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:05:26,415 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:05:26,437 [INFO] ner_benchmark: [Worker 4] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record '14'...
+2026-09-09 01:05:26,437 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:05:26,441 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:05:29,483 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:05:29,490 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:05:29,509 [INFO] ner_benchmark: [Worker 5] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_baseline') -> Extracting entities for record '15'...
+2026-09-09 01:05:29,509 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:05:29,513 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:05:33,253 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:05:33,592 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:05:33,606 [INFO] ner_benchmark.pub_sub: Acknowledged task nemotron-mini:4b_baseline-b1-1788926684 in memory queue.
+2026-09-09 01:05:33,615 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_kb_rag-b0-1788926733 for batch 0 to memory queue.
+2026-09-09 01:05:33,615 [INFO] ner_benchmark.pub_sub: Published task nemotron-mini:4b_kb_rag-b1-1788926733 for batch 1 to memory queue.
+2026-09-09 01:05:33,615 [INFO] ner_benchmark: Running RAG study 'nemotron-mini:4b_kb_rag' with 1 workers...
+2026-09-09 01:05:33,615 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task nemotron-mini:4b_kb_rag-b0-1788926733 from memory queue.
+2026-09-09 01:05:33,615 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-09 01:05:33,615 [INFO] ner_benchmark: [Worker 1] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record '1'...
+2026-09-09 01:05:33,741 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:05:33,744 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:05:37,092 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:05:37,311 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:05:37,337 [INFO] ner_benchmark: [Worker 2] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record '2'...
+2026-09-09 01:05:37,426 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:05:37,429 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:05:40,776 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:05:40,996 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:05:41,027 [INFO] ner_benchmark: [Worker 3] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record '3'...
+2026-09-09 01:05:41,120 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:05:41,123 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:05:45,075 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:05:45,183 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:05:45,208 [INFO] ner_benchmark: [Worker 4] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record '4'...
+2026-09-09 01:05:45,295 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:05:45,299 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:05:49,964 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:05:50,385 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:05:50,412 [INFO] ner_benchmark: [Worker 5] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record '5'...
+2026-09-09 01:05:50,498 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:05:50,501 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:05:52,555 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:05:53,048 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:05:53,064 [INFO] ner_benchmark: [Worker 6] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record '6'...
+2026-09-09 01:05:53,165 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:05:53,168 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:05:54,241 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:05:54,710 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:05:54,720 [INFO] ner_benchmark: [Worker 7] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record '7'...
+2026-09-09 01:05:54,827 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:05:54,830 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:05:58,753 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:05:58,890 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:05:58,908 [INFO] ner_benchmark: [Worker 8] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record '8'...
+2026-09-09 01:05:59,000 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:05:59,003 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:05:59,841 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:06:00,034 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:06:00,038 [INFO] ner_benchmark: [Worker 9] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record '9'...
+2026-09-09 01:06:00,132 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:06:00,135 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:06:02,958 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:06:03,192 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:06:03,207 [INFO] ner_benchmark: [Worker 10] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record '10'...
+2026-09-09 01:06:03,306 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:06:03,310 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:06:06,570 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:06:06,884 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:06:06,909 [INFO] ner_benchmark.pub_sub: Acknowledged task nemotron-mini:4b_kb_rag-b0-1788926733 in memory queue.
+2026-09-09 01:06:06,919 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task nemotron-mini:4b_kb_rag-b1-1788926733 from memory queue.
+2026-09-09 01:06:06,919 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-09 01:06:06,920 [INFO] ner_benchmark: [Worker 1] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record '11'...
+2026-09-09 01:06:07,010 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:06:07,013 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:06:13,016 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:06:13,112 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:06:13,172 [INFO] ner_benchmark: [Worker 2] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record '12'...
+2026-09-09 01:06:13,258 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:06:13,262 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:06:17,799 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:06:17,829 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:06:17,876 [INFO] ner_benchmark: [Worker 3] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record '13'...
+2026-09-09 01:06:17,961 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:06:17,964 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:06:21,017 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:06:21,540 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:06:21,572 [INFO] ner_benchmark: [Worker 4] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record '14'...
+2026-09-09 01:06:21,669 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:06:21,672 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:06:26,080 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:06:26,255 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:06:26,277 [INFO] ner_benchmark: [Worker 5] Model 'nemotron-mini:4b' (Mapped: 'nemotron-mini:4b_kb_rag') -> Extracting entities for record '15'...
+2026-09-09 01:06:26,365 [DEBUG] ner_benchmark.providers.factory: Factory: model 'nemotron-mini:4b' → OllamaProvider (default)
+2026-09-09 01:06:26,368 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=nemotron-mini:4b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 01:06:30,447 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 01:06:30,936 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 01:06:30,965 [INFO] ner_benchmark.pub_sub: Acknowledged task nemotron-mini:4b_kb_rag-b1-1788926733 in memory queue.
+2026-09-09 01:06:30,972 [INFO] ner_benchmark: Unloading model weights for nemotron-mini:4b to protect VRAM.
+2026-09-09 01:06:31,027 [INFO] ner_benchmark.llm_runner: Successfully unloaded weights for nemotron-mini:4b from VRAM.
+2026-09-09 01:06:33,037 [INFO] ner_benchmark: ==================================================
+2026-09-09 01:06:33,037 [INFO] ner_benchmark: BENCHMARK EXTRACTIONS COMPLETE. PROCESSING METRICS...
+2026-09-09 01:06:33,037 [INFO] ner_benchmark: ==================================================
+2026-09-09 01:06:33,108 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.
