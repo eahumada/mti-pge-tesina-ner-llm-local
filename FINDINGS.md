@@ -2624,3 +2624,42 @@ por artículo comparable.
 
 **Pregunta al equipo de 48 GB: se mantiene, pero ya no como diagnóstico.** Basta con que confirmen si
 `latency_sec` incluye la espera en cola, para dejarlo escrito con su palabra además de con la aritmética.
+
+---
+
+## §F78 — Las veinticuatro comprobaciones, sometidas a prueba de mutación
+
+**Fecha:** 2026-09-08, 22:23. Aplicada al propio verificador la regla que él impone: **una comprobación que
+nunca se ha visto fallar no está comprobada** (`§L48`).
+
+Hasta hoy solo cinco de las veinticuatro se habían probado en negativo. Se han introducido **catorce
+mutaciones** deliberadas en el informe, una por familia de defecto, comprobando en cada caso que alguna
+comprobación la detecta, y restaurando después:
+
+| Mutación introducida | ¿Detectada? |
+|:---|:---|
+| Referencia `§9.99` a una sección inexistente | sí |
+| Leyenda de tabla sin tabla debajo | sí |
+| Cita a una «Figura 9» que no existe | sí |
+| Entrada de bibliografía sin URL | sí |
+| Numeración de bibliografía no contigua | sí |
+| Cita `[99]` sin entrada | sí |
+| Resumen por encima de 200 palabras | sí |
+| Pictograma en prosa | sí (2 comprobaciones) |
+| Nombre de modelo excluido | sí (2) |
+| Arte ASCII | sí |
+| Δ incoherente en la Tabla 7 | sí |
+| Fila con F1 imposible | sí (2) |
+| Desajuste entre el Anexo I y la Tabla 7 | sí (3) |
+| Cifra alterada en el índice de defensa | sí |
+
+**Catorce de catorce.** Y las mutaciones se solapan: varias disparan más de una comprobación, lo que da
+redundancia allí donde más importa —las cifras de las tablas—.
+
+**Un falso negativo, y era mío.** La primera versión de la prueba de bibliografía insertaba texto sin quitar
+la URL, de modo que la línea seguía conteniendo `http` y la comprobación hacía bien en no protestar. Corregida
+la mutación, se detecta. **Es el mismo error que la prueba pretende cazar**: dar por buena una comprobación
+sin verificar que la mutación era realmente un defecto.
+
+**Verificado que el informe queda intacto** tras las catorce mutaciones: `diff` sin diferencias frente al
+original.
