@@ -1149,3 +1149,30 @@ cifra contra una **palabra**.
 comprobación encontraba el Markdown —que estaba bien— y no los entregables —que era donde estaba el
 defecto—: habría dado por bueno el documento roto mientras verificaba el que no lo estaba. Es §L66 con una
 vuelta más: **un detector puede estar lo bastante roto como para mirar solo donde no hay nada que encontrar.**
+
+## §L70 — El registro puede sobrevivir al fallo de la edición que describe
+
+Un reemplazo en `DEFENSA-PREGUNTAS-Y-RESPUESTAS.md` falló —el texto buscado tenía saltos de línea y la cadena
+de búsqueda no— y **la orden compuesta siguió adelante hasta el `git commit`**. El resultado quedó
+comprometido y empujado: `FINDINGS §F107` afirmaba «sustituido por un par verificado» mientras el documento
+conservaba el ejemplo viejo.
+
+El `assert` **sí** detectó el fallo y lo dijo. Lo que no hizo fue abortar la cadena que lo invocaba: un
+`assert` aborta su propio script, no el `&&` implícito de la orden que lo llamó.
+
+**Es la forma más silenciosa de que un proyecto acabe mintiendo sobre sí mismo.** Un `git status` limpio no lo
+detecta, porque el registro sí se escribió. Y nada vuelve a mirar el fichero que debía haber cambiado: la
+siguiente pasada lee el registro, no el documento.
+
+**La regla, en dos partes:**
+
+- **La edición y su registro no van en la misma orden.** Primero se aplica, después se **verifica leyendo el
+  resultado**, y solo entonces se anota. Si se hacen juntas, el registro puede sobrevivir al fallo.
+- **Toda corrección sustantiva deja un predicado**, no solo una frase. `tools/auditar_afirmaciones.py`
+  expresa cada afirmación del registro como una **prueba sobre los ficheros reales** — no una copia de la
+  afirmación, que sería una segunda fuente de verdad (§L63), sino un test de ella. Nueve afirmaciones de hoy
+  comprobadas así, las nueve se cumplen; el fallo ocurrió una vez y se cazó.
+
+**Y una advertencia sobre esa herramienta:** su lista se mantiene a mano, de modo que **solo cubre lo que
+alguien se acordó de anotar**. No pretende ser exhaustiva. Pretende que las correcciones de más peso no puedan
+quedarse en el registro sin estar en el fichero — que es exactamente lo que pasó una vez hoy.

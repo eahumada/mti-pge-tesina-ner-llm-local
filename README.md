@@ -104,6 +104,7 @@ el documento y los datos no puedan divergir en silencio:
 | `docx_reescribir_celdas.py` | Reescribe las celdas de una tabla del `.docx` desde la fuente canónica, todo o nada |
 | `generar_reglas_tablas_docx.py` | Deriva del Markdown las reglas de la anterior, para no teclear ningún valor |
 | `desfase_cifras_docx.py` | Compara **todas** las cifras decimales de un `.docx` contra el Markdown y señala las candidatas a obsoletas |
+| `auditar_afirmaciones.py` | Comprueba que el registro no afirme correcciones que no se aplicaron: cada afirmación es un predicado sobre los ficheros |
 | `derivados_desfasados.py` | Artefactos derivados que la corrección de puntuación dejó atrás: `acceptance_status.json` e informes por corrida, con el consolidado como control |
 
 ## Documentos fechados
