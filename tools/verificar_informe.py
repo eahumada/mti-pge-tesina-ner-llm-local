@@ -1054,17 +1054,48 @@ def c_alucinaciones(s):
                 g[(os.path.basename(os.path.dirname(f)), k)] = 100 * sum(v) / len(v)
     fallos, mirados = [], 0
     mirados += 1
-    if len(g) != 61:
-        fallos.append('§5.4 declara 61 grupos de 120 registros y se encuentran %d' % len(g))
+    # Las tres cifras se LEEN de §5.4 en lugar de estar escritas aqui. Antes eran constantes —61,
+    # 21.59 y 28— copiadas del informe al escribir la comprobacion, de modo que detectaba una
+    # deriva de los datos pero **no** una del informe: comprobado por mutacion el 2026-09-09,
+    # cambiar «21,59» por «21,99» en el texto no lo notaba nadie. Y los mensajes decian «y §5.4
+    # dice 21,59 %» sin haber leido §5.4 nunca.
+    PAL = {'cero': 0, 'una': 1, 'dos': 2, 'tres': 3, 'cuatro': 4, 'cinco': 5, 'seis': 6,
+           'siete': 7, 'ocho': 8, 'nueve': 9, 'diez': 10, 'veintiocho': 28, 'veintinueve': 29,
+           'sesenta y un': 61, 'sesenta y uno': 61, 'sesenta y dos': 62, 'sesenta y tres': 63}
+
+    def num(txt):
+        txt = txt.strip().lower()
+        if re.fullmatch(r'\d+', txt):
+            return int(txt)
+        return PAL.get(txt)
+
+    # Se ancla en la propia frase y no en un encabezado: buscar «## 5.4» seleccionaba otro bloque y
+    # la expresion casaba con «El primero de esos dos casos», que no tiene nada que ver.
+    m_max = re.search(r'el rango va de \*\*\w+\*\*.{0,120}?al \*\*(\d+,\d+) ?%\*\*', s, re.S)
+    m_cnt = re.search(r'y ([\wáéíóú ]+?) de esos ([\wáéíóú ]+?) grupos quedan por debajo del \*\*1 ?%\*\*',
+                      s, re.S)
+    esp_max = float(m_max.group(1).replace(',', '.')) if m_max else None
+    esp_bajo = num(m_cnt.group(1)) if m_cnt else None
+    esp_grupos = num(m_cnt.group(2)) if m_cnt else None
+    if esp_max is None or esp_bajo is None or esp_grupos is None:
+        fallos.append('no se pueden leer de §5.4 las tres cifras que esta comprobacion ata al dato '
+                      '(maximo de alucinacion, grupos por debajo del 1 %% y total de grupos); '
+                      'leidas: max=%s bajo=%s grupos=%s' % (esp_max, esp_bajo, esp_grupos))
+        esp_max, esp_bajo, esp_grupos = 21.59, 28, 61
+
+    if len(g) != esp_grupos:
+        fallos.append('§5.4 declara %s grupos de 120 registros y se encuentran %d'
+                      % (esp_grupos, len(g)))
     if g:
         mirados += 1
         mx = max(g.values())
-        if abs(mx - 21.59) > 0.011:
-            fallos.append('el maximo de alucinacion es %.2f %% y §5.4 dice 21,59 %%' % mx)
+        if abs(mx - esp_max) > 0.011:
+            fallos.append('el maximo de alucinacion es %.2f %% y §5.4 dice %s %%' % (mx, esp_max))
         mirados += 1
         bajo = sum(1 for v in g.values() if v < 1.0)
-        if bajo != 28:
-            fallos.append('§5.4 dice que 28 grupos quedan por debajo del 1 %% y son %d' % bajo)
+        if bajo != esp_bajo:
+            fallos.append('§5.4 dice que %s grupos quedan por debajo del 1 %% y son %d'
+                          % (esp_bajo, bajo))
     check('la taxonomia de errores de §5.4 reproduce desde los datos', mirados, fallos,
           'la poblacion son los 61 grupos con 120 registros, no los 26 publicados')
 
