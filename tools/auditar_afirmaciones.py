@@ -63,6 +63,85 @@ def celdas(rel, valor):
     return len(re.findall(r'<w:t(?:\s[^>]*)?>%s</w:t>' % re.escape(valor), x))
 
 
+def _filas_md(cabecera, ncols):
+    """Filas de una tabla del Markdown, en orden, como lista de listas."""
+    txt = texto(MD)
+    if txt is None:
+        return None
+    i = txt.find(cabecera)
+    if i < 0:
+        return None
+    out = []
+    for l in txt[i:].split('\n')[2:]:
+        if not l.startswith('|'):
+            break
+        c = [z.strip().strip('`') for z in l.strip('|').split('|')]
+        if len(c) == ncols:
+            out.append(c)
+    return out or None
+
+
+def _filas_docx(rel, marca):
+    """Filas de la tabla que contiene `marca`, en orden, como lista de listas."""
+    ruta = os.path.join(RAIZ, rel)
+    if not os.path.exists(ruta):
+        return None
+    with zipfile.ZipFile(ruta) as z:
+        x = z.read('word/document.xml').decode('utf-8')
+    T = lambda s: ' '.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', s, re.S))
+    cand = [b for b in re.findall(r'<w:tbl>.*?</w:tbl>', x, re.S) if marca in T(b)]
+    if len(cand) != 1:
+        return None
+    out = []
+    for f in re.findall(r'<w:tr[ >].*?</w:tr>', cand[0], re.S)[1:]:
+        out.append([T(c).strip() for c in re.findall(r'<w:tc>.*?</w:tc>', f, re.S)])
+    return out or None
+
+
+def _tabla_igual(marca, cabecera, ncols):
+    """La tabla de los tres .docx coincide con la del Markdown, en contenido y en orden."""
+    m = _filas_md(cabecera, ncols)
+    if m is None:
+        return False, 'no se puede leer la tabla del Markdown'
+    malos = []
+    for rel in (D1, D2, D3):
+        d = _filas_docx(rel, marca)
+        base = os.path.basename(rel)
+        if d is None:
+            malos.append('%s: no se identifica la tabla' % base)
+            continue
+        if len(d) != len(m):
+            malos.append('%s: %d filas frente a %d del Markdown' % (base, len(d), len(m)))
+            continue
+        dif = next((k for k in range(len(m)) if d[k] != m[k]), None)
+        if dif is not None:
+            malos.append('%s: la fila %d difiere — .docx %s vs .md %s'
+                         % (base, dif + 1, d[dif][:2], m[dif][:2]))
+    return (not malos), ' · '.join(malos)
+
+
+def _resalte_33():
+    """En §3.3 el resalte cubre solo el porcentaje, no la frase entera."""
+    malos = []
+    for rel in (D1, D2, D3):
+        ruta = os.path.join(RAIZ, rel)
+        base = os.path.basename(rel)
+        if not os.path.exists(ruta):
+            malos.append('%s no existe' % base)
+            continue
+        with zipfile.ZipFile(ruta) as z:
+            x = z.read('word/document.xml').decode('utf-8')
+        solo = re.search(r'<w:r><w:rPr><w:b/></w:rPr><w:t[^>]*>66,0 %</w:t></w:r>', x) is not None
+        frase = 'el 66,0 % de los falsos positivos' in re.sub(
+            r'<[^>]+>', '', x[max(0, x.find('<w:b/></w:rPr><w:t')):]) and \
+            re.search(r'<w:b/></w:rPr><w:t[^>]*>el 66,0 %', x) is not None
+        if not solo:
+            malos.append('%s: «66,0 %%» no esta en su propio run en negrita' % base)
+        if frase:
+            malos.append('%s: la frase entera sigue en negrita' % base)
+    return (not malos), ' · '.join(malos)
+
+
 def afirmaciones():
     """(descripcion, quien la afirma, predicado). Cada una devuelve (ok, detalle)."""
     def _todos(rel_list, fn):
@@ -110,6 +189,19 @@ def afirmaciones():
         ('«solo» sin tilde en el .md y en los tres .docx', '§F105',
          lambda: _todos([MD] + TRES, lambda t: ('sólo' not in t,
                                                 'conserva «solo» con tilde'))),
+        # Las tres correcciones de mas peso del 2026-09-09 no tenian predicado, que es justo el
+        # hueco que esta herramienta declara. Anadidas: las dos tablas propagadas y la particion
+        # del run de §3.3.
+        ('la Tabla 19 coincide con el Markdown celda por celda', '§F95',
+         lambda: _tabla_igual('F1 restr.',
+                              '| Configuración | Corrida | P | R | F1 | P restr. | F1 restr. | Δ F1 |',
+                              8)),
+        ('la Tabla 18 coincide con el Markdown en contenido y orden', '§F95',
+         lambda: _tabla_igual('Δ F1 por entidad',
+                              '| Configuración | Δ F1 por entidad de referencia | '
+                              'Δ F1 por texto de entrada |', 3)),
+        ('en §3.3 el resalte cubre solo el porcentaje', '§F96',
+         lambda: _resalte_33()),
         ('DEFENSA usa el ejemplo verificado del duplicado', '§F107',
          lambda: ((lambda t: ('Jose Bono' in t.replace('é', 'e') and '88,89' in t,
                               'no trae el par verificado'))(texto(
