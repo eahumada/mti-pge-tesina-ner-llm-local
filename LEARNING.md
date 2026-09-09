@@ -768,3 +768,40 @@ dato.
 
 Es hermana de `§L47` y `§L52`: las tres describen medidas que fallan sin dar ningún síntoma, porque devuelven
 un número en lugar de un error.
+
+---
+
+## §L57 — Una comprobación cuyo valor «bueno» puede producirse por avería necesita su control en la misma orden
+
+**2026-09-08, 23:0x.** La rutina de seguimiento incluye una comprobación de la purga de GitHub: si el commit
+que contiene la clave de API deja de responder, la purga se ha completado. Llevaba todo el día devolviendo
+HTTP 200, es decir, sin purgar. Esta vez devolvió **404**, y durante unos segundos eso se leyó como que el
+objeto había desaparecido.
+
+No había desaparecido. La orden usaba `eahumadaFID/…` como propietario del repositorio, cuando el propietario
+es `eahumada/…`. Un repositorio inexistente devuelve 404 para todo. El comprobante correcto, ejecutado después
+con el token y la URL que registra `SEGURIDAD-CLAVE-GOOGLE-20260908.md`, devolvió **HTTP 200 y la clave en
+claro**: la situación no había cambiado en absoluto.
+
+**Lo que lo destapó** fue pedir el control en la misma orden: además del commit purgado, la raíz del
+repositorio y un commit vigente de `HEAD`. Los tres dieron 404. Un commit vigente que no responde no es una
+purga, es una URL rota, y ahí se acabó la interpretación optimista.
+
+**La lección.** El 404 era simultáneamente el resultado esperado del éxito y el síntoma de la avería más
+común de esa orden: escribir mal la URL. Cuando el valor que indica éxito coincide con el que produce un
+fallo de la propia comprobación, la comprobación no distingue nada por sí sola, y leerla como buena noticia
+es lo que el sesgo hace por defecto.
+
+- **Toda comprobación cuyo valor bueno sea «algo ya no está» lleva su control adjunto**: pedir en la misma
+  orden algo que *sí debe seguir estando*. Si el control también falla, el resultado no es un hallazgo, es
+  una avería.
+- **Un resultado que mejora sin causa conocida se verifica antes de celebrarse.** Nadie ejecutó nada entre
+  las dos mediciones. Un cambio de estado sin causa es primero sospechoso y solo después bueno.
+- Esto es lo mismo que `[[L47]]` sobre las comprobaciones vacías, aplicado un paso más allá: allí una
+  comprobación que no examinaba nada se marcaba como superada; aquí una que examina el objeto equivocado
+  devuelve el valor del éxito. En ambos casos el defecto no está en el dato, sino en que la orden no puede
+  distinguir entre haber acertado y no haber mirado.
+
+**Aplicado.** La comprobación documentada en `SEGURIDAD-CLAVE-GOOGLE-20260908.md` se amplía con su control, y
+declara explícitamente que un 404 anónimo no significa nada: el repositorio es privado y responde 404 a
+cualquiera sin credenciales, incluida su propia raíz.

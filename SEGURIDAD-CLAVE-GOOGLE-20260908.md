@@ -82,3 +82,39 @@ curl -s -o /dev/null -w '%{http_code}
 
 La solicitud a Support sigue redactada y lista en `SOLICITUD-GITHUB-PURGA-20260908.md` por si el autor
 decide acelerar el proceso más adelante.
+
+---
+
+## Comprobante corregido — con su control (2026-09-08, 23:0x)
+
+La comprobación de una línea de más arriba es correcta pero **insuficiente**, y ya indujo a error una vez.
+El detalle está en `LEARNING.md §L57`; el resumen es que un 404 significa tanto «el objeto se purgó» como
+«la URL está mal escrita», y la segunda es la avería más frecuente de esa orden.
+
+**Dos advertencias que hay que tener presentes al leer el resultado:**
+
+1. **El propietario del repositorio es `eahumada`.** Escribirlo mal produce 404 en todo, que es exactamente
+   el valor que se interpretaría como purga completada.
+2. **Una petición anónima devuelve 404 aunque el objeto siga ahí.** El repositorio es privado: sin token,
+   hasta su propia raíz responde 404. Un 404 sin credenciales no es evidencia de nada.
+
+El comprobante amplía el original con dos controles que **deben** devolver 200. Si alguno no lo hace, el
+resultado no es un hallazgo sino una avería de la propia comprobación:
+
+```sh
+. ./.setenv.sh
+R=eahumada/mti-pge-tesina-ner-llm-local
+H="Authorization: Bearer $GITHUB_TOKEN"
+q() { curl -s -o /dev/null -w "%{http_code}" -H "$H" "$1"; }
+
+echo "control raiz del repo:  $(q https://api.github.com/repos/$R)"                       # debe ser 200
+echo "control commit vigente: $(q https://api.github.com/repos/$R/commits/$(git rev-parse HEAD))"  # debe ser 200
+echo "objeto purgado:         $(q "https://api.github.com/repos/$R/contents/test_flash.py?ref=bb79279")"
+```
+
+**Lectura del resultado.** Solo si los dos controles dan 200 tiene sentido leer la tercera línea: 200 en el
+objeto significa que la purga sigue pendiente; 404, que se completó. Si algún control falla, la tercera línea
+no se interpreta.
+
+**Estado a 2026-09-08, 23:0x:** los dos controles dan 200 y el objeto purgado **también da 200, con la clave
+en claro**. La purga sigue pendiente y el repositorio no puede hacerse público.
