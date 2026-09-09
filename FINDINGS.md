@@ -7697,3 +7697,54 @@ abstract, para verificar que la composición de idiomas se declara con las cifra
 La primera redacción más clara rompía esa adyacencia textual. Reescrita para conservar «120 artículos,
 105 en español» como frase contigua y añadir la aclaración del dominio alrededor, en lugar de
 en medio.
+
+---
+
+## §F159 — Seis pasajes más describían los defectos corregidos como vigentes, y faltaba el «Corpus 3»
+
+**Fecha:** 2026-09-09 · **Origen:** el autor, comprobando que la Figura 1 seguía describiendo el
+defecto de Locations como presente; workflow `wf_800c741d-847` para un barrido exhaustivo
+
+`§F154` y `§F157` corrigieron `§5.3.1` y su párrafo de correlación. El autor encontró que la nota
+que precede a la Figura 1 seguía diciendo «sustituirlas exige volver a inferir, que es lo que hará
+la re-corrida pendiente» — la re-corrida ya había pasado. Lancé el workflow que pidió el autor para
+un barrido exhaustivo del resto del cuerpo, y confirmó **seis pasajes** más, los seis con confianza
+alta o media y **verificados por un segundo agente con sesgo a refutar**, ninguno descartado:
+
+1. **§3.3**, la cifra del 66,0 % de falsos positivos «según recoge la Figura 1… cubre los
+   veintiséis grupos que sostienen la Tabla 7» — la Tabla 7 vigente es la adoptada, donde Locations
+   ya está anotada; esa cifra es del consolidado publicado.
+2. **§3.3**, la frase de cierre, «sustituirlas exige volver a inferir, que es lo que hará la
+   re-corrida pendiente» — ya se hizo.
+3. **Leyenda de la Figura 1** — atada a «los veintiséis grupos que sostienen la Tabla 7» en
+   presente, cuando describe el consolidado publicado.
+4. **Conclusión 7 de §7.1** — describía el mojibake en presente («el corpus N=120 almacena»), sin
+   la salvedad de corregido que sí lleva la conclusión 6 vecina sobre Locations.
+5. **§7.2, punto 7** («Fase 6», normalización de codificación) — proponía como trabajo futuro
+   pendiente exactamente lo que ya se ejecutó.
+6. **§7.2, punto 8** («Prioridad Alta», recuperación de Locations) — mismo defecto: proponía como
+   pendiente una corrección ya aplicada antes de la re-corrida adoptada.
+
+**Los seis, corregidos de forma aditiva**: se conservan todas las cifras y el análisis —las tasas
+de F1 por artículo afectado, el 20,1 %/87 % del mojibake, el 66,0 % de los FP— cambiando el tiempo
+verbal a pasado y añadiendo, donde faltaba, la referencia a que la corrección ya está hecha y a
+`§5.3.1` como el sitio donde vive el resultado vigente. Los puntos 7 y 8 de §7.2 dejan de leerse
+como trabajo futuro pendiente y pasan a declarar explícitamente «ya realizada»/«ya realizado»,
+sin perder ninguna cifra de las que documentaban el defecto y su magnitud.
+
+**Un detalle que el propio workflow señaló y que no era cierto**: un verificador reportó que
+`results/COMPOSICION_FP_20260908/` «no existe físicamente», lo cual habría sido un hallazgo grave
+—una fuente citada que no está—. **Comprobado por mi cuenta: sí existe**, con su
+`composicion_fp_26_grupos.json`, cuyo propio campo `consolidado` declara `ANALISIS_CONJUNTO_20260907`
+—el publicado—, confirmando exactamente la lectura del hallazgo. El error del verificador fue de
+directorio de trabajo, no un hecho sobre el repositorio; se anota porque es la misma clase de
+error que `§L71` lleva documentando: comprobar el resultado de un subagente, no darlo por bueno.
+
+### Y un problema de estructura distinto, señalado también por el autor: faltaba el «Corpus 3»
+
+§4.1 anuncia «tres corpus complementarios» y solo etiqueta dos, «Corpus 1» y «Corpus 2»; el tercero
+(N=120) se describe cuatro párrafos después, bajo el encabezado `#### 4.1.2`, sin la etiqueta
+paralela que el lector espera tras leer «tres». Añadido un párrafo breve «Corpus 3 — Real
+Balanceado (N=120, Estudio Principal)» inmediatamente después del Corpus 2, con una frase de
+resumen y remisión a §4.1.2 para el detalle — sin duplicar ni recortar el contenido que §4.1.2 ya
+desarrolla.

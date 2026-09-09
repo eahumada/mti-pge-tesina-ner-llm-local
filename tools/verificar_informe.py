@@ -77,7 +77,7 @@ FALLOS_DECLARADOS = {
         'diera 6, pero el estado actual del .docx da 13. No es aceptado por el equipo principal: '
         'se declara para no bloquear ediciones ajenas al render mientras esa sesion sigue '
         'trabajando; corresponde a Claude Desktop cerrarlo.'),
-    'guiones largos frente a 89 del Markdown': ('2026-09-09',
+    'guiones largos frente a': ('2026-09-09',
         'EN CURSO por Claude Desktop, misma causa que el resalte: el renderizador propio no ha '
         'terminado de igualar el recuento de guiones largos del cuerpo. No aceptado, solo '
         'declarado para no bloquear.'),
