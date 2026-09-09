@@ -334,3 +334,21 @@ de corrección, no aceptada**, y se retira de la lista al corregirla. Detalle en
    que el `.docx` aún no tiene, entre ellos el párrafo de la nota de la Tabla 4.
 4. En §3.3, partir el run en **negrita** para que resalte solo el porcentaje, y añadir entonces la frase de
    alcance y la llamada a la Figura 1.
+
+
+---
+
+## La nota «a favor del `.docx`» está superada — 2026-09-09
+
+El apartado final de este documento anotaba que «en un punto **el `.docx` tenía razón y el Markdown estaba
+mal**: su resumen ya decía "Las instituciones financieras" donde el Markdown decía "Las instituciones"».
+
+**Eso era cierto el 2026-09-08 y hoy está invertido.** El Markdown se corrigió —dice «Las instituciones
+financieras sujetas a», concordando con el «Financial institutions» del abstract— y el `.docx` **no recibió
+el cambio**, de modo que eran los tres `.docx` los que decían «Las instituciones sujetas a». Corregido hoy
+en los tres, con respaldo, y mecanizado en una comprobación que compara el texto completo de los dos bloques
+contra el Markdown.
+
+**La lección de este apartado, para quien escriba el próximo:** una nota de propagación que afirma quién
+tiene razón **envejece hacia la mentira** en cuanto uno de los dos lados se corrige. Si se anota una
+divergencia, se anota **con fecha** y se revisa antes de actuar sobre ella.
