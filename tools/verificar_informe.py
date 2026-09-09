@@ -941,6 +941,73 @@ def c_alucinaciones(s):
           'la poblacion son los 61 grupos con 120 registros, no los 26 publicados')
 
 
+# --- 24. El indice de defensa cita cifras que sus artefactos respaldan -------------------------
+DEFENSA = os.path.join(RAIZ, 'DEFENSA-PREGUNTAS-Y-RESPUESTAS.md')
+RES = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark/results')
+
+
+def c_defensa(s):
+    """Las cifras del indice de defensa, contra los artefactos que las calculan.
+
+    Ese documento existe para responder en la sala sin recalcular nada, de modo que una cifra suya
+    que haya dejado de ser cierta es peor que no tenerla. Cuando la re-corrida sustituya los datos
+    esta comprobacion fallara, y eso es lo que se busca: obliga a actualizarlo.
+    """
+    import json as _json
+    if not os.path.exists(DEFENSA):
+        check('el indice de defensa cita cifras respaldadas', 0, ['no existe DEFENSA-PREGUNTAS-Y-RESPUESTAS.md'])
+        return
+    d = open(DEFENSA, encoding='utf-8').read()
+
+    def carga(rel):
+        p = os.path.join(RES, rel)
+        return _json.load(open(p, encoding='utf-8')) if os.path.exists(p) else None
+
+    fr = carga('ROBUSTEZ_ESTADISTICA_20260908/friedman.json')
+    co = carga('CORRELACION_CAPACIDAD_20260908/correlacion.json')
+    ph = carga('ROBUSTEZ_ESTADISTICA_20260908/posthoc_pareado.json')
+    fp = carga('COMPOSICION_FP_20260908/composicion_fp_26_grupos.json')
+    fallos, mirados = [], 0
+    esperadas = []
+    if fr:
+        esperadas.append(('chi2 de Friedman', '{:,.2f}'.format(fr['friedman_medidas_repetidas']['chi2'])
+                          .replace(',', ' ').replace('.', ',')))
+    if co:
+        esperadas += [('rho de Spearman', '%.4f' % abs(co['spearman']['rho'])).__class__ and
+                      ('rho de Spearman', ('%.4f' % abs(co['spearman']['rho'])).replace('.', ',')),
+                      ('p de Spearman', ('%.4f' % co['spearman']['p']).replace('.', ',')),
+                      ('r de Pearson', ('%.4f' % abs(co['pearson']['r'])).replace('.', ',')),
+                      ('p de Pearson', ('%.4f' % co['pearson']['p']).replace('.', ','))]
+    # En prosa espanola un recuento pequeno se escribe con letra, y eso es correcto: el verificador
+    # debe aceptar ambas formas en lugar de obligar al documento a escribir digitos.
+    LETRA = {0: 'cero', 1: 'uno', 2: 'dos', 3: 'tres', 4: 'cuatro', 5: 'cinco', 6: 'seis', 7: 'siete',
+             8: 'ocho', 9: 'nueve', 10: 'diez', 11: 'once', 12: 'doce', 13: 'trece', 14: 'catorce',
+             15: 'quince', 16: 'dieciseis', 20: 'veinte', 26: 'veintiseis'}
+
+    def formas(n_):
+        f_ = ['%d' % n_]
+        if n_ in LETRA:
+            f_.append(LETRA[n_])
+        return f_
+
+    if ph:
+        a_, b_ = ph['significativos_pareado'], ph['n_comparaciones']
+        alt = ['%s de %s' % (x, y) for x in formas(a_) for y in formas(b_)]
+        esperadas.append(('significativos del post-hoc pareado', alt))
+    if fp:
+        esperadas += [('falsos positivos de Locations',
+                       '{:,}'.format(fp['fp_locations']).replace(',', ' ')),
+                      ('falsos positivos totales',
+                       '{:,}'.format(fp['fp_total']).replace(',', ' '))]
+    for etiq, val in esperadas:
+        mirados += 1
+        opciones = val if isinstance(val, list) else [val]
+        if not any(o in d for o in opciones):
+            fallos.append('el indice no cita %s = %s' % (etiq, ' o '.join(opciones[:2])))
+    check('el indice de defensa cita cifras respaldadas por sus artefactos', mirados, fallos,
+          'fallara cuando la re-corrida cambie los datos, y entonces hay que actualizarlo')
+
+
 def main():
     s = texto()
     c_vacios()
@@ -965,6 +1032,7 @@ def main():
     c_json_parsea(s)
     c_correlacion(s)
     c_alucinaciones(s)
+    c_defensa(s)
     if '--red' in sys.argv:
         c_urls(s)
 
