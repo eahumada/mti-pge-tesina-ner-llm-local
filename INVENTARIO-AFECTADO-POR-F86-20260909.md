@@ -126,6 +126,19 @@ porque condiciona cómo se enuncia la conclusión en todo lo demás.
 La densidad de referencia es de **684 palabras por página**, medida sobre el PDF entregado, y es la que usa
 `tools/verificar_informe.py` para estimar la extensión.
 
+## Algo que la reescritura debería aprovechar para declarar
+
+El informe dice, en el anexo de uso de IA, que «los ejemplares *few-shot* de la base de conocimientos
+contextual fueron extraídos de artículos reales anotados del **propio corpus de evaluación**». Es la verdad y
+está bien que conste, pero está enunciado como **procedencia** y no como **limitación de la medición**: no
+dice que son **siete de ciento veinte**, ni que en los modos con recuperación eso es contaminación del
+conjunto de prueba, ni que el efecto está medido en **+10,01 pp sobre esos siete frente a +2,19 sobre los
+demás** (`FINDINGS §F65`).
+
+Como §5.3.1 se va a reescribir de todos modos, es el momento de recogerlo: cuesta una frase, la magnitud es
+pequeña y **declararla convierte un flanco en una limitación asumida**. La re-corrida ya los excluye y publica
+sobre 113 registros, de modo que la reescritura tendrá que explicar el cambio de base en cualquier caso.
+
 ## Orden recomendado
 
 1. Esperar a que el equipo resuelva `§F85` y rehaga el consolidado.

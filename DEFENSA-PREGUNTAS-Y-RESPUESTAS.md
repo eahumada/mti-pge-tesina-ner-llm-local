@@ -123,6 +123,22 @@ oscila entre −0,070 y +0,025 de F1 según el modelo, y los corpus N=15 y N=30 
 
 ---
 
+**«Su Anexo dice que los ejemplares *few-shot* salen del propio corpus de evaluación. ¿No es eso contaminar
+el conjunto de prueba?»**
+**Sí lo es, y conviene reconocerlo antes de que lo señalen.** El informe lo declara —«extraídos de artículos
+reales anotados del propio corpus de evaluación»— pero lo dice como **procedencia** en el anexo de uso de IA,
+no como **limitación de la medición**, y no dice cuántos son ni qué efecto tienen.
+
+**Son siete de ciento veinte**, y el efecto está medido: en los modos `kb_fewshot` y `kb_combined` el KB RAG
+aporta **+10,01 pp** sobre esos siete artículos, frente a **+2,19 pp** sobre los ciento trece restantes
+(`FINDINGS §F65`). Es decir, en esos siete se le está enseñando al modelo la respuesta del examen.
+
+**Lo que hay que poder decir con precisión:** las cifras que publica el informe **incluyen** los siete, de
+modo que el efecto del RAG está algo sobrestimado; la re-corrida los **excluye** y publica sobre **113**
+registros; y esa diferencia de base es una de las razones por las que las dos series no son directamente
+comparables. La magnitud del sesgo es pequeña frente al total —siete de ciento veinte— pero **no declararla
+sería lo indefendible**, y por eso conviene que la reescritura de §5.3.1 la recoja.
+
 ## Sobre las cifras económicas
 
 **«¿De dónde sale el 99,4 % de reducción de coste? ¿Lo han medido?»**
