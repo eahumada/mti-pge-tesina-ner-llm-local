@@ -1,0 +1,27 @@
+{
+  "_comment": [
+    "Corrige una inconsistencia aritmetica INTRODUCIDA POR MI el 2026-09-09.",
+    "",
+    "Al propagar las cifras del F1 restringido con terms_restringido.json cambie 81,45 -> 80,42 y",
+    "76,85 -> 76,55, pero deje la palabra «cinco puntos», que era correcta con las cifras viejas",
+    "(81,45 - 76,85 = 4,60) y es falsa con las nuevas (80,42 - 76,55 = 3,87).",
+    "",
+    "El Markdown dice «cuesta del orden de cuatro puntos de F1». Se iguala a la fuente, no solo se",
+    "cambia el numeral: la redaccion tambien difiere («unos» frente a «del orden de»).",
+    "",
+    "Leccion: propagar una cifra sin su prosa dependiente deja el documento peor que antes, porque",
+    "antes era coherente con datos viejos y ahora es incoherente consigo mismo."
+  ],
+  "parts": [
+    "word/document.xml"
+  ],
+  "rules": [
+    {
+      "id": "A1",
+      "_where": "§6.1 / conclusion 3: el coste de la soberania",
+      "find": "la soberanía cuesta unos cinco puntos de F1",
+      "replace": "la soberanía cuesta del orden de cuatro puntos de F1",
+      "expect": 1
+    }
+  ]
+}
