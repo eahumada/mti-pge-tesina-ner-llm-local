@@ -112,12 +112,16 @@ def c_tabla7_desde_per_type(s):
     ata a los **recuentos** de los que ese CSV sale, y por tanto puede discrepar de la anterior.
     Discrepa: en `nemotron-mini:4b_baseline` los dos artefactos del grupo dicen cosas distintas,
     porque seis de sus registros se re-extrajeron fuera del arnes y solo el CSV recibio las
-    metricas (§F110). Los otros 25 grupos coinciden por las dos rutas.
+    metricas (§F110). Los otros 25 grupos coinciden por las dos rutas, y eso es lo que acredita
+    sus cifras: coinciden por dos caminos distintos.
 
-    No es redundante con la anterior: dos rutas que coinciden acreditan la cifra, y la unica que
-    no coincide es precisamente la que hay que volver a mirar cuando llegue la re-corrida de
-    `§3.bis.15`. Cuando este fallo declarado desaparezca, la exclusion de
-    `tools/sensibilidad_combinada.py` se puede levantar.
+    Se declaro esperando que la re-corrida de `§3.bis.15` lo cerrase. **Llego el 2026-09-09 y no lo
+    cierra**: fue a `ANALISIS_CONJUNTO_20260909_FIX`, un consolidado construido sobre trece corridas
+    que no comparten ni una fuente con el publicado, y el publicado —que es el que esta
+    comprobacion lee— sigue intacto. De modo que ahora depende de la **decision 1**, reabierta en
+    `§F113`: si el informe adopta el consolidado nuevo, hay que apuntar `CSV_CONSOLIDADO` al nuevo y
+    levantar la exclusion de `tools/sensibilidad_combinada.py`; si no lo adopta, este fallo se queda
+    y hay que redeclararlo como permanente.
     """
     import importlib.util as _iu
     ruta = os.path.join(RAIZ, 'tools/sensibilidad_combinada.py')
@@ -151,7 +155,7 @@ def c_tabla7_desde_per_type(s):
             if abs(got - pub) > 0.05:
                 fallos.append('%s: publicado %.2f, per_type %.4f (%+.4f)' % (g, pub, got, got - pub))
     check('la Tabla 7 reproduce tambien desde per_type', n, fallos,
-          'ruta independiente de c_tabla7_vs_datos; su unico fallo cierra con §3.bis.15')
+          'ruta independiente de c_tabla7_vs_datos; su unico fallo depende de la decision 1')
 
 
 def check(nombre, examinados, fallos, nota=''):
