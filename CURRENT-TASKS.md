@@ -226,6 +226,9 @@ Para **cada tarea** que ejecutes:
   `CURRENT-TASKS.md`, hoy presente solo en `CLAUDE.md`.
 
 ### 2.1 PENDIENTE — Reinserción de secciones faltantes (prioritario)
+
+> **Superada 2026-09-09.** Esta entrada es de una fase muy anterior del proyecto —cita «F=10.2096», que no corresponde a ningún estadístico vigente— y la tarea que describe, de forma genérica, la asumió por completo el encargo detallado y con piezas numeradas `PROMPT-CLAUDE-DESKTOP-DOCX-Y-PDF-20260909.md`, que es la instrucción vigente. No se borra porque documenta que el problema de fondo —los `.docx` por detrás del Markdown— es recurrente y ya llevaba tiempo señalado.
+
 - **Estado:** ⬜ PENDIENTE
 - **Archivo:** `Informe_Final_Tesina_NER.docx`
 - **Tarea:** reinsertar íntegras **§4.1.3** y **§5.3.5** (con la tabla 5 modelos × 2 modos y las cifras
@@ -233,12 +236,18 @@ Para **cada tarea** que ejecutes:
 - **Verificado:** cero ocurrencias de `4.1.3`, `5.3.5` y `10.2096` en su XML.
 
 ### 2.2 PENDIENTE — Propagar correcciones del Markdown a los `.docx`
+
+> **Superada 2026-09-09.** Esta entrada es de una fase muy anterior del proyecto —cita «F=10.2096», que no corresponde a ningún estadístico vigente— y la tarea que describe, de forma genérica, la asumió por completo el encargo detallado y con piezas numeradas `PROMPT-CLAUDE-DESKTOP-DOCX-Y-PDF-20260909.md`, que es la instrucción vigente. No se borra porque documenta que el problema de fondo —los `.docx` por detrás del Markdown— es recurrente y ya llevaba tiempo señalado.
+
 - **Estado:** ⬜ PENDIENTE
 - **Archivos:** los tres `.docx` de la tesina
 - **Fuente:** `AUDITORIA_CONSISTENCIA_20260903.md` y el Markdown canónico ya corregido
 - **Herramienta:** `tools/docx_replace_terms.py` para reemplazos de texto (no inserta secciones)
 
 ### 2.3 PENDIENTE — Formato y verificación final
+
+> **Superada 2026-09-09.** Esta entrada es de una fase muy anterior del proyecto —cita «F=10.2096», que no corresponde a ningún estadístico vigente— y la tarea que describe, de forma genérica, la asumió por completo el encargo detallado y con piezas numeradas `PROMPT-CLAUDE-DESKTOP-DOCX-Y-PDF-20260909.md`, que es la instrucción vigente. No se borra porque documenta que el problema de fondo —los `.docx` por detrás del Markdown— es recurrente y ya llevaba tiempo señalado.
+
 - **Estado:** ⬜ PENDIENTE
 - Glosas tipográficas (negrita/cursiva), verificación del límite de **25 páginas**, ausencia de páginas en
   blanco y tablas partidas, numeración multinivel correcta.
@@ -375,7 +384,10 @@ detallado del desfase te sirve, y en particular la tensión que declara sobre `p
 - **`_v11` congelada:** `.docx` `efe56e1d7495` · `.pdf` `872d23993314`, con copia de ambos en la raíz.
   **No se declara versión de entrega**: la extensión total está por resolver y §2.20 sigue abierta.
 
-### 2.20 🔴 EN CURSO — Saneamiento del aparato bibliográfico
+### 2.20 ✅ COMPLETADA (encabezado corregido 2026-09-09; era: 🔴 EN CURSO) — Saneamiento del aparato bibliográfico
+
+> **Corregido el encabezado, no el cuerpo.** Decía «EN CURSO» y el cuerpo describía un workflow a medio terminar, pero la bibliografía de hoy tiene **39 entradas contiguas, todas con URL y correspondencia en ambos sentidos** (`tools/verificar_informe.py`, comprobación «bibliografía contigua…», ok), y las cuatro citas que este apartado señalaba como ficticias — [7], [9], [10], [15] — son hoy Cañete et al. (BETO), Islam et al. (FinanceBench), Salinas Alvarado et al. (ALTA) y Loukas et al. (FiNER, ACL 2022): las mismas obras reales que el cuerpo de este apartado proponía buscar. Es el mismo defecto de `§1.139`: un encabezado que anuncia una urgencia que el propio texto, o en este caso el propio informe, ya no tiene.
+
 
 **Motivo:** `FINDINGS.md §F51`. Cuatro referencias de la bibliografía **no corresponden a ninguna obra
 existente**: [7] García y López (IberLEF), [9] Chang, Kim y Park (*J. Financial Data Science*), [10] Smith,
@@ -2024,3 +2036,4 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.275: **cierre del análisis del día (instrucción del autor) y consolidación del encargo a Claude Desktop.** Anotado y **no perseguido** por decisión de cierre: la Tabla 19 tiene dos filas sin identificar su configuración (§F153, confianza media/alta, menor). Consolidado `PROMPT-CLAUDE-DESKTOP-DOCX-Y-PDF-20260909.md` de punta a punta: reordenadas las diez piezas —la 9 estaba antes que la 8 por como se insertó—, retirada una **duplicación exacta** de la pieza 9 que dejó dos copias del mismo bloque, añadida la **pieza 10** (Tabla 19, opcional), y **reescrito el criterio de aceptación de §5 sin cifras absolutas**: citaba «baja de 61» y «51 restantes», que ya iban por la tercera cifra distinta en dos días — el mismo defecto de `§F134` alcanzando ahora al propio encargo de maquetación. Ahora compara antes/después del trabajo de Claude Desktop, en lugar de un número escrito a mano. También retiradas las citas por **número** de comprobación de la sección 0 («51 a 54»), que §F146 ya había prohibido en los otros dos encargos y aquí seguían |
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.276: **decisión 1 completada: adoptado el consolidado de la re-corrida y el Markdown reescrito (§F154, §F155).** Instrucción explícita del autor de tomar el consolidado nuevo. `CSV_CONSOLIDADO`/`MANIFIESTO` apuntan ahora a `ANALISIS_CONJUNTO_20260909_FIX`; el publicado se conserva íntegro. Reescritas Tabla 7 (26 celdas), el párrafo de ANOVA/Tukey/Levene/Friedman (F=119,7502 con cota «p < 10⁻³⁰⁰»; Tukey **uno** de trece, no dos —`llama3.2:latest` deja de ser significativo—; Levene ahora **sí** detecta heterocedasticidad), el de correlación (los dos coeficientes **coinciden**, ninguno significativo), la conclusión 6/resumen/abstract (**decisión 11**, ejecutada), las titulares (76,55→**81,47 %**, 80,42→**82,13 %**, ya sin restringir), y las conclusiones 1/3/§6 (**decisión 13**, resuelta: el coste de soberanía pasa de «cuatro puntos» a «menos de un punto»). El Anexo I se mantiene **histórico** por decisión deliberada —única sección dedicada a describir el defecto del corpus publicado, que es lo que la regla de integridad exige declarar— y se le añade la declaración de que hubo **dos corridas completas** del estudio. Figura 2 regenerada. **El verificador se generalizó en el camino**: seis funciones que hardcodeaban el consolidado publicado ahora derivan de `CSV_CONSOLIDADO`, más `MANIFIESTO_PUBLICADO` para las dos que deliberadamente no deben seguir la adopción; y cuatro comprobaciones tenían regex o listas congeladas al texto exacto de la frase publicada (`c_anova` buscaba la p en todo el documento y encontraba la de Levene por error; `c_tukey` exigía dos modelos fijos; `c_levene` un solo verbo y notación decimal; `c_redondeos` un valor «0707» escrito en el regex), las cuatro corregidas para leer el documento en vez de una copia congelada. **Verificado paso a paso, no solo al final: 56 comprobaciones, 0 fallos nuevos** en todo momento; 15/15 afirmaciones; cuerpo dentro de 25 páginas |
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.277: **barrido de documentos vivos tras la decisión 1: tres seguían afirmando que el consolidado publicado era «el definitivo» (§F156).** Un `grep` de «38,2222» fuera de los documentos de registro dio seis coincidencias; tres son legítimamente históricas (un *changelog* de versiones y una copia congelada de sincronización) y no se tocan. **Tres afirmaban en presente y se corrigieron:** `CLAUDE.md` mismo —la sección que toda sesión futura lee primero decía «el análisis conjunto definitivo está en `ANALISIS_CONJUNTO_20260907`»—; `TODO-INFORME-FINAL.md`, una fila de checklist y una disyuntiva (F=35,5557 vs 38,2222, `§F66`) que la decisión 1 dejó sin objeto; y `ENCARGO-CIERRE-EQUIPO-48GB-20260910.md`, instrucción viva al equipo remoto que decía «no se adoptó» un consolidado que hoy sí lo está (aunque no el que el documento creía). Los tres corregidos de forma aditiva, con nota fechada que remite a `§F154`/`§F155`, sin borrar el texto original — el mismo tratamiento de `§F149` aplicado ahora al propio documento de políticas del proyecto |
+| 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.278: **cuatro entradas de Claude Desktop en §2 estaban desactualizadas y podían confundir la coordinación.** La §2.20 decía «EN CURSO — saneamiento del aparato bibliográfico» sobre una tarea que ya está terminada: la bibliografía de hoy tiene 39 entradas contiguas verificadas, y las cuatro citas que señalaba como ficticias ([7],[9],[10],[15]) son hoy obras reales y verificadas. Mismo defecto que `§1.139`. Y las entradas 2.1/2.2/2.3, genéricas y de una fase muy anterior —citan «F=10.2096», que no corresponde a ningún estadístico vigente—, quedaron marcadas **superadas** por el encargo detallado y con piezas numeradas `PROMPT-CLAUDE-DESKTOP-DOCX-Y-PDF-20260909.md`, que es la instrucción vigente hoy. Las cuatro conservadas, no borradas, con nota fechada |
