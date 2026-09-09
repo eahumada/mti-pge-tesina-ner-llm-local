@@ -34,6 +34,7 @@ ARTEFACTOS = [
     (f'{BENCH}/CORRELACION_CAPACIDAD_20260908/correlacion.json', 'indice de defensa'),
     ('DEFENSA-PREGUNTAS-Y-RESPUESTAS.md', 'indice de defensa'),
     (f'{BENCH}/ROBUSTEZ_ESTADISTICA_20260909/robustez.json', 'indice de defensa'),
+    (f'{BENCH}/ANALISIS_CONJUNTO_20260907/levene.json', 'homocedasticidad'),
 ]
 
 

@@ -1391,6 +1391,145 @@ def c_agregacion(s):
           'falla a proposito hasta que se resuelva la decision 13, como el [37] hasta la purga')
 
 
+def _betacf(a, b, x):
+    """Fraccion continua de la beta incompleta, metodo de Lentz."""
+    TINY, EPS, MAXIT = 1e-300, 3e-16, 500
+    qab, qap, qam = a + b, a + 1.0, a - 1.0
+    c, d = 1.0, 1.0 - qab * x / qap
+    if abs(d) < TINY:
+        d = TINY
+    d = 1.0 / d
+    h = d
+    for m in range(1, MAXIT + 1):
+        m2 = 2 * m
+        aa = m * (b - m) * x / ((qam + m2) * (a + m2))
+        d = 1.0 + aa * d
+        d = TINY if abs(d) < TINY else d
+        c = 1.0 + aa / c
+        c = TINY if abs(c) < TINY else c
+        d = 1.0 / d
+        h *= d * c
+        aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2))
+        d = 1.0 + aa * d
+        d = TINY if abs(d) < TINY else d
+        c = 1.0 + aa / c
+        c = TINY if abs(c) < TINY else c
+        d = 1.0 / d
+        de = d * c
+        h *= de
+        if abs(de - 1.0) < EPS:
+            break
+    return h
+
+
+def _f_sf(F, df1, df2):
+    """P(X > F) con X ~ F(df1, df2), por la beta incompleta regularizada."""
+    import math
+    if F <= 0:
+        return 1.0
+    a, b, x = df2 / 2.0, df1 / 2.0, df2 / (df2 + df1 * F)
+    if x <= 0.0:
+        return 0.0
+    if x >= 1.0:
+        return 1.0
+    lb = (math.lgamma(a + b) - math.lgamma(a) - math.lgamma(b)
+          + a * math.log(x) + b * math.log1p(-x))
+    if x < (a + 1.0) / (a + b + 2.0):
+        return math.exp(lb) * _betacf(a, b, x) / a
+    return 1.0 - math.exp(lb) * _betacf(b, a, 1.0 - x) / b
+
+
+def c_levene(s):
+    """El supuesto de homocedasticidad del ANOVA principal se recalcula, no se cita de memoria.
+
+    §5 dice «La prueba de Levene no detecta heterocedasticidad (p = 0,18), lo que con 3 120
+    observaciones si es informativo». Esa p sostiene el supuesto del ANOVA que da el resultado
+    titular del trabajo, y hasta hoy **nada la recalculaba**: estaba persistida en `levene.json`
+    desde el 2026-09-08 y ningun codigo la leia, de modo que un cambio en el CSV fusionado —el que
+    traera la re-corrida pendiente de `nemotron-mini`— la habria dejado obsoleta en silencio. Es la
+    clase de defecto de §F89, en una cifra que el informe **publica**.
+
+    La variante es Levene con centrado en la mediana, Brown-Forsythe, que es la robusta y la que da
+    `scipy.stats.levene(center='median')`. Se implementa **con la biblioteca estandar**, a
+    proposito: `scipy` solo esta en `repos/ner-llm-entity-benchmark/venv` y una comprobacion que
+    solo corre dentro de un entorno concreto no corre. Verificada contra scipy y contra el
+    artefacto: las tres vias dan W = 1,2475 y p = 0,1842.
+    """
+    import csv as _csv
+    import statistics as _st
+    from collections import defaultdict as _dd
+    cons = os.path.join(BENCH_DIR, 'results/ANALISIS_CONJUNTO_20260907')
+    csv_path = os.path.join(cons, 'merged_results.csv')
+    art_path = os.path.join(cons, 'levene.json')
+    fallos, mirados = [], 0
+    if not os.path.exists(csv_path):
+        check('el supuesto de homocedasticidad se recalcula desde el CSV', 0,
+              ['no existe %s' % csv_path])
+        return
+    g = _dd(list)
+    with open(csv_path, encoding='utf-8') as fh:
+        for r in _csv.DictReader(fh):
+            v = r.get('f1')
+            if v is not None and v != '':
+                g[r['model']].append(float(v))
+    if not g:
+        check('el supuesto de homocedasticidad se recalcula desde el CSV', 0,
+              ['el CSV fusionado no trae ninguna f1 legible'])
+        return
+    z = {k: [abs(x - _st.median(v)) for x in v] for k, v in g.items()}
+    kk = len(z)
+    N = sum(len(v) for v in z.values())
+    gran = sum(x for v in z.values() for x in v) / N
+    ssb = sum(len(v) * (sum(v) / len(v) - gran) ** 2 for v in z.values())
+    ssw = sum((x - sum(v) / len(v)) ** 2 for v in z.values() for x in v)
+    df1, df2 = kk - 1, N - kk
+    W = (ssb / df1) / (ssw / df2)
+    pv = _f_sf(W, df1, df2)
+
+    # 1) contra el artefacto persistido
+    mirados += 1
+    if not os.path.exists(art_path):
+        fallos.append('no existe levene.json: la cifra publicada no tiene artefacto')
+    else:
+        try:
+            import json as _json
+            with open(art_path, encoding='utf-8') as fh:
+                A = _json.load(fh)
+            for campo, calc in (('W', W), ('p_valor', pv)):
+                mirados += 1
+                dado = A.get(campo)
+                if dado is None:
+                    fallos.append('levene.json no trae %s' % campo)
+                elif abs(dado - calc) >= 5e-5:
+                    fallos.append('levene.json dice %s=%s y el CSV da %.4f' % (campo, dado, calc))
+            for campo, calc in (('grupos', kk), ('observaciones', N), ('df1', df1), ('df2', df2)):
+                mirados += 1
+                if A.get(campo) is not None and A.get(campo) != calc:
+                    fallos.append('levene.json dice %s=%s y el CSV da %s'
+                                  % (campo, A.get(campo), calc))
+        except (ValueError, OSError) as e:
+            fallos.append('levene.json no se puede leer: %s' % e)
+
+    # 2) contra lo que el informe publica, a los dos decimales con que lo cita
+    mirados += 1
+    m = re.search(r'prueba de Levene no detecta heterocedasticidad \(p = (\d+),(\d+)\)', s)
+    if m is None:
+        fallos.append('no se encuentra en el informe la frase de Levene con su p: '
+                      'revisar si se reformulo')
+    else:
+        pub = float('%s.%s' % (m.group(1), m.group(2)))
+        dec = len(m.group(2))
+        if abs(round(pv, dec) - pub) >= 10 ** (-dec) / 2:
+            fallos.append('el informe publica p = %s y el CSV da %.4f (a %d decimales, %.*f)'
+                          % (pub, pv, dec, dec, round(pv, dec)))
+    # 3) y que el numero de observaciones que cita el informe sea el del CSV
+    mirados += 1
+    if re.search(r'3\s*120 observaciones', s) is None and N == 3120:
+        fallos.append('el informe no cita las 3 120 observaciones que da el CSV')
+
+    check('el supuesto de homocedasticidad se recalcula desde el CSV', mirados, fallos)
+
+
 def c_titulares(s):
     """Las cifras titulares, atadas a su corrida: las dos del resumen y la de la soberania.
 
@@ -1580,6 +1719,7 @@ def main():
     ejecutar(c_defensa, s)
     ejecutar(c_fuentes_de_los_grupos, s)
     ejecutar(c_agregacion, s)
+    ejecutar(c_levene, s)
     ejecutar(c_titulares, s)
     ejecutar(c_ablacion, s)
     ejecutar(c_extension, s)

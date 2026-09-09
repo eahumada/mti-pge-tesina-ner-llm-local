@@ -61,7 +61,18 @@ def holm(pares):
 
 
 def calcular(ruta_csv):
-    from scipy import stats
+    try:
+        from scipy import stats
+    except ImportError:
+        raise SystemExit(
+            '  Falta scipy, y esta herramienta lo necesita.\n'
+            '  Esta instalado en el entorno del proyecto, de modo que la orden es:\n\n'
+            '      repos/ner-llm-entity-benchmark/venv/bin/python3 tools/robustez_estadistica.py '
+            '--validar\n\n'
+            '  Antes de este mensaje la herramienta moria con un traceback de ModuleNotFoundError,\n'
+            '  que no dice donde esta el interprete que si la puede ejecutar. Comprobado el\n'
+            '  2026-09-09: en ese venv reproduce los artefactos publicados sin discrepancias.\n'
+            '  La comprobacion de Levene del verificador NO depende de scipy, a proposito.')
 
     datos = leer(ruta_csv)
     grupos = sorted(datos)

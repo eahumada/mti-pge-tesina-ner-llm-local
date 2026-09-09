@@ -3644,3 +3644,52 @@ búsqueda se ancla ahora a la cabecera `| Model | Sample Size (N) | Mean F1-Scor
 Es la tercera vez en dos días que un patrón aparentemente específico caza otra cosa —`<w:t[^>]*>` con
 `<w:tcPr>` en §F88, `5.33` con `35.33%` en el mismo—, y las tres veces lo destapó mirar la salida con
 desconfianza, no releer el patrón.
+
+## §F91 — El supuesto que sostiene el ANOVA principal no lo recalculaba nadie
+
+**2026-09-09.** §5 del informe publica que «la prueba de Levene no detecta heterocedasticidad (p = 0,18), lo
+que con 3 120 observaciones sí es informativo». Esa p sostiene el supuesto de homocedasticidad del ANOVA que
+da el **resultado titular del trabajo**.
+
+Comprobado hoy: la cifra estaba persistida en `results/ANALISIS_CONJUNTO_20260907/levene.json` desde el
+2026-09-08 y **ningún código la leía ni la recalculaba**. `grep` sobre `tools/` y `src/` da cero
+coincidencias, y el verificador no la mencionaba. Es decir: un artefacto correcto, sin nadie que lo
+comprobara, exactamente la situación de §F89 —pero en una cifra que el informe **publica**, no en un
+derivado interno.
+
+**Y no era hipotético.** La re-corrida pendiente de `nemotron-mini` (§3.bis.15) va a cambiar
+`merged_results.csv`, y con él W y p. Sin comprobación, el informe habría seguido citando la p de un CSV
+anterior. La mutación que retira las filas de un grupo lo demuestra: W pasa de 1,2475 a 1,2627 y p de 0,1842
+a 0,1762.
+
+### La comprobación, y por qué no usa scipy
+
+Añadida como comprobación **30** del verificador, con **9 elementos examinados**: recalcula Brown-Forsythe
+—Levene con centrado en la mediana, la variante robusta— desde `merged_results.csv` y lo contrasta contra
+`levene.json` (W, p, grupos, observaciones, df1, df2), contra la p que el informe publica a sus dos
+decimales, y contra las 3 120 observaciones que cita.
+
+Está implementada **con la biblioteca estándar**, a propósito. `scipy` solo existe en
+`repos/ner-llm-entity-benchmark/venv`, y una comprobación que solo corre dentro de un entorno concreto no
+corre. La distribución F se evalúa por la beta incompleta regularizada con la fracción continua de Lentz.
+**Verificada por tres vías independientes**, que dan el mismo resultado al cuarto decimal:
+
+| Vía | W | p |
+|:---|---:|---:|
+| `scipy.stats.levene(center='median')` | 1,2475 | 0,1842 |
+| Implementación en biblioteca estándar | 1,2475 | 0,1842 |
+| `levene.json` persistido | 1,2475 | 0,1842 |
+
+Probada por mutación en tres frentes, y los tres se detectan: cambiar la p del informe, cambiar la W del
+artefacto, y cambiar los datos retirando las filas de un grupo, que es el caso realista.
+
+### De paso: una herramienta que no podía ejecutarse
+
+`tools/robustez_estadistica.py` moría con un `ModuleNotFoundError: No module named 'scipy'`, porque importa
+scipy y el intérprete del sistema no lo tiene. La herramienta **no estaba rota** —en
+`repos/ner-llm-entity-benchmark/venv` reproduce los artefactos publicados sin discrepancias—, pero un
+traceback no dice dónde está el intérprete que sí la ejecuta. Ahora falla con la orden exacta.
+
+Merece la pena retenerlo: **una comprobación que aborta con un traceback es indistinguible de una
+comprobación que no existe**, y ésta llevaba así el tiempo que llevara sin scipy en el intérprete del
+sistema.

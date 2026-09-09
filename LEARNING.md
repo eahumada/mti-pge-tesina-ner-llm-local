@@ -965,3 +965,21 @@ mirar sus resultados con desconfianza:
 en el documento y la tercera era `35.33%`: la regla ingenua lo habría convertido en `35.80%`. Antes de
 aplicar un reemplazo hay que **contar las ocurrencias y mirarlas una por una**, y cuando el objetivo es una
 celda de tabla, anclar en la celda y no en el texto. Es la misma lección que `<w:t[^>]*>`, en otro nivel.
+
+## §L62 — Persistir una cifra no es verificarla
+
+`levene.json` se creó el 2026-09-08 precisamente porque la p publicada «no estaba guardada en ningún
+artefacto, de modo que no era verificable sin recalcularla». El artefacto se escribió, la nota se redactó
+con cuidado, y **nadie lo volvió a leer**: ningún código lo cargaba y ninguna comprobación lo miraba. Un
+cambio en el CSV fusionado lo habría dejado obsoleto en silencio. Ver `FINDINGS §F91`.
+
+**La regla:** persistir una cifra resuelve la trazabilidad y no resuelve la vigencia. Son dos problemas
+distintos y el segundo necesita algo que **recalcule** y compare. Cuando se guarda un artefacto para hacer
+verificable una cifra, en el mismo commit hay que dejar quien lo verifique; si no, se ha creado una segunda
+copia de la cifra, que es una fuente más de divergencia y no una garantía.
+
+**Corolario sobre las dependencias.** Una comprobación que solo corre dentro de un entorno concreto no
+corre. `tools/robustez_estadistica.py` moría con un `ModuleNotFoundError` porque scipy solo está en el venv
+del proyecto, y un traceback no dice dónde está el intérprete que sí funciona: durante ese tiempo la
+herramienta era indistinguible de no existir. Por eso la comprobación de Levene se implementó con la
+biblioteca estándar, aun teniendo scipy a mano, y se validó **contra** scipy en lugar de **con** scipy.
