@@ -80,6 +80,21 @@ cuando se entregó —era lo que decían los datos de entonces— pero significa
 editando el informe**: hay que comunicarla, y es mejor hacerlo por iniciativa propia que verse preguntado en
 la defensa. Cómo y cuándo es del autor; lo que aquí se hace es dejarlo dicho.
 
+### Qué cifras concretas tiene el profesor
+
+Extraídas del PDF entregado: **las trece filas de línea base de la Tabla 7** están todas —62.38, 59.25,
+56.18, 55.91, 52.39, 50.22, 48.76, 48.21, 44.00, 43.38, 36.11, 24.83 y 22.59— y el **ANOVA F = 38,2222**
+también.
+
+**Los coeficientes de correlación, en cambio, no aparecen**: ni 0,5165 ni 0,6004 ni sus valores *p*. Es
+coherente con `FINDINGS §F74`, que descubrió el 2026-09-08 por la tarde —después de la entrega, que fue a las
+05:07— que la ρ que sostiene el hallazgo central **vivía únicamente dentro de la imagen de la Figura 2**, sin
+mencionarse en el texto. Se añadieron al informe entonces.
+
+De modo que el documento que tiene el profesor **enuncia la proporcionalidad inversa sin las cifras que la
+sostienen**. Para la corrección esto es más fácil, no más difícil: lo que hay que rectificar allí es una
+afirmación cualitativa y trece valores de tabla, no un aparato estadístico.
+
 **Nota de método.** Esta comprobación estuvo a punto de dar un falso negativo. Un primer extractor de PDF
 casero devolvió **cero** apariciones de las cuatro frases, lo que se habría leído como «el PDF no lo dice». El
 control de `LEARNING §L57` —buscar además palabras que **tienen** que estar— lo destapó: «Kleptotrace»,
