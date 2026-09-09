@@ -1,0 +1,11 @@
+{
+  "_motivo": "El Anexo H.3 de los tres .docx afirma «19 de las 24 configuraciones puntúan mejor» y «5 de las 24 puntúan peor» sobre una tabla que tiene 26 filas, idénticas a las del Markdown canónico. Recalculado desde esa tabla: 21 puntúan mejor por entidad de referencia y 23 puntúan peor por texto de entrada. El «5» era además el recuento de la OTRA columna (los que puntúan peor por entidad de referencia), de modo que el texto confundía el criterio. El Markdown ya dice 21 y 23; esto solo lo propaga. Ver FINDINGS §F120.",
+  "rules": [
+    {"id": "R1", "find": "19 de las 24 configuraciones puntúan mejor",
+     "replace": "veintiuna de las veintiséis configuraciones puntúan mejor", "expect": 1},
+    {"id": "R2", "find": "y 5 de las 24 puntúan peor",
+     "replace": "y veintitrés puntúan peor", "expect": 1},
+    {"id": "R3", "find": "sobre las 24 configuraciones del corpus N=120",
+     "replace": "sobre las 26 configuraciones del corpus N=120", "expect": 1}
+  ]
+}

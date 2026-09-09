@@ -868,7 +868,12 @@ def _texto_docx(ruta):
 
 # 17 el 2026-09-09 al medirlo por primera vez; 16 tras partir el run de §3.3, que era el
 # unico de los 17 introducido por una edicion propia. Baja segun se propague la limpieza.
-BOLD_CUERPO_BASE = 16
+BOLD_CUERPO_BASE = 14   # 16 -> 14 el 2026-09-09: la correccion de §F120 reemplazo texto
+                        # entre runs y el nuevo texto heredo el formato del primero, que no
+                        # estaba en negrita. Son dos cifras derivadas de una tabla, que segun
+                        # CLAUDE.md no llevan resalte, de modo que la perdida va en la
+                        # direccion correcta. Se baja la base para que la comprobacion siga
+                        # vigilando que no CREZCAN desde el estado nuevo.
 
 
 PDF_RAIZ = 'Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.pdf'

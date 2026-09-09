@@ -5420,3 +5420,89 @@ importarlo en la función, y `ejecutar` lo reportó como **VACÍA (reventó) —
 comportamiento diseñado: una comprobación que revienta tiene que decir cuál es y seguir.
 
 **Estado del verificador:** 50 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F120 — El entregable contradecía a su propia tabla, y las cincuenta comprobaciones miraban el otro fichero
+
+**Fecha:** 2026-09-09 · **Origen:** notar que las comprobaciones 45 a 50 leen todas el Markdown
+
+Las seis comprobaciones añadidas hoy verifican el **Markdown canónico**. El entregable es el
+`.docx`, y si una de esas cifras divergiera allí, ninguna lo vería. Ejecutado
+`tools/desfase_cifras_docx.py`, resultó que **diez cifras están en el Markdown y no en los `.docx`**,
+y comparando por **párrafo** —no por cifra— aparecieron dos párrafos de la fuente ausentes de los
+tres entregables y siete emparejados pero distintos.
+
+### El más grave: el texto contradice a la tabla que introduce
+
+| | Texto |
+|:---|:---|
+| Markdown | «**veintiuna de las veintiséis** configuraciones puntúan mejor […] y **veintitrés** puntúan peor» |
+| Los tres `.docx` | «**19 de las 24** configuraciones puntúan mejor […] y **5 de las 24** puntúan peor» |
+
+La Tabla 18 del `.docx` tiene **26 filas de datos, idénticas a las del Markdown** —es lo que la
+comprobación 27 verifica, con sus 52 elementos—. De modo que **la tabla se propagó y la prosa que la
+describe no**, y el entregable afirmaba una cosa justo encima de una tabla que dice otra.
+
+**Recalculado desde esas 26 filas**, el Markdown es el que cuadra:
+
+| Criterio | Δ > 0 (mejor) | Δ < 0 (peor) |
+|:---|---:|---:|
+| Por entidad de referencia | **21** | 5 |
+| Por texto de entrada | 3 | **23** |
+
+Y el error del `.docx` era doble: el 19 es un recuento antiguo sobre 24 configuraciones, y **el 5 es
+el recuento de la otra columna** —los que puntúan peor por entidad de referencia—, de modo que el
+texto además **confundía el criterio**. Es exactamente el defecto que §5.x advierte que hay que
+evitar: el signo del efecto depende de qué criterio se elija, y esa dependencia es el resultado.
+
+**Corregido** con `tools/docx_replace_terms.py` y las reglas de `tools/terms_desfase_mojibake.json`:
+tres reemplazos en cada uno de los tres entregables, todos aplicados según lo esperado, con respaldo
+previo. No es una decisión editorial: **el Markdown canónico ya decía 21 y 23**, y esto solo lo
+propaga, que es el flujo que `CLAUDE.md` fija.
+
+Un efecto lateral que la comprobación 39 detectó y explicó sola: el reemplazo de `R2` fue entre
+`runs` y el texto nuevo heredó el formato del primero, que no estaba en negrita, así que los
+resaltes del cuerpo bajaron de 16 a **14**. Van en la dirección correcta —son dos cifras derivadas
+de una tabla, y `CLAUDE.md` reserva la negrita para las que la tabla no recoge—, de modo que se bajó
+`BOLD_CUERPO_BASE` a 14 para que la comprobación siga vigilando que no **crezcan** desde el estado
+nuevo, que es lo que vigila.
+
+### Lo que NO he corregido, y por qué
+
+Tres divergencias más, todas en la misma dirección —el `.docx` conserva una versión anterior—, que
+**no toco porque son inserciones de texto y el cuerpo tiene un límite duro de 25 páginas**. Van aquí
+con el texto exacto para la pasada de maquetación:
+
+**1. Falta la prueba de Friedman, y con ella la respuesta a la objeción del diseño apareado.** La
+palabra «Friedman» aparece **cero veces** en los tres `.docx`, y `169,23` también.
+
+| | Texto |
+|:---|:---|
+| Markdown | «La prueba de Levene **no detecta heterocedasticidad** (p = 0,18), lo que con 3 120 observaciones sí es informativo, **aunque no equivalga a demostrar que las varianzas son iguales**. Y tratar como independientes unas observaciones apareadas hace el contraste conservador: repetido con la prueba de **Friedman**, que es la que corresponde a un diseño de medidas repetidas, el rechazo se sostiene con holgura (χ² = 1 169,23), de modo que la conclusión no depende de esa elección.» |
+| Los tres `.docx` | «La homocedasticidad **se verifica** (Levene, p = 0,18) y, al ser el diseño pareado más potente que el independiente, la significancia obtenida por esta vía es conservadora.» |
+
+Dos problemas, y el segundo es peor que la ausencia. El `.docx` **afirma lo que el Markdown dice
+expresamente que no se puede afirmar**: Levene no verifica la homocedasticidad, solo no la rechaza,
+y una p de 0,18 no demuestra que las varianzas sean iguales. Y donde el Markdown aporta **una
+prueba** —Friedman, con su χ²—, el `.docx` argumenta por aserción. Es el párrafo que sostiene la
+principal debilidad metodológica declarada del trabajo, y la versión del entregable es la más
+atacable de las dos. Añade unos 300 caracteres, unas 50 palabras.
+
+**2. Dos párrafos de la fuente que no están en ningún `.docx`**, los que empiezan por «Los motivos
+de invalidez son dos» y «Conviene separar dos situaciones que no son la misma». Los dos explican por
+qué ocho grupos tienen una corrida previa que no es una medición alternativa sino inválida, que es
+la distinción que la regla de integridad de `CLAUDE.md` obliga a declarar.
+
+**3. Cinco párrafos más emparejados pero no idénticos**, con similitud entre 0,85 y 0,91: la
+formulación de los objetivos específicos, la definición de RAG, la frase de la brecha —a la que el
+Markdown añade «y con una medición cuyos límites estén declarados»—, el módulo KB RAG y la cautela
+metodológica de la tabla, que en el Markdown advierte de **dos** versiones anteriores y en el
+`.docx` de una.
+
+**La lección, que es la que importa.** Cincuenta comprobaciones sobre el Markdown no acreditan el
+entregable. `c_excluidos`, `c_sobriedad_docx`, `c_docx_sano` y las dos de tablas sí lo leen, pero
+ninguna comparaba **la prosa**, y el desfase vivía precisamente ahí. Un documento cuyo texto
+contradice a su propia tabla pasa las cincuenta.
+
+**Estado del verificador:** 50 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
