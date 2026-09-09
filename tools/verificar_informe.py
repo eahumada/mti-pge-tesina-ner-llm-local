@@ -215,7 +215,9 @@ def _texto_docx(ruta):
     return ' '.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', x, re.S))
 
 
-BOLD_CUERPO_BASE = 17
+# 17 el 2026-09-09 al medirlo por primera vez; 16 tras partir el run de §3.3, que era el
+# unico de los 17 introducido por una edicion propia. Baja segun se propague la limpieza.
+BOLD_CUERPO_BASE = 16
 
 
 def c_sobriedad_docx(s):
@@ -223,8 +225,8 @@ def c_sobriedad_docx(s):
 
     `CLAUDE.md` obliga a que «quien los produce cuente guiones y resaltes del cuerpo del documento
     generado y los compare con los de la fuente, porque el renderizador no debe añadir énfasis».
-    Comprobado el 2026-09-09 y nunca antes: el `.docx` canonico tiene **17 tramos en negrita en el
-    cuerpo** que el Markdown no marca. Los guiones largos, en cambio, bajan de 81 a 67, sin
+    Comprobado el 2026-09-09 y nunca antes: el `.docx` canonico tenia **17 tramos en negrita en el
+    cuerpo** que el Markdown no marca, hoy **16**. Los guiones largos, en cambio, bajan de 81 a 67, sin
     añadidos.
 
     Clasificados, para no contar de mas: **76** de los resaltes que el Markdown no marca estan

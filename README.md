@@ -97,6 +97,7 @@ el documento y los datos no puedan divergir en silencio:
 | `docx_replace_terms.py` | Ediciones de texto en los `.docx` preservando el formato. `celda_exacta` ancla en la celda de tabla, no en el texto |
 | `.githooks/pre-commit` | Puerta de commit: ejecuta el verificador si el commit toca el informe, `tools/` o los datos. Requiere `git config core.hooksPath .githooks` **en cada clon** |
 | `docx_borrar_filas.py` | Suprime filas de una tabla del `.docx`, identificando la tabla por su texto y la fila por su primera celda |
+| `docx_partir_run.py` | Parte un `<w:r>` para que el resalte cubra solo el trozo que debe, sin tocar el texto |
 | `docx_reconstruir_cuerpo.py` | Reconstruye el cuerpo de una tabla del `.docx` desde el Markdown, para añadir filas u ordenar; se niega si perdería información |
 | `docx_reescribir_celdas.py` | Reescribe las celdas de una tabla del `.docx` desde la fuente canónica, todo o nada |
 | `generar_reglas_tablas_docx.py` | Deriva del Markdown las reglas de la anterior, para no teclear ningún valor |

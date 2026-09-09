@@ -1,0 +1,22 @@
+{
+  "_comment": [
+    "Parte el run en negrita de §3.3 para que resalte solo el porcentaje, como el Markdown",
+    "(2026-09-09). Es la unica de las 17 divergencias de resalte de §F96 introducida por una",
+    "edicion propia: docx_replace_terms.py escribio la cifra nueva dentro del run que ya estaba",
+    "en negrita, heredando un enfasis que la fuente no tiene.",
+    "",
+    "El Markdown dice «el **66,0 %** de los falsos positivos...», con la negrita solo en la cifra."
+  ],
+  "parts": [
+    "word/document.xml"
+  ],
+  "reglas": [
+    {
+      "id": "N1",
+      "_where": "§3.3, nota sobre los falsos positivos de la categoria no anotada",
+      "texto_del_run": "el 66,0 % de los falsos positivos del estudio, 12 852 de 19 464, proceden de esa categoría",
+      "resaltar": "66,0 %",
+      "propiedad": "<w:b/>"
+    }
+  ]
+}

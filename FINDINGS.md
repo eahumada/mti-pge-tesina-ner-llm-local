@@ -4078,3 +4078,25 @@ versión**: el χ² de medidas repetidas, la potencia y la *d* de Cohen, el rang
 de siglas y las filas de la Tabla 20. Comprobado sonda a sonda: ninguna tiene contrapartida en el
 entregable. No es propagación de cifras, es **inserción de párrafos y de una tabla nueva**, con decisiones
 de posición y estilo que son de maquetación.
+
+### Cerrada la divergencia de resalte introducida por una edición propia — 2026-09-09
+
+De los 17 resaltes de cuerpo que §F96 contó, uno lo había introducido yo: el reemplazo de texto de §3.3
+escribió la cifra nueva **dentro** del run que ya estaba en negrita, con lo que la frase entera quedó
+resaltada donde el Markdown resalta solo el porcentaje. Arreglarlo exigía partir el run, y ninguna
+herramienta del proyecto lo hacía.
+
+`tools/docx_partir_run.py` lo hace ahora: parte el `<w:r>` en hasta tres —lo de antes sin la propiedad de
+resalte, el trozo con el `rPr` original intacto, y lo de después sin ella— y omite el `rPr` entero si al
+quitar la propiedad se queda vacío, que es lo que produce texto de cuerpo normal. Exige que el texto del run
+aparezca **una sola vez** en el documento, que el trozo a resaltar esté **una sola vez** dentro de él, y que
+el run **lleve** la propiedad que se va a quitar; si no, reporta en lugar de fingir que hizo algo.
+
+**Verificado en los tres documentos:** la frase sigue íntegra en el texto, `66,0 %` está en su propio run en
+negrita, y el run que resaltaba la frase entera ya no existe. Los paquetes abren.
+
+**Y la comprobación 34 se comportó como se diseñó**, que es la parte que interesa: al bajar el recuento a 16
+no dio «ok» en silencio —lo que habría dejado el umbral holgado y ciego a un resalte nuevo— sino que pidió
+**bajar el umbral a 16 para seguir vigilando desde el nuevo estado**. Bajado. Quedan **16**, todos
+preexistentes al trabajo de hoy, y la propagación de la limpieza de sobriedad sigue siendo de la pasada de
+maquetación.
