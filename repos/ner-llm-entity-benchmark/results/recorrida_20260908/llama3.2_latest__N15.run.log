@@ -1,0 +1,199 @@
+2026-09-09 00:18:58,834 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-09 00:18:58,851 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-09 00:18:58,851 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-09-09 00:18:58,851 [INFO] ner_benchmark: Corpus loaded: 15 articles split into 2 batches.
+2026-09-09 00:18:58,851 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-09 00:18:58,895 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-09 00:18:58,897 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-09 00:18:58,897 [INFO] ner_benchmark: [RAG] Using Knowledge Base mode: 'kb_combined'
+2026-09-09 00:18:58,911 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest_baseline-b0-1788923938 for batch 0 to memory queue.
+2026-09-09 00:18:58,911 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest_baseline-b1-1788923938 for batch 1 to memory queue.
+2026-09-09 00:18:58,911 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest_kb_rag-b0-1788923938 for batch 0 to memory queue.
+2026-09-09 00:18:58,911 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest_kb_rag-b1-1788923938 for batch 1 to memory queue.
+2026-09-09 00:18:58,911 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=1 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-09-09 00:18:58,913 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-09 00:18:58,914 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-09 00:18:58,914 [INFO] ner_benchmark: [RAG] Worker phase — Knowledge Base mode: 'kb_combined'
+2026-09-09 00:18:58,927 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest_baseline-b0-1788923938 for batch 0 to memory queue.
+2026-09-09 00:18:58,927 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest_baseline-b1-1788923938 for batch 1 to memory queue.
+2026-09-09 00:18:58,927 [INFO] ner_benchmark: Running RAG study 'llama3.2:latest_baseline' with 1 workers...
+2026-09-09 00:18:58,928 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest_baseline-b0-1788923938 from memory queue.
+2026-09-09 00:18:58,928 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-09 00:18:58,928 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_baseline') -> Extracting entities for record '1'...
+2026-09-09 00:18:58,929 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:18:58,932 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:19:03,598 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:19:04,009 [DEBUG] ner_benchmark.llm_runner: Successfully extracted entities via regex key fallback.
+2026-09-09 00:19:04,037 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_baseline') -> Extracting entities for record '2'...
+2026-09-09 00:19:04,037 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:19:04,042 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:19:05,846 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:19:06,097 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:19:06,121 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_baseline') -> Extracting entities for record '3'...
+2026-09-09 00:19:06,121 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:19:06,127 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:19:09,716 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:19:10,203 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:19:10,226 [INFO] ner_benchmark: [Worker 4] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_baseline') -> Extracting entities for record '4'...
+2026-09-09 00:19:10,226 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:19:10,229 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:19:13,885 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:19:14,314 [DEBUG] ner_benchmark.llm_runner: Successfully extracted entities via regex key fallback.
+2026-09-09 00:19:14,343 [INFO] ner_benchmark: [Worker 5] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_baseline') -> Extracting entities for record '5'...
+2026-09-09 00:19:14,343 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:19:14,348 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:19:15,162 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:19:15,374 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:19:15,385 [INFO] ner_benchmark: [Worker 6] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_baseline') -> Extracting entities for record '6'...
+2026-09-09 00:19:15,385 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:19:15,390 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:19:16,249 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:19:16,423 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:19:16,432 [INFO] ner_benchmark: [Worker 7] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_baseline') -> Extracting entities for record '7'...
+2026-09-09 00:19:16,433 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:19:16,439 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:19:18,845 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:19:18,991 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:19:19,011 [INFO] ner_benchmark: [Worker 8] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_baseline') -> Extracting entities for record '8'...
+2026-09-09 00:19:19,011 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:19:19,017 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:19:19,913 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:19:20,049 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:19:20,053 [INFO] ner_benchmark: [Worker 9] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_baseline') -> Extracting entities for record '9'...
+2026-09-09 00:19:20,053 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:19:20,058 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:19:23,027 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:19:23,106 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:19:23,117 [INFO] ner_benchmark: [Worker 10] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_baseline') -> Extracting entities for record '10'...
+2026-09-09 00:19:23,118 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:19:23,122 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:19:27,778 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:19:28,207 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:19:28,224 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest_baseline-b0-1788923938 in memory queue.
+2026-09-09 00:19:28,226 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest_baseline-b1-1788923938 from memory queue.
+2026-09-09 00:19:28,226 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-09 00:19:28,226 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_baseline') -> Extracting entities for record '11'...
+2026-09-09 00:19:28,226 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:19:28,230 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:19:33,383 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:19:33,827 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:19:33,880 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_baseline') -> Extracting entities for record '12'...
+2026-09-09 00:19:33,880 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:19:33,884 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:19:38,037 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:19:38,467 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:19:38,503 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_baseline') -> Extracting entities for record '13'...
+2026-09-09 00:19:38,503 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:19:38,506 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:19:41,286 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:19:41,560 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:19:41,581 [INFO] ner_benchmark: [Worker 4] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_baseline') -> Extracting entities for record '14'...
+2026-09-09 00:19:41,582 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:19:41,585 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:19:44,379 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:19:44,649 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:19:44,671 [INFO] ner_benchmark: [Worker 5] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_baseline') -> Extracting entities for record '15'...
+2026-09-09 00:19:44,671 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:19:44,676 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:19:46,962 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:19:47,229 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:19:47,247 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest_baseline-b1-1788923938 in memory queue.
+2026-09-09 00:19:47,251 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest_kb_rag-b0-1788923987 for batch 0 to memory queue.
+2026-09-09 00:19:47,252 [INFO] ner_benchmark.pub_sub: Published task llama3.2:latest_kb_rag-b1-1788923987 for batch 1 to memory queue.
+2026-09-09 00:19:47,252 [INFO] ner_benchmark: Running RAG study 'llama3.2:latest_kb_rag' with 1 workers...
+2026-09-09 00:19:47,252 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest_kb_rag-b0-1788923987 from memory queue.
+2026-09-09 00:19:47,252 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-09 00:19:47,252 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_kb_rag') -> Extracting entities for record '1'...
+2026-09-09 00:19:47,396 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:19:47,399 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:19:51,115 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:19:51,475 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:19:51,509 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_kb_rag') -> Extracting entities for record '2'...
+2026-09-09 00:19:51,599 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:19:51,602 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:19:53,634 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:19:53,644 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:19:53,665 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_kb_rag') -> Extracting entities for record '3'...
+2026-09-09 00:19:53,759 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:19:53,762 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:19:57,562 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:19:57,843 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:19:57,869 [INFO] ner_benchmark: [Worker 4] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_kb_rag') -> Extracting entities for record '4'...
+2026-09-09 00:19:57,958 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:19:57,962 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:20:01,504 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:20:02,040 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:20:02,072 [INFO] ner_benchmark: [Worker 5] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_kb_rag') -> Extracting entities for record '5'...
+2026-09-09 00:20:02,162 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:20:02,166 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:20:03,721 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:20:04,208 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:20:04,219 [INFO] ner_benchmark: [Worker 6] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_kb_rag') -> Extracting entities for record '6'...
+2026-09-09 00:20:04,313 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:20:04,316 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:20:05,004 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:20:05,340 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:20:05,348 [INFO] ner_benchmark: [Worker 7] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_kb_rag') -> Extracting entities for record '7'...
+2026-09-09 00:20:05,438 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:20:05,441 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:20:09,079 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:20:09,521 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:20:09,543 [INFO] ner_benchmark: [Worker 8] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_kb_rag') -> Extracting entities for record '8'...
+2026-09-09 00:20:09,634 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:20:09,638 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:20:10,424 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:20:10,666 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:20:10,672 [INFO] ner_benchmark: [Worker 9] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_kb_rag') -> Extracting entities for record '9'...
+2026-09-09 00:20:10,768 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:20:10,772 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:20:13,316 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:20:13,833 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:20:13,846 [INFO] ner_benchmark: [Worker 10] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_kb_rag') -> Extracting entities for record '10'...
+2026-09-09 00:20:13,947 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:20:13,950 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:20:18,459 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:20:18,524 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:20:18,548 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest_kb_rag-b0-1788923987 in memory queue.
+2026-09-09 00:20:18,553 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task llama3.2:latest_kb_rag-b1-1788923987 from memory queue.
+2026-09-09 00:20:18,553 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-09 00:20:18,553 [INFO] ner_benchmark: [Worker 1] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_kb_rag') -> Extracting entities for record '11'...
+2026-09-09 00:20:18,644 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:20:18,648 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:20:23,707 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:20:24,232 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:20:24,267 [INFO] ner_benchmark: [Worker 2] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_kb_rag') -> Extracting entities for record '12'...
+2026-09-09 00:20:24,353 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:20:24,357 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:20:28,054 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:20:28,428 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:20:28,458 [INFO] ner_benchmark: [Worker 3] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_kb_rag') -> Extracting entities for record '13'...
+2026-09-09 00:20:28,541 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:20:28,545 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:20:30,765 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:20:31,093 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:20:31,124 [INFO] ner_benchmark: [Worker 4] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_kb_rag') -> Extracting entities for record '14'...
+2026-09-09 00:20:31,213 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:20:31,217 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:20:33,724 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:20:33,767 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:20:33,791 [INFO] ner_benchmark: [Worker 5] Model 'llama3.2:latest' (Mapped: 'llama3.2:latest_kb_rag') -> Extracting entities for record '15'...
+2026-09-09 00:20:33,885 [DEBUG] ner_benchmark.providers.factory: Factory: model 'llama3.2:latest' → OllamaProvider (default)
+2026-09-09 00:20:33,888 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=llama3.2:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:20:36,699 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:20:36,948 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:20:36,961 [INFO] ner_benchmark.pub_sub: Acknowledged task llama3.2:latest_kb_rag-b1-1788923987 in memory queue.
+2026-09-09 00:20:36,974 [INFO] ner_benchmark: Unloading model weights for llama3.2:latest to protect VRAM.
+2026-09-09 00:20:37,026 [INFO] ner_benchmark.llm_runner: Successfully unloaded weights for llama3.2:latest from VRAM.
+2026-09-09 00:20:39,032 [INFO] ner_benchmark: ==================================================
+2026-09-09 00:20:39,032 [INFO] ner_benchmark: BENCHMARK EXTRACTIONS COMPLETE. PROCESSING METRICS...
+2026-09-09 00:20:39,032 [INFO] ner_benchmark: ==================================================
+2026-09-09 00:20:39,119 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.
+
+==================================================
+      FINAL BENCHMARK PERFORMANCE RESULTS
+==================================================
+                                f1  precision    recall  hallucination_rate  latency_sec
+llama3.2:latest_baseline  0.652190   0.738252  0.619910            0.019565     3.194453
+llama3.2:latest_kb_rag    0.697278   0.712796  0.710626            0.042275     3.193339
+==================================================
+Full reports saved under: results/ directory.
