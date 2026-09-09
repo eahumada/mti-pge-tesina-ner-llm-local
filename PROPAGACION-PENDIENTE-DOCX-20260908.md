@@ -132,7 +132,12 @@ correcciones pendientes**:
 | `emparejamiento` | 6 | 3 | Las precisiones sobre el umbral y el cotejo difuso |
 | `potencia` | 9 | 7 | La potencia declarada de los contrastes (`§F77`) |
 
-**Cuatro de los seis están a cero**, lo que confirma que ninguna de esas correcciones ha llegado. Y da la
+**Cuatro de los seis están a cero**, lo que confirma que ninguna de esas correcciones ha llegado.
+
+**Y los tres `.docx` están en el mismo estado: 6 de 6 sin propagar en cada uno.** Eso simplifica el trabajo
+más de lo que parece: no hay estados parciales que reconciliar, ni un fichero más adelantado que otro. Es una
+sola tanda de correcciones aplicada tres veces, y los tres se comprueban con la misma orden cambiando el
+nombre del fichero. Y da la
 comprobación posterior: **tras propagar, los seis recuentos deben coincidir**. Es una orden de una línea y no
 depende de contar commits, que es lo que envejece.
 
