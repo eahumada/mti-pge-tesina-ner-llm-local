@@ -1025,3 +1025,27 @@ vuelven a ser vigilables al corregir el defecto, de modo que la deuda queda anot
 tiene este coste oculto. El fallo declarado **desactiva como centinela** a su propia comprobación. Es una
 razón más para que la lista de declarados sea corta y se pode: cada entrada no solo tolera un defecto, sino
 que ciega una comprobación.
+
+## §L65 — Una excepción sin fecha es un aparcamiento indefinido
+
+La lista de fallos declarados del verificador llegó a siete entradas en un día. Auditadas una por una, las
+siete eran válidas y correctamente atribuidas, de modo que la lista no escondía nada — pero el ejercicio
+dejó ver la carencia: **ninguna tenía fecha**. Nada distinguía la que se acababa de escribir, con su
+responsable trabajando en ella, de la que llevaría tres semanas ahí porque se olvidó.
+
+Y declarar tiene un coste que §L64 documenta: cada entrada **ciega como centinela a su propia
+comprobación**. De modo que la lista tiene que ser corta y hay que **verla envejecer**.
+
+**La regla:** toda excepción declarada lleva **la fecha en que se declaró**, y la herramienta **muestra su
+edad**. Sin eso, «declarado» deja de significar «alguien se ocupa» y pasa a significar «nadie mira».
+
+**Y una decisión deliberada: no caducan.** Caducar automáticamente un fallo declarado lo convertiría en un
+fallo nuevo y cortaría la puerta de commit sin que nadie haya hecho nada mal — que es exactamente la clase de
+alarma que se aprende a ignorar, y una alarma ignorada es peor que ninguna. Lo que se hace es **mostrar la
+edad** y, pasadas dos semanas, decir en voz alta que una declaración tan vieja suele significar que su
+responsable no la tiene. La decisión sigue siendo de una persona; lo que cambia es que ya no puede tomarse
+por omisión.
+
+**Comprobado en los dos sentidos:** con las fechas reales el resumen dice «la más antigua lleva 0 días»; con
+una fecha de hace veinte, emite el aviso. Las fechas, además, se verificaron contra el historial de git en
+lugar de suponerse — las siete se habían añadido el mismo día.

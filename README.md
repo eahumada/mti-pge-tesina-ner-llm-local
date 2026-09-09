@@ -66,6 +66,8 @@ esperan al autor, el par de cifras de la conclusión 1 (**decisión 13**) y la r
 repositorio y falla hasta que se complete la purga. La lista de declarados **se poda en cuanto uno se
 resuelve**: una lista de excepciones que nadie limpia acaba silenciando defectos de verdad.
 
+Cada declaración lleva **la fecha en que se declaró**, y el resumen imprime la edad de la más antigua: una excepción sin fecha es un aparcamiento indefinido, y cada una ciega como centinela a su propia comprobación (`LEARNING §L64`, `§L65`). No caducan automáticamente —eso cortaría la puerta sin que nadie hubiera hecho nada mal—, pero pasadas dos semanas la herramienta lo dice.
+
 ```
 python3 tools/verificar_informe.py          # todas, sin red
 python3 tools/verificar_informe.py --red    # además abre las URL de la bibliografía

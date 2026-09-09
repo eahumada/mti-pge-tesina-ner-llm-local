@@ -35,21 +35,56 @@ EXCLUIDOS = ['nuextract', 'minimax-m3', 'gemini-3.1-flash-lite', 'q8-64k', 'sonc
 #
 # Retirar una entrada de aqui en cuanto se resuelva: una lista de excepciones que nadie poda acaba
 # silenciando defectos de verdad.
+# Cada fallo declarado lleva la FECHA en que se declaro, no solo su motivo.
+#
+# Por que. Una declaracion sin fecha es un aparcamiento indefinido: nada distingue la que se
+# escribio hoy, con su responsable trabajando en ella, de la que lleva tres semanas ahi porque se
+# olvido. Y cada entrada tiene un coste que §L64 documenta —ciega como centinela a su propia
+# comprobacion—, de modo que la lista tiene que ser corta y hay que verla envejecer.
+#
+# El resumen imprime la edad de cada una. No hay caducidad automatica: caducar un fallo
+# declarado lo convertiria en un fallo nuevo y cortaria la puerta sin que nadie haya hecho nada
+# mal, que es la clase de alarma que se aprende a ignorar. Lo que se hace es **mostrar la edad**.
 FALLOS_DECLARADOS = {
-    '.rebuild_venv.log': 'fichero vacio del commit 880f4f9; decision del autor (CURRENT-TASKS §1.103)',
-    '.restore_results.log': 'idem',
-    'cita 62.67': 'decision 13, pendiente del autor (FINDINGS §F87)',
-    'cita 80.51': 'decision 13, pendiente del autor (FINDINGS §F87)',
-    'el Anexo I dice': 'decision 13, ampliada a la tercera instancia del defecto '
-                       '(FINDINGS §F87.bis)',
-    'hay que regenerarlo desde el .docx': 'PENDIENTE, no aceptado: el PDF de la raiz es del '
-                                        '2026-09-08 y los .docx se corrigieron el 09. Exige '
-                                        'Word y no hay conversor aqui; es de la pasada de '
-                                        'maquetacion (FINDINGS §F98). El PDF de enviados/ se '
-                                        'conserva y no se toca',
-    'github.com/eahumada/mti-pge-tesina': 'referencia [37]: el repositorio es privado hasta la purga '
-                                          '(SEGURIDAD-CLAVE-GOOGLE-20260908.md)',
+    '.rebuild_venv.log': ('2026-09-09',
+                          'fichero vacio del commit 880f4f9; decision del autor '
+                          '(CURRENT-TASKS §1.103)'),
+    '.restore_results.log': ('2026-09-09', 'idem'),
+    'cita 62.67': ('2026-09-09', 'decision 13, pendiente del autor (FINDINGS §F87)'),
+    'cita 80.51': ('2026-09-09', 'decision 13, pendiente del autor (FINDINGS §F87)'),
+    'el Anexo I dice': ('2026-09-09',
+                        'decision 13, ampliada a la tercera instancia del defecto '
+                        '(FINDINGS §F87.bis)'),
+    'hay que regenerarlo desde el .docx': ('2026-09-09',
+                                           'PENDIENTE, no aceptado: el PDF de la raiz es del '
+                                           '2026-09-08 y los .docx se corrigieron el 09. Exige '
+                                           'Word y no hay conversor aqui; es de la pasada de '
+                                           'maquetacion (FINDINGS §F98). El PDF de enviados/ se '
+                                           'conserva y no se toca'),
+    'github.com/eahumada/mti-pge-tesina': ('2026-09-09',
+                                           'referencia [37]: el repositorio es privado hasta la '
+                                           'purga (SEGURIDAD-CLAVE-GOOGLE-20260908.md)'),
 }
+
+
+def _edad_declarado(clave):
+    """Texto con la edad de una declaracion, o cadena vacia si no se puede fechar."""
+    import datetime as _dt
+    fecha = FALLOS_DECLARADOS[clave][0]
+    try:
+        d = _dt.date.fromisoformat(fecha)
+    except ValueError:
+        return ''
+    dias = (_dt.date.today() - d).days
+    if dias <= 0:
+        return ' · declarado hoy'
+    if dias == 1:
+        return ' · declarado ayer'
+    return ' · declarado hace %d dias' % dias
+
+
+def _motivo_declarado(clave):
+    return FALLOS_DECLARADOS[clave][1] + _edad_declarado(clave)
 
 resultados = []
 
@@ -2337,7 +2372,7 @@ def main():
             for f in fallos[:8]:
                 cl = _declarado(f)
                 print('           - %s%s' % (f, '' if not cl else
-                                             '\n             [DECLARADO] %s' % FALLOS_DECLARADOS[cl]))
+                                             '\n             [DECLARADO] %s' % _motivo_declarado(cl)))
             if len(fallos) > 8:
                 print('           ... y %d más' % (len(fallos) - 8))
             if (fallos or n == 0) and nota:
@@ -2347,6 +2382,24 @@ def main():
           % (len(resultados), fallos_totales, declarados, nuevos, vacias))
     if not nuevos and not vacias:
         print('  sin fallos nuevos: todo lo que falla esta declarado y asignado')
+    # La edad de la declaracion mas vieja, para que la lista no se vuelva un aparcamiento. Cada
+    # entrada ciega como centinela a su comprobacion (§L64), de modo que envejecer es un coste.
+    if declarados:
+        import datetime as _dt
+        edades = []
+        for _k, (_f, _m) in FALLOS_DECLARADOS.items():
+            try:
+                edades.append(((_dt.date.today() - _dt.date.fromisoformat(_f)).days, _k))
+            except ValueError:
+                pass
+        if edades:
+            d, k = max(edades)
+            print('  %d declaraciones vigentes · la mas antigua lleva %d dia(s): «%s»'
+                  % (len(FALLOS_DECLARADOS), d, k))
+            if d >= 14:
+                print('  ATENCION: una declaracion de mas de dos semanas suele significar que su '
+                      'responsable no la tiene. Revisarla o reasignarla; cada una ciega una '
+                      'comprobacion.')
     # El codigo de salida senala los fallos NUEVOS, no los declarados. Con la lista de declarados
     # devolvia 1 siempre, y `CLAUDE.md` describe esta herramienta como la puerta previa a cada
     # commit: una puerta que nunca abre no es una puerta. Con `--estricto` vuelve el comportamiento
