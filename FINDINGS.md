@@ -3074,3 +3074,41 @@ Los dos que sobreviven son `llama3.2:latest` (+6,73) y `gemma4:12b-mlx` (+2,29).
 
 Cuando lleguen los trece, `CIERRE-RECORRIDA-PROCEDIMIENTO.md` debe incluir la ejecución de esta herramienta
 junto al `merge_and_analyze.py`, y §5.3.1 habrá de reescribirse con las cifras que salgan.
+
+---
+
+## §F84 — El respaldo del analizador rescata casi siempre, y donde no lo hace está concentrado
+
+**2026-09-09, 04:1x.** La quinta verificación del protocolo pide cruzar `parse_method` con el resultado para
+saber si el respaldo **rescata contenido o encubre un fallo**. Al hacerlo en dos modelos salió lo contrario en
+cada uno: en `mistral-nemo:latest` los 44 respaldos puntuaban casi como las filas directas, y en
+`deepseek-r1:1.5b` los 4 puntuaban **cero los cuatro**. Conviene entonces mirarlo entero.
+
+Sobre las **36 corridas** entregadas de la re-corrida:
+
+| Ruta de análisis | Filas | F1 medio | Con `recall = 0` |
+|:---|---:|---:|---:|
+| `direct_json` | 1 002 | 67,95 | 11 |
+| `codeblock` | 231 | 30,96 | 11 |
+| `fallback` | **57** | **49,90** | **6** |
+
+**Lo que dice.** El respaldo se usa poco —57 filas— y cuando se usa **rescata**: 49,90 de F1 medio está lejos
+del cero que tendría si solo encubriera fallos, aunque por debajo de las filas analizadas directamente.
+Solo **6 de los 57** quedan en cero, y **5 están concentrados**: los 4 de `deepseek-r1:1.5b` y 1 de
+`gpt-oss:20b`. En el resto de modelos el respaldo funciona.
+
+**El caso de `mistral-nemo` merece leerse aparte**, porque concentra 44 de los 57. Sus respaldos dan 55,27
+frente a 59,56 de sus filas directas, y **42 de los 44 son del modo KB RAG**: el prompt de recuperación le
+hace emitir un JSON que el analizador directo no lee en el 35 % de los casos, contra el 1,7 % de su línea
+base. Pero **su caída de F1 no la causa eso**: entre las filas directas, KB RAG da 57,47 y la línea base
+60,95.
+
+**El `codeblock` no es un fallo.** Sus 231 filas son casi todas de `deepseek-r1:1.5b`, que envuelve su salida
+en bloques de código; su F1 medio bajo refleja que es el peor modelo del estudio, no que la ruta falle.
+
+### Por qué importa la distinción
+
+Porque «hay respaldos» no significa nada por sí solo, y el número puede leerse de tres maneras opuestas: como
+un fallo del modelo, como un rescate del arnés o como un rasgo del formato de salida. Aquí se dan las tres a
+la vez en modelos distintos. **La única lectura válida es cruzarlo con el resultado**, que es exactamente lo
+que el protocolo de seguimiento pide y lo que ninguna cifra agregada de `parse_method` puede sustituir.
