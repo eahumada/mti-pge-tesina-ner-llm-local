@@ -482,8 +482,11 @@ PARAMS = ('rag_mode', 'data_file', 'max_tokens', 'temperature', 'batch_size', 'f
 # la corrida que la resuelve esté hecha.
 DIVERGENCIAS_DECLARADAS = {
     'max_tokens': ('4096 en gptoss_rerun frente a 2048 en las demás; declarado en el Anexo I, '
-                   'apartado «Corridas múltiples». Lo resuelve la re-corrida completa pendiente, '
-                   'que fija 4096 para los trece modelos. Ver FINDINGS §F61.bis'),
+                   'apartado «Corridas múltiples». **Ya resuelto en la re-corrida**, comprobado el '
+                   '2026-09-09: las 39 corridas de recorrida_20260908/ declaran max_tokens=4096 sin '
+                   'una sola excepción. La divergencia sigue siendo real en el consolidado PUBLICADO, '
+                   'que es lo que esta comprobación lee, y esta entrada se retira en cuanto se rehaga '
+                   'el consolidado desde la re-corrida. Ver FINDINGS §F61.bis'),
 }
 
 
