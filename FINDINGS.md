@@ -5937,3 +5937,43 @@ sus cuatro citas, cinco párrafos de declaraciones de límites, tres filas de la
 la Tabla 3 y la frase de Friedman.
 
 **Estado del verificador:** 54 comprobaciones, 61 fallos (61 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F129 — La comprobación que audita las declaraciones se silenciaba a sí misma
+
+**Fecha:** 2026-09-09 · **Origen:** las declaraciones llegaron a veinticinco y nadie las auditaba
+
+`FALLOS_DECLARADOS` funciona buscando un fragmento de texto en el mensaje del fallo. **Una clave
+demasiado genérica taparía fallos que su motivo no describe**, y eso no lo detectaba nada: el resumen
+los contaría entre los declarados y el código de salida seguiría siendo 0. Con cinco declaraciones
+era improbable; con **veinticinco** convenía comprobarlo.
+
+**El mecanismo está limpio.** Auditadas las 25 claves contra los 61 mensajes de fallo reales:
+
+| Comprobación | Resultado |
+|:---|---:|
+| Claves que silencian fallos de más de una comprobación | **0** |
+| Pares de claves anidadas, donde la corta se come los fallos de la larga | **0** |
+| Claves que no tapan nada | **1**, y con explicación |
+
+La única que no tapa nada es la de la referencia [37], que pertenece a `c_urls` y **solo corre con
+`--red`**. Ejecutada con red: `c_urls` da **38 elementos y exactamente un fallo**, `[37] HTTP 404`,
+que es el repositorio privado hasta la purga. La declaración está viva, no caducada. De paso queda
+comprobado que **las otras 37 URL de la bibliografía responden**.
+
+### Y la comprobación nueva cometió, en su primera versión, el defecto que existe para cazar
+
+El mensaje del aviso incluía la clave literal —«la declaración `github.com/eahumada/mti-pge-tesina`
+no tapa ningún fallo»—, de modo que **esa misma declaración lo silenciaba** y salía como `DECLARADO`
+en lugar de como fallo nuevo. Una comprobación cuya salida contiene la cadena que la silencia es
+invisible por construcción.
+
+**Arreglado imprimiendo un prefijo estricto** de la clave, siempre más corto que ella, que por
+construcción no puede contenerla, más su número de orden para poder localizarla. La truncatura fija
+no bastaba: `cita 62.67` tiene diez caracteres y cualquier corte a catorce la habría escrito entera.
+
+**Comprobación 55**, 325 elementos —las 25 claves más los 300 pares—, y se ejecuta **al final**
+porque necesita los resultados de todas las demás.
+
+**Estado del verificador:** 55 comprobaciones, 62 fallos (62 declarados, **0 nuevos**), 0 vacías.

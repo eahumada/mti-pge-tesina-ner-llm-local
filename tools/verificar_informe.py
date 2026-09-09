@@ -108,6 +108,8 @@ FALLOS_DECLARADOS = {
         'PENDIENTE de la pasada de maquetacion, decision 19 del autor: al entregable le falta la subseccion ENTERA de las corridas multiples —encabezado, cinco parrafos y la Tabla 20—, que es la declaracion que exige la regla de integridad de CLAUDE.md. Insertarla afecta al limite duro de 25 paginas. Ver FINDINGS §F127'),
     'del Markdown no esta (cero <w:drawing>': ('2026-09-09',
         'PENDIENTE de la pasada de maquetacion, decision 19 del autor: las dos figuras del informe no estan en los entregables. Los PNG existen en doc/figuras/ y son reproducibles byte a byte; insertarlas es maquetacion y afecta al limite de 25 paginas. El entregable tampoco las cita, de modo que hoy es incompleto pero COHERENTE. Ver FINDINGS §F128'),
+    'no tapa ningun fallo. Sin --red': ('2026-09-09',
+        'ESTADO LEGITIMO, no un defecto: la declaracion de la referencia [37] pertenece a `c_urls`, que solo corre con --red, de modo que sin red no tapa nada. Comprobado con --red el 2026-09-09: c_urls da 38 elementos y exactamente 1 fallo, «[37] HTTP 404», que esa declaracion cubre. Se retira cuando el repositorio deje de ser privado. Ver §F129'),
     'github.com/eahumada/mti-pge-tesina': ('2026-09-09',
                                            'referencia [37]: el repositorio es privado hasta la '
                                            'purga (SEGURIDAD-CLAVE-GOOGLE-20260908.md)'),
@@ -1131,6 +1133,72 @@ def c_figuras_docx(s):
     check('las figuras del Markdown estan en los tres .docx', mirados, fallos,
           'se cuentan los <w:drawing> del cuerpo, no los ficheros de word/media: los del .docx '
           'con plantilla son el encabezado y el pie institucionales')
+
+
+# --- 55. Las propias DECLARACIONES no silencian mas de lo que les toca ------------------------
+def c_declaraciones():
+    """La comprobacion de la comprobacion, sobre el mecanismo que ya carga 25 declaraciones.
+
+    Cada clave de `FALLOS_DECLARADOS` es un fragmento que se busca en el mensaje del fallo. **Una
+    clave demasiado generica taparia fallos que no cubre**, y eso no lo detectaba nada: el resumen
+    los contaria como declarados y el codigo de salida seguiria siendo 0. Con cinco declaraciones
+    era improbable; con veinticinco conviene comprobarlo (`§F129`).
+
+    Tres cosas, y las tres pasan hoy:
+
+    1. **Ninguna clave toca mas de una comprobacion.** Si una lo hiciera, estaria silenciando algo
+       que su motivo no describe.
+    2. **Ninguna clave contiene a otra.** Dos claves anidadas hacen que la mas corta se coma los
+       fallos de la mas larga, y el motivo que se lee entonces es el equivocado.
+    3. **Ninguna clave deja de tapar algo sin explicacion.** Una declaracion que no casa con ningun
+       fallo esta caducada —el defecto se arreglo y nadie retiro la declaracion— o pertenece a una
+       comprobacion que no ha corrido. El unico caso legitimo hoy es `c_urls`, que solo corre con
+       `--red`; **con `--red` esa excusa desaparece** y la comprobacion lo exige.
+
+    Se ejecuta al final, porque necesita los resultados de todas las demas.
+    """
+    mensajes = [(n, f) for n, _e, fs, _nt in resultados for f in fs]
+    claves = list(FALLOS_DECLARADOS)
+    fallos, mirados = [], 0
+    con_red = '--red' in sys.argv
+
+    def _ref(i_, k_):
+        """Nombra una declaracion SIN escribirla entera, o se silenciaria a si misma.
+
+        Primera version del defecto que esta comprobacion existe para cazar, cometido por ella:
+        el mensaje incluia la clave literal, de modo que la propia declaracion lo tapaba y salia
+        como DECLARADO en lugar de como nuevo. Se imprime un **prefijo estricto** —siempre mas
+        corto que la clave—, que por construccion no puede contenerla, mas su numero de orden
+        para poder localizarla.
+        """
+        corte = max(6, min(len(k_) - 1, 24))
+        return 'n.%d «%s…»' % (i_ + 1, k_[:corte])
+    for k in claves:
+        mirados += 1
+        tocados = {n for n, f in mensajes if k in f}
+        if len(tocados) > 1:
+            fallos.append('la declaracion %s silencia fallos de %d comprobaciones distintas '
+                          '(%s): es demasiado generica y su motivo no las describe todas'
+                          % (_ref(claves.index(k), k), len(tocados),
+                             '; '.join(sorted(tocados))[:110]))
+        if not tocados:
+            if con_red:
+                fallos.append('la declaracion %s no tapa ningun fallo ni con --red: esta '
+                              'caducada y hay que retirarla' % _ref(claves.index(k), k))
+            else:
+                fallos.append('AVISO: la declaracion %s no tapa ningun fallo. Sin --red puede '
+                              'ser de c_urls; ejecutar con --red para saber si esta caducada'
+                              % _ref(claves.index(k), k))
+    for i, a in enumerate(claves):
+        for b in claves[i + 1:]:
+            mirados += 1
+            if a in b or b in a:
+                fallos.append('las declaraciones %s y %s estan anidadas: la mas corta se come '
+                              'los fallos de la otra y se lee el motivo equivocado'
+                              % (_ref(claves.index(a), a), _ref(claves.index(b), b)))
+    check('las declaraciones no silencian mas de lo que les toca', mirados, fallos,
+          'se ejecuta al final porque lee los resultados de las demas; sin --red, una declaracion '
+          'que no tapa nada puede ser de c_urls')
 
 
 def check(nombre, examinados, fallos, nota=''):
@@ -4122,6 +4190,8 @@ def main():
     ejecutar(c_extension, s)
     if '--red' in sys.argv:
         c_urls(s)
+    # AL FINAL: lee los resultados de todas las anteriores.
+    ejecutar(c_declaraciones)
 
     breve = '--breve' in sys.argv
     fallos_totales = vacias = declarados = 0
