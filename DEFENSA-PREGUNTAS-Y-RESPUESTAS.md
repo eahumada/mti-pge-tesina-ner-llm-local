@@ -128,6 +128,22 @@ No, y la glosa de la tabla lo declara: la Tabla 4 se midió sobre N=15 en modo `
 principal usa `kb_combined` sobre N=120. Son dos conjuntos de evaluación distintos y el §5.1 lo advierte
 expresamente al presentarlos.
 
+**«Excluyen siete artículos por contaminación, pero solo contaminaban el modo con recuperación. ¿Por qué los
+quitan también de la línea base?»**
+Buena pregunta, y la respuesta es deliberada. Los siete son los ejemplares *few-shot* del propio corpus, de
+modo que solo contaminan `kb_fewshot` y `kb_combined` —el manifiesto lo declara así, en su campo
+`excluded_from_metric_modes`—. Se excluyen igualmente de la línea base **para que ambos brazos se midan sobre
+los mismos 113 artículos**. Si no se hiciera, la comparación base contra RAG sería entre poblaciones distintas
+y el emparejamiento por registro, que es lo que sostiene el contraste de Wilcoxon y el ANOVA de medidas
+repetidas, dejaría de ser posible. Quitar siete artículos a ambos lados cuesta poco; compararlos sobre
+conjuntos distintos invalidaría el contraste.
+
+**«¿Cómo sé que las cifras del seguimiento salen de los datos y no de un resumen que quedó viejo?»**
+Porque se ha comprobado. Los **66 grupos** de los once modelos rehechos —tres corpus cada uno— se
+recalcularon desde los `benchmark_results.csv` crudos, excluyendo los siete contaminados, y **coinciden con
+sus `benchmark_summary.json` sin una sola discrepancia**, tanto en la media de F1 como en el recuento de
+registros.
+
 ## Sobre la reproducibilidad
 
 **«¿Puedo reproducir sus cifras?»**
