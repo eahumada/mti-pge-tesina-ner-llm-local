@@ -147,3 +147,24 @@ más, distintas, que pasaron por el camino de excepción del parseo.
 
 Ver `FINDINGS §F108.bis`. Disculpas por el ruido: el apartado anterior se deja a la vista, tachado por este,
 porque retirarlo escondería que el error se cometió.
+
+
+---
+
+## Qué esperar de la re-corrida — 2026-09-10
+
+Un dato para que el resultado no sorprenda. `nemotron-mini:4b` es el **único** de los trece modelos cuyo
+delta con recuperación **baja** al aislar las filas de parseo alterno, porque **sus siete están en la línea
+base** y la deprimen:
+
+| | Δ publicado | Δ aislando el parseo alterno |
+|:---|---:|---:|
+| `nemotron-mini:4b` | +14,5249 | **+14,0491** |
+
+Es decir: al arreglar el `TypeError` y recuperar esas filas, la línea base **sube** y por tanto la mejora que
+la recuperación aporta **baja**. Previsiblemente el **+14,52 pp** que el informe publica se reducirá hacia el
+entorno del **+14,05**.
+
+**Eso no invalida nada** —sigue siendo, con holgura, el mayor efecto del estudio y uno de los dos
+significativos según Tukey— pero conviene saberlo antes de comparar, para no leer un descenso como un
+problema de la re-corrida.

@@ -4752,3 +4752,34 @@ mitad con recuperación, cuatro de ellos cerca de cero.
 **Por eso esto es una prueba de sensibilidad y no una corrección**, y por eso va a decisión del autor: lo que
 está en juego es si el informe declara que su conclusión sobre los modelos de 31B depende de seis registros
 que no se parsearon. Queda como **decisión 18**.
+
+### El barrido de los trece, que acota el hallazgo
+
+Encontrado el caso por casualidad, la pregunta obligada era cuántos más hay. Calculado el delta de los trece
+modelos con y sin las filas de parseo alterno:
+
+| Modelo | Δ publicado | Δ solo directo | Cambio | Vía alterna base/kb |
+|:---|---:|---:|---:|:---|
+| `mistral-nemo:latest` | +2,3717 | +3,9830 | +1,6114 | 9 / 69 |
+| `gemma4:31b-mlx` | **−0,1801** | **+1,4051** | +1,5852 | 1 / 5 |
+| `gemma4:latest` | −1,1698 | −0,2963 | +0,8735 | 2 / 1 |
+| `llama3.2:latest` | +10,8229 | +11,6782 | +0,8554 | 2 / 0 |
+| `deepseek-r1:1.5b` | −0,8966 | −0,0431 | +0,8535 | 4 / 8 |
+| `nemotron-mini:4b` | +14,5249 | +14,0491 | **−0,4758** | 7 / 1 |
+| `qwen3:8b` | +3,2491 | +3,4904 | +0,2413 | 1 / 0 |
+| `gpt-oss:20b` | +3,2803 | +3,3079 | +0,0276 | 1 / 1 |
+| Los otros **cinco** | — | — | **0,0000** | 0 / 0 |
+
+**Tres conclusiones, y las tres tranquilizan:**
+
+1. **Solo uno cambia de signo:** `gemma4:31b-mlx`. Ningún otro delta cruza el cero, de modo que la
+   sensibilidad afecta a **una** afirmación del informe y no a su estructura.
+2. **Los dos resultados significativos sobreviven holgados:** `nemotron-mini:4b` pasa de +14,52 a **+14,05**
+   y `llama3.2:latest` de +10,82 a **+11,68**. La conclusión sobre para qué modelos sirve el RAG no se toca.
+3. **Cinco modelos son inmunes** porque no tienen ni una fila de parseo alterno: `gemma4:12b-mlx`,
+   `gemma4:31b-cloud`, `gemma:latest`, `llama3.1:8b` y `qwen2.5:14b`.
+
+**Y un dato para el encargo `§3.bis.15`:** `nemotron-mini:4b` es el **único** cuyo delta **baja** al aislar,
+de +14,52 a +14,05, porque sus siete filas de parseo alterno están en la **línea base** y la deprimen. La
+re-corrida, al arreglarlas, previsiblemente **reducirá** el +14,52 que el informe publica. Conviene esperarlo
+en lugar de descubrirlo.
