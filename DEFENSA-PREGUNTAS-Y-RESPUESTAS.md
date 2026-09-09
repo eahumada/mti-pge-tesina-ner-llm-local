@@ -141,6 +141,24 @@ Porque a esta fecha es privado. Es un **pendiente declarado** y bloqueante para 
 
 ---
 
+## Sobre la bibliografía
+
+**«¿De dónde salen el 88,43 % y el 82,1 % del §2?»**
+De [7] y [15] respectivamente. **Aviso interno, no respuesta:** ambas cifras están en tablas del texto
+completo de esos artículos y **no se han abierto**. Se comprobó que las dos obras existen —BETO, con 339
+citas en OpenAlex, y FiNER de Loukas et al., ACL 2022— y que sus URL resuelven, pero **eso acredita la
+referencia, no la cifra**. Cerrar esto cuesta abrir dos PDF y localizar las tablas de resultados; conviene
+hacerlo antes de la defensa, porque es exactamente el tipo de pregunta que se hace.
+
+**Contexto que obliga a ser especialmente cuidadoso aquí.** La verificación del 2026-09-08 encontró que
+**cuatro referencias no correspondían a ninguna obra existente** —[7], [9], [10] y [15]—, y dos de ellas
+sostenían precisamente una afirmación del estado del arte. Las cuatro se sustituyeron por obras reales y el
+texto se reescribió con precisión: [15] declara ahora que la tarea de FiNER es etiquetar magnitudes según la
+taxonomía XBRL «y no identificar personas y organizaciones», que es la corrección exacta que el hallazgo
+pedía. **El problema está resuelto**, y por eso mismo las cifras que quedan merecen comprobarse hasta el
+final.
+→ `FINDINGS §F51` · comprobación de que las URL responden: `python3 tools/verificar_informe.py --red`
+
 ## Lo que no tiene respuesta calculada, y conviene saberlo
 
 - **Por qué las latencias de la re-corrida difieren tanto de las publicadas.** Ocho de diez pares bajan,
