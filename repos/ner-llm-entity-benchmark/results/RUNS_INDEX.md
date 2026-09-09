@@ -274,3 +274,25 @@ Añadido de forma aditiva al cerrarse el estudio. El catálogo anterior llegaba 
 > del *scorer* (`F1=1.0` en extracción vacía). Ver `results/AVISO-SUMMARIES-OBSOLETOS.md`.
 >
 > **Alcance final del estudio: 13 modelos** — ver `CIERRE-BENCHMARKS-20260907.md`.
+
+---
+
+## Re-corrida completa con corpus corregido (2026-09-08 / 2026-09-09)
+
+Campaña `results/recorrida_20260908/` — **13 modelos × 3 corpus (N=120, N=30, N=15) = 39 corridas, todas
+VÁLIDAS** con `tools/verificar_corrida.py`. Corpus corregido: mojibake reparado y `Locations` recuperadas
+(545, 119/120). Un modelo por turno en el equipo de 48 GB, `kb_combined`, `max_tokens=4096`, `seed=42`,
+`temperature=0.1`. Cada N=120 con `TP+FN` = 1098/1500/1034 por categoría. Incluye `detailed_results.json`
+(con `metrics.per_type`) en las 39.
+
+| Artefacto | Estado | Nota |
+|:---|:---|:---|
+| `ANALISIS_CONJUNTO_20260909_FIX/` | **VÁLIDO** | Consolidado definitivo de la campaña: 26 grupos, 113 registros (7 contaminados excluidos), **F=119,7502, p≈0**. Incorpora la re-corrida de `nemotron-mini:4b` con el `TypeError` de §F85 arreglado. |
+| `ANALISIS_CONJUNTO_20260909/` | **RETIRADO** | Consolidado intermedio con la corrida *buggy* de `nemotron-mini:4b` baseline (18 filas `failed`, §F85). Su F=121,56 **no es cifra del estudio**. Sustituido por `_FIX`. Directorio eliminado; evidencia del defecto en `FINDINGS §F85`. |
+| `recorrida_20260908/nemotron-mini_4b__N120_F85_BUGGY/` | **RETIRADO** | Corrida *buggy* previa al arreglo. Eliminada por decisión del autor («solo corridas válidas»); su diagnóstico está en `FINDINGS §F85/§F108/§F113`. |
+
+**Sobre `benchmark_n120_REMOTO` (fuente del consolidado publicado `ANALISIS_CONJUNTO_20260907`):** sus 8
+registros `parse_method='failed'` son **todos `nemotron-mini:4b_baseline`**, el mismo defecto §F85. Ese grupo
+**ya tiene medición válida** en `recorrida_20260908` (re-corrida con el fix, `failed=0`), de modo que **no se
+re-ejecuta nada**: la versión correcta es la de la campaña nueva. Adoptar el consolidado nuevo en el informe
+es decisión del autor. La corrida `benchmark_n120_REMOTO` **no se borra**: se conserva como registro.
