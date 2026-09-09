@@ -651,3 +651,19 @@ tubería, y el estudio mide la tubería, no solo el modelo. Excluirlas responde 
 **Contexto que ayuda a decidir:** el informe **ya declara dos salvedades de procedencia** de esta misma clase
 —la latencia del cloud que no mide inferencia, y las siete filas de `nemotron-mini` sin telemetría—, así que
 una tercera no rompe ningún molde. Ver `FINDINGS §F109`.
+
+> ### Ampliación del 2026-09-10: son dos modelos, y uno solo aparece al combinar
+>
+> Rehecha la sensibilidad combinando los dos efectos —el parseo alterno y el emparejamiento duplicado—,
+> resulta que **`gemma4:latest` también cambia de signo**, y solo con **las dos a la vez**:
+>
+> | Escenario | Δ de `gemma4:latest` |
+> |:---|---:|
+> | Publicado | **−1,1698** |
+> | Aislando el parseo alterno | −0,2963 |
+> | Corrigiendo el emparejamiento duplicado | −0,2545 |
+> | **Las dos** | **+0,4739** |
+>
+> Ninguna por separado le da la vuelta. **Esto cambia la forma de la decisión, no su fondo:** si se declara
+> la sensibilidad, hay que declararla **como combinación**, porque dos notas sueltas no habrían mostrado este
+> caso. La significación sigue sin cambiar para ninguno de los dos. Ver `FINDINGS §F111`.

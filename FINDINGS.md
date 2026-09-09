@@ -4783,3 +4783,115 @@ modelos con y sin las filas de parseo alterno:
 de +14,52 a +14,05, porque sus siete filas de parseo alterno están en la **línea base** y la deprimen. La
 re-corrida, al arreglarlas, previsiblemente **reducirá** el +14,52 que el informe publica. Conviene esperarlo
 en lugar de descubrirlo.
+
+## §F110 — El bloque `overall` de `detailed_results.json` es inservible, y en un grupo el `per_type` tampoco cuadra
+
+**2026-09-10.** Intentando combinar las dos sensibilidades del estudio —el parseo alterno de §F109 y el
+emparejamiento duplicado— la tabla salió con cifras que **no reproducían el CSV consolidado**:
+`nemotron-mini:4b` daba un delta de +6,19 donde el CSV da +14,52. Perseguido el origen, aparecen dos defectos
+distintos en `detailed_results.json`, y conviene separarlos porque su gravedad no es la misma.
+
+### 1. El bloque `overall` contiene valores imposibles
+
+Para `nemotron-mini:4b_baseline`, **77 de 120 registros** discrepan entre el CSV y el `overall.f1` del
+`detailed`. El patrón es siempre el mismo: el CSV dice **0** y el `detailed` dice **100**. Un ejemplo íntegro:
+
+```json
+"overall": {"precision": 0.0, "recall": 0.0, "f1": 1.0, "tp": 0, "fp": 2, "fn": 6}
+```
+
+**F1 de 1,0 con precisión 0 y exhaustividad 0 es imposible.** Es la vieja convención de extracción vacía —que
+§3.3 declara corregida— sobreviviendo en el bloque `overall`, y aplicada además a un registro que **no está
+vacío**: extrajo dos falsos positivos.
+
+**Nada publicado lo lee** —las tablas salen del CSV—, de modo que ninguna cifra del informe está afectada.
+Pero es una trampa para quien calcule desde ahí, y me atrapó a mí durante veinte minutos.
+
+### 2. En un grupo, el `per_type` tampoco reproduce el CSV
+
+Esto es más relevante, porque **el Anexo I sí se calcula desde `per_type`**. Comprobados los 26 grupos:
+
+| | |
+|:---|---:|
+| Grupos donde `per_type` reproduce el CSV a precisión de máquina | **25 de 26** |
+| Grupos donde no | **1**: `nemotron-mini:4b_baseline`, −1,0936 pp |
+
+La causa son **seis registros** —`real_mixed_101`, `106`, `30`, `32`, `50` y `53`—, que son exactamente seis
+de las siete filas re-extraídas fuera del arnés de lotes que §5.3.1 declara. Su `per_type` quedó **a cero** en
+el `detailed` mientras el CSV recibió sus métricas reales: se actualizó un artefacto y no el otro.
+
+**La consecuencia en el Anexo I**, y es acotada: la fila de ese grupo publica F1 **22,59** —del CSV— y F1
+restringido **25,28** —de `per_type`, y reproduce exacto—, de modo que su **Δ de +2,68 compara dos estados
+distintos del dato**. Calculado como comparación homogénea desde `per_type`, el Δ sería 21,50 → 25,28 =
+**+3,78**. Un punto y once centésimas de diferencia, en una fila de veintiséis.
+
+### Lo que esto no es
+
+**No es un defecto de las cifras publicadas.** Las 25 filas restantes del Anexo I comparan estados
+homogéneos, la Tabla 7 sale del CSV, y §5.3.1 ya declara que esas siete filas se re-extrajeron. Lo que no
+declara —porque nadie lo había mirado— es que su `per_type` no se actualizó con ellas.
+
+**Y lo arregla la re-corrida pendiente.** `§3.bis.15` regenerará los dos artefactos del grupo, de modo que
+esto no necesita trabajo aparte: necesita **no olvidarse de comprobarlo después**, cosa que la comparación de
+26 grupos de este hallazgo permite repetir en un minuto.
+
+### Y una advertencia sobre mi propio análisis
+
+La sensibilidad de §F109 se calculó desde el **CSV consolidado** y por tanto **sigue siendo válida**. La que
+intenté aquí —combinar las dos sensibilidades— usaba `overall.f1` y **queda descartada**; para hacerla bien
+hay que partir de `per_type`, y solo es homogénea en 25 de los 26 grupos. No la publico a medias.
+
+## §F111 — Un delta cambia de signo solo cuando las dos sensibilidades se aplican juntas
+
+**2026-09-10.** Rehecha desde `per_type` la combinación de sensibilidades que §F110 obligó a descartar. La
+columna base reproduce ahora los deltas publicados —`gemma4:31b-mlx` −0,1801, `llama3.2:latest` +10,8229,
+`deepseek-r1:1.5b` −0,8966—, de modo que el dato es homogéneo con lo que el informe dice.
+
+`nemotron-mini:4b_baseline` **queda excluido**, porque su `per_type` no reproduce su CSV (§F110) y meterlo
+compararía estados distintos del dato.
+
+| Modelo | Publicado | Sin parseo alterno | Sin duplicados | Las dos |
+|:---|---:|---:|---:|---:|
+| `deepseek-r1:1.5b` | −0,8966 | −0,0431 | −0,9806 | −0,1420 |
+| `gemma4:12b-mlx` | +2,2770 | +2,2770 | +2,1742 | +2,1742 |
+| `gemma4:31b-cloud` | −0,5371 | −0,5371 | −0,5552 | −0,5552 |
+| **`gemma4:31b-mlx`** | **−0,1801** | **+1,4051** | −0,2844 | **+1,4073** |
+| **`gemma4:latest`** | **−1,1698** | −0,2963 | −0,2545 | **+0,4739** |
+| `gemma:latest` | +7,3609 | +7,3609 | +7,2929 | +7,2929 |
+| `gpt-oss:20b` | +3,2803 | +3,3079 | +3,2806 | +3,3082 |
+| `llama3.1:8b` | +1,9880 | +1,9880 | +2,4104 | +2,4104 |
+| `llama3.2:latest` | +10,8229 | +11,6782 | +10,9060 | +11,6741 |
+| `mistral-nemo:latest` | +2,3717 | +3,9830 | +2,3854 | +3,9961 |
+| `qwen2.5:14b` | +4,6213 | +4,6213 | +4,6047 | +4,6047 |
+| `qwen3:8b` | +3,2491 | +3,4904 | +3,2551 | +3,4729 |
+
+### El hallazgo: `gemma4:latest` solo cambia de signo con las dos
+
+`gemma4:31b-mlx` ya se sabía (§F109). Lo nuevo es **`gemma4:latest`**, que el informe publica **empeorando
+1,17 puntos** con recuperación:
+
+| Escenario | Δ |
+|:---|---:|
+| Publicado | **−1,1698** |
+| Aislando el parseo alterno | −0,2963 |
+| Corrigiendo el emparejamiento duplicado | −0,2545 |
+| **Las dos a la vez** | **+0,4739** |
+
+**Ninguna de las dos por separado le da la vuelta.** Juntas, sí. Es exactamente el fenómeno que justificaba
+hacer la combinación: dos efectos individualmente insuficientes cuyo efecto conjunto cruza el cero, y que
+**ningún análisis de sensibilidad de una sola variable habría encontrado**.
+
+### Las cautelas, que siguen siendo las mismas y en el mismo sitio
+
+1. **La significación no cambia para ninguno de los dos.** Ni `gemma4:31b-mlx` ni `gemma4:latest` alcanzan el
+   umbral de Tukey en el informe, y no lo alcanzan tampoco en ningún escenario. Lo que se mueve es el signo
+   de la estimación puntual.
+2. **Las dos correcciones no tienen el mismo estatus.** Corregir el emparejamiento duplicado va **hacia** la
+   medida correcta —cuenta cada referencia una vez, y el propio informe reconoce el defecto—; aislar el
+   parseo alterno es **hipotético**, porque descarta mediciones reales de la tubería.
+3. **Es una fila de veintiséis y dos modelos de doce.** El resto se mueve por debajo de medio punto, y los
+   dos significativos siguen intactos: `llama3.2:latest` de +10,82 a +11,67.
+
+**Lo que esto añade a la decisión 18:** ya no es un modelo sino **dos**, y uno de ellos solo aparece al
+combinar. Si se declara la sensibilidad, conviene declararla **como combinación** y no como dos notas
+sueltas, porque por separado ninguna de las dos habría mostrado el caso de `gemma4:latest`.
