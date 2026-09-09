@@ -7097,3 +7097,71 @@ distingue un pendiente conocido de una puerta silenciada.
 **Y la comprobación de referencias colgantes cazó esta propia sección mientras se escribía:** la
 declaración citaba `§F147` antes de que `§F147` existiera, y el verificador lo dijo. Es la segunda
 vez en dos días que hace exactamente eso, y es la razón de tenerla.
+
+---
+
+## §F148 — Los dos consolidados se reproducen desde datos que están aquí, y el bloqueo de la decisión 1 era de forma
+
+**Fecha:** 2026-09-09 · **Origen:** el §9 del encargo al equipo de 48 GB pedía un manifiesto portable
+porque sus trece rutas apuntaban a otra máquina, y ninguna resolvía
+
+**Lo que estaba bloqueado y por qué.** La decisión 1 del autor —adoptar o no el consolidado
+`ANALISIS_CONJUNTO_20260909_FIX`— tenía dos impedimentos anotados. El primero: su manifiesto declara
+las trece fuentes con rutas absolutas del tipo `/Users/eahumada1/Projects/…`, que **no existen en
+esta máquina**. Un manifiesto cuyas rutas no abren no acredita nada, aunque los datos estén.
+
+**Y ahí hay dos cosas que conviene no confundir:** que el manifiesto no sea **portable** es un
+defecto de forma; que los datos **no estuvieran** sería de fondo. `tools/manifiesto_local.py`, escrito
+hoy, separa las dos. Reancla cada ruta por la cola conocida `repos/ner-llm-entity-benchmark/`,
+comprueba que el fichero existe con las filas declaradas, reagrega las fuentes aplicando la exclusión
+de contaminados y la precedencia entre duplicados que el propio manifiesto declara, y contrasta el
+resultado contra `merged_results.csv`.
+
+### El resultado: los dos acreditan
+
+| | Publicado `20260907` | Nuevo `20260909_FIX` |
+|:---|:---|:---|
+| Fuentes reancladas | 8 de 8 | **13 de 13** |
+| Filas reagregadas frente al consolidado | 3 120 = 3 120 | **2 938 = 2 938** |
+| Grupos | 26 = 26 | 26 = 26 |
+| Grupos cuya F1 media discrepa por encima de 1e-4 | **0** de 26 | **0** de 26 |
+| Tabla `integrity` frente a los datos | 26 entradas, 0 discrepancias | 26 entradas, 0 discrepancias |
+| Rutas no portables | 0 | 13, y es lo único que queda |
+
+**De modo que el primero de los dos impedimentos de la decisión 1 se cierra.** No hay bloqueo por
+falta de datos: el consolidado nuevo se reproduce entero desde ficheros que están en este
+repositorio. Queda el segundo, que es real: al nuevo le falta `levene.json`, y ese sigue siendo el
+§9 del encargo al equipo de 48 GB.
+
+### Y por el camino, dos veces el mismo error mío
+
+La herramienta declaró **NO reproducible el consolidado publicado**, que sí lo es. Dos defectos
+encadenados, los dos míos:
+
+1. **Tomaba el fichero entero de cada fuente.** El manifiesto declara **qué grupos aporta cada una**,
+   y una fuente puede traer más. El caso real es `afectados_thinking_n120_REMOTO`, con **453 filas**:
+   los dos grupos de `gemma4:12b-mlx` completos y dos de `qwen3:8b` **parciales, con 99 y 114 de
+   120**. La fusión toma solo los dos primeros, porque los de `qwen3` los aporta completos otra
+   fuente. Leer el fichero entero **mete resultados parciales en el agregado**, que es exactamente lo
+   que no debe pasar.
+2. **Ignoraba la precedencia entre duplicados.** Ocho grupos vienen en dos fuentes cada uno, los
+   cuatro modelos que se re-corrieron, y el manifiesto lo declara nota por nota con
+   `--on-duplicate=first`. Sin precedencia salían **4 080 filas en lugar de 3 120**, que son
+   justamente 8 × 120 de más.
+
+Es **§L71 por sexta vez** en la sesión: el detector roto y no el documento. Y con el agravante de que
+esta vez el falso positivo caía sobre el **artefacto que sostiene el informe**. Si lo hubiera
+reportado sin abrir el manifiesto, habría dicho que la cifra titular del trabajo no se reproduce.
+
+**Lo que hizo la diferencia** fue el control: correr la herramienta sobre el consolidado **publicado**
+antes de creerme el resultado del nuevo. Una herramienta probada solo con el caso que quería acreditar
+no está probada.
+
+### La prueba de mutación, y una que no detecta por buenas razones
+
+Seis mutaciones del manifiesto sobre los dos consolidados. **Once de doce detectadas.** La que no:
+invertir la precedencia a `last` en el consolidado **nuevo**, que **no tiene ni un duplicado** —sus
+trece fuentes son disjuntas, una por modelo— de modo que la regla no cambia nada. La mutación era
+**inaplicable**, no la comprobación ciega; sobre el publicado, que tiene ocho duplicados, se detecta.
+Distinguirlo importa: es la lección de las cuatro mutaciones mal armadas de §L71, aplicada a tiempo
+en lugar de después.

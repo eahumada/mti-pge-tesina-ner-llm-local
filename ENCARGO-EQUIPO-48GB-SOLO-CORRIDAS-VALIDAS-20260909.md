@@ -248,6 +248,26 @@ como las del publicado (`results/recorrida_20260908/<modelo>__N120/benchmark_res
 manifiesto, no los datos: no hay que volver a fusionar nada si vuestra herramienta permite reescribir
 solo esa parte, y si no, la fusión es determinista y sale igual.
 
+> **Actualización del 2026-09-09, y os quita urgencia: comprobado que los datos están y que el
+> consolidado se reproduce.** Escribimos `tools/manifiesto_local.py`, que reancla cada ruta por la
+> cola `repos/ner-llm-entity-benchmark/`, y con eso **las trece fuentes resuelven aquí, con las filas
+> que declaran**. Reagregadas aplicando vuestra exclusión de contaminados dan **2 938 filas en 26
+> grupos**, que es exactamente lo que trae vuestro `merged_results.csv`, y la **F1 media coincide en
+> los 26 grupos** por debajo de 1e-4. Vuestra tabla `integrity` también cuadra, 26 entradas sin una
+> discrepancia.
+>
+> De modo que esto **es un defecto de forma y no de fondo**: los datos están y el trabajo es
+> correcto. Sigue conviniendo arreglarlo, porque un manifiesto que solo abre en la máquina que lo
+> escribió no acredita nada por sí mismo y el verificador de este lado no debería depender de una
+> heurística de reanclaje. Pero **ya no bloquea la decisión del autor**, que era lo que importaba.
+>
+> Y un dato que salió del mismo trabajo y que os concierne: la fuente
+> `afectados_thinking_n120_REMOTO` del consolidado **publicado** trae **453 filas**, no 240. Las de
+> más son **dos grupos de `qwen3:8b` parciales, con 99 y 114 registros de 120**, y la fusión los
+> descarta con razón porque otra fuente los aporta completos. Está bien hecho; lo anotamos porque un
+> fichero de corrida que contiene grupos que la fusión no usa es una trampa para cualquiera que lo
+> reagregue por su cuenta, y nosotros caímos en ella antes de leer el manifiesto con cuidado.
+
 ### 9.2 Falta `levene.json`
 
 El consolidado publicado lo tiene y el nuevo no, lo que concuerda con que vuestro
