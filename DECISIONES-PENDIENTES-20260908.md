@@ -238,3 +238,13 @@ Con tres de los trece modelos rehechos, el efecto del KB RAG **cambia de signo e
 y −0,18 a +0,81 y +0,97. Si eso se confirma con los trece, la frase de §5.3.1 que dice que el beneficio «se
 anula o revierte en los de mayor capacidad» **habrá que reformularla**. No hay nada que decidir todavía, pero
 conviene no encontrárselo el último día. Evidencia: `FINDINGS §F68`.
+
+
+**Actualización del 2026-09-09, y ya no es solo un cambio de signo.** Con **once** de los trece rehechos, el
+post-hoc pareado sobre el corpus corregido da **2 significativos de 11**, frente a los **8 de 13** de los
+datos publicados (`FINDINGS §F83`). Sobreviven `llama3.2:latest` con +6,73 pp y `gemma4:12b-mlx` con +2,29;
+`gemma4:latest` y `mistral-nemo:latest` quedan al borde, con Holm de 0,0529 y 0,0520, y el segundo con efecto
+**negativo** de −4,29 pp. Sigue sin haber nada que decidir hasta que lleguen los trece —falta
+`nemotron-mini:4b`, que era el de mayor efecto—, pero conviene ir asumiendo que **§5.3.1 no se arregla
+cambiando cifras**: el efecto del RAG sobre el corpus corregido es sustancialmente menor y se apoyará en
+menos modelos. El sentido de la tesis no se invierte; su fuerza sí disminuye.

@@ -83,6 +83,33 @@ cd repos/ner-llm-entity-benchmark
 
 ---
 
+## 2.bis. Rehacer los contrastes de robustez
+
+El ANOVA que produce el paso anterior trata como independientes unas observaciones que no lo son. Los dos
+contrastes que lo acreditan se rehacen con una sola orden:
+
+```sh
+repos/ner-llm-entity-benchmark/venv/bin/python tools/robustez_estadistica.py \
+    repos/ner-llm-entity-benchmark/results/ANALISIS_CONJUNTO_<fecha>/merged_results.csv \
+    --json repos/ner-llm-entity-benchmark/results/ROBUSTEZ_ESTADISTICA_<fecha>
+```
+
+Da el **Friedman** de medidas repetidas y el **post-hoc pareado** —Wilcoxon por modelo entre línea base y KB
+RAG sobre los mismos registros, con Holm sobre las trece comparaciones de interés—. De ahí salen `§F75`,
+`§F76` y la **decisión 7**.
+
+**Hasta el 2026-09-09 esto no se podía hacer:** los artefactos publicados se habían calculado a mano y ningún
+script los reproducía (`FINDINGS §F83`). La herramienta se validó exigiéndole reproducir lo publicado
+—χ² = 1169,2327 y 8 de 13 significativos— con `--validar`, que conviene ejecutar de nuevo sobre el
+consolidado antiguo si alguna vez se toca la herramienta.
+
+**Y hay que esperar cambios grandes.** Sobre los once modelos entregados al 2026-09-09, el post-hoc pareado
+da **2 significativos de 11** frente a los 8 de 13 de los datos antiguos. La cifra es provisional —falta
+`nemotron-mini:4b`, que era el de mayor efecto— pero la dirección está clara: **§5.3.1 habrá que reescribirlo
+con bastante más que un cambio de cifras**.
+
+---
+
 ## 3. Rehacer la Tabla 7
 
 ```sh
