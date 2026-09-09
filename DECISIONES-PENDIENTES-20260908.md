@@ -732,3 +732,43 @@ una tercera no rompe ningún molde. Ver `FINDINGS §F109`.
 > Ninguna por separado le da la vuelta. **Esto cambia la forma de la decisión, no su fondo:** si se declara
 > la sensibilidad, hay que declararla **como combinación**, porque dos notas sueltas no habrían mostrado este
 > caso. La significación sigue sin cambiar para ninguno de los dos. Ver `FINDINGS §F111`.
+
+---
+
+## 19. Los diez párrafos del Markdown que no están en el entregable — **NUEVA, 2026-09-09, y es la más urgente de las que quedan**
+
+**Qué pasa.** Comparada la prosa de los tres `.docx` contra el Markdown canónico párrafo a párrafo,
+**diez párrafos de la fuente no están en el entregable**. Evidencia: `FINDINGS §F121`, comprobación
+**51** del verificador, 234 elementos.
+
+**Cinco de los diez son un solo bloque: la declaración de corridas múltiples.** El Markdown declara
+que cuatro de los trece modelos se midieron más de una vez, que ocho de los veintiséis grupos tienen
+dos o tres corridas, por qué seis de ellas son mediciones inválidas y no alternativas, los dos
+motivos de invalidez, y —el que más importa— que el criterio de selección fue la validez de la
+medición y **no su resultado**, con un caso en que eligió la corrida *menos* favorable.
+
+`CLAUDE.md` obliga a esa declaración con estas palabras: «citar la más favorable sin mencionar las
+demás es indistinguible de seleccionar el resultado, aunque no haya intención de hacerlo, **y es lo
+que un tribunal juzga**». **El Markdown cumple; el entregable no.** Sin esos párrafos, un tribunal
+que descubra las corridas múltiples por su cuenta no encuentra en el documento nada que responda.
+
+**Los otros cinco** son declaraciones de límites del planteamiento —la carencia de datos etiquetados
+como constatación y no como supuesto, la dificultad de medición, los dos rasgos del problema, las
+tres advertencias de lectura— y la versión canónica de la frase del efecto diferencial.
+
+**Por qué no está hecho.** Son unas **1 500 palabras** y el cuerpo tiene un límite duro de **25
+páginas** con 23,0 usadas. `CLAUDE.md` reserva a la autorización expresa del autor cualquier
+movimiento de párrafos por motivos de espacio, y esto es la operación inversa: añadir. No lo hago
+sin que lo autorices.
+
+**Recomendación: insertar los cinco de las corridas múltiples, y decidir los otros cinco aparte.**
+Los cinco primeros cubren una exposición concreta en la defensa y son la mitad del volumen. Si el
+espacio no da para los diez, el orden de prioridad es claro: primero el que acredita que el criterio
+fue la validez y no el resultado, después los que explican qué corridas hay y por qué unas no
+cuentan, y al final las declaraciones de límites, que ya tienen eco en otras partes del documento.
+Los espacios se recortan por estilo antes de tocar contenido, como fija `CLAUDE.md`.
+
+**Y tres divergencias más de la misma pasada** (`§F120`): la ausencia de la prueba de Friedman —con
+un `.docx` que además afirma que «la homocedasticidad se verifica», que es lo que el Markdown dice
+expresamente que no puede afirmarse—, dos párrafos presentes con redacción distinta y cinco más con
+similitud entre 0,85 y 0,91.

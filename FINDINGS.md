@@ -5489,10 +5489,9 @@ prueba** —Friedman, con su χ²—, el `.docx` argumenta por aserción. Es el 
 principal debilidad metodológica declarada del trabajo, y la versión del entregable es la más
 atacable de las dos. Añade unos 300 caracteres, unas 50 palabras.
 
-**2. Dos párrafos de la fuente que no están en ningún `.docx`**, los que empiezan por «Los motivos
-de invalidez son dos» y «Conviene separar dos situaciones que no son la misma». Los dos explican por
-qué ocho grupos tienen una corrida previa que no es una medición alternativa sino inválida, que es
-la distinción que la regla de integridad de `CLAUDE.md` obliga a declarar.
+**2. Párrafos de la fuente que no están en ningún `.docx`.** Aquí escribí «dos», y al construir la
+comprobación que faltaba resultaron ser **diez**. Corregido y desarrollado en [§F121](#f121), que es
+donde está el alcance real.
 
 **3. Cinco párrafos más emparejados pero no idénticos**, con similitud entre 0,85 y 0,91: la
 formulación de los objetivos específicos, la definición de RAG, la frase de la brecha —a la que el
@@ -5506,3 +5505,70 @@ ninguna comparaba **la prosa**, y el desfase vivía precisamente ahí. Un docume
 contradice a su propia tabla pasa las cincuenta.
 
 **Estado del verificador:** 50 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F121 — No eran dos párrafos: son diez, y cinco de ellos son la declaración que la regla de integridad exige
+
+**Fecha:** 2026-09-09 · **Origen:** construir la comprobación que [§F120](#f120) dejó pendiente
+
+`§F120` reportó «dos párrafos de la fuente ausentes de los tres entregables». Al construir la
+comprobación **son diez**, y la corrección importa porque cambia lo que está en juego.
+
+El recuento inicial salió de una prueba mala: buscar los primeros 60 caracteres del párrafo
+literalmente en el `.docx`. Eso falla ante **cualquier** reformulación, de modo que contaba como
+ausente todo lo reescrito. La prueba correcta es sondear el `.docx` con **cinco frases distintivas
+repartidas por el párrafo** y declararlo ausente solo si no aparece ninguna. De los doce que no
+casaban por similitud, **dos sí estaban** —reescritos, con similitud de 0,28 y 0,35— y **diez no
+están en absoluto**.
+
+### Cinco de los diez son un solo bloque, y es el que más pesa
+
+| Párrafo ausente | Qué declara |
+|:---|:---|
+| «**Cuatro de los trece modelos se midieron más de una vez** sobre el corpus N=120, de modo que ocho de los veintiséis grupos disponen de dos o tres corridas» | que existen corridas múltiples |
+| «Conviene separar dos situaciones que no son la misma. Seis de esos ocho grupos tienen una corrida previa que no es una medición alternativa sino una **medición inválida**» | por qué no todas cuentan |
+| «Los motivos de invalidez son dos. El modo de razonamiento activo hacía que el modelo consumiera el presupuesto de salida deliberando…» | el primer motivo |
+| «El presupuesto de salida agotado produce el mismo efecto por otra vía: `gpt-oss:20b` es un modelo de razonamiento, y con 2 048 tokens…» | el segundo |
+| «La última fila acredita que **el criterio fue la validez de la medición y no su resultado**: en `nemotron-mini:4b` con KB RAG la corrida publicada da menos…» | que la selección no fue por conveniencia |
+
+Es **la declaración de corridas múltiples**, y `CLAUDE.md` la exige en estos términos:
+
+> «Cuando existan varias corridas del mismo experimento, **el informe declara todas**. Se explica
+> cuál se toma como referencia y por qué. Citar la más favorable sin mencionar las demás es
+> indistinguible de seleccionar el resultado, aunque no haya intención de hacerlo, **y es lo que un
+> tribunal juzga**.»
+
+**El Markdown cumple la regla. El entregable no la contiene.** Y el último de los cinco párrafos es
+justamente el que desarma la objeción, porque muestra un caso en que el criterio de validez
+seleccionó la corrida **menos** favorable. Sin él, un tribunal que descubra las corridas múltiples
+por su cuenta no tiene en el documento nada que responda.
+
+### Los otros cinco
+
+«La carencia de datos etiquetados no es una suposición de partida sino una constatación de este
+trabajo», «A la carencia de datos se suma una dificultad de medición que el planteamiento no puede
+dar por resuelta», «Dos rasgos del problema explican por qué no basta con una solución puntual»,
+«Tres advertencias de lectura antes de las cifras» y «El efecto se midió sobre las veintiséis
+configuraciones del estudio». Los cuatro primeros son declaraciones de límites del planteamiento;
+el quinto es la versión canónica de la frase cuyo contador corregí en `§F120`.
+
+### Comprobación 51
+
+Compara **la prosa** de los tres entregables contra el Markdown, párrafo a párrafo, que es lo que
+ninguna de las cincuenta anteriores hacía: cinco leen los `.docx` —modelos excluidos, sobriedad,
+OOXML sano y las dos de tablas— y ninguna miraba el texto. **234 elementos.** Los treinta fallos
+—diez párrafos por tres ficheros— quedan **declarados** a nombre de la pasada de maquetación, con su
+motivo, de modo que no cortan; **cualquier divergencia nueva sí**.
+
+**No los inserto.** Son unas 1 500 palabras y el cuerpo tiene un límite duro de **25 páginas** con
+23,0 usadas. Insertar diez párrafos es una decisión de maquetación y de espacio que corresponde al
+autor, y `CLAUDE.md` reserva expresamente a su autorización cualquier movimiento de párrafos por
+motivos de espacio. Queda como **decisión 19**.
+
+**Lo que esto dice del método.** `§F120` encontró el desfase y lo midió mal, con una prueba que
+parecía razonable y no lo era. La comprobación mecánica lo corrigió el mismo día. Una cifra en el
+registro vale lo que vale la prueba que la produjo, y «busqué el texto y no estaba» no es una prueba
+cuando el texto pudo haberse reescrito.
+
+**Estado del verificador:** 51 comprobaciones, 40 fallos (40 declarados, **0 nuevos**), 0 vacías.

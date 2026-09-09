@@ -76,6 +76,26 @@ FALLOS_DECLARADOS = {
         'consolidado nuevo—, que es del autor y esta reabierta (§F113). Si se adopta, hay que '
         'apuntar CSV_CONSOLIDADO al nuevo y levantar la exclusion de '
         'tools/sensibilidad_combinada.py'),
+    'Dos rasgos del problema explican': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
+    'La carencia de datos etiquetados no es': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
+    'A la carencia de datos se suma': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
+    'El efecto se midió sobre las veintiséis': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
+    'Cuatro de los trece modelos se midieron': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
+    'Conviene separar dos situaciones': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
+    'La última fila acredita que el criterio': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
+    'Los motivos de invalidez son dos': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
+    'El presupuesto de salida agotado': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
+    'Tres advertencias de lectura antes': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
     'github.com/eahumada/mti-pge-tesina': ('2026-09-09',
                                            'referencia [37]: el repositorio es privado hasta la '
                                            'purga (SEGURIDAD-CLAVE-GOOGLE-20260908.md)'),
@@ -698,6 +718,110 @@ def c_tabla17(s):
     check('la Tabla 17 reproduce desde el corpus historico', mirados, fallos,
           'el corpus ACTUAL da cero en todas sus filas: la tabla mide el estado anterior a la '
           'correccion del 2026-09-08 y solo la historia de git lo conserva')
+
+
+# --- 51. La PROSA del entregable esta sincronizada con la del Markdown ------------------------
+def _norm_prosa(t):
+    import unicodedata as _u
+    t = _u.normalize('NFC', t)
+    for a in (' ', ' ', ' '):
+        t = t.replace(a, ' ')
+    return ' '.join(re.sub(r'[`*_]', '', t).split())
+
+
+def _parrafos_md(s):
+    """Parrafos de prosa larga del Markdown, sin tablas, codigo, indice ni leyendas."""
+    out, en_codigo = [], False
+    for b in s.split('\n\n'):
+        b = b.strip()
+        if b.startswith('```'):
+            en_codigo = not en_codigo
+            continue
+        if en_codigo or not b or b.startswith(('|', '#', '_Tabla', '!')) or '](#' in b:
+            continue
+        n = _norm_prosa(re.sub(r'^>\s?', '', b, flags=re.M))
+        if len(n) > 160:
+            out.append(n)
+    return out
+
+
+def _parrafos_docx(rel):
+    import zipfile as _z
+    ruta = os.path.join(RAIZ, rel)
+    if not os.path.exists(ruta):
+        return None, None
+    with _z.ZipFile(ruta) as z:
+        x = z.read('word/document.xml').decode('utf-8')
+    pars = []
+    for p in re.findall(r'<w:p[ >].*?</w:p>', x, re.S):
+        t = _norm_prosa(''.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', p, re.S)))
+        if len(t) > 160:
+            pars.append(t)
+    todo = _norm_prosa(' '.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', x, re.S)))
+    return pars, todo
+
+
+def c_prosa_docx(s):
+    """Lo que dejo pasar `§F120`: ninguna comprobacion comparaba la PROSA de los entregables.
+
+    Cinco comprobaciones leen los `.docx` —modelos excluidos, sobriedad, OOXML sano y las dos de
+    tablas— y ninguna miraba el texto. El desfase vivia ahi: los tres entregables afirmaban «19 de
+    las 24 configuraciones» encima de una tabla de 26 filas que **si** estaba propagada, de modo
+    que un documento contradiciendo a su propia tabla pasaba las cincuenta comprobaciones.
+
+    Al construir esta aparecio que el desfase es mucho mayor de lo que `§F120` reporto: **diez
+    parrafos del Markdown canonico no estan en el entregable**, no dos (`§F121`). Estan
+    **declarados** abajo con su responsable —la pasada de maquetacion, porque insertarlos afecta al
+    limite duro de 25 paginas y es decision del autor— de modo que no cortan, y **cualquier
+    divergencia nueva si**.
+
+    Como funciona. Para cada parrafo de prosa larga del Markdown se busca su mejor pareja en el
+    `.docx` por similitud; si no la hay, se sondea el `.docx` con **cinco frases distintivas
+    repartidas por el parrafo**, porque la prueba del arranque literal falla ante cualquier
+    reformulacion —de los doce que no casaban, dos si estaban, reescritos—. Solo se declara ausente
+    el parrafo del que no aparece **ninguna** sonda.
+    """
+    import difflib as _dl
+    md_pars = _parrafos_md(s)
+    if not md_pars:
+        check('la prosa de los tres .docx sigue al Markdown', 0,
+              ['no se extrajo ningun parrafo de prosa del Markdown'])
+        return
+    fallos, mirados = [], 0
+    for rel in DOCX_ENTREGABLES:
+        base = os.path.basename(rel)
+        pars, todo = _parrafos_docx(rel)
+        if pars is None:
+            fallos.append('%s no existe' % base)
+            continue
+        usados = set()
+        for a in md_pars:
+            mirados += 1
+            mejor, sc = None, 0.0
+            for j, b in enumerate(pars):
+                if j in usados:
+                    continue
+                r = _dl.SequenceMatcher(None, a[:400], b[:400]).ratio()
+                if r > sc:
+                    mejor, sc = j, r
+            if mejor is not None and sc >= 0.60:
+                usados.add(mejor)
+                continue
+            # sin pareja: se sondea antes de declararlo ausente
+            pal = a.split()
+            sondas = []
+            for frac in (0.10, 0.28, 0.46, 0.64, 0.82):
+                k = int(len(pal) * frac)
+                fr = ' '.join(pal[k:k + 6])
+                if len(fr) > 25:
+                    sondas.append(fr)
+            if any(x in todo for x in sondas):
+                continue          # esta, con otra redaccion: no es una ausencia
+            fallos.append('%s: parrafo ausente del entregable — «%s...»'
+                          % (base, a[:58]))
+    check('la prosa de los tres .docx sigue al Markdown', mirados, fallos,
+          'lo que dejo pasar §F120; los diez parrafos ausentes estan declarados a nombre de la '
+          'pasada de maquetacion, y una divergencia nueva si corta')
 
 
 def check(nombre, examinados, fallos, nota=''):
@@ -3666,6 +3790,7 @@ def main():
     ejecutar(c_ablacion_idioma, s)
     ejecutar(c_redondeos, s)
     ejecutar(c_tabla17, s)
+    ejecutar(c_prosa_docx, s)
     ejecutar(c_tabla4_vs_datos, s)
     ejecutar(c_figura1_vs_artefacto, s)
     ejecutar(c_tablas_menores, s)
