@@ -122,6 +122,52 @@ párrafos de límites y las filas de la Tabla 9, que tienen eco en otras partes 
 
 ---
 
+## 2.bis Las cuatro recomendaciones del profesor guía, que siguen abiertas
+
+**Esto es lo que el director del trabajo devolvió, y es lo que va a volver a mirar.** No lo
+confundas con las críticas nuevas de esta revisión: son anteriores y siguen sin atender del todo.
+Están registradas en `TODO-INFORME-FINAL.md`.
+
+| # | Reparo del profesor guía | Qué toca hacer, y es tuyo |
+|:--|:---|:---|
+| 1 | **Bloques en blanco y saltos de página** | Es de maquetación pura y es enteramente tuyo. Al insertar contenido y regenerar el PDF, revisa que no queden páginas semivacías, encabezados solapados ni saltos que dejen una tabla separada de su leyenda. La leyenda va **con** su tabla en la misma página. |
+| 2 | **Ficha del estudiante en la primera hoja** | Comprueba que está y que la plantilla la coloca donde `plantilla_final-2026.docx` manda. Si falta, se añade: es requisito institucional, no estilo. |
+| 3 | **Poco desarrollo: secciones de un solo párrafo** | **Y aquí hay una coincidencia que conviene aprovechar.** Este reparo y la decisión 19 apuntan al mismo sitio: las piezas 1 y 2 de este encargo son **diez párrafos y una tabla** que el Markdown ya tiene y el entregable no. Insertarlas **atiende el reparo 3 con texto ya escrito y revisado**, sin redactar nada nuevo. Es el argumento más fuerte para que quepan. |
+| 4 | **Marco conceptual pobre, sin comparar metodologías** | Este **no es tuyo**: exige escribir marco teórico nuevo y es del autor. Anótalo como pendiente y no improvises. |
+
+**Los reparos 1, 2 y 3 los cierra este encargo. El 4 no, y hay que decirlo al entregar** en lugar de
+dar por atendidas las cuatro.
+
+---
+
+## 2.ter Las 25 páginas: el límite manda sobre todo lo demás
+
+Lo dice ya el apartado 2, pero conviene repetirlo porque es el punto donde se toman malas
+decisiones bajo presión:
+
+> **El cuerpo no puede exceder 25 páginas, sin contar anexos. Es una restricción institucional, no
+> una preferencia.** Un informe de 26 páginas se devuelve, y entonces no importa lo bien que esté
+> el resto.
+
+**El orden de actuación cuando aprieta, y no admite atajos:**
+
+1. **Primero, estilo.** Espaciados de `Heading`, `abstract` y `table caption`; interlineado; cuerpo
+   de letra de los bloques de código, hasta **7 pt** si hace falta. Esto está expresamente
+   autorizado por `CLAUDE.md`.
+2. **Después, los anexos.** Admiten 25 páginas más y **no cuentan** para el límite. Si una tabla
+   larga del cuerpo puede vivir en un anexo con su llamada desde el cuerpo, eso libera espacio sin
+   perder nada. Comprueba que la referencia cruzada queda correcta: la comprobación 3 del
+   verificador la vigila.
+3. **Solo entonces, y con autorización expresa del autor que HOY NO ESTÁ DADA**, se considera tocar
+   texto. **Suprimir párrafos para ganar espacio sin esa autorización no es una opción.**
+4. **Si tras 1 y 2 sigue sin caber, PARA Y DILO**, con el recuento de páginas y qué ajustes probaste.
+   Y aplica el orden de prioridad del apartado 2: la subsección de corridas múltiples primero.
+
+**Cuenta sobre el PDF y no sobre el Word.** Su paginación no siempre coincide y el metadato de
+páginas del `.docx` no sirve. Cuenta el cuerpo, sin anexos, y di la cifra en tu informe.
+
+---
+
 ## 3. El PDF, que es lo que se entrega
 
 **Está desfasado.** El `.docx` con plantilla se modificó hoy a las 11:26 y el PDF de la raíz es del
@@ -193,6 +239,17 @@ python3 tools/auditar_afirmaciones.py
 
 **Si algo va mal, restaura desde el respaldo y dilo.** Un entregable corrupto es peor que un
 entregable incompleto, y las 55 comprobaciones no sirven de nada si el fichero no abre.
+
+---
+
+## 5.bis Si el autor decide publicar el eta cuadrado
+
+Es una mejora barata que las guías de reporte piden y el informe no trae: el **tamaño de efecto**
+junto al valor p. Está **ya calculado**: η² = **0,2360** en el consolidado publicado. Si el autor
+decide incluirlo, es **una frase** en §5, junto a la del ANOVA, y no altera el recuento de páginas.
+
+No lo añadas por tu cuenta: es contenido y lo decide él. Queda anotado aquí para que, si te lo pide,
+no haya que buscar la cifra.
 
 ---
 
