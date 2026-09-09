@@ -253,3 +253,34 @@ para el límite de 25 páginas del cuerpo. Las tres reglas alcanzaron su cuenta 
 3. Las dos **figuras** y la **Tabla 20**, como decía el inventario original.
 4. En §3.3, partir el run en negrita para que resalte solo el porcentaje, y añadir entonces la frase de
    alcance y la llamada a la Figura 1, que ahora no se pusieron por no existir aún la figura.
+
+### Comparación completa de cifras — 2026-09-09, y una cuarta obsoleta
+
+Encontradas tres cifras obsoletas a mano, quedaba por saber si eran las únicas. Ahora está mecanizado en
+`tools/desfase_cifras_docx.py`, que compara **todas** las cifras decimales de los dos lados: 705 distintas
+examinadas.
+
+| | Total | En filas de tabla | Fuera de tablas |
+|:---|---:|---:|---:|
+| Solo en el `.docx` | 273 | 269 | **4** |
+| Solo en el Markdown | 218 | 206 | 12 |
+
+Las 269 en filas de tabla confirman el diagnóstico de arriba y lo generalizan: **las tablas de resultados no
+están desfasadas en algunas celdas, están sustituidas en bloque.** Reemplazarlas desde el Markdown es la
+única vía; parchear celdas no lo es.
+
+De las cuatro de prosa, tres eran las conocidas y **la cuarta era nueva**: la columna Tok/s/B de las dos
+filas de `gemma4:latest` en la **Tabla 4** decía `5.33`, y los datos dan `5.80` —media de `tokens_per_sec` en
+`ablacion_n15_REMOTO`, 52,16 sobre 9 000 millones de parámetros, n=15; el 5,33 exigiría 47,97 tok/s, que no
+sale de ninguna configuración—. La Tabla 4 **coincide con el Markdown en todas sus demás celdas**, así que
+era parcheable. **Aplicada** con `tools/terms_tabla4_throughput.json`, respaldo `*.bak_20260909-063106`:
+dos celdas a 5.80, cero a 5.33, y el `35.33%` de otra tabla intacto.
+
+Ese `35.33%` es el aviso que conviene retener: **`5.33` estaba tres veces en el documento**, y una era parte
+de otra cifra. Una regla de subcadena la habría convertido en `35.80%`. Para eso
+`tools/docx_replace_terms.py` tiene ahora la opción **`celda_exacta`**, que ancla en la celda y no en el
+texto; hará falta igual al reemplazar la Tabla 19, donde todas las celdas son numéricas.
+
+**Estado de la prosa:** tras corregir el 5,33, las únicas divergencias fuera de tablas son las **tres**
+acopladas a la Tabla 19 —76,85, 90,91, 81,45—, ya escritas en `tools/terms_restringido.json`. Es decir: la
+pasada de maquetación tiene delante un conjunto cerrado y verificado, no una búsqueda.

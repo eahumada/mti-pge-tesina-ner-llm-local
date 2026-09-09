@@ -939,3 +939,29 @@ a 18 y ninguna puede desaparecer sin nombre. Verificado por mutación con dos de
 - Y el corolario incómodo: **esta autoprueba se escribió ayer para detectar exactamente esta clase de
   ceguera**, y era ciega a una variante suya. Ver `[[L57]]`, `[[L58]]` y `[[L59]]` — la familia ya tiene
   cuatro miembros y todos se descubrieron probando, ninguno leyendo.
+
+## §L61 — Encontrar defectos de uno en uno no acredita que no haya más
+
+Tres cifras obsoletas encontradas a mano en el entregable dejaban abierta la única pregunta que importa:
+si son las únicas. La respuesta era no — había una cuarta, el `5.33` de la Tabla 4, que ninguna lectura
+había visto y que los datos contradicen sin ambigüedad. Apareció al **mecanizar la comparación completa**
+en lugar de seguir leyendo. Ver `FINDINGS §F88`.
+
+**La regla:** cuando se encuentran varios defectos del mismo tipo a mano, el paso siguiente no es buscar el
+próximo a mano, es **escribir la comprobación que los enumera todos**. Un hallazgo aislado es un dato; una
+serie de hallazgos del mismo tipo es la especificación de una herramienta que falta.
+
+**Y la herramienta también necesita su control.** Ésta tuvo dos defectos, y ninguno se habría visto sin
+mirar sus resultados con desconfianza:
+
+- Un patrón que parecía específico y no lo era: `<w:t[^>]*>` encaja con `<w:tcPr>`. **Lo delató su propia
+  salida**, que imprimía marcado XML donde debía haber texto. Merece la pena imprimir contexto aunque no se
+  necesite: es lo que hace visible un extractor roto.
+- Una medición plausible que medía otra cosa: contar `dígito SEP dígito` daba 257 números «partidos» donde
+  hay 1, porque dos celdas numéricas contiguas encajan con el patrón. **Una cifra plausible no es una cifra
+  correcta**, y aquí las dos mediciones difieren en 257 veces.
+
+**Corolario sobre las anclas.** Un ancla textual que parece única suele no serlo. `5.33` estaba tres veces
+en el documento y la tercera era `35.33%`: la regla ingenua lo habría convertido en `35.80%`. Antes de
+aplicar un reemplazo hay que **contar las ocurrencias y mirarlas una por una**, y cuando el objetivo es una
+celda de tabla, anclar en la celda y no en el texto. Es la misma lección que `<w:t[^>]*>`, en otro nivel.

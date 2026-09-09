@@ -143,6 +143,39 @@ def replace_intra_run(xml, find, repl):
 
 
 # --------------------------------------------------------------------------- #
+# Estrategia 0: celda de tabla completa (opcional, por regla)
+# --------------------------------------------------------------------------- #
+
+def replace_whole_cell(xml, find, repl):
+    """Reemplaza sólo los <w:t> cuyo contenido ENTERO es `find`.
+
+    Para qué. Una celda de tabla que vale `5.33` no se puede corregir con una búsqueda de
+    subcadena: el 2026-09-09 el mismo documento tenía dos celdas `5.33` y, en otra tabla, un
+    `35.33%` que una regla de `5.33` habría convertido en `35.80%`. Es la misma clase de trampa
+    que `<w:t[^>]*>` encajando con `<w:tcPr>`: el ancla parece específica y no lo es.
+
+    Con esta estrategia el ancla es la celda, no el texto, y `35.33%` queda fuera por
+    construcción. No se intenta cross-run: una celda numérica es un único run, y si no lo es la
+    regla devuelve cero y se reporta como no alcanzada, que es la conducta correcta.
+
+    Se conserva el espaciado original de la celda, por si el estilo dependiera de él.
+    """
+    counter = {"n": 0}
+
+    def _sub(m):
+        attrs, body = m.group(1), m.group(2)
+        text = xml_unescape(body)
+        if text.strip() != find:
+            return m.group(0)
+        counter["n"] += 1
+        izq = text[:len(text) - len(text.lstrip())]
+        der = text[len(text.rstrip()):]
+        return "<w:t%s>%s</w:t>" % (ensure_preserve(attrs), xml_escape(izq + repl + der))
+
+    return RE_WT.sub(_sub, xml), counter["n"]
+
+
+# --------------------------------------------------------------------------- #
 # Estrategia 2: reemplazo a caballo entre varios <w:t> del mismo párrafo
 # --------------------------------------------------------------------------- #
 
@@ -264,8 +297,13 @@ def apply_rules_to_xml(xml, rules):
     for rule in rules:
         find = rule["find"]
         repl = rule["replace"]
-        xml, n_intra = replace_intra_run(xml, find, repl)
-        xml, n_cross = replace_cross_run(xml, find, repl)
+        if rule.get("celda_exacta"):
+            # el ancla es la celda entera; ver replace_whole_cell
+            xml, n_intra = replace_whole_cell(xml, find, repl)
+            n_cross = 0
+        else:
+            xml, n_intra = replace_intra_run(xml, find, repl)
+            xml, n_cross = replace_cross_run(xml, find, repl)
         stats.append({"id": rule.get("id", find[:30]), "intra": n_intra, "cross": n_cross})
     return xml, stats
 

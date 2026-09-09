@@ -94,7 +94,8 @@ el documento y los datos no puedan divergir en silencio:
 | `robustez_estadistica.py` | Friedman, post-hoc pareado **y la correlación capacidad-beneficio con su análisis de influencia**, que es la que sostiene la tesis central. Con `--validar` reproduce los artefactos publicados |
 | `efecto_emparejamiento_duplicado.py` | El efecto del doble conteo del emparejamiento sobre las cifras antiguas |
 | `desfase_documentos.py` | Qué documentos de estado han envejecido respecto de lo que describen |
-| `docx_replace_terms.py` | Ediciones de texto en los `.docx` preservando el formato |
+| `docx_replace_terms.py` | Ediciones de texto en los `.docx` preservando el formato. `celda_exacta` ancla en la celda de tabla, no en el texto |
+| `desfase_cifras_docx.py` | Compara **todas** las cifras decimales de un `.docx` contra el Markdown y señala las candidatas a obsoletas |
 
 ## Documentos fechados
 

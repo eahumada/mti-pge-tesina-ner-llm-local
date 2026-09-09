@@ -1,0 +1,28 @@
+{
+  "_comment": [
+    "Tabla 4, columna Tok/s/B de las dos filas de gemma4:latest (2026-09-09).",
+    "El .docx dice 5.33 y los datos dan 5.80: media de tokens_per_sec de ablacion_n15_REMOTO",
+    "sobre 9B params -> fs-es 52.16/9 = 5.80 y zs-es 52.16/9 = 5.80 (n=15 cada una). El 5.33",
+    "exigiria 47.97 tok/s, que no sale de ninguna configuracion.",
+    "",
+    "Es INDEPENDIENTE de la Tabla 19 y puede aplicarse por separado: comprobado que la Tabla 4",
+    "coincide con el Markdown en todas sus demas celdas, de modo que no hay una fila a medias.",
+    "",
+    "celda_exacta ES OBLIGATORIO aqui. El documento tiene un tercer '5.33' dentro de '35.33%',",
+    "en otra tabla, y una regla de subcadena lo convertiria en '35.80%'.",
+    "La encontro tools/desfase_cifras_docx.py: a mano no habia salido."
+  ],
+  "parts": [
+    "word/document.xml"
+  ],
+  "rules": [
+    {
+      "id": "T4",
+      "_where": "Tabla 4, Tok/s/B de gemma4:latest (FS-ES) y (ZS-ES)",
+      "find": "5.33",
+      "replace": "5.80",
+      "expect": 2,
+      "celda_exacta": true
+    }
+  ]
+}

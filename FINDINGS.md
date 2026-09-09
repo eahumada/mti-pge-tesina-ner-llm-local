@@ -3457,3 +3457,54 @@ siguen—. Queda declarada bajo la decisión 13, ampliada a esta tercera instanc
 **Lección operativa.** Un defecto de agregación no aparece una vez. Cuando se encuentre uno, hay que
 **enumerar todas las apariciones de la cifra** y juzgar cada una por separado, porque algunas serán
 legítimas y tratarlas en bloque introduce un error nuevo. Aquí, sustituir las tres habría estropeado §3.3.
+
+## §F88 — Mecanizada la comparación de cifras, aparece una cuarta obsoleta que a mano no salió
+
+**2026-09-09.** Encontradas a mano tres cifras titulares obsoletas en los `.docx`, quedaba la pregunta que
+importa: **¿son las únicas?** Encontrar defectos de uno en uno acredita que se miraron esos, no que no haya
+más. `tools/desfase_cifras_docx.py` compara **todas** las cifras decimales de los dos lados.
+
+**Resultado sobre el `.docx` canónico:** 705 cifras distintas examinadas, 273 solo en el `.docx` y 218 solo
+en el Markdown. Clasificadas por dónde caen, el número se vuelve interpretable:
+
+| | Total | En filas de tabla | Fuera de tablas |
+|:---|---:|---:|---:|
+| Solo en el `.docx` | 273 | 269 | **4** |
+| Solo en el Markdown | 218 | 206 | 12 |
+
+Las 269 confirman lo ya sabido: las tablas de resultados están sustituidas en bloque, no desfasadas en
+algunas celdas. Y de las **4** de prosa, tres eran las conocidas —76,85, 90,91, 81,45— y la cuarta era nueva:
+
+**El `5.33` de la Tabla 4.** La columna Tok/s/B de las dos filas de `gemma4:latest` decía 5.33 en los tres
+`.docx`. Los datos dan **5.80**: la media de `tokens_per_sec` en `ablacion_n15_REMOTO` es 52,16 sobre 9 000
+millones de parámetros, con n=15 en cada configuración, y las cuatro configuraciones dan 5,80. El 5,33
+exigiría 47,97 tok/s, que no sale de ninguna. A diferencia de la Tabla 19, la Tabla 4 **coincide con el
+Markdown en todas sus demás celdas**, de modo que era parcheable sin dejar una fila incoherente. Corregido.
+
+### Dos defectos de la propia herramienta, y los dos los delató un control
+
+**Primero: `<w:t[^>]*>` encaja con `<w:tcPr>`.** El patrón parece específico y no lo es: `w:t` seguido de
+`[^>]*` acepta `cPr`, y también `<w:tc>` y `<w:tbl>`. El resultado era que el texto «visible» arrastraba
+marcado XML. **Lo delató la herramienta a sí misma:** imprimía como contexto de una cifra
+`<w:jc w:val="left"/>…<w:t>43.29`. Hay que exigir que tras `w:t` venga `>` o un espacio.
+
+**Segundo: contar lindes con dígitos no cuenta números partidos.** La primera versión medía los números
+partidos entre runs como `dígito SEP dígito` y daba **257**. Pero en una fila de tabla, la celda `43.29`
+seguida de `38.91` encaja con ese patrón y no hay nada partido. La prueba correcta es que la unión forme un
+decimal válido y que **ninguno de los dos lados sea ya un decimal completo**. Con eso da **1**, que es
+exactamente la única reparación cross-run que la prueba en seco de las reglas había necesitado. Las dos
+mediciones son plausibles y difieren en 257 veces.
+
+### La trampa de la celda: `5.33` está tres veces, y una es `35.33%`
+
+Corregir la Tabla 4 con una regla de subcadena `5.33` habría convertido, en otra tabla, un `35.33%` en
+`35.80%`. Es la misma clase de error que `<w:t[^>]*>`: un ancla que parece específica y no lo es.
+
+Por eso `tools/docx_replace_terms.py` tiene ahora la opción **`celda_exacta`**, que solo reemplaza los
+`<w:t>` cuyo contenido **entero** es el buscado. Verificada con un control en los dos sentidos: sin la
+opción la regla alcanza **3** ocurrencias, con ella **2**, y el `35.33%` queda intacto. La opción hará falta
+igual para reemplazar la Tabla 19, donde todas las celdas son numéricas.
+
+**Lo que queda.** Tras corregir el 5,33, las únicas divergencias de prosa son las **tres** acopladas a la
+Tabla 19, ya especificadas en `tools/terms_restringido.json` para la tanda de maquetación. Ver
+`PROPAGACION-PENDIENTE-DOCX-20260908.md`.
