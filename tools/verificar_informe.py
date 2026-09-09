@@ -27,6 +27,22 @@ SCRIPT_FIGURAS = os.path.join(RAIZ, 'tools/generar_figuras_informe.py')
 EXCLUIDOS = ['nuextract', 'minimax-m3', 'gemini-3.1-flash-lite', 'q8-64k', 'sonct988',
              'gemini-3.5-flash', 'phi3.5', 'gliner']
 
+# Fallos conocidos, con quien los tiene y desde cuando. La clave es un fragmento del texto del
+# fallo; si aparece, se cuenta como DECLARADO y no como nuevo. Sin esto el resumen decia «4 fallos»
+# sin distinguir los deliberados de los inesperados, y **un fallo nuevo se habria perdido entre
+# ellos** — que es el mismo defecto que tener una cifra sin contexto.
+#
+# Retirar una entrada de aqui en cuanto se resuelva: una lista de excepciones que nadie poda acaba
+# silenciando defectos de verdad.
+FALLOS_DECLARADOS = {
+    '.rebuild_venv.log': 'fichero vacio del commit 880f4f9; decision del autor (CURRENT-TASKS §1.103)',
+    '.restore_results.log': 'idem',
+    'cita 62.67': 'decision 13, pendiente del autor (FINDINGS §F87)',
+    'cita 80.51': 'decision 13, pendiente del autor (FINDINGS §F87)',
+    'github.com/eahumada/mti-pge-tesina': 'referencia [37]: el repositorio es privado hasta la purga '
+                                          '(SEGURIDAD-CLAVE-GOOGLE-20260908.md)',
+}
+
 resultados = []
 
 
@@ -1542,23 +1558,39 @@ def main():
         c_urls(s)
 
     breve = '--breve' in sys.argv
-    fallos_totales = vacias = 0
+    fallos_totales = vacias = declarados = 0
+
+    def _declarado(txt):
+        for clave in FALLOS_DECLARADOS:
+            if clave in txt:
+                return clave
+        return None
+
     for nombre, n, fallos, nota in resultados:
+        declar = [f for f in fallos if _declarado(f)]
+        declarados += len(declar)
         if n == 0:
             estado, vacias = 'VACIA ', vacias + 1
         elif fallos:
-            estado, fallos_totales = 'FALLA ', fallos_totales + len(fallos)
+            estado = 'FALLA ' if len(declar) < len(fallos) else 'CONOC '
+            fallos_totales += len(fallos)
         else:
             estado = 'ok    '
         if not breve or fallos or n == 0:
             print('  %s %-62s (%d elementos)' % (estado, nombre, n))
             for f in fallos[:8]:
-                print('           - %s' % f)
+                cl = _declarado(f)
+                print('           - %s%s' % (f, '' if not cl else
+                                             '\n             [DECLARADO] %s' % FALLOS_DECLARADOS[cl]))
             if len(fallos) > 8:
                 print('           ... y %d más' % (len(fallos) - 8))
             if (fallos or n == 0) and nota:
                 print('           nota: %s' % nota)
-    print('\n  %d comprobaciones · %d fallos · %d vacías' % (len(resultados), fallos_totales, vacias))
+    nuevos = fallos_totales - declarados
+    print('\n  %d comprobaciones · %d fallos (%d declarados, **%d nuevos**) · %d vacías'
+          % (len(resultados), fallos_totales, declarados, nuevos, vacias))
+    if not nuevos and not vacias:
+        print('  sin fallos nuevos: todo lo que falla esta declarado y asignado')
     return 1 if (fallos_totales or vacias) else 0
 
 

@@ -59,6 +59,13 @@ con cada comprobación nueva, y ya ocurrió dos veces en este mismo párrafo. To
 de mutación: se les introduce el defecto que deben detectar y se comprueba que fallan (`FINDINGS §F78`).
 Una comprobación que no examina nada se marca como **vacía**, no como superada.
 
+**Los fallos conocidos se declaran y no se silencian.** El verificador distingue los que están asignados a
+alguien —`CONOC`, con su motivo y dónde consta— de los **nuevos**, y el resumen los cuenta por separado:
+«5 fallos (5 declarados, **0 nuevos**)». Hoy hay cinco, cuatro sin red: dos ficheros de registro vacíos que
+esperan al autor, el par de cifras de la conclusión 1 (**decisión 13**) y la referencia [37], que apunta al
+repositorio y falla hasta que se complete la purga. La lista de declarados **se poda en cuanto uno se
+resuelve**: una lista de excepciones que nadie limpia acaba silenciando defectos de verdad.
+
 ```
 python3 tools/verificar_informe.py          # todas, sin red
 python3 tools/verificar_informe.py --red    # además abre las URL de la bibliografía
