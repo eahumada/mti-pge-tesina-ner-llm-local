@@ -7383,3 +7383,24 @@ artefacto se desfasa sin que nada avise.
 **Y el desfase de siempre con los `.docx`:** al corregir el Markdown, dos de los tres entregables
 siguen con 26.5 en la Tabla 8. Declarado con su responsable, junto a la pieza 7 del encargo de
 maquetación, que ya corrige la misma tabla.
+
+---
+
+## §F153 — La Tabla 19, cinco filas sin identificar su configuración: anotado y no perseguido, por decisión de cierre
+
+**Fecha:** 2026-09-09 · **Origen:** lote de anexos de `wf_348f89e2-43b`, confianza media/alta; el
+autor pidió cerrar los análisis en este punto y no abrir más hilos
+
+Dos defectos menores en el Anexo I, Tabla 19 (42 filas):
+
+1. **La fila `llama3.2:latest`** no lleva sufijo de modo y **reproduce exacta** —los siete valores,
+   comprobado registro a registro— a `llama3.2:latest_baseline`. El propio texto que sigue a la tabla
+   ya lo advierte: «la tabla tiene cuarenta y dos filas pero cuarenta y una configuraciones
+   distintas». El defecto es de **etiqueta**, no de dato: la fila no dice de qué modo es.
+2. **Las cuatro filas `zs-es`/`zs-en`/`fs-es`/`fs-en`**, de la ablación de prompt, no identifican a
+   qué **modelo** pertenecen en la columna que sí lo hace para las otras 38.
+
+**No se persigue más en esta sesión**, por instrucción explícita del autor de cerrar los análisis y
+pasar a las formalidades. Queda para quien maquete: añadir el sufijo `_baseline` a la fila 33 y el
+nombre del modelo a las cuatro filas de ablación, sin tocar ninguna cifra. Es aditivo y de una
+palabra por fila; no cambia ningún resultado del estudio.

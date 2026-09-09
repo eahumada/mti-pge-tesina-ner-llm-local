@@ -4,6 +4,12 @@
 como registro y no se borra. Lo que cambia respecto de aquel es lo más importante de este encargo:
 **ya no hay que reconstruir a mano la lista de lo que falta**.
 
+**Consolidado el 2026-09-09, tras cerrar el análisis del día.** Diez piezas en total (se añadieron la
+7, 8, 9 y 10 sobre la marcha; reordenadas aquí en el orden en que conviene aplicarlas). El criterio de
+aceptación de §5 se reescribió para no citar cifras absolutas: se comparan antes/después de tu
+trabajo, porque un número fijo escrito en este documento se desfasa en cuanto alguien corrija el
+Markdown — ya le pasó dos veces a documentos parecidos (`FINDINGS §F134`, `§F149`).
+
 ---
 
 ## 0. Lo primero, y ahorra la mitad del trabajo
@@ -16,18 +22,25 @@ git pull
 python3 tools/verificar_informe.py
 ```
 
-Las comprobaciones **51 a 54** comparan los tres `.docx` contra el Markdown canónico en los cuatro
-tipos de contenido, y **lo que falta sale en su salida, fichero por fichero**:
+Cuatro comprobaciones comparan los tres `.docx` contra el Markdown canónico, cada una en un tipo
+de contenido, y **lo que falta sale en su salida, fichero por fichero**. Se citan por **nombre**, no
+por número: el número de comentario del código fuente (`# --- N.`) es una etiqueta histórica que no
+identifica la comprobación, y dos de ellas ya llevaban una cita mal puesta por confiar en el número
+(`FINDINGS §F146`).
 
-| Comprobación | Qué compara | Fallos hoy |
-|:---|:---|---:|
-| 51 | la **prosa**, párrafo a párrafo | 30 |
-| 52 | las **tablas** celda a celda y la **bibliografía** | 12 |
-| 53 | los **encabezados** | 3 |
-| 54 | las **figuras** y las citas colgantes | 6 |
+| Comprobación (nombre) | Qué compara |
+|:---|:---|
+| «la prosa de los tres .docx sigue al Markdown» | la **prosa**, párrafo a párrafo |
+| «las tablas y la bibliografia de los .docx siguen al Markdown» | las **tablas** celda a celda y la **bibliografía** |
+| «los encabezados y su nivel siguen al Markdown» (o equivalente) | los **encabezados** |
+| «las figuras del Markdown estan en los tres .docx» | las **figuras** y las citas colgantes |
+| «ninguna frase retirada sobrevive en los entregables» | frases que la fuente **corrigió** y el `.docx` todavía afirma |
 
-**Trabaja contra esa salida, no contra la lista de abajo.** La lista es para que entiendas el
-alcance; la salida es la verdad, y se actualiza sola a medida que insertas.
+**No hay una cifra de «fallos hoy» escrita aquí a propósito.** Cambia cada vez que se corrige el
+Markdown —es el defecto de `FINDINGS §F134`, que ya alcanzó a un resultado estadístico en `§F149`— y
+un número copiado en este documento se desfasa sin que nada avise. **Ejecuta tú mismo**
+`python3 tools/verificar_informe.py` y trabaja contra esa salida, no contra una cifra de este
+documento.
 
 **Coordinación, y ya está resuelta.** Un workflow de Claude Code evaluó estas inserciones por
 cirugía OOXML y dictaminó **«proceder con las viables»**, que son solo dos. **Haz `git pull` antes de
@@ -166,6 +179,22 @@ conserva la atribución vieja. **Son tres cambios y van juntos:**
 > «OpenSanctions» borraría una referencia correcta. Copia el texto del Markdown, no busques y
 > reemplaces.
 
+### Pieza 8 — El punto 11 de §7.2 y la referencia [39]
+
+Añadidos al Markdown el 2026-09-09 a petición del autor: el punto 11 de la lista de trabajo futuro
+declara el **contraste pareado por modelo** y las **variantes de la métrica** como línea pendiente, y
+cita **[39]**, que es Dror et al., ACL 2018, la referencia estándar de contrastes de significación en
+el área. Su URL está verificada y sus datos vienen del BibTeX canónico.
+
+Igual que la pieza 3: las entradas van **contiguas hasta [38]** y [39] se añade al final, de modo que
+**no hay corrimiento de numeración**. El punto 11 y la entrada [39] **van juntos**, porque una cita
+sin entrada es un fallo del verificador, y una entrada sin cita también.
+
+Es un punto **largo**, de unas dieciséis líneas, y por tanto es el primer candidato a chocar con el
+límite de 25 páginas. Si no cabe, aplica el orden del apartado 2.ter: primero espaciados y cuerpo de
+letra, y solo con autorización expresa del autor se toca el texto. **Lo que no se puede hacer es
+insertar la entrada [39] sin el punto que la cita, ni el punto sin la entrada.**
+
 ### Pieza 9 — Un pasaje del Anexo I que hoy dice algo falso, si decides insertarlo
 
 Va **con la pieza 1**, no aparte: forma parte de los párrafos del Anexo I que no llegaron al
@@ -189,21 +218,19 @@ falsedad porque tampoco afirma nada sobre eso.
 > las dos atribuciones a OpenSanctions y la glosa de la última columna. Cuando termines la pieza 7 y
 > la corrección de la Tabla 1, baja a cero sola.
 
-### Pieza 8 — El punto 11 de §7.2 y la referencia [39]
 
-Añadidos al Markdown el 2026-09-09 a petición del autor: el punto 11 de la lista de trabajo futuro
-declara el **contraste pareado por modelo** y las **variantes de la métrica** como línea pendiente, y
-cita **[39]**, que es Dror et al., ACL 2018, la referencia estándar de contrastes de significación en
-el área. Su URL está verificada y sus datos vienen del BibTeX canónico.
 
-Igual que la pieza 3: las entradas van **contiguas hasta [38]** y [39] se añade al final, de modo que
-**no hay corrimiento de numeración**. El punto 11 y la entrada [39] **van juntos**, porque una cita
-sin entrada es un fallo del verificador, y una entrada sin cita también.
+### Pieza 10 — Dos etiquetas de fila de la Tabla 19, opcional y solo si insertas el Anexo I
 
-Es un punto **largo**, de unas dieciséis líneas, y por tanto es el primer candidato a chocar con el
-límite de 25 páginas. Si no cabe, aplica el orden del apartado 2.ter: primero espaciados y cuerpo de
-letra, y solo con autorización expresa del autor se toca el texto. **Lo que no se puede hacer es
-insertar la entrada [39] sin el punto que la cita, ni el punto sin la entrada.**
+Menor, y no bloquea nada: si decides insertar el Anexo I (piezas 1 y 9), de paso hay dos etiquetas de
+fila que no identifican su configuración. **Es de una palabra por fila y no cambia ninguna cifra.**
+
+1. La fila `llama3.2:latest` (sin sufijo) reproduce exacta a `llama3.2:latest_baseline` —el propio
+   texto que sigue a la tabla ya lo dice—. Añádele el sufijo `_baseline`.
+2. Las cuatro filas `zs-es` / `zs-en` / `fs-es` / `fs-en` no dicen a qué modelo pertenecen. Añade el
+   nombre del modelo delante de la etiqueta de ablación.
+
+Si no insertas el Anexo I, esta pieza no aplica y no hay que hacer nada. Ver `FINDINGS §F153`.
 
 ---
 
@@ -241,9 +268,7 @@ Si no cabe, la regla de `CLAUDE.md` es explícita y no admite atajo:
 Esa autorización **no se ha dado**. Si tras agotar los ajustes de estilo sigue sin caber, **para y
 dilo**, con el número de páginas y qué ajustes ya probaste. Y si hay que priorizar —que según la
 estimación de arriba probablemente **no haga falta**—, el orden es:
-**pieza 1 primero** —la subsección de corridas múltiples, que es la que un tribunal juzga—, después
-las figuras con su prosa, después la referencia [38] con la celda de la Tabla 3, y al final los cinco
-párrafos de límites y las filas de la Tabla 9, que tienen eco en otras partes del documento.
+**pieza 7 primero** —es la única afirmación **falsa** de la lista, y no cuesta espacio nuevo porque corrige texto que ya está—, después **la pieza 1** —la subsección de corridas múltiples, que es la que un tribunal juzga—, después las figuras (pieza 6) con su prosa, después la referencia [38] con la celda de la Tabla 3 (piezas 3 y 5), después el punto 11 con la referencia [39] (pieza 8), que es el más largo y el primer candidato a no caber, y al final los cinco párrafos de límites y las filas de la Tabla 9 (pieza 2 y 4), que tienen eco en otras partes del documento. Las piezas 9 y 10 solo aplican si insertas la pieza 1, y van con ella.
 
 ---
 
@@ -349,23 +374,34 @@ python3 tools/verificar_informe.py
 python3 tools/auditar_afirmaciones.py
 ```
 
-**Lo que tiene que pasar:**
+**No compares contra un número fijo de fallos escrito en este documento.** Ese número cambia cada vez
+que se corrige el Markdown —hoy va por la tercera cifra distinta en dos días— y un recuento copiado
+aquí se desfasa sin que nada avise (es el defecto de `FINDINGS §F134`, y le pasó otra vez a
+`§F149` con un resultado estadístico). **La comparación correcta es relativa**, antes y después de tu
+trabajo:
 
-1. El recuento de **fallos declarados baja de 61**. Cada pieza que insertes cierra 3 fallos, uno por
-   `.docx`. Si insertas todo, deben cerrar **51** y quedar los 10 restantes, que no son tuyos: el
-   PDF (3, que cierran cuando lo regeneres), los dos ficheros de registro vacíos, la telemetría de
-   `real_mixed_70`, el `per_type` de `nemotron-mini` y las tres de la decisión 13.
-2. Las comprobaciones **51 a 54 pasan a `ok`**. Si alguna sigue en `CONOC`, su salida dice
-   exactamente qué falta.
-3. **Cero fallos NUEVOS.** El verificador devuelve 0 si no hay nuevos; si aparece uno, es que la
-   inserción rompió algo y **eso es más importante que lo que arregló**.
-4. La auditoría de afirmaciones sigue en **15 predicados y 0 incumplidos**.
-5. Los tres `.docx` siguen siendo OOXML estructuralmente sano, que lo comprueba «los tres .docx siguen siendo OOXML estructuralmente sano».
+1. **Corre el verificador ANTES de tocar nada** y guarda su resumen: `N fallos (N declarados, 0
+   nuevos)`. Es tu línea de base.
+2. Aplica las piezas que decidas aplicar.
+3. **Corre el verificador DESPUÉS.** El número de declarados tiene que **bajar** — cada pieza cierra
+   los fallos de las tres comprobaciones que la citan como responsable, y el propio verificador te
+   dice cuáles son al ejecutarse; no hay que memorizarlos.
+4. **Cero fallos NUEVOS, antes y después.** El verificador imprime «0 nuevos» cuando está limpio; si
+   aparece un número mayor que cero, la inserción rompió algo, y **eso es más grave que lo que
+   arregló**. Léelo, no lo ignores.
+5. Las comprobaciones que citan tu pasada de maquetación —búscalas por nombre, no por número: **«las
+   tablas y la bibliografía de los `.docx` siguen al Markdown»**, **«la prosa de los tres `.docx`
+   sigue al Markdown»** y **«ninguna frase retirada sobrevive en los entregables»**— deben tener
+   **menos** entradas que antes, idealmente ninguna. (Los números de comentario `# --- N.` del código
+   fuente son etiquetas históricas y no identifican la comprobación: ver la nota al principio de
+   `tools/verificar_informe.py`.)
+6. La auditoría de afirmaciones sigue en **0 incumplidos**. El número de predicados también cambia
+   con el tiempo; lo que importa es que la segunda columna sea cero.
+7. Los tres `.docx` siguen siendo OOXML estructuralmente sano, que lo comprueba la comprobación
+   **«los tres .docx siguen siendo OOXML estructuralmente sano»**.
 
 **Si algo va mal, restaura desde el respaldo y dilo.** Un entregable corrupto es peor que un
-entregable incompleto, y las 55 comprobaciones no sirven de nada si el fichero no abre.
-
----
+entregable incompleto, y ninguna comprobación sirve de nada si el fichero no abre.
 
 ## 5.bis Si el autor decide publicar el eta cuadrado
 
