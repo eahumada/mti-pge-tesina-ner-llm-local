@@ -66,7 +66,24 @@ Evidencia: `FINDINGS §F67.bis`.
 
 ---
 
-## 3. Los dos ficheros JSON que el barrido de exclusión dejó ilegibles
+## 3. Los dos ficheros JSON que el barrido de exclusión dejó ilegibles — *contexto verificado*
+
+> **Comprobado el 2026-09-09, y el contexto importa más de lo que el planteamiento original decía.**
+>
+> A diferencia de los **104** respaldos de la decisión 2 —ninguno rastreado—, estos dos **sí están en el
+> repositorio**, y no por descuido: el commit `b59b1d6` versionó deliberadamente **doce** respaldos previos a
+> la corrección de puntuación, como prueba de qué había antes de tocarla. `.gitignore` excluye `*.bak_*`,
+> pero no desrastrea lo que se añadió a propósito.
+>
+> **De esos doce, once son JSON y nueve están íntegros.** Parsean y traen sus registros: 1 200, 507, 240,
+> 240, 120, 60, 30 y dos resúmenes de dos claves. **Los rotos son exactamente los dos de este apartado**, los
+> de `excluidos_n120_REMOTO`.
+>
+> Eso acota la decisión: no hay un problema general con los respaldos versionados, hay dos ficheros
+> concretos, y son los del barrido que retiró un modelo excluido. **Y siguen sin parsear**, verificado hoy.
+
+### Planteamiento original (2026-09-08)
+
 
 **Qué pasa.** `results/excluidos_n120_REMOTO/detailed_results.json.bak_prescore` tiene **240 de 480** claves
 `"model"` sin valor, y su `benchmark_summary.json.bak_prescore` perdió una clave de primer nivel. Los rompió
