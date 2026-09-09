@@ -1,0 +1,350 @@
+2026-09-08 23:19:57,411 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-08 23:19:57,427 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-08 23:19:57,427 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-09-08 23:19:57,428 [INFO] ner_benchmark: Corpus loaded: 30 articles split into 3 batches.
+2026-09-08 23:19:57,428 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-08 23:19:57,474 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-08 23:19:57,477 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-08 23:19:57,477 [INFO] ner_benchmark: [RAG] Using Knowledge Base mode: 'kb_combined'
+2026-09-08 23:19:57,493 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b0-1788920397 for batch 0 to memory queue.
+2026-09-08 23:19:57,493 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b1-1788920397 for batch 1 to memory queue.
+2026-09-08 23:19:57,493 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b2-1788920397 for batch 2 to memory queue.
+2026-09-08 23:19:57,493 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b0-1788920397 for batch 0 to memory queue.
+2026-09-08 23:19:57,493 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b1-1788920397 for batch 1 to memory queue.
+2026-09-08 23:19:57,493 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b2-1788920397 for batch 2 to memory queue.
+2026-09-08 23:19:57,493 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=1 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-09-08 23:19:57,495 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-08 23:19:57,496 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-08 23:19:57,496 [INFO] ner_benchmark: [RAG] Worker phase — Knowledge Base mode: 'kb_combined'
+2026-09-08 23:19:57,511 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b0-1788920397 for batch 0 to memory queue.
+2026-09-08 23:19:57,511 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b1-1788920397 for batch 1 to memory queue.
+2026-09-08 23:19:57,511 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_baseline-b2-1788920397 for batch 2 to memory queue.
+2026-09-08 23:19:57,511 [INFO] ner_benchmark: Running RAG study 'gpt-oss:20b_baseline' with 1 workers...
+2026-09-08 23:19:57,511 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b0-1788920397 from memory queue.
+2026-09-08 23:19:57,511 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-08 23:19:57,512 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '1'...
+2026-09-08 23:19:57,513 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:19:57,517 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:20:08,183 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:20:08,679 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:20:08,693 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '2'...
+2026-09-08 23:20:08,693 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:20:08,698 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:20:16,946 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:20:17,328 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:20:17,332 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '3'...
+2026-09-08 23:20:17,333 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:20:17,336 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:20:24,389 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:20:24,427 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:20:24,434 [INFO] ner_benchmark: [Worker 4] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '4'...
+2026-09-08 23:20:24,434 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:20:24,439 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:20:28,698 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:20:29,002 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:20:29,010 [INFO] ner_benchmark: [Worker 5] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '5'...
+2026-09-08 23:20:29,010 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:20:29,013 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:20:34,431 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:20:34,594 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:20:34,606 [INFO] ner_benchmark: [Worker 6] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '6'...
+2026-09-08 23:20:34,607 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:20:34,613 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:20:39,683 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:20:40,205 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:20:40,218 [INFO] ner_benchmark: [Worker 7] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '7'...
+2026-09-08 23:20:40,218 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:20:40,225 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:20:45,390 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:20:45,819 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:20:45,826 [INFO] ner_benchmark: [Worker 8] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '8'...
+2026-09-08 23:20:45,827 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:20:45,832 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:20:56,541 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:20:56,985 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:20:56,993 [INFO] ner_benchmark: [Worker 9] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '9'...
+2026-09-08 23:20:56,994 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:20:56,999 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:21:00,828 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:21:01,059 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:21:01,064 [INFO] ner_benchmark: [Worker 10] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '10'...
+2026-09-08 23:21:01,064 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:21:01,069 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:21:08,327 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:21:08,695 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:21:08,703 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_baseline-b0-1788920397 in memory queue.
+2026-09-08 23:21:08,706 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b1-1788920397 from memory queue.
+2026-09-08 23:21:08,706 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-08 23:21:08,706 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '11'...
+2026-09-08 23:21:08,706 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:21:08,713 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:21:11,526 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:21:11,785 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:21:11,796 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '12'...
+2026-09-08 23:21:11,796 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:21:11,803 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:21:18,891 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:21:19,414 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:21:19,418 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '13'...
+2026-09-08 23:21:19,418 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:21:19,424 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:21:29,100 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:21:29,565 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:21:29,573 [INFO] ner_benchmark: [Worker 4] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '14'...
+2026-09-08 23:21:29,573 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:21:29,580 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:21:34,596 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:21:34,659 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:21:34,666 [INFO] ner_benchmark: [Worker 5] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '15'...
+2026-09-08 23:21:34,666 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:21:34,672 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:21:46,035 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:21:46,325 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:21:46,332 [INFO] ner_benchmark: [Worker 6] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '16'...
+2026-09-08 23:21:46,333 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:21:46,340 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:21:50,322 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:21:50,418 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:21:50,428 [INFO] ner_benchmark: [Worker 7] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '17'...
+2026-09-08 23:21:50,428 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:21:50,435 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:21:54,204 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:21:54,506 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:21:54,516 [INFO] ner_benchmark: [Worker 8] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '18'...
+2026-09-08 23:21:54,516 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:21:54,522 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:21:59,987 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:22:00,119 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:22:00,123 [INFO] ner_benchmark: [Worker 9] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '19'...
+2026-09-08 23:22:00,123 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:22:00,128 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:22:07,262 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:22:07,745 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:22:07,751 [INFO] ner_benchmark: [Worker 10] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '20'...
+2026-09-08 23:22:07,752 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:22:07,757 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:22:15,191 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:22:15,386 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:22:15,389 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_baseline-b1-1788920397 in memory queue.
+2026-09-08 23:22:15,391 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_baseline-b2-1788920397 from memory queue.
+2026-09-08 23:22:15,391 [INFO] ner_benchmark: Processing batch 3 with 1 parallel workers...
+2026-09-08 23:22:15,391 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '21'...
+2026-09-08 23:22:15,391 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:22:15,394 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:22:25,099 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:22:25,525 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:22:25,532 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '22'...
+2026-09-08 23:22:25,532 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:22:25,536 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:22:31,939 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:22:32,132 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:22:32,139 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '23'...
+2026-09-08 23:22:32,140 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:22:32,145 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:22:37,496 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:22:37,742 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:22:37,746 [INFO] ner_benchmark: [Worker 4] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '24'...
+2026-09-08 23:22:37,747 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:22:37,751 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:22:42,574 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:22:42,829 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:22:42,835 [INFO] ner_benchmark: [Worker 5] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '25'...
+2026-09-08 23:22:42,835 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:22:42,840 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:22:47,162 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:22:47,432 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:22:47,442 [INFO] ner_benchmark: [Worker 6] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '26'...
+2026-09-08 23:22:47,442 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:22:47,448 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:22:51,995 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:22:52,020 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:22:52,023 [INFO] ner_benchmark: [Worker 7] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '27'...
+2026-09-08 23:22:52,023 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:22:52,027 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:22:55,879 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:22:56,100 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:22:56,103 [INFO] ner_benchmark: [Worker 8] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '28'...
+2026-09-08 23:22:56,103 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:22:56,108 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:23:00,611 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:23:00,675 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:23:00,682 [INFO] ner_benchmark: [Worker 9] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '29'...
+2026-09-08 23:23:00,682 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:23:00,688 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:23:06,891 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:23:07,273 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:23:07,276 [INFO] ner_benchmark: [Worker 10] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_baseline') -> Extracting entities for record '30'...
+2026-09-08 23:23:07,276 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:23:07,281 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:23:14,743 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:23:14,892 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:23:14,899 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_baseline-b2-1788920397 in memory queue.
+2026-09-08 23:23:14,904 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b0-1788920594 for batch 0 to memory queue.
+2026-09-08 23:23:14,904 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b1-1788920594 for batch 1 to memory queue.
+2026-09-08 23:23:14,904 [INFO] ner_benchmark.pub_sub: Published task gpt-oss:20b_kb_rag-b2-1788920594 for batch 2 to memory queue.
+2026-09-08 23:23:14,904 [INFO] ner_benchmark: Running RAG study 'gpt-oss:20b_kb_rag' with 1 workers...
+2026-09-08 23:23:14,904 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_kb_rag-b0-1788920594 from memory queue.
+2026-09-08 23:23:14,904 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-08 23:23:14,904 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '1'...
+2026-09-08 23:23:15,047 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:23:15,050 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:23:26,146 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:23:26,178 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:23:26,189 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '2'...
+2026-09-08 23:23:26,284 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:23:26,287 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:23:40,297 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:23:40,505 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:23:40,517 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '3'...
+2026-09-08 23:23:40,624 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:23:40,627 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:23:48,774 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:23:49,258 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:23:49,266 [INFO] ner_benchmark: [Worker 4] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '4'...
+2026-09-08 23:23:49,369 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:23:49,372 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:23:56,375 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:23:56,492 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:23:56,503 [INFO] ner_benchmark: [Worker 5] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '5'...
+2026-09-08 23:23:56,602 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:23:56,605 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:24:04,392 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:24:04,750 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:24:04,760 [INFO] ner_benchmark: [Worker 6] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '6'...
+2026-09-08 23:24:04,857 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:24:04,860 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:24:11,446 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:24:11,969 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:24:11,979 [INFO] ner_benchmark: [Worker 7] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '7'...
+2026-09-08 23:24:12,071 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:24:12,074 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:24:22,306 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:24:22,720 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:24:22,726 [INFO] ner_benchmark: [Worker 8] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '8'...
+2026-09-08 23:24:22,815 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:24:22,818 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:24:46,259 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:24:46,633 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:24:46,638 [INFO] ner_benchmark: [Worker 9] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '9'...
+2026-09-08 23:24:46,726 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:24:46,729 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:24:51,795 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:24:51,809 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:24:51,818 [INFO] ner_benchmark: [Worker 10] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '10'...
+2026-09-08 23:24:51,914 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:24:51,917 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:25:01,492 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:25:01,534 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:25:01,537 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_kb_rag-b0-1788920594 in memory queue.
+2026-09-08 23:25:01,540 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_kb_rag-b1-1788920594 from memory queue.
+2026-09-08 23:25:01,541 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-08 23:25:01,541 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '11'...
+2026-09-08 23:25:01,633 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:25:01,637 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:25:06,319 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:25:06,739 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:25:06,749 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '12'...
+2026-09-08 23:25:06,853 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:25:06,856 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:25:16,632 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:25:17,044 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:25:17,050 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '13'...
+2026-09-08 23:25:17,151 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:25:17,155 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:25:24,844 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:25:25,271 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:25:25,278 [INFO] ner_benchmark: [Worker 4] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '14'...
+2026-09-08 23:25:25,371 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:25:25,374 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:25:31,587 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:25:31,969 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:25:31,973 [INFO] ner_benchmark: [Worker 5] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '15'...
+2026-09-08 23:25:32,065 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:25:32,069 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:25:39,074 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:25:39,162 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:25:39,166 [INFO] ner_benchmark: [Worker 6] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '16'...
+2026-09-08 23:25:39,257 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:25:39,261 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:25:46,086 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:25:46,377 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:25:46,386 [INFO] ner_benchmark: [Worker 7] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '17'...
+2026-09-08 23:25:46,482 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:25:46,485 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:25:57,160 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:25:57,651 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:25:57,661 [INFO] ner_benchmark: [Worker 8] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '18'...
+2026-09-08 23:25:57,761 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:25:57,764 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:26:08,607 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:26:08,933 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:26:08,941 [INFO] ner_benchmark: [Worker 9] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '19'...
+2026-09-08 23:26:09,042 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:26:09,045 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:26:22,343 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:26:22,734 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:26:22,740 [INFO] ner_benchmark: [Worker 10] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '20'...
+2026-09-08 23:26:22,829 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:26:22,832 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:26:30,707 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:26:30,983 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:26:30,988 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_kb_rag-b1-1788920594 in memory queue.
+2026-09-08 23:26:31,000 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task gpt-oss:20b_kb_rag-b2-1788920594 from memory queue.
+2026-09-08 23:26:31,001 [INFO] ner_benchmark: Processing batch 3 with 1 parallel workers...
+2026-09-08 23:26:31,001 [INFO] ner_benchmark: [Worker 1] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '21'...
+2026-09-08 23:26:31,091 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:26:31,095 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:26:37,461 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:26:37,686 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:26:37,700 [INFO] ner_benchmark: [Worker 2] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '22'...
+2026-09-08 23:26:37,794 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:26:37,798 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:26:47,927 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:26:47,949 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:26:47,960 [INFO] ner_benchmark: [Worker 3] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '23'...
+2026-09-08 23:26:48,066 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:26:48,069 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:26:58,866 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:26:59,252 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:26:59,262 [INFO] ner_benchmark: [Worker 4] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '24'...
+2026-09-08 23:26:59,365 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:26:59,368 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:27:04,456 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:27:04,973 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:27:04,983 [INFO] ner_benchmark: [Worker 5] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '25'...
+2026-09-08 23:27:05,086 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:27:05,089 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:27:14,556 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:27:14,749 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:27:14,756 [INFO] ner_benchmark: [Worker 6] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '26'...
+2026-09-08 23:27:14,863 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:27:14,869 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:27:21,158 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:27:21,450 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:27:21,455 [INFO] ner_benchmark: [Worker 7] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '27'...
+2026-09-08 23:27:21,553 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:27:21,556 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:27:26,916 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:27:27,144 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:27:27,147 [INFO] ner_benchmark: [Worker 8] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '28'...
+2026-09-08 23:27:27,237 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:27:27,241 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:27:33,880 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:27:34,333 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:27:34,344 [INFO] ner_benchmark: [Worker 9] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '29'...
+2026-09-08 23:27:34,440 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:27:34,443 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:27:41,604 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:27:42,083 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:27:42,088 [INFO] ner_benchmark: [Worker 10] Model 'gpt-oss:20b' (Mapped: 'gpt-oss:20b_kb_rag') -> Extracting entities for record '30'...
+2026-09-08 23:27:42,188 [DEBUG] ner_benchmark.providers.factory: Factory: model 'gpt-oss:20b' → OllamaProvider (default)
+2026-09-08 23:27:42,191 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=gpt-oss:20b options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-08 23:27:47,054 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-08 23:27:47,261 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-08 23:27:47,268 [INFO] ner_benchmark.pub_sub: Acknowledged task gpt-oss:20b_kb_rag-b2-1788920594 in memory queue.
+2026-09-08 23:27:47,280 [INFO] ner_benchmark: Unloading model weights for gpt-oss:20b to protect VRAM.
+2026-09-08 23:27:47,340 [INFO] ner_benchmark.llm_runner: Successfully unloaded weights for gpt-oss:20b from VRAM.
+2026-09-08 23:27:49,342 [INFO] ner_benchmark: ==================================================
+2026-09-08 23:27:49,342 [INFO] ner_benchmark: BENCHMARK EXTRACTIONS COMPLETE. PROCESSING METRICS...
+2026-09-08 23:27:49,342 [INFO] ner_benchmark: ==================================================
+2026-09-08 23:27:49,441 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.
