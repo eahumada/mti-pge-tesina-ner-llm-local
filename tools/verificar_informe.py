@@ -323,10 +323,32 @@ def c_recuentos(s):
 # --- 13. Las URL de la bibliografía responden (opcional: --red) ----------------------------------
 # Editoriales que bloquean al lector automático. CLAUDE.md ya admite acreditarlas por resolución del
 # DOI y dejar constancia: un 403 de ACM no es un enlace roto, es un portero.
-PORTEROS = ('dl.acm.org', 'acm.org', 'ieeexplore.ieee.org', 'sciencedirect.com', 'link.springer.com')
+# Servidores que devuelven 401/403 a un lector automatico aunque el recurso exista. Comprobado el
+# 2026-09-08: zenodo.org responde 403 incluso en su propia raiz, de modo que un 403 suyo no dice nada
+# sobre la entrada. Una URL de un portero se acredita por RESOLUCION DEL DOI, nunca dandola por buena.
+PORTEROS = ('dl.acm.org', 'acm.org', 'ieeexplore.ieee.org', 'sciencedirect.com',
+            'link.springer.com', 'zenodo.org')
+
+# Entradas de un portero cuyo trabajo NO tiene DOI registrado, de modo que la acreditacion por
+# resolucion del DOI no puede aplicarse. Cada una lleva la evidencia externa que la sostiene.
+# No es una lista para ir ampliando cuando algo moleste: exige una fuente independiente que ate
+# el identificador al trabajo, porque ACM devuelve 403 igual a un identificador real que a uno
+# inventado — comprobado el 2026-09-08 con 10.5555/000000.000000, que tambien da 403.
+# La clave es (numero, URL EXACTA). Atarla solo al numero acreditaria cualquier URL que se
+# pusiera en esa entrada, que es el defecto de §L57: devolver el valor del exito sin mirar.
+# Comprobado por mutacion: con la clave solo numerica, sustituir la URL de [17] por un
+# identificador inventado pasaba sin que nada lo notase.
+SIN_DOI_ACREDITADAS = {
+    ('17', 'https://dl.acm.org/doi/10.5555/645530.655813'):
+          ('Lafferty, McCallum y Pereira, ICML 2001. OpenAlex lo registra con 12 994 citas y '
+           'doi: None: el trabajo no tiene DOI, y el 10.5555 es el identificador interno de ACM '
+           'para material heredado. Copia abierta verificada (HTTP 200): '
+           'https://repository.upenn.edu/handle/20.500.14332/6188'),
+}
 
 
 def c_urls(s):
+    import socket
     import urllib.request
     import urllib.error
     # El paréntesis SÍ forma parte de algunos DOI: 10.1016/0169-7552(89)90019-6. Cortar en «)»
@@ -335,7 +357,27 @@ def c_urls(s):
     for m in re.finditer(r'^\[(\d+)\] (.*)$', s, re.M):
         u = re.search(r'https?://[^\s>\]]+', m.group(2))
         urls.append((m.group(1), u.group(0).rstrip('.,;') if u else None))
-    fallos = []
+    def resuelve_doi(url):
+        """Un DOI acreditado responde 301/302 con destino. No sigue la redirección:
+        el destino es justo el portero que bloquea, y seguirlo devolvería su 403."""
+        m = re.search(r'(10\.\d{4,9}/[^\s]+)', url)
+        if not m:
+            return None
+        class NoSigas(urllib.request.HTTPRedirectHandler):
+            def redirect_request(self, *a, **k):
+                return None
+        op = urllib.request.build_opener(NoSigas)
+        try:
+            op.open('https://doi.org/' + m.group(1), timeout=25)
+        except urllib.error.HTTPError as e:
+            destino = e.headers.get('Location', '') if e.headers else ''
+            if e.code in (301, 302, 303, 307, 308) and destino:
+                return destino
+        except Exception:
+            return None
+        return None
+
+    fallos, acreditadas, inciertas = [], [], []
     for n, u in urls:
         if u is None:
             fallos.append('[%s] sin URL' % n)
@@ -352,13 +394,41 @@ def c_urls(s):
             # dl.acm.org, y mirar solo la URL de partida no lo detecta nunca.
             destino = getattr(e, 'url', '') or ''
             if e.code in (401, 403) and any(p in u or p in destino for p in PORTEROS):
-                continue  # acreditada por resolución del DOI, no es un enlace roto
+                # No basta con que sea un portero: hay que acreditar la entrada por otra vía,
+                # o un DOI inventado sobre un dominio bloqueado pasaría sin que nadie lo mirase.
+                r = resuelve_doi(u)
+                if r:
+                    acreditadas.append('[%s] %d de %s, DOI resuelve a %s'
+                                       % (n, e.code, destino.split('/')[2] if '//' in destino else u, r))
+                elif (n, u) in SIN_DOI_ACREDITADAS:
+                    acreditadas.append('[%s] sin DOI registrado; %s' % (n, SIN_DOI_ACREDITADAS[(n, u)]))
+                else:
+                    fallos.append('[%s] HTTP %d de un portero y su DOI no resuelve — %s' % (n, e.code, u))
+                continue
+            if 500 <= e.code < 600:
+                inciertas.append('[%s] HTTP %d, caída del servidor — %s' % (n, e.code, u))
+                continue
             fallos.append('[%s] HTTP %d — %s%s'
                           % (n, e.code, u, ' -> %s' % destino if destino and destino != u else ''))
         except Exception as e:
-            fallos.append('[%s] %s — %s' % (n, type(e).__name__, u))
-    check('las URL de la bibliografía responden', len(urls), fallos,
-          'los 401/403 de las editoriales que bloquean lectores automáticos no cuentan como rotos')
+            # Un tiempo de espera agotado no acredita que el enlace esté roto: acredita que el
+            # servidor no respondió a tiempo, y se declara aparte. Pero un dominio que no resuelve
+            # en el DNS, o que rechaza la conexión, SI es un enlace roto y tiene que fallar.
+            # Comprobado por mutación: sin esta distinción, un dominio inventado pasaba como
+            # «no concluyente», que es tanto como no comprobar la bibliografía.
+            razon = getattr(e, 'reason', None)
+            roto = isinstance(razon, (socket.gaierror, ConnectionRefusedError, ConnectionResetError))
+            if roto:
+                fallos.append('[%s] el dominio no resuelve o rechaza la conexión — %s' % (n, u))
+            elif resuelve_doi(u):
+                acreditadas.append('[%s] %s, pero su DOI resuelve — %s' % (n, type(e).__name__, u))
+            else:
+                inciertas.append('[%s] %s — %s' % (n, type(e).__name__, u))
+    nota = ('acreditadas por resolución del DOI: %d' % len(acreditadas)) if acreditadas else ''
+    if inciertas:
+        nota += ('%sno concluyentes (el servidor no respondió, que no es lo mismo que un enlace roto): %s'
+                 % (' · ' if nota else '', '; '.join(inciertas)))
+    check('las URL de la bibliografía responden', len(urls), fallos, nota)
 
 
 # --- 14. Protocolo homogéneo ENTRE las corridas fusionadas ---------------------------------------

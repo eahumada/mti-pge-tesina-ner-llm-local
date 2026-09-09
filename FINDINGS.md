@@ -2703,3 +2703,61 @@ presente.
 vivo es su propio registro de progreso, y por eso se pidió el script al equipo de 48 GB. Un silencio largo
 **no es evidencia de nada**, y hoy ya llevó una vez a estar a punto de declarar caído un barrido que
 funcionaba.
+
+---
+
+## §F80 — La comprobación de las URL estaba tras una bandera, y al ejecutarla aparecieron tres cosas
+
+**2026-09-08, 23:3x.** La rutina de seguimiento venía informando «24 comprobaciones, 0 fallos» después de cada
+cambio. La comprobación de que **las URL de la bibliografía responden** no está entre esas 24: vive detrás de
+`--red`, porque sale a la red y tarda. De modo que la línea de estado decía cero fallos **sin haber abierto
+una sola URL**, cuando `CLAUDE.md` es explícito en que «una URL no abierta no cuenta como verificada».
+
+Ejecutada, la comprobación pasa a ser la **25** y aparecen tres cosas.
+
+**Zenodo bloquea lectores automáticos.** La entrada [18], el corpus Kleptotrace, daba tiempo de espera
+agotado, y luego HTTP 504. Aplicando el control de `§L57` —pedir algo que sí debería responder— resultó que
+**zenodo.org devuelve 403 hasta en su propia raíz**. No es un enlace roto: es un portero, igual que ACM. Se
+acredita, como manda la norma del proyecto, por **resolución del DOI**: `10.5281/zenodo.14027005` responde 302
+con destino, luego el registro existe.
+
+**Un identificador de ACM que no es un DOI.** Al exigir resolución del DOI a las entradas de un portero, falló
+la [17], el artículo de Lafferty, McCallum y Pereira sobre *conditional random fields*. Su URL es
+`dl.acm.org/doi/10.5555/645530.655813`, y **`10.5555` no es un DOI registrado**: doi.org devuelve 404 y
+Crossref responde «Resource not found». OpenAlex confirma que el trabajo existe —12 994 citas— y que su campo
+`doi` es **nulo**: es un artículo de ICML de 2001 sin DOI, y `10.5555` es el identificador interno de ACM para
+material heredado. La cita **no está mal** para un lector humano, que abre esa página sin problema; lo que no
+puede es acreditarse por DOI, porque no lo hay. Se declara la excepción con su evidencia y con una copia
+abierta verificada: `repository.upenn.edu/handle/20.500.14332/6188`, HTTP 200.
+
+**Y lo más importante: el 403 de ACM no distingue nada.** Comprobado con un identificador inventado,
+`10.5555/000000.000000`, que devuelve **el mismo 403** que el real. Es decir, la regla anterior —«si es un
+portero y da 403, se acepta»— habría dado por buena **cualquier cita inventada sobre ese dominio**. Ese es el
+defecto de `§L57` con otra cara: un valor que significa éxito y que también produce la avería.
+
+### El primer arreglo tenía dos defectos, y los encontró su propia prueba de mutación
+
+Aplicada la disciplina de `§F78`, dos mutaciones sobre el arreglo recién escrito:
+
+1. **Sustituir la URL de [17] por el identificador inventado pasaba sin que nada lo notase.** La excepción
+   estaba indexada **solo por el número de entrada**, de modo que acreditaba la entrada 17 llevara la URL que
+   llevase. Corregido: la clave es ahora el par (número, URL exacta).
+2. **Un dominio inexistente se clasificaba como «no concluyente».** La distinción entre fallo y caída del
+   servidor es correcta —un 504 no acredita que el enlace esté roto—, pero se aplicaba a toda excepción de
+   red. Un dominio que no resuelve en el DNS **sí es un enlace roto**. Corregido: `gaierror`,
+   `ConnectionRefusedError` y `ConnectionResetError` fallan; el resto queda como no concluyente.
+
+Con los dos arreglos, ambas mutaciones se detectan. Informe restaurado y comprobado con `diff`.
+
+### Lo que queda fallando, y debe seguir así
+
+La entrada **[37]**, el repositorio del proyecto, devuelve **404 porque es privado**. Es un defecto real y
+declarado: el informe afirma que el material está publicado y hoy no lo está, por la purga pendiente. **No se
+declara como excepción**: tiene que seguir fallando hasta que se resuelva, que es justo para lo que sirve una
+comprobación. Ver `SEGURIDAD-CLAVE-GOOGLE-20260908.md`.
+
+### Consecuencia para la rutina
+
+Antes de dar por buena la bibliografía hay que ejecutar `python3 tools/verificar_informe.py --red`, y no
+solamente la forma corta. Una comprobación que existe pero no se ejecuta es indistinguible de una que no
+existe. `LEARNING §L47` lo dice para las comprobaciones vacías; esto es lo mismo para las apagadas.
