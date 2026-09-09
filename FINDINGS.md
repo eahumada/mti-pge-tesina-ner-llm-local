@@ -6913,3 +6913,74 @@ Solo apunta a la columna equivocada. **Pendiente de corregir «última» por «d
 que es más claro que «cuarta» y no se rompe si alguien reordena. **No lo aplico ahora**: hay un
 workflow de consistencia leyendo el Markdown en este momento y sus citas se apoyan en él; se aplica
 cuando cierre.
+
+---
+
+## §F145 — El proveedor de los datos de sanciones está mal atribuido: en el entregable siempre, y en la fuente una vez
+
+**Fecha:** 2026-09-09 · **Origen:** dos workflows lo señalaron como el hallazgo más grave y se
+verificó contra el artefacto primario
+
+**El artefacto primario es inequívoco.**
+`repos/ner-llm-entity-benchmark/data/dictionaries/PROCEDENCIA.md` declara que los diccionarios se
+construyen desde **`treasury.gov/ofac/downloads/sdn.csv`** —la lista de Nacionales Especialmente
+Designados de la Oficina de Control de Activos Extranjeros del Tesoro de los Estados Unidos— más
+S&P 500, un repositorio de nombres españoles y `tidytuesday`. **No menciona OpenSanctions en ninguna
+parte.**
+
+OFAC y OpenSanctions **no son lo mismo**: la primera es la autoridad sancionadora estadounidense y la
+segunda un agregador independiente de listas. Para un tribunal con dominio AML/KYC —que es el dominio
+de este trabajo— confundirlas no es un detalle de forma.
+
+### Dos defectos distintos, y hay que separarlos
+
+**Primero, en el entregable, y es total.** Los tres `.docx` dicen:
+
+| | Texto |
+|:---|:---|
+| Atribución del corpus | «Las entidades fueron seleccionadas de la base de datos **OpenSanctions [19]**» |
+| Trabajo futuro | «bases de datos de **OpenSanctions [19]**» |
+| **Entrada [19] de la bibliografía** | «**OpenSanctions**: Open Data on Sanctions Lists and Politically Exposed Persons» |
+| Menciones de «SDN» | **cero** |
+
+Y el Markdown canónico dice, en los mismos sitios, «la lista **SDN** del Departamento del Tesoro de
+los Estados Unidos [19]» con la entrada **[19] = U.S. Department of the Treasury, Office of Foreign
+Assets Control, *Specially Designated Nationals and Blocked Persons List (SDN)*, instantánea del 27
+de julio de 2026**, `treasury.gov/ofac/downloads/sdn.csv`.
+
+De modo que **la fuente se corrigió y el entregable no**, incluida su **entrada bibliográfica**. Es el
+mismo desfase de [§F127](#f127), pero con una diferencia que lo hace peor que los demás: los otros son
+**ausencias**, y este es una **afirmación falsa** — el entregable atribuye datos a un proveedor que no
+los aportó, y respalda esa atribución con una referencia a ese proveedor.
+
+**Segundo, y es nuevo: el Markdown se contradice a sí mismo una vez.** Dos pasajes describen **los
+mismos** pares `{entidad_PER, entidad_ORG}` del corpus sintético N=30, a 4 123 caracteres de
+distancia:
+
+- **Anexo F**: «Para cada artículo sintético se definió a priori un par {entidad_PER, entidad_ORG}…
+  Las entidades fueron seleccionadas de **la lista SDN del Departamento del Tesoro** de los Estados
+  Unidos [19]»
+- **Anexo G.2**: «el autor definió a priori la distribución temática, los pares {entidad_PER,
+  entidad_ORG} objetivo **tomados de OpenSanctions**»
+
+**El Anexo F es el correcto**, porque coincide con el artefacto primario. El Anexo G.2 conserva la
+atribución vieja. Ninguna comprobación lo detectaba: la 3 verifica que toda cita tenga entrada y
+toda entrada cita, no que dos pasajes atribuyan el mismo dato a la misma fuente.
+
+**Y hay dos menciones de OpenSanctions en el Markdown que son legítimas y no se tocan:** la de
+trabajo futuro —«ampliar el corpus incorporando fuentes como la UAF, CMF y bases de datos de
+OpenSanctions [38]»—, que es una propuesta y no una atribución, y la entrada **[38]**, que es
+`FollowTheMoney`, una ontología que OpenSanctions sí publica y que el trabajo sí usa. Distinguirlas
+importa: corregir de más aquí borraría una referencia correcta.
+
+### Qué hay que hacer, y por qué no lo hago ahora
+
+**En el Markdown, una palabra:** en el Anexo G.2, «tomados de OpenSanctions» pasa a «tomados de la
+lista SDN del Departamento del Tesoro de los Estados Unidos [19]», que es lo que ya dice el Anexo F.
+
+**En los tres `.docx`, tres cosas:** las dos atribuciones y la **entrada [19] completa**. Es de la
+pasada de maquetación y va en el encargo de Claude Desktop.
+
+**No aplico la corrección del Markdown en este momento** porque hay un workflow de consistencia
+leyéndolo y sus citas se apoyan en él. Queda anotada con el texto exacto, junto con la de la glosa de
+la Tabla 1 de [§F144](#f144), para aplicarlas juntas cuando cierre.
