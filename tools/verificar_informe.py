@@ -334,6 +334,88 @@ def c_friedman(s):
           'con correccion por empates: sin ella daria 1123,07 en lugar de 1169,23')
 
 
+# --- 48. Los tres deltas del 2x2 del idioma del prompt -----------------------------------------
+def c_ablacion_idioma(s):
+    """El factor que §5 pone primero para explicar sus resultados, atado a su ablacion.
+
+    §5 abre la explicacion de los resultados con el idioma: «Redactar ambos en espanol aporta
+    10,40 puntos de F1 sin cambiar de modelo, mejora que ninguno de los dos factores consigue por
+    separado: traducir solo el prompt aporta 4,38 puntos y anadir ejemplos en ingles resta 0,72».
+    Son tres cifras y una afirmacion de interaccion.
+
+    Las cifras van **sin resalte**, por la regla de sobriedad tipografica del proyecto, y por eso el
+    patron sin asteriscos se prueba primero y el resaltado como alternativa. Al escribir esta
+    comprobacion lo hice al reves y las tres primeras mutaciones «no encontraron el ancla»: el fallo
+    era del ensayo, no de la comprobacion, y conviene dejarlo escrito porque la proxima cifra que se
+    verifique aqui tampoco estara en negrita.
+
+    **La comprobacion 33 verifica el ANOVA de esa misma ablacion** (F = 1,1379, p = 0,3417), y la
+    frase de replicacion de §7 —+3,11 y −0,43 con p = 0,9328— tambien esta cubierta alli. Los tres
+    deltas, en cambio, no los tocaba nadie: comprobado por mutacion antes de escribir esto, alterar
+    el 10,40 a 99,99 y el 4,38 a 9,99 daba **cero fallos nuevos** sobre 47 comprobaciones (`§F117`).
+
+    Reproducen desde `ablacion_n15_REMOTO`, que trae las cuatro celdas del diseno con 15 registros
+    cada una: `zs-en` 64,0451, `zs-es` 68,4273, `fs-en` 63,3210, `fs-es` 74,4447. La celda de
+    referencia es `zs-en`, la de menos ayuda.
+
+    Se comprueba tambien **la afirmacion de interaccion**, que es la que sostiene el argumento y no
+    es una cifra: que ninguno de los dos factores por separado alcance el efecto conjunto. Una
+    comprobacion que solo cotejara los tres numeros dejaria pasar un texto que los citara bien y
+    concluyera lo contrario.
+    """
+    import csv as _csv
+    import collections as _c
+    d = os.path.join(BENCH_DIR, 'results/ablacion_n15_REMOTO/benchmark_results.csv')
+    if not os.path.exists(d):
+        check('los deltas del 2x2 del idioma reproducen desde la ablacion', 0,
+              ['no existe %s' % os.path.relpath(d, RAIZ)])
+        return
+    g = _c.defaultdict(list)
+    with open(d, encoding='utf-8') as fh:
+        for r in _csv.DictReader(fh):
+            if r.get('f1') not in (None, ''):     # un F1 de 0,0 es un dato, no un hueco
+                g[r['model']].append(float(r['f1']))
+    M = {k: 100 * sum(v) / len(v) for k, v in g.items()}
+    faltan = [c for c in ('zs-en', 'zs-es', 'fs-en', 'fs-es') if c not in M]
+    if faltan:
+        check('los deltas del 2x2 del idioma reproducen desde la ablacion', 0,
+              ['la ablacion no trae las celdas %s; trae %s' % (faltan, sorted(M))])
+        return
+    juntos = M['fs-es'] - M['zs-en']
+    solo_p = M['zs-es'] - M['zs-en']
+    solo_e = M['fs-en'] - M['zs-en']
+
+    fallos, mirados = [], 0
+    CASOS = [('ambos en espanol', juntos,
+              r'Redactar ambos en espa\u00f1ol aporta \*\*(\d+),(\d+)\*\* puntos'),
+             ('solo el prompt', solo_p,
+              r'traducir solo el prompt aporta \*\*(\d+),(\d+)\*\* puntos'),
+             ('ejemplos en ingles', -solo_e,
+              r'a\u00f1adir ejemplos en ingl\u00e9s resta \*\*(\d+),(\d+)\*\*')]
+    for nombre, calc, pat in CASOS:
+        mirados += 1
+        # sin resalte primero: es como el informe las escribe
+        m = re.search(pat.replace(r'\*\*', ''), s) or re.search(pat, s)
+        if m is None:
+            fallos.append('no se encuentra en el informe la cifra de «%s»: revisar si se reformulo'
+                          % nombre)
+            continue
+        pub = float('%s.%s' % (m.group(1), m.group(2)))
+        if abs(pub - calc) > 0.011:
+            fallos.append('«%s»: el informe dice %.2f y la ablacion da %.4f' % (nombre, pub, calc))
+    # La afirmacion de interaccion, que no es una cifra y es la que sostiene el argumento.
+    mirados += 1
+    if 'mejora que ninguno de los dos factores consigue por separado' in s:
+        if not (solo_p < juntos and solo_e < juntos):
+            fallos.append('el informe afirma que ningun factor por separado alcanza el efecto '
+                          'conjunto, y los datos dan juntos=%.4f, solo prompt=%.4f, solo '
+                          'ejemplos=%.4f' % (juntos, solo_p, solo_e))
+    else:
+        fallos.append('no se encuentra la afirmacion de interaccion en §5: revisar si se reformulo')
+    check('los deltas del 2x2 del idioma reproducen desde la ablacion', mirados, fallos,
+          'la celda de referencia es zs-en; el ANOVA de esta misma ablacion lo verifica la 33')
+
+
 def check(nombre, examinados, fallos, nota=''):
     resultados.append((nombre, examinados, list(fallos), nota))
 
@@ -3292,6 +3374,7 @@ def main():
     ejecutar(c_tabla7_desde_per_type, s)
     ejecutar(c_tukey_recuento, s)
     ejecutar(c_friedman, s)
+    ejecutar(c_ablacion_idioma, s)
     ejecutar(c_tabla4_vs_datos, s)
     ejecutar(c_figura1_vs_artefacto, s)
     ejecutar(c_tablas_menores, s)

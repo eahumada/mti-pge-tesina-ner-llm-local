@@ -5221,3 +5221,59 @@ convenía precisarla; en [§F115](#f115) me retracté porque el texto está bien
 reabre: lo que faltaba no era corregir el texto sino **vigilar una cifra vecina**.
 
 **Estado del verificador:** 47 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F117 — El primer factor con que §5 explica sus resultados tampoco tenía quien lo recalculara
+
+**Fecha:** 2026-09-09 · **Origen:** revisar a mano las candidatas del barrido de [§F116](#f116)
+
+El barrido dejó 52 candidatas, y la utilidad de la lista se ve en el triaje: **la mayoría eran
+falsos descubiertos**, y comprobarlo cuesta poco.
+
+| Candidata | Veredicto |
+|:---|:---|
+| `76,55 %`, `90,16 %`, `80,42 %` | cubiertas, pero por `auditar_afirmaciones.py`, que el barrido no mira |
+| `66,0 %` | cubierta por `c_figura1_vs_artefacto` y por la auditoría de afirmaciones |
+| `62,67 %`, `80,51 %` | son los dos **fallos declarados** de la decisión 13, o sea vigiladas y en rojo a propósito |
+| `ρ = −0,5165`, `p = 0,0707`, `p = 0,0300` | cubiertas por `c_correlacion`, probado por mutación |
+| `+3,11`, `−0,43`, `p = 0,9328` | cubiertas por la comprobación 33 y documentadas en [§F55](#f55) |
+| **`+10,40`, `+4,38`, `−0,72`** | **descubiertas de verdad** |
+
+Las tres últimas son el **primer factor** con que §5 explica la distribución de resultados:
+«Redactar ambos en español aporta 10,40 puntos de F1 sin cambiar de modelo, mejora que ninguno de
+los dos factores consigue por separado: traducir solo el prompt aporta 4,38 puntos y añadir ejemplos
+en inglés resta 0,72». La comprobación 33 verifica el **ANOVA** de esa misma ablación (F = 1,1379,
+p = 0,3417) y §7 tiene cubierta la frase de que el efecto no replica, pero **los tres deltas no los
+tocaba nadie**: alterados el 10,40 a 99,99 y el 4,38 a 9,99, cero fallos nuevos sobre 47
+comprobaciones.
+
+**Las tres son correctas.** Reproducen desde `ablacion_n15_REMOTO`, que trae las cuatro celdas del
+diseño con quince registros cada una:
+
+| Celda | F1 | Contraste contra `zs-en` | Publicado |
+|:---|---:|---:|---:|
+| `zs-en` | 64,0451 | referencia | — |
+| `zs-es` | 68,4273 | +4,3821 | 4,38 |
+| `fs-en` | 63,3210 | −0,7242 | 0,72 |
+| `fs-es` | 74,4447 | **+10,3996** | 10,40 |
+
+**Comprobación 48**, y con una cuarta cosa que no es una cifra: **la afirmación de interacción**.
+Que ninguno de los dos factores por separado alcance el efecto conjunto es lo que sostiene el
+argumento, y una comprobación que solo cotejara los tres números dejaría pasar un texto que los
+citara bien y concluyera lo contrario. Probada por mutación en los cuatro frentes, los cuatro
+detectados; el cuarto se ensayó cambiando «ninguno» por «cualquiera».
+
+**Un fallo del ensayo, no de la comprobación, que conviene dejar escrito.** Las tres primeras
+mutaciones no encontraron su ancla porque las busqué en negrita, y el informe escribe esas cifras
+**sin resalte** por la regla de sobriedad tipográfica del proyecto. La comprobación funcionaba —su
+patrón alternativo casaba— pero mi prueba no probaba nada, que es el modo más silencioso de dar por
+validada una comprobación vacua. Corregido el orden de los patrones para que el caso sin resalte sea
+el primero, y anotado en el docstring: la próxima cifra que se verifique ahí tampoco estará en
+negrita.
+
+**Y por segunda vez seguida, la comprobación 43 detectó mi propia referencia colgante** a este mismo
+`§F117` mientras lo escribía. Es la tercera vez en la sesión que una comprobación del proyecto
+encuentra un defecto de quien las escribe.
+
+**Estado del verificador:** 48 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
