@@ -144,11 +144,18 @@ Porque a esta fecha es privado. Es un **pendiente declarado** y bloqueante para 
 ## Sobre la bibliografía
 
 **«¿De dónde salen el 88,43 % y el 82,1 % del §2?»**
-De [7] y [15] respectivamente. **Aviso interno, no respuesta:** ambas cifras están en tablas del texto
-completo de esos artículos y **no se han abierto**. Se comprobó que las dos obras existen —BETO, con 339
-citas en OpenAlex, y FiNER de Loukas et al., ACL 2022— y que sus URL resuelven, pero **eso acredita la
-referencia, no la cifra**. Cerrar esto cuesta abrir dos PDF y localizar las tablas de resultados; conviene
-hacerlo antes de la defensa, porque es exactamente el tipo de pregunta que se hace.
+De [7] y [15], y **ambas están verificadas contra las tablas de los propios artículos** (2026-09-09):
+
+- **88,43 %** es el F1 de **BETO *cased*** en NER sobre **CoNLL-2002 en español**, en la **Tabla 1** de [7].
+  El artículo lo marca con asterisco como **nuevo estado del arte** en ese *benchmark*, por delante del mejor
+  mBERT (87,38) y de la variante *uncased* (82,67). El informe dice «con un codificador monolingüe», que es
+  exactamente lo que BETO es.
+- **82,1 %** es el **micro-F1 de `sec-bert-shape` sobre el conjunto de prueba de FiNER-139**, en la **Tabla 4**
+  de [15]; su macro-F1 es 80,1. El artículo describe su tarea como «*word-level tagging of financial numeric
+  expressions with XBRL entity types*», que confirma literalmente la salvedad del informe: **etiquetar
+  magnitudes según la taxonomía XBRL y no identificar personas y organizaciones**.
+
+Si preguntan por el modelo concreto detrás del 82,1 —el informe no lo nombra— la respuesta es `sec-bert-shape`.
 
 **Contexto que obliga a ser especialmente cuidadoso aquí.** La verificación del 2026-09-08 encontró que
 **cuatro referencias no correspondían a ninguna obra existente** —[7], [9], [10] y [15]—, y dos de ellas
