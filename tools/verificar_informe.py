@@ -40,6 +40,8 @@ FALLOS_DECLARADOS = {
     '.restore_results.log': 'idem',
     'cita 62.67': 'decision 13, pendiente del autor (FINDINGS §F87)',
     'cita 80.51': 'decision 13, pendiente del autor (FINDINGS §F87)',
+    'el Anexo I dice': 'decision 13, ampliada a la tercera instancia del defecto '
+                       '(FINDINGS §F87.bis)',
     'github.com/eahumada/mti-pge-tesina': 'referencia [37]: el repositorio es privado hasta la purga '
                                           '(SEGURIDAD-CLAVE-GOOGLE-20260908.md)',
 }
@@ -1305,6 +1307,7 @@ def c_agregacion(s):
     CASOS = ((d120, 'gemma4:31b-mlx_baseline', 'N=120'),
              ('results/n30_rerun_REMOTO', 'gemma4:31b-mlx', 'dominio'))
     fallos, mirados = [], 0
+    agreg = {}
     for rel, grupo, etiq in CASOS:
         mirados += 1
         if rel is None:
@@ -1349,6 +1352,7 @@ def c_agregacion(s):
             return 100 * 2 * pr * rc / (pr + rc) if pr + rc else 0.0
 
         ma, mi = _macro(T3), _micro(T3)
+        agreg[etiq] = (ma, mi)
         # la conclusion 1 debe citar la macro; si cita la micro, esta mezclando agregaciones
         i7 = s.find('1. **Viabilidad demostrada')
         concl = s[i7:i7 + 1200] if i7 >= 0 else ''
@@ -1362,6 +1366,27 @@ def c_agregacion(s):
         elif not re.search(pat_ma, concl):
             fallos.append('la conclusion 1 no cita ni %.2f (macro) ni %.2f (micro) para %s: '
                           'revisar de donde sale su cifra' % (ma, mi, etiq))
+    # El Anexo I empareja la cifra restringida con su cifra publicada: «pasa de X % a 76,55 %».
+    # Esa X debe ser la macro, porque el 76,55 sale de la Tabla 19, que es macro. Si es la micro,
+    # el propio Anexo hace lo que §3.3 advierte que no se haga: incomparables el texto y su tabla.
+    if 'N=120' in agreg:
+        ma, mi = agreg['N=120']
+        mirados += 1
+        m = re.search(r'pasa de\s+(\d+)[.,](\d+)\s*%\s*a\s*\*{0,2}(\d+)[.,](\d+)', s)
+        if m is None:
+            fallos.append('no se encuentra en el Anexo I la frase «pasa de X % a Y %» que empareja '
+                          'la cifra publicada con la restringida: revisar si se reformulo')
+        else:
+            x = float('%s.%s' % (m.group(1), m.group(2)))
+            if abs(x - mi) < 0.01:
+                fallos.append('el Anexo I dice «pasa de %.2f %%» (micro) y lo empareja con el %s,%s '
+                              'restringido, que sale de la Tabla 19 y es macro; la convencion da '
+                              '%.2f. Es el mismo defecto que la conclusion 1, en otro sitio. '
+                              'Ver FINDINGS §F87.bis y la decision 13'
+                              % (x, m.group(3), m.group(4), ma))
+            elif abs(x - ma) >= 0.01:
+                fallos.append('el Anexo I dice «pasa de %.2f %%», que no es ni la macro (%.2f) ni la '
+                              'micro (%.2f): revisar de donde sale' % (x, ma, mi))
     check('la conclusion 1 usa la agregacion declarada en §3.3', mirados, fallos,
           'falla a proposito hasta que se resuelva la decision 13, como el [37] hasta la purga')
 

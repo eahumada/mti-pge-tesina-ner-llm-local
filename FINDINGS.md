@@ -3372,6 +3372,9 @@ más pesa en el análisis es justamente el afectado.
 
 ## §F87 — La conclusión 1 empareja cifras macro con cifras micro y las llama equivalentes
 
+> **Ampliado el 2026-09-09.** El defecto tiene una **tercera** instancia, en la prosa del Anexo I, donde
+> además contradice a la Tabla 19 que la acompaña. Ver **§F87.bis**.
+
 **2026-09-09, 14:2x.** Verificando la afirmación de viabilidad —el umbral de F1 ≥ 70 % que fija la hipótesis—
 aparecen las cuatro variantes que se pueden calcular sobre el mismo modelo y el mismo corpus:
 
@@ -3418,3 +3421,39 @@ un golpe. **No se ha modificado**: es una conclusión y la decisión es del auto
 
 Si se prefiriera conservar el 62,67 por alguna razón, entonces habría que decir que cambia también la
 agregación, y §3.3 tendría que dejar de llamar «única» a la macro.
+
+## §F87.bis — El mismo defecto está en el Anexo I, y ahí contradice a su propia tabla
+
+**2026-09-09.** Al preparar la propagación a los `.docx` se encontró una **tercera** instancia del defecto
+de §F87, que ni la decisión 13 ni la comprobación cubrían. Está en la prosa del Anexo I:
+
+> «El mejor modelo local sobre este corpus, `gemma4:31b-mlx`, **pasa de 62,67 % a 76,55 %** de F1 y supera
+> el umbral de 70 %…»
+
+El **76,55** sale de la Tabla 19, que es macro. El **62,67** es micro. La fila de esa misma tabla dice
+`59.25 → 76.55`, es decir **+17,30**, mientras la prosa insinúa +13,88. El emparejamiento es incomparable y
+la cifra de partida no es la que publica la tabla que está tres líneas más arriba.
+
+Lo que agrava el caso respecto de la conclusión 1 es que **§3.3 advierte exactamente de esto**:
+
+> «…mezclarlas haría incomparables las cifras del texto con las de sus propias tablas.»
+
+El Anexo I hace lo que §3.3 prohíbe, y con la tabla que tiene al lado.
+
+**Las tres apariciones de 62,67 en el informe no son equivalentes**, y conviene no tratarlas igual:
+
+| Línea | Dónde | Juicio |
+|---:|:---|:---|
+| 289 | §3.3, declarando la agregación | **Legítima.** Cita la alternativa para descartarla, y es la que advierte del riesgo |
+| 487 | Conclusión 1 | Defecto §F87, ya declarado, decisión 13 |
+| 1095 | Prosa del Anexo I | Defecto, **nuevo**: contradice a la Tabla 19 que la acompaña |
+
+**Por qué sobrevivió.** La comprobación `c_agregacion` examinaba la conclusión 1 y nada más: cuatro
+elementos, los dos casos por sus dos agregaciones. Un defecto situado fuera de esa ventana era invisible por
+construcción, que es §L47 otra vez. Extendida hoy, la comprobación mira **cinco** elementos y lo detecta;
+probada por mutación en los dos sentidos —con 62,67 marca, con 59,25 deja de marcar y los otros dos fallos
+siguen—. Queda declarada bajo la decisión 13, ampliada a esta tercera instancia.
+
+**Lección operativa.** Un defecto de agregación no aparece una vez. Cuando se encuentre uno, hay que
+**enumerar todas las apariciones de la cifra** y juzgar cada una por separado, porque algunas serán
+legítimas y tratarlas en bloque introduce un error nuevo. Aquí, sustituir las tres habría estropeado §3.3.

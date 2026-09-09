@@ -1,0 +1,45 @@
+{
+  "_comment": [
+    "Poblacion de la cifra de falsos positivos de la categoria no anotada (2026-09-09).",
+    "Estas SI pueden aplicarse por separado: no dependen de la Tabla 19.",
+    "",
+    "Son TRES puntos y NO se corrigen igual. El inventario original decia 'dos puntos, §3.3 y",
+    "§7.2, que repite la misma cifra', y eso es falso: el segundo punto es el ANEXO I, y ahi las",
+    "cifras 20 946 / 32 201 son CORRECTAS —describen las cuarenta y dos configuraciones de esa",
+    "tabla, no el estudio—. Lo que estaba mal era llamarlas 'del estudio'. Sustituirlas ahi",
+    "introduciria un error donde no habia ninguno.",
+    "",
+    "NOTA de maquetacion: el Markdown de §3.3 anade tras la cifra 'segun recoge la Figura 1' y",
+    "una frase de alcance ('cubre los veintiseis grupos que sostienen la Tabla 7 y esta desglosada",
+    "por grupo en results/COMPOSICION_FP_20260908/'). No se incluyen aqui por dos razones: la",
+    "Figura 1 aun no existe en el .docx, y la frase caeria dentro del run en NEGRITA, alargando un",
+    "resalte que la regla de sobriedad tipografica ya senala como divergente. Van en la pasada de",
+    "maquetacion, con su formato."
+  ],
+  "parts": [
+    "word/document.xml"
+  ],
+  "rules": [
+    {
+      "id": "F1",
+      "_where": "§3.3. La cifra del .docx es la de 42 configuraciones y se atribuye al estudio",
+      "find": "el 65 % de los falsos positivos del estudio, 20 946 de 32 201, proceden de esa categoría",
+      "replace": "el 66,0 % de los falsos positivos del estudio, 12 852 de 19 464, proceden de esa categoría",
+      "expect": 1
+    },
+    {
+      "id": "F2",
+      "_where": "Conclusiones. Solo el porcentaje, no hay absolutos",
+      "find": "procede el 65 % de los falsos positivos del estudio",
+      "replace": "procede el 66,0 % de los falsos positivos del estudio",
+      "expect": 1
+    },
+    {
+      "id": "F3",
+      "_where": "Anexo I. Se CONSERVAN las cifras y se corrige la poblacion, con glosa",
+      "find": "En conjunto, 20946 de los 32201 falsos positivos del estudio (65.0 %) proceden de la categoría no anotada.",
+      "replace": "En conjunto, 20 946 de los 32 201 falsos positivos de estas cuarenta y dos configuraciones (65,0 %) proceden de la categoría no anotada. La cifra no coincide con el 66,0 % que da §3.3 porque cubre una población distinta: esta tabla incluye configuraciones que el estudio no publica, entre ellas corridas después sustituidas por inválidas. Ambas son ciertas sobre lo que dicen medir.",
+      "expect": 1
+    }
+  ]
+}

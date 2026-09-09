@@ -442,6 +442,25 @@ y eso no se cambia sin el autor, no porque haya dos lecturas defendibles.
 
 ---
 
+> ### Ampliación del 2026-09-09: son tres sitios, no dos
+>
+> Al preparar la propagación a los `.docx` apareció una **tercera** instancia, en la prosa del Anexo I:
+> «pasa de **62,67 %** a 76,55 %». El 76,55 sale de la Tabla 19, que es macro; el 62,67 es micro. La fila de
+> esa misma tabla dice `59.25 → 76.55`, o sea **+17,30**, mientras la prosa insinúa +13,88.
+>
+> Agrava el caso que **§3.3 advierte literalmente de esto** —«mezclarlas haría incomparables las cifras del
+> texto con las de sus propias tablas»— y el Anexo I lo hace con la tabla que tiene al lado.
+>
+> **Lo que esta decisión debe cubrir ahora son tres sitios**, y **no** los tres de la misma manera. La tercera
+> aparición de 62,67, la de §3.3 (línea 289), es **legítima**: cita la alternativa para descartarla. Sustituirla
+> convertiría en incoherente el párrafo que declara la convención. Detalle en `FINDINGS §F87.bis`.
+>
+> | Línea | Dónde | Qué hacer |
+> |---:|:---|:---|
+> | 289 | §3.3, declarando la agregación | **nada**: es la que advierte del riesgo |
+> | 487 | Conclusión 1 | lo que decida el autor |
+> | 1095 | Prosa del Anexo I | lo mismo que en la 487, para no dejarlas divergentes |
+
 ## Y un aviso que todavía no es decisión
 
 Con tres de los trece modelos rehechos, el efecto del KB RAG **cambia de signo en los dos de 31B**: de −0,53

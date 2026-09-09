@@ -157,3 +157,99 @@ EOF
 2. Recuento de páginas del PDF: el cuerpo iba en 20 de 25 y la estimación con lo añadido sube a **~24**.
 3. Contar guiones largos y negritas del documento generado y compararlos con la fuente: el renderizador no
    debe añadir énfasis.
+
+---
+
+## Inventario corregido — 2026-09-09
+
+Al preparar la propagación se cotejaron los tres `.docx` contra el Markdown cifra por cifra. **El inventario
+de arriba está incompleto, y su apartado 1, leído literalmente, estropearía el Anexo I.** Lo que sigue lo
+sustituye.
+
+### El apartado 1 se equivoca en dos cosas
+
+Dice que la cifra de los falsos positivos «afecta a dos puntos del `.docx`: §3.3 y §7.2, que repite la misma
+cifra». Comprobado sobre el XML, son **tres** puntos, el segundo **no** es §7.2 sino el Anexo I, y **no todos
+se corrigen igual**:
+
+| Punto | El `.docx` dice | El Markdown dice | Acción |
+|:---|:---|:---|:---|
+| §3.3 | `el 65 % … 20 946 de 32 201, proceden de esa categoría` | `el 66,0 % … 12 852 de 19 464` | sustituir la cifra |
+| Conclusiones | `de ahí procede el 65 % de los falsos positivos del estudio` | `el 66,0 %` | sustituir solo el porcentaje |
+| **Anexo I** | `20946 de los 32201 … del estudio (65.0 %)` | `20 946 de los 32 201 … de estas cuarenta y dos configuraciones (65,0 %)` | **conservar las cifras**; corregir la población y añadir la glosa |
+
+En el Anexo I **las cifras son correctas**: describen las cuarenta y dos configuraciones de esa tabla, no el
+estudio. Lo que estaba mal era llamarlas «del estudio». El Markdown las conservó y añadió la glosa que
+explica por qué no coinciden con el 66,0 % de §3.3. Sustituirlas ahí, como el apartado 1 sugiere, introduciría
+un error donde no había ninguno — y es el incidente de 2026-09-03 otra vez: un hallazgo de auditoría tomado
+por hecho.
+
+### Lo que el inventario no recogía: tres cifras titulares obsoletas
+
+Las tres cifras del **F1 restringido** se recalcularon después de congelar los `.docx`. La divergencia es
+total y limpia: el valor viejo aparece solo en los `.docx` y el nuevo solo en el Markdown.
+
+| Cifra | `.docx` | Markdown | Apariciones en cada `.docx` |
+|:---|:---|:---|---:|
+| F1 restringido, mejor local, N=120 | 76,85 % | **76,55 %** | 8 |
+| F1 restringido, dominio | 90,91 % | **90,16 %** | 3 |
+| F1 restringido, variante en la nube | 81,45 % | **80,42 %** | 3 |
+
+Son **14 apariciones por documento, 42 en los tres**, y entre ellas están **el resumen y el abstract**: el
+entregable anuncia en su primera página una cifra que los datos ya no sostienen. Las tres nuevas están
+verificadas contra las corridas por la comprobación `c_titulares` de `tools/verificar_informe.py`; el 76,85 no
+sale de ninguna agregación vigente — sobre los 113 registros del manifiesto saldría 76,78, no 76,85.
+
+### Y la Tabla 19 no es parcheable: está entera sustituida
+
+La fila del mejor modelo local difiere **en todas sus columnas**:
+
+| | P | R | F1 | P restr. | F1 restr. | Δ |
+|:---|---:|---:|---:|---:|---:|---:|
+| `.docx` | 55.41 | 72.11 | 62.67 | 82.25 | 76.85 | +14.18 |
+| Markdown | 52.89 | 72.35 | 59.25 | 80.85 | 76.55 | +17.30 |
+
+**Por eso no se ha aplicado nada todavía.** Cambiar `76,85` por `76,55` dentro de esa fila dejaría un
+`F1 restr.` que no se corresponde con el `P restr.` de su lado: una fila internamente incoherente, peor que
+la que hay. La Tabla 19 entera debe reemplazarse desde el Markdown, y las catorce cifras de prosa van **en la
+misma pasada** que ella, porque derivan de sus filas. Propagar solo la prosa dejaría el resumen
+contradiciendo a la tabla del anexo.
+
+### Reglas preparadas, no aplicadas
+
+Las sustituciones de **prosa** están escritas y ancladas por contexto en `tools/terms_restringido.json`, de
+modo que ninguna toca la Tabla 19. **No ejecutarlas por separado:** están ahí para lanzarse junto al
+reemplazo de la tabla, que es trabajo de maquetación.
+
+Una advertencia sobre el énfasis: en §3.3 el `.docx` tiene **toda la frase en negrita**, mientras el Markdown
+resalta solo el porcentaje. Es la divergencia que la regla de sobriedad tipográfica prohíbe, y no se arregla
+con reemplazo de texto porque exige partir el run del XML. Queda para la pasada de maquetación.
+
+### Estado tras el 2026-09-09: aplicado lo independiente, pendiente lo acoplado
+
+**Aplicado** en los tres `.docx` con `tools/docx_replace_terms.py --rules tools/terms_fp_poblacion.json
+--in-place`, respaldo `*.bak_20260909-062438`:
+
+| | Antes | Ahora |
+|:---|---:|---:|
+| «65 % de los falsos positivos **del estudio**» | 2 | **0** |
+| 66,0 % · 12 852 | 0 | 3 · 1 |
+| Anexo I: «de estas cuarenta y dos configuraciones» | 0 | 1 |
+| Anexo I: conserva 20 946 / 32 201 | sí | **sí** |
+| Fila de la Tabla 19 (`62.67 · 82.25 · 76.85`) | intacta | **intacta** |
+| Emojis | 0 | 0 |
+| Palabras | 16 776 | 16 822 (+46, todas en el Anexo) |
+
+Los tres paquetes abren, conservan sus 29 y 15 partes, y las +46 palabras caen en un anexo, que no cuenta
+para el límite de 25 páginas del cuerpo. Las tres reglas alcanzaron su cuenta exacta en los tres documentos.
+
+**Pendiente y acoplado**, para la pasada de maquetación, en una sola tanda:
+
+1. Reemplazar la **Tabla 19** entera desde el Markdown.
+2. En la misma pasada, `tools/terms_restringido.json`: las **12** cifras de prosa del F1 restringido
+   (76,85→76,55, 90,91→90,16, 81,45→80,42), resumen y abstract incluidos. Probadas en seco: las 8 reglas
+   alcanzan su cuenta en los tres documentos, y **R7 requiere reparación por fragmentación de runs**, que la
+   herramienta hace sola. Ninguna ancla toca la Tabla 19.
+3. Las dos **figuras** y la **Tabla 20**, como decía el inventario original.
+4. En §3.3, partir el run en negrita para que resalte solo el porcentaje, y añadir entonces la frase de
+   alcance y la llamada a la Figura 1, que ahora no se pusieron por no existir aún la figura.

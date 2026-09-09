@@ -1,0 +1,81 @@
+{
+  "_comment": [
+    "Cifras del F1 RESTRINGIDO recalculadas despues de congelar los .docx (2026-09-09).",
+    "76,85 -> 76,55 · 90,91 -> 90,16 · 81,45 -> 80,42. Las tres nuevas estan verificadas",
+    "contra las corridas por la comprobacion c_titulares de tools/verificar_informe.py.",
+    "",
+    "NO EJECUTAR POR SEPARADO. Estas 12 sustituciones son de PROSA y derivan de las filas de",
+    "la Tabla 19, que en el .docx esta ENTERA sustituida: su fila del mejor modelo local difiere",
+    "en TODAS sus columnas (55.41/72.11/62.67/82.25/76.85/+14.18 frente a",
+    "52.89/72.35/59.25/80.85/76.55/+17.30). Aplicar solo la prosa dejaria el resumen",
+    "contradiciendo a la tabla del anexo. Van en la misma pasada que el reemplazo de la tabla.",
+    "",
+    "Las anclas estan elegidas para que NINGUNA toque la Tabla 19: las dos apariciones que",
+    "quedan dentro de ella (76.85 y 81.45, con punto decimal) no las alcanza ninguna regla.",
+    "Comprobado: las 11 anclas son unicas en word/document.xml de los tres .docx.",
+    "",
+    "NO se toca el 62,67 de la regla R7: es el defecto de FINDINGS §F87.bis, pendiente de la",
+    "decision 13 del autor. La regla corrige el 76,85 de esa frase y deja el 62,67 intacto."
+  ],
+  "parts": [
+    "word/document.xml"
+  ],
+  "rules": [
+    {
+      "id": "R1",
+      "_where": "Resumen en espanol, primera pagina",
+      "find": "el mejor modelo local alcanza 76,85 % de F1 en español y 90,91 % en el dominio",
+      "replace": "el mejor modelo local alcanza 76,55 % de F1 en español y 90,16 % en el dominio",
+      "expect": 1
+    },
+    {
+      "id": "R2",
+      "_where": "Abstract en ingles, primera pagina",
+      "find": "the best local model reaches 76.85 % F1 in Spanish and 90.91 % on the domain corpus",
+      "replace": "the best local model reaches 76.55 % F1 in Spanish and 90.16 % on the domain corpus",
+      "expect": 1
+    },
+    {
+      "id": "R3",
+      "_where": "Tabla comparativa del estado del arte, celda de este trabajo",
+      "find": "76,85 % F1",
+      "replace": "76,55 % F1",
+      "expect": 1
+    },
+    {
+      "id": "R4",
+      "_where": "Introduccion, cifra del corpus periodistico",
+      "find": "76,85 % de F1 sobre el corpus periodístico",
+      "replace": "76,55 % de F1 sobre el corpus periodístico",
+      "expect": 1
+    },
+    {
+      "id": "R5",
+      "_where": "Introduccion, cifra del corpus de dominio",
+      "find": "90,91 % sobre el corpus",
+      "replace": "90,16 % sobre el corpus",
+      "expect": 1
+    },
+    {
+      "id": "R6",
+      "_where": "Conclusiones, el coste de la soberania",
+      "find": "obtiene 81,45 % frente al 76,85 % del mejor local",
+      "replace": "obtiene 80,42 % frente al 76,55 % del mejor local",
+      "expect": 1
+    },
+    {
+      "id": "R7",
+      "_where": "Anexo I, prosa. Se corrige el 76,85 y se DEJA el 62,67 (§F87.bis)",
+      "find": "a 76,85 % de F1 y supera el umbral",
+      "replace": "a 76,55 % de F1 y supera el umbral",
+      "expect": 1
+    },
+    {
+      "id": "R8",
+      "_where": "Anexo I, prosa, comparacion con la nube",
+      "find": "(81,45 % frente a 76,85 %)",
+      "replace": "(80,42 % frente a 76,55 %)",
+      "expect": 1
+    }
+  ]
+}
