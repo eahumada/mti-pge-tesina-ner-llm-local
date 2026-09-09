@@ -74,6 +74,33 @@ oscila entre −0,070 y +0,025 de F1 según el modelo, y los corpus N=15 y N=30 
 
 ---
 
+## Sobre las cifras económicas
+
+**«¿De dónde sale el 99,4 % de reducción de coste? ¿Lo han medido?»**
+No, y el informe lo dice con todas las letras: **son estimaciones, no mediciones**. Los 0,052 dólares por
+artículo reparten la amortización del equipo a un año (0,050) más el consumo eléctrico (0,002), de modo que
+**no miden cómputo** y por eso son idénticos en las tres filas de la tabla. Los 8,75 dólares de la revisión
+manual resultan de valorar el tiempo de un analista en 35 dólares por hora y estimar quince minutos por
+noticia, **ambos de observación interna del proceso vigente en Austranet y no de una fuente publicada**. Las
+dos cosas están declaradas en §5.5 y en la conclusión 4. Presentarlas como medición sería lo indefendible;
+presentarlas como estimación con sus parámetros a la vista es lo correcto.
+
+**«El objetivo dice 60–80 % y el resultado 99,4 %. ¿En qué quedamos?»**
+Son dos magnitudes distintas y el informe las separa: **99,4 % es la reducción del coste unitario directo**
+—0,052 frente a 8,75— y el **60–80 % se refiere al coste operativo total, que incluye la supervisión
+humana**. La distinción se introdujo tras la auditoría del 2026-09-03 (hallazgo M9), y por eso la afirmación
+se retiró del resumen.
+
+**Y aquí hay que ser honesto, porque es el flanco real:** el informe **no deriva** ese 60–80 %. Es el rango
+que fijaron los objetivos al principio del trabajo, no un resultado calculado a partir de los datos. La
+respuesta defendible es esa misma: el estudio estima el coste unitario con sus parámetros declarados, y
+advierte de que el ahorro total **depende de cuánto reduzca el sistema el volumen que llega a revisión
+humana**, algo que este trabajo **no midió** porque exigiría un despliegue en producción con analistas. Quien
+pregunte por el 60–80 % está señalando una limitación declarada, no un error.
+
+**Lo que no conviene hacer** es defender el 60–80 % como si tuviera respaldo empírico. No lo tiene, y sostenerlo
+convierte una limitación honesta en una cifra atacable.
+
 ## Sobre la reproducibilidad
 
 **«¿Puedo reproducir sus cifras?»**

@@ -159,6 +159,33 @@ peor que la propia cifra.
 
 ---
 
+## 9. El 60–80 % de reducción de coste total: ¿se matiza en la conclusión 4?
+
+La conclusión 4 dice, entre paréntesis, «60–80 % del costo operativo total, que incluye la supervisión
+humana». **El informe no deriva esa cifra en ninguna parte.** Es el rango que fijaron los objetivos al
+principio del trabajo, no un resultado calculado a partir de los datos.
+
+El resto del párrafo está bien construido: declara que las cifras son estimaciones y no mediciones, y §5.5
+advierte de que el ahorro real «depende de cuánto reduzca el volumen que llega a revisión humana», que es
+justo lo que el estudio no midió. **La única cifra sin respaldo es el 60–80 %**, y va sin matiz, presentada
+como dato junto al 99,4 %, que sí tiene sus parámetros a la vista.
+
+| Opción | Qué implica |
+|:---|:---|
+| **a) Dejarlo** | La conclusión ya declara que son estimaciones. Riesgo: quien pregunte por el 60–80 % encontrará que no hay de dónde sacarlo, y la respuesta tendrá que darse en la sala |
+| **b) Matizarlo** | Añadir que ese rango es **el objetivo planteado** y no un resultado medido, porque el ahorro total depende de la reducción de volumen que el trabajo no midió. Cuesta una línea y convierte un flanco en una limitación declarada |
+| **c) Retirarlo** | Dejar solo el 99,4 % unitario. **Se desaconseja**: el objetivo 5 lo menciona y desaparecería la conexión entre objetivo y conclusión |
+
+**Recomendación: (b).** Es neutra en extensión y es lo que ya hace el resto del informe con sus otras
+limitaciones. La respuesta preparada, por si se decide (a), está en
+`DEFENSA-PREGUNTAS-Y-RESPUESTAS.md §Sobre las cifras económicas`.
+
+*Antecedente:* la auditoría del 2026-09-03 ya trató la contradicción entre 60–80 % y 99,4 % (hallazgo M9) y
+la resolvió distinguiendo coste unitario de coste total, y retirando la afirmación del resumen. Lo que quedó
+sin resolver es el respaldo del rango, no su coherencia.
+
+---
+
 ## Y un aviso que todavía no es decisión
 
 Con tres de los trece modelos rehechos, el efecto del KB RAG **cambia de signo en los dos de 31B**: de −0,53
