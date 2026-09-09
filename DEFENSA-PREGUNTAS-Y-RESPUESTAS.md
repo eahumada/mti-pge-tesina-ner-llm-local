@@ -178,9 +178,15 @@ convierte una limitación honesta en una cifra atacable.
 **«He mirado sus datos crudos y hay registros con exhaustividad mayor que 1. ¿Cómo lo explica?»**
 Es correcto, hay **197**, y el máximo es **2,444**. La causa está localizada en el código: el emparejamiento
 incrementa los aciertos **por cada entidad extraída que casa**, mientras cuenta los fallos sobre las
-referencias **distintas** casadas. Cuando dos extracciones casan con la misma referencia —«John Smith» y
-«Smith, John», iguales para el emparejamiento difuso al 85 %— el acierto se cuenta dos veces. La precisión no
-está afectada, porque cada entidad extraída contribuye como mucho una vez.
+referencias **distintas** casadas. Cuando dos extracciones casan con la misma referencia —sobre «José Bono»,
+tanto «José Bono» como «Jose Bono» superan el umbral, con 100 y **88,89** de similitud— el acierto se cuenta
+dos veces. La precisión no está afectada, porque cada entidad extraída contribuye como mucho una vez.
+
+> **Nota del 2026-09-10.** Este ejemplo era antes «John Smith» y «Smith, John», y **no resistía que alguien
+> lo ejecutara**: `fuzz.ratio` los puntúa a **47,62**, muy por debajo del umbral de 85, de modo que la segunda
+> extracción no habría casado y el duplicado no se produciría. El mecanismo es real y está cuantificado justo
+> abajo; lo que fallaba era la ilustración, y es una ilustración destinada a decirse en voz alta ante alguien
+> que puede comprobarla. Sustituido por un par verificado ejecutando la biblioteca. Ver `FINDINGS §F107`.
 
 **Y está cuantificado.** Recalculado contando cada referencia una sola vez, sin reejecutar inferencia: el F1
 está inflado **+0,160 pp de media** y **+1,287 pp** como máximo, siempre al alza; **ninguna** de las trece
