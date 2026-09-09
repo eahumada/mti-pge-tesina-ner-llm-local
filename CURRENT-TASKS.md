@@ -1646,3 +1646,39 @@ Está en `FINDINGS §F65` y `§F65.bis`, con la tabla de ambas.
 | 2026-09-09 06:2x | Claude Code (equipo principal) | ✅ §1.184: **§F87.bis — el defecto de agregación tiene una tercera instancia, en el Anexo I, donde contradice a su propia tabla**. La prosa dice «pasa de **62,67 %** a 76,55 %»: el 76,55 sale de la Tabla 19, que es macro, y el 62,67 es micro; la fila de esa misma tabla dice `59.25 → 76.55`, o sea **+17,30**, mientras la prosa insinúa +13,88. Lo agrava que **§3.3 advierta literalmente de esto** —«mezclarlas haría incomparables las cifras del texto con las de sus propias tablas»— y el Anexo lo haga con la tabla de al lado. Sobrevivió porque `c_agregacion` examinaba **solo la conclusión 1**: fuera de esa ventana era invisible por construcción, que es §L47 otra vez. Extendida a **5 elementos**, detecta la tercera instancia; **probada por mutación en los dos sentidos** y el Markdown restaurado idéntico. Declarada bajo la decisión 13, **ampliada a tres sitios** — y con la advertencia de que la tercera aparición de 62,67, la de §3.3, es **legítima**: sustituir las tres estropearía el párrafo que declara la convención |
 | 2026-09-09 06:3x | Claude Code (equipo principal) | ✅ §1.185: **mecanizada la comparación de cifras `.docx` vs Markdown, y aparece una cuarta obsoleta que a mano no salió**. Encontrar tres a mano no acreditaba que fueran las únicas (§L61). `tools/desfase_cifras_docx.py` compara **las 705 cifras decimales** de los dos lados: **273 solo en el `.docx`**, de las que **269 caen en filas de tabla** —las tablas de resultados están **sustituidas en bloque**, no desfasadas en celdas— y **4 en prosa**. Tres eran las conocidas; la cuarta, nueva: el **`5.33` de la Tabla 4** (Tok/s/B de las dos filas de `gemma4:latest`), que los datos contradicen — `ablacion_n15_REMOTO` da 52,16 tok/s medios sobre 9B, o sea **5.80**, n=15, y el 5,33 exigiría 47,97 tok/s que no sale de ninguna configuración. La Tabla 4 coincide en todas sus demás celdas, así que era parcheable: **aplicada** en los tres `.docx` con respaldo. Tras ello **las únicas divergencias de prosa son las 3 acopladas a la Tabla 19**, ya especificadas: la maquetación tiene un conjunto cerrado, no una búsqueda |
 | 2026-09-09 06:3x | Claude Code (equipo principal) | ✅ §1.186: **`celda_exacta` en `docx_replace_terms.py`, y dos defectos corregidos en la herramienta nueva**. (a) `5.33` estaba **tres** veces en el documento y una era **`35.33%`**: una regla de subcadena la habría convertido en `35.80%`, de modo que se añadió la opción `celda_exacta`, que solo reemplaza los `<w:t>` cuyo contenido **entero** es el buscado — verificada con control en los dos sentidos, **sin ella 3 ocurrencias, con ella 2**, y hará falta igual para la Tabla 19. (b) En la herramienta nueva, `<w:t[^>]*>` **encajaba con `<w:tcPr>`** y arrastraba XML al texto: lo delató su propia salida, que imprimía `<w:jc w:val="left"/>…<w:t>43.29` como contexto. (c) El recuento de números partidos entre runs daba **257** contando `dígito SEP dígito`, pero dos celdas numéricas contiguas encajan con eso; medido bien da **1**, que es exactamente la única reparación cross-run que la prueba en seco había necesitado. **Dos mediciones plausibles que difieren 257 veces** (§L61) |
+
+#### §3.bis.18 — Rehacer los siete `acceptance_status.json` desfasados (Equipo Remoto 48 GB)
+
+**Estado:** PENDIENTE · abierta el 2026-09-09 por Claude Code (equipo principal) · ver `FINDINGS §F89`.
+
+La corrección de puntuación del 2026-09-06 rehizo los `benchmark_summary.json` pero **no** los
+`acceptance_status.json`, que `src/main.py` escribe al cerrar la corrida. **7 de 17** quedaron con el
+veredicto calculado sobre cifras que ya no existen, y en las siete la cifra vieja es la más alta.
+
+Diagnóstico reproducible con `python3 tools/acceptance_desfasado.py`, que imprime lo que cada fichero
+debería declarar. Resumen:
+
+| Corrida | `overall_f1` actual | Debe decir |
+|:---|---:|---:|
+| `afectados_thinking_n120_REMOTO` | 0,592929 | 0,584595 |
+| `benchmark_balanced_120_20260824_173017` | 0,394452 | 0,361119 |
+| `benchmark_n120_REMOTO` | 0,549147 | 0,507480 |
+| `excluidos_n120_REMOTO` | 0,596448 | 0,438386 |
+| `gemma4_31b_cloud_n120_REMOTO` | 0,626804 | 0,623841 |
+| `nemotron_rerun_n120_REMOTO` | 0,437837 | 0,371170 |
+| `qwen3_nothink_n120_REMOTO` | 0,531255 | 0,514588 |
+
+**Atención al caso del cloud, que es el único con consecuencia interpretativa.** Además de la cifra,
+`gemma4_31b_cloud_n120_REMOTO` declara `best_model: gemma4:31b-cloud_kb_rag`, cuando el resumen corregido da
+mejor al **`..._baseline`**. El fichero afirma lo contrario de lo que sostiene el informe sobre el modelo
+grande y el RAG. Ese campo hay que corregirlo también, no solo el `overall_f1`.
+
+**Cómo:** recalcular desde el `benchmark_summary.json` corregido de cada corrida, sin repetir inferencia.
+Buscar el mejor con `f is not None`, **nunca** con `if f`: un F1 de 0.0 es *falsy* y dejaría fuera
+precisamente la corrida que hay que detectar. Revisar también `target_f1_met`, que es un veredicto derivado
+de la cifra vieja.
+
+**No tocar los `benchmark.log` ni los `*.bak_prescore`:** atestiguan qué había antes de la corrección y son
+la prueba de que ésta se hizo. El fichero que se corrige es el que **afirma**.
+| 2026-09-09 06:5x | Claude Code (equipo principal) | ✅ §1.187: **verificada la mitad `kb_rag` de `gemma4:12b-mlx`, que ya estaba entregada, y la cifra reportada no era la válida**. Los cinco criterios sobre `afectados_thinking_n120_REMOTO`: **failed=0**, `parse_method` 100 % `direct_json`, **latencia 0 en ninguna fila** (sin rechazo de infraestructura), `recall=0` en **4/120** el baseline y **5/120** el kb_rag, **0 filas** violan F1 ≤ (P+R)/2 en 453 examinadas, y `rag_mode=kb_combined` con **8 de 9** parámetros iguales a la referencia (difiere `num_workers` 9 vs 6, que afecta a la latencia y no a las métricas). Cifras válidas: baseline **56,18** y kb_rag **58,46**. El equipo reportó **0,5929**, que **no está ni en el CSV ni en el resumen**: sale de `acceptance_status.json`, previo a la corrección de puntuación. El informe **ya cita las correctas** (56,18 y 58,46, sin rastro de 59,29 ni del 11,21 de la corrida antigua) |
+| 2026-09-09 06:5x | Claude Code (equipo principal) | ✅ §1.188: **§F89 — 7 de 17 `acceptance_status.json` quedaron con el veredicto de antes de la corrección, y uno invierte el orden**. En lugar de tratar el 0,5929 como un caso aislado, mecanizado en `tools/acceptance_desfasado.py`: **7 de 17** corridas desfasadas y en las siete la cifra vieja es la **más alta**, la firma de la corrección. **No afecta a las métricas del estudio** —solo `src/dashboard.py` lo lee—, pero en `gemma4_31b_cloud_n120_REMOTO` declara `best_model` = `..._kb_rag` cuando el resumen corregido da mejor al `..._baseline`: **el fichero afirma lo contrario de lo que sostiene el informe** sobre el modelo grande y el RAG. Sobrevivió porque un derivado que nadie lee no da señales; lo destapó el cotejo de una cifra reportada contra su fuente, que es el criterio 2 del protocolo. Encargado en **§3.bis.18** con el contenido exacto de cada fichero; la herramienta **no escribe**, porque son artefactos de la corrida |

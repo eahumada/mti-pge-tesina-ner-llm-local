@@ -3508,3 +3508,49 @@ igual para reemplazar la Tabla 19, donde todas las celdas son numéricas.
 **Lo que queda.** Tras corregir el 5,33, las únicas divergencias de prosa son las **tres** acopladas a la
 Tabla 19, ya especificadas en `tools/terms_restringido.json` para la tanda de maquetación. Ver
 `PROPAGACION-PENDIENTE-DOCX-20260908.md`.
+
+## §F89 — Siete `acceptance_status.json` quedaron con el veredicto de antes de la corrección, y uno invierte el orden
+
+**2026-09-09.** Al verificar la mitad `kb_rag` de la re-corrida de `gemma4:12b-mlx` apareció que la cifra
+que el equipo remoto había reportado, **0,5929**, no está ni en el CSV ni en el resumen de la corrida, que
+dan **0,5846**. El origen es `acceptance_status.json`, que sigue declarando
+`overall_f1: 0.5929285920482852`.
+
+`src/main.py` escribe ese fichero al cerrar la corrida. La corrección de puntuación del 2026-09-06 rehizo
+los `benchmark_summary.json` pero **no** los `acceptance_status.json`. Mecanizado en
+`tools/acceptance_desfasado.py`, el defecto no es aislado: **7 de 17** corridas están desfasadas, y en las
+siete la cifra vieja es la **más alta**, que es la firma de la corrección.
+
+| Corrida | `acceptance` | Resumen corregido |
+|:---|---:|---:|
+| `afectados_thinking_n120_REMOTO` | 0,592929 | **0,584595** |
+| `benchmark_balanced_120_20260824_173017` | 0,394452 | **0,361119** |
+| `benchmark_n120_REMOTO` | 0,549147 | **0,507480** |
+| `excluidos_n120_REMOTO` | 0,596448 | **0,438386** |
+| `gemma4_31b_cloud_n120_REMOTO` | 0,626804 | **0,623841** |
+| `nemotron_rerun_n120_REMOTO` | 0,437837 | **0,371170** |
+| `qwen3_nothink_n120_REMOTO` | 0,531255 | **0,514588** |
+
+### Lo que no está afectado, y conviene decirlo antes
+
+**Las métricas del estudio no lo están.** Solo `src/dashboard.py` lee este fichero, y es visualización;
+ninguna etapa del análisis lo toca. El informe, además, ya cita las cifras correctas: su Anexo I trae
+**56,18** y **58,46** para las dos mitades de `gemma4:12b-mlx`, y no hay en él ni un 59,29 ni el 11,21 de la
+corrida antigua.
+
+### Y lo que sí es grave: un orden invertido
+
+En `gemma4_31b_cloud_n120_REMOTO` el fichero no solo trae la cifra vieja, sino que declara
+`best_model: gemma4:31b-cloud_kb_rag` con 0,6268, cuando el resumen corregido da mejor al
+**`..._baseline`** con 0,6238 y sitúa a `kb_rag` en 0,6185. **El fichero afirma lo contrario de lo que
+sostiene el informe** sobre el modelo grande y el RAG. Quien lo abriera, o quien mirara el cuadro de mando,
+vería una inversión del resultado que el trabajo defiende.
+
+**Por qué sobrevivió.** Un fichero derivado que nadie lee no da señales: no rompe nada, no aparece en un
+`git status` sucio y su contenido es internamente coherente — es la firma de §F59 y de la regla de que una
+cifra estable no acredita una medición correcta. Lo destapó no una revisión del fichero, sino el **cotejo de
+una cifra reportada contra su fuente primaria**, que es el criterio 2 del protocolo de monitorización.
+
+**Reparto.** `acceptance_status.json` **afirma**, no atestigua, de modo que se corrige y no se conserva como
+está; pero es artefacto de la corrida y lo rehace quien la ejecutó. Encargado al equipo remoto en
+`CURRENT-TASKS §3.bis.18`, con el contenido exacto que cada uno debe declarar. La herramienta no escribe.
