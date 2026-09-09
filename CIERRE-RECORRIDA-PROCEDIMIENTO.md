@@ -53,6 +53,34 @@ La herramienta **se para sola** en dos casos, y en ambos hay que mirar antes de 
 
 **Comprobar:** 26 grupos, 113 registros por grupo, 2 938 filas.
 
+### Ensayado el 2026-09-09 con once modelos, y funciona
+
+Antes de que lleguen los trece se ejecutó la fusión sobre los **once** ya entregados, extrayendo sus CSV de la
+rama a un directorio temporal. **Corre de extremo a extremo**: 2 486 filas, **22 grupos**, 113 `record_id`
+únicos, F = 30,9783 con p = 3,2723 × 10⁻¹⁰⁹. No hay que descubrir un bloqueo el último día.
+
+Tres cosas que el ensayo dejó claras:
+
+- **El manifiesto de contaminados llega con la rama.** La herramienta lo busca por defecto en
+  `data/knowledge_base/contaminated_exemplar_articles.json`, que **no está en `main`**: solo aparece tras el
+  paso 1. Ejecutar el paso 2 antes que el 1 la detiene, que es el comportamiento correcto.
+- **No pasar `--expected-n 120`.** Es el recuento **antes** de excluir los contaminados, y forzarlo hace que
+  los veintiséis grupos se marquen `INCOMPLETO` teniendo exactamente las filas que deben tener. Sin la
+  bandera, la herramienta deduce 113 después de excluir y no emite un solo aviso. Se comprobó en los dos
+  sentidos: con `--expected-n 120` salen 22 avisos falsos y con 113 o sin bandera, ninguno.
+- **El intérprete es el del proyecto.** `repos/ner-llm-entity-benchmark/venv/bin/python`, con pandas 3.0.5 y
+  scipy 1.18.0. El `python3` del sistema no tiene pandas y la herramienta ni siquiera arranca.
+
+La orden ensayada, con las rutas del árbol de trabajo tras fusionar la rama:
+
+```sh
+cd repos/ner-llm-entity-benchmark
+./venv/bin/python src/merge_and_analyze.py \
+    results/recorrida_20260908/*__N120 \
+    --output-dir results/ANALISIS_CONJUNTO_<fecha> \
+    --grupos-esperados 26
+```
+
 ---
 
 ## 3. Rehacer la Tabla 7
