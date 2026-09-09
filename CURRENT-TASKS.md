@@ -1279,7 +1279,31 @@ corpus.**
 > herramienta. Nada de esto cambia el alcance de la tarea: sigue siendo un brazo, de un modelo,
 > de un corpus.
 
-### 3.bis.16 🔴 PENDIENTE — Entregar los `detailed_results.json` de la re-corrida
+### 3.bis.16 🔴🔴 PENDIENTE Y AHORA BLOQUEANTE — Entregar los `detailed_results.json` de la re-corrida
+
+> **Reclasificada el 2026-09-09: de menor a la tarea que desbloquea la decisión más grande del
+> cierre** (`FINDINGS §F114`). Estado comprobado: **1 de las 13** corridas de `recorrida_20260908/`
+> tiene `detailed_results.json` —solo `nemotron-mini_4b__N120`, que lo entregasteis con `§3.bis.15`—.
+>
+> **Por qué bloquea.** El informe publica dos mediciones: la de tres categorías y una **restringida**
+> a las que el corpus anota (Anexo I), y la restringida se calcula **reagregando `per_type`**, que
+> vive en `detailed_results.json`. Sin esos ficheros la campaña nueva solo se puede evaluar en la
+> métrica de tres categorías. Y ahí `llama3.2:latest` pierde la significación, mientras que en la
+> métrica restringida de los datos publicados **la conserva**. Las dos cosas son compatibles, y la
+> pregunta que decide si el informe adopta el consolidado nuevo es precisamente la que no se puede
+> calcular: **si la conclusión de dos modelos sobrevive en la métrica restringida de la campaña
+> nueva**.
+>
+> **No requiere inferencia ninguna.** Los `detailed_results.json` se escriben en la misma ejecución
+> que el `benchmark_results.csv`; los ficheros están en vuestra máquina. Es un volcado, y con él la
+> decisión se puede resolver el mismo día.
+>
+> **Lo que hace falta:** los 12 que faltan, uno por corrida, en su directorio correspondiente de
+> `results/recorrida_20260908/<modelo>__N120/`. Sin tocar nada más — ni el consolidado, ni los logs,
+> ni los `.bak_prescore`.
+
+**Planteamiento original, conservado:**
+
 
 **Pedido original:** [`remote_48g/PEDIDO-COMMITEAR-BARRIDO-Y-DETALLE-20260908.md`](./remote_48g/PEDIDO-COMMITEAR-BARRIDO-Y-DETALLE-20260908.md)
 (2026-09-08, 18:15). Se repite aquí porque **no estaba en esta sección**, que es la que consultáis.
