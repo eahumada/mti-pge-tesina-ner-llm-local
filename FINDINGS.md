@@ -6163,3 +6163,47 @@ insertarlas, y ahora consta que se pueden regenerar y que lo que hay en `doc/fig
 exactamente lo que produce la herramienta desde la Tabla 7 del Markdown.
 
 **Estado del verificador:** 55 comprobaciones, 63 fallos (63 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F133 — La declaración que puse para el aviso de la comprobación 55 anuló su detección entera
+
+**Fecha:** 2026-09-09 · **Origen:** la propia comprobación 55, un turno después de escribirla
+
+[§F129](#f129) arregló que la comprobación 55 se silenciara a sí misma: su mensaje contenía la clave
+literal, y se imprimió en adelante solo un **prefijo estricto**. Luego declaré el aviso legítimo
+—la declaración de la referencia [37], que pertenece a `c_urls` y sin `--red` no tapa nada— con esta
+clave:
+
+> `'no tapa ningun fallo. Sin --red'`
+
+Y esa cadena es un trozo de **la plantilla del mensaje**: «…no tapa ningún fallo. Sin `--red` puede
+ser de `c_urls`…». De modo que la declaración casaba con **cualquier** aviso de huérfana, no solo con
+el suyo, y **anulaba la detección completa de declaraciones caducadas**, presentes y futuras. Es
+exactamente la «clave demasiado genérica» que la comprobación 55 existe para encontrar, y mi
+declaración la dejó ciega para su propia categoría de fallo.
+
+El síntoma que lo delató: la 55 reportaba «la declaración n.25 no tapa ningún fallo» **sobre la
+declaración n.25**, que era la que acababa de añadir. Una declaración que se acusa a sí misma es la
+señal de que su clave describe el mensaje y no el defecto.
+
+**Arreglado sin declaración.** Una lista explícita, `SOLO_CON_RED`, enumera las claves cuya
+comprobación solo corre con `--red`; la 55 las cuenta aparte y lo dice en su nota —«1 declaración de
+`SOLO_CON_RED` no tapa nada sin red, y es legítimo»— en lugar de silenciarlas. **Cualquier otra
+huérfana vuelve a ser un fallo.** Las declaraciones bajan de 26 a 25.
+
+**Probado por mutación en los dos frentes**, los dos detectados y con el mensaje correcto:
+
+| Mutación | Resultado |
+|:---|:---|
+| Una declaración caducada, con clave que no tapa nada | señalada: «no tapa ningún fallo y no está en `SOLO_CON_RED`» |
+| Una clave genérica, `'no esta'` | señalada **por las dos ramas**: silencia tres comprobaciones **y** está anidada con la de la Tabla 20 |
+
+**La lección, que es la que importa y ya va por la tercera vuelta.** El mecanismo de declaraciones
+empareja **por texto del mensaje**, de modo que declarar un fallo cuyo mensaje describe *el mecanismo
+mismo* es intrínsecamente peligroso: la clave deja de nombrar un defecto y pasa a nombrar una forma
+de decirlo. Cuando lo que hay que declarar es un estado del **entorno** y no un defecto del
+documento, la herramienta correcta es una lista enumerada en el código, no una declaración.
+
+**Estado del verificador:** 55 comprobaciones, 61 fallos (61 declarados, **0 nuevos**), 0 vacías, 25
+declaraciones.

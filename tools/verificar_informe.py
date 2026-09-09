@@ -108,12 +108,18 @@ FALLOS_DECLARADOS = {
         'PENDIENTE de la pasada de maquetacion, decision 19 del autor: al entregable le falta la subseccion ENTERA de las corridas multiples —encabezado, cinco parrafos y la Tabla 20—, que es la declaracion que exige la regla de integridad de CLAUDE.md. Insertarla afecta al limite duro de 25 paginas. Ver FINDINGS §F127'),
     'del Markdown no esta (cero <w:drawing>': ('2026-09-09',
         'PENDIENTE de la pasada de maquetacion, decision 19 del autor: las dos figuras del informe no estan en los entregables. Los PNG existen en doc/figuras/ y son reproducibles byte a byte; insertarlas es maquetacion y afecta al limite de 25 paginas. El entregable tampoco las cita, de modo que hoy es incompleto pero COHERENTE. Ver FINDINGS §F128'),
-    'no tapa ningun fallo. Sin --red': ('2026-09-09',
-        'ESTADO LEGITIMO, no un defecto: la declaracion de la referencia [37] pertenece a `c_urls`, que solo corre con --red, de modo que sin red no tapa nada. Comprobado con --red el 2026-09-09: c_urls da 38 elementos y exactamente 1 fallo, «[37] HTTP 404», que esa declaracion cubre. Se retira cuando el repositorio deje de ser privado. Ver §F129'),
     'github.com/eahumada/mti-pge-tesina': ('2026-09-09',
                                            'referencia [37]: el repositorio es privado hasta la '
                                            'purga (SEGURIDAD-CLAVE-GOOGLE-20260908.md)'),
 }
+
+
+# Declaraciones cuya comprobacion **solo corre con `--red`**, de modo que sin red no tapan nada
+# y eso es legitimo. Se enumeran aqui y NO se declaran como fallo, porque una declaracion cuya
+# clave describiera el aviso de huerfana silenciaria **todos** los avisos de huerfana, presentes y
+# futuros. Es lo que paso: la clave «no tapa ningun fallo. Sin --red» casaba con la plantilla del
+# mensaje de la comprobacion 55 y anulaba su deteccion entera. Ver FINDINGS §F133.
+SOLO_CON_RED = frozenset({'github.com/eahumada/mti-pge-tesina'})
 
 
 def _edad_declarado(clave):
@@ -1159,7 +1165,7 @@ def c_declaraciones():
     """
     mensajes = [(n, f) for n, _e, fs, _nt in resultados for f in fs]
     claves = list(FALLOS_DECLARADOS)
-    fallos, mirados = [], 0
+    fallos, mirados, sin_red = [], 0, 0
     con_red = '--red' in sys.argv
 
     def _ref(i_, k_):
@@ -1182,12 +1188,14 @@ def c_declaraciones():
                           % (_ref(claves.index(k), k), len(tocados),
                              '; '.join(sorted(tocados))[:110]))
         if not tocados:
-            if con_red:
+            if k in SOLO_CON_RED and not con_red:
+                sin_red += 1          # legitimo y enumerado: no es un fallo
+            elif con_red:
                 fallos.append('la declaracion %s no tapa ningun fallo ni con --red: esta '
                               'caducada y hay que retirarla' % _ref(claves.index(k), k))
             else:
-                fallos.append('AVISO: la declaracion %s no tapa ningun fallo. Sin --red puede '
-                              'ser de c_urls; ejecutar con --red para saber si esta caducada'
+                fallos.append('la declaracion %s no tapa ningun fallo y no esta en '
+                              'SOLO_CON_RED: o esta caducada, o su comprobacion no corrio'
                               % _ref(claves.index(k), k))
     for i, a in enumerate(claves):
         for b in claves[i + 1:]:
@@ -1196,9 +1204,10 @@ def c_declaraciones():
                 fallos.append('las declaraciones %s y %s estan anidadas: la mas corta se come '
                               'los fallos de la otra y se lee el motivo equivocado'
                               % (_ref(claves.index(a), a), _ref(claves.index(b), b)))
-    check('las declaraciones no silencian mas de lo que les toca', mirados, fallos,
-          'se ejecuta al final porque lee los resultados de las demas; sin --red, una declaracion '
-          'que no tapa nada puede ser de c_urls')
+    nota = ('se ejecuta al final porque lee los resultados de las demas')
+    if sin_red:
+        nota += '; %d declaracion(es) de SOLO_CON_RED no tapan nada sin red, y es legitimo' % sin_red
+    check('las declaraciones no silencian mas de lo que les toca', mirados, fallos, nota)
 
 
 def check(nombre, examinados, fallos, nota=''):
