@@ -4697,3 +4697,58 @@ misma fila— o leer §5.3.1 —que estaba en el documento que audito— para no
 
 Una regla heredada es una hipótesis con buena reputación. Sigue necesitando que se compruebe su premisa en el
 caso concreto, y **el sitio donde comprobarla suele ser el propio documento que se está auditando**.
+
+## §F109 — El informe no describe la vía de parseo alterna, y una conclusión cambia de signo al aislarla
+
+**2026-09-10.** Buscando si había cometido en otro sitio el error de §F108.bis —aplicar una regla sin
+comprobar su premisa— apareció algo distinto: **el informe no menciona en ninguna parte el
+`parse_method = 'fallback'`**. Cero apariciones de «fallback», «parse_method», «vía alterna», «reintento del
+parseo» o equivalentes. Su único rastro es una fila de tabla que dice que `llm_runner.py` tiene «parseo en
+cascada», sin describirlo ni decir cuántas veces se usa.
+
+**Y se usa.** En el consolidado publicado, **112 de 3 120 registros (3,6 %)** se parsearon por esa vía, con
+una distribución muy desigual:
+
+| Grupo | Vía alterna | % del grupo | Rescatan contenido | F1 de esas filas |
+|:---|---:|---:|---:|---:|
+| `mistral-nemo:latest_kb_rag` | 69 | **57,5 %** | 68 de 69 | 44,60 |
+| `mistral-nemo:latest_baseline` | 9 | 7,5 % | 9 de 9 | 43,91 |
+| `deepseek-r1:1.5b_kb_rag` | 8 | 6,7 % | **0 de 8** | **0,00** |
+| `nemotron-mini:4b_baseline` | 7 | 5,8 % | 4 de 7 | 12,02 |
+| `gemma4:31b-mlx_kb_rag` | 5 | 4,2 % | 1 de 5 | 11,16 |
+| `deepseek-r1:1.5b_baseline` | 4 | 3,3 % | **0 de 4** | **0,00** |
+| `llama3.2:latest_baseline` | 2 | 1,7 % | 2 de 2 | **86,58** |
+
+**«El fallback rescata» no es una regla, es un caso.** Rescata 68 de 69 en `mistral-nemo` y **0 de 8** en
+`deepseek`. En `llama3.2` las dos filas rescatadas puntúan **86,58**, muy por encima del 35,26 de su grupo.
+Es exactamente la distinción que el criterio 5 pide, y hay que hacerla **por grupo**, no en general — cosa
+que yo mismo no hice al reportar `mistral-nemo` como «benigno» sin mirar los demás.
+
+### La consecuencia que importa
+
+El informe concluye que **el modelo grande no se beneficia de la recuperación**, con un delta de
+**−0,18 pp** para `gemma4:31b-mlx`. Aislando las filas que no se parsearon por la vía directa:
+
+| | F1 publicado | F1 solo con parseo directo |
+|:---|---:|---:|
+| `gemma4:31b-mlx_baseline` | 59,2550 | 59,7529 |
+| `gemma4:31b-mlx_kb_rag` | 59,0749 | **61,1580** |
+| **Delta** | **−0,1801 pp** | **+1,4051 pp** |
+
+**El signo se invierte.** Y lo hacen **seis registros**: uno en la línea base, con F1 cero, y cinco en la
+mitad con recuperación, cuatro de ellos cerca de cero.
+
+**Tres cautelas, para no sobreinterpretarlo:**
+
+1. **La significación no cambia.** Ninguno de los dos deltas alcanza el umbral de Tukey; el modelo grande
+   sigue sin mostrar un efecto significativo. Lo que cambia es el **signo de la estimación puntual**, no el
+   veredicto estadístico.
+2. **Excluir esas filas no es evidentemente el análisis correcto.** Son mediciones reales del comportamiento
+   de la tubería, y el estudio mide la tubería, no solo el modelo. Un análisis que las descarte está
+   respondiendo a otra pregunta.
+3. **No es solo ese grupo.** El mismo efecto deprime la cifra publicada en `deepseek-r1:1.5b_kb_rag`
+   (+1,71 pp al aislar) y en `mistral-nemo:latest_kb_rag` (+1,57 pp).
+
+**Por eso esto es una prueba de sensibilidad y no una corrección**, y por eso va a decisión del autor: lo que
+está en juego es si el informe declara que su conclusión sobre los modelos de 31B depende de seis registros
+que no se parsearon. Queda como **decisión 18**.

@@ -624,3 +624,30 @@ resumen es que con recuperación «respondió incorrectamente o rehusó responde
 **es correcto**. Su tabla de NER da un mínimo de 53,61 (Headlines) y un máximo de 75,50 (Transcripts). Con
 esto, de las cinco cifras que el informe atribuye a una fuente, **cuatro están verificadas y solo ésta es
 falsa**.
+
+
+## 18. La conclusión sobre los modelos de 31B depende de seis registros que no se parsearon
+
+**Qué pasa.** El informe concluye que el modelo grande **no se beneficia** de la recuperación, con un delta de
+**−0,18 pp** para `gemma4:31b-mlx`. Aislando los registros que se parsearon por la vía alterna —el
+`parse_method = 'fallback'` que el informe **no menciona en ninguna parte**—, el delta pasa a **+1,41 pp**:
+**cambia de signo**. Lo hacen **seis registros**: uno en la línea base con F1 cero y cinco en la mitad con
+recuperación, cuatro de ellos cerca de cero.
+
+**Lo que no cambia**, y conviene decirlo primero: **la significación**. Ninguno de los dos deltas alcanza el
+umbral de Tukey, así que el modelo grande sigue sin mostrar efecto significativo. Cambia la estimación
+puntual, no el veredicto.
+
+**Y hay un argumento sólido para no tocar nada:** esas filas son mediciones reales del comportamiento de la
+tubería, y el estudio mide la tubería, no solo el modelo. Excluirlas responde a otra pregunta.
+
+| Opción | Qué implica |
+|:---|:---|
+| **a) Declararlo como prueba de sensibilidad** | Dos o tres frases en §5.3: el delta de los 31B es −0,18 pp y pasa a +1,41 si se aíslan los seis registros no parseados; la significación no cambia. **Es la que recomiendo**: cuesta poco y desarma la pregunta antes de que la hagan |
+| b) Describir la vía alterna y sus recuentos | Más completo: una salvedad de procedencia como las dos que ya existen, diciendo que 112 de 3 120 registros (3,6 %) se parsearon así, con el 57,5 % de `mistral-nemo:latest_kb_rag` como caso extremo. Cuesta más espacio |
+| c) Las dos | Lo más defendible, y sigue siendo barato en extensión |
+| d) No tocarlo | Defendible por el argumento de la tubería. Pero el dato está en el CSV publicado y quien lo mire llegará a la misma resta |
+
+**Contexto que ayuda a decidir:** el informe **ya declara dos salvedades de procedencia** de esta misma clase
+—la latencia del cloud que no mide inferencia, y las siete filas de `nemotron-mini` sin telemetría—, así que
+una tercera no rompe ningún molde. Ver `FINDINGS §F109`.
