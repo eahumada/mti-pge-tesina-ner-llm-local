@@ -65,6 +65,27 @@ estrategias de recuperación, no entre capacidades. Se comprueba aquí para que 
 - **El hecho de que el RAG ayude.** Sigue habiendo mejora significativa en dos modelos y ninguna degradación
   en los grandes. Lo que cae es la **forma funcional** de la relación, no su existencia en los pequeños.
 
+## Dónde está ya publicado, y esto cambia el asunto
+
+Las cuatro afirmaciones no están solo en el Markdown. Comprobado el 2026-09-09:
+
+| Artefacto | «nulo o adverso» | «inversamente proporcional» | «se anula o revierte» | «redundancia de conocimiento» |
+|:---|:---:|:---:|:---:|:---:|
+| `Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.docx` | sí | sí | sí | sí |
+| `Informe_Final_Tesina_NER.docx` | sí | sí | sí | sí |
+| **PDF entregado al profesor guía** (`doc/versions/enviados/`, 31 páginas) | **sí** | **sí** | **sí** | **sí** |
+
+**El profesor ya tiene un documento que afirma algo que los datos corregidos desmienten.** No era un error
+cuando se entregó —era lo que decían los datos de entonces— pero significa que la corrección **no se agota
+editando el informe**: hay que comunicarla, y es mejor hacerlo por iniciativa propia que verse preguntado en
+la defensa. Cómo y cuándo es del autor; lo que aquí se hace es dejarlo dicho.
+
+**Nota de método.** Esta comprobación estuvo a punto de dar un falso negativo. Un primer extractor de PDF
+casero devolvió **cero** apariciones de las cuatro frases, lo que se habría leído como «el PDF no lo dice». El
+control de `LEARNING §L57` —buscar además palabras que **tienen** que estar— lo destapó: «Kleptotrace»,
+«gemma» y «Ahumada» también daban cero, de modo que el extractor no leía nada. Con `pypdf` el control pasa
+(11, 91 y 2 apariciones) y las cuatro frases aparecen.
+
 ## Orden recomendado
 
 1. Esperar a que el equipo resuelva `§F85` y rehaga el consolidado.

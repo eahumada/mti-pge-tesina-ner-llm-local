@@ -280,6 +280,12 @@ El argumento práctico del trabajo no depende de la forma funcional que se cae.
 **Antes de escribir nada hay que esperar a `§F85`**: el punto que más pesa en el análisis es el que arrastra
 los diecisiete ceros del `TypeError`.
 
+**Y hay una parte que no es de redacción.** Las cuatro afirmaciones están también en los dos `.docx` **y en el
+PDF de 31 páginas que ya se entregó al profesor guía**, comprobado. No era un error entonces —era lo que
+decían los datos—, pero el profesor tiene hoy un documento que la re-corrida desmiente. **Comunicárselo por
+iniciativa propia** es una decisión del autor, y probablemente la mejor: la alternativa es que la pregunta
+llegue en la defensa.
+
 ---
 
 ## Y un aviso que todavía no es decisión
