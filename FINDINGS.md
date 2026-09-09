@@ -2414,3 +2414,34 @@ dirección se hubiera predicho antes de ver los datos.
 **Para qué sirve esto.** No cambia ninguna cifra del informe. Es **material de defensa**: si en la mesa se
 plantea la objeción del artefacto —y es una objeción buena—, la respuesta está calculada, versionada en
 `results/CORRELACION_CAPACIDAD_20260908/` y es reproducible.
+
+---
+
+## §F75 — El diseño de medidas repetidas confirma el ANOVA, y ahora está comprobado y no solo argumentado
+
+**Fecha:** 2026-09-08, 21:26. Material de defensa, en la línea de `§F74.bis`. No cambia ninguna cifra.
+
+§5.3.1 declara una limitación con honradez: las 3 120 observaciones **no son independientes**, porque los
+veintiséis grupos evalúan los mismos ciento veinte artículos, de modo que el diseño es de medidas repetidas y
+un modelo apropiado sería el procedimiento estrictamente correcto. Y añade un argumento: «al ser el diseño
+pareado más potente que el independiente, la significancia obtenida por esta vía es conservadora».
+
+**Ese argumento era razonable pero no estaba comprobado.** Ahora lo está:
+
+| Prueba | Estadístico | p |
+|:---|---:|---:|
+| ANOVA de una vía (publicado) | F = 38,2222 | 3,4453 × 10⁻¹⁶⁰ |
+| **Friedman, medidas repetidas** | χ² = 1 169,23 | **6,2481 × 10⁻²³¹** |
+
+El diseño está **completamente cruzado y equilibrado**: los ciento veinte registros tienen los veintiséis
+grupos, sin huecos, que es la condición que Friedman necesita.
+
+**Cómo hay que leerlo, con cuidado.** Los dos estadísticos **no son directamente comparables** —uno es
+paramétrico sobre medias y el otro no paramétrico sobre rangos—, de modo que **no procede decir que un `p`
+menor signifique más potencia**. Lo que sí puede afirmarse, y es lo que la objeción pone en duda, es que
+**el rechazo de la hipótesis nula se sostiene con el método apropiado al diseño**. La elección del ANOVA no
+sostiene la conclusión: la conclusión aguanta con ambos.
+
+**Para la defensa.** Si se pregunta por qué se usó un ANOVA de una vía sobre datos apareados, la respuesta
+tiene dos partes: el informe lo declara como limitación —no lo esconde— y se ha verificado que la conclusión
+no depende de esa elección. Queda en `results/ROBUSTEZ_ESTADISTICA_20260908/`.
