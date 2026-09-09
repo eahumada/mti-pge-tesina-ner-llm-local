@@ -45,6 +45,11 @@ ARTEFACTOS = [
     (f'{BENCH}/cloud_n15_limpio_20260905/benchmark_results.csv', 'Tabla 4'),
     (f'{BENCH}/gemma4_31b_n15_REMOTO/benchmark_results.csv', 'tablas 5, 6 y 8'),
     (f'{BENCH}/benchmark_results.csv', 'Tabla 4'),
+    # Los tres entregables: desde §F94 el verificador los lee, y esconder uno debe notarse.
+    ('Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.docx', 'modelos excluidos'),
+    ('Informe_Final_Tesina_NER.docx', 'modelos excluidos'),
+    ('doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.docx',
+     'modelos excluidos'),
 ]
 
 
@@ -63,7 +68,7 @@ def _rutas_del_verificador():
     lit = set()
     for m in _re.finditer(r"[\'\"]((?:results|repos|doc|tools)/[A-Za-z0-9_./:-]+)[\'\"]", src):
         lit.add(m.group(1))
-    for m in _re.finditer(r"[\'\"]([A-Za-z0-9_.-]+\.(?:json|csv|md|py))[\'\"]", src):
+    for m in _re.finditer(r"[\'\"]([A-Za-z0-9_.-]+\.(?:json|csv|md|py|docx))[\'\"]", src):
         lit.add(m.group(1))
     return lit
 
@@ -147,7 +152,7 @@ def main():
     else:
         print('control: el verificador pasa con todo en su sitio\n')
 
-    fallos = []
+    fallos, bloqueadas = [], []
     for rel, esperada in ARTEFACTOS:
         ruta = os.path.join(RAIZ, rel)
         if not os.path.isfile(ruta):
@@ -172,6 +177,16 @@ def main():
             return ''.join(c for c in unicodedata.normalize('NFD', s_.lower())
                            if unicodedata.category(c) != 'Mn')
         atribuida = [n for n in nuevas if _pl(esperada) in _pl(n)]
+        # Una comprobacion que YA esta en rojo no puede servir de centinela: esconder el artefacto
+        # no cambia el CONJUNTO de comprobaciones fallidas, de modo que `nuevas` sale vacio y la
+        # prueba lo reportaria como hueco de cobertura cuando en realidad esta bloqueada por otra
+        # cosa. Aparecio el 2026-09-09 al poner los tres .docx bajo vigilancia mientras §F94 esta
+        # sin corregir. Se distingue en lugar de disimularse, y no cuenta como fallo: es §L57, un
+        # control que no puede distinguir «bien» de «no mirado».
+        if any(_pl(esperada) in _pl(x) for x in previas):
+            bloqueadas.append((rel, esperada))
+            print(f'  BLOQUEADO  {rel}  ->  «{esperada}» ya esta en rojo, no puede hacer de centinela')
+            continue
         if not nuevas:
             fallos.append((rel, 'esconderlo no anade ninguna comprobacion fallida'))
             print(f'  NO DETECTA  {rel}')
@@ -185,6 +200,14 @@ def main():
             print(f'  detecta ({marca:5})  {rel}  ->  «{esperada}»')
 
     print()
+    if bloqueadas:
+        print(f'{len(bloqueadas)} artefacto(s) no se pueden vigilar todavia, porque la '
+              f'comprobacion que los usa ya esta en rojo:')
+        for rel, esp in bloqueadas:
+            print(f'  - {rel}  («{esp}»)')
+        print('  Vuelven a ser vigilables en cuanto ese fallo se corrija. No es un hueco de')
+        print('  cobertura de esta prueba: es una consecuencia de que el defecto siga abierto.')
+        print()
     if fallos:
         print(f'{len(fallos)} de {len(ARTEFACTOS)} artefactos no se vigilan:')
         for rel, por in fallos:
@@ -193,8 +216,9 @@ def main():
     # La cifra que importa no es «N de N», que siempre sale redonda: es cuantos de los
     # artefactos que el verificador REALMENTE lee estan vigilados. Un «9 de 9» sobre 26
     # dependencias se lee como universal y no lo es (§L47).
-    print(f'{len(ARTEFACTOS)} de {len(ARTEFACTOS)} artefactos vigilados: ninguno puede faltar '
-          f'sin que se note')
+    n_vig = len(ARTEFACTOS) - len(bloqueadas)
+    print(f'{n_vig} de {len(ARTEFACTOS)} artefactos vigilados: ninguno puede faltar sin que se '
+          f'note' + (f' ({len(bloqueadas)} bloqueado(s) por un fallo abierto)' if bloqueadas else ''))
     _informe_cobertura()
     return 0
 

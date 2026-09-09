@@ -1004,3 +1004,24 @@ sobrevivido, porque contra el artefacto la comprobación sí funcionaba.
 **Corolario:** al escribir una comprobación conviene preguntarse, por cada valor que aparece en su código,
 de dónde sale. Si sale del documento que se está comprobando, es una constante y hay que reemplazarla por
 una lectura. Si sale de la teoría —un umbral, un nivel de significación—, puede quedarse.
+
+## §L64 — Una comprobación que ya está en rojo no puede servir de centinela
+
+Al poner los tres `.docx` bajo la vigilancia de la autoprueba, esconder cualquiera de ellos **no producía
+ningún fallo nuevo**, y la prueba lo reportaba como hueco de cobertura. El motivo no era un hueco: la
+comprobación que los usa —«sin modelos excluidos»— **ya estaba en rojo** por §F94, y la autoprueba compara
+*conjuntos* de comprobaciones fallidas, de modo que esconder el fichero no cambiaba el conjunto.
+
+**La regla:** un centinela tiene que estar en verde para poder ponerse en rojo. Mientras un defecto siga
+abierto, la comprobación que lo delata **no puede vigilar además la presencia de sus artefactos**, y una
+prueba de cobertura que no lo distinga confundirá «bloqueado» con «no cubierto». Es el corolario de §L57
+—controlar que «bien» no sea indistinguible de «no mirado»— aplicado a la dependencia entre comprobaciones.
+
+**Cómo se resolvió:** la autoprueba distingue ahora tres estados en lugar de dos —vigilado, **bloqueado por
+un fallo abierto**, y no vigilado— y solo el tercero cuenta como fallo suyo. El mensaje dice qué artefactos
+vuelven a ser vigilables al corregir el defecto, de modo que la deuda queda anotada donde se va a leer.
+
+**Y el efecto colateral que conviene prever:** declarar un fallo para que la puerta de commit siga abierta
+tiene este coste oculto. El fallo declarado **desactiva como centinela** a su propia comprobación. Es una
+razón más para que la lista de declarados sea corta y se pode: cada entrada no solo tolera un defecto, sino
+que ciega una comprobación.
