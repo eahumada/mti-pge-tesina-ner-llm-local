@@ -286,6 +286,101 @@ PAL_EN = {'the', 'of', 'and', 'to', 'in', 'that', 'for', 'with', 'was', 'were', 
           'it', 'be'}
 
 
+def c_resumen_docx(s):
+    """El resumen y el abstract de los `.docx` dicen lo que dice el Markdown, palabra por palabra.
+
+    `CLAUDE.md` singulariza este par: «Resumen y abstract van fundidos, sincronizados y en la
+    primera pagina. Deben decir **exactamente lo mismo** en ambos idiomas… si divergen, el
+    documento deja de ser coherente para un lector que compare ambas versiones.» Es la primera
+    pagina y es lo primero que se lee.
+
+    Y divergio en silencio. El 2026-09-09 los tres `.docx` abrian con «Las instituciones sujetas a
+    regulaciones AML/KYC» mientras el Markdown decia «Las instituciones **financieras** sujetas
+    a», que es lo que concuerda con el «**Financial** institutions» del abstract. Una palabra, en
+    la primera pagina, en el par que la regla protege expresamente.
+
+    Lo instructivo es la direccion del error: `PROPAGACION-PENDIENTE-DOCX-20260908.md` anotaba lo
+    **contrario** —que el `.docx` tenia razon y el Markdown estaba mal—, y era cierto **el dia
+    anterior**. El Markdown se corrigio y el `.docx` no recibio el cambio, de modo que la nota
+    quedo describiendo un estado invertido. Una nota de propagacion sin fecha de caducidad envejece
+    hacia la mentira.
+
+    Se compara el texto **completo** de los dos bloques, normalizando espacios, no solo su primera
+    frase: una divergencia puede estar en cualquier punto.
+    """
+    import zipfile as _zip
+    # El Markdown escribe el enfasis con marcadores —`*few-shot*`, `**cifra**`, backticks— y el
+    # .docx lo lleva como formato real, de modo que comparar en crudo da falsos positivos: la
+    # primera version reporto una divergencia en la palabra 153 que era solo un par de asteriscos.
+    # Se comparan los TEXTOS, no el marcado.
+    def norm(z):
+        z = re.sub(r'\*\*([^*]+)\*\*', r'\1', z)
+        z = re.sub(r'\*([^*]+)\*', r'\1', z)
+        z = z.replace('`', '')
+        return ' '.join(z.split())
+    L = s.split('\n')
+    # el resumen y el abstract del Markdown son los parrafos que siguen a sus encabezados
+    def _md(enc):
+        for k, l in enumerate(L):
+            if l.strip() == enc:
+                for m in range(k + 1, min(k + 6, len(L))):
+                    if L[m].strip():
+                        return norm(L[m])
+        return None
+    res_md, abs_md = _md('## Resumen'), _md('## Abstract')
+    if not res_md or not abs_md:
+        check('el resumen y el abstract de los .docx coinciden con el Markdown', 0,
+              ['no se encuentran el resumen o el abstract en el Markdown'])
+        return
+    fallos, mirados = [], 0
+    for rel in DOCX_ENTREGABLES:
+        ruta = os.path.join(RAIZ, rel)
+        base = os.path.basename(rel)
+        if not os.path.exists(ruta):
+            mirados += 1
+            fallos.append('no existe el entregable %s' % rel)
+            continue
+        with _zip.ZipFile(ruta) as z:
+            x = z.read('word/document.xml').decode('utf-8')
+        # En el .docx con la plantilla institucional los dos bloques llevan el estilo `abstract`.
+        # El .docx sin plantilla NO usa esos estilos —la primera version reportaba «hay 0» y era un
+        # defecto del detector, no del documento—, de modo que ahi se localizan por el parrafo que
+        # sigue a los encabezados RESUMEN y ABSTRACT.
+        parrafos = []
+        for m in re.finditer(r'<w:p[ >].*?</w:p>', x, re.S):
+            par = m.group(0)
+            txt = ''.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', par, re.S)).strip()
+            if txt:
+                parrafos.append((txt, 'w:val="abstract"' in par))
+        bloques = [norm(z) for z, es in parrafos if es]
+        if len(bloques) < 2:
+            bloques = []
+            for k, (z, _) in enumerate(parrafos):
+                if z.strip().upper() in ('RESUMEN', 'ABSTRACT') and k + 1 < len(parrafos):
+                    bloques.append(norm(parrafos[k + 1][0]))
+        mirados += 1
+        if len(bloques) < 2:
+            fallos.append('%s: no se localizan los dos bloques de resumen y abstract, ni por el '
+                          'estilo «abstract» ni tras los encabezados RESUMEN y ABSTRACT'
+                          % base)
+            continue
+        for etiq, esperado, hallado in (('el resumen', res_md, bloques[0]),
+                                        ('el abstract', abs_md, bloques[1])):
+            mirados += 1
+            if hallado == esperado:
+                continue
+            # localizar la primera palabra que difiere, para que el mensaje sirva
+            a, b = esperado.split(), hallado.split()
+            pos = next((k for k in range(min(len(a), len(b))) if a[k] != b[k]), min(len(a), len(b)))
+            fallos.append('%s: %s difiere del Markdown en la palabra %d de %d — el .md dice «%s» y '
+                          'el .docx «%s»'
+                          % (base, etiq, pos + 1, len(a),
+                             ' '.join(a[max(0, pos - 2):pos + 3]),
+                             ' '.join(b[max(0, pos - 2):pos + 3])))
+    check('el resumen y el abstract de los .docx coinciden con el Markdown', mirados, fallos,
+          'CLAUDE.md exige que digan exactamente lo mismo, y estan en la primera pagina')
+
+
 def c_indice(s):
     """El indice de contenidos coincide con la estructura real, anclajes incluidos.
 
@@ -2785,6 +2880,7 @@ def main():
     ejecutar(c_higiene, s)
     ejecutar(c_excluidos, s)
     ejecutar(c_sobriedad_docx, s)
+    ejecutar(c_resumen_docx, s)
     ejecutar(c_indice, s)
     ejecutar(c_ninguna_comprobacion_huerfana, s)
     ejecutar(c_corpus_idioma, s)

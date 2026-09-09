@@ -1,0 +1,31 @@
+{
+  "_comment": [
+    "Resincroniza el resumen del .docx con el abstract y con el Markdown (2026-09-09).",
+    "",
+    "CLAUDE.md: «Resumen y abstract van fundidos, sincronizados y en la primera pagina. Deben decir",
+    "exactamente lo mismo en ambos idiomas… si divergen, el documento deja de ser coherente para un",
+    "lector que compare ambas versiones.»",
+    "",
+    "Los tres .docx abren el resumen con «Las instituciones sujetas a regulaciones AML/KYC», mientras",
+    "el Markdown dice «Las instituciones FINANCIERAS sujetas a» y el abstract ingles «FINANCIAL",
+    "institutions subject to». Es una divergencia de una palabra, en la primera pagina, en el par que",
+    "la regla senala expresamente.",
+    "",
+    "OJO con el registro historico: PROPAGACION-PENDIENTE-DOCX-20260908.md anota lo CONTRARIO —que el",
+    ".docx tenia razon y el Markdown estaba mal—. Esa nota era cierta el 2026-09-08 y hoy no lo es: el",
+    "Markdown se corrigio y el .docx no recibio el cambio. La nota se marca como superada.",
+    "NOTA: esta herramienta espera la clave \"rules\"; docx_borrar_filas.py espera \"reglas\". Confundirlas da un KeyError, no un fallo silencioso, que es la conducta correcta."
+  ],
+  "parts": [
+    "word/document.xml"
+  ],
+  "rules": [
+    {
+      "id": "S1",
+      "_where": "Resumen, primera pagina",
+      "find": "Las instituciones sujetas a regulaciones AML/KYC",
+      "replace": "Las instituciones financieras sujetas a regulaciones AML/KYC",
+      "expect": 1
+    }
+  ]
+}
