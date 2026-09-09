@@ -528,6 +528,178 @@ def c_redondeos(s):
           'las dos formas se LEEN del documento; una constante aqui no veria una deriva del texto')
 
 
+# --- 50. La Tabla 17 reproduce desde el corpus HISTORICO -----------------------------------
+CORPUS_REL = 'repos/ner-llm-entity-benchmark/data/benchmark_balanced_120.json'
+# El corpus se corrigio el 2026-09-08 y la Tabla 17 mide el estado ANTERIOR. Este commit es el
+# ultimo que lo conserva con el defecto; localizado recorriendo `git log --follow` sobre el
+# corpus y midiendo cada version (§F119).
+CORPUS_HIST = 'df9b4c4'
+
+
+def _fuzz_ratio(a, b):
+    """`fuzz.ratio` de rapidfuzz en biblioteca estandar: 200 * LCS / (len(a) + len(b)).
+
+    Es la similitud de Indel normalizada. `rapidfuzz` solo esta en el venv del proyecto, y una
+    comprobacion que solo corre en un entorno no corre. **Validada contra rapidfuzz sobre los 283
+    pares del corpus historico: diferencia maxima 0,0 y cero discrepancias de veredicto.**
+
+    No sirve `difflib.SequenceMatcher.ratio`, que usa bloques coincidentes y no la subsecuencia
+    comun mas larga: da valores parecidos y no iguales, y aqui se compara contra un umbral.
+    """
+    if not a and not b:
+        return 100.0
+    m, n = len(a), len(b)
+    ant = [0] * (n + 1)
+    for i in range(1, m + 1):
+        act = [0] * (n + 1)
+        ai = a[i - 1]
+        for j in range(1, n + 1):
+            act[j] = ant[j - 1] + 1 if ai == b[j - 1] else max(ant[j], act[j - 1])
+        ant = act
+    return 200.0 * ant[n] / (m + n)
+
+
+def _sin_mojibake(t):
+    """La forma correcta de una cadena con mojibake, o None si no lo tiene.
+
+    Se usa la **definicion** del defecto y no una clase de caracteres: una cadena esta corrupta si
+    recodificarla de latin-1 a utf-8 tiene exito y cambia el resultado, que es exactamente lo que
+    significa «bytes UTF-8 reinterpretados como Latin-1».
+    """
+    if not isinstance(t, str):
+        return None
+    try:
+        v = t.encode('latin-1').decode('utf-8')
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        return None
+    return v if v != t else None
+
+
+def c_tabla17(s):
+    """Una medicion que el corpus actual ya NO puede reproducir, atada a la version que si.
+
+    La Tabla 17 mide el alcance del defecto de codificacion sobre el corpus N=120, y el informe
+    declara en §2 que «el defecto esta corregido en el corpus desde el 8 de septiembre de 2026» y
+    que sus cifras «se conservan tal como se midieron». De modo que **medirla contra el corpus
+    actual da cero en todas sus filas**: no porque la tabla este mal, sino porque describe un
+    estado que ya no existe. Comprobado: hoy el fichero trae 0 entidades con mojibake y 545
+    localizaciones que entonces no tenia.
+
+    Eso la dejaba fuera del alcance de cualquier comprobacion, y es una tabla de **seis medidas**.
+    La ruta que si funciona es la historia de git, que es un artefacto que **atestigua** y por
+    tanto se conserva: `git show df9b4c4:<corpus>` devuelve la version con el defecto, y sobre ella
+    las seis filas reproducen exactas.
+
+    Las cifras se **leen de la tabla**, no se escriben aqui (`§L63`). La fila del umbral difuso
+    exige reimplementar `fuzz.ratio`, y esta validada contra `rapidfuzz` en los 283 pares.
+    """
+    fallos, mirados = [], 0
+    i = s.find('_Tabla 17.')
+    if i < 0:
+        check('la Tabla 17 reproduce desde el corpus historico', 0,
+              ['no se encuentra la Tabla 17'])
+        return
+    bloque = s[i:i + 1400]
+
+    def fila(pat):
+        m = re.search(pat, bloque)
+        return m
+
+    r = subprocess.run(['git', 'show', '%s:%s' % (CORPUS_HIST, CORPUS_REL)],
+                       cwd=RAIZ, capture_output=True, text=True)
+    if r.returncode != 0 or not r.stdout.strip():
+        check('la Tabla 17 reproduce desde el corpus historico', 0,
+              ['no se puede leer %s:%s — un clon superficial no trae ese commit, y sin el la '
+               'Tabla 17 no se puede verificar contra nada: el corpus actual ya no tiene el '
+               'defecto' % (CORPUS_HIST, CORPUS_REL)])
+        return
+    import json as _json
+    try:
+        recs = _json.loads(r.stdout)['dataset']
+    except (ValueError, KeyError, TypeError) as e:
+        check('la Tabla 17 reproduce desde el corpus historico', 0,
+              ['el corpus historico no se puede interpretar: %s: %s' % (type(e).__name__, e)])
+        return
+
+    CAMPOS = ('name_entities', 'organizations', 'locations')
+    tot = moj = arts = igual = correcta = irrec = 0
+    for reg in recs:
+        t = reg.get('text') or ''
+        if _sin_mojibake(t) is not None:
+            arts += 1
+        for c in CAMPOS:
+            for x in (reg.get(c) or []):
+                tot += 1
+                lim = _sin_mojibake(x)
+                if lim is None:
+                    continue
+                moj += 1
+                if x in t:
+                    igual += 1
+                elif lim in t:
+                    correcta += 1
+                if _fuzz_ratio(x.lower(), lim.lower()) < 85:
+                    irrec += 1
+
+    def comp(nombre, pat, calc, grupo=1):
+        nonlocal mirados
+        mirados += 1
+        m = fila(pat)
+        if m is None:
+            fallos.append('no se encuentra en la Tabla 17 la fila de «%s»: revisar si se '
+                          'reformulo' % nombre)
+            return
+        pub = int(m.group(grupo).replace(' ', '').replace(' ', ''))
+        if pub != calc:
+            fallos.append('«%s»: la Tabla 17 dice %d y el corpus historico da %d'
+                          % (nombre, pub, calc))
+
+    comp('entidades de referencia totales',
+         r'Entidades de referencia totales \|\s*\*{0,2}([\d\s ]+?)\*{0,2}\s*\|', tot)
+    comp('entidades con mojibake',
+         r'Entidades con \*mojibake\* \|\s*\*{0,2}([\d\s ]+?) \(', moj)
+    comp('irrecuperables en el cotejo difuso',
+         r'irrecuperables en el cotejo difuso[^|]*\|\s*\*{0,2}([\d\s ]+?) \(', irrec)
+    comp('articulos con mojibake en el texto',
+         r'Artículos con \*mojibake\* en el campo `text` \|\s*\*{0,2}([\d\s ]+?) de', arts)
+    comp('corruptas que aparecen igual de corruptas',
+         r'aparecen igual de corruptas en el texto \|\s*\*{0,2}([\d\s ]+?) de', igual)
+    comp('corruptas que aparecen correctas en el texto',
+         r'aparecen correctas en el texto \|\s*\*{0,2}([\d\s ]+?)\*{0,2}\s*\|', correcta)
+
+    # Los dos porcentajes derivados de la propia tabla
+    mirados += 1
+    m = re.search(r'irrecuperables en el cotejo difuso[^|]*\|\s*\*{0,2}[\d\s]+ \((\d+),(\d) ?%'
+                  r' del total\)', bloque)
+    if m is None:
+        fallos.append('no se encuentra el porcentaje de irrecuperables en la Tabla 17')
+    else:
+        pub = float('%s.%s' % (m.group(1), m.group(2)))
+        calc = round(100 * irrec / tot, 1) if tot else None
+        if calc is None or abs(pub - calc) > 1e-9:
+            fallos.append('irrecuperables: %d de %d son %s %% y la tabla dice %s %%'
+                          % (irrec, tot, calc, pub))
+    # Y el ejemplo que la prosa cita como recuperable
+    mirados += 1
+    m = re.search(r'`Emiliano Garc[^`]*` obtiene (\d+)', s)
+    if m is None:
+        fallos.append('no se encuentra en la prosa el ejemplo de cotejo recuperable')
+    else:
+        par = [(x, _sin_mojibake(x)) for reg in recs for c in CAMPOS
+               for x in (reg.get(c) or [])
+               if _sin_mojibake(x) and 'Page' in (_sin_mojibake(x) or '')]
+        if not par:
+            fallos.append('el ejemplo de la prosa no esta en el corpus historico')
+        else:
+            got = round(_fuzz_ratio(par[0][0].lower(), par[0][1].lower()))
+            if got != int(m.group(1)):
+                fallos.append('el ejemplo de la prosa: la razon es %d y el informe dice %s'
+                              % (got, m.group(1)))
+    check('la Tabla 17 reproduce desde el corpus historico', mirados, fallos,
+          'el corpus ACTUAL da cero en todas sus filas: la tabla mide el estado anterior a la '
+          'correccion del 2026-09-08 y solo la historia de git lo conserva')
+
+
 def check(nombre, examinados, fallos, nota=''):
     resultados.append((nombre, examinados, list(fallos), nota))
 
@@ -3488,6 +3660,7 @@ def main():
     ejecutar(c_friedman, s)
     ejecutar(c_ablacion_idioma, s)
     ejecutar(c_redondeos, s)
+    ejecutar(c_tabla17, s)
     ejecutar(c_tabla4_vs_datos, s)
     ejecutar(c_figura1_vs_artefacto, s)
     ejecutar(c_tablas_menores, s)

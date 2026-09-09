@@ -5350,3 +5350,73 @@ la auditoría de afirmaciones. **Ninguna afirmación numérica del cuerpo del in
 la mire.**
 
 **Estado del verificador:** 49 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F119 — Una tabla de seis medidas que el corpus actual ya no puede reproducir
+
+**Fecha:** 2026-09-09 · **Origen:** comprobar un supuesto que yo mismo había escrito
+
+`tools/cobertura_cifras.py` excluye las tablas del barrido con el comentario «se verifican por otra
+vía». **Eso era un supuesto, no una comprobación**, así que lo verifiqué: de las **20 tablas** con
+leyenda, **11 no se mencionan** en ninguna de las dos herramientas que comprueban el informe.
+
+Nueve de esas once son **descriptivas** —familias de técnicas, estado del arte, arquitectura por
+capas, estructura del repositorio, entorno de pruebas, configuración del módulo, contenido de la
+base de conocimientos, formas corruptas de los nombres— y no hay nada que recalcular: se acreditan
+por su cita o por el código que describen. La décima, la **Tabla 15**, sí está cubierta.
+
+La undécima es la **Tabla 17, «Alcance medido del defecto de codificación sobre el corpus N=120»**,
+que son **seis medidas**.
+
+### Por qué estaba fuera del alcance de todo
+
+Medirla contra el corpus actual **da cero en todas sus filas**. No porque la tabla esté mal, sino
+porque describe un estado que ya no existe: el informe declara en §2 que «el defecto está corregido
+en el corpus desde el 8 de septiembre de 2026» y que sus cifras «se conservan tal como se midieron».
+Hoy el fichero trae **0 entidades con *mojibake*** y **545 localizaciones** que entonces no tenía
+—de ahí que el total pase de 1 406 a 1 951—.
+
+Es una clase de afirmación que el verificador no cubría en absoluto: **una medición histórica**. No
+se puede atar al dato actual, y no atarla a nada la deja indefinidamente sin vigilancia.
+
+### La ruta que sí funciona
+
+La historia de git, que es un artefacto que **atestigua** y por eso se conserva. Recorriendo
+`git log --follow` sobre el corpus y midiendo cada versión aparece exactamente dónde vive la tabla:
+
+| Commit | Fecha | Entidades P+O | `locations` | Con *mojibake* | Artículos afectados |
+|:---|:---|---:|---:|---:|---:|
+| `f49c03c` | 2026-09-08 | 1 406 | 545 | 0 | 0 |
+| `c776fe0` | 2026-09-08 | 1 406 | 482 | 0 | 0 |
+| `eb97af0` | 2026-09-08 | 1 406 | 0 | 0 | 0 |
+| **`df9b4c4`** | **2026-09-06** | **1 406** | 0 | **283** | **104** |
+
+Sobre `df9b4c4` las seis filas reproducen **exactas**: 1 406 entidades, 283 con *mojibake*, 66
+irrecuperables con umbral 85 (4,69 % → 4,7 %), 104 de 120 artículos, 283 de 283 igual de corruptas y
+0 correctas. Y el ejemplo que la prosa cita como recuperable, `Emiliano GarcÃ­a-Page`, da razón
+**92,7**, que redondea al 93 publicado.
+
+### Comprobación 50, con dos reimplementaciones
+
+La primera es la **detección del defecto por su definición** y no por una clase de caracteres: una
+cadena está corrupta si recodificarla de `latin-1` a `utf-8` tiene éxito y cambia el resultado, que
+es exactamente lo que significa «bytes UTF-8 reinterpretados como Latin-1». Más corto y más exacto
+que enumerar los caracteres sospechosos.
+
+La segunda es **`fuzz.ratio` en biblioteca estándar**, porque `rapidfuzz` solo está en el venv y una
+comprobación que solo corre en un entorno no corre. Es la similitud de Indel normalizada,
+`200 · LCS / (len a + len b)`, y está **validada contra `rapidfuzz` sobre los 283 pares del corpus
+histórico: diferencia máxima 0,0 y cero discrepancias de veredicto**. No sirve
+`difflib.SequenceMatcher.ratio`, que usa bloques coincidentes en lugar de la subsecuencia común más
+larga: da valores parecidos y no iguales, y aquí se compara contra un umbral.
+
+**Y un detalle de operación que la comprobación declara en su fallo**: un clon superficial no trae
+`df9b4c4`, y sin ese commit la Tabla 17 **no se puede verificar contra nada**. La comprobación lo
+dice con esas palabras en lugar de pasar en silencio.
+
+**El propio verificador encontró mi error al escribirla.** La primera versión usaba `json` sin
+importarlo en la función, y `ejecutar` lo reportó como **VACÍA (reventó) — NameError**, que es su
+comportamiento diseñado: una comprobación que revienta tiene que decir cuál es y seguir.
+
+**Estado del verificador:** 50 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
