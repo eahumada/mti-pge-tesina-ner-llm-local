@@ -793,6 +793,17 @@ fue la validez y no el resultado, después los que explican qué corridas hay y 
 cuentan, y al final las declaraciones de límites, que ya tienen eco en otras partes del documento.
 Los espacios se recortan por estilo antes de tocar contenido, como fija `CLAUDE.md`.
 
+**Inventario cerrado el 2026-09-09** (`§F126`), porque «diez párrafos» no era todo: al entregable
+le falta además la **Tabla 20 completa** —nueve filas, «Grupos con más de una corrida sobre N=120,
+con el motivo de la sustitución y la evidencia»—, que es **la tabla de esa misma declaración de
+corridas múltiples**. Y la **referencia [38] con sus cuatro citas**, más tres filas de la Tabla 9 y
+una celda de la Tabla 3. Las entradas [1] a [37] sí están y son contiguas, así que **no hay
+corrimiento de numeración**.
+
+Con eso, lo que falta en el entregable de la declaración de corridas múltiples es **prosa y tabla,
+completo**. Refuerza la recomendación: si el espacio no da para todo, esos cinco párrafos y la
+Tabla 20 van primero.
+
 **Y tres divergencias más de la misma pasada** (`§F120`): la ausencia de la prueba de Friedman —con
 un `.docx` que además afirma que «la homocedasticidad se verifica», que es lo que el Markdown dice
 expresamente que no puede afirmarse—, dos párrafos presentes con redacción distinta y cinco más con

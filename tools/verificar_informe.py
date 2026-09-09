@@ -96,6 +96,14 @@ FALLOS_DECLARADOS = {
         'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
     'Tres advertencias de lectura antes': ('2026-09-09',
         'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
+    'Tabla 3, fila 1 difiere': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision 19 del autor: el entregable refleja un estado anterior del Markdown. Insertar lo que falta afecta al limite duro de 25 paginas y no se aplica sin autorizacion expresa. Ver FINDINGS §F126'),
+    'Tabla 9 tiene 42 filas': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision 19 del autor: el entregable refleja un estado anterior del Markdown. Insertar lo que falta afecta al limite duro de 25 paginas y no se aplica sin autorizacion expresa. Ver FINDINGS §F126'),
+    'Tabla 20 no esta en el entregable': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision 19 del autor: el entregable refleja un estado anterior del Markdown. Insertar lo que falta afecta al limite duro de 25 paginas y no se aplica sin autorizacion expresa. Ver FINDINGS §F126'),
+    'le faltan las entradas de bibliografia [38]': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision 19 del autor: el entregable refleja un estado anterior del Markdown. Insertar lo que falta afecta al limite duro de 25 paginas y no se aplica sin autorizacion expresa. Ver FINDINGS §F126'),
     'github.com/eahumada/mti-pge-tesina': ('2026-09-09',
                                            'referencia [37]: el repositorio es privado hasta la '
                                            'purga (SEGURIDAD-CLAVE-GOOGLE-20260908.md)'),
@@ -845,6 +853,144 @@ def c_prosa_docx(s):
     check('la prosa de los tres .docx sigue al Markdown', mirados, fallos,
           'lo que dejo pasar §F120; los diez parrafos ausentes estan declarados a nombre de la '
           'pasada de maquetacion, y una divergencia nueva si corta')
+
+
+# --- 52. Las TABLAS y la BIBLIOGRAFIA del entregable siguen a las del Markdown -----------------
+def _norm_celda(t):
+    """Normaliza texto de celda. Decodifica las entidades XML ANTES de nada.
+
+    Sin eso la Tabla 7 aparece como divergente y es identica: el `.docx` guarda «p&lt;0.001» donde
+    el Markdown escribe «p<0.001». Fue el primer resultado de la comparacion y era un defecto de la
+    comparacion, no del documento (§F126).
+    """
+    import html as _h
+    import unicodedata as _u
+    t = _u.normalize('NFC', _h.unescape(t))
+    for a in (' ', ' ', ' '):
+        t = t.replace(a, ' ')
+    return ' '.join(re.sub(r'[`*_]', '', t).split())
+
+
+def _tablas_md(s):
+    """(numero de leyenda, filas) de cada tabla del Markdown, en orden."""
+    lineas, out, i = s.split('\n'), [], 0
+    while i < len(lineas):
+        sep = (i + 1 < len(lineas)
+               and set(lineas[i + 1].replace('|', '').replace(' ', '')) <= set('-:')
+               and lineas[i + 1].strip().startswith('|'))
+        if lineas[i].startswith('|') and sep:
+            filas, j = [], i
+            while j < len(lineas) and lineas[j].startswith('|'):
+                c = [_norm_celda(x) for x in lineas[j].strip('|').split('|')]
+                if not (set(''.join(c).replace(' ', '')) <= set('-:') and c):
+                    filas.append(c)
+                j += 1
+            num = None
+            for k in range(max(0, i - 4), i):
+                m = re.match(r'_Tabla (\d+)\.', lineas[k].strip())
+                if m:
+                    num = int(m.group(1))
+            out.append((num, filas))
+            i = j
+        else:
+            i += 1
+    return out
+
+
+def _tablas_docx(rel):
+    import zipfile as _z
+    ruta = os.path.join(RAIZ, rel)
+    if not os.path.exists(ruta):
+        return None
+    with _z.ZipFile(ruta) as z:
+        x = z.read('word/document.xml').decode('utf-8')
+    def T(q):
+        return _norm_celda(' '.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', q, re.S)))
+    out = []
+    for b in re.findall(r'<w:tbl>.*?</w:tbl>', x, re.S):
+        filas = [[T(c) for c in re.findall(r'<w:tc>.*?</w:tc>', f, re.S)]
+                 for f in re.findall(r'<w:tr[ >].*?</w:tr>', b, re.S)]
+        if filas:
+            out.append(filas)
+    return out
+
+
+def _biblio_docx(rel):
+    """Numeros de entrada de la bibliografia del .docx, uno por parrafo."""
+    import html as _h
+    import zipfile as _z
+    ruta = os.path.join(RAIZ, rel)
+    if not os.path.exists(ruta):
+        return None
+    with _z.ZipFile(ruta) as z:
+        x = z.read('word/document.xml').decode('utf-8')
+    out = []
+    for p in re.findall(r'<w:p[ >].*?</w:p>', x, re.S):
+        t = _h.unescape(' '.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', p, re.S))).strip()
+        m = re.match(r'^\[(\d+)\]', t)
+        if m:
+            out.append(int(m.group(1)))
+    return out
+
+
+def c_tablas_y_biblio_docx(s):
+    """Solo DOS de las veinte tablas se comparaban entre fuente y entregable.
+
+    `c_prosa_docx` cerro el hueco de la prosa que dejo pasar `§F120`. Las tablas seguian igual:
+    `auditar_afirmaciones.py` compara la 18 y la 19 celda a celda, y las otras dieciocho —incluida
+    la **Tabla 7, la central del estudio**— no las comparaba nadie. Y la bibliografia tampoco.
+
+    Lo que encontro al escribirse (`§F126`): dieciseis tablas identicas, y tres divergencias reales
+    —la **Tabla 20 falta por completo** del entregable, la Tabla 9 tiene tres filas menos y la
+    Tabla 3 una celda mas corta—, mas la **referencia [38] y sus cuatro citas**, ausentes. Las
+    entradas [1] a [37] del entregable si estan y son contiguas, de modo que **no hay corrimiento
+    de numeracion**: falta la ultima y nada mas.
+
+    Todo eso queda **declarado** a nombre de la pasada de maquetacion, con el resto de `§F121`.
+    """
+    md_t = [(n, f) for n, f in _tablas_md(s) if f]
+    fallos, mirados = [], 0
+    citas_md = {int(x) for x in re.findall(r'\[(\d+)\]', s)}
+    i = s.find('## Referencias')
+    ent_md = {int(x) for x in re.findall(r'^\[(\d+)\]', s[i:], re.M)} if i >= 0 else set()
+    for rel in DOCX_ENTREGABLES:
+        base = os.path.basename(rel)
+        dx = _tablas_docx(rel)
+        if dx is None:
+            fallos.append('%s no existe' % base)
+            continue
+        usados = set()
+        for num, filas in md_t:
+            mirados += 1
+            et = 'Tabla %s' % num if num else 'tabla sin leyenda'
+            cab = ' | '.join(filas[0])[:70]
+            pareja = next((j for j, fb in enumerate(dx)
+                           if j not in usados and fb and ' | '.join(fb[0])[:70] == cab), None)
+            if pareja is None:
+                fallos.append('%s: %s no esta en el entregable (%d filas, cab: %s)'
+                              % (base, et, len(filas), cab[:40]))
+                continue
+            usados.add(pareja)
+            fb = dx[pareja]
+            if len(fb) != len(filas):
+                fallos.append('%s: %s tiene %d filas y el Markdown %d'
+                              % (base, et, len(fb), len(filas)))
+                continue
+            k = next((z for z in range(len(filas)) if filas[z] != fb[z]), None)
+            if k is not None:
+                fallos.append('%s: %s, fila %d difiere — .md %s / .docx %s'
+                              % (base, et, k, filas[k][:2], fb[k][:2]))
+        # bibliografia
+        mirados += 1
+        ent = _biblio_docx(rel)
+        faltan = sorted(ent_md - set(ent or []))
+        if faltan:
+            fallos.append('%s: le faltan las entradas de bibliografia %s' % (base, faltan))
+        if ent and sorted(ent) != list(range(min(ent), max(ent) + 1)):
+            fallos.append('%s: las entradas de bibliografia no son contiguas' % base)
+    check('las tablas y la bibliografia de los .docx siguen al Markdown', mirados, fallos,
+          'las entidades XML se decodifican antes de comparar; sin eso la Tabla 7 sale '
+          'divergente siendo identica')
 
 
 def check(nombre, examinados, fallos, nota=''):
@@ -3814,6 +3960,7 @@ def main():
     ejecutar(c_redondeos, s)
     ejecutar(c_tabla17, s)
     ejecutar(c_prosa_docx, s)
+    ejecutar(c_tablas_y_biblio_docx, s)
     ejecutar(c_tabla4_vs_datos, s)
     ejecutar(c_figura1_vs_artefacto, s)
     ejecutar(c_tablas_menores, s)

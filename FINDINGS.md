@@ -5774,3 +5774,52 @@ columna agrupa métricas de tareas distintas bajo un mismo encabezado».
 coinciden salvo el `data_file` de los dos corpus pequeños, que es lo esperado.
 
 **Estado del verificador:** 51 comprobaciones, 40 fallos (40 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F126 — Faltaba una tabla entera en el entregable, y una referencia con sus cuatro citas
+
+**Fecha:** 2026-09-09 · **Origen:** cerrar en las tablas el hueco que [§F121](#f121) cerró en la prosa
+
+`c_prosa_docx` cerró la comparación de la **prosa** entre fuente y entregable. Las tablas seguían
+igual que antes: `auditar_afirmaciones.py` compara la 18 y la 19 celda a celda, y **las otras
+dieciocho no las comparaba nadie**, incluida la **Tabla 7, que es la tabla central del estudio**. La
+bibliografía tampoco.
+
+**Dieciséis de las veinte tablas son idénticas**, la Tabla 7 entre ellas. Tres divergen, y una de
+las tres es grave:
+
+| Divergencia | Alcance |
+|:---|:---|
+| **Tabla 20 no está en el entregable** | 9 filas, ausente por completo; cero menciones de «Tabla 20» y cero de «Corrida sustituida» |
+| Tabla 9, estructura del repositorio | 42 filas en el entregable frente a 45 en la fuente |
+| Tabla 3, capa de datos | el entregable dice «validación de esquema» donde la fuente dice «validación contra el esquema FollowTheMoney [38]» |
+| **Referencia [38] y sus cuatro citas** | ausentes del entregable; sus entradas [1] a [37] **sí** están y son **contiguas**, de modo que **no hay corrimiento de numeración** |
+
+### La Tabla 20 es la que importa, y agranda la decisión 19
+
+Su leyenda es «Grupos con más de una corrida sobre N=120, con el motivo de la sustitución y la
+evidencia». Es **la tabla de la declaración de corridas múltiples**: la que acompaña a los cinco
+párrafos que `§F121` encontró ausentes. De modo que al entregable le falta esa declaración
+**completa**, prosa y tabla, y es la que `CLAUDE.md` exige con las palabras «es lo que un tribunal
+juzga».
+
+Dicho de otro modo: `§F121` reportó diez párrafos; el inventario cerrado es **diez párrafos más una
+tabla de nueve filas más una referencia con sus cuatro citas**, y todo ello es un bloque coherente de
+adiciones tardías al Markdown que nunca se propagaron.
+
+### El primer resultado de la comparación era un defecto de la comparación
+
+La Tabla 7 salió como divergente en su fila de `nemotron-mini:4b`, y las celdas impresas eran
+idénticas. La diferencia estaba en la quinta columna: el `.docx` guarda `sí (p&lt;0.001)` y el
+Markdown escribe `sí (p<0.001)`. **Son la misma cadena**; lo que faltaba era decodificar las
+entidades XML antes de comparar. Si no lo hubiera mirado, habría reportado una divergencia en la
+tabla central del estudio que no existe — y con `§F121` recién corregido por sobrestimar, era el
+segundo aviso del mismo día de que **una divergencia detectada hay que confirmarla antes de
+contarla**.
+
+**Comprobación 52**, 63 elementos: las veinte tablas por los tres entregables y la bibliografía de
+cada uno. Los doce fallos —cuatro por fichero— quedan **declarados** a nombre de la decisión 19, con
+el resto de `§F121`; cualquier divergencia nueva corta.
+
+**Estado del verificador:** 52 comprobaciones, 52 fallos (52 declarados, **0 nuevos**), 0 vacías.
