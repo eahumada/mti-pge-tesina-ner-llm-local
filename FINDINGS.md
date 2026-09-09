@@ -2533,3 +2533,27 @@ al límite de su potencia: `§F73` con la correlación de trece modelos, `§F74`
 Spearman y Pearson, y ahora este. El patrón sugiere revisar, antes de la defensa, **todo contraste del
 informe cuya conclusión sea un «no significativo»**, porque en un estudio con trece modelos y corpus de entre
 quince y ciento veinte artículos la potencia es sistemáticamente escasa.
+
+### §F77.bis — Repasados los demás «no significativo» del informe
+
+**2026-09-08, 21:46.** Ejecutada la recomendación de `§F77`. Dos casos, con distinto resultado.
+
+**§5.2, la ablación de prompts: correcto y no se toca.** Dice que el ANOVA no alcanza significancia
+(F = 1,1379; p = 0,3417) «consecuencia de N=15» y que los deltas «deben leerse como una **tendencia
+consistente y no como una diferencia demostrada**». Es exactamente la formulación que corresponde: declara la
+causa —la muestra— y no convierte el no rechazo en prueba de igualdad.
+
+**§5.3.1, la prueba de Levene: mismo error que `§F77`, aunque de menor gravedad.** Decía «la homocedasticidad
+**se verifica** (Levene, p = 0,18)». Un contraste no significativo no verifica la hipótesis nula. La
+diferencia con el caso de `§F77` es que aquí la potencia sí acompaña: con 3 120 observaciones, Levene detecta
+incluso efectos pequeños con más del 99 % de potencia, de modo que el no rechazo **sí es informativo**. El
+defecto era de redacción, no de fondo.
+
+Corregido a «**no detecta heterocedasticidad**, lo que con 3 120 observaciones sí es informativo, aunque no
+equivalga a demostrar que las varianzas son iguales». Y se aprovecha para sustituir el argumento de que el
+diseño pareado es más potente —que era una conjetura— por el resultado que `§F75` calculó: repetido con
+Friedman, el rechazo se sostiene con χ² = 1 169,23, de modo que la conclusión no depende de la elección del
+contraste. **La frase pasa de argumentar a citar un dato.**
+
+**Balance del repaso:** de los tres «no significativo» del informe, uno estaba bien redactado, uno era un
+error de fondo —corregido en `§F77`— y uno de redacción, corregido aquí.
