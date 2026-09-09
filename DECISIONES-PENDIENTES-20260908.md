@@ -349,6 +349,40 @@ llegue en la defensa.
 
 ---
 
+## 12. Las dos glosas de `BENCHMARKS.md` que narran la exclusión
+
+**Hallado el 2026-09-09** revisando las premisas del `TODO §10`. `BENCHMARKS.md` contiene dos bloques con esta
+forma:
+
+> **Retirado del estudio (2026-09-05, decisión del autor).** `minimax-m3:cloud` se elimina del benchmark: su
+> única medición tenía 9 de 15 extracciones fallidas por cuota…
+
+y otro equivalente para `nuextract:latest`. `CLAUDE.md` es explícito en este punto: los modelos excluidos no
+pueden aparecer «**tampoco en una glosa que los declare excluidos**: la exclusión se aplica, no se narra».
+
+**Lo que hace ambigua la decisión** es que `CLAUDE.md` enumera qué artefactos se conservan —`benchmark.log`,
+`RUNS_INDEX.md`, los `WORKLOG.md`, los datos crudos históricos y los hitos entregados— y **`BENCHMARKS.md` no
+está en ninguna de las dos listas**. Cabe leerlo como artefacto derivado, y entonces las glosas sobran; o como
+documento de trabajo que atestigua qué se decidió y por qué, y entonces se quedan.
+
+| Opción | Qué implica |
+|:---|:---|
+| **a) Retirar las dos glosas** | Cumple la norma al pie de la letra. La justificación de por qué se excluyeron **no se pierde**: está en `FINDINGS §F38` y en la lista cerrada de `CLAUDE.md`, que es donde corresponde |
+| **b) Dejarlas** | Defendible si se considera `BENCHMARKS.md` un documento que atestigua. Riesgo: es el fichero de resultados del repositorio, el primero que abre quien quiera comprobar cifras |
+| **c) Retirarlas y anotar en `CLAUDE.md` a qué lista pertenece `BENCHMARKS.md`** | Resuelve el caso y la ambigüedad que lo permitió |
+
+**Recomendación: (c).** El coste es una línea en cada sitio y evita que la misma duda vuelva.
+
+**No se ha tocado nada.** Editar un documento de resultados por interpretación de una norma es del autor, y
+la política aditiva desaconseja retirar texto sin su visto bueno.
+
+**Lo que no está en cuestión:** los siete ficheros de **código** que mencionan esos modelos —`config.py`,
+`llm_runner.py`, `ollama_provider.py`, `gliner_provider.py`, `dashboard.py`, `run_remoto_chain.sh` y
+`test_flash.py`—. Dan soporte a proveedores, no citan cifras como resultado del estudio, y retirarlos rompería
+la plataforma. Tampoco lo está `results/HISTORICO_20260630/`, que el inventario ya decidió conservar.
+
+---
+
 ## Y un aviso que todavía no es decisión
 
 Con tres de los trece modelos rehechos, el efecto del KB RAG **cambia de signo en los dos de 31B**: de −0,53
