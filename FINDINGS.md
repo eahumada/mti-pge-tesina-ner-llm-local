@@ -3194,3 +3194,78 @@ Y una precisión sobre `§F84`: allí concluí que el respaldo «rescata casi si
 respaldos no son el problema aquí—, pero aquel análisis se hizo **antes** de que llegara este modelo y por
 tanto no incluía sus 18 fallos. `parse_method='failed'` es una categoría distinta del respaldo, y es la que
 hay que mirar primero.
+
+---
+
+## §F86 — Sobre el corpus corregido, la proporcionalidad inversa no se sostiene
+
+**2026-09-09, 05:4x.** §5.3.1 sostiene la tesis central del trabajo: que el beneficio de la recuperación es
+inversamente proporcional a la capacidad del modelo, y que «se anula o revierte en los de mayor capacidad».
+La sostiene con una correlación entre el F1 de la línea base y la mejora que aporta el RAG: **Spearman
+−0,5165 (p = 0,0707) y Pearson −0,6004 (p = 0,0300)**.
+
+Recalculada sobre el consolidado de la re-corrida completa, con los mismos trece modelos:
+
+| | Publicado | Re-corrida |
+|:---|---:|---:|
+| Spearman ρ | −0,5165 (p = 0,0707) | **−0,0879 (p = 0,7752)** |
+| Pearson r | −0,6004 (p = 0,0300) | **−0,5266 (p = 0,0645)** |
+
+**El coeficiente de rangos, que es el robusto, se va a cero.** No queda relación monótona: ordenados los
+trece modelos por capacidad, los incrementos van +0,03, −4,29, +6,73, −0,05, +2,31, +0,69, +2,53, +1,67,
++2,29, +0,97 y +0,81 desde el sexto puesto en adelante. No hay tendencia que leer ahí.
+
+### El coeficiente lineal descansa en un solo punto
+
+Repetido el cálculo retirando cada modelo por turno:
+
+| Se retira | Pearson r | p |
+|:---|---:|---:|
+| *ninguno* | −0,5266 | 0,064 |
+| `nemotron-mini:4b` | **+0,0120** | **0,971** |
+| cualquier otro | entre −0,52 y −0,67 | 0,02 – 0,08 |
+
+**Quitar `nemotron-mini:4b` no debilita la correlación: la anula.** Con los otros doce modelos el
+coeficiente es prácticamente cero y de signo contrario. Ningún otro punto tiene una influencia comparable.
+
+Y ese punto es precisamente el que `§F85` señala: su Δ de +14,23 pp incluye diecisiete registros que puntúan
+cero por un `TypeError`. Con la corrección aproximada su Δ baja a +9,58 y la correlación se debilita todavía
+más —Pearson −0,4035 con p = 0,1716—.
+
+### La afirmación que queda desmentida
+
+«El beneficio se anula o revierte en los de mayor capacidad» **es falsa sobre el corpus corregido**. Los cinco
+modelos de mayor capacidad tienen **todos** mejora positiva:
+
+| Modelo | F1 base | Δ |
+|:---|---:|---:|
+| `gemma4:31b-cloud` | 82,13 | +0,81 |
+| `gemma4:31b-mlx` | 81,47 | +0,97 |
+| `gemma4:12b-mlx` | 77,67 | +2,29 |
+| `gpt-oss:20b` | 75,41 | +1,67 |
+| `gemma4:latest` | 75,33 | +2,53 |
+
+Ninguno revierte, ninguno se anula. Lo que ocurría en los datos antiguos —los grandes con Δ negativo— era del
+corpus defectuoso, y `§F68` ya lo había anticipado con los primeros modelos rehechos.
+
+### Qué se puede afirmar todavía
+
+Conviene no pasarse de frenada en la dirección contraria. Lo que los datos siguen sosteniendo:
+
+- **El mayor beneficio lo obtienen modelos pequeños.** `nemotron-mini:4b` y `llama3.2:latest` son los dos
+  únicos con mejora grande, y son de los más pequeños del estudio. Son también los **dos únicos
+  significativos** tras el post-hoc pareado.
+- **El beneficio no perjudica a los grandes**, que es una afirmación distinta y más débil que la publicada,
+  pero verdadera y útil: la recuperación no degrada a ningún modelo de capacidad alta.
+- **Lo que no se sostiene es la forma funcional**: que el beneficio decrezca de manera ordenada con la
+  capacidad. Entre los once modelos de capacidad media y alta no hay ninguna tendencia.
+
+### Consecuencia para el informe
+
+§5.3.1 **no se arregla cambiando cifras**. La correlación es la que sostiene el argumento y ha dejado de ser
+significativa por las dos vías. Hay que reescribir el apartado con lo que digan los datos: dos modelos
+pequeños se benefician claramente, el resto apenas se mueve y ninguno de los grandes empeora. Es una
+conclusión más modesta y perfectamente defendible; presentarla como la publicada, no.
+
+**Y hay que esperar a que se resuelva `§F85` antes de escribir las cifras definitivas**, porque el punto que
+más pesa en el análisis es justamente el afectado.

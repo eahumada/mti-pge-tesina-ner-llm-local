@@ -142,9 +142,18 @@ avisa expresamente.
 
 Esto no se automatiza. Por orden de importancia:
 
-1. **§5.3.1.** Si el cambio de signo se confirma —tres de los cuatro primeros modelos rehechos lo mostraban, y el cuarto ya era positivo—, la
-   frase «el beneficio se anula o revierte en los de mayor capacidad» deja de ser cierta (`FINDINGS §F68`).
-   Reformular con lo que digan los datos, sea lo que sea.
+1. **§5.3.1, y ya no es una hipótesis: está medido** (`FINDINGS §F86`). Con los trece modelos rehechos:
+   - La frase «el beneficio se anula o revierte en los de mayor capacidad» **es falsa**. Los cinco de mayor
+     capacidad tienen **todos** Δ positivo: +0,81, +0,97, +2,29, +1,67 y +2,53.
+   - La correlación que sostiene el argumento **se desploma**: Spearman pasa de −0,5165 a **−0,0879
+     (p = 0,7752)** y Pearson de −0,6004 a −0,5266 (p = 0,0645), este último **sostenido por un solo punto**:
+     retirando `nemotron-mini:4b` queda en +0,0120 con p = 0,971.
+   - **Lo que sí se puede afirmar:** los dos modelos pequeños que más ganan son los dos únicos significativos
+     tras el post-hoc pareado, y **ningún modelo grande empeora**. Es más modesto que lo publicado y es
+     verdadero.
+
+   **Esperar a que se resuelva `§F85` antes de escribir las cifras definitivas**, porque el punto que más
+   pesa en el análisis es justamente el que arrastra los diecisiete ceros del `TypeError`.
 2. **§3.3, §7.2 y la leyenda de la Figura 1**, según el paso 4.
 3. **El Anexo I.** Su columna de «métrica restringida» pierde sentido cuando el corpus anota las tres
    categorías: no hay nada que restringir. Decidir si se conserva como registro histórico de la corrección o
