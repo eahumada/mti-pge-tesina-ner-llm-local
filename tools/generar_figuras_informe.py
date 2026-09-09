@@ -1,10 +1,23 @@
 #!/usr/bin/env python3
 """Genera las figuras del informe final a partir de las cifras ya publicadas en sus tablas.
 
-Los valores no se recalculan desde los CSV: se toman de la Tabla 7 y de §4.4 del Markdown canónico,
-de modo que figura y tabla no puedan divergir. Si una tabla cambia, hay que cambiar aquí también.
-Salida en doc/figuras/ a 300 ppp, en escala de grises legible al imprimir.
+Los valores no se recalculan desde los CSV: se LEEN de la Tabla 7 del Markdown canónico, de modo que
+figura y tabla no puedan divergir.
+
+Hasta el 2026-09-09 la Tabla 7 estaba copiada a mano aquí, con la advertencia «si una tabla cambia,
+hay que cambiar aquí también». Comprobado ese día: coincidía en las trece filas, de modo que no había
+defecto vivo — pero era una segunda fuente de verdad que habría dejado de coincidir sin avisar, que es
+§L63. Ahora se lee, y si la tabla no se puede interpretar la herramienta **aborta** en lugar de dibujar
+una figura con datos de otro momento.
+
+Salida en doc/figuras/ a 300 ppp, o donde diga `--out-dir`: la primera versión solo podía sobrescribir
+las figuras del entregable, lo que impedía comprobar que son reproducibles sin arriesgarlas.
 """
+import os
+import re
+import sys
+import argparse
+
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -14,22 +27,34 @@ plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 8,
                      'axes.edgecolor': '#444444', 'axes.linewidth': 0.6,
                      'xtick.color': '#444444', 'ytick.color': '#444444'})
 
-# Tabla 7: modelo, F1 baseline, F1 KB RAG, delta significativo
-TABLA7 = [
-    ('gemma4:31b-cloud',    62.38, 61.85, False),
-    ('gemma4:31b-mlx',      59.25, 59.07, False),
-    ('gemma4:12b-mlx',      56.18, 58.46, False),
-    ('gemma4:latest',       55.91, 54.74, False),
-    ('gpt-oss:20b',         52.39, 55.67, False),
-    ('qwen2.5:14b',         50.22, 54.84, False),
-    ('llama3.1:8b',         48.76, 50.75, False),
-    ('qwen3:8b',            48.21, 51.46, False),
-    ('gemma:latest',        44.00, 51.36, False),
-    ('mistral-nemo:latest', 43.38, 45.76, False),
-    ('llama3.2:latest',     36.11, 46.93, True),
-    ('deepseek-r1:1.5b',    24.83, 23.94, False),
-    ('nemotron-mini:4b',    22.59, 37.12, True),
-]
+MD = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                  'doc/organized/Hito_5_Tarea4_Informe_Final',
+                  '2026-07-04_Borrador-Informe-Final-Tesina.md')
+
+
+def leer_tabla7():
+    """(modelo, F1 baseline, F1 KB RAG, significativo) leidos de la Tabla 7 del Markdown."""
+    with open(MD, encoding='utf-8') as fh:
+        t = fh.read()
+    i = t.find('_Tabla 7.')
+    if i < 0:
+        raise SystemExit('  no se encuentra la Tabla 7 en el Markdown: no se dibuja nada')
+    filas = []
+    for l in t[i:].split('\n'):
+        m = re.match(r'^\|\s*`?([^|`]+?)`?\s*\|\s*\*{0,2}([\d.]+)%\*{0,2}\s*\|'
+                     r'\s*\*{0,2}([\d.]+)%\*{0,2}\s*\|\s*\*{0,2}([\u2212+-][\d.]+) pp\*{0,2}'
+                     r'\s*\|\s*(\*\*s\u00ed\*\*|no)', l)
+        if m:
+            filas.append((m.group(1).strip(), float(m.group(2)), float(m.group(3)),
+                          m.group(5).startswith('**')))
+        elif filas:
+            break
+    if not filas:
+        raise SystemExit('  la Tabla 7 no se puede interpretar: no se dibuja nada')
+    return filas
+
+
+TABLA7 = leer_tabla7()
 
 GRIS, OSCURO, ACENTO = '#9a9a9a', '#1a1a1a', '#000000'
 
@@ -121,6 +146,14 @@ def figura_2():
 
 
 if __name__ == '__main__':
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument('--out-dir', default=SALIDA,
+                    help='donde escribir las figuras (por omision doc/figuras)')
+    args = ap.parse_args()
+    SALIDA = args.out_dir
+    os.makedirs(SALIDA, exist_ok=True)
+    print('  Tabla 7 leida del Markdown: %d filas' % len(TABLA7))
     figura_1()
     figura_2()
-    print('figuras generadas en', SALIDA)
+    print('  figuras generadas en', SALIDA)

@@ -355,20 +355,50 @@ def c_figura_vs_tabla(s):
     for nom, base, rag, d, _ in filas:
         if abs(round(rag - base, 2) - d) > 0.011:
             fallos.append('Δ de %s: declara %+.2f, calcula %+.2f' % (nom, d, round(rag - base, 2)))
+    # Hasta el 2026-09-09 el script tenia la Tabla 7 copiada a mano y aqui se comparaba ese
+    # literal contra la tabla. Desde que la LEE (§F97) no hay literal que comparar, y borrar la
+    # comprobacion habria dejado sin vigilar la coherencia entre figura y tabla. Se sustituye por
+    # algo mas fuerte: se **ejecuta el lector del propio script** y se contrasta con la lectura
+    # independiente de arriba. Son dos implementaciones distintas del mismo parseo, y que
+    # coincidan dice mas que comparar una constante.
+    #
+    # No se importa el modulo, porque importa matplotlib y eso solo esta en el venv del proyecto:
+    # se extrae el codigo de `leer_tabla7` y su constante MD y se ejecuta aislado.
+    sc = ''
     try:
-        sc = open(SCRIPT_FIGURAS, encoding='utf-8').read()
-        lit = sc[sc.index('TABLA7 = ['):]
-        lit = lit[:lit.index(']\n') + 1]
-        script = ast.literal_eval(lit.split('=', 1)[1].strip())
-    except Exception as e:
-        fallos.append('no se puede leer TABLA7 del script: %s' % e)
-        script = []
-    if script:
-        if len(script) != len(filas):
-            fallos.append('el script tiene %d filas y la tabla %d' % (len(script), len(filas)))
-        for a, b in zip(filas, script):
-            if a[0] != b[0] or abs(a[1] - b[1]) > 1e-9 or abs(a[2] - b[2]) > 1e-9 or a[4] != b[3]:
-                fallos.append('fila distinta: tabla %s vs script %s' % (a[:3], b[:3]))
+        with open(SCRIPT_FIGURAS, encoding='utf-8') as fh:
+            sc = fh.read()
+    except OSError as e:
+        fallos.append('no se puede abrir el script de figuras: %s' % e)
+    if sc:
+        if re.search(r'^TABLA7 = \[', sc, re.M):
+            fallos.append('el script vuelve a tener la Tabla 7 escrita a mano: debe leerla del '
+                          'Markdown (§F97, §L63)')
+        arb = ast.parse(sc)
+        pedazos = [n for n in arb.body
+                   if (isinstance(n, ast.FunctionDef) and n.name == 'leer_tabla7')
+                   or (isinstance(n, ast.Assign)
+                       and any(getattr(x, 'id', '') == 'MD' for x in n.targets))]
+        if len(pedazos) != 2:
+            fallos.append('no se encuentran en el script la constante MD y la funcion '
+                          'leer_tabla7: son %d de 2' % len(pedazos))
+        else:
+            ns = {'os': os, 're': re, '__file__': SCRIPT_FIGURAS}
+            try:
+                exec(compile(ast.Module(body=pedazos, type_ignores=[]), SCRIPT_FIGURAS, 'exec'), ns)
+                script = ns['leer_tabla7']()
+            except Exception as e:                                   # noqa: BLE001
+                fallos.append('el lector del script falla: %s: %s' % (type(e).__name__, e))
+                script = []
+            if script:
+                if len(script) != len(filas):
+                    fallos.append('el lector del script da %d filas y esta comprobacion %d'
+                                  % (len(script), len(filas)))
+                for a, b in zip(filas, script):
+                    if a[0] != b[0] or abs(a[1] - b[1]) > 1e-9 or abs(a[2] - b[2]) > 1e-9 \
+                            or a[4] != b[3]:
+                        fallos.append('fila distinta: esta comprobacion %s vs el lector del '
+                                      'script %s' % (a[:3], b[:3]))
     check('Figura 2 coherente con la Tabla 7 y Δ aritméticamente correcto', len(filas), fallos)
 
 

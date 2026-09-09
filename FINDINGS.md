@@ -4100,3 +4100,64 @@ no dio «ok» en silencio —lo que habría dejado el umbral holgado y ciego a u
 **bajar el umbral a 16 para seguir vigilando desde el nuevo estado**. Bajado. Quedan **16**, todos
 preexistentes al trabajo de hoy, y la propagación de la limpieza de sobriedad sigue siendo de la pasada de
 maquetación.
+
+## §F97 — Las figuras del informe son reproducibles byte a byte, y su tabla ya no está copiada a mano
+
+**2026-09-09.** Ejecutadas las 17 herramientas del proyecto para ver cuáles corren, dos fallaban, y las dos
+por lo mismo: una dependencia que solo está en `repos/ner-llm-entity-benchmark/venv`.
+
+- `robustez_estadistica.py` falla por `scipy`, **con diagnóstico** desde hoy, que es la conducta correcta.
+- `generar_figuras_informe.py` fallaba por `matplotlib` con un `ModuleNotFoundError` desnudo.
+
+La segunda importaba más de lo que parecía, porque produce **las dos figuras del entregable**, y traía dos
+defectos de fondo.
+
+### La Tabla 7 estaba copiada a mano dentro de la herramienta
+
+Su propio docstring lo admitía: «los valores se toman de la Tabla 7 … **si una tabla cambia, hay que cambiar
+aquí también**». Comprobado hoy: coincidía en las **trece filas**, de modo que **no había defecto vivo** —
+pero era una segunda fuente de verdad que habría dejado de coincidir sin avisar, que es §L63, y con la
+particularidad de que el aviso estaba escrito en el propio fichero y aun así nadie iba a acordarse.
+
+Ahora la **lee** del Markdown, y si la tabla no se puede interpretar **aborta** en lugar de dibujar una
+figura con datos de otro momento.
+
+### Y solo podía sobrescribir las figuras del entregable
+
+No tenía forma de escribir en otro sitio, así que comprobar que las figuras son reproducibles exigía
+arriesgarlas. Añadido `--out-dir`.
+
+### El resultado, que es lo que un tribunal preguntaría
+
+Regeneradas en un directorio aparte y comparadas con las comprometidas:
+
+| Figura | Tamaño | Resultado |
+|:---|---:|:---|
+| `efecto-kb-rag.png` | 2297 × 1029 px | **idéntica byte a byte**, 0 píxeles distintos de 2 363 613 |
+| `falsos-positivos.png` | 2110 × 436 px | **idéntica byte a byte**, 0 píxeles distintos de 919 960 |
+
+Las figuras del informe son **reproducibles desde la fuente canónica**, y desde hoy sin ninguna cifra
+intermedia mantenida a mano.
+
+**Corolario del inventario:** de las 17 herramientas, 12 corren en el intérprete del sistema, 5 son editoras
+de `.docx` que solo se invocan con reglas, y las 2 que necesitan el venv lo dicen. Ninguna falla en silencio.
+
+### La puerta de commit detuvo la primera regresión, el día que se instaló
+
+Al comprometer §F97 la puerta **cortó el commit**: la comprobación 12 leía el literal `TABLA7 = [...]` del
+script de figuras para compararlo con la Tabla 7 del Markdown, y al hacer que el script **leyera** la tabla
+en lugar de tenerla escrita, ese literal desapareció y la comprobación se quedó sin nada que leer.
+
+No era un fallo del informe, era una regresión de la instrumentación causada por una mejora — y es
+exactamente el caso para el que sirve una puerta: se vio en el acto, con el nombre de la comprobación, en
+lugar de descubrirse semanas después con la comprobación pasando en verde sobre nada.
+
+**No se borró la comprobación**, que habría dejado sin vigilar la coherencia entre figura y tabla. Se
+sustituyó por algo **más fuerte**: ahora se **ejecuta el lector del propio script** —extrayendo su función y
+su constante del árbol sintáctico y ejecutándolas aisladas, porque importar el módulo arrastraría matplotlib,
+que solo está en el venv— y se contrasta con la lectura independiente que la comprobación ya hacía. Son dos
+implementaciones distintas del mismo parseo, y que coincidan dice más que comparar una constante. Además se
+exige que el literal **no vuelva**.
+
+Probada por mutación en tres frentes, los tres detectados con su mensaje: reescribir la tabla a mano, alterar
+lo que el lector devuelve, y renombrar la función lectora.
