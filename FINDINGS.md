@@ -4209,3 +4209,35 @@ los `.docx` siguen en verde y la autoprueba en 19 de 19. **Cada defecto abierto 
 recalcula al abrir, de modo que no engañan al lector, pero sí a quien inspeccione las propiedades del
 fichero — y la restricción institucional se mide en páginas. Conviene saberlo antes de fiarse de ese dato:
 **el recuento de páginas del `.docx` no se puede leer de sus metadatos**.
+
+## §F99 — Un zip válido no acredita que Word pueda abrir el fichero
+
+**2026-09-09.** Tras usar las **cinco** herramientas que editan `word/document.xml` sobre los tres
+entregables —reemplazo de texto, borrado de filas, reescritura de celdas, reconstrucción de cuerpo y
+partición de runs—, lo único que se había comprobado era `testzip()`, que solo verifica los CRC. Un
+`document.xml` malformado, o una tabla cuyas filas no cuadran con su rejilla, produce un diálogo de error en
+Word en lugar del documento, y el zip sigue siendo perfectamente válido.
+
+Comprobado a fondo, y el resultado es bueno: la cirugía de hoy no rompió nada.
+
+| Comprobación | Resultado |
+|:---|:---|
+| Partes XML bien formadas | **26, 15 y 15**, todas |
+| Filas con celdas distintas de la rejilla | **0** en las 19 tablas de cada documento |
+| Identificadores duplicados de marcador o de dibujo | **0** |
+| Referencias `r:id` sin su relación | **0** |
+
+Mecanizado como comprobación **36**, con **722 elementos examinados**, y probado por mutación en sus cuatro
+frentes, los cuatro detectados con su mensaje:
+
+- un `</w:body>` corrompido → «la parte `word/document.xml` no parsea», con línea y columna;
+- una celda suprimida de una fila → «tabla 0 fila 0 tiene 3 celdas y la rejilla declara 4 columnas»;
+- un marcador duplicado → lo señala por su `w:id` **y** por su nombre;
+- un `r:id` inventado → «1 referencia sin su relación».
+
+**Por qué importa que esté mecanizado y no solo comprobado.** Las cinco herramientas seguirán usándose en la
+pasada de maquetación —quedan la inserción de párrafos, las dos figuras y la Tabla 20—, y cada una hace
+cirugía sobre el mismo fichero. Comprobarlo una vez acredita el estado de hoy; la comprobación acredita el de
+mañana. Y la de la rejilla es la que más falta hacía: **clonar y borrar filas es exactamente lo que la
+descuadra**, y Word la dibuja torcida sin quejarse, de modo que un descuadre podría llegar a la defensa sin
+que nada lo delatara.

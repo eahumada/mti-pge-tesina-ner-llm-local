@@ -265,6 +265,99 @@ PDF_ENVIADO = ('doc/versions/enviados/'
                '2026-09-08_Informe_Final_Tesina_NER_ENVIADO-AL-PROFESOR-GUIA.pdf')
 
 
+def c_docx_sano(s):
+    """Los tres `.docx` siguen siendo OOXML estructuralmente sano tras la cirugia sobre su XML.
+
+    El proyecto tiene **cinco** herramientas que editan `word/document.xml` —reemplazo de texto,
+    borrado de filas, reescritura de celdas, reconstruccion de cuerpo y particion de runs— y el
+    2026-09-09 se usaron todas sobre los entregables. Un zip valido no acredita nada: `testzip()`
+    solo comprueba los CRC, y un `document.xml` malformado o con una tabla descuadrada abre un
+    dialogo de error en Word en lugar del documento.
+
+    Cuatro comprobaciones, en orden de gravedad:
+
+    1. **Toda parte XML del paquete parsea.** No solo `document.xml`: tambien los `.rels`, los
+       estilos y la numeracion, que una reescritura del ZIP podria truncar.
+    2. **Cada fila de cada tabla tiene tantas celdas como columnas declara la rejilla**, contando
+       los `gridSpan`. Es el descuadre tipico de borrar o clonar filas, y Word lo dibuja torcido
+       sin quejarse.
+    3. **Ningun identificador duplicado** de marcador o de propiedad de dibujo. Clonar una fila
+       como plantilla es la forma facil de duplicar uno, y Word rechaza el fichero.
+    4. **Ninguna referencia `r:id` sin su relacion**, que dejaria una imagen o un hiperenlace roto.
+
+    Comprobado el dia que se anadio: 26, 15 y 15 partes XML bien formadas, 19 tablas por documento
+    sin un solo descuadre, cero identificadores duplicados y cero referencias colgando.
+    """
+    import zipfile as _zip
+    import collections as _col
+    from xml.etree import ElementTree as _ET
+    fallos, mirados = [], 0
+    for rel in DOCX_ENTREGABLES:
+        ruta = os.path.join(RAIZ, rel)
+        base = os.path.basename(rel)
+        if not os.path.exists(ruta):
+            mirados += 1
+            fallos.append('no existe el entregable %s' % rel)
+            continue
+        try:
+            z = _zip.ZipFile(ruta)
+        except _zip.BadZipFile as e:
+            mirados += 1
+            fallos.append('%s no es un zip valido: %s' % (base, e))
+            continue
+        # 1) toda parte XML parsea
+        for n in z.namelist():
+            if not n.endswith(('.xml', '.rels')):
+                continue
+            mirados += 1
+            try:
+                _ET.fromstring(z.read(n))
+            except _ET.ParseError as e:
+                fallos.append('%s: la parte %s no parsea: %s' % (base, n, e))
+        try:
+            x = z.read('word/document.xml').decode('utf-8')
+        except KeyError:
+            fallos.append('%s no trae word/document.xml' % base)
+            continue
+        # 2) rejilla contra celdas
+        for i, tb in enumerate(re.findall(r'<w:tbl>.*?</w:tbl>', x, re.S)):
+            cols = len(re.findall(r'<w:gridCol\b', tb))
+            if not cols:
+                continue
+            for k, f in enumerate(re.findall(r'<w:tr[ >].*?</w:tr>', tb, re.S)):
+                mirados += 1
+                nc = len(re.findall(r'<w:tc>', f))
+                extra = sum(int(v) - 1 for v in re.findall(r'<w:gridSpan w:val="(\d+)"', f))
+                if nc + extra != cols:
+                    fallos.append('%s: tabla %d fila %d tiene %d celdas (+%d de gridSpan) y la '
+                                  'rejilla declara %d columnas'
+                                  % (base, i, k, nc, extra, cols))
+        # 3) identificadores duplicados
+        for nom, pat in (('marcador', r'<w:bookmarkStart[^>]*\bw:id="([^"]+)"'),
+                         ('nombre de marcador', r'<w:bookmarkStart[^>]*\bw:name="([^"]+)"'),
+                         ('propiedad de dibujo', r'<wp:docPr[^>]*\bid="([^"]+)"')):
+            mirados += 1
+            c = _col.Counter(re.findall(pat, x))
+            dup = sorted(k for k, v in c.items() if v > 1)
+            if dup:
+                fallos.append('%s: %d identificador(es) de %s duplicado(s): %s'
+                              % (base, len(dup), nom, dup[:4]))
+        # 4) relaciones colgando
+        mirados += 1
+        try:
+            rels = z.read('word/_rels/document.xml.rels').decode('utf-8')
+        except KeyError:
+            rels = ''
+        ids = set(re.findall(r'Id="([^"]+)"', rels))
+        usados = set(re.findall(r'r:(?:id|embed|link)="([^"]+)"', x))
+        colgando = sorted(usados - ids)
+        if colgando:
+            fallos.append('%s: %d referencia(s) sin su relacion: %s'
+                          % (base, len(colgando), colgando[:4]))
+    check('los tres .docx siguen siendo OOXML estructuralmente sano', mirados, fallos,
+          'un zip valido no acredita nada: testzip() solo comprueba los CRC')
+
+
 def c_pdf_al_dia(s):
     """El PDF de la raiz no puede ser mas viejo que el `.docx` del que sale.
 
@@ -2320,6 +2413,7 @@ def main():
     ejecutar(c_higiene, s)
     ejecutar(c_excluidos, s)
     ejecutar(c_sobriedad_docx, s)
+    ejecutar(c_docx_sano, s)
     ejecutar(c_pdf_al_dia, s)
     ejecutar(c_figura_vs_tabla, s)
     ejecutar(c_identificadores)
