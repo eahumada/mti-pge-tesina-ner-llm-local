@@ -2384,3 +2384,33 @@ de otra.
 correlación de −1,000 con p ≈ 0 sobre trece modelos sería una cifra muy citable en el capítulo de resultados,
 y sería falsa. La regla general: **antes de celebrar una correlación, comprobar si una de las dos variables
 contiene a la otra**.
+
+### §F74.bis — La `ρ` del hallazgo central resiste la objeción del artefacto
+
+**2026-09-08, 21:24.** Comprobación motivada por `§F73.bis`, donde una correlación de −1,000 resultó ser un
+artefacto de definir una variable restando la otra.
+
+**La objeción, que un tribunal puede plantear.** El informe correlaciona el F1 base de cada modelo con
+`Δ = F1_kb_rag − F1_baseline`. Esa Δ **contiene** la variable con la que se la correlaciona, y con signo
+negativo. ¿No será la `ρ = −0,5165` un artefacto de construcción, como el −1,000 de `§F73.bis`?
+
+**Respuesta: no lo es, y está comprobado.** Simulada la nula correcta —efecto del RAG independiente de la
+capacidad, es decir `F1_kb_rag = F1_baseline + ruido` con la media y dispersión observadas de Δ, cinco mil
+repeticiones—, la `ρ` bajo esa nula tiene **mediana −0,005** e intervalo central **[−0,484, +0,462]**. El
+valor observado cae **fuera** de ese intervalo: solo el **3,72 %** de las simulaciones llega a ser tan
+negativo.
+
+**Por qué aquí no hay artefacto y en `§F73.bis` sí.** El artefacto aparece cuando la variable restada domina
+la varianza del resultado. En `§F73.bis`, el rango del Δ publicado era 8,53 y el de la re-corrida 2,58, de
+modo que la resta quedaba gobernada por el primero. Aquí, en cambio, `F1_kb_rag` varía tanto como
+`F1_baseline` —correlacionan a 0,956— y Δ resulta genuinamente pequeño e informativo.
+
+**Tres pruebas coinciden, y conviene no vender la simulación como algo que no es.** Paramétrica unilateral
+**0,0354**, simulación **0,0372**, permutación **0,0374**. La simulación **no** aporta más significancia que
+la prueba clásica: aporta el descarte del artefacto, que es otra cosa. El informe seguirá citando la `p`
+bilateral de **0,0707**, que es lo prudente, porque una prueba unilateral solo sería defendible si la
+dirección se hubiera predicho antes de ver los datos.
+
+**Para qué sirve esto.** No cambia ninguna cifra del informe. Es **material de defensa**: si en la mesa se
+plantea la objeción del artefacto —y es una objeción buena—, la respuesta está calculada, versionada en
+`results/CORRELACION_CAPACIDAD_20260908/` y es reproducible.
