@@ -197,7 +197,11 @@ Comprobaciones mecánicas que hay que pasar sobre el Markdown canónico antes de
 de defectos reales encontrados en la revisión final.
 
 > **Están implementadas en `tools/verificar_informe.py`.** Ejecutarlo antes de cada commit sobre el informe;
-> devuelve 0 si no hay fallos. Cada comprobación declara **cuántos elementos examinó**, y una que examina
+> devuelve 0 si no hay fallos **nuevos**. *(Precisión del 2026-09-09: existen fallos **declarados**, cada uno
+> con su motivo y con quien lo tiene —dos ficheros de registro vacíos, el par de cifras de la conclusión 1 y
+> la referencia al repositorio privado—. Antes hacían que devolviera 1 siempre, y una puerta que nunca abre
+> no es una puerta. El resumen los cuenta aparte: «4 fallos (4 declarados, **0 nuevos**)». Con `--estricto`
+> vuelve el comportamiento anterior y cualquier fallo corta.)* Cada comprobación declara **cuántos elementos examinó**, y una que examina
 > cero se marca como VACÍA y no como superada: el informe ya documenta una prueba de sensibilidad que no
 > podía marcar nada por construcción (§5.3), y una comprobación que no mira nada es indistinguible de una
 > que pasa. Al añadir una comprobación nueva, comprobar que su recuento no es cero.

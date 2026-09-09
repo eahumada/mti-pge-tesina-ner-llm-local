@@ -9,6 +9,7 @@ que pasa.
 Uso:  python3 tools/verificar_informe.py            # todas
       python3 tools/verificar_informe.py --breve    # solo lo que falla
       python3 tools/verificar_informe.py --red      # además comprueba las URL en red
+      python3 tools/verificar_informe.py --estricto # los fallos declarados también cortan
 Devuelve 0 si no hay fallos, 1 si los hay.
 """
 import ast
@@ -1591,7 +1592,16 @@ def main():
           % (len(resultados), fallos_totales, declarados, nuevos, vacias))
     if not nuevos and not vacias:
         print('  sin fallos nuevos: todo lo que falla esta declarado y asignado')
-    return 1 if (fallos_totales or vacias) else 0
+    # El codigo de salida senala los fallos NUEVOS, no los declarados. Con la lista de declarados
+    # devolvia 1 siempre, y `CLAUDE.md` describe esta herramienta como la puerta previa a cada
+    # commit: una puerta que nunca abre no es una puerta. Con `--estricto` vuelve el comportamiento
+    # anterior, para quien quiera que cualquier fallo, incluido el declarado, corte.
+    if '--estricto' in sys.argv:
+        return 1 if (fallos_totales or vacias) else 0
+    if fallos_totales and not nuevos:
+        print('  (codigo de salida 0: no hay fallos nuevos. Usar --estricto para que los declarados '
+              'tambien corten)')
+    return 1 if (nuevos or vacias) else 0
 
 
 if __name__ == '__main__':
