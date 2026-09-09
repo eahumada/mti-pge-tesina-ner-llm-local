@@ -4449,3 +4449,34 @@ Y tiene una consecuencia que merece anotarse: **la comprobación 38 protege esa 
 que `Locations` no tiene ni una entidad de referencia, y la 38 vigila exactamente eso — si el corpus
 corregido llega y `Locations` gana referencias, la 38 falla y con ella cae la justificación de la estructura
 del Anexo I. La comprobación no se escribió para eso, pero lo cubre.
+
+## §F105 — Pasada de corrección lingüística: el texto está limpio, con dos excepciones menores
+
+**2026-09-09.** Revisión del lenguaje del informe, que era el último frente de lectura sin tocar. Los repasos
+mecánicos salen **limpios**: cero palabras repetidas consecutivas, cero espacios dobles en prosa, cero
+espacios antes de puntuación, y paréntesis, comillas latinas y corchetes **equilibrados** en todo el
+documento —362/362, 23/23 y 152/152—.
+
+Los cuatro «paréntesis sin cerrar» que el primer barrido levantó eran **falsos positivos**: paréntesis que
+abren en una línea y cierran en la siguiente, invisibles a una comprobación por líneas. §L66 otra vez, y esta
+vez detectado en el acto.
+
+### Lo único que apareció
+
+**Corregido, porque no era criterio sino inconsistencia interna:** el Hallazgo 3 de §5.1 escribía «Recall de
+**sólo** 25.77 %», con tilde, frente a **31 «solo»** sin tilde en el resto del documento. Uno contra
+treinta y uno no es una decisión de estilo; es un descuido respecto de la propia convención del texto, y la
+RAE recomienda «solo» sin tilde desde 2010. Corregido en el Markdown y en los tres `.docx`.
+
+**Dejado al autor, porque sí es criterio:** «Recall» aparece **5 veces en prosa, en mayúscula y sin
+cursiva**, conviviendo con «exhaustividad» (15 veces, el término que §4.4 declara) y con «*recall*» en
+cursiva (3 veces, el uso correcto del extranjerismo, y el que §4.4 emplea al presentarlo: «la
+**exhaustividad** o *recall*»). En las tablas «Recall» es una cabecera y ahí no hay nada que discutir. Queda
+como **decisión 16**, con recomendación de reservar «Recall» a las cabeceras.
+
+### Lo que esta pasada no puede acreditar
+
+Un barrido mecánico no lee. No detecta una concordancia rota que resulte gramatical, una frase sin verbo
+principal, ni un párrafo que dice lo contrario de lo que pretende. De esto último ya se encargó la revisión
+de fondo de §F102 y §F103; de lo primero, nada de lo que hay aquí da garantías, y conviene decirlo en lugar
+de dejar que «pasada de corrección: limpio» suene a más de lo que es.

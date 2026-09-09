@@ -573,3 +573,27 @@ dejan el margen en **1 065**.
 
 **No lo redacto por iniciativa propia:** una entradilla fija el tono de lo que sigue y eso es del autor. Ver
 `FINDINGS §F103`.
+
+
+## 16. «Recall» en mayúscula convive con «exhaustividad» y con «*recall*»
+
+**Qué pasa.** §4.4 introduce **«exhaustividad»** como el término español de la métrica, y la usa 15 veces. Pero
+en prosa aparecen además dos formas más:
+
+- **«*recall*» en cursiva**, 3 veces, como glosa del extranjerismo — es el uso correcto y el que §4.4 emplea
+  al presentarlo: «la **exhaustividad** o *recall*».
+- **«Recall» en mayúscula y sin cursiva**, **5 veces**, como si fuera el nombre propio de la métrica: en el
+  Hallazgo 3 de §5.1, en §5.2, en §3.3, en §5.3 y en el trabajo futuro.
+
+Las tres formas designan lo mismo. En las **tablas** «Recall» es una cabecera y ahí es irreprochable; el
+asunto es solo la prosa.
+
+| Opción | Qué implica |
+|:---|:---|
+| **a) Dejar «exhaustividad» en prosa y «Recall» solo en cabeceras** | Cinco sustituciones. Es lo que §4.4 declara y lo que hace el resto del documento. La que recomiendo |
+| b) Usar «*recall*» en cursiva en los cinco | También coherente, y más cercano al vocabulario del área; obliga a revisar que §4.4 lo presente así |
+| c) Dejarlo | Nadie va a suspender una tesina por esto. Pero es de lo poco que queda y cuesta cinco reemplazos |
+
+**Ya corregido, aparte:** el mismo Hallazgo 3 escribía «Recall de **sólo** 25.77 %», con tilde, frente a
+**31 «solo»** sin tilde en el resto del documento. Eso no era criterio sino inconsistencia con su propia
+convención, y se corrigió en el Markdown y en los tres `.docx`. Ver `FINDINGS §F105`.

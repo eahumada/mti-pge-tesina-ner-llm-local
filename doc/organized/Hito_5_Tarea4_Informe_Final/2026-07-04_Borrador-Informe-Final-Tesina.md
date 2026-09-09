@@ -331,7 +331,7 @@ _Tabla 4. Benchmark exploratorio: doce modelos en trece configuraciones sobre el
 
 > **Hallazgo 1:** la familia `gemma4` copa las cinco primeras posiciones. `gemma4:latest` con prompt *few-shot* en español (74.44%) supera a los dos modelos de 31B, a un tercio de su tamaño.  
 > **Hallazgo 2:** la exhaustividad más alta entre los modelos locales la obtiene `gemma4:latest` con *prompt* few-shot en español (86.87%), por delante de `gemma4:31b` (86.80%) y de su compilación MLX (86.76%), pese a ser un modelo de un tercio del tamaño; la variante alojada alcanza un valor equivalente (86.88%). Es decir, las cuatro configuraciones se agrupan en menos de un décimo de punto, y lo que separa a `gemma4:31b` no es la exhaustividad sino su tasa de alucinación, de 0.16%.  
-> **Hallazgo 3:** `deepseek-r1:1.5b` debe descartarse para producción: F1 de 27.65% y Recall de sólo 25.77%.  
+> **Hallazgo 3:** `deepseek-r1:1.5b` debe descartarse para producción: F1 de 27.65% y Recall de solo 25.77%.  
 > **Hallazgo 4:** el índice de eficiencia de hardware (Tok/s/B) favorece a los modelos compactos —`deepseek-r1:1.5b` (86.20) y `llama3.2` (26.44)— para *screening* masivo, mientras que `gemma4:31b` (0.33) se justifica para análisis de alto riesgo.
 
 ### 5.2 Análisis de Variantes de Prompts (gemma4:latest, N=15)
