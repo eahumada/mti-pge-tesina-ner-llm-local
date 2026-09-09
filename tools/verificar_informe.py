@@ -1261,6 +1261,56 @@ def c_fuentes_de_los_grupos(_s):
     check('cada grupo se lee de la corrida que el consolidado usa', mirados, list(descuadres))
 
 
+def c_ablacion(s):
+    """Las tres diferencias del analisis de variantes de prompt, contra su corrida.
+
+    Son +4,38 pp por localizar al espanol, -0,72 por los ejemplos few-shot en ingles y +10,4 por la
+    combinacion, y aparecen en **siete** lugares del informe: el resumen, el abstract, §5.2 dos
+    veces, §6 y las conclusiones. Ninguna comprobacion las cubria: la Tabla 5 se contrasta contra la
+    misma corrida, pero estas son **diferencias** entre sus filas y el informe las cita en prosa.
+
+    Se calculan desde el CSV crudo y no restando las medias publicadas: con dos decimales sale
+    -0,73 en lugar de -0,72, y eso habria dado un falso positivo.
+    """
+    import csv as _csv
+    import collections as _c
+    rel = 'results/ablacion_n15_REMOTO/benchmark_results.csv'
+    ruta = os.path.join(BENCH_DIR, rel)
+    if not os.path.exists(ruta):
+        check('las diferencias del analisis de variantes reproducen', 0,
+              ['no existe %s' % rel])
+        return
+    g = _c.defaultdict(list)
+    with open(ruta, encoding='utf-8') as fh:
+        for r in _csv.DictReader(fh):
+            if r.get('f1') not in (None, ''):
+                g[r['model']].append(float(r['f1']))
+    m = {k: 100 * sum(v) / len(v) for k, v in g.items()}
+    faltan = [k for k in ('zs-en', 'zs-es', 'fs-en', 'fs-es') if k not in m]
+    if faltan:
+        check('las diferencias del analisis de variantes reproducen', 0,
+              ['la corrida de ablacion no trae los grupos %s' % ', '.join(faltan)])
+        return
+    esperado = (('localizacion al espanol', m['zs-es'] - m['zs-en'], r'\+4[.,]38'),
+                ('few-shot en ingles', m['fs-en'] - m['zs-en'], r'[-−]0[.,]72'),
+                ('combinacion de ambos', m['fs-es'] - m['zs-en'], r'\+?10[.,]4\b'))
+    fallos, mirados = [], 0
+    for etiq, val, patron in esperado:
+        mirados += 1
+        if not re.search(patron, s):
+            fallos.append('el informe no cita la diferencia de %s, que el dato pone en %+.2f pp'
+                           % (etiq, val))
+    # y al reves: que la cifra citada coincida con el dato, no solo que exista
+    for etiq, val, esp in (('localizacion al espanol', m['zs-es'] - m['zs-en'], 4.38),
+                           ('few-shot en ingles', m['fs-en'] - m['zs-en'], -0.72),
+                           ('combinacion de ambos', m['fs-es'] - m['zs-en'], 10.40)):
+        mirados += 1
+        if abs(val - esp) > 0.006:
+            fallos.append('%s: el informe dice %+.2f pp y el dato da %+.4f' % (etiq, esp, val))
+    check('las diferencias del analisis de variantes reproducen', mirados, fallos,
+          'se calculan del CSV crudo: restando medias redondeadas sale -0,73 y no -0,72')
+
+
 def c_extension(s):
     """El cuerpo no puede exceder 25 paginas. La estimacion se declara como tal."""
     L = s.split('\n')
@@ -1320,6 +1370,7 @@ def main():
     ejecutar(c_alucinaciones, s)
     ejecutar(c_defensa, s)
     ejecutar(c_fuentes_de_los_grupos, s)
+    ejecutar(c_ablacion, s)
     ejecutar(c_extension, s)
     if '--red' in sys.argv:
         c_urls(s)
