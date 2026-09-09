@@ -1435,6 +1435,50 @@ Está en `FINDINGS §F65` y `§F65.bis`, con la tabla de ambas.
 
 ---
 
+### §4.bis Workflow `wf_348f89e2-43b` — consistencia global de la tesina (REINTENTO)
+
+**Agente:** Claude Code (equipo principal) · **Lanzado:** 2026-09-09 · **Estado:** EN CURSO
+
+**Reintenta `wf_ae5d7d69-db5`, que murió sin entregar nada.** Causa: **límite de sesión**, no un
+defecto del script. Pero su diseño contribuyó: **un solo agente** gastó **218 842 tokens y 91
+llamadas a herramientas en 17 minutos** y seguía «montando el inventario» cuando se cortó. Un agente
+monolítico que lo lee todo no tiene punto de retorno.
+
+**Qué cambia en el reintento:**
+
+| | Intento fallido | Reintento |
+|:---|:---|:---|
+| Agentes | 1, monolítico | **4 estrechos y en paralelo**, más hasta 6 refutadores |
+| Alcance de cada uno | todo | un lote: prosa del cuerpo · tablas · anexos · artefactos de datos |
+| Presupuesto declarado | ninguno | **25 llamadas** por agente, 12 por refutador |
+| Datos de referencia | los buscaba el agente | **verificados por el orquestador** y puestos en el prompt |
+
+**Revisión del orquestador antes de despachar**, como exige `CLAUDE.md`:
+
+1. **Ningún enunciado dirige a eliminar contenido.** Los cuatro prompts declaran la política aditiva
+   y llevan el caso real de las dos filas de `gemma4:latest` que una auditoría tomó por duplicado.
+   Los cuatro agentes son de **solo lectura** y se les prohíbe `git add`, `git commit` y editar.
+2. **Datos de referencia verificados contra la fuente primaria** por el orquestador antes de
+   escribirlos: los dos consolidados existen y solo esos dos, **3 120 filas y 26 grupos** el
+   publicado y **2 938 filas y 26 grupos** el nuevo, que son 26×113 tras excluir los siete
+   contaminados; **cero** `parse_method='failed'` y **cero** filas con F1 > (P+R)/2 en ambos; y las
+   **13** corridas `__N120` declaran `kb_combined` y `max_tokens=4096` sin una excepción.
+3. **Ficheros disjuntos:** tres lotes se reparten el mismo Markdown por **zonas** —cuerpo, tablas,
+   anexos— y el cuarto no lo abre siquiera. Al ser de solo lectura no hay riesgo de pisarse.
+4. **Backup previo:** no aplica por ser de solo lectura, y se dice explícitamente en el prompt.
+5. **Etapa de verificación posterior:** todo hallazgo marcado **grave** pasa por un refutador con
+   sesgo por defecto a que es falso, que lleva **los dos casos reales** en que una auditoría de este
+   proyecto se equivocó: el falso duplicado de la Tabla 2 y el 50 % de FinanceBench leído una fila
+   desplazada. Y la síntesis final la hace el orquestador, no un agente.
+
+**Además:** se les advierte del `if x.get('k') is not None` frente a `if x.get('k')`, porque un 0,0
+es falsy y descartarlo infla las medias; y de que **no** reporten modelos excluidos hallados en logs,
+en `RUNS_INDEX.md` o en corridas históricas, porque esos artefactos **atestiguan** y se conservan.
+
+**Nota sobre el alcance, que el autor ya cerró:** omitir del informe los resultados **parciales**
+está **autorizado**. Que falten no es un hallazgo; que se presenten como definitivos, sí.
+
+
 ## 5. Procesos de fondo activos
 
 | Proceso | Función |
