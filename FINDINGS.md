@@ -2557,3 +2557,26 @@ contraste. **La frase pasa de argumentar a citar un dato.**
 
 **Balance del repaso:** de los tres «no significativo» del informe, uno estaba bien redactado, uno era un
 error de fondo —corregido en `§F77`— y uno de redacción, corregido aquí.
+
+### §F77.ter — La conclusión sobre soberanía está bien construida, y queda cuantificada
+
+**2026-09-08, 21:52.** Última pieza del repaso de potencia. **Resultado negativo: no hay nada que corregir.**
+
+La conclusión 3 de §7.1 compara ejecución local y alojada, y la sospecha era que afirmara una superioridad
+sobre quince artículos. **No lo hace.** Dice que sobre N=15 la local supera a la alojada, «**pero ese
+experimento es el de menor potencia estadística y el estudio principal lo contradice**», y extrae la
+conclusión del corpus grande: la soberanía cuesta del orden de cuatro puntos de F1.
+
+Es el tratamiento correcto, y los números lo respaldan: la diferencia de **2,13 pp** no alcanza significancia
+por ninguna vía —Wilcoxon pareado `p = 0,4543`, *t* independiente `p = 0,5940`— y la potencia frente a ese
+efecto es del **8 %**.
+
+**Lo que aporta esta comprobación** es poner cifra a lo que el texto dice en palabras. Cuando el informe
+escribe «el experimento de menor potencia estadística», ahora hay un artefacto que responde qué significa eso
+si alguien lo pregunta: `results/ROBUSTEZ_ESTADISTICA_20260908/potencia_contrastes.json` recoge los cuatro
+contrastes revisados hoy con su potencia y su lectura.
+
+**Balance del repaso completo.** De los cuatro contrastes del informe con conclusión negativa o sobre muestra
+pequeña: **dos estaban bien redactados** —§5.2 y esta conclusión 3—, **uno era un error de fondo** que se
+corrigió (`§F77`) y **uno de redacción** (`§F77.bis`). El informe sale del repaso mejor de lo que entró, y
+con la potencia de sus contrastes documentada.
