@@ -28,6 +28,7 @@ ARTEFACTOS = [
     f'{BENCH}/ANALISIS_MOJIBAKE_20260908/efecto_mojibake.json',
     f'{BENCH}/CORRELACION_CAPACIDAD_20260908/correlacion.json',
     'DEFENSA-PREGUNTAS-Y-RESPUESTAS.md',
+    f'{BENCH}/ROBUSTEZ_ESTADISTICA_20260909/robustez.json',
 ]
 
 
@@ -37,13 +38,33 @@ def verificador():
         cwd=RAIZ, capture_output=True, text=True)
 
 
+def malas(r):
+    """Nombres de las comprobaciones que fallan o quedan vacias.
+
+    Se comparan CONJUNTOS y no el codigo de salida. Exigir que el verificador pase por completo
+    dejaba esta autoprueba inerte en cuanto algo ajeno fallara: ocurrio el 2026-09-09, cuando la
+    fusion del equipo trajo dos `.log` a cero bytes que no se pueden borrar —son registros— y la
+    autoprueba se abortaba entera sin protejer nada. Lo que hay que exigir es que esconder un
+    artefacto **anada** un fallo, no que no hubiera ninguno antes.
+    """
+    fuera = set()
+    for l in (r.stdout or '').split('\n'):
+        s = l.strip()
+        if s.startswith('FALLA') or s.startswith('VACIA'):
+            fuera.add(' '.join(s.split()[1:]).split('(')[0].strip())
+    return fuera
+
+
 def main():
     partida = verificador()
-    if partida.returncode != 0:
-        print('El verificador ya falla sin esconder nada. Corrige eso primero.')
-        print(partida.stdout[-800:])
-        return 2
-    print('control: el verificador pasa con todo en su sitio\n')
+    previas = malas(partida)
+    if previas:
+        print('aviso: %d comprobacion(es) ya fallan sin esconder nada, y se descuentan:' % len(previas))
+        for x in sorted(previas):
+            print('    - %s' % x)
+        print()
+    else:
+        print('control: el verificador pasa con todo en su sitio\n')
 
     fallos = []
     for rel in ARTEFACTOS:
@@ -61,11 +82,13 @@ def main():
             shutil.move(guardado, ruta)
             shutil.rmtree(tmp, ignore_errors=True)
 
-        if r.returncode == 0:
-            fallos.append((rel, 'el verificador pasa sin el artefacto'))
+        nuevas = malas(r) - previas
+        if not nuevas:
+            fallos.append((rel, 'esconderlo no anade ninguna comprobacion fallida'))
             print(f'  NO DETECTA {rel}')
         else:
-            marca = 'VACIA' if 'VACIA' in r.stdout else 'fallo'
+            marca = 'VACIA' if any('VACIA' in l and any(n in l for n in nuevas)
+                                   for l in r.stdout.split('\n')) else 'fallo'
             print(f'  detecta ({marca:5})  {rel}')
 
     print()

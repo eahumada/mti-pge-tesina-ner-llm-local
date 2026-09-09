@@ -1110,6 +1110,14 @@ def c_defensa(s):
     # Se anaden porque el error de escribir «dos modelos significativos» cuando son tres estuvo en
     # ese documento y no lo detecto nada: la comprobacion solo miraba los artefactos antiguos.
     rb = carga('ROBUSTEZ_ESTADISTICA_20260909/robustez.json')
+    if not rb:
+        # Sin este `else` la comprobacion se saltaba en silencio las cifras de la re-corrida cuando
+        # el artefacto faltaba, y seguia diciendo «ok» con menos elementos: el defecto de §L47 en
+        # codigo escrito para prevenirlo. Lo destapo `tools/autoprueba_verificador.py` el mismo dia.
+        fallos.append('falta results/ROBUSTEZ_ESTADISTICA_20260909/robustez.json, del que dependen '
+                      'las cifras de la re-corrida que el indice cita; regenerar con '
+                      'tools/robustez_estadistica.py')
+        mirados += 1
     if rb:
         co2 = rb.get('correlacion_capacidad_beneficio') or {}
         mi = rb.get('modelo_mas_influyente')
