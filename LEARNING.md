@@ -983,3 +983,24 @@ corre. `tools/robustez_estadistica.py` moría con un `ModuleNotFoundError` porqu
 del proyecto, y un traceback no dice dónde está el intérprete que sí funciona: durante ese tiempo la
 herramienta era indistinguible de no existir. Por eso la comprobación de Levene se implementó con la
 biblioteca estándar, aun teniendo scipy a mano, y se validó **contra** scipy en lugar de **con** scipy.
+
+## §L63 — Una comprobación que compara contra una constante escrita a mano no comprueba el documento
+
+La comprobación del «dos de los trece» de Tukey contrastaba el delta del artefacto contra un `0.1452`
+literal, puesto en el código porque era lo que el informe decía **en el momento de escribirla**. El efecto
+es que la comprobación validaba el artefacto contra sí misma: cambiar el `+14,52 pp` del informe no producía
+ningún fallo. Ver `FINDINGS §F91.bis`.
+
+**La regla:** en una comprobación que enfrenta documento y dato, **los dos lados se leen**. El valor
+esperado no se teclea en el código; se extrae del documento, aunque sea más trabajo y aunque el patrón sea
+más frágil. Un patrón frágil falla de forma visible cuando el texto cambia; una constante escrita a mano
+calla.
+
+**Cómo se detecta:** solo por mutación, y **mutando el documento**, no el dato. De cinco mutaciones, cuatro
+se detectaban —el recuento, la p publicada, el veredicto del artefacto y el emparejamiento roto— y la que
+tocaba la cifra publicada no. Si la prueba se hubiera limitado a mutar el artefacto, la vacuidad habría
+sobrevivido, porque contra el artefacto la comprobación sí funcionaba.
+
+**Corolario:** al escribir una comprobación conviene preguntarse, por cada valor que aparece en su código,
+de dónde sale. Si sale del documento que se está comprobando, es una constante y hay que reemplazarla por
+una lectura. Si sale de la teoría —un umbral, un nivel de significación—, puede quedarse.

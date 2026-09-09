@@ -3647,6 +3647,9 @@ desconfianza, no releer el patrón.
 
 ## §F91 — El supuesto que sostiene el ANOVA principal no lo recalculaba nadie
 
+> **Ampliado el 2026-09-09.** Cerrado este hueco, se enumeraron las demas afirmaciones estadisticas del
+> informe: **ninguna** estaba cubierta, incluido el ANOVA titular. Las dos reproducen. Ver **§F91.bis**.
+
 **2026-09-09.** §5 del informe publica que «la prueba de Levene no detecta heterocedasticidad (p = 0,18), lo
 que con 3 120 observaciones sí es informativo». Esa p sostiene el supuesto de homocedasticidad del ANOVA que
 da el **resultado titular del trabajo**.
@@ -3693,3 +3696,48 @@ traceback no dice dónde está el intérprete que sí la ejecuta. Ahora falla co
 Merece la pena retenerlo: **una comprobación que aborta con un traceback es indistinguible de una
 comprobación que no existe**, y ésta llevaba así el tiempo que llevara sin scipy en el intérprete del
 sistema.
+
+## §F91.bis — Ninguna de las treinta comprobaciones recalculaba el ANOVA titular
+
+**2026-09-09.** Cerrado el hueco de Levene, la pregunta obligada era cuántas más de las afirmaciones
+estadísticas publicadas estaban en la misma situación. Enumeradas las del informe y cruzadas contra el
+verificador, **ninguna figuraba por nombre**, incluida la que más pesa:
+
+> «El ANOVA de una vía sobre los veintiséis grupos arroja **F = 38,2222** con p = 3,4453 × 10⁻¹⁶⁰»
+
+Las treinta comprobaciones cubrían tablas, figuras, bibliografía, agregación y el protocolo de las corridas
+fusionadas, pero **la F y la p del resultado principal no las tocaba nadie**.
+
+**Ambas reproducen.** Recalculadas desde `merged_results.csv` con la biblioteca estándar: F = 38,2222,
+p = 3,445331e-160, η² = 0,2360 sobre 26 grupos y 3 120 observaciones, df (25, 3094). Contrastado con
+`scipy.stats.f_oneway`, que da lo mismo al cuarto decimal. La beta incompleta no se desborda a esa magnitud,
+que era la duda razonable con un exponente de −160.
+
+**El «dos de los trece» de Tukey también reproduce**, y es la afirmación que decide para qué modelos sirve el
+RAG. Contadas las 325 comparaciones del informe del consolidado, de las 13 que enfrentan `baseline` con
+`kb_rag` del mismo modelo hay exactamente **2** significativas, y son las dos que el informe nombra:
+
+| Modelo | Δ | p ajustada | El informe publica |
+|:---|---:|---:|:---|
+| `nemotron-mini:4b` | +14,52 pp | ~0 | p<0,001 |
+| `llama3.2:latest` | +10,82 pp | 0,0069 | p=0,007 |
+
+**Y una distinción que conviene tener clara antes de la defensa:** `robustez_estadistica.py` da **8 de 13**
+significativos, no 2. No es una contradicción — es Wilcoxon apareado con corrección de Holm, una prueba
+distinta y menos conservadora, porque aprovecha el emparejamiento por artículo que Tukey ignora. Las dos son
+ciertas sobre lo que dicen medir, y el riesgo está en citarlas como si fueran la misma cuenta.
+
+Añadidas como comprobaciones **31** y **32**, con 5 y 8 elementos, y probadas por mutación en cinco y siete
+frentes respectivamente.
+
+### Dos trampas de emparejamiento, una en cada comprobación
+
+**`rsplit('_', 1)` parte `_kb_rag` por dentro.** Da `gemma4:31b-mlx_kb` y `rag`, con lo que no empareja ni
+una de las 13 y el recuento sale **cero**. La comprobación lo declara ahora como fallo explícito en lugar de
+contar cero en silencio, y la mutación que renombra el sufijo lo confirma.
+
+**Y una vacuidad propia, que la prueba por mutación destapó.** La primera versión de la comprobación de
+Tukey comparaba el delta del artefacto contra un `0.1452` **escrito a mano en el código**. Alterar el
+`+14,52 pp` del informe no hacía fallar nada: la comprobación no miraba el documento que decía comprobar.
+De cinco mutaciones, cuatro se detectaban y esa no. Corregida para leer el delta del informe, ahora falla en
+los dos modelos.

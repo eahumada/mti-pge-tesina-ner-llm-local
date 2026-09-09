@@ -1439,6 +1439,252 @@ def _f_sf(F, df1, df2):
     return 1.0 - math.exp(lb) * _betacf(b, a, 1.0 - x) / b
 
 
+SUPER = {'\u2070': '0', '\u00b9': '1', '\u00b2': '2', '\u00b3': '3', '\u2074': '4',
+         '\u2075': '5', '\u2076': '6', '\u2077': '7', '\u2078': '8', '\u2079': '9',
+         '\u207b': '-'}
+
+
+def _exp_super(txt):
+    """Convierte un exponente escrito en superindices unicode a entero. '\u207b\u00b9\u2076\u2070' -> -160."""
+    s = ''.join(SUPER.get(c, '') for c in txt)
+    try:
+        return int(s)
+    except ValueError:
+        return None
+
+
+def _grupos_f1(csv_path):
+    """f1 por grupo desde un CSV de resultados. Guarda `is not None`, no `if v`."""
+    import csv as _csv
+    from collections import defaultdict as _dd
+    g = _dd(list)
+    with open(csv_path, encoding='utf-8') as fh:
+        for r in _csv.DictReader(fh):
+            v = r.get('f1')
+            if v is not None and v != '':
+                g[r['model']].append(float(v))
+    return g
+
+
+def _anova_una_via(g):
+    """(F, df1, df2, p, eta2, k, N) del ANOVA de una via sobre los grupos dados."""
+    k = len(g)
+    N = sum(len(v) for v in g.values())
+    gran = sum(x for v in g.values() for x in v) / N
+    ssb = sum(len(v) * (sum(v) / len(v) - gran) ** 2 for v in g.values())
+    ssw = sum((x - sum(v) / len(v)) ** 2 for v in g.values() for x in v)
+    df1, df2 = k - 1, N - k
+    F = (ssb / df1) / (ssw / df2)
+    return F, df1, df2, _f_sf(F, df1, df2), ssb / (ssb + ssw), k, N
+
+
+def c_anova(s):
+    """El ANOVA titular se recalcula desde el CSV, no se cita del informe de la corrida.
+
+    §5 publica «El ANOVA de una via sobre los veintiseis grupos arroja **F = 38,2222** con
+    p = 3,4453 x 10^-160». Es **el resultado estadistico principal del trabajo** y, hasta hoy,
+    ninguna de las comprobaciones lo recalculaba: la 16 comprueba que el protocolo de las corridas
+    fusionadas sea homogeneo y la 18 que la Tabla 7 reproduzca, pero la F y la p no las tocaba
+    nadie. Es §F91 otra vez, en la cifra que mas pesa.
+
+    Se recalcula con la biblioteca estandar, por lo mismo que Levene: `scipy` solo esta en el venv
+    del proyecto. Contrastado contra scipy el 2026-09-09: las dos vias dan F = 38,2222 y
+    p = 3,445331e-160, y la beta incompleta no se desborda a esa magnitud.
+
+    Se comprueba tambien contra el `statistical_report.md` del consolidado, que es el que
+    `tools/generar_tabla7.py` lee, y contra el numero de grupos que el informe declara en palabras.
+    """
+    cons = os.path.join(BENCH_DIR, 'results/ANALISIS_CONJUNTO_20260907')
+    csv_path = os.path.join(cons, 'merged_results.csv')
+    if not os.path.exists(csv_path):
+        check('el ANOVA titular se recalcula desde el CSV', 0, ['no existe %s' % csv_path])
+        return
+    g = _grupos_f1(csv_path)
+    if not g:
+        check('el ANOVA titular se recalcula desde el CSV', 0,
+              ['el CSV fusionado no trae ninguna f1 legible'])
+        return
+    F, df1, df2, pv, eta2, k, N = _anova_una_via(g)
+    fallos, mirados = [], 0
+
+    # 1) la F que publica el informe
+    mirados += 1
+    m = re.search(r'ANOVA de una v\u00eda sobre los \w+ grupos arroja \*\*F = (\d+),(\d+)\*\*', s)
+    if m is None:
+        fallos.append('no se encuentra en el informe la frase del ANOVA con su F: '
+                      'revisar si se reformulo')
+    else:
+        pub = float('%s.%s' % (m.group(1), m.group(2)))
+        if abs(pub - F) >= 5e-5:
+            fallos.append('el informe publica F = %s y el CSV da %.4f' % (pub, F))
+
+    # 2) la p, con el exponente en superindices
+    mirados += 1
+    m = re.search(r'p = (\d+),(\d+) \u00d7 10([\u2070-\u2079\u00b9\u00b2\u00b3\u207b]+)', s)
+    if m is None:
+        fallos.append('no se encuentra en el informe la p del ANOVA en notacion cientifica')
+    else:
+        mant = float('%s.%s' % (m.group(1), m.group(2)))
+        ex = _exp_super(m.group(3))
+        if ex is None:
+            fallos.append('no se puede leer el exponente de la p del ANOVA: %r' % m.group(3))
+        else:
+            pub = mant * (10.0 ** ex)
+            # se compara la mantisa a los decimales con que se publica, y el exponente exacto
+            import math
+            ex_calc = math.floor(math.log10(pv))
+            mant_calc = pv / (10.0 ** ex_calc)
+            dec = len(m.group(2))
+            if ex_calc != ex:
+                fallos.append('el informe publica exponente %d y el CSV da %d' % (ex, ex_calc))
+            elif abs(round(mant_calc, dec) - mant) >= 10 ** (-dec) / 2:
+                fallos.append('el informe publica p = %s x 10^%d y el CSV da %.*f x 10^%d'
+                              % (m.group(1) + ',' + m.group(2), ex, dec,
+                                 round(mant_calc, dec), ex_calc))
+            del pub
+
+    # 3) los grupos, que el informe declara en palabras
+    mirados += 1
+    if re.search(r'sobre los veintis\u00e9is grupos', s) is None:
+        fallos.append('el informe no declara «veintiseis grupos» junto al ANOVA; el CSV trae %d' % k)
+    elif k != 26:
+        fallos.append('el informe dice veintiseis grupos y el CSV trae %d' % k)
+
+    # 4) el informe del consolidado, que es el que generar_tabla7.py lee
+    rep = os.path.join(cons, 'statistical_report.md')
+    mirados += 1
+    if not os.path.exists(rep):
+        fallos.append('no existe el statistical_report.md del consolidado')
+    else:
+        with open(rep, encoding='utf-8') as fh:
+            txt = fh.read()
+        m = re.search(r'\*\*F-Statistic:\*\*\s*([0-9.]+)', txt)
+        if m is None:
+            fallos.append('el informe del consolidado no declara su F-Statistic')
+        elif abs(float(m.group(1)) - F) >= 5e-5:
+            fallos.append('el informe del consolidado dice F = %s y el CSV da %.4f'
+                          % (m.group(1), F))
+
+    # 5) y los grados de libertad, que se derivan de k y N
+    mirados += 1
+    if (df1, df2) != (k - 1, N - k):
+        fallos.append('los grados de libertad no cuadran con %d grupos y %d observaciones' % (k, N))
+
+    check('el ANOVA titular se recalcula desde el CSV', mirados, fallos)
+
+
+def c_tukey(s):
+    """El "dos de los trece" de Tukey se cuenta, y sus dos p se leen del artefacto.
+
+    §5.3 dice que la recuperacion «mejoro el F1-Score de forma estadisticamente significativa
+    (Tukey HSD) en **dos de los trece** modelos (`nemotron-mini:4b` +14,52 pp, p<0,001, y
+    `llama3.2:latest` +10,82 pp, p=0,007)». Es la afirmacion que decide **para que modelos sirve el
+    RAG**, y por tanto una de las que un tribunal mira primero.
+
+    Contado el 2026-09-09 sobre las 325 comparaciones del informe del consolidado: de las 13 que
+    enfrentan `baseline` con `kb_rag` del mismo modelo, **2 son significativas**, y son esas dos,
+    con p_adj de 0 y 0,0069. El informe acierta.
+
+    Conviene no confundir esta cuenta con la de `robustez_estadistica.py`, que da **8 de 13**: esa
+    es Wilcoxon apareado con correccion de Holm, una prueba distinta y menos conservadora, porque
+    aprovecha el emparejamiento por articulo que Tukey ignora. Las dos cifras son ciertas sobre lo
+    que dicen medir, y el riesgo esta en citarlas como si fueran la misma.
+
+    Trampa al emparejar: los sufijos son `_baseline` y `_kb_rag`, y un `rsplit('_', 1)` parte el
+    segundo por dentro —`gemma4:31b-mlx_kb` y `rag`—, con lo que no empareja ni una y la
+    comprobacion da cero en silencio. Se recortan los sufijos completos.
+    """
+    cons = os.path.join(BENCH_DIR, 'results/ANALISIS_CONJUNTO_20260907')
+    rep = os.path.join(cons, 'statistical_report.md')
+    if not os.path.exists(rep):
+        check('el «dos de los trece» de Tukey se cuenta desde el artefacto', 0,
+              ['no existe el statistical_report.md del consolidado'])
+        return
+    with open(rep, encoding='utf-8') as fh:
+        txt = fh.read()
+    filas = re.findall(r'^\|\s*([^|]+?)\s+vs\s+([^|]+?)\s*\|\s*(-?[0-9.]+)\s*\|'
+                       r'\s*([0-9.eE+-]+)\s*\|\s*([^|]*?)\s*\|', txt, re.M)
+
+    def _partes(n):
+        for suf in ('_kb_rag', '_baseline'):
+            if n.endswith(suf):
+                return n[:-len(suf)], suf[1:]
+        return None, None
+
+    pares = {}
+    for a, b, d, pa, sig in filas:
+        ma, sa = _partes(a.strip())
+        mb, sb = _partes(b.strip())
+        if ma and ma == mb and {sa, sb} == {'kb_rag', 'baseline'}:
+            pares[ma] = (float(d), float(pa), 'No' not in sig)
+    fallos, mirados = [], 0
+
+    mirados += 1
+    if not pares:
+        fallos.append('cero comparaciones baseline-vs-kb_rag emparejadas sobre %d filas de Tukey: '
+                      'revisar el recorte de sufijos, que es la trampa de esta comprobacion'
+                      % len(filas))
+        check('el «dos de los trece» de Tukey se cuenta desde el artefacto', mirados, fallos)
+        return
+
+    sig = sorted([(m, d, pa) for m, (d, pa, e) in pares.items() if e], key=lambda x: x[2])
+
+    # 1) el recuento que publica el informe, en palabras
+    mirados += 1
+    m = re.search(r'\(Tukey HSD\) en (\w+) de los (\w+) modelos', s)
+    PAL = {'dos': 2, 'tres': 3, 'cuatro': 4, 'cinco': 5, 'seis': 6, 'siete': 7, 'ocho': 8,
+           'trece': 13, 'doce': 12}
+    if m is None:
+        fallos.append('no se encuentra en el informe la frase del recuento de Tukey')
+    else:
+        n_pub, tot_pub = PAL.get(m.group(1)), PAL.get(m.group(2))
+        if n_pub is None or tot_pub is None:
+            fallos.append('no se pueden leer los numerales de la frase de Tukey: %r de %r'
+                          % (m.group(1), m.group(2)))
+        else:
+            if n_pub != len(sig):
+                fallos.append('el informe dice %d modelos significativos con Tukey y el artefacto '
+                              'da %d: %s' % (n_pub, len(sig), ', '.join(x[0] for x in sig)))
+            if tot_pub != len(pares):
+                fallos.append('el informe dice «de los %d modelos» y el artefacto empareja %d'
+                              % (tot_pub, len(pares)))
+
+    # 2) los dos modelos nombrados, con su delta y su p
+    #
+    # El delta se LEE DEL INFORME, no se escribe aqui. La primera version comparaba el artefacto
+    # contra un 0.1452 puesto a mano en el codigo, de modo que alterar la cifra del informe no
+    # hacia fallar nada: la comprobacion no miraba el documento que dice comprobar. Lo destapo la
+    # prueba por mutacion —cuatro de cinco mutaciones se detectaban y esta no—, que es exactamente
+    # para lo que sirve.
+    for nombre, p_pat in (('nemotron-mini:4b', r'p<0,001'), ('llama3.2:latest', r'p=0,007')):
+        mirados += 1
+        if nombre not in pares:
+            fallos.append('el artefacto no trae la comparacion de %s' % nombre)
+            continue
+        d, pa, es = pares[nombre]
+        if not es:
+            fallos.append('el informe nombra %s como significativo y el artefacto dice que no'
+                          % nombre)
+        mirados += 1
+        m2 = re.search(r'`%s`\s*\*\*([+-]?\d+),(\d+) pp\*\*' % re.escape(nombre), s)
+        if m2 is None:
+            fallos.append('no se encuentra en el informe el delta en pp junto a `%s`' % nombre)
+        else:
+            d_pub = float('%s.%s' % (m2.group(1), m2.group(2))) / 100.0
+            if abs(d - d_pub) >= 5e-5:
+                fallos.append('el informe publica %+.2f pp para %s y el artefacto da %+.2f pp'
+                              % (100 * d_pub, nombre, 100 * d))
+        mirados += 1
+        if re.search(p_pat, s) is None:
+            fallos.append('el informe no publica «%s» junto a %s' % (p_pat, nombre))
+        elif p_pat == 'p<0,001' and pa >= 0.001:
+            fallos.append('el informe dice p<0,001 para %s y el artefacto da %.4g' % (nombre, pa))
+        elif p_pat == 'p=0,007' and abs(round(pa, 3) - 0.007) >= 5e-4:
+            fallos.append('el informe dice p=0,007 para %s y el artefacto da %.4g' % (nombre, pa))
+
+    check('el «dos de los trece» de Tukey se cuenta desde el artefacto', mirados, fallos)
+
+
 def c_levene(s):
     """El supuesto de homocedasticidad del ANOVA principal se recalcula, no se cita de memoria.
 
@@ -1719,6 +1965,8 @@ def main():
     ejecutar(c_defensa, s)
     ejecutar(c_fuentes_de_los_grupos, s)
     ejecutar(c_agregacion, s)
+    ejecutar(c_anova, s)
+    ejecutar(c_tukey, s)
     ejecutar(c_levene, s)
     ejecutar(c_titulares, s)
     ejecutar(c_ablacion, s)
