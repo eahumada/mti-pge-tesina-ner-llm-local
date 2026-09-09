@@ -6123,3 +6123,43 @@ la de «el Anexo I dice» —las dos de la decisión 13— y la de la telemetrí
 tenga que acordarse de comprobarlo.
 
 **Estado del verificador:** 55 comprobaciones, 63 fallos (63 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F132 — Prueba de humo de las veintiuna herramientas: una sola falla, y por el motivo correcto
+
+**Fecha:** 2026-09-09 · **Origen:** haber añadido seis herramientas en una sesión sin ejecutarlas todas
+
+Una herramienta que revienta es peor que no tenerla, y `ast.parse` no lo detecta: un `NameError` o un
+`import` que falta pasan la comprobación de sintaxis sin problema. Ejecutadas las **21** de `tools/`
+más la de `.sh`:
+
+| Comprobación | Resultado |
+|:---|---:|
+| Sintaxis (`ast.parse` y `sh -n`) | **22 de 22** correctas |
+| Cargan y responden a `--help` | **20 de 21** |
+| Ficheros rastreados a cero bytes | 2, los dos declarados |
+| Residuo sin rastrear en el repositorio | **0** |
+
+La que no carga es `generar_figuras_informe.py`, que necesita `matplotlib`. Y **es el motivo
+correcto**, no un defecto: `matplotlib` está en el venv del proyecto —3.11.1— y no en el Python del
+sistema, a propósito. Las otras veinte corren con el del sistema porque **una comprobación que solo
+corre en un entorno no corre**, y este proyecto ya rehízo Levene, el ANOVA, Friedman y `fuzz.ratio`
+en biblioteca estándar por esa razón. Esta **genera**, no comprueba, y por eso se le permite la
+dependencia.
+
+**Y no deja ninguna comprobación sin correr**, que era lo que había que verificar: el verificador
+**lee su fuente como texto** para contrastar los rótulos de las figuras, y no la ejecuta.
+
+**Lo que sí era un defecto es el mensaje.** Un `ModuleNotFoundError: No module named 'matplotlib'`
+no le dice a nadie qué hacer. Sustituido por una guarda que da la orden exacta con el venv y explica
+por qué esta herramienta es la excepción.
+
+### Y una comprobación que importa para la decisión 19
+
+Las figuras **regeneran idénticas byte a byte** hoy, comprobado con el venv sobre un directorio
+aparte para no arriesgar las del entregable. No es un dato de archivo: la decisión 19 incluye
+insertarlas, y ahora consta que se pueden regenerar y que lo que hay en `doc/figuras/` es
+exactamente lo que produce la herramienta desde la Tabla 7 del Markdown.
+
+**Estado del verificador:** 55 comprobaciones, 63 fallos (63 declarados, **0 nuevos**), 0 vacías.

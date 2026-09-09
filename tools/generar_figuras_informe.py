@@ -18,7 +18,20 @@ import re
 import sys
 import argparse
 
-import matplotlib
+try:
+    import matplotlib
+except ModuleNotFoundError:                                      # pragma: no cover
+    import sys as _sys
+    _sys.exit(
+        "  Esta herramienta necesita matplotlib, que NO esta en el Python del sistema.\n"
+        "  Usar el venv del proyecto:\n"
+        "      repos/ner-llm-entity-benchmark/venv/bin/python tools/generar_figuras_informe.py\n"
+        "  Es la unica herramienta de tools/ con esa dependencia: las 20 restantes corren con el\n"
+        "  Python del sistema a proposito, porque una comprobacion que solo corre en un entorno no\n"
+        "  corre. Esta genera, no comprueba, y por eso se le permite. El verificador LEE su fuente\n"
+        "  para contrastar los rotulos de las figuras, pero no la ejecuta, de modo que su ausencia\n"
+        "  no deja ninguna comprobacion sin correr. Ver FINDINGS §F132.")
+
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
