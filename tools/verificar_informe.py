@@ -1246,34 +1246,50 @@ def c_extension(s):
           % (cuerpo, pags, int((LIMITE - pags) * DENSIDAD)))
 
 
+def ejecutar(fn, *args):
+    """Ejecuta una comprobacion y convierte su excepcion en un fallo declarado.
+
+    Sin esto, un artefacto con JSON roto hacia caer el verificador entero con un volcado: se perdia
+    el resumen, no se sabia que comprobaciones habian pasado y la autoprueba lo leia como «no
+    detecta», porque no encontraba ninguna linea FALLA que analizar. Comprobado el 2026-09-09
+    rompiendo `friedman.json`. Una comprobacion que revienta tiene que **decir cual es y seguir**.
+    """
+    try:
+        fn(*args)
+    except Exception as e:
+        check('%s (reventó)' % fn.__name__, 0,
+              ['%s: %s' % (type(e).__name__, str(e)[:160])],
+              'una comprobacion que lanza excepcion se reporta, no tumba el verificador')
+
+
 def main():
     s = texto()
-    c_vacios()
-    c_secciones(s)
-    c_refs_anexos_tablas(s)
-    c_tablas(s)
-    c_figuras(s)
-    c_bibliografia(s)
-    c_resumen(s)
-    c_higiene(s)
-    c_excluidos(s)
-    c_figura_vs_tabla(s)
-    c_identificadores()
-    c_aritmetica(s)
-    c_recuentos(s)
-    c_protocolo(s)
-    c_anexo_vs_tabla7(s)
-    c_tabla7_vs_datos(s)
-    c_tabla4_vs_datos(s)
-    c_figura1_vs_artefacto(s)
-    c_tablas_menores(s)
-    c_tabla18_vs_artefacto(s)
-    c_json_parsea(s)
-    c_correlacion(s)
-    c_alucinaciones(s)
-    c_defensa(s)
-    c_fuentes_de_los_grupos(s)
-    c_extension(s)
+    ejecutar(c_vacios)
+    ejecutar(c_secciones, s)
+    ejecutar(c_refs_anexos_tablas, s)
+    ejecutar(c_tablas, s)
+    ejecutar(c_figuras, s)
+    ejecutar(c_bibliografia, s)
+    ejecutar(c_resumen, s)
+    ejecutar(c_higiene, s)
+    ejecutar(c_excluidos, s)
+    ejecutar(c_figura_vs_tabla, s)
+    ejecutar(c_identificadores)
+    ejecutar(c_aritmetica, s)
+    ejecutar(c_recuentos, s)
+    ejecutar(c_protocolo, s)
+    ejecutar(c_anexo_vs_tabla7, s)
+    ejecutar(c_tabla7_vs_datos, s)
+    ejecutar(c_tabla4_vs_datos, s)
+    ejecutar(c_figura1_vs_artefacto, s)
+    ejecutar(c_tablas_menores, s)
+    ejecutar(c_tabla18_vs_artefacto, s)
+    ejecutar(c_json_parsea, s)
+    ejecutar(c_correlacion, s)
+    ejecutar(c_alucinaciones, s)
+    ejecutar(c_defensa, s)
+    ejecutar(c_fuentes_de_los_grupos, s)
+    ejecutar(c_extension, s)
     if '--red' in sys.argv:
         c_urls(s)
 
