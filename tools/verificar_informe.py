@@ -1261,6 +1261,91 @@ def c_fuentes_de_los_grupos(_s):
     check('cada grupo se lee de la corrida que el consolidado usa', mirados, list(descuadres))
 
 
+def c_agregacion(s):
+    """Las cifras de la conclusion 1 usan la agregacion que §3.3 declara: macro, por articulo.
+
+    §3.3 dice que agregar dentro de cada articulo y promediar entre articulos es la **unica**
+    convencion del trabajo, y advierte de que la alternativa daria «62,67 % frente al 59,25 % que
+    aqui se publica». La conclusion 1, sin embargo, presenta el **62,67** y el **80,51** como los
+    equivalentes de sus cifras restringidas, y esos dos son **micro**: mezcla las dos agregaciones
+    y las llama equivalentes. Ver `FINDINGS §F87` y la **decision 13**.
+
+    Esta comprobacion **falla a proposito** mientras el autor no decida, igual que la referencia [37]
+    falla hasta que se complete la purga. Su mensaje dice que sustituir.
+    """
+    import json as _json
+    if not os.path.exists(MANIFIESTO):
+        check('la conclusion 1 usa la agregacion declarada en §3.3', 0,
+              ['no existe el manifiesto, del que sale la corrida de referencia'])
+        return
+    with open(MANIFIESTO, encoding='utf-8') as fh:
+        srcs = _json.load(fh)['sources']
+    d120 = next((os.path.dirname(x['csv_path']) for x in srcs
+                 if 'gemma4:31b-mlx_baseline' in x.get('models', [])), None)
+    CASOS = ((d120, 'gemma4:31b-mlx_baseline', 'N=120'),
+             ('results/n30_rerun_REMOTO', 'gemma4:31b-mlx', 'dominio'))
+    fallos, mirados = [], 0
+    for rel, grupo, etiq in CASOS:
+        mirados += 1
+        if rel is None:
+            fallos.append('el manifiesto no dice de que corrida sale %s' % etiq)
+            continue
+        ruta = os.path.join(BENCH_DIR, rel, 'detailed_results.json')
+        if not os.path.exists(ruta):
+            fallos.append('no existe %s, de donde salen las cifras de %s' % (rel, etiq))
+            continue
+        with open(ruta, encoding='utf-8') as fh:
+            R = [r for r in _json.load(fh) if r.get('model') == grupo]
+        if not R:
+            fallos.append('%s no trae el grupo %s' % (rel, grupo))
+            continue
+        T3 = ('Persons', 'Organizations', 'Locations')
+
+        def _macro(cats):
+            v = []
+            for r in R:
+                pt = ((r.get('metrics') or {}).get('per_type')) or {}
+                tp = sum((pt.get(c, {}).get('tp', 0) or 0) for c in cats)
+                fp = sum((pt.get(c, {}).get('fp', 0) or 0) for c in cats)
+                fn = sum((pt.get(c, {}).get('fn', 0) or 0) for c in cats)
+                if tp + fp + fn == 0:
+                    v.append(1.0)
+                    continue
+                pr = tp / (tp + fp) if tp + fp else 0.0
+                rc = tp / (tp + fn) if tp + fn else 0.0
+                v.append(2 * pr * rc / (pr + rc) if pr + rc else 0.0)
+            return 100 * sum(v) / len(v)
+
+        def _micro(cats):
+            TP = FP = FN = 0
+            for r in R:
+                pt = ((r.get('metrics') or {}).get('per_type')) or {}
+                for c in cats:
+                    TP += pt.get(c, {}).get('tp', 0) or 0
+                    FP += pt.get(c, {}).get('fp', 0) or 0
+                    FN += pt.get(c, {}).get('fn', 0) or 0
+            pr = TP / (TP + FP) if TP + FP else 0.0
+            rc = TP / (TP + FN) if TP + FN else 0.0
+            return 100 * 2 * pr * rc / (pr + rc) if pr + rc else 0.0
+
+        ma, mi = _macro(T3), _micro(T3)
+        # la conclusion 1 debe citar la macro; si cita la micro, esta mezclando agregaciones
+        i7 = s.find('1. **Viabilidad demostrada')
+        concl = s[i7:i7 + 1200] if i7 >= 0 else ''
+        mirados += 1
+        pat_mi = r'%s[.,]%s' % (int(mi), ('%.2f' % mi).split('.')[1])
+        pat_ma = r'%s[.,]%s' % (int(ma), ('%.2f' % ma).split('.')[1])
+        if re.search(pat_mi, concl):
+            fallos.append('la conclusion 1 cita %.2f (micro) para %s; la convencion declarada da '
+                          '%.2f (macro). Sustituir. Ver FINDINGS §F87 y la decision 13'
+                          % (mi, etiq, ma))
+        elif not re.search(pat_ma, concl):
+            fallos.append('la conclusion 1 no cita ni %.2f (macro) ni %.2f (micro) para %s: '
+                          'revisar de donde sale su cifra' % (ma, mi, etiq))
+    check('la conclusion 1 usa la agregacion declarada en §3.3', mirados, fallos,
+          'falla a proposito hasta que se resuelva la decision 13, como el [37] hasta la purga')
+
+
 def c_titulares(s):
     """Las cifras titulares, atadas a su corrida: las dos del resumen y la de la soberania.
 
@@ -1449,6 +1534,7 @@ def main():
     ejecutar(c_alucinaciones, s)
     ejecutar(c_defensa, s)
     ejecutar(c_fuentes_de_los_grupos, s)
+    ejecutar(c_agregacion, s)
     ejecutar(c_titulares, s)
     ejecutar(c_ablacion, s)
     ejecutar(c_extension, s)

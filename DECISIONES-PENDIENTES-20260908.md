@@ -405,7 +405,13 @@ mismo modelo, y el 80,51 contradice al **80,57** que usan §5.3 y §5.4 para el 
 | **c) Dejarlo** | **Se desaconseja.** Quien compare la conclusión con la Tabla 7 encuentra dos cifras para lo mismo, y con la conclusión favoreciendo a la convención antigua |
 
 **Recomendación: (a).** Y con una salvedad sobre el resto de las decisiones de esta lista: **aquí no hay
-criterio que ejercer**, solo una inconsistencia que resolver. Se deja como decisión porque toca una conclusión
+criterio que ejercer**, solo una inconsistencia que resolver.
+
+**Y está comprobado que la corrección basta.** La **comprobación 29** del verificador falla hoy con este
+mensaje —«la conclusión 1 cita 62.67 (micro) para N=120; la convención declarada da 59.25 (macro)»— y **pasa
+en verde en cuanto se sustituye el par**, probado aplicando la corrección y revirtiéndola. La comprobación
+falla a propósito mientras esto no se resuelva, igual que la referencia [37] falla hasta que se complete la
+purga: es la forma de que no se olvide. Se deja como decisión porque toca una conclusión
 y eso no se cambia sin el autor, no porque haya dos lecturas defendibles.
 
 ---
