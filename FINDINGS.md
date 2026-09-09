@@ -2968,3 +2968,64 @@ que sobre el informe limpio no aparece ningún falso positivo: sigue en 32 eleme
 protegidas** —alucinaciones por su aserción de población, Anexo I y Tabla 18— y **cuatro no**: Tabla 4,
 Tabla 7 y las tres tablas menores, que compartían el mismo defecto con tres variantes. Todas corregidas y
 sometidas a mutación.
+
+---
+
+## §F81.ter — `§F81` era un redescubrimiento de `§F49`, y `§F49` afirma una inmunidad que no existe
+
+**2026-09-09, 02:1x.** Verificando las nueve corridas entregadas de la re-corrida apareció que la firma
+`tp + fn` es **idéntica en las veintisiete** —(1098, 1500, 1034) en N=120— cuando `§F81` predice que debería
+variar entre modelos. La explicación estaba en el propio código de la rama: `src/evaluator.py` lleva desde el
+**2026-09-08** una corrección con este comentario, «cada entidad de referencia se empareja UNA sola vez.
+Antes dos extracciones que casaban con un mismo gold sumaban dos aciertos», y cita `encargo §2.3, FINDINGS
+§F49/§F50`.
+
+**Es decir: el defecto ya estaba encontrado y ya estaba corregido, y `§F81` lo redescubrió sin verlo.** El
+mecanismo que describí es el mismo que `§F49` documentó el 2026-09-07, con la misma referencia de línea. Debí
+haberlo buscado antes de escribir un hallazgo nuevo; que la firma constante de la re-corrida me llevara hasta
+él es una casualidad afortunada, no un método.
+
+### Pero `§F49` afirma algo que no se sostiene, y eso sí es nuevo
+
+`§F49` concluye que el defecto **«no contamina los resultados»** porque «las cifras del estudio proceden del
+bloque `overall`, que sí calcula `tp / (tp + fn)` y es **inmune** al problema». El razonamiento es que al
+aparecer `tp` en numerador y denominador el sesgo se cancela.
+
+**No se cancela: se atenúa.** Con referencia {A, B, C} y extracciones A, A′, B —las dos primeras casando con
+A— resulta `tp = 3`, referencias casadas {A, B} y `fn = 1`. El `overall` da `3/4 = 0,750` cuando lo correcto
+es `2/3 = 0,667`. `tp` infla el numerador y **`fn` no compensa**, porque se calcula sobre referencias
+distintas.
+
+La prueba empírica es la propia corrección: **si `overall` fuera inmune, recalcular no cambiaría nada**, y
+cambia. Sobre los 26 grupos publicados, el F1 sube **+0,160 pp de media** y **+1,287 pp** como máximo, siempre
+al alza, con **409** emparejamientos duplicados (`§F81`, `§F81.bis`).
+
+### Lo que queda en pie de cada hallazgo
+
+| Afirmación | Estado |
+|:---|:---|
+| El mecanismo del doble conteo (`§F49`, `§F81`) | **Correcto**, y descrito igual en ambos |
+| La exhaustividad por tipo pasa de 1,0 (`§F49`) | **Correcto**: 197 registros, máximo 2,444 |
+| «El bloque `overall` es inmune» (`§F49`) | **Falso.** Atenúa el sesgo, no lo elimina |
+| «Ninguno afecta a las cifras publicadas» (`§F49`) | **Falso**, aunque el efecto es pequeño: +0,160 pp de media |
+| La cuantificación del efecto residual (`§F81`) | **Correcta y nueva**; es lo único que `§F81` aporta |
+| El defecto persiste y hay que decidir cuándo corregirlo (`§F81`) | **Falso.** Ya está corregido en la rama de la re-corrida desde el 2026-09-08 |
+
+### Consecuencias prácticas
+
+- **La decisión 8 se reformula.** Preguntaba si corregir el evaluador y cuándo; ya está corregido y la
+  re-corrida usa la versión corregida. Lo que queda por decidir es **si el informe declara el defecto de los
+  datos antiguos** mientras conviven con los nuevos.
+- **La re-corrida no arrastra el defecto**, y ahora está probado contra la fuente: su `tp + fn` de N=120 vale
+  exactamente **2 × (549, 750, 517)**, la anotación de los **113** artículos no contaminados, sin un solo
+  acierto de más.
+- **Pero no puede comprobarse registro a registro**, porque la re-corrida **no entrega
+  `detailed_results.json`** y las métricas por tipo viven ahí. Es una razón más para insistir en el pedido de
+  `PEDIDO-COMMITEAR-BARRIDO-Y-DETALLE-20260908.md`.
+
+### La lección
+
+Antes de escribir un hallazgo hay que **buscar si ya está escrito**, con un `grep` por el mecanismo y no solo
+por el número de sección. Y al leer un hallazgo antiguo, su conclusión tranquilizadora —«no afecta a las
+cifras publicadas»— merece la misma comprobación que una alarmante: aquí bastaba un ejemplo de tres entidades
+en una servilleta para ver que la inmunidad no se sostenía, y sobrevivió dos días sin que nadie lo hiciera.

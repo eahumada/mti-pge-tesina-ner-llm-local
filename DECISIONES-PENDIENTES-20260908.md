@@ -124,7 +124,14 @@ Evidencia: `FINDINGS §F76`.
 
 ---
 
-## 8. ¿Se corrige el emparejamiento duplicado del evaluador, y cuándo? — **urgente**
+## 8. El emparejamiento duplicado: qué declara el informe — *reformulada el 2026-09-09*
+
+> **Esta decisión estaba mal planteada y se reformula.** Preguntaba si corregir `evaluator.py` y cuándo.
+> **Ya está corregido**, en la rama de la re-corrida y desde el 2026-09-08, con la referencia
+> `encargo §2.3, FINDINGS §F49/§F50`; la re-corrida entera usa la versión corregida y se ha comprobado
+> contra la fuente que su `tp + fn` vale exactamente la anotación de los 113 artículos, sin un acierto de
+> más. Lo que sigue abierto es otra cosa: **qué dice el informe de los datos antiguos**, que sí lo
+> arrastran y que conviven con los nuevos hasta que la re-corrida termine. Ver `FINDINGS §F81.ter`.
 
 `src/evaluator.py` cuenta `tp` por cada entidad extraída que casa, pero `fn` sobre las referencias
 **distintas** casadas. Cuando dos extracciones casan con la misma referencia —«John Smith» y «Smith, John»,
@@ -141,17 +148,17 @@ el informe no publica una ordenación de grupos.
 *(Cifras corregidas el 2026-09-09: las primeras se calcularon leyendo ocho de los veintiséis grupos de la
 corrida equivocada. Ver `FINDINGS §F81.bis`.)*
 
-**Es urgente por una razón que no es la magnitud:** la re-corrida en marcha en el equipo de 48 GB usa este
-mismo evaluador. Cada modelo que termina lo hace con la métrica actual.
+**Ya no es urgente, y la razón por la que lo parecía era equivocada:** se dio por hecho que la re-corrida
+usaba el evaluador defectuoso, y usa el corregido desde el primer modelo.
 
 | Opción | Qué implica |
 |:---|:---|
-| **a) No tocar nada y declararlo** | El barrido entero queda homogéneo, que es lo que permite compararlo. El informe declara la limitación con su efecto cuantificado. Es lo más defendible y no cuesta horas de máquina |
-| **b) Corregir ahora** | Los modelos ya terminados quedarían medidos con un criterio y los que faltan con otro. Obligaría a rehacer los ocho ya hechos. **Se desaconseja** |
-| **c) Corregir después, y rehacer la medición sin reejecutar** | Al terminar el barrido, recalcular todos los registros con `tools/efecto_emparejamiento_duplicado.py`, que no necesita inferencia. Da cifras corregidas y homogéneas, a coste cero de máquina |
+| **a) Declarar el defecto de los datos antiguos** | Una línea en las limitaciones: las cifras anteriores a la re-corrida están infladas +0,160 pp de media por un doble conteo ya corregido, y ninguna conclusión cambia. Cuesta poco y desactiva la objeción |
+| **b) No declararlo** | Defendible si la re-corrida sustituye **todas** las cifras del informe antes de la entrega. Riesgo: si alguna tabla se queda con datos antiguos, queda sin declarar |
+| **c) Recalcular las cifras antiguas** | `tools/efecto_emparejamiento_duplicado.py` lo hace sin reejecutar inferencia, y la tabla ya está en `tabla7_recalculada.md`. Obligaría a rehacer Anexo I, Figura 2, ANOVA y post-hoc |
 
-**Recomendación: (a) para el barrido en curso y (c) al cerrarlo.** Lo que **no** debe hacerse es tocar
-`evaluator.py` mientras el barrido corre, y por eso no se ha tocado.
+**Recomendación: (a) si queda alguna cifra antigua en el informe, y (b) solo si no queda ninguna.** La (c)
+tiene poco sentido cuando la re-corrida va a sustituir esos datos de todos modos.
 
 **La tabla ya está calculada, para que la decisión se tome mirando cifras.**
 `results/EMPAREJAMIENTO_DUPLICADO_20260908/tabla7_recalculada.md` trae la Tabla 7 completa con las dos
