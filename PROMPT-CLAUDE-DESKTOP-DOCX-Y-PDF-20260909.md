@@ -29,11 +29,36 @@ tipos de contenido, y **lo que falta sale en su salida, fichero por fichero**:
 **Trabaja contra esa salida, no contra la lista de abajo.** La lista es para que entiendas el
 alcance; la salida es la verdad, y se actualiza sola a medida que insertas.
 
-**Coordinación, importante:** un workflow de Claude Code (`wifolz9jz`) está evaluando ahora mismo si
-estas inserciones son viables por cirugía OOXML, con una puerta que se detiene si no lo son. **Mira
-`CURRENT-TASKS.md` antes de empezar.** Lo más probable es que se detenga —ninguna herramienta de
-`tools/` inserta párrafos ni imágenes, solo reemplaza y reescribe— y entonces el trabajo es tuyo,
-que tienes Word. Si el workflow hubiera aplicado algo, la salida del verificador lo reflejará.
+**Coordinación, y ya está resuelta.** Un workflow de Claude Code evaluó estas inserciones por
+cirugía OOXML y dictaminó **«proceder con las viables»**, que son solo dos. **Haz `git pull` antes de
+empezar** y trabaja contra la salida del verificador, que reflejará lo ya aplicado.
+
+**El reparto, verificado:**
+
+| Pieza | Quién |
+|:---|:---|
+| **5** — la celda de la Tabla 3 | **el workflow**: cadena única, un solo `<w:t>`, run sin resalte |
+| **3, en parte** — las dos citas de [38] en el texto (§2.1 y §7.2) | **el workflow**: anclas únicas en los tres |
+| **1** — la subsección completa | **tú**: ninguna herramienta inserta párrafos, encabezados ni tablas |
+| **2** — los cinco párrafos | **tú**: exigen `<w:p>` nuevos, y uno exige **partir en dos** un párrafo que el `.docx` tiene fundido |
+| **3, el resto** — la entrada [38] de la bibliografía | **tú**: `<w:p>` nuevo con `pStyle` `referenceitem` en A y `BodyText` en B y C, `numId=0` y un run en cursiva |
+| **4** — la Tabla 9 | **tú, y no es lo que parecía**: ver abajo |
+| **6** — las dos figuras | **tú**: `word/media/`, relaciones, `w:drawing`, y en B y C hace falta declarar `Default Extension="png"` en `[Content_Types].xml` |
+
+> **Dos hechos del análisis que te ahorran una decisión equivocada.**
+>
+> **El `.docx` con plantilla no usa `heading4`.** De modo que el encabezado de la pieza 1 no es un
+> problema de herramienta: **el nivel y su numeración son una decisión editorial** que hay que tomar,
+> porque la jerarquía de la plantilla no tiene ese nivel en uso. Decide con qué estilo va y dilo.
+>
+> **La Tabla 9 no le faltan tres filas: usa otra convención.** Verificado celda por celda: el
+> `.docx` escribe la hoja **indentada con espacios duros** —`&nbsp;&nbsp;&nbsp;&nbsp;main.py`— y el
+> Markdown escribe la **ruta completa** —`src/main.py`—. Son 41 filas de datos frente a 44, pero el
+> mapeo **no es uno a uno**: pegar tres filas con ruta completa **rompería la convención del
+> entregable**, que es un árbol indentado y se lee mejor así. Lo que hay que hacer es averiguar qué
+> tres rutas del Markdown no tienen su hoja en el árbol del `.docx` y añadirlas **en la convención
+> del `.docx`**. Y si decides que la convención del entregable es la buena —lo es, para un lector—,
+> di que la divergencia es **deliberada** y quedará declarada como tal en lugar de como defecto.
 
 ---
 
@@ -75,9 +100,16 @@ El `.docx` tiene las entradas **[1] a [37] contiguas** y le falta solo la últim
 corrimiento de numeración**: se añade [38] al final de la bibliografía y sus cuatro citas donde el
 Markdown las tiene. La obra es el esquema **FollowTheMoney**.
 
-### Pieza 4 — Tres filas de la Tabla 9
+### Pieza 4 — La Tabla 9, y no es lo que el recuento sugiere
 
-Estructura del repositorio: el `.docx` tiene **42** filas y el Markdown **45**.
+El `.docx` tiene **41 filas de datos** y el Markdown **44**. Pero la diferencia **no son tres filas
+que falten**: las dos tablas usan **convenciones distintas**, verificado celda por celda. El `.docx`
+presenta un **árbol indentado con espacios duros** (`&nbsp;&nbsp;&nbsp;&nbsp;main.py`) y el Markdown
+**rutas completas** (`src/main.py`).
+
+Ver el aviso del apartado 0: hay que averiguar qué tres rutas no tienen hoja en el árbol y añadirlas
+**en la convención del `.docx`**, o declarar la divergencia como deliberada. Lo que **no** hay que
+hacer es pegar tres filas con ruta completa.
 
 ### Pieza 5 — Una celda de la Tabla 3
 

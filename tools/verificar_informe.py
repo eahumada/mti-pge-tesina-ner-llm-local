@@ -99,7 +99,7 @@ FALLOS_DECLARADOS = {
     'Tabla 3, fila 1 difiere': ('2026-09-09',
         'PENDIENTE de la pasada de maquetacion, decision 19 del autor: el entregable refleja un estado anterior del Markdown. Insertar lo que falta afecta al limite duro de 25 paginas y no se aplica sin autorizacion expresa. Ver FINDINGS §F126'),
     'Tabla 9 tiene 42 filas': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, decision 19 del autor: el entregable refleja un estado anterior del Markdown. Insertar lo que falta afecta al limite duro de 25 paginas y no se aplica sin autorizacion expresa. Ver FINDINGS §F126'),
+        'PENDIENTE de la pasada de maquetacion, decision 19 del autor. Y el encuadre de este fallo se corrigio el 2026-09-09: NO son tres filas que falten. El .docx presenta la estructura del repositorio como un ARBOL INDENTADO con espacios duros y el Markdown como RUTAS COMPLETAS, verificado celda por celda, de modo que el mapeo entre sus filas no es uno a uno y pegar tres filas con ruta completa romperia la convencion del entregable. Esta comprobacion compara recuentos y se detiene antes de comparar contenido, por eso informa de la diferencia de filas y no de la de convencion, que es la que manda. Declarar la divergencia como deliberada es una opcion legitima y probablemente la buena. Ver FINDINGS §F141'),
     'Tabla 20 no esta en el entregable': ('2026-09-09',
         'PENDIENTE de la pasada de maquetacion, decision 19 del autor: el entregable refleja un estado anterior del Markdown. Insertar lo que falta afecta al limite duro de 25 paginas y no se aplica sin autorizacion expresa. Ver FINDINGS §F126'),
     'le faltan las entradas de bibliografia [38]': ('2026-09-09',

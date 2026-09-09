@@ -6637,3 +6637,44 @@ las cuatro mutaciones fallidas: **un ensayo mal armado no refuta ni confirma**.
 daño que una cifra mal calculada, porque no hay nada que detecte el error: los 23,05 son exactos para
 lo que miden. La pregunta que faltaba no era «¿está bien calculado?» sino **«¿de qué artefacto habla?»**.
 Y la respuesta cambió una decisión: de «probablemente no cabe» a «cabe con margen».
+
+---
+
+## §F141 — A la Tabla 9 no le faltan tres filas: el entregable usa otra convención
+
+**Fecha:** 2026-09-09 · **Origen:** la puerta de factibilidad lo señaló y se verificó celda por celda
+
+La comprobación 52 declara «Tabla 9 tiene 42 filas y el Markdown 45», y yo lo he trasladado tres
+veces como «tres filas que faltan». **No es eso.**
+
+| | Primera columna, filas 3 a 6 |
+|:---|:---|
+| Markdown | `src/main.py`, `src/config.py`, `src/data_loader.py`, `src/llm_runner.py` |
+| `.docx` | `····main.py`, `····config.py`, `····data_loader.py`, `····llm_runner.py` (cuatro espacios duros) |
+
+El `.docx` presenta la estructura del repositorio como un **árbol indentado**; el Markdown, como
+**rutas completas**. Son dos convenciones de presentación, y **el mapeo entre sus filas no es uno a
+uno**. Pegar tres filas con ruta completa en el `.docx` **rompería su convención**, que además se lee
+mejor para un tribunal.
+
+**Lo que la comprobación detectó es real; su encuadre no lo era.** La 52 compara recuentos y, al no
+cuadrar, se detiene antes de comparar contenido — de modo que informó de la diferencia de filas y no
+de la de convención, que es la que manda. Es la regla del proyecto una vez más: **un hallazgo de
+auditoría es una hipótesis**, y su formulación puede estar mal aunque la detección esté bien.
+
+**Corregido** en el encargo a Claude Desktop, que decía «tres filas» y ahora dice qué hacer: averiguar
+qué tres rutas no tienen hoja en el árbol y añadirlas **en la convención del `.docx`**, o **declarar
+la divergencia como deliberada** — que es una opción legítima y probablemente la buena, porque el
+árbol indentado es mejor presentación que la lista de rutas.
+
+**Y un segundo hecho del mismo análisis, que evita una decisión equivocada:** el `.docx` con plantilla
+**no usa `heading4`**. De modo que insertar el encabezado de la subsección que falta no es un problema
+de herramienta: **el nivel y su numeración son una decisión editorial**, porque la jerarquía de la
+plantilla no tiene ese nivel en uso. Lo he pasado a Desktop como decisión a tomar, no como tarea
+mecánica.
+
+**Reparto verificado de las seis piezas.** La puerta dictaminó «proceder con las viables», y son solo
+**dos**: la celda de la Tabla 3 y las dos citas de [38] en el texto, las dos con anclas únicas. Las
+otras cuatro exigen insertar `<w:p>`, tablas, imágenes con sus relaciones y una declaración
+`Default Extension="png"` en `[Content_Types].xml`, y ninguna herramienta de `tools/` lo hace. Van a
+Word, y el encargo lo dice pieza por pieza con el motivo.
