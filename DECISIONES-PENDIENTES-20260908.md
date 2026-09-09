@@ -35,7 +35,21 @@ Evidencia: `FINDINGS §F66`.
 
 ---
 
-## 2. Los nueve respaldos con nombres de modelos excluidos
+## 2. Los respaldos con nombres de modelos excluidos — **recuento corregido, y menos grave**
+
+> **Comprobado el 2026-09-09, y las dos cifras del planteamiento original estaban mal en direcciones
+> opuestas.** No son nueve: son **104** los ficheros `.bak*` que contienen algún nombre de modelo excluido.
+> Pero **ninguno está rastreado por git** —cero de 104—, porque `.gitignore` los excluye con `*.bak_*`.
+>
+> Eso cambia lo que se decide. No es un problema de integridad del repositorio ni de los entregables: esos
+> ficheros **no llegan al remoto, no aparecen en ningún clon y no forman parte de ninguna entrega**. Es
+> higiene del árbol de trabajo local, y como tal no corre prisa.
+>
+> Se conserva abajo el planteamiento original porque documenta la preocupación, que era razonable antes de
+> comprobar el rastreo.
+
+### Planteamiento original (2026-09-08)
+
 
 **Qué pasa.** De los 36 `.bak_prescore` —instantáneas anteriores a la corrección de puntuación—, doce se
 versionaron hoy por ser única copia y estar limpios. **Nueve contienen nombres de modelos excluidos** y
