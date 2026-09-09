@@ -1074,3 +1074,28 @@ detector a propósito: emite el aviso de guarda en lugar de los cuarenta falsos 
 **Y el corolario, que es el mismo de §L61 desde otro ángulo:** cuando una comprobación nueva reporta *muchos*
 fallos a la vez, la primera hipótesis no es que el proyecto esté lleno de defectos — es que la comprobación
 está mal. Conviene mirar tres de los fallos antes de creerse el recuento.
+
+## §L67 — No se muta un fichero con trabajo sin comprometer, y `git checkout --` no es un «deshacer»
+
+Al probar por mutación una comprobación recién escrita **y no comprometida**, restauré el fichero con
+`git checkout -- tools/verificar_informe.py`. Eso lo devolvió a `HEAD`, y con ello **borró la comprobación
+entera**: unas noventa líneas escritas ese mismo turno. Ningún respaldo la tenía, porque los que había hecho
+eran anteriores a escribirla. Se pudo rehacer solo porque el código estaba en la conversación.
+
+Hay una simetría instructiva con el error del sentido contrario, cometido también hoy: entonces comprometí
+una comprobación **antes** de probarla por mutación, y la conclusión fue «mutar, verificar y luego
+comprometer». Es media verdad. La regla completa tiene dos mitades:
+
+- **El trabajo se compromete antes de mutar**, porque la mutación va a exigir restaurar y toda restauración
+  puede llevarse lo que no esté guardado.
+- **La mutación se prueba antes de dar la comprobación por buena**, porque una comprobación que no se ha
+  visto fallar no acredita nada.
+
+Las dos caben: se compromete, se muta, se verifica, y si la verificación descubre que la comprobación era
+vacua, se corrige en un segundo commit. Un commit de más es barato; noventa líneas perdidas, no.
+
+**Y el corolario sobre la herramienta:** `git checkout -- <fichero>` **no es un «deshacer»**. Es «tráeme la
+versión de `HEAD`», que es una operación destructiva sobre todo lo que haya encima. Para revertir una
+mutación hay que restaurar desde **una copia hecha inmediatamente antes de mutar** — que es lo que hice con
+los `.docx`, con el corpus y con el Markdown durante todo el día, y lo que olvidé precisamente en el fichero
+donde acababa de escribir.

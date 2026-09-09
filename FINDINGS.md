@@ -4286,3 +4286,35 @@ describir lo que mide.
 **El detalle que más importa del código:** los enteros se suman con `int(v.get(k) or 0)` y no con
 `if v.get(k)`. Aquí más que en ningún sitio — un `tp` de 0 es *falsy*, y descartarlo haría invisible
 justamente el caso que se busca.
+
+## §F101 — Cerrada la última regla de integridad sin mecanizar: el idioma del corpus
+
+**2026-09-09.** `CLAUDE.md` cierra su sección de integridad con «el idioma del corpus se comprueba, no se
+supone», tras haber descubierto que los dos corpus del dominio estaban íntegramente en inglés mientras el
+informe declaraba validación en español (§F54). Era la última de esa sección sin mecanizar.
+
+**Contado sobre `data/benchmark_balanced_120.json`: 105 español, 15 inglés, 0 indeterminados.** Coincide con
+lo que el informe declara. Y de paso queda comprobada la corrección del corpus del 2026-09-08: **545
+localizaciones en 119 de los 120 registros**, exactamente lo que se declaró.
+
+Esas dos cifras juntas dicen algo que conviene tener presente: **el corpus ya tiene las localizaciones y las
+métricas publicadas son anteriores**. Es la contraparte de la segunda mitad de `c_firma_categorias`, y entre
+las dos explican por qué la re-corrida sigue pendiente.
+
+La declaración se **lee** del informe y **en sus dos idiomas** —el resumen dice «120 artículos, 105 en
+español» y el abstract «120 articles, 105 in Spanish»—, de modo que la comprobación vigila también la
+sincronía que `CLAUDE.md` exige entre ambos. El informe usa **cuatro redacciones** para la misma cifra en
+cinco sitios, así que un patrón único no valía; se anclan las dos del encabezado, que son las que un tribunal
+lee primero.
+
+Probada por mutación en cuatro frentes, los cuatro detectados: alterar la cifra del resumen, desincronizar el
+abstract, vaciar las localizaciones del corpus, y **romper el detector de idioma** —que emite la guarda de
+§L66, «120 de 120 registros quedan sin clasificar», en lugar de un veredicto falso—.
+
+**Y una pérdida de trabajo propia, con su lección.** La primera versión de esta comprobación se escribió y se
+perdió: al probar la cuarta mutación restauré el fichero con `git checkout --`, que lo devolvió a `HEAD` y
+borró las noventa líneas recién escritas y no comprometidas. Se rehízo desde la conversación. La lección está
+en **§L67**, y su parte operativa es corta: **comprometer antes de mutar**, y no confundir `git checkout --`
+con un «deshacer». La cuarta mutación, además, estaba mal hecha las dos primeras veces: cambiaba **la primera
+palabra** de cada lista y dejaba las otras veintiséis, de modo que el detector seguía funcionando y la prueba
+daba «ok» — §L59 otra vez, las mutaciones han de ser completas.
