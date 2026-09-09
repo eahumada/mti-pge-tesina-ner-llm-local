@@ -1,0 +1,7176 @@
+[
+  {
+    "batch_idx": 0,
+    "record_id": "1",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 4.575641870498657,
+    "tokens_per_sec": 144.02,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 1.0,
+    "recall": 0.375,
+    "f1": 0.5454545454545454,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 16.3,
+    "cpu_peak_pct": 29.1,
+    "proc_cpu_avg_pct": 9.6,
+    "mem_avg_mb": 244.5,
+    "mem_peak_mb": 244.5,
+    "sys_mem_avg_mb": 22587.5,
+    "sys_mem_avg_pct": 57.1,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 4
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.375,
+        "f1": 0.5454545454545454,
+        "tp": 3,
+        "fp": 0,
+        "fn": 5,
+        "oov_recall": 0.375
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Alexey Shevchenko",
+            "reference": "Alexey Shevchenko"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "US Department of the Treasury",
+            "reference": "Department of the Treasury"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "OFAC",
+            "reference": "OFAC"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Al-Sahra Electronics"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Dubai"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Russia"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "UAE"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "United States"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "Dubai",
+          "category": "Locations"
+        },
+        {
+          "ground_truth_entity": "UAE",
+          "category": "Locations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:43:46.899463+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "2",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 5.585108041763306,
+    "tokens_per_sec": 143.73,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 1.0,
+    "recall": 0.6666666666666666,
+    "f1": 0.8,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 17.0,
+    "cpu_peak_pct": 21.8,
+    "proc_cpu_avg_pct": 9.7,
+    "mem_avg_mb": 245.2,
+    "mem_peak_mb": 245.2,
+    "sys_mem_avg_mb": 22829.8,
+    "sys_mem_avg_pct": 57.5,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.3333333333333333,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 0,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.6666666666666666,
+        "f1": 0.8,
+        "tp": 4,
+        "fp": 0,
+        "fn": 2,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Stephen Murphy",
+            "reference": "Stephen Murphy"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Kenneth A. Polite Jr.",
+            "reference": "Kenneth A. Polite Jr."
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "HSBC",
+            "reference": "HSBC"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "DOJ"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Sinaloa Cartel"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "New York",
+            "reference": "New York"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "DOJ",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:43:52.503890+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "3",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 3.055732011795044,
+    "tokens_per_sec": 143.92,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.6,
+    "recall": 0.75,
+    "f1": 0.6666666666666665,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 17.5,
+    "cpu_peak_pct": 23.1,
+    "proc_cpu_avg_pct": 19.6,
+    "mem_avg_mb": 245.9,
+    "mem_peak_mb": 245.9,
+    "sys_mem_avg_mb": 22835.1,
+    "sys_mem_avg_pct": 57.4,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.3333333333333333,
+          "recall": 1.0,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 2,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.6,
+        "recall": 0.75,
+        "f1": 0.6666666666666665,
+        "tp": 3,
+        "fp": 2,
+        "fn": 1,
+        "oov_recall": 0.6666666666666666
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Dmitry Kovalev",
+            "reference": "Dmitry Kovalev"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Belneftekhim",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "European Council",
+            "reference": null
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Belneftekhim",
+            "reference": "Belneftekhim"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "European Council",
+            "reference": "European Council"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Belarus"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Belneftekhim",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Belneftekhim"
+        },
+        {
+          "entity": "European Council",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "European Council"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:43:55.575381+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "4",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 3.5444278717041016,
+    "tokens_per_sec": 143.91,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.5,
+    "recall": 0.25,
+    "f1": 0.3333333333333333,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 15.6,
+    "cpu_peak_pct": 23.6,
+    "proc_cpu_avg_pct": 15.1,
+    "mem_avg_mb": 246.6,
+    "mem_peak_mb": 246.6,
+    "sys_mem_avg_mb": 22929.2,
+    "sys_mem_avg_pct": 57.6,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.3333333333333333,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 0,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5,
+        "recall": 0.25,
+        "f1": 0.3333333333333333,
+        "tp": 1,
+        "fp": 1,
+        "fn": 3,
+        "oov_recall": 0.25
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Sun Hung Kai",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Arthur Chan"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "SFC",
+            "reference": "SFC"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Securities and Futures Commission"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Sun Hung Kai Securities"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:43:59.130913+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "5",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 3.5703980922698975,
+    "tokens_per_sec": 135.37,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.5,
+    "recall": 0.4,
+    "f1": 0.4444444444444445,
+    "hallucination_rate": 0.25,
+    "hallucinated_count": 1,
+    "cpu_avg_pct": 34.8,
+    "cpu_peak_pct": 69.2,
+    "proc_cpu_avg_pct": 15.1,
+    "mem_avg_mb": 247.3,
+    "mem_peak_mb": 247.3,
+    "sys_mem_avg_mb": 23071.7,
+    "sys_mem_avg_pct": 57.9,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.3333333333333333,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 0,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.5,
+        "recall": 0.4,
+        "f1": 0.4444444444444445,
+        "tp": 2,
+        "fp": 2,
+        "fn": 3,
+        "oov_recall": 0.4
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Barclays Bank",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Maher Al-Assad",
+            "reference": "Maher Al-Assad"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "The UK Office of Financial Sanctions Implementation (OFSI)",
+            "reference": "Office of Financial Sanctions Implementation"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "OFSI"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Barclays Bank"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "United Kingdom",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Syria"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Barclays Bank",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Barclays Bank"
+        }
+      ],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "OFSI",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "Syria",
+          "category": "Locations"
+        }
+      ],
+      "extrinsic_hallucinations": [
+        {
+          "entity": "United Kingdom",
+          "category": "Locations",
+          "text_match_ratio": 40.0
+        }
+      ]
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:44:02.714936+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "6",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 4.066976070404053,
+    "tokens_per_sec": 142.7,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.6,
+    "recall": 0.5,
+    "f1": 0.5454545454545454,
+    "hallucination_rate": 0.2,
+    "hallucinated_count": 1,
+    "cpu_avg_pct": 29.9,
+    "cpu_peak_pct": 71.4,
+    "proc_cpu_avg_pct": 13.4,
+    "mem_avg_mb": 248.0,
+    "mem_peak_mb": 248.0,
+    "sys_mem_avg_mb": 23036.1,
+    "sys_mem_avg_pct": 57.8,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5,
+          "recall": 0.3333333333333333,
+          "f1": 0.4,
+          "tp": 1,
+          "fp": 1,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 1,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.6,
+        "recall": 0.5,
+        "f1": 0.5454545454545454,
+        "tp": 3,
+        "fp": 2,
+        "fn": 3,
+        "oov_recall": 0.5
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Cyril Ramaphosa",
+            "reference": "Cyril Ramaphosa"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Standard Bank",
+            "reference": "Standard Bank"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Zimbabwe",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Financial Action Task Force"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "FATF"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Zimbabwe",
+            "reference": "Zimbabwe"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Harare",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "South Africa"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Zimbabwe",
+          "extracted_type": "Organizations",
+          "correct_type": "Locations",
+          "matched_ground_truth": "Zimbabwe"
+        }
+      ],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "FATF",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:44:06.797428+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "7",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 3.5824220180511475,
+    "tokens_per_sec": 144.16,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.5,
+    "recall": 0.75,
+    "f1": 0.6,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 18.8,
+    "cpu_peak_pct": 22.3,
+    "proc_cpu_avg_pct": 15.5,
+    "mem_avg_mb": 248.7,
+    "mem_peak_mb": 248.7,
+    "sys_mem_avg_mb": 22987.5,
+    "sys_mem_avg_pct": 57.7,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.3333333333333333,
+          "recall": 1.0,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 2,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 1,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5,
+        "recall": 0.75,
+        "f1": 0.6,
+        "tp": 3,
+        "fp": 3,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "The SEC",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "ABB Ltd",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Marc Dufour",
+            "reference": "Marc Dufour"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "The SEC",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "ABB Ltd",
+            "reference": "ABB Ltd"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "SEC"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "South Africa",
+            "reference": "South Africa"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "The SEC",
+          "ground_truth_target": "SEC",
+          "ratio": 60.0
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "ABB Ltd",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "ABB Ltd"
+        }
+      ],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "SEC",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:44:10.390858+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "8",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 3.5393309593200684,
+    "tokens_per_sec": 143.2,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.7142857142857143,
+    "recall": 1.0,
+    "f1": 0.8333333333333333,
+    "hallucination_rate": 0.14285714285714285,
+    "hallucinated_count": 1,
+    "cpu_avg_pct": 13.0,
+    "cpu_peak_pct": 15.9,
+    "proc_cpu_avg_pct": 15.2,
+    "mem_avg_mb": 249.4,
+    "mem_peak_mb": 249.4,
+    "sys_mem_avg_mb": 22921.3,
+    "sys_mem_avg_pct": 57.5,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.7142857142857143,
+        "recall": 1.0,
+        "f1": 0.8333333333333333,
+        "tp": 5,
+        "fp": 2,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Nicolas Maduro Guerra",
+            "reference": "Nicolas Maduro Guerra"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "U.S. Treasury",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "OFAC",
+            "reference": "OFAC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "PDVSA",
+            "reference": "PDVSA"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Panama",
+            "reference": "Panama"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Switzerland",
+            "reference": "Switzerland"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "United States",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:44:13.945930+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "9",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 3.0608372688293457,
+    "tokens_per_sec": 144.17,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.6,
+    "recall": 0.75,
+    "f1": 0.6666666666666665,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 18.7,
+    "cpu_peak_pct": 31.0,
+    "proc_cpu_avg_pct": 18.1,
+    "mem_avg_mb": 250.0,
+    "mem_peak_mb": 250.0,
+    "sys_mem_avg_mb": 22892.2,
+    "sys_mem_avg_pct": 57.5,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6,
+        "recall": 0.75,
+        "f1": 0.6666666666666665,
+        "tp": 3,
+        "fp": 2,
+        "fn": 1,
+        "oov_recall": 0.6666666666666666
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Christian Sewing",
+            "reference": "Christian Sewing"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Deutsche Bank",
+            "reference": null
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "BaFin",
+            "reference": "BaFin"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Deutsche Bank"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Russia",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Germany",
+            "reference": "Germany"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Deutsche Bank",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Deutsche Bank"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:44:17.019069+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "10",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 4.555904865264893,
+    "tokens_per_sec": 143.74,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.5,
+    "recall": 1.0,
+    "f1": 0.6666666666666666,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 17.8,
+    "cpu_peak_pct": 25.6,
+    "proc_cpu_avg_pct": 11.8,
+    "mem_avg_mb": 250.8,
+    "mem_peak_mb": 250.8,
+    "sys_mem_avg_mb": 22963.4,
+    "sys_mem_avg_pct": 57.6,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "tp": 3,
+        "fp": 3,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Georgios Pavlidis",
+            "reference": "Georgios Pavlidis"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Suez Rajan Ltd",
+            "reference": null
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Suez Rajan Ltd",
+            "reference": "Suez Rajan Ltd"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "The Justice Department",
+            "reference": "Justice Department"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Suez Rajan tanker",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Greece",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Suez Rajan Ltd",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Suez Rajan Ltd"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:44:21.581009+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "11",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 4.561499834060669,
+    "tokens_per_sec": 143.98,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.6,
+    "recall": 0.75,
+    "f1": 0.6666666666666665,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 22.6,
+    "cpu_peak_pct": 34.8,
+    "proc_cpu_avg_pct": 11.9,
+    "mem_avg_mb": 251.5,
+    "mem_peak_mb": 251.5,
+    "sys_mem_avg_mb": 22948.1,
+    "sys_mem_avg_pct": 57.6,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.6666666666666666,
+          "recall": 0.6666666666666666,
+          "f1": 0.6666666666666666,
+          "tp": 2,
+          "fp": 1,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6,
+        "recall": 0.75,
+        "f1": 0.6666666666666665,
+        "tp": 3,
+        "fp": 2,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Deputy Attorney General Lisa O. Monaco",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Heather Morgan",
+            "reference": "Heather Morgan"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Ilya Lichtenstein",
+            "reference": "Ilya Lichtenstein"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Lisa O. Monaco"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Bitfinex",
+            "reference": "Bitfinex"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Bitfinex",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Deputy Attorney General Lisa O. Monaco",
+          "ground_truth_target": "Lisa O. Monaco",
+          "ratio": 53.84615384615385
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "Bitfinex",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Bitfinex"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:44:26.159418+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "12",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 3.0478951930999756,
+    "tokens_per_sec": 143.38,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.25,
+    "recall": 0.5,
+    "f1": 0.3333333333333333,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 20.3,
+    "cpu_peak_pct": 40.7,
+    "proc_cpu_avg_pct": 17.3,
+    "mem_avg_mb": 252.2,
+    "mem_peak_mb": 252.2,
+    "sys_mem_avg_mb": 22928.0,
+    "sys_mem_avg_pct": 57.5,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.25,
+        "recall": 0.5,
+        "f1": 0.3333333333333333,
+        "tp": 1,
+        "fp": 3,
+        "fn": 1,
+        "oov_recall": 0.5
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Denmark's State Prosecutor",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Thomas Borgen"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "Denmark",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Danske Bank",
+            "reference": "Danske Bank"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Denmark",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:44:29.220881+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "13",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 3.5609941482543945,
+    "tokens_per_sec": 143.98,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.6,
+    "recall": 0.75,
+    "f1": 0.6666666666666665,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 16.6,
+    "cpu_peak_pct": 27.2,
+    "proc_cpu_avg_pct": 15.5,
+    "mem_avg_mb": 252.9,
+    "mem_peak_mb": 252.9,
+    "sys_mem_avg_mb": 23043.8,
+    "sys_mem_avg_pct": 57.8,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6,
+        "recall": 0.75,
+        "f1": 0.6666666666666665,
+        "tp": 3,
+        "fp": 2,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Muammar Gaddafi",
+            "reference": "Muammar Gaddafi"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Mutassim Gaddafi",
+            "reference": "Mutassim Gaddafi"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "Malta",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Bank of Valletta"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Malta",
+            "reference": "Malta"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Bank of Valletta",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Muammar Gaddafi",
+          "ground_truth_target": "Mutassim Gaddafi",
+          "ratio": 77.41935483870968
+        },
+        {
+          "entity": "Mutassim Gaddafi",
+          "ground_truth_target": "Muammar Gaddafi",
+          "ratio": 77.41935483870968
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "Malta",
+          "extracted_type": "Organizations",
+          "correct_type": "Locations",
+          "matched_ground_truth": "Malta"
+        },
+        {
+          "entity": "Bank of Valletta",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Bank of Valletta"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:44:32.794627+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "14",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 13.162211656570435,
+    "tokens_per_sec": 140.16,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.6666666666666666,
+    "recall": 0.5,
+    "f1": 0.5714285714285715,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 18.9,
+    "cpu_peak_pct": 34.7,
+    "proc_cpu_avg_pct": 4.1,
+    "mem_avg_mb": 253.6,
+    "mem_peak_mb": 253.6,
+    "sys_mem_avg_mb": 23009.9,
+    "sys_mem_avg_pct": 57.7,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 1,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.6666666666666666,
+        "recall": 0.5,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "fp": 1,
+        "fn": 2,
+        "oov_recall": 0.6666666666666666
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Willy Ngoma",
+            "reference": "Willy Ngoma"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "Democratic Republic of Congo",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "United Nations Security Council",
+            "reference": "United Nations Security Council"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "M23"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Congo"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "M23",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "Congo",
+          "category": "Locations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:44:45.965376+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "15",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 3.552833080291748,
+    "tokens_per_sec": 143.55,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.5,
+    "recall": 0.6666666666666666,
+    "f1": 0.5714285714285715,
+    "hallucination_rate": 0.25,
+    "hallucinated_count": 1,
+    "cpu_avg_pct": 19.3,
+    "cpu_peak_pct": 28.3,
+    "proc_cpu_avg_pct": 15.1,
+    "mem_avg_mb": 254.3,
+    "mem_peak_mb": 254.3,
+    "sys_mem_avg_mb": 23053.8,
+    "sys_mem_avg_pct": 57.8,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5,
+        "recall": 0.6666666666666666,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "fp": 2,
+        "fn": 1,
+        "oov_recall": 0.6666666666666666
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Evelin Banev",
+            "reference": "Evelin Banev"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Credit Suisse Group AG",
+            "reference": null
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Credit Suisse Group AG",
+            "reference": "Credit Suisse Group AG"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Swiss Federal Criminal Court"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Switzerland",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Credit Suisse Group AG",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Credit Suisse Group AG"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": [
+        {
+          "entity": "Switzerland",
+          "category": "Locations",
+          "text_match_ratio": 42.10526315789473
+        }
+      ]
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:44:49.528737+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "16",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 4.061915874481201,
+    "tokens_per_sec": 143.78,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.5,
+    "recall": 0.25,
+    "f1": 0.3333333333333333,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 18.3,
+    "cpu_peak_pct": 27.5,
+    "proc_cpu_avg_pct": 13.4,
+    "mem_avg_mb": 255.0,
+    "mem_peak_mb": 255.0,
+    "sys_mem_avg_mb": 23136.8,
+    "sys_mem_avg_pct": 57.9,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 2
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5,
+        "recall": 0.25,
+        "f1": 0.3333333333333333,
+        "tp": 1,
+        "fp": 1,
+        "fn": 3,
+        "oov_recall": 0.25
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Ripple Labs Inc",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Brad Garlinghouse"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Christian Larsen"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Ripple Labs Inc",
+            "reference": "Ripple Labs Inc"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "SEC"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Ripple Labs Inc",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Ripple Labs Inc"
+        }
+      ],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "SEC",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:44:53.606792+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "17",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 4.055429220199585,
+    "tokens_per_sec": 143.92,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6666666666666666,
+    "recall": 0.4,
+    "f1": 0.5,
+    "hallucination_rate": 0.3333333333333333,
+    "hallucinated_count": 1,
+    "cpu_avg_pct": 20.7,
+    "cpu_peak_pct": 31.9,
+    "proc_cpu_avg_pct": 13.2,
+    "mem_avg_mb": 255.8,
+    "mem_peak_mb": 255.8,
+    "sys_mem_avg_mb": 23019.1,
+    "sys_mem_avg_pct": 57.7,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 1,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 2
+        }
+      },
+      "overall": {
+        "precision": 0.6666666666666666,
+        "recall": 0.4,
+        "f1": 0.5,
+        "tp": 2,
+        "fp": 1,
+        "fn": 3,
+        "oov_recall": 0.5
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Lars Machen",
+            "reference": "Lars Machen"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "Department of Justice",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "BNP Paribas SA",
+            "reference": "BNP Paribas SA"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "DOJ"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Iran"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Sudan"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "DOJ",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "Iran",
+          "category": "Locations"
+        },
+        {
+          "ground_truth_entity": "Sudan",
+          "category": "Locations"
+        }
+      ],
+      "extrinsic_hallucinations": [
+        {
+          "entity": "Department of Justice",
+          "category": "Organizations",
+          "text_match_ratio": 48.78048780487805
+        }
+      ]
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:44:57.680906+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "18",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 4.051054000854492,
+    "tokens_per_sec": 143.44,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.4,
+    "recall": 0.6666666666666666,
+    "f1": 0.5,
+    "hallucination_rate": 0.2,
+    "hallucinated_count": 1,
+    "cpu_avg_pct": 16.2,
+    "cpu_peak_pct": 27.7,
+    "proc_cpu_avg_pct": 13.4,
+    "mem_avg_mb": 256.5,
+    "mem_peak_mb": 256.5,
+    "sys_mem_avg_mb": 23073.8,
+    "sys_mem_avg_pct": 57.8,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.3333333333333333,
+          "recall": 0.5,
+          "f1": 0.4,
+          "tp": 1,
+          "fp": 2,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.4,
+        "recall": 0.6666666666666666,
+        "f1": 0.5,
+        "tp": 2,
+        "fp": 3,
+        "fn": 1,
+        "oov_recall": 0.6666666666666666
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Sani Abacha",
+            "reference": "Sani Abacha"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "The U.S. Department of Justice",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Citibank",
+            "reference": "Citibank"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "international financial institutions",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Department of Justice"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "United States",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "The U.S. Department of Justice",
+          "ground_truth_target": "Department of Justice",
+          "ratio": 82.35294117647058
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": [
+        {
+          "entity": "United States",
+          "category": "Locations",
+          "text_match_ratio": 45.45454545454546
+        }
+      ]
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:45:01.748011+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "19",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 3.5696229934692383,
+    "tokens_per_sec": 143.93,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.75,
+    "recall": 1.0,
+    "f1": 0.8571428571428571,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 16.6,
+    "cpu_peak_pct": 28.4,
+    "proc_cpu_avg_pct": 15.3,
+    "mem_avg_mb": 257.2,
+    "mem_peak_mb": 257.2,
+    "sys_mem_avg_mb": 22983.8,
+    "sys_mem_avg_pct": 57.6,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571428571428571,
+        "tp": 3,
+        "fp": 1,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Sarah Johnston",
+            "reference": "Sarah Johnston"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "U.S. Treasury",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "OFAC",
+            "reference": "OFAC"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Airbnb Inc.",
+            "reference": "Airbnb Inc"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:45:05.328343+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "20",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 3.545853853225708,
+    "tokens_per_sec": 143.58,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.6666666666666666,
+    "recall": 0.6666666666666666,
+    "f1": 0.6666666666666666,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 22.0,
+    "cpu_peak_pct": 32.2,
+    "proc_cpu_avg_pct": 15.5,
+    "mem_avg_mb": 257.2,
+    "mem_peak_mb": 257.2,
+    "sys_mem_avg_mb": 23037.8,
+    "sys_mem_avg_pct": 57.7,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 1,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.6666666666666666,
+        "tp": 2,
+        "fp": 1,
+        "fn": 1,
+        "oov_recall": 0.6666666666666666
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "U.S. District Judge Denny Chin",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": " Bernard L. Madoff",
+            "reference": "Bernard L. Madoff"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Denny Chin"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": " Bernard L. Madoff Investment Securities LLC",
+            "reference": "Bernard L. Madoff Investment Securities LLC"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "U.S. District Judge Denny Chin",
+          "ground_truth_target": "Denny Chin",
+          "ratio": 50.0
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:45:08.885248+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "21",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 2.555114984512329,
+    "tokens_per_sec": 143.45,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.3333333333333333,
+    "hallucinated_count": 1,
+    "cpu_avg_pct": 13.6,
+    "cpu_peak_pct": 15.8,
+    "proc_cpu_avg_pct": 21.5,
+    "mem_avg_mb": 257.2,
+    "mem_peak_mb": 257.2,
+    "sys_mem_avg_mb": 23140.2,
+    "sys_mem_avg_pct": 57.9,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 4
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 2
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 3,
+        "fn": 7,
+        "oov_recall": 0.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Standard Chartered Bank",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Mahmoud Bahmani"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "New York Department of Financial Services (DFS)",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Department of Financial Services"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "DFS"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Standard Chartered Bank"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Central Bank of Iran"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "New York City",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "New York"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Iran"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "New York Department of Financial Services (DFS)",
+          "ground_truth_target": "Department of Financial Services",
+          "ratio": 81.0126582278481
+        },
+        {
+          "entity": "New York City",
+          "ground_truth_target": "New York",
+          "ratio": 76.19047619047619
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "Standard Chartered Bank",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Standard Chartered Bank"
+        }
+      ],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "DFS",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "Iran",
+          "category": "Locations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:45:11.458485+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "22",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 4.574841260910034,
+    "tokens_per_sec": 143.29,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.42857142857142855,
+    "recall": 0.75,
+    "f1": 0.5454545454545454,
+    "hallucination_rate": 0.2857142857142857,
+    "hallucinated_count": 2,
+    "cpu_avg_pct": 16.5,
+    "cpu_peak_pct": 26.8,
+    "proc_cpu_avg_pct": 11.9,
+    "mem_avg_mb": 257.2,
+    "mem_peak_mb": 257.2,
+    "sys_mem_avg_mb": 23056.2,
+    "sys_mem_avg_pct": 57.8,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.3333333333333333,
+          "recall": 1.0,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 2,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.42857142857142855,
+        "recall": 0.75,
+        "f1": 0.5454545454545454,
+        "tp": 3,
+        "fp": 4,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Goldman Sachs Group Inc",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Jho Low",
+            "reference": "Jho Low"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "DoJ",
+            "reference": null
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Goldman Sachs Group Inc",
+            "reference": "Goldman Sachs Group Inc"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "1MDB",
+            "reference": "1MDB"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "DOJ"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Dubai",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "New York",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Goldman Sachs Group Inc",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Goldman Sachs Group Inc"
+        },
+        {
+          "entity": "DoJ",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "DOJ"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": [
+        {
+          "entity": "Dubai",
+          "category": "Locations",
+          "text_match_ratio": 44.44444444444444
+        },
+        {
+          "entity": "New York",
+          "category": "Locations",
+          "text_match_ratio": 44.44444444444444
+        }
+      ]
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:45:16.046352+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "23",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 3.5569851398468018,
+    "tokens_per_sec": 143.27,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.3333333333333333,
+    "recall": 0.25,
+    "f1": 0.28571428571428575,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 18.0,
+    "cpu_peak_pct": 27.4,
+    "proc_cpu_avg_pct": 15.2,
+    "mem_avg_mb": 257.2,
+    "mem_peak_mb": 257.2,
+    "sys_mem_avg_mb": 23030.8,
+    "sys_mem_avg_pct": 57.7,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.3333333333333333,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 0,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.3333333333333333,
+        "recall": 0.25,
+        "f1": 0.28571428571428575,
+        "tp": 1,
+        "fp": 2,
+        "fn": 3,
+        "oov_recall": 0.25
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Finansinspektionen",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Erik Thedeen"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Skandinaviska Enskilda Banken (SEB)",
+            "reference": "Skandinaviska Enskilda Banken"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Finansinspektionen"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "SEB"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Baltic branches",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Finansinspektionen",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Finansinspektionen"
+        }
+      ],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "SEB",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:45:19.614954+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "24",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 2.549006223678589,
+    "tokens_per_sec": 143.84,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 15.5,
+    "cpu_peak_pct": 24.0,
+    "proc_cpu_avg_pct": 21.0,
+    "mem_avg_mb": 257.2,
+    "mem_peak_mb": 257.2,
+    "sys_mem_avg_mb": 23094.0,
+    "sys_mem_avg_pct": 57.9,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Timur Kulibaev",
+            "reference": "Timur Kulibaev"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "The National Bank of Kazakhstan",
+            "reference": "National Bank of Kazakhstan"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Eurasian Bank",
+            "reference": "Eurasian Bank"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Kazakhstan",
+            "reference": "Kazakhstan"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:45:22.178916+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "25",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 4.081850290298462,
+    "tokens_per_sec": 143.52,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 1.0,
+    "recall": 0.3333333333333333,
+    "f1": 0.5,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 17.2,
+    "cpu_peak_pct": 23.8,
+    "proc_cpu_avg_pct": 13.2,
+    "mem_avg_mb": 257.2,
+    "mem_peak_mb": 257.2,
+    "sys_mem_avg_mb": 23013.3,
+    "sys_mem_avg_pct": 57.7,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.2,
+          "f1": 0.33333333333333337,
+          "tp": 1,
+          "fp": 0,
+          "fn": 4
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.3333333333333333,
+        "f1": 0.5,
+        "tp": 2,
+        "fp": 0,
+        "fn": 4,
+        "oov_recall": 0.3333333333333333
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Jane Watson",
+            "reference": "Jane Watson"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Financial Conduct Authority (FCA)",
+            "reference": "Financial Conduct Authority"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "FCA"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Royal Bank of Scotland"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "RBS"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "OFAC"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "FCA",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "RBS",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "OFAC",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:45:26.282536+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "26",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 3.567049980163574,
+    "tokens_per_sec": 143.49,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 1.0,
+    "recall": 0.6666666666666666,
+    "f1": 0.8,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 18.9,
+    "cpu_peak_pct": 32.5,
+    "proc_cpu_avg_pct": 15.2,
+    "mem_avg_mb": 257.2,
+    "mem_peak_mb": 257.2,
+    "sys_mem_avg_mb": 23049.9,
+    "sys_mem_avg_pct": 57.8,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.6666666666666666,
+        "f1": 0.8,
+        "tp": 2,
+        "fp": 0,
+        "fn": 1,
+        "oov_recall": 0.5
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Najib Razak",
+            "reference": "Najib Razak"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "SRC International",
+            "reference": "SRC International"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "1MDB"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "1MDB",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:45:29.860307+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "27",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 2.5485661029815674,
+    "tokens_per_sec": 143.49,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.75,
+    "recall": 1.0,
+    "f1": 0.8571428571428571,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 13.4,
+    "cpu_peak_pct": 18.1,
+    "proc_cpu_avg_pct": 21.8,
+    "mem_avg_mb": 257.2,
+    "mem_peak_mb": 257.2,
+    "sys_mem_avg_mb": 23087.3,
+    "sys_mem_avg_pct": 57.8,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571428571428571,
+        "tp": 3,
+        "fp": 1,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Jian Liu",
+            "reference": "Jian Liu"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Lucky Coffee Inc",
+            "reference": null
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Luckin Coffee Inc",
+            "reference": "Luckin Coffee Inc"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sec",
+            "reference": "SEC"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Lucky Coffee Inc",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Luckin Coffee Inc"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:45:32.421736+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "28",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 3.0594048500061035,
+    "tokens_per_sec": 143.74,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.6666666666666666,
+    "recall": 0.5,
+    "f1": 0.5714285714285715,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 17.3,
+    "cpu_peak_pct": 24.0,
+    "proc_cpu_avg_pct": 17.9,
+    "mem_avg_mb": 257.2,
+    "mem_peak_mb": 257.2,
+    "sys_mem_avg_mb": 23001.2,
+    "sys_mem_avg_pct": 57.6,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.3333333333333333,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 0,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6666666666666666,
+        "recall": 0.5,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "fp": 1,
+        "fn": 2,
+        "oov_recall": 0.5
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Brian Hartzer",
+            "reference": "Brian Hartzer"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Westpac Banking Corporation",
+            "reference": "Westpac Banking Corporation"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Australian Transaction Reports and Analysis Centre"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "AUSTRAC"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Australia",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:45:35.497976+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "29",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 3.5527658462524414,
+    "tokens_per_sec": 143.56,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 17.2,
+    "cpu_peak_pct": 21.9,
+    "proc_cpu_avg_pct": 15.0,
+    "mem_avg_mb": 257.2,
+    "mem_peak_mb": 257.2,
+    "sys_mem_avg_mb": 23009.4,
+    "sys_mem_avg_pct": 57.7,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 2,
+        "fn": 2,
+        "oov_recall": 0.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Johann Aarup-Andersen",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Jacob Aarup-Andersen"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "Copenhagen Police",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Danske Bank"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Johann Aarup-Andersen",
+          "ground_truth_target": "Jacob Aarup-Andersen",
+          "ratio": 82.92682926829268
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:45:39.059759+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "30",
+    "model": "deepseek-r1:1.5b_baseline",
+    "latency_sec": 4.071275949478149,
+    "tokens_per_sec": 143.42,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 1.0,
+    "recall": 0.75,
+    "f1": 0.8571428571428571,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 21.3,
+    "cpu_peak_pct": 32.1,
+    "proc_cpu_avg_pct": 13.1,
+    "mem_avg_mb": 257.2,
+    "mem_peak_mb": 257.2,
+    "sys_mem_avg_mb": 23105.8,
+    "sys_mem_avg_pct": 57.8,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571428571428571,
+        "tp": 3,
+        "fp": 0,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Susan Mauldin",
+            "reference": "Susan Mauldin"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Equifax Inc",
+            "reference": "Equifax Inc"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "FTC",
+            "reference": "FTC"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Federal Trade Commission"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:45:43.140000+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "1",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 5.599355936050415,
+    "tokens_per_sec": 140.65,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.2222222222222222,
+    "recall": 0.25,
+    "f1": 0.23529411764705882,
+    "hallucination_rate": 0.7777777777777778,
+    "hallucinated_count": 7,
+    "cpu_avg_pct": 14.5,
+    "cpu_peak_pct": 28.1,
+    "proc_cpu_avg_pct": 9.8,
+    "mem_avg_mb": 464.5,
+    "mem_peak_mb": 464.5,
+    "sys_mem_avg_mb": 23136.0,
+    "sys_mem_avg_pct": 57.9,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.16666666666666666,
+          "recall": 1.0,
+          "f1": 0.2857142857142857,
+          "tp": 1,
+          "fp": 5,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 3
+        },
+        "Locations": {
+          "precision": 0.5,
+          "recall": 0.25,
+          "f1": 0.3333333333333333,
+          "tp": 1,
+          "fp": 1,
+          "fn": 3
+        }
+      },
+      "overall": {
+        "precision": 0.2222222222222222,
+        "recall": 0.25,
+        "f1": 0.23529411764705882,
+        "tp": 2,
+        "fp": 7,
+        "fn": 6,
+        "oov_recall": 0.25
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Sayma Syrenius Cephus",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Alexey Shevchenko",
+            "reference": "Alexey Shevchenko"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Bill Twehway",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "George Weah",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Brian E. Nelson",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Nathaniel McGill",
+            "reference": null
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "U.S. Department of the Treasury's Office of Foreign Assets Control",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Department of the Treasury"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "OFAC"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Al-Sahra Electronics"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Dubai",
+            "reference": "Dubai"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "United Arab Emirates",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Russia"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "UAE"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "United States"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "U.S. Department of the Treasury's Office of Foreign Assets Control",
+          "ground_truth_target": "Department of the Treasury",
+          "ratio": 56.52173913043479
+        },
+        {
+          "entity": "Dubai",
+          "ground_truth_target": "UAE",
+          "ratio": 50.0
+        },
+        {
+          "entity": "United Arab Emirates",
+          "ground_truth_target": "United States",
+          "ratio": 66.66666666666667
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "OFAC",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "UAE",
+          "category": "Locations"
+        }
+      ],
+      "extrinsic_hallucinations": [
+        {
+          "entity": "Sayma Syrenius Cephus",
+          "category": "Persons",
+          "text_match_ratio": 40.90909090909091
+        },
+        {
+          "entity": "Bill Twehway",
+          "category": "Persons",
+          "text_match_ratio": 48.0
+        },
+        {
+          "entity": "George Weah",
+          "category": "Persons",
+          "text_match_ratio": 41.666666666666664
+        },
+        {
+          "entity": "Brian E. Nelson",
+          "category": "Persons",
+          "text_match_ratio": 44.99999999999999
+        },
+        {
+          "entity": "Nathaniel McGill",
+          "category": "Persons",
+          "text_match_ratio": 40.0
+        }
+      ]
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:45:48.894044+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "2",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 4.066558122634888,
+    "tokens_per_sec": 141.36,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 1.0,
+    "recall": 0.6666666666666666,
+    "f1": 0.8,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 20.5,
+    "cpu_peak_pct": 25.6,
+    "proc_cpu_avg_pct": 14.4,
+    "mem_avg_mb": 465.2,
+    "mem_peak_mb": 469.3,
+    "sys_mem_avg_mb": 23277.0,
+    "sys_mem_avg_pct": 58.2,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.3333333333333333,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 0,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.6666666666666666,
+        "f1": 0.8,
+        "tp": 4,
+        "fp": 0,
+        "fn": 2,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Stephen Murphy",
+            "reference": "Stephen Murphy"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Kenneth A. Polite Jr.",
+            "reference": "Kenneth A. Polite Jr."
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "HSBC",
+            "reference": "HSBC"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "DOJ"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Sinaloa Cartel"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "New York",
+            "reference": "New York"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "DOJ",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:45:53.072518+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "3",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 3.0486812591552734,
+    "tokens_per_sec": 142.5,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.42857142857142855,
+    "recall": 0.75,
+    "f1": 0.5454545454545454,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 12.8,
+    "cpu_peak_pct": 22.2,
+    "proc_cpu_avg_pct": 16.6,
+    "mem_avg_mb": 475.7,
+    "mem_peak_mb": 475.7,
+    "sys_mem_avg_mb": 23179.5,
+    "sys_mem_avg_pct": 58.0,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 2,
+          "fp": 2,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.42857142857142855,
+        "recall": 0.75,
+        "f1": 0.5454545454545454,
+        "tp": 3,
+        "fp": 4,
+        "fn": 1,
+        "oov_recall": 0.6666666666666666
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Dmitry Kovalev",
+            "reference": "Dmitry Kovalev"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "Russia",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Europe",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Belneftekhim",
+            "reference": "Belneftekhim"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "European Council",
+            "reference": "European Council"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Russia",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Europe",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Belarus"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Europe",
+          "ground_truth_target": "European Council",
+          "ratio": 54.54545454545454
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:45:56.228139+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "4",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 3.055959701538086,
+    "tokens_per_sec": 142.1,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.5,
+    "recall": 0.5,
+    "f1": 0.5,
+    "hallucination_rate": 0.25,
+    "hallucinated_count": 1,
+    "cpu_avg_pct": 23.0,
+    "cpu_peak_pct": 24.9,
+    "proc_cpu_avg_pct": 17.5,
+    "mem_avg_mb": 475.9,
+    "mem_peak_mb": 475.9,
+    "sys_mem_avg_mb": 23195.0,
+    "sys_mem_avg_pct": 58.0,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.3333333333333333,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 0,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5,
+        "tp": 2,
+        "fp": 2,
+        "fn": 2,
+        "oov_recall": 0.5
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Arthur Chan",
+            "reference": "Arthur Chan"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Sun Hung Kai Securities",
+            "reference": null
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Securities and Futures Commission (SFC)",
+            "reference": "Securities and Futures Commission"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "SFC"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Sun Hung Kai Securities"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Hong Kong",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Sun Hung Kai Securities",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Sun Hung Kai Securities"
+        }
+      ],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "SFC",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:45:59.382583+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "5",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 3.0687429904937744,
+    "tokens_per_sec": 142.07,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.8,
+    "recall": 0.8,
+    "f1": 0.8000000000000002,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 18.7,
+    "cpu_peak_pct": 22.7,
+    "proc_cpu_avg_pct": 17.8,
+    "mem_avg_mb": 478.7,
+    "mem_peak_mb": 478.8,
+    "sys_mem_avg_mb": 23234.0,
+    "sys_mem_avg_pct": 58.1,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.8,
+        "recall": 0.8,
+        "f1": 0.8000000000000002,
+        "tp": 4,
+        "fp": 1,
+        "fn": 1,
+        "oov_recall": 0.8
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Barclays Bank",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Maher Al-Assad",
+            "reference": "Maher Al-Assad"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Barclays Bank",
+            "reference": "Barclays Bank"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "The UK Office of Financial Sanctions Implementation (OFSI)",
+            "reference": "Office of Financial Sanctions Implementation"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "OFSI"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Syria",
+            "reference": "Syria"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Barclays Bank",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Barclays Bank"
+        }
+      ],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "OFSI",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:46:02.545468+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "6",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 3.5682499408721924,
+    "tokens_per_sec": 141.95,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.7142857142857143,
+    "recall": 0.8333333333333334,
+    "f1": 0.7692307692307692,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 24.4,
+    "cpu_peak_pct": 33.4,
+    "proc_cpu_avg_pct": 15.7,
+    "mem_avg_mb": 496.7,
+    "mem_peak_mb": 496.7,
+    "sys_mem_avg_mb": 23301.7,
+    "sys_mem_avg_pct": 58.3,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.6666666666666666,
+          "recall": 0.6666666666666666,
+          "f1": 0.6666666666666666,
+          "tp": 2,
+          "fp": 1,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.7142857142857143,
+        "recall": 0.8333333333333334,
+        "f1": 0.7692307692307692,
+        "tp": 5,
+        "fp": 2,
+        "fn": 1,
+        "oov_recall": 0.8333333333333334
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Standard Bank",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Cyril Ramaphosa",
+            "reference": "Cyril Ramaphosa"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Financial Action Task Force (FATF)",
+            "reference": "Financial Action Task Force"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Standard Bank",
+            "reference": "Standard Bank"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "South Africa",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "FATF"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Zimbabwe",
+            "reference": "Zimbabwe"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "South Africa",
+            "reference": "South Africa"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Standard Bank",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Standard Bank"
+        },
+        {
+          "entity": "South Africa",
+          "extracted_type": "Organizations",
+          "correct_type": "Locations",
+          "matched_ground_truth": "South Africa"
+        }
+      ],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "FATF",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:46:06.218960+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "7",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 3.5735678672790527,
+    "tokens_per_sec": 141.5,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.75,
+    "recall": 0.75,
+    "f1": 0.75,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 22.3,
+    "cpu_peak_pct": 27.1,
+    "proc_cpu_avg_pct": 15.3,
+    "mem_avg_mb": 496.7,
+    "mem_peak_mb": 496.7,
+    "sys_mem_avg_mb": 23256.5,
+    "sys_mem_avg_pct": 58.2,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 1,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.75,
+        "recall": 0.75,
+        "f1": 0.75,
+        "tp": 3,
+        "fp": 1,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Marc Dufour",
+            "reference": "Marc Dufour"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "Swiss engineering firm ABB Ltd",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sec",
+            "reference": "SEC"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "ABB Ltd"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "South Africa",
+            "reference": "South Africa"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:46:09.900983+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "8",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 4.55124568939209,
+    "tokens_per_sec": 141.05,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.42857142857142855,
+    "recall": 0.6,
+    "f1": 0.5,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 17.8,
+    "cpu_peak_pct": 20.4,
+    "proc_cpu_avg_pct": 12.1,
+    "mem_avg_mb": 497.2,
+    "mem_peak_mb": 497.2,
+    "sys_mem_avg_mb": 23292.0,
+    "sys_mem_avg_pct": 58.2,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.3333333333333333,
+          "recall": 1.0,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 2,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.42857142857142855,
+        "recall": 0.6,
+        "f1": 0.5,
+        "tp": 3,
+        "fp": 4,
+        "fn": 2,
+        "oov_recall": 0.6
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Nicolas Maduro Guerra",
+            "reference": "Nicolas Maduro Guerra"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Nicolas Maduro Guerra's Son",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "President",
+            "reference": null
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "U.S. Treasury's OFAC",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "OFAC"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "PDVSA"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Panama",
+            "reference": "Panama"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Venezuela",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Switzerland",
+            "reference": "Switzerland"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "OFAC",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "PDVSA",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:46:14.565579+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "9",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 2.534187078475952,
+    "tokens_per_sec": 143.21,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 17.4,
+    "cpu_peak_pct": 25.3,
+    "proc_cpu_avg_pct": 21.5,
+    "mem_avg_mb": 498.2,
+    "mem_peak_mb": 498.2,
+    "sys_mem_avg_mb": 23312.3,
+    "sys_mem_avg_pct": 58.3,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 4,
+        "fp": 0,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Christian Sewing",
+            "reference": "Christian Sewing"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "BaFin",
+            "reference": "BaFin"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Deutsche Bank",
+            "reference": "Deutsche Bank"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Germany",
+            "reference": "Germany"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:46:17.201428+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "10",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 3.0566728115081787,
+    "tokens_per_sec": 141.67,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.3333333333333333,
+    "recall": 0.3333333333333333,
+    "f1": 0.3333333333333333,
+    "hallucination_rate": 0.3333333333333333,
+    "hallucinated_count": 1,
+    "cpu_avg_pct": 22.7,
+    "cpu_peak_pct": 28.1,
+    "proc_cpu_avg_pct": 19.4,
+    "mem_avg_mb": 498.5,
+    "mem_peak_mb": 498.5,
+    "sys_mem_avg_mb": 23282.3,
+    "sys_mem_avg_pct": 58.2,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.3333333333333333,
+        "recall": 0.3333333333333333,
+        "f1": 0.3333333333333333,
+        "tp": 1,
+        "fp": 2,
+        "fn": 2,
+        "oov_recall": 0.5
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Georgios Pavlidis"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Suez Rajan Ltd.",
+            "reference": "Suez Rajan Ltd"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Justice Department"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Saudi Arabia",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Greece",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:46:20.356575+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "11",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 3.0547149181365967,
+    "tokens_per_sec": 141.93,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.6666666666666666,
+    "recall": 0.5,
+    "f1": 0.5714285714285715,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 13.7,
+    "cpu_peak_pct": 24.0,
+    "proc_cpu_avg_pct": 17.9,
+    "mem_avg_mb": 502.2,
+    "mem_peak_mb": 502.2,
+    "sys_mem_avg_mb": 23255.4,
+    "sys_mem_avg_pct": 58.2,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6666666666666666,
+        "recall": 0.5,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "fp": 1,
+        "fn": 2,
+        "oov_recall": 0.5
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Heather Morgan",
+            "reference": "Heather Morgan"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Ilya Lichtenstein",
+            "reference": "Ilya Lichtenstein"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Lisa O. Monaco"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Bitfinex"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Bitfinex",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Bitfinex",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Bitfinex"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:46:23.528188+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "12",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 4.579344749450684,
+    "tokens_per_sec": 140.69,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.3333333333333333,
+    "recall": 1.0,
+    "f1": 0.5,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 15.6,
+    "cpu_peak_pct": 29.2,
+    "proc_cpu_avg_pct": 11.9,
+    "mem_avg_mb": 502.3,
+    "mem_peak_mb": 502.3,
+    "sys_mem_avg_mb": 23164.0,
+    "sys_mem_avg_pct": 58.0,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "f1": 0.5,
+        "tp": 2,
+        "fp": 4,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Denmark's State Prosecutor for Serious Economic and International Crime",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Thomas Borgen",
+            "reference": "Thomas Borgen"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Danke Bank",
+            "reference": "Danske Bank"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Denmark's State Prosecutor for Serious Economic and International Crime",
+            "reference": null
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Denmark",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Estonian branch",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:46:28.213572+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "13",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 3.559824228286743,
+    "tokens_per_sec": 141.78,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.75,
+    "recall": 0.75,
+    "f1": 0.75,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 15.7,
+    "cpu_peak_pct": 24.4,
+    "proc_cpu_avg_pct": 15.5,
+    "mem_avg_mb": 500.5,
+    "mem_peak_mb": 500.6,
+    "sys_mem_avg_mb": 23321.4,
+    "sys_mem_avg_pct": 58.3,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.75,
+        "recall": 0.75,
+        "f1": 0.75,
+        "tp": 3,
+        "fp": 1,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Muammar Gaddafi",
+            "reference": "Muammar Gaddafi"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Mutassim Gaddafi",
+            "reference": "Mutassim Gaddafi"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "Malta",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Bank of Valletta"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Malta",
+            "reference": "Malta"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Muammar Gaddafi",
+          "ground_truth_target": "Mutassim Gaddafi",
+          "ratio": 77.41935483870968
+        },
+        {
+          "entity": "Mutassim Gaddafi",
+          "ground_truth_target": "Muammar Gaddafi",
+          "ratio": 77.41935483870968
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "Malta",
+          "extracted_type": "Organizations",
+          "correct_type": "Locations",
+          "matched_ground_truth": "Malta"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:46:31.889415+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "14",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 4.587002754211426,
+    "tokens_per_sec": 141.23,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.6666666666666666,
+    "recall": 0.5,
+    "f1": 0.5714285714285715,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 15.0,
+    "cpu_peak_pct": 24.1,
+    "proc_cpu_avg_pct": 11.9,
+    "mem_avg_mb": 500.7,
+    "mem_peak_mb": 500.7,
+    "sys_mem_avg_mb": 23210.6,
+    "sys_mem_avg_pct": 58.1,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        }
+      },
+      "overall": {
+        "precision": 0.6666666666666666,
+        "recall": 0.5,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "fp": 1,
+        "fn": 2,
+        "oov_recall": 0.6666666666666666
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Willy Ngoma",
+            "reference": "Willy Ngoma"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "United Nations Security Council",
+            "reference": "United Nations Security Council"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "M23"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Democratic Republic of Congo",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Congo"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "M23",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "Congo",
+          "category": "Locations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:46:36.570453+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "15",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 4.067800045013428,
+    "tokens_per_sec": 141.05,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.5,
+    "recall": 0.6666666666666666,
+    "f1": 0.5714285714285715,
+    "hallucination_rate": 0.25,
+    "hallucinated_count": 1,
+    "cpu_avg_pct": 17.9,
+    "cpu_peak_pct": 27.1,
+    "proc_cpu_avg_pct": 13.6,
+    "mem_avg_mb": 493.5,
+    "mem_peak_mb": 500.8,
+    "sys_mem_avg_mb": 23224.2,
+    "sys_mem_avg_pct": 58.1,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5,
+        "recall": 0.6666666666666666,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "fp": 2,
+        "fn": 1,
+        "oov_recall": 0.6666666666666666
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Evelin Banev",
+            "reference": "Evelin Banev"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Credit Suisse Group AG",
+            "reference": null
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Swiss Federal Criminal Court",
+            "reference": "Swiss Federal Criminal Court"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Credit Suisse Group AG"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Zurich, Switzerland",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Credit Suisse Group AG",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Credit Suisse Group AG"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": [
+        {
+          "entity": "Zurich, Switzerland",
+          "category": "Locations",
+          "text_match_ratio": 41.17647058823529
+        }
+      ]
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:46:40.748629+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "16",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 3.058337926864624,
+    "tokens_per_sec": 142.57,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.5,
+    "recall": 0.75,
+    "f1": 0.6,
+    "hallucination_rate": 0.3333333333333333,
+    "hallucinated_count": 2,
+    "cpu_avg_pct": 19.3,
+    "cpu_peak_pct": 21.7,
+    "proc_cpu_avg_pct": 17.9,
+    "mem_avg_mb": 500.9,
+    "mem_peak_mb": 500.9,
+    "sys_mem_avg_mb": 23242.1,
+    "sys_mem_avg_pct": 58.1,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5,
+        "recall": 0.75,
+        "f1": 0.6,
+        "tp": 3,
+        "fp": 3,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Ripple Labs Inc",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Brad Garlinghouse",
+            "reference": "Brad Garlinghouse"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Christian Larsen",
+            "reference": "Christian Larsen"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "SEC",
+            "reference": "SEC"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Ripple Labs Inc"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Washington D.C.",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "United States",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Ripple Labs Inc",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Ripple Labs Inc"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": [
+        {
+          "entity": "Washington D.C.",
+          "category": "Locations",
+          "text_match_ratio": 45.16129032258065
+        }
+      ]
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:46:43.919355+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "17",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 3.571812152862549,
+    "tokens_per_sec": 141.76,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.5,
+    "recall": 0.6,
+    "f1": 0.5454545454545454,
+    "hallucination_rate": 0.3333333333333333,
+    "hallucinated_count": 2,
+    "cpu_avg_pct": 17.8,
+    "cpu_peak_pct": 22.2,
+    "proc_cpu_avg_pct": 15.4,
+    "mem_avg_mb": 501.4,
+    "mem_peak_mb": 501.4,
+    "sys_mem_avg_mb": 23256.9,
+    "sys_mem_avg_pct": 58.2,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 1,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5,
+        "recall": 0.6,
+        "f1": 0.5454545454545454,
+        "tp": 3,
+        "fp": 3,
+        "fn": 2,
+        "oov_recall": 0.5
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Department of Justice",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "BNP Paribas SA",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Lars Machen"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "Department of Justice",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "BNP Paribas SA",
+            "reference": "BNP Paribas SA"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "DOJ"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Iran",
+            "reference": "Iran"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sudan",
+            "reference": "Sudan"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "BNP Paribas SA",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "BNP Paribas SA"
+        }
+      ],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "DOJ",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": [
+        {
+          "entity": "Department of Justice",
+          "category": "Persons",
+          "text_match_ratio": 48.78048780487805
+        },
+        {
+          "entity": "Department of Justice",
+          "category": "Organizations",
+          "text_match_ratio": 48.78048780487805
+        }
+      ]
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:46:47.605066+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "18",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 2.5250298976898193,
+    "tokens_per_sec": 142.9,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.5,
+    "recall": 0.6666666666666666,
+    "f1": 0.5714285714285715,
+    "hallucination_rate": 0.25,
+    "hallucinated_count": 1,
+    "cpu_avg_pct": 21.0,
+    "cpu_peak_pct": 25.8,
+    "proc_cpu_avg_pct": 21.6,
+    "mem_avg_mb": 501.7,
+    "mem_peak_mb": 501.8,
+    "sys_mem_avg_mb": 23256.7,
+    "sys_mem_avg_pct": 58.2,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5,
+        "recall": 0.6666666666666666,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "fp": 2,
+        "fn": 1,
+        "oov_recall": 0.6666666666666666
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Sani Abacha",
+            "reference": "Sani Abacha"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Sani Abacha's associates",
+            "reference": null
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "U.S. Department of Justice",
+            "reference": "Department of Justice"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Citibank"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Nigeria",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Sani Abacha's associates",
+          "ground_truth_target": "Sani Abacha",
+          "ratio": 62.857142857142854
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:46:50.232036+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "19",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 3.042965888977051,
+    "tokens_per_sec": 141.74,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.25,
+    "recall": 0.3333333333333333,
+    "f1": 0.28571428571428575,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 13.9,
+    "cpu_peak_pct": 23.7,
+    "proc_cpu_avg_pct": 17.9,
+    "mem_avg_mb": 502.1,
+    "mem_peak_mb": 502.1,
+    "sys_mem_avg_mb": 23436.3,
+    "sys_mem_avg_pct": 58.5,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.25,
+        "recall": 0.3333333333333333,
+        "f1": 0.28571428571428575,
+        "tp": 1,
+        "fp": 3,
+        "fn": 2,
+        "oov_recall": 0.3333333333333333
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Airbnb Inc",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Sarah Johnston",
+            "reference": "Sarah Johnston"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "The U.S. Treasury's OFAC",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "OFAC"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Airbnb Inc"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "U.S.",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Airbnb Inc",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Airbnb Inc"
+        }
+      ],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "OFAC",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:46:53.369015+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "20",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 4.067957878112793,
+    "tokens_per_sec": 141.01,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.5,
+    "recall": 1.0,
+    "f1": 0.6666666666666666,
+    "hallucination_rate": 0.16666666666666666,
+    "hallucinated_count": 1,
+    "cpu_avg_pct": 15.3,
+    "cpu_peak_pct": 21.4,
+    "proc_cpu_avg_pct": 11.9,
+    "mem_avg_mb": 502.5,
+    "mem_peak_mb": 502.5,
+    "sys_mem_avg_mb": 23272.3,
+    "sys_mem_avg_pct": 58.2,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "tp": 3,
+        "fp": 3,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Investor Securities LLC.",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Bernard L. Madoff",
+            "reference": "Bernard L. Madoff"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Denny Chin",
+            "reference": "Denny Chin"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Bernard L. Madoff Investment Securities LLC.",
+            "reference": "Bernard L. Madoff Investment Securities LLC"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Investor Securities LLC.",
+            "reference": null
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Washington, D.C.",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Investor Securities LLC.",
+          "ground_truth_target": "Bernard L. Madoff Investment Securities LLC",
+          "ratio": 62.68656716417911
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": [
+        {
+          "entity": "Washington, D.C.",
+          "category": "Locations",
+          "text_match_ratio": 40.0
+        }
+      ]
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:46:57.536956+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "21",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 3.57757306098938,
+    "tokens_per_sec": 141.95,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.6,
+    "recall": 0.42857142857142855,
+    "f1": 0.5,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 18.3,
+    "cpu_peak_pct": 28.5,
+    "proc_cpu_avg_pct": 15.5,
+    "mem_avg_mb": 509.2,
+    "mem_peak_mb": 509.2,
+    "sys_mem_avg_mb": 23318.5,
+    "sys_mem_avg_pct": 58.3,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 4
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6,
+        "recall": 0.42857142857142855,
+        "f1": 0.5,
+        "tp": 3,
+        "fp": 2,
+        "fn": 4,
+        "oov_recall": 0.3333333333333333
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Mahmoud Bahmani",
+            "reference": "Mahmoud Bahmani"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Standard Chartered Bank",
+            "reference": null
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "New York Department of Financial Services (DFS)",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Department of Financial Services"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "DFS"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Standard Chartered Bank"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Central Bank of Iran"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Iran",
+            "reference": "Iran"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "New York",
+            "reference": "New York"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "New York Department of Financial Services (DFS)",
+          "ground_truth_target": "Department of Financial Services",
+          "ratio": 81.0126582278481
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "Standard Chartered Bank",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Standard Chartered Bank"
+        }
+      ],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "DFS",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:47:01.243163+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "22",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 4.061117887496948,
+    "tokens_per_sec": 141.22,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.25,
+    "recall": 0.25,
+    "f1": 0.25,
+    "hallucination_rate": 0.5,
+    "hallucinated_count": 2,
+    "cpu_avg_pct": 17.6,
+    "cpu_peak_pct": 24.2,
+    "proc_cpu_avg_pct": 13.2,
+    "mem_avg_mb": 506.3,
+    "mem_peak_mb": 506.3,
+    "sys_mem_avg_mb": 23276.4,
+    "sys_mem_avg_pct": 58.2,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 3
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.25,
+        "recall": 0.25,
+        "f1": 0.25,
+        "tp": 1,
+        "fp": 3,
+        "fn": 3,
+        "oov_recall": 0.25
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Goldman Sachs Group Inc",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Jho Low",
+            "reference": "Jho Low"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "fp",
+            "extracted": "Department of Justice",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "DOJ"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Goldman Sachs Group Inc"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "1MDB"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Washington",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Goldman Sachs Group Inc",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Goldman Sachs Group Inc"
+        }
+      ],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "DOJ",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "1MDB",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": [
+        {
+          "entity": "Washington",
+          "category": "Locations",
+          "text_match_ratio": 42.10526315789473
+        }
+      ]
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:47:05.413302+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "23",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 3.570518970489502,
+    "tokens_per_sec": 141.87,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.75,
+    "recall": 0.75,
+    "f1": 0.75,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 17.7,
+    "cpu_peak_pct": 22.8,
+    "proc_cpu_avg_pct": 15.8,
+    "mem_avg_mb": 506.2,
+    "mem_peak_mb": 506.2,
+    "sys_mem_avg_mb": 23256.7,
+    "sys_mem_avg_pct": 58.1,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.75,
+        "recall": 0.75,
+        "f1": 0.75,
+        "tp": 3,
+        "fp": 1,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Erik Thedeen",
+            "reference": "Erik Thedeen"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "SEB",
+            "reference": "SEB"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Finansinspektionen",
+            "reference": "Finansinspektionen"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Skandinaviska Enskilda Banken"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Sweden",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:47:09.085073+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "24",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 3.5596110820770264,
+    "tokens_per_sec": 143.0,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.75,
+    "recall": 0.75,
+    "f1": 0.75,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 24.4,
+    "cpu_peak_pct": 34.8,
+    "proc_cpu_avg_pct": 16.0,
+    "mem_avg_mb": 506.2,
+    "mem_peak_mb": 506.2,
+    "sys_mem_avg_mb": 23455.5,
+    "sys_mem_avg_pct": 58.6,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.75,
+        "recall": 0.75,
+        "f1": 0.75,
+        "tp": 3,
+        "fp": 1,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Eurasian Bank",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Timur Kulibaev",
+            "reference": "Timur Kulibaev"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "National Bank of Kazakhstan",
+            "reference": "National Bank of Kazakhstan"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Eurasian Bank"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "tp",
+            "extracted": "Kazakhstan",
+            "reference": "Kazakhstan"
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Eurasian Bank",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Eurasian Bank"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:47:12.759614+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "25",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 2.5486810207366943,
+    "tokens_per_sec": 142.38,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 1.0,
+    "recall": 0.5,
+    "f1": 0.6666666666666666,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 24.3,
+    "cpu_peak_pct": 33.5,
+    "proc_cpu_avg_pct": 21.6,
+    "mem_avg_mb": 505.5,
+    "mem_peak_mb": 505.5,
+    "sys_mem_avg_mb": 23461.9,
+    "sys_mem_avg_pct": 58.6,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.4,
+          "f1": 0.5714285714285715,
+          "tp": 2,
+          "fp": 0,
+          "fn": 3
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666,
+        "tp": 3,
+        "fp": 0,
+        "fn": 3,
+        "oov_recall": 0.5
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Jane Watson",
+            "reference": "Jane Watson"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "FCA",
+            "reference": "FCA"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "RBS",
+            "reference": "RBS"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Financial Conduct Authority"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Royal Bank of Scotland"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "OFAC"
+          }
+        ],
+        "Locations": []
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "FCA",
+          "ground_truth_target": "OFAC",
+          "ratio": 57.14285714285714
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "OFAC",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:47:15.415552+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "26",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 2.560114860534668,
+    "tokens_per_sec": 142.77,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.3333333333333333,
+    "recall": 0.3333333333333333,
+    "f1": 0.3333333333333333,
+    "hallucination_rate": 0.3333333333333333,
+    "hallucinated_count": 1,
+    "cpu_avg_pct": 15.6,
+    "cpu_peak_pct": 22.3,
+    "proc_cpu_avg_pct": 21.8,
+    "mem_avg_mb": 505.4,
+    "mem_peak_mb": 505.5,
+    "sys_mem_avg_mb": 23396.4,
+    "sys_mem_avg_pct": 58.4,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.3333333333333333,
+        "recall": 0.3333333333333333,
+        "f1": 0.3333333333333333,
+        "tp": 1,
+        "fp": 2,
+        "fn": 2,
+        "oov_recall": 0.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Former Prime Minister Najib Razak",
+            "reference": null
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Najib Razak"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "SRC International",
+            "reference": "SRC International"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "1MDB"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Nigeria",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Former Prime Minister Najib Razak",
+          "ground_truth_target": "Najib Razak",
+          "ratio": 50.0
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "1MDB",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:47:18.084628+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "27",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 3.0440597534179688,
+    "tokens_per_sec": 142.59,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.5,
+    "recall": 0.6666666666666666,
+    "f1": 0.5714285714285715,
+    "hallucination_rate": 0.25,
+    "hallucinated_count": 1,
+    "cpu_avg_pct": 20.2,
+    "cpu_peak_pct": 32.9,
+    "proc_cpu_avg_pct": 18.2,
+    "mem_avg_mb": 506.0,
+    "mem_peak_mb": 506.0,
+    "sys_mem_avg_mb": 23465.1,
+    "sys_mem_avg_pct": 58.6,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5,
+        "recall": 0.6666666666666666,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "fp": 2,
+        "fn": 1,
+        "oov_recall": 0.6666666666666666
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Jian Liu",
+            "reference": "Jian Liu"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Luckin Coffee Inc",
+            "reference": null
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Luckin Coffee Inc",
+            "reference": "Luckin Coffee Inc"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "SEC"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "New York City",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Luckin Coffee Inc",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Luckin Coffee Inc"
+        }
+      ],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "SEC",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": [
+        {
+          "entity": "New York City",
+          "category": "Locations",
+          "text_match_ratio": 43.75
+        }
+      ]
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:47:21.237252+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "28",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 5.581464052200317,
+    "tokens_per_sec": 140.81,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.42857142857142855,
+    "recall": 0.75,
+    "f1": 0.5454545454545454,
+    "hallucination_rate": 0.14285714285714285,
+    "hallucinated_count": 1,
+    "cpu_avg_pct": 20.5,
+    "cpu_peak_pct": 32.0,
+    "proc_cpu_avg_pct": 9.7,
+    "mem_avg_mb": 506.0,
+    "mem_peak_mb": 506.0,
+    "sys_mem_avg_mb": 23318.1,
+    "sys_mem_avg_pct": 58.3,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.3333333333333333,
+          "recall": 1.0,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 2,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.42857142857142855,
+        "recall": 0.75,
+        "f1": 0.5454545454545454,
+        "tp": 3,
+        "fp": 4,
+        "fn": 1,
+        "oov_recall": 0.75
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Westpac Banking Corporation",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Brian Hartzer",
+            "reference": "Brian Hartzer"
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Nathaniel McGill",
+            "reference": null
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Westpac Banking Corporation",
+            "reference": "Westpac Banking Corporation"
+          },
+          {
+            "verdict": "tp",
+            "extracted": "AUSTRAC (Australian Transaction Reports and Analysis Centre)",
+            "reference": "Australian Transaction Reports and Analysis Centre"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "AUSTRAC"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Western Australia",
+            "reference": null
+          },
+          {
+            "verdict": "fp",
+            "extracted": "Australia",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Westpac Banking Corporation",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Westpac Banking Corporation"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": [
+        {
+          "entity": "Nathaniel McGill",
+          "category": "Persons",
+          "text_match_ratio": 41.379310344827594
+        }
+      ]
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:47:26.922031+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "29",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 2.555859088897705,
+    "tokens_per_sec": 142.51,
+    "retries": 0,
+    "parse_method": "codeblock",
+    "precision": 0.6666666666666666,
+    "recall": 1.0,
+    "f1": 0.8,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 13.8,
+    "cpu_peak_pct": 16.8,
+    "proc_cpu_avg_pct": 21.4,
+    "mem_avg_mb": 506.1,
+    "mem_peak_mb": 506.1,
+    "sys_mem_avg_mb": 23271.6,
+    "sys_mem_avg_pct": 58.2,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8,
+        "tp": 2,
+        "fp": 1,
+        "fn": 0,
+        "oov_recall": 1.0
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "tp",
+            "extracted": "Jacob Aarup-Andersen",
+            "reference": "Jacob Aarup-Andersen"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Danke Bank",
+            "reference": "Danske Bank"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "Copenhagen",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:47:29.579799+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "30",
+    "model": "deepseek-r1:1.5b_kb_rag",
+    "latency_sec": 3.562908887863159,
+    "tokens_per_sec": 141.61,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.5,
+    "recall": 0.5,
+    "f1": 0.5,
+    "hallucination_rate": 0.25,
+    "hallucinated_count": 1,
+    "cpu_avg_pct": 21.7,
+    "cpu_peak_pct": 34.2,
+    "proc_cpu_avg_pct": 15.0,
+    "mem_avg_mb": 509.8,
+    "mem_peak_mb": 509.8,
+    "sys_mem_avg_mb": 23404.5,
+    "sys_mem_avg_pct": 58.4,
+    "vram_mb": 1723.0,
+    "model_disk_mb": 1065.6,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 0.3333333333333333,
+          "f1": 0.5,
+          "tp": 1,
+          "fp": 0,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5,
+        "tp": 2,
+        "fp": 2,
+        "fn": 2,
+        "oov_recall": 0.5
+      },
+      "per_entity": {
+        "Persons": [
+          {
+            "verdict": "fp",
+            "extracted": "Equifax Inc",
+            "reference": null
+          },
+          {
+            "verdict": "tp",
+            "extracted": "Susan Mauldin",
+            "reference": "Susan Mauldin"
+          }
+        ],
+        "Organizations": [
+          {
+            "verdict": "tp",
+            "extracted": "Federal Trade Commission (FTC)",
+            "reference": "Federal Trade Commission"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "FTC"
+          },
+          {
+            "verdict": "fn",
+            "extracted": null,
+            "reference": "Equifax Inc"
+          }
+        ],
+        "Locations": [
+          {
+            "verdict": "fp",
+            "extracted": "San Francisco",
+            "reference": null
+          }
+        ]
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Equifax Inc",
+          "extracted_type": "Persons",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Equifax Inc"
+        }
+      ],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "FTC",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": [
+        {
+          "entity": "San Francisco",
+          "category": "Locations",
+          "text_match_ratio": 44.44444444444444
+        }
+      ]
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-09T03:47:33.249304+00:00",
+      "model_version": "deepseek-r1:1.5b",
+      "prompt_hash": "a6af280e"
+    }
+  }
+]
