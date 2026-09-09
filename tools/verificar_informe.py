@@ -62,25 +62,11 @@ EXCLUIDOS = ['nuextract', 'minimax-m3', 'gemini-3.1-flash-lite', 'q8-64k', 'sonc
 # No se renumera: las citas de FINDINGS son registro fechado y renumerar las invalidaria todas.
 # ─────────────────────────────────────────────────────────────────────────────────────────────────
 
-# Retiradas 2026-09-09 (segunda pasada de Claude Desktop, §2.25, en dos tandas): 'en español, del
-# corpus periodistico,' / 'in Spanish, from the news' / 'guiones largos frente a' / 'Nueve de los
-# trece modelos mejoran' / '−0,54 y −0,18 puntos en los dos de 31B' / 'Grupos con mas de una
-# corrida...' / 'resaltes en el cuerpo...' ya no tapan ningun fallo (comprobacion 55 las marco
-# caducadas, una tras otra, en la misma sesion de monitoreo: Claude Desktop seguia trabajando en
-# vivo). Comprobado antes de retirar cada una: el .docx de turno ya no contenia esa frase ni ese
-# recuento. Ver CURRENT-TASKS §1.287/§1.288.
+# Retiradas 2026-09-09 (segunda pasada de Claude Desktop, §2.25, en tres tandas): ademas de las
+# siete de la nota anterior, 'guiones largos frente a' (reabierta y vuelta a cerrar por la pieza 30)
+# y 'Vale la pena señalar una particularidad de procedencia' ya no tapan ningun fallo: la nota de
+# §F163 se propago a los tres .docx (v14). Comprobado antes de retirar. Ver CURRENT-TASKS §1.291.
 FALLOS_DECLARADOS = {
-    'guiones largos frente a': ('2026-09-09',
-        'PENDIENTE de propagar a los tres .docx (§F163): el autor pidio retirar totalmente la '
-        'nota de "particularidad de procedencia" en §5.3 (F1 de 79,03% no recalculable, datos '
-        'perdidos por sobrescritura). El parrafo tenia dos guiones largos; al retirarlo el '
-        'Markdown baja de 90 a 88 y los .docx, renderizados antes, se quedan en 90. No aceptado, '
-        'solo declarado para no bloquear ediciones ajenas al render.'),
-    'Vale la pena señalar una particularidad de procedencia': ('2026-09-09',
-        'PENDIENTE de propagar a los tres .docx (§F163): la anecdota completa se retiro del '
-        'Markdown a peticion expresa del autor (dato sin evidencia recalculable); los tres '
-        '.docx, renderizados antes de esta corrección, todavia la conservan. No aceptado, solo '
-        'declarado para no bloquear.'),
     '.rebuild_venv.log': ('2026-09-09',
                           'fichero vacio del commit 880f4f9; decision del autor '
                           '(CURRENT-TASKS §1.103)'),

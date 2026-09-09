@@ -281,6 +281,47 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.26 COMPLETADA — Tercera pasada: piezas 29 y 30 (fechas de calendario y nota de procedencia)
+- **Abierta:** 2026-09-09 23:15 por Claude Desktop. Sección **0.sexies** del encargo, añadida a las 20:08
+  (commit `7698531`), después de que la `_v13` ya estuviera rendereada.
+- **Pieza 29:** ocho fechas de calendario retiradas del cuerpo, en §3.3, §4.1.2, §5.3, §5.3.1 y §7.1. Ninguna
+  cifra cambia. **Los Anexos H e I no se tocan**: siguen siendo bitácora fechada, y eso lo confirmó el autor.
+- **Pieza 30:** eliminado por completo el párrafo de «particularidad de procedencia» de §5.3, el del F1 de
+  79,03 % de `gemma4:31b` cuya corrida se perdió por sobrescritura. El autor calificó de grave mencionar en el
+  cuerpo un dato sin evidencia recalculable, aunque sea como anécdota. No queda resto suyo en el `.md`.
+- **Las dos son cambios del `.md`**, de modo que la reconstrucción las hereda sin cirugía.
+- **Línea base:** `56 comprobaciones · 11 fallos (11 declarados, 0 nuevos)` y `15 afirmaciones · 0 que no se
+  cumplen`.
+- **Estado del `.md`:** 154 988 bytes, escrito a las 23:05, SHA-256 `ad4a6b2d70d5`. Se comprueba al terminar.
+- **Archivos que toco:** los tres `.docx`, el PDF de la raíz, `doc/versions/informe_final/` y `VERSIONES.md`.
+
+**Cerrada:** 2026-09-09 23:20. Hash del `.md` comprobado al terminar: el mismo, `ad4a6b2d70d5`.
+
+| | Antes | Después |
+|:---|:---:|:---:|
+| `verificar_informe.py` | 11 fallos (11 declarados, 0 nuevos) | **7 fallos (5 declarados, 2 nuevos)** |
+| `auditar_afirmaciones.py` | 15 comprobadas, 0 incumplidas | 15 comprobadas, **0 incumplidas** |
+
+Los dos «nuevos» son la comprobación de siempre, «las declaraciones no silencian más de lo que les toca»,
+avisando de que dos declaraciones quedaron caducadas: la de los guiones largos y la de «Vale la pena señalar
+una…», que es precisamente el párrafo que la pieza 30 mandaba eliminar. Es la señal de que el trabajo se hizo.
+
+**Comprobado en el cuerpo del PDF, que es donde importa:** cero fechas de calendario —ninguna coincidencia del
+patrón «N de <mes> de AAAA» en las 24 páginas del cuerpo—, ninguna aparición de «particularidad de procedencia»
+y ninguna del 79,03 %. Los Anexos H e I conservan sus fechas, como pidió el autor.
+
+**Una comprobación pasó a verde sola:** «el `.docx` no añade resaltes ni guiones respecto del Markdown» ya no
+aparece entre los fallos. Con el diagnóstico de §2.25 y la base en 9, el recuento vuelve a estar dentro.
+
+**Medición sobre el PDF:** 37 páginas, **cuerpo 24 de 25** y anexos 13. Cero páginas en blanco, encabezado y
+pie en las 37 sin solaparse (mínimos 20,8 y 17,5 pt), resumen y abstract en la página 1 con 198 y 183 palabras,
+siete capítulos y nueve anexos A-I, 19 leyendas de tabla correlativas, dos de figura, 39 entradas de
+bibliografía correlativas, ninguna llamada `§` rota, sin emojis, arte ASCII ni asteriscos sueltos. Los tres
+`.docx` coinciden entre sí en referencias, tablas, figuras y anexos.
+
+**Respaldo** en `doc/versions/informe_final/_respaldos_20260909_c/`. **`_v14` congelada**: `.docx`
+`b1c0d197809c` · `.pdf` `f34a8efb7985`. Sin tocar el PDF de `doc/versions/enviados/`.
+
 ### 2.25 COMPLETADA — Segunda pasada: propagar las piezas 19 a 28 del encargo
 - **Abierta:** 2026-09-09 22:50 por Claude Desktop. El encargo creció después de la `_v12`: pasó de 31 859 a
   41 986 bytes con las secciones **0.ter, 0.quater y 0.quinquies** y las piezas **19 a 28**, entre ellas la
@@ -1734,6 +1775,7 @@ miraba, y eso motiva la política.
 
 | Fecha/hora | Agente | Cambio |
 |:---|:---|:---|
+| 2026-09-09 23:20 | Claude Desktop | §2.26: piezas 29 y 30 propagadas (ocho fechas de calendario fuera del cuerpo y eliminado el párrafo de «particularidad de procedencia» con el 79,03 % sin evidencia recalculable). Verificador **11 → 7 fallos**, auditoría 0 incumplidas, y los dos nuevos son declaraciones caducadas, una de ellas la del propio párrafo retirado. Cuerpo 24/25 sobre el PDF. `_v14` congelada |
 | 2026-09-09 23:00 | Claude Desktop | §2.25: piezas 19-28 propagadas reconstruyendo desde el `.md` (155 926 bytes, hash sin cambios). Verificador **26 → 6 fallos**, auditoría 0 incumplidas, y las tres frases retiradas del aviso §1.286 ya no están en ningún entregable. Cuerpo 24/25 sobre el PDF. Cerrado el pendiente de los resaltes: los 9 que acusaba el verificador **están marcados en el `.md`** y son falsos positivos de su regex (negrita con cursiva dentro, y negrita que cruza una línea de cita); probado el arreglo no codicioso, subía a 142, así que **no se tocó el regex**. `_v13` congelada |
 | 2026-09-09 20:05 | Claude Desktop | §2.24: los tres `.docx` y el PDF reconstruidos desde el `.md` (157 189 bytes, hash sin cambios al terminar). Cierra las piezas 1-5, 7-9 y 11-18 del encargo del 09-09 de una vez, por reconstrucción en lugar de cirugía OOXML; **las dos figuras insertadas** (renderizador enseñado a leer `![]()`, con interlineado automático para que la imagen no se recorte y `keepNext` para que la leyenda no se separe). Verificador: **86 fallos → 29**, y los 24 nuevos son declaraciones caducadas, no defectos. Medido sobre el PDF: 37 páginas, **cuerpo 24 de 25**, anexos 13. `_v12` congelada |
 | 2026-09-03 16:15 | Claude Code | Creación del documento con el estado inicial |
@@ -2210,3 +2252,4 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.288: **la séptima y última declaración también se resolvió mientras escribía `§1.287`: el pre-commit bloqueó el commit de esa fila con un fallo nuevo.** `git commit` de `§1.287` se detuvo con «1 nuevos»: la declaración «resaltes en el cuerpo... son 6» —la única que quedaba activa— ya no tapaba ningún fallo. Comprobado antes de retirarla: `el .docx no anade resaltes ni guiones respecto del Markdown` pasa **ok** (9 elementos). Es decir que Claude Desktop cerró también esa pieza de sobriedad tipográfica entre mi verificación de `§1.287` y el intento de commit — la sesión sigue trabajando en vivo y el pre-commit hizo exactamente lo que debía: parar ante un estado que había cambiado bajo los pies. Retirada la última entrada de `FALLOS_DECLARADOS`; releído el archivo fresco antes de retirarla (no había cambiado desde el intento fallido). Verificado: **56 comprobaciones, 5 fallos (5 declarados, 0 nuevos)**, 4 declaraciones vigentes, ninguna de las 7 declaraciones de esta ronda queda ya activa. `BOLD_CUERPO_BASE` sigue en 6, sin tocar. Reintentando el commit de `§1.287`+`§1.288` juntos |
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.289: **el autor preguntó si el pasaje de §3.3 sobre `Locations` era un residuo de la generación `.md→.docx→PDF`; no lo era, y de paso pidió una regla nueva: el cuerpo no menciona fechas de calendario del proceso (`FINDINGS §F162`).** Investigado: el `.md`, el `.docx` raíz (19:50:44) y el PDF raíz (19:50:45, un segundo más nuevo, no desfasado) coincidían carácter por carácter en el pasaje pegado por el autor — no hay defecto de generación, es contenido deliberado ya corregido (tiempo pasado, remite a la Tabla 7). Preguntado si además había que retirar las fechas de calendario, y **confirmado con una pregunta previa que el alcance es solo el cuerpo** (capítulos 1-7): los Anexos H e I quedan como bitácora fechada, que es su propósito declarado en `CLAUDE.md`. Barrido completo de capítulos 1-7: ocho menciones de fecha en §3.3 (dos), §4.1.2 (dos), §5.3 (una), §5.3.1 (una) y §7.1 (dos), todas reescritas sin perder cifras ni la secuencia lógica de qué corrida sustituye a cuál. **Una fecha se conservó a propósito**: la cita [19] («instantánea del 27 de julio de 2026» de la lista OFAC/SDN) es la fecha de una instantánea de una fuente externa viva, exigida por la norma de citación IEEE para trazabilidad, no una fecha de proceso interno. Verificado: 56 comprobaciones, 0 fallos nuevos, dentro de 25 páginas; ninguna reescritura tocó una frase matcheada por regex del verificador. Pendiente: añadir la pieza correspondiente al encargo de Claude Desktop para que la segunda pasada, si aún no cerró, propague también estos ocho cambios |
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.290: **el autor calificó de «grave e importante» retirar por completo cualquier mención a datos sin evidencia recalculable, y señaló la nota de §5.3 sobre `gemma4:31b` (F1 de 79,03 %, datos perdidos por sobrescritura) (`FINDINGS §F163`).** Distinto de `§1.285`/`§F160`: aquella regla es sobre no imprimir dos cifras cuando ambas tienen evidencia; esta es sobre no mencionar ninguna cifra cuando **ninguna** corrida la respalda. Retirado el párrafo completo (dos frases), comprobado antes de que ningún otro pasaje citara 79,03 % ni 73,34 % — no quedó cross-reference que reparar, y la conclusión del análisis de sensibilidad que sí permanece («no depende de unos pocos textos extremos») es un argumento aparte, sobre longitud, no sobre la convención de puntuación que motivaba la nota retirada. Efecto colateral declarado: el párrafo tenía dos guiones largos, así que el cuerpo bajó de 90 a 88 mientras los tres `.docx` (renderizados antes) se quedan en 90; declarado en `FALLOS_DECLARADOS` y en `RETIRADAS`, no aceptado. Añadida la sección **0.sexies** (Piezas 29-30) al encargo de Claude Desktop, cubriendo también las ocho fechas de `§1.289`. Verificado: 56 comprobaciones, 0 fallos nuevos (11 declarados, 6 vigentes), dentro de 25 páginas. `BOLD_CUERPO_BASE` sigue en 9 (valor de Claude Desktop), sin tocar |
+| 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.291: **Claude Desktop propagó las piezas 29 y 30 (§2.26): las ocho fechas y la anécdota de `gemma4:31b` ya no están en los tres `.docx` (`_v14` congelada).** Monitoreando noté que los `.docx` cambiaron de hora (19:50 → 20:16). El verificador confirmó, vía comprobación 55, que las dos declaraciones de `§1.290` («guiones largos frente a», «Vale la pena señalar una particularidad de procedencia») ya no tapan ningún fallo — coincide con lo que la propia entrada `§2.26` de Claude Desktop reporta (11 → 7 fallos, y los dos nuevos son justo esas declaraciones caducadas). Retiradas ambas de `FALLOS_DECLARADOS`, comprobado antes de retirarlas con `las tablas... ok` y `ninguna frase retirada... ok`. Verificado: **56 comprobaciones, 5 fallos (5 declarados, 0 nuevos)**, 4 declaraciones vigentes. `BOLD_CUERPO_BASE` sigue en 9, sin tocar. Sin commits nuevos del equipo remoto de 48 GB |
