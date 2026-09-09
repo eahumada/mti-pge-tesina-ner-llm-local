@@ -961,3 +961,19 @@ bloqueantes desactualizado induce a creer que quedan ocho cosas por hacer antes 
 **Pendiente:** once modelos de la re-corrida; decidir si el informe adopta F = 35,5557 o espera al
 consolidado nuevo; la purga de GitHub, que arrastra el 404 de la referencia [37]; y resincronizar los tres
 `.docx`, que van muy por detrás del Markdown.
+
+### 2026-09-09 — Re-corrida completa terminada (13 modelos, 3 corpus)
+
+Ejecutada íntegramente en el equipo de 48 GB, un modelo por turno, `num_workers=1`, con el corpus corregido
+(mojibake 0, Locations 545/119-de-120 tras aplicar las 63 embebidas). **39/39 corridas VÁLIDAS**
+(`tools/verificar_corrida.py`); los 13 N=120 con `TP+FN` = 1098/1500/1034 por categoría.
+
+Agregación conjunta (`src/merge_and_analyze.py`, contaminados excluidos → 113 registros, 26 grupos):
+**ANOVA F=121,56, p≈0**. En `results/ANALISIS_CONJUNTO_20260909/` (statistical_report.md, merged_results.csv,
+merge_manifest.json, RESUMEN-RECORRIDA.md).
+
+Resultados N=120 kb_combined: mejor nube `gemma4:31b-cloud` 0,829; mejor local `gemma4:31b-mlx` **0,824**
+(supera el umbral del 70 %). RAG contextual aporta más cuanto más débil el modelo (nemotron-mini +0,142,
+llama3.2 +0,067). `gpt-oss:20b` limpio con budget 4096 (1 respaldo vs 67). **Aviso §6:** distancia
+nube-mejor-local ~0,5 pp, no los ~5 pp anticipados —`gemma4:31b-mlx` es un local grande de la misma familia
+que el cloud—; declarada sin ajustar, a criterio del autor.
