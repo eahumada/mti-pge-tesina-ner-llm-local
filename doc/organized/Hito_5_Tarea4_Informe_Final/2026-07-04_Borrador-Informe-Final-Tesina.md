@@ -164,7 +164,7 @@ _Tabla 2. Estado del arte en reconocimiento de entidades para dominios financier
 | FinanceBench [9] | 361 informes SEC | GPT-4-Turbo + RAG | 50 % exactitud | Cloud | Inglés |
 | **Este trabajo** | **CoNLL-2002 y Kleptotrace (N=120)** | **gemma4:31b-mlx local** | **76,55 % F1** | **100 % Local** | **Español (105/120)** |
 
-Las cifras de la última columna no son directamente comparables entre sí, porque cada trabajo mide una tarea distinta: FiNER-139 etiqueta magnitudes numéricas según la taxonomía XBRL y FinanceBench evalúa exactitud de respuesta sobre preguntas abiertas, no identificación de personas y organizaciones. Aun así, de la comparación se desprende una brecha: los trabajos que alcanzan el mejor F1 lo hacen sobre corpus en inglés y con infraestructura en la nube, mientras que los que preservan la privacidad no abordan el dominio de cumplimiento en español. Este trabajo se sitúa en esa intersección.
+Las cifras de la columna de desempeño publicado no son directamente comparables entre sí, porque cada trabajo mide una tarea distinta: FiNER-139 etiqueta magnitudes numéricas según la taxonomía XBRL y FinanceBench evalúa exactitud de respuesta sobre preguntas abiertas, no identificación de personas y organizaciones. Aun así, de la comparación se desprende una brecha: los trabajos que alcanzan el mejor F1 lo hacen sobre corpus en inglés y con infraestructura en la nube, mientras que los que preservan la privacidad no abordan el dominio de cumplimiento en español. Este trabajo se sitúa en esa intersección.
 
 La revisión anterior deja fijados los criterios con los que el capítulo 3 justifica cada decisión de diseño: (C1) prescindir de datos etiquetados, por no existir corpus del dominio en español; (C2) preservar la soberanía del dato, lo que excluye toda API externa; (C3) operar sobre hardware de consumo, lo que obliga a cuantización y a gestión explícita de memoria; **(C4) producir salida verificable**, dado que el modelo elegido genera texto libre; y (C5) permitir comparación empírica entre variantes, tanto de *prompt* como de estrategia de recuperación.
 
@@ -542,6 +542,24 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
     el mecanismo que se le atribuía, la concordancia de idioma entre prompt y texto, no puede ser el correcto:
     la mejora se obtuvo sobre artículos en inglés.
 
+11. Contraste pareado por modelo y variantes de la métrica (Prioridad Alta): los veintiséis grupos
+    evalúan los mismos ciento veinte artículos, de modo que las observaciones están apareadas y el
+    procedimiento que corresponde al diseño es un contraste pareado modelo por modelo con corrección
+    por comparaciones múltiples, y no el análisis de varianza de una vía que este trabajo reporta y
+    cuya limitación §5.3.1 ya declara. Replicarlo exige declarar las dos métricas, la de tres
+    categorías y la restringida del Anexo I, porque no coinciden en qué modelos resultan
+    significativos; y acompañar cada modelo de tres cifras de tamaño de efecto: mediana, media y
+    recuento de pares que cambian con su reparto entre mejoras y empeoramientos. La mediana por sí
+    sola induce a error cuando una fracción grande de los pares vale cero, caso en que un efecto
+    concentrado en una minoría de artículos se lee como ausencia de efecto. Conviene además
+    contrastar la F1 macro por artículo que este trabajo publica con dos variantes que responden a
+    objeciones distintas: la F1 micro, que agrega los aciertos y los errores de todo el corpus antes
+    de calcular la métrica y por tanto pondera por entidad y no por artículo, lo que evita que un
+    artículo con dos entidades pese igual que uno con cuarenta; y un remuestreo pareado sobre la
+    diferencia de F1, que entrega intervalo de confianza sin suponer normalidad ni homocedasticidad
+    y es la práctica recomendada para contrastes de significación en procesamiento de lenguaje
+    natural [39].
+
 
 ## Referencias
 
@@ -621,6 +639,8 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 [37] E. Ahumada Gallardo. *mti-pge-tesina-ner-llm-local*, repositorio de código del trabajo, 2026. [Online]. Available: https://github.com/eahumada/mti-pge-tesina-ner-llm-local (accedido: 8 sep. 2026).
 
 [38] OpenSanctions, *FollowTheMoney: an ontology and data model for anti-corruption and due diligence data* [En línea]. Disponible: https://followthemoney.tech
+
+[39] R. Dror, G. Baumer, S. Shlomov, and R. Reichart, "The Hitchhiker's Guide to Testing Statistical Significance in Natural Language Processing," in *Proc. 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)*, Melbourne, Australia, 2018, pp. 1383-1392, doi: 10.18653/v1/P18-1128. [En línea]. Disponible: https://aclanthology.org/P18-1128/
 
 ## Anexos
 
@@ -864,7 +884,7 @@ El autor es asimismo responsable de la auditoría crítica de los artefactos pro
 
 #### G.2 Apoyo de IA en la elaboración de artefactos de prueba
 
-Se utilizó IA generativa como instrumento en la construcción de artefactos de evaluación, siempre bajo especificación y verificación del autor. El corpus sintético N=30 (kleptotrace_augmented_30.json) fue generado mediante aumento de datos guiado por LLM: el autor definió a priori la distribución temática, los pares {entidad_PER, entidad_ORG} objetivo tomados de OpenSanctions y el prompt de generación (Anexo F); el modelo gemma4:31b produjo los textos; y cada artículo fue revisado manualmente para confirmar el ground truth, descartándose y regenerándose los que introducían entidades no anotadas. El corpus real N=120 (benchmark_balanced_120.json) no fue generado por IA: combina 15 artículos del corpus Kleptotrace con 105 artículos muestreados de CoNLL-2002 en español. Los ejemplares few-shot de la base de conocimientos contextual fueron extraídos de artículos reales anotados del propio corpus de evaluación, sin generación sintética.
+Se utilizó IA generativa como instrumento en la construcción de artefactos de evaluación, siempre bajo especificación y verificación del autor. El corpus sintético N=30 (kleptotrace_augmented_30.json) fue generado mediante aumento de datos guiado por LLM: el autor definió a priori la distribución temática, los pares {entidad_PER, entidad_ORG} objetivo tomados de la lista SDN del Departamento del Tesoro de los Estados Unidos [19] y el prompt de generación (Anexo F); el modelo gemma4:31b produjo los textos; y cada artículo fue revisado manualmente para confirmar el ground truth, descartándose y regenerándose los que introducían entidades no anotadas. El corpus real N=120 (benchmark_balanced_120.json) no fue generado por IA: combina 15 artículos del corpus Kleptotrace con 105 artículos muestreados de CoNLL-2002 en español. Los ejemplares few-shot de la base de conocimientos contextual fueron extraídos de artículos reales anotados del propio corpus de evaluación, sin generación sintética.
 
 #### G.3 Apoyo de IA en implementación, documentación y formato
 

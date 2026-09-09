@@ -63,6 +63,12 @@ EXCLUIDOS = ['nuextract', 'minimax-m3', 'gemini-3.1-flash-lite', 'q8-64k', 'sonc
 # ─────────────────────────────────────────────────────────────────────────────────────────────────
 
 FALLOS_DECLARADOS = {
+    'le faltan las entradas de bibliografia [39]': ('2026-09-10',
+        'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop: la entrada [39] '
+        '(Dror et al., ACL 2018) se anadio al Markdown canonico el 2026-09-09 junto al punto 11 '
+        'de §7.2 que la cita, que es el contraste pareado como trabajo futuro pedido por el '
+        'autor. La cita y su entrada entraron en el MISMO commit, como exige CLAUDE.md; lo que '
+        'falta es propagarlas a los tres .docx, que no se regeneran con pandoc. Ver §F147'),
     '.rebuild_venv.log': ('2026-09-09',
                           'fichero vacio del commit 880f4f9; decision del autor '
                           '(CURRENT-TASKS §1.103)'),

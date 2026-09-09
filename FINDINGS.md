@@ -7039,3 +7039,61 @@ detector roto, no el documento— y esta vez con daño real, aunque de dos minut
 **Lo que sí es cierto de este hallazgo:** los 37 marcadores para 56 comprobaciones, las 19 sin
 marcador, los 34 desajustes de orden, el hueco 26–44 y las doce citas a números inexistentes. Nada de
 eso venía de mi regex; el duplicado sí.
+
+---
+
+## §F147 — Aplicadas las dos correcciones retenidas, y añadido el trabajo futuro que la decisión B dejaba a medias
+
+**Fecha:** 2026-09-09 · **Origen:** el workflow de consistencia que bloqueaba el Markdown murió por
+el límite de sesión, y con él repuesto el fichero quedó libre
+
+### Las dos que estaban retenidas
+
+[§F144](#f144) y [§F145](#f145) dejaron dos correcciones anotadas con su texto exacto y sin aplicar,
+porque un workflow estaba leyendo el Markdown y sus citas se apoyaban en él. Aplicadas ahora, las dos
+en el mismo commit:
+
+| De | Decía | Dice |
+|:---|:---|:---|
+| Anexo G.2 | «pares {entidad_PER, entidad_ORG} objetivo tomados de OpenSanctions» | «tomados de la lista SDN del Departamento del Tesoro de los Estados Unidos [19]» |
+| Glosa de la Tabla 1 | «las cifras de la última columna» | «las cifras de la columna de desempeño publicado» |
+
+**Y comprobado lo que había que no tocar:** las dos menciones legítimas de OpenSanctions siguen en
+su sitio, la propuesta de trabajo futuro y la entrada [38] de `FollowTheMoney`, que es una ontología
+que ese proveedor sí publica y que el trabajo sí usa. Corregir de más habría borrado una referencia
+correcta.
+
+### El punto 11 de §7.2, que es el pendiente de la decisión B
+
+`DECISION-ESTADISTICA-20260909.md` cerraba la decisión B —el contraste pareado sale del estudio y
+queda como trabajo futuro— con un pendiente escrito para quien editase el Markdown a continuación.
+Escrito ahora, y reúne dos cosas que el autor pidió por separado:
+
+1. **El contraste pareado por modelo** con corrección por comparaciones múltiples, que es el
+   procedimiento que corresponde a un diseño en el que los veintiséis grupos evalúan los mismos
+   artículos. Declarando **las dos métricas**, porque no coinciden en qué modelos resultan
+   significativos, y con **tres cifras** de tamaño de efecto por modelo: mediana, media y reparto de
+   los pares que cambian. La razón está medida: dos de los cuatro significativos de la métrica
+   restringida tienen mediana exactamente cero, y con solo la mediana parecerían no tener efecto.
+2. **Las variantes de F1**, que responden a la pregunta del autor de si existe alguna que sostenga
+   mejor los resultados. La **F1 micro**, que pondera por entidad y no por artículo, y un
+   **remuestreo pareado** sobre la diferencia, que da intervalo de confianza sin suponer normalidad
+   ni homocedasticidad.
+
+La segunda trae **cita nueva, [39]**, Dror et al., ACL 2018, que es la referencia estándar de
+contrastes de significación en el área. Verificada abriendo `aclanthology.org/P18-1128/`, que
+responde 200, y con los datos tomados de su BibTeX canónico en lugar de de memoria: cuatro autores,
+páginas 1383-1392, DOI 10.18653/v1/P18-1128. La cita y su entrada entraron **en el mismo commit**,
+como exige la regla de referencias cruzadas.
+
+### Y el precio, declarado en lugar de escondido
+
+Añadir [39] al Markdown crea de inmediato **tres fallos nuevos** en el verificador: a los tres
+`.docx` les falta esa entrada. Es la clase de desfase de [§F121](#f121), y es inevitable mientras la
+fuente sea el Markdown y el entregable no se regenere con pandoc. **Declarado** con su motivo y su
+responsable, la pasada de maquetación de Claude Desktop, y añadido a su encargo. Declararlo es lo que
+distingue un pendiente conocido de una puerta silenciada.
+
+**Y la comprobación de referencias colgantes cazó esta propia sección mientras se escribía:** la
+declaración citaba `§F147` antes de que `§F147` existiera, y el verificador lo dijo. Es la segunda
+vez en dos días que hace exactamente eso, y es la razón de tenerla.

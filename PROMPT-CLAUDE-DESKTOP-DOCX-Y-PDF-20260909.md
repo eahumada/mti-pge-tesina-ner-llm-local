@@ -62,7 +62,11 @@ empezar** y trabaja contra la salida del verificador, que reflejará lo ya aplic
 
 ---
 
-## 1. Qué le falta al entregable: son 51 fallos y **una sola causa**
+## 1. Qué le falta al entregable, y hay **una sola causa**
+
+> El número exacto de fallos **no se anota aquí**, porque cambia cada vez que se corrige el
+> Markdown y un recuento copiado se queda desfasado sin que nada avise (es el defecto de
+> `FINDINGS §F134`). Lo dice el verificador al ejecutarse: `python3 tools/verificar_informe.py`.
 
 Los tres `.docx` reflejan un estado anterior del Markdown. No son defectos dispersos:
 
@@ -128,6 +132,52 @@ rehacerlos, hay que insertarlos, con su leyenda **debajo** y a 300 puntos por pu
 > promete nada que no muestre. Si insertas la prosa que las menciona —el párrafo del 66,0 % dice
 > «según recoge la Figura 1»— **sin** insertar las imágenes, el entregable pasa de incompleto a
 > **defectuoso**. **Las dos cosas van juntas o no van.** La comprobación «las figuras del Markdown estan en los tres .docx» vigila exactamente eso.
+
+### Pieza 7 — La atribución del proveedor de los datos, y es la más grave de la lista
+
+**Es la única pieza que no es una ausencia sino una afirmación falsa.** El entregable atribuye los
+datos de sanciones a un proveedor que no los aportó, y respalda la atribución con una referencia a
+ese proveedor. Para un tribunal con dominio en prevención de lavado de activos, que es el dominio de
+este trabajo, confundir la autoridad sancionadora con un agregador de listas no es un detalle de
+forma.
+
+El artefacto primario es inequívoco: `data/dictionaries/PROCEDENCIA.md` declara que los
+diccionarios se construyen desde `treasury.gov/ofac/downloads/sdn.csv`, la lista de Nacionales
+Especialmente Designados de la Oficina de Control de Activos Extranjeros del Tesoro de los Estados
+Unidos, y **no menciona OpenSanctions en ninguna parte**. El Markdown ya está corregido; el `.docx`
+conserva la atribución vieja. **Son tres cambios y van juntos:**
+
+| Dónde | El `.docx` dice hoy | Tiene que decir |
+|:---|:---|:---|
+| Atribución del corpus (Anexo F) | «seleccionadas de la base de datos OpenSanctions [19]» | «seleccionadas de la lista SDN del Departamento del Tesoro de los Estados Unidos [19]» |
+| Anexo G.2 | «pares {entidad_PER, entidad_ORG} objetivo tomados de OpenSanctions» | «tomados de la lista SDN del Departamento del Tesoro de los Estados Unidos [19]» |
+| Entrada [19] de la bibliografía | «OpenSanctions: Open Data on Sanctions Lists and Politically Exposed Persons» | «U.S. Department of the Treasury, Office of Foreign Assets Control, *Specially Designated Nationals and Blocked Persons List (SDN)*, instantánea del 27 de julio de 2026», con `treasury.gov/ofac/downloads/sdn.csv` |
+
+> **Y aquí es fácil corregir de más, así que atención.** Quedan en el Markdown **dos** menciones de
+> OpenSanctions que son **correctas y no se tocan**: la propuesta de trabajo futuro de §7.2 —«ampliar
+> el corpus incorporando fuentes como la UAF, CMF y bases de datos de OpenSanctions [38]»—, que es
+> una propuesta y no una atribución; y la **entrada [38]**, que es `FollowTheMoney`, una ontología
+> que ese proveedor sí publica y que el trabajo sí usa. Un reemplazo global de la cadena
+> «OpenSanctions» borraría una referencia correcta. Copia el texto del Markdown, no busques y
+> reemplaces.
+
+### Pieza 8 — El punto 11 de §7.2 y la referencia [39]
+
+Añadidos al Markdown el 2026-09-09 a petición del autor: el punto 11 de la lista de trabajo futuro
+declara el **contraste pareado por modelo** y las **variantes de la métrica** como línea pendiente, y
+cita **[39]**, que es Dror et al., ACL 2018, la referencia estándar de contrastes de significación en
+el área. Su URL está verificada y sus datos vienen del BibTeX canónico.
+
+Igual que la pieza 3: las entradas van **contiguas hasta [38]** y [39] se añade al final, de modo que
+**no hay corrimiento de numeración**. El punto 11 y la entrada [39] **van juntos**, porque una cita
+sin entrada es un fallo del verificador, y una entrada sin cita también.
+
+Es un punto **largo**, de unas dieciséis líneas, y por tanto es el primer candidato a chocar con el
+límite de 25 páginas. Si no cabe, aplica el orden del apartado 2.ter: primero espaciados y cuerpo de
+letra, y solo con autorización expresa del autor se toca el texto. **Lo que no se puede hacer es
+insertar la entrada [39] sin el punto que la cita, ni el punto sin la entrada.**
+
+---
 
 ---
 
