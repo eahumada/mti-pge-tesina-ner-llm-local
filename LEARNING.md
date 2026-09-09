@@ -1121,3 +1121,31 @@ mirar por qué no apareció: aquí la respuesta era que el programa había muert
 **Corolario, que enlaza con §L66:** una comprobación puede fallar de tres maneras y hay que distinguirlas —
 porque el documento está mal, porque su detector está roto, o porque el caso **nunca llega**. La tercera no
 se arregla mejorando la comprobación; se arregla **retirándola** y diciendo quién cubre ese caso.
+
+## §L69 — Propagar una cifra sin su prosa dependiente deja el documento peor que antes
+
+Al propagar a los `.docx` las cifras recalculadas del F1 restringido cambié 81,45 por 80,42 y 76,85 por
+76,55, y dejé intacta la frase que dependía de ellas: «la soberanía cuesta unos **cinco** puntos de F1». Era
+correcta con las cifras viejas —81,45 − 76,85 = 4,60— y es falsa con las nuevas —80,42 − 76,55 = 3,87—. Los
+tres entregables quedaron afirmando, en una conclusión, algo que **su propia resta desmentía dos líneas
+antes**.
+
+**Antes de mi cambio el documento era coherente con datos viejos. Después era incoherente consigo mismo.** Lo
+segundo es peor: un lector que no conozca los datos no puede detectar lo primero, y detecta lo segundo sin
+herramientas, con solo restar.
+
+**La regla:** al propagar una cifra hay que buscar **la prosa que depende de ella** — numerales en palabras,
+comparativos («el doble», «tres veces más»), redondeos y signos. Un reemplazo de texto cambia la cifra y no
+sabe nada de lo que la cita. La búsqueda no es opcional: la cifra vieja desaparece del documento, así que
+después ya no hay forma de encontrar lo que la mencionaba.
+
+**Lo encontró una lectura, no una comprobación.** Estaba revisando el informe como lector, leyendo las siete
+conclusiones una por una, y la 3 daba las dos cifras y su diferencia en la misma frase. Ninguna de las
+cuarenta y tantas comprobaciones lo habría visto, porque todas comparaban cifras contra cifras y ésta era una
+cifra contra una **palabra**.
+
+**Y la comprobación que se escribió después casi nació inútil.** El informe usa «alcanza» en §6.1 y
+«obtiene» en la conclusión 3, y el `.docx` conserva solo la segunda. Con un solo verbo en el patrón, la
+comprobación encontraba el Markdown —que estaba bien— y no los entregables —que era donde estaba el
+defecto—: habría dado por bueno el documento roto mientras verificaba el que no lo estaba. Es §L66 con una
+vuelta más: **un detector puede estar lo bastante roto como para mirar solo donde no hay nada que encontrar.**
