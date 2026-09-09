@@ -2,12 +2,13 @@
  "nota": "Efecto del emparejamiento duplicado de evaluator.py sobre las metricas publicadas. Recalculado desde detailed_results.json, sin reejecutar inferencia.",
  "consolidado": "repos/ner-llm-entity-benchmark/results/ANALISIS_CONJUNTO_20260907",
  "grupos_examinados": 26,
- "duplicados_totales": 410,
- "delta_medio_pp": 0.1446,
- "delta_maximo_pp": 0.9363,
- "grupo_mas_afectado": "gemma4:latest_baseline",
+ "duplicados_totales": 409,
+ "delta_medio_pp": 0.1601,
+ "delta_maximo_pp": 1.2868,
+ "grupo_mas_afectado": "nemotron-mini:4b_baseline",
  "mejoras_que_cambian_de_signo": 0,
- "orden_de_grupos_identico": true,
+ "orden_de_grupos_identico": false,
+ "grupos_que_no_reproducen_el_consolidado": [],
  "por_grupo": {
   "deepseek-r1:1.5b_baseline": {
    "n": 120,
@@ -25,17 +26,17 @@
   },
   "gemma4:12b-mlx_baseline": {
    "n": 120,
-   "f1_publicado": 27.3102,
-   "f1_corregido": 27.1125,
-   "delta": 0.1977,
-   "duplicados": 9
+   "f1_publicado": 56.1825,
+   "f1_corregido": 56.1667,
+   "delta": 0.0158,
+   "duplicados": 5
   },
   "gemma4:12b-mlx_kb_rag": {
    "n": 120,
-   "f1_publicado": 11.2076,
-   "f1_corregido": 11.1278,
-   "delta": 0.0797,
-   "duplicados": 6
+   "f1_publicado": 58.4595,
+   "f1_corregido": 58.3409,
+   "delta": 0.1186,
+   "duplicados": 32
   },
   "gemma4:31b-cloud_baseline": {
    "n": 120,
@@ -95,17 +96,17 @@
   },
   "gpt-oss:20b_baseline": {
    "n": 120,
-   "f1_publicado": 43.8386,
-   "f1_corregido": 43.493,
-   "delta": 0.3456,
-   "duplicados": 15
+   "f1_publicado": 52.3913,
+   "f1_corregido": 52.3727,
+   "delta": 0.0186,
+   "duplicados": 5
   },
   "gpt-oss:20b_kb_rag": {
    "n": 120,
-   "f1_publicado": 34.1874,
-   "f1_corregido": 33.8201,
-   "delta": 0.3673,
-   "duplicados": 31
+   "f1_publicado": 55.6716,
+   "f1_corregido": 55.6533,
+   "delta": 0.0184,
+   "duplicados": 6
   },
   "llama3.1:8b_baseline": {
    "n": 120,
@@ -151,15 +152,15 @@
   },
   "nemotron-mini:4b_baseline": {
    "n": 120,
-   "f1_publicado": 21.3025,
-   "f1_corregido": 21.1862,
-   "delta": 0.1162,
-   "duplicados": 4
+   "f1_publicado": 22.5921,
+   "f1_corregido": 21.3053,
+   "delta": 1.2868,
+   "duplicados": 5
   },
   "nemotron-mini:4b_kb_rag": {
    "n": 120,
-   "f1_publicado": 37.3278,
-   "f1_corregido": 37.2662,
+   "f1_publicado": 37.117,
+   "f1_corregido": 37.0554,
    "delta": 0.0616,
    "duplicados": 6
   },
@@ -179,17 +180,17 @@
   },
   "qwen3:8b_baseline": {
    "n": 120,
-   "f1_publicado": 44.8263,
-   "f1_corregido": 44.8032,
-   "delta": 0.023,
-   "duplicados": 4
+   "f1_publicado": 48.2097,
+   "f1_corregido": 48.1629,
+   "delta": 0.0469,
+   "duplicados": 14
   },
   "qwen3:8b_kb_rag": {
    "n": 120,
-   "f1_publicado": 42.5874,
-   "f1_corregido": 42.5728,
-   "delta": 0.0147,
-   "duplicados": 3
+   "f1_publicado": 51.4588,
+   "f1_corregido": 51.418,
+   "delta": 0.0408,
+   "duplicados": 4
   }
  },
  "por_modelo": {
@@ -198,8 +199,8 @@
    "delta_corregido": -0.9806
   },
   "gemma4:12b-mlx": {
-   "delta_publicado": -16.1026,
-   "delta_corregido": -15.9847
+   "delta_publicado": 2.277,
+   "delta_corregido": 2.1742
   },
   "gemma4:31b-cloud": {
    "delta_publicado": -0.5371,
@@ -218,8 +219,8 @@
    "delta_corregido": 7.2929
   },
   "gpt-oss:20b": {
-   "delta_publicado": -9.6512,
-   "delta_corregido": -9.6729
+   "delta_publicado": 3.2803,
+   "delta_corregido": 3.2806
   },
   "llama3.1:8b": {
    "delta_publicado": 1.988,
@@ -234,16 +235,16 @@
    "delta_corregido": 2.3855
   },
   "nemotron-mini:4b": {
-   "delta_publicado": 16.0253,
-   "delta_corregido": 16.08
+   "delta_publicado": 14.5249,
+   "delta_corregido": 15.7501
   },
   "qwen2.5:14b": {
    "delta_publicado": 4.6213,
    "delta_corregido": 4.6047
   },
   "qwen3:8b": {
-   "delta_publicado": -2.2389,
-   "delta_corregido": -2.2304
+   "delta_publicado": 3.2491,
+   "delta_corregido": 3.2551
   }
  }
 }

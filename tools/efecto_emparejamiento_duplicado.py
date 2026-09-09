@@ -58,19 +58,44 @@ def recalcula(r):
 
 def main():
     man = json.load(open(os.path.join(CONS, 'merge_manifest.json'), encoding='utf-8'))
-    origen = {g: os.path.dirname(s['csv_path'])
-              for s in man['sources'] for g in s.get('models', [])}
+    # El consolidado resuelve los grupos repetidos con --on-duplicate=first: gana la PRIMERA
+    # fuente que los trae, y el manifiesto lo documenta en `duplicate_notes`. Ocho de los 26
+    # grupos aparecen en dos fuentes. Una comprension de diccionario deja ganar a la ultima,
+    # que es la superada: asi se leyo `gpt-oss:20b` desde '05_excluidos' en lugar de desde
+    # '00_gptoss_rerun', y `gemma4:12b-mlx` desde '06_P3' en lugar de '02_gemma4_12b_mlx'.
+    # `setdefault` reproduce la politica del consolidado.
+    origen = {}
+    for s in man['sources']:
+        for g in s.get('models', []):
+            origen.setdefault(g, os.path.dirname(s['csv_path']))
+
+    # Control: la media del detalle tiene que reproducir la del CSV consolidado. Si no lo hace,
+    # el grupo se esta leyendo de otra corrida y sus cifras no son las publicadas.
+    import csv as _csv
+    from collections import defaultdict as _dd
+    pub = _dd(list)
+    with open(os.path.join(CONS, 'merged_results.csv'), encoding='utf-8') as fh:
+        for r in _csv.DictReader(fh):
+            try:
+                pub[r['model']].append(float(r['f1']))
+            except (TypeError, ValueError):
+                pass
+    descuadres = []
 
     grupos = {}
     for g in sorted(origen):
         R = [x for x in registros(origen[g]) if x.get('model') == g]
         if not R:
             continue
-        pub = sum(x['f1'] for x in R) / len(R) * 100
+        pub_med = sum(x['f1'] for x in R) / len(R) * 100
         vals = [recalcula(x) for x in R]
         cor = sum(v[0] for v in vals) / len(vals) * 100
-        grupos[g] = {'n': len(R), 'f1_publicado': round(pub, 4),
-                     'f1_corregido': round(cor, 4), 'delta': round(pub - cor, 4),
+        ref = pub.get(g)
+        if ref and abs(sum(ref) / len(ref) * 100 - pub_med) > 0.05:
+            descuadres.append('%s: detalle %.2f vs consolidado %.2f'
+                              % (g, pub_med, sum(ref) / len(ref) * 100))
+        grupos[g] = {'n': len(R), 'f1_publicado': round(pub_med, 4),
+                     'f1_corregido': round(cor, 4), 'delta': round(pub_med - cor, 4),
                      'duplicados': sum(v[1] for v in vals)}
 
     modelos, cambian = {}, 0
@@ -98,6 +123,7 @@ def main():
         'grupo_mas_afectado': max(grupos, key=lambda g: grupos[g]['delta']),
         'mejoras_que_cambian_de_signo': cambian,
         'orden_de_grupos_identico': orden_pub == orden_cor,
+        'grupos_que_no_reproducen_el_consolidado': descuadres,
         'por_grupo': grupos,
         'por_modelo': modelos,
     }

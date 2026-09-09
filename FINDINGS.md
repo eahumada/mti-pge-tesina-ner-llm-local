@@ -2799,6 +2799,10 @@ referencias casadas son `len(gt) - fn`. Con eso se rehace cada registro contando
 Artefacto en `results/EMPAREJAMIENTO_DUPLICADO_20260908/efecto.json`, reproducible con
 `tools/efecto_emparejamiento_duplicado.py`.
 
+> **Las cuatro cifras de este bloque están corregidas en `§F81.bis`.** Se calcularon leyendo ocho de los
+> veintiséis grupos de la corrida equivocada. El mecanismo, la dirección y la conclusión no cambian; las
+> cifras y una de las afirmaciones, sí.
+
 - **410 emparejamientos duplicados** en los 26 grupos.
 - El F1 publicado está inflado **+0,145 pp de media**, con un máximo de **+0,936 pp** en
   `gemma4:latest_baseline`. Siempre al alza, como predice el mecanismo.
@@ -2831,3 +2835,65 @@ una línea de aritmética y ninguna necesita reejecutar nada.
 Y apareció al ejecutar un modo de validación que existía desde hacía días y que nadie había corrido, igual que
 `§F80` apareció al ejecutar `--red`. Dos hallazgos seguidos por la misma causa: **una capacidad que existe y
 no se ejecuta no está comprobando nada**.
+
+---
+
+## §F81.bis — Las cifras de §F81 estaban mal: ocho de veintiséis grupos leídos de la corrida equivocada
+
+**2026-09-09, 00:2x.** Comprobando otra cosa —si las cifras «Publicado» de `tools/estado_recorrida.py`
+coincidían con la Tabla 7— apareció que la media del detalle por registro **no reproducía la tabla en cuatro
+grupos**: `gemma4:12b-mlx_baseline` daba 27,31 frente a 56,18, `gpt-oss:20b_baseline` 43,84 frente a 52,39,
+`qwen3:8b_baseline` 44,83 frente a 48,21 y `nemotron-mini:4b_baseline` 21,30 frente a 22,59. Tres de esas
+cuatro cifras son justamente las que se retiraron del informe por inválidas.
+
+### La causa, y es mía
+
+El consolidado resuelve los grupos repetidos con `--on-duplicate=first`: gana la **primera** fuente que los
+trae, y el manifiesto lo documenta en `duplicate_notes`. **Ocho de los veintiséis grupos aparecen en dos
+fuentes.** El script que escribí para `§F81` construía el mapa de origen con una comprensión de diccionario,
+donde **gana la última**, que es la política contraria. Así se leyó `gpt-oss:20b` desde `05_excluidos` en
+lugar de `00_gptoss_rerun`, y `gemma4:12b-mlx`, `qwen3:8b` y `nemotron-mini:4b` desde `06_P3` en lugar de sus
+corridas de sustitución.
+
+**`tools/composicion_fp.py` no tiene este defecto**: usa `setdefault`, que sí reproduce la política del
+consolidado. De modo que **la composición de falsos positivos publicada —el 66,0 %, 12 852 de 19 464— no está
+afectada**. Lo comprobé antes de escribir nada, porque esa cifra sí está en el informe.
+
+### Las cifras corregidas
+
+Corregido `tools/efecto_emparejamiento_duplicado.py` para usar `setdefault`, y añadido un **control** que
+compara la media de cada grupo con la del CSV consolidado y declara los que no cuadren. Con la corrección, los
+veintiséis reproducen el consolidado y **el control no señala ninguno**. Los Δ coinciden ahora con la Tabla 7
+del informe, que es la prueba externa de que la fuente es la correcta.
+
+| Magnitud | En `§F81` | Correcta |
+|:---|---:|---:|
+| Emparejamientos duplicados | 410 | **409** |
+| Inflación media del F1 | +0,145 pp | **+0,160 pp** |
+| Inflación máxima | +0,936 pp | **+1,287 pp** |
+| Grupo más afectado | `gemma4:latest_baseline` | **`nemotron-mini:4b_baseline`** |
+| Mejoras que cambian de signo | 0 de 13 | **0 de 13** |
+| Orden de los 26 grupos | idéntico | **cambia en un puesto** |
+
+### La afirmación que hay que retirar
+
+**«El orden de los veintiséis grupos es idéntico» era falsa.** Con la fuente correcta hay **un intercambio**:
+`gpt-oss:20b_kb_rag` y `gemma4:latest_baseline` permutan los puestos 7 y 8, porque el segundo pasa de 55,91 a
+54,98 y el primero apenas se mueve, de 55,67 a 55,65. Son dos grupos separados por 0,24 puntos y el informe no
+publica una ordenación de grupos, de modo que **no cambia ninguna conclusión**; pero la afirmación, tal como
+estaba escrita, no era cierta.
+
+**Lo que sí se sostiene**, y es lo que importaba: el mecanismo, que la inflación es siempre al alza, que
+**ninguna de las trece mejoras cambia de signo** y que el efecto queda muy por debajo del umbral de 0,02 en F1
+que `CLAUDE.md` declara tolerable.
+
+### Lo que enseña
+
+Un mapa de `grupo → corrida` construido con una comprensión de diccionario **elige en silencio** cuando una
+clave aparece dos veces, y elige lo contrario que `setdefault`. No hay error, ni aviso, ni nada que mirar: el
+script corre igual y produce cifras plausibles. Lo destapó **un control externo** —comparar contra la Tabla 7,
+que se produjo por otra vía— y no una revisión del código, que se había leído entero sin ver nada.
+
+De ahí la regla que se incorpora al recálculo: **toda herramienta que reagrupe por corrida declara si sus
+medias reproducen el consolidado**, y nombra las que no. Es una comprobación de cuatro líneas y habría
+ahorrado este hallazgo.

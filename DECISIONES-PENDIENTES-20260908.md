@@ -133,9 +133,13 @@ medible: la exhaustividad por categoría **pasa de 1,0 en 197 registros**, con u
 completa en `FINDINGS §F81`; artefacto en `results/EMPAREJAMIENTO_DUPLICADO_20260908/efecto.json`.
 
 **El efecto está acotado y no cambia ninguna conclusión.** Recalculado contando cada referencia una vez: el F1
-publicado está inflado **+0,145 pp de media**, máximo **+0,936 pp**; **ninguna** de las trece mejoras cambia de
-signo y **el orden de los veintiséis grupos es idéntico**. Queda muy por debajo del umbral de 0,02 en F1 que
-`CLAUDE.md` declara tolerable.
+publicado está inflado **+0,160 pp de media**, máximo **+1,287 pp** en `nemotron-mini:4b_baseline`; **ninguna**
+de las trece mejoras cambia de signo. Queda muy por debajo del umbral de 0,02 en F1 que `CLAUDE.md` declara
+tolerable. El orden de los veintiséis grupos cambia en **un solo puesto**, entre dos separados por 0,24 pp, y
+el informe no publica una ordenación de grupos.
+
+*(Cifras corregidas el 2026-09-09: las primeras se calcularon leyendo ocho de los veintiséis grupos de la
+corrida equivocada. Ver `FINDINGS §F81.bis`.)*
 
 **Es urgente por una razón que no es la magnitud:** la re-corrida en marcha en el equipo de 48 GB usa este
 mismo evaluador. Cada modelo que termina lo hace con la métrica actual.
