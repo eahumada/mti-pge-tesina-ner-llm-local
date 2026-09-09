@@ -6418,3 +6418,82 @@ técnica sino de qué se enuncia como resultado, y con qué matiz de relevancia 
 
 **Nada de esto se ha incorporado al informe.** `CSV_CONSOLIDADO` sigue apuntando al consolidado
 publicado y la cifra titular sigue siendo F = 38,2222.
+
+---
+
+## §F138 — Sí, el test de Wald es factible: 47 216 eventos de clasificación. Pero mide recall, no F1
+
+**Fecha:** 2026-09-09 · **Origen:** la pregunta del autor de si «al ser un problema de clasificación
+y no de regresión, R² o un test de Wald no serían mejores»
+
+Tres respuestas, y la tercera es la que decide.
+
+### R² (η²) no es una alternativa: es un tamaño de efecto, no una prueba
+
+No sustituye al contraste, lo acompaña, y **está ya calculado**: η² = **0,2360** en el consolidado
+publicado y **0,5069** en el nuevo. Lo que sí es cierto es que el informe **no lo publica**, y las
+guías de reporte estadístico lo piden junto al valor p. Eso es una mejora real del informe, pero no
+resuelve qué prueba sostiene la conclusión.
+
+### La heterocedasticidad sí aplica al ANOVA, aunque el problema sea de clasificación
+
+La intuición del autor llega a la conclusión correcta por un camino que no se sostiene en una
+defensa. **Que la tarea sea de clasificación no exime al ANOVA de sus supuestos**: ese ANOVA se
+calcula sobre una respuesta continua —el F1 por artículo, en [0, 1]—, y a esa respuesta se le
+aplican los supuestos del modelo, con independencia de cómo se haya obtenido.
+
+Los motivos por los que la heterocedasticidad **no manda** aquí son otros, y son los que el equipo de
+48 GB documentó y este equipo verificó: el diseño está **balanceado** —n idéntico en los 26 grupos—,
+lo que hace robusto el F de Fisher; con N = 2 938 Levene es **sobre-potente**; y el defecto de fondo
+es otro, el **diseño pareado ignorado**. Ver [§F137](#f137).
+
+Conviene decirlo así en la defensa. «No aplica porque es clasificación» es rebatible en una frase;
+«no manda porque el diseño está balanceado, la prueba está sobre-potenciada con este N, y el defecto
+real es el emparejamiento» no lo es.
+
+### El test de Wald es factible, y con un n enorme
+
+Un test de Wald vive dentro de un **modelo**, y el modelo natural para un problema de clasificación
+es una **regresión logística de efectos mixtos** sobre el resultado binario de cada evento —cada
+entidad de referencia acertada o no—, con el artículo como efecto aleatorio, MODELO y MODO como
+fijos, y el Wald sobre la **interacción MODELO × MODO**, que es literalmente «el RAG ayuda en unos
+modelos y no en otros».
+
+**El dato lo soporta.** `metrics.per_entity` existe en los `detailed_results.json`, con el veredicto
+`tp`/`fp`/`fn`, la cadena extraída y la de referencia, entidad por entidad. Medido sobre las trece
+corridas nuevas, excluidos los siete contaminados:
+
+| | |
+|:---|---:|
+| Registros con `per_entity` | **2 938 de 2 938** |
+| Eventos de clasificación en total | **56 496** |
+| De ellos: `tp` / `fn` / `fp` | 28 611 / 18 605 / 9 280 |
+| **Eventos con entidad de referencia (`tp` + `fn`)** | **47 216** |
+| Por grupo | **1 816, idéntico en los 26** |
+
+Ese «1 816 idéntico en los 26» es un dato en sí mismo: el diseño está **balanceado también a nivel de
+entidad**, que es precisamente lo que hace robusto al F y lo que sostiene el argumento de §F137.
+
+### Y la salvedad que decide: modela **recall**, no F1
+
+Los `fp` **no tienen entidad de referencia**. No son «una referencia acertada o no» sino una
+extracción espuria, de modo que no entran en un modelo cuyo evento es «esta referencia se acertó».
+Un solo modelo logístico sobre los 47 216 eventos con referencia **modela la exhaustividad**, no el
+F1: la precisión vive en los 9 280 `fp`, con otro denominador.
+
+Eso tiene dos caras y hay que declarar las dos:
+
+- **A favor:** es **estadísticamente más limpio** que un ANOVA sobre un cociente agregado por
+  artículo. Modela los eventos de clasificación reales, con su binomialidad, su efecto de artículo y
+  su interacción, y el test de Wald sobre la interacción responde exactamente la pregunta del
+  estudio.
+- **En contra:** **responde una pregunta más estrecha**. El informe publica F1 y sus conclusiones
+  están enunciadas en F1. Sustituirlo por un modelo de recall cambia la magnitud medida, no solo la
+  prueba, y exigiría reenunciar los resultados o mantener dos aparatos en paralelo.
+
+**Recomendación, y es del autor decidir.** Es una **mejora deseable, no imprescindible para
+aprobar**, y llega tarde para el calendario: exigiría reenunciar el capítulo de resultados en
+términos de exhaustividad. El camino corto y defendible sigue siendo el de §F137 —contraste pareado
+por modelo, que es lo que el diseño pide— **más publicar el η² que ya está calculado**, que sí es
+barato. El modelo logístico con Wald es el candidato natural a **trabajo futuro**, y ahora consta que
+el dato lo permite: 47 216 eventos, balanceados, ya en el repositorio.
