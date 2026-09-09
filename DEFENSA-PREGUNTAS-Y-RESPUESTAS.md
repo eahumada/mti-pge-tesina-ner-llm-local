@@ -9,6 +9,49 @@ planteado todavía, y esas respuestas se pierden si quedan repartidas entre hall
 
 ---
 
+## Lo primero: la tesis central cambió con el corpus corregido
+
+**Esta sección es posterior a las demás y las condiciona.** El 2026-09-09 terminó la re-corrida completa sobre
+el corpus con las tres categorías anotadas, y el hallazgo central del trabajo no sobrevive en la forma en que
+está escrito. Conviene leerlo antes que nada, porque varias respuestas de más abajo se apoyan en las cifras
+antiguas.
+
+**«Su tesis es que el beneficio del RAG decrece con la capacidad del modelo. ¿Lo sostienen los datos?»**
+**Sobre el corpus corregido, no en esa forma.** La correlación entre capacidad base y mejora pasa de Spearman
+−0,5165 a **−0,0879 (p = 0,7752)**: el coeficiente de rangos se va a cero. El de Pearson queda en −0,5266
+(p = 0,0645), pero **descansa en un solo punto**: retirando `nemotron-mini:4b` cae a +0,0120 con p = 0,971,
+mientras que retirar cualquier otro modelo lo deja entre −0,52 y −0,67.
+
+**Lo que sí sostienen los datos, y hay que decirlo así:** dos modelos pequeños se benefician de forma clara
+—`nemotron-mini:4b` y `llama3.2:latest`, los **dos únicos significativos** tras el post-hoc pareado—, el resto
+apenas se mueve, y **ningún modelo grande empeora**. Es más modesto que «inversamente proporcional» y es
+verdadero. Y es exactamente lo que justifica la arquitectura en dos niveles del capítulo 6, de modo que **el
+argumento práctico del trabajo no depende de la forma funcional que se cae**.
+→ `FINDINGS §F86` · `INVENTARIO-AFECTADO-POR-F86-20260909.md`
+
+**«El informe dice que el efecto es nulo o adverso en los modelos mayores.»**
+Eso **era cierto sobre el corpus defectuoso y no lo es sobre el corregido**. Los cinco modelos de mayor
+capacidad tienen todos mejora positiva: +0,81, +0,97, +2,29, +1,67 y +2,53. La afirmación está en el resumen,
+en el abstract, en §5.3.1 y explicada en §6, y hay que rectificarla en los cuatro sitios.
+
+**«¿Y por qué cambia tanto?»**
+Porque el corpus anterior **no anotaba localizaciones** mientras el prompt las pedía, de modo que toda
+localización extraída contaba como falso positivo: el 66 % de todos los falsos positivos del estudio. Los
+modelos que más localizaciones emitían salían más castigados, y eso no era una propiedad suya sino del
+corpus. Corregida la anotación, el efecto se recoloca.
+→ `FINDINGS §F53`
+
+**«¿Su mayor resultado, el +14,5 de `nemotron-mini`, es fiable?»**
+**No del todo, y lo sabemos.** En la re-corrida su línea base incluye **diecisiete registros que puntúan cero
+por un `TypeError` del arnés** —`llm_runner.py:167`, que asume que el modelo devuelve un objeto JSON y falla
+si devuelve un array—, y **todos caen en la línea base, ninguno en el brazo con RAG**, porque el ejemplar del
+prompt de recuperación guía al modelo al formato correcto. Descontándolos, su Δ pasa de +14,23 a **+9,58 pp**.
+
+Sigue siendo el mayor efecto del estudio y sigue siendo significativo en ambos escenarios. Está pedido
+re-ejecutar ese brazo antes de fijar cifras. **Ningún otro modelo está afectado**: es el único error de las
+treinta y nueve corridas, y los datos publicados tienen cero fallos.
+→ `FINDINGS §F85` · `remote_48g/ALERTA-NEMOTRON-BASELINE-20260909.md`
+
 ## Sobre la estadística
 
 **«¿Por qué un ANOVA de una vía sobre observaciones que no son independientes?»**
