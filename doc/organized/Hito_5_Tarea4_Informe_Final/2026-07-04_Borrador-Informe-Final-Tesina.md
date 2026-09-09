@@ -319,7 +319,11 @@ _Tabla 4. Benchmark exploratorio: doce modelos en trece configuraciones sobre el
 > Cifras medidas sobre `results/benchmark_results.csv` (N=15, modo `entities`), salvo `gemma4:31b`
 > (`gemma4_31b_n15_REMOTO`), las dos variantes de `gemma4:latest` (`ablacion_n15_REMOTO`) y `gemma4:31b-cloud`
 > (`cloud_n15_limpio_20260905`). Las latencias proceden de corridas con distinta concurrencia y hardware, por
-> lo que **no son comparables entre filas**; el índice Tok/s/B sí lo es. La columna «Parámetros» recoge
+> lo que **no son comparables entre filas**. La razón es más de fondo que la procedencia: el valor registrado
+> es el reloj de pared de cada artículo bajo concurrencia, de modo que **incluye la espera en cola** y depende
+> del número de consumidores que el controlador tuviera activos, por lo que **no es una propiedad del
+> modelo**. El rendimiento en tokens por segundo, en cambio, sí es estable entre corridas del mismo modelo, y
+> por eso el índice Tok/s/B que deriva de él es la magnitud que aquí se compara. La columna «Parámetros» recoge
 > la denominación nominal de la etiqueta del modelo, que no siempre coincide con el recuento del manifiesto —1,8B en
 > `deepseek-r1:1.5b`, 4,2B en `nemotron-mini:4b`, 8,2B en `qwen3:8b`, 12,2B en `mistral-nemo`, 31,3B en `gemma4:31b`—,
 > y el índice Tok/s/B se calcula sobre la nominal. `gemma4:31b-cloud` corre además en BF16 sobre ~32,7B parámetros sin
