@@ -3248,6 +3248,31 @@ modelos de mayor capacidad tienen **todos** mejora positiva:
 Ninguno revierte, ninguno se anula. Lo que ocurría en los datos antiguos —los grandes con Δ negativo— era del
 corpus defectuoso, y `§F68` ya lo había anticipado con los primeros modelos rehechos.
 
+### Corrección del 2026-09-09: son tres, no dos
+
+Al escribir este hallazgo dije que los modelos con mejora significativa sobre el corpus corregido eran «los
+dos únicos», nombrando `nemotron-mini:4b` y `llama3.2:latest`. **Son tres.** El post-hoc pareado con Holm
+sobre el consolidado de trece modelos da:
+
+| Modelo | Δ | Holm |
+|:---|---:|---:|
+| `nemotron-mini:4b` | +14,23 | 0,0000 |
+| `llama3.2:latest` | +6,73 | 0,0011 |
+| **`gemma4:12b-mlx`** | **+2,29** | **0,0005** |
+
+Se me pasó `gemma4:12b-mlx`, que tiene un Δ modesto pero muy consistente entre registros —de ahí su p tan
+baja— y por eso supera la corrección. Dos más quedan al borde: `gemma4:latest` con 0,0595 y
+`mistral-nemo:latest` con 0,0577, este con efecto negativo.
+
+El error estaba propagado al índice de defensa, al procedimiento de cierre y al inventario, y se ha corregido
+en los cuatro sitios. **No cambia la conclusión** —el efecto sigue concentrado y sigue siendo mucho menor que
+en el corpus antiguo— pero un recuento equivocado en el material de defensa es exactamente lo que no puede
+quedarse.
+
+**Y conviene no confundir dos cifras que ahora conviven:** el «ocho de trece» de `§F76` es sobre el corpus
+**antiguo**; el «tres de trece» es sobre el **corregido**. El contraste es el mismo; lo que cambia es el
+efecto que mide.
+
 ### Qué se puede afirmar todavía
 
 Conviene no pasarse de frenada en la dirección contraria. Lo que los datos siguen sosteniendo:

@@ -22,9 +22,10 @@ antiguas.
 (p = 0,0645), pero **descansa en un solo punto**: retirando `nemotron-mini:4b` cae a +0,0120 con p = 0,971,
 mientras que retirar cualquier otro modelo lo deja entre −0,52 y −0,67.
 
-**Lo que sí sostienen los datos, y hay que decirlo así:** dos modelos pequeños se benefician de forma clara
-—`nemotron-mini:4b` y `llama3.2:latest`, los **dos únicos significativos** tras el post-hoc pareado—, el resto
-apenas se mueve, y **ningún modelo grande empeora**. Es más modesto que «inversamente proporcional» y es
+**Lo que sí sostienen los datos, y hay que decirlo así:** **tres** modelos mejoran de forma significativa
+tras el post-hoc pareado sobre el corpus corregido —`nemotron-mini:4b` con +14,23 pp, `llama3.2:latest` con
++6,73 y `gemma4:12b-mlx` con +2,29—, el resto apenas se mueve, y **ningún modelo grande empeora**. Los dos
+primeros son de los más pequeños del estudio. Es más modesto que «inversamente proporcional» y es
 verdadero. Y es exactamente lo que justifica la arquitectura en dos niveles del capítulo 6, de modo que **el
 argumento práctico del trabajo no depende de la forma funcional que se cae**.
 → `FINDINGS §F86` · `INVENTARIO-AFECTADO-POR-F86-20260909.md`
@@ -83,8 +84,13 @@ compilaciones de 31B sobre N=30 la potencia es del **8 %** ante el efecto observ
 **«El post-hoc dice que solo dos modelos mejoran. ¿No es demasiado conservador?»**
 Sí, y está medido. El Tukey publicado corrige por las **325** comparaciones entre los veintiséis grupos
 cuando las de interés son **trece**. Con el contraste pareado y corrección de Holm sobre esas trece,
-**mejoran ocho de trece**, y los cinco que no lo hacen son exactamente los de efecto nulo o negativo.
-**Decisión del autor pendiente** sobre si el informe lo adopta.
+**mejoran ocho de trece** sobre los datos publicados, y los cinco que no lo hacen son exactamente los de
+efecto nulo o negativo. **Decisión del autor pendiente** sobre si el informe lo adopta.
+
+**Aviso, porque estas dos cifras conviven y se confunden:** ese «ocho de trece» es sobre el **corpus
+antiguo**. Sobre el **corregido** el mismo contraste da **tres de trece** —`nemotron-mini:4b`,
+`llama3.2:latest` y `gemma4:12b-mlx`—. No es que el post-hoc sea más o menos conservador: es que el efecto
+del RAG es mucho menor cuando el corpus anota las localizaciones que el prompt pide.
 → `FINDINGS §F76` · `results/ROBUSTEZ_ESTADISTICA_20260908/posthoc_pareado.json`
 
 ---

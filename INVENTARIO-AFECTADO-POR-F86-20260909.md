@@ -38,8 +38,9 @@ apartado, y es la que el coeficiente de rangos deja de sostener. También la col
 los de mayor capacidad».
 
 **No se arregla cambiando cifras.** Lo que los datos permiten afirmar es más modesto y sigue siendo útil: dos
-modelos pequeños se benefician de forma clara y **son los dos únicos significativos** tras el post-hoc
-pareado; el resto apenas se mueve; y **ningún modelo grande empeora**.
+modelos mejoran de forma significativa tras el post-hoc pareado sobre el corpus corregido —**tres de trece**:
+`nemotron-mini:4b`, `llama3.2:latest` y `gemma4:12b-mlx`—, los dos primeros de los más pequeños del estudio;
+el resto apenas se mueve; y **ningún modelo grande empeora**.
 
 ### 3. §6 — la explicación del efecto
 

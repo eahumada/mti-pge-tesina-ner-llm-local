@@ -148,9 +148,10 @@ Esto no se automatiza. Por orden de importancia:
    - La correlación que sostiene el argumento **se desploma**: Spearman pasa de −0,5165 a **−0,0879
      (p = 0,7752)** y Pearson de −0,6004 a −0,5266 (p = 0,0645), este último **sostenido por un solo punto**:
      retirando `nemotron-mini:4b` queda en +0,0120 con p = 0,971.
-   - **Lo que sí se puede afirmar:** los dos modelos pequeños que más ganan son los dos únicos significativos
-     tras el post-hoc pareado, y **ningún modelo grande empeora**. Es más modesto que lo publicado y es
-     verdadero.
+   - **Lo que sí se puede afirmar:** **tres** modelos mejoran de forma significativa tras el post-hoc
+     pareado —`nemotron-mini:4b` +14,23, `llama3.2:latest` +6,73 y `gemma4:12b-mlx` +2,29—, los dos primeros
+     de los más pequeños del estudio, y **ningún modelo grande empeora**. Es más modesto que lo publicado y
+     es verdadero.
 
    **Esperar a que se resuelva `§F85` antes de escribir las cifras definitivas**, porque el punto que más
    pesa en el análisis es justamente el que arrastra los diecisiete ceros del `TypeError`.
