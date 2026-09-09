@@ -154,19 +154,26 @@ def main():
     fallos = check_fallos_por_modelo(recs)
     ok5, valores_cfg, discrep = check_config(cfg, ref_cfg)
 
+    # §5.4 / FINDINGS §F108: `parse_method='failed'` (los tres reintentos agotados) es un FALLO bloqueante,
+    # no solo un dato de reporte. Una corrida con filas 'failed' tiene registros perdidos que puntúan 0 y
+    # sesgan la media. La corrida `nemotron-mini_4b__N120` pasó por válida con 18 'failed' en un brazo porque
+    # este recuento no bloqueaba; ahora sí.
+    total_failed = sum(v.get("failed", 0) for v in fallos.values())
+    ok_failed = total_failed == 0
+
     informe = {
         "corrida": args.run_dir,
         "n_registros": len(recs),
         "check_1_fn_por_categoria": {"ok": ok1, "detalle": det_fn, "problemas": prob_fn},
         "check_2_recall_mayor_1": {"ok": ok2, "ofensores": ofens_recall},
         "check_3_f1_coherente": {"ok": ok3, "ofensores": ofens_f1},
-        "check_4_fallos_por_modelo": fallos,
+        "check_4_fallos_por_modelo": {"ok": ok_failed, "total_failed": total_failed, "por_modelo": fallos},
         "check_5_config": {"ok": ok5, "valores": valores_cfg, "discrepancias": discrep,
                            "referencia": args.referencia},
     }
 
-    # Comprobaciones BLOQUEANTES: 1, 2, 3 y (si hay referencia) 5.
-    bloqueantes = [ok1, ok2, ok3]
+    # Comprobaciones BLOQUEANTES: 1, 2, 3, 4 (failed==0) y (si hay referencia) 5.
+    bloqueantes = [ok1, ok2, ok3, ok_failed]
     if ref_cfg is not None:
         bloqueantes.append(ok5)
     todo_ok = all(bloqueantes)
