@@ -805,3 +805,49 @@ es lo que el sesgo hace por defecto.
 **Aplicado.** La comprobación documentada en `SEGURIDAD-CLAVE-GOOGLE-20260908.md` se amplía con su control, y
 declara explícitamente que un 404 anónimo no significa nada: el repositorio es privado y responde 404 a
 cualquiera sin credenciales, incluida su propia raíz.
+
+---
+
+## §L58 — `git branch -f` no puede mover la rama activa, y no dice nada al no hacerlo
+
+**2026-09-08, tarde y noche.** Tras cada commit se ejecutaba esta secuencia para mantener las tres ramas
+alineadas:
+
+```sh
+for b in sesion/revision-final-20260908 backup/revision-final-20260908; do
+  git branch -f "$b" main >/dev/null 2>&1
+done
+git push -q origin main sesion/... backup/... --force-with-lease
+```
+
+Y después se informaba «ramas en `<sha>`, todo empujado». **No era exacto.** La rama activa era
+`sesion/revision-final-20260908`, de modo que los commits avanzaban *esa* rama y `main` se quedaba donde
+estaba. La orden `git branch -f sesion/... main` habría retrocedido la rama de sesión hasta `main`
+—destruyendo el trabajo— pero git **se niega a mover la rama que está activa**, y ese rechazo iba directo a
+`/dev/null` por el `>/dev/null 2>&1`. El `push` entonces empujaba `main` y `backup` en su estado viejo, sin
+error, porque no había nada que empujar.
+
+**Resultado:** trece commits vivían solo en la rama de sesión. No se perdió nada —estaban comprometidos y
+empujados ahí— pero `main` llevaba cinco horas de retraso mientras el informe de estado decía lo contrario.
+
+**Lo que falló, en orden de importancia:**
+
+1. **Silenciar la salida de una orden que puede negarse a actuar.** El `2>&1` de conveniencia convirtió un
+   rechazo explícito de git en nada. Si una orden puede fallar de forma legítima, su error se lee.
+2. **Informar del estado sin comprobarlo.** «Todo empujado» se decía a partir del código de salida del
+   `push`, que era cero porque no tenía nada que hacer. La comprobación correcta es
+   `git rev-list --count origin/<rama>..<rama>` **por cada rama**, y compararla con cero.
+3. **Usar `git branch -f` teniendo una rama activa.** Para adelantar otra rama a la actual, la dirección es
+   la contraria: `git branch -f main <rama-activa>`, que sí funciona porque `main` no está activa.
+
+**La comprobación que lo destapa** cabe en una línea y ahora cierra cada tanda:
+
+```sh
+for r in main sesion/... backup/...; do
+  echo "$r: $(git rev-list --count origin/$r..$r) por empujar"
+done
+```
+
+Es el mismo patrón de `[[L57]]`: una orden cuyo «no hizo nada» es indistinguible de «lo hizo bien» si nadie
+mira el resultado. Allí un 404 podía significar éxito o URL rota; aquí un `push` sin error puede significar
+sincronizado o nada que empujar.
