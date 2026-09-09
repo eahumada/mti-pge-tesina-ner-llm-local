@@ -1,6 +1,6 @@
 # Estado de la re-corrida completa
 
-**Actualizado: 2026-09-09 01:54.** Regenerar con `python3 tools/estado_recorrida.py`; no editar a mano.
+**Actualizado: 2026-09-09 07:44.** Regenerar con `python3 tools/estado_recorrida.py`; no editar a mano.
 
 Todas las corridas listadas han pasado las cinco verificaciones del protocolo —cero
 `parse_method='failed'`, cero violaciones de `F1 ≤ (P+R)/2`, cero rechazos de infraestructura— y

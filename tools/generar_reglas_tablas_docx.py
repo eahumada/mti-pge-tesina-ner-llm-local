@@ -92,9 +92,10 @@ def main():
             'R19: las %d filas de la Tabla 19, 7 celdas cada una. Los conjuntos de filas del' % len(t19),
             '     .docx y del Markdown coinciden exactamente, comprobado antes de generar.',
             '',
-            'R18: solo las %d filas que el .docx ya trae. Reescribir celdas NO anade filas, y al' % len(sub18),
-            '     .docx le faltan estas %d legitimas, que exigen insercion y siguen pendientes:' % len(sin_propagar),
-            '     ' + ', '.join(sin_propagar),
+            'R18: las %d filas que el .docx trae. Reescribir celdas NO anade filas.' % len(sub18),
+            ('     Al .docx le faltan estas %d legitimas, que exigen insercion: %s'
+             % (len(sin_propagar), ', '.join(sin_propagar))) if sin_propagar else
+            '     No le falta ninguna: coincide con el Markdown en el conjunto de filas.',
         ],
         'reglas': [
             {'id': 'R19', 'tabla_contiene': 'F1 restr.', 'filas': t19},

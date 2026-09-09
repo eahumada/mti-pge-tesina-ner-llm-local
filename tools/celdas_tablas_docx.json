@@ -6,9 +6,8 @@
   "R19: las 42 filas de la Tabla 19, 7 celdas cada una. Los conjuntos de filas del",
   "     .docx y del Markdown coinciden exactamente, comprobado antes de generar.",
   "",
-  "R18: solo las 22 filas que el .docx ya trae. Reescribir celdas NO anade filas, y al",
-  "     .docx le faltan estas 4 legitimas, que exigen insercion y siguen pendientes:",
-  "     nemotron-mini:4b_baseline, nemotron-mini:4b_kb_rag, qwen3:8b_baseline, qwen3:8b_kb_rag"
+  "R18: las 26 filas que el .docx trae. Reescribir celdas NO anade filas.",
+  "     No le falta ninguna: coincide con el Markdown en el conjunto de filas."
  ],
  "reglas": [
   {
@@ -399,6 +398,10 @@
    "id": "R18",
    "tabla_contiene": "Δ F1 por entidad",
    "filas": {
+    "qwen3:8b_kb_rag": [
+     "+0.1554",
+     "+0.0152"
+    ],
     "gemma4:31b-cloud_baseline": [
      "+0.1418",
      "+0.0029"
@@ -419,6 +422,10 @@
      "+0.0965",
      "-0.0845"
     ],
+    "nemotron-mini:4b_kb_rag": [
+     "+0.0948",
+     "-0.0609"
+    ],
     "gemma4:31b-mlx_baseline": [
      "+0.0873",
      "-0.0613"
@@ -426,6 +433,10 @@
     "gpt-oss:20b_baseline": [
      "+0.0819",
      "-0.0438"
+    ],
+    "gemma4:12b-mlx_baseline": [
+     "+0.0789",
+     "-0.0612"
     ],
     "mistral-nemo:latest_baseline": [
      "+0.0684",
@@ -439,6 +450,10 @@
      "+0.0620",
      "-0.0958"
     ],
+    "gemma4:12b-mlx_kb_rag": [
+     "+0.0604",
+     "-0.0897"
+    ],
     "llama3.1:8b_baseline": [
      "+0.0514",
      "-0.0709"
@@ -450,10 +465,6 @@
     "gemma:latest_baseline": [
      "+0.0409",
      "-0.1678"
-    ],
-    "gemma4:12b-mlx_baseline": [
-     "+0.0789",
-     "-0.0612"
     ],
     "qwen2.5:14b_kb_rag": [
      "+0.0380",
@@ -471,13 +482,17 @@
      "+0.0122",
      "-0.1256"
     ],
+    "qwen3:8b_baseline": [
+     "-0.0076",
+     "-0.1359"
+    ],
     "deepseek-r1:1.5b_baseline": [
      "-0.0124",
      "+0.0028"
     ],
-    "gemma4:12b-mlx_kb_rag": [
-     "+0.0604",
-     "-0.0897"
+    "nemotron-mini:4b_baseline": [
+     "-0.0477",
+     "-0.1942"
     ],
     "deepseek-r1:1.5b_kb_rag": [
      "-0.0717",
