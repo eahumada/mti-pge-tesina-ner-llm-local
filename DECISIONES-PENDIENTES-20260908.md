@@ -1,8 +1,12 @@
 # Decisiones que esperan al autor
 
-**2026-09-08, 18:55.** Reunidas aquí porque estaban repartidas entre `FINDINGS.md`, `CURRENT-TASKS.md` y
-tres documentos sueltos, mezcladas con decisiones ya tomadas. Son **cinco**, ninguna urgente, todas con
-recomendación. Ninguna bloquea a la otra.
+**Actualizado: 2026-09-08, 21:36.** Reunidas aquí porque estaban repartidas entre `FINDINGS.md`,
+`CURRENT-TASKS.md` y varios documentos sueltos, mezcladas con decisiones ya tomadas. Son **siete**, todas con
+recomendación y ninguna bloquea a otra.
+
+Las dos últimas —la **6**, sobre `gpt-oss:20b`, y la **7**, sobre el post-hoc— son las que más conviene
+resolver pronto: la primera porque afecta a horas de máquina y la segunda porque toca una conclusión del
+capítulo de resultados.
 
 ---
 
@@ -78,6 +82,45 @@ aplicada a una sección que habla del estudio.
 **Recomendación: propagar antes de cualquier entrega, y no con pandoc.** La lista exacta, con ubicaciones,
 está en `PROPAGACION-PENDIENTE-DOCX-20260908.md`. Conviene esperar a que termine la re-corrida para no
 propagar dos veces, **salvo** que haya entrega antes.
+
+---
+
+## 6. ¿Se re-ejecuta `gpt-oss:20b` sobre el corpus corregido?
+
+**Qué pasa.** No está en el barrido: ni `START`, ni `END`, ni `SKIP`. La causa probable es una lectura literal
+de `§F44`, donde usted lo congeló «con think ON, sin re-ejecutar».
+
+**Por qué importa.** Esa decisión era sobre el *thinking*, no sobre el corpus. Si no se re-ejecuta, el
+consolidado final tendría **doce modelos sobre el corpus corregido y uno sobre el antiguo**, y su F1 quedaría
+unos veinte puntos por debajo del resto por un defecto del corpus y no por su desempeño.
+
+**Recomendación: re-ejecutarlo con `think` ON**, que es lo que la decisión protege, sobre el corpus corregido
+y con 4 096 tokens. Respeta `§F44` en lo que decía y resuelve de paso la asimetría de presupuesto que hoy lo
+hace incomparable con los otros doce.
+
+Evidencia: `FINDINGS §F72`. La guarda de 26 grupos impediría que se colara en silencio, pero descubrirlo al
+fusionar cuesta otra tanda de horas de máquina.
+
+---
+
+## 7. ¿Cambia el informe su post-hoc al contraste apropiado al diseño?
+
+**Qué pasa.** §5.3.1 concluye que solo dos modelos mejoran de forma significativa. Con el contraste que
+corresponde al diseño —Wilcoxon pareado sobre los mismos registros, con corrección de Holm sobre las **trece**
+comparaciones de interés en lugar de Tukey sobre las **325** posibles— resultan **ocho de trece**.
+
+**Por qué importa.** No es un tecnicismo: hoy el informe agrupa como «no concluyentes» a modelos con **+7,36
+pp** y a otros con **−0,54**, lo que es difícil de defender. Con el contraste pareado los cinco que no
+alcanzan significancia son exactamente los de efecto nulo o negativo.
+
+**Recomendación: adoptarlo, y declarar ambos.** La afirmación resultante es **más fuerte y más matizada**, y
+la tesis de la proporcionalidad inversa **sale reforzada**: los dos mayores efectos son los dos modelos más
+pequeños. El Tukey no se retira —responde a otra pregunta, la de todos los pares— sino que se acompaña.
+
+**Cuándo.** Después de la re-corrida, porque los datos cambian; pero el argumento metodológico vale igual
+para los datos nuevos, así que conviene decidirlo ya.
+
+Evidencia: `FINDINGS §F76`.
 
 ---
 
