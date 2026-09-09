@@ -157,6 +157,26 @@ Porque a esta fecha es privado. Es un **pendiente declarado** y bloqueante para 
 
 ---
 
+## Sobre la tasa de alucinación y el objetivo 5
+
+**«Su objetivo 5 fija una tasa de alucinaciones inferior al 5 %. ¿Lo cumplieron?»**
+**Parcialmente, y el informe da los datos para verlo aunque no lo formule como un sí o un no.** §5.4 declara
+el rango completo: de **cero** en las variantes alojadas de `gemma4:31b` al **21,59 %** de `deepseek-r1:1.5b`
+con recuperación por diccionario, con **28 de 61 grupos por debajo del 1 %**. El umbral se cumple en la gran
+mayoría de configuraciones y **se incumple en los dos modelos más pequeños**, que es donde el informe sitúa
+expresamente el problema.
+
+**La respuesta honesta** es que el objetivo se alcanza para las configuraciones que el capítulo 6 propone
+desplegar, y no para los modelos más pequeños, que el propio trabajo descarta para uso en producción por su
+F1. Presentarlo como un cumplimiento global sería falso y es innecesario: la conclusión práctica no depende de
+ello.
+
+**Cifras de la re-corrida sobre el corpus corregido**, con doce de los trece modelos y por tanto provisionales:
+el máximo baja a **15,61 %** (`deepseek-r1:1.5b` con KB RAG) y **21 de 24 grupos quedan por debajo del 5 %**,
+quince de ellos por debajo del 1 %. Los tres que lo superan son las dos configuraciones de `deepseek-r1:1.5b`
+y `gemma:latest` con KB RAG, esta última en 5,14 %. **El cuadro cualitativo no cambia**: el problema sigue
+concentrado en los modelos pequeños.
+
 ## Sobre la bibliografía
 
 **«¿De dónde salen el 88,43 % y el 82,1 % del §2?»**
