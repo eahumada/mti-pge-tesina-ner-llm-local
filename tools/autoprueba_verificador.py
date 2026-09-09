@@ -20,15 +20,20 @@ import tempfile
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BENCH = 'repos/ner-llm-entity-benchmark/results'
 
+# Cada artefacto con la comprobacion que TIENE que enterarse de su ausencia. Sin ese segundo campo
+# la autoprueba solo pregunta «fallo algo», y varios ficheros los leen dos o tres comprobaciones: basta
+# con que una se entere para dar el visto bueno mientras las otras se lo saltan en silencio. Paso el
+# 2026-09-09 —el indice de defensa bajaba de 13 a 9 elementos y seguia en «ok»— y esta escrito en
+# `LEARNING §L60`. El texto es un fragmento del nombre de la comprobacion, no el nombre entero.
 ARTEFACTOS = [
-    'tools/generar_figuras_informe.py',
-    f'{BENCH}/ANALISIS_CONJUNTO_20260907/merge_manifest.json',
-    f'{BENCH}/ANALISIS_CONJUNTO_20260907/merged_results.csv',
-    f'{BENCH}/COMPOSICION_FP_20260908/composicion_fp_26_grupos.json',
-    f'{BENCH}/ANALISIS_MOJIBAKE_20260908/efecto_mojibake.json',
-    f'{BENCH}/CORRELACION_CAPACIDAD_20260908/correlacion.json',
-    'DEFENSA-PREGUNTAS-Y-RESPUESTAS.md',
-    f'{BENCH}/ROBUSTEZ_ESTADISTICA_20260909/robustez.json',
+    ('tools/generar_figuras_informe.py', 'Figura 1'),
+    (f'{BENCH}/ANALISIS_CONJUNTO_20260907/merge_manifest.json', 'protocolo homog'),
+    (f'{BENCH}/ANALISIS_CONJUNTO_20260907/merged_results.csv', 'Tabla 7 reproduce'),
+    (f'{BENCH}/COMPOSICION_FP_20260908/composicion_fp_26_grupos.json', 'Figura 1'),
+    (f'{BENCH}/ANALISIS_MOJIBAKE_20260908/efecto_mojibake.json', 'Tabla 18'),
+    (f'{BENCH}/CORRELACION_CAPACIDAD_20260908/correlacion.json', 'indice de defensa'),
+    ('DEFENSA-PREGUNTAS-Y-RESPUESTAS.md', 'indice de defensa'),
+    (f'{BENCH}/ROBUSTEZ_ESTADISTICA_20260909/robustez.json', 'indice de defensa'),
 ]
 
 
@@ -67,7 +72,7 @@ def main():
         print('control: el verificador pasa con todo en su sitio\n')
 
     fallos = []
-    for rel in ARTEFACTOS:
+    for rel, esperada in ARTEFACTOS:
         ruta = os.path.join(RAIZ, rel)
         if not os.path.isfile(ruta):
             fallos.append((rel, 'el artefacto no existe; la prueba no puede correr'))
@@ -83,13 +88,25 @@ def main():
             shutil.rmtree(tmp, ignore_errors=True)
 
         nuevas = malas(r) - previas
+        # Comparacion insensible a acentos: la primera version esperaba «protocolo homogeneo» y la
+        # comprobacion se llama «protocolo homogéneo», de modo que la atribucion fallaba por una tilde
+        # y se reportaba como hueco de cobertura.
+        def _pl(s_):
+            import unicodedata
+            return ''.join(c for c in unicodedata.normalize('NFD', s_.lower())
+                           if unicodedata.category(c) != 'Mn')
+        atribuida = [n for n in nuevas if _pl(esperada) in _pl(n)]
         if not nuevas:
             fallos.append((rel, 'esconderlo no anade ninguna comprobacion fallida'))
-            print(f'  NO DETECTA {rel}')
+            print(f'  NO DETECTA  {rel}')
+        elif not atribuida:
+            fallos.append((rel, 'falla otra comprobacion, pero no «%s», que es la que lo usa; '
+                                'fallan: %s' % (esperada, ', '.join(sorted(nuevas))[:90])))
+            print(f'  MAL ATRIBUIDO  {rel}')
         else:
-            marca = 'VACIA' if any('VACIA' in l and any(n in l for n in nuevas)
+            marca = 'VACIA' if any('VACIA' in l and any(n in l for n in atribuida)
                                    for l in r.stdout.split('\n')) else 'fallo'
-            print(f'  detecta ({marca:5})  {rel}')
+            print(f'  detecta ({marca:5})  {rel}  ->  «{esperada}»')
 
     print()
     if fallos:
