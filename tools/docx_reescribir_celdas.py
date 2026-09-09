@@ -59,10 +59,17 @@ def escapar(s):
     return (s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'))
 
 
-def preservar(attrs):
-    """Asegura xml:space=preserve, para que un valor con espacios no se recorte."""
-    if 'xml:space' in attrs:
-        return attrs
+def preservar(attrs, valor):
+    """Anade xml:space=preserve SOLO si el valor lo necesita.
+
+    La primera version lo anadia siempre, y eso dejo dos filas de cada tabla con un esqueleto
+    XML distinto del resto —justo las que se reescribieron— sin ningun efecto visual, pero
+    rompiendo la uniformidad estructural que una reconstruccion por plantilla aprovecha. Es
+    inocuo —el documento ya trae 743 `<w:t>` con ese atributo de origen— y aun asi no hay razon
+    para ponerlo en un valor como `+0.0789`, que no tiene espacios que preservar.
+    """
+    if 'xml:space' in (attrs or '') or valor == valor.strip():
+        return attrs or ''
     return (attrs or '') + ' xml:space="preserve"'
 
 
@@ -73,7 +80,7 @@ def reescribir_celda(celda, valor):
         return celda, False
     if m.group(2) == escapar(valor):
         return celda, False
-    nuevo = '<w:t%s>%s</w:t>' % (preservar(m.group(1) or ''), escapar(valor))
+    nuevo = '<w:t%s>%s</w:t>' % (preservar(m.group(1) or '', valor), escapar(valor))
     return celda[:m.start()] + nuevo + celda[m.end():], True
 
 

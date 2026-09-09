@@ -3998,3 +3998,34 @@ coincidir sin avisar. El generador, además, **se niega a generar** si los conju
 - En §3.3 sigue pendiente partir el run en negrita para que resalte solo el porcentaje.
 
 **Herramientas nuevas:** `tools/docx_reescribir_celdas.py` y `tools/generar_reglas_tablas_docx.py`.
+
+### Reconstrucción de la Tabla 18 — 2026-09-09, cierre de §F95
+
+La única pieza de §F95 que quedaba pendiente de las dos tablas está hecha. A la Tabla 18 del `.docx` le
+faltaban **cuatro filas legítimas** —`nemotron-mini:4b` y `qwen3:8b`, en sus dos modos— y, al comprobar
+dónde insertarlas, apareció algo que la inserción no habría resuelto: **el orden del `.docx` no era el del
+Markdown**, que ordena por Δ descendente, y ni siquiera era una subsecuencia suya.
+
+Insertar en el hueco correcto habría dejado las 26 filas en un orden que no es el de la fuente. Las dos
+cosas se resuelven igual: **reconstruir el cuerpo** de la tabla desde el Markdown, generando cada fila desde
+la plantilla del esqueleto XML más frecuente y en el orden de la fuente. La cabecera no se toca.
+
+**Resultado, verificado en los tres documentos:** la Tabla 18 tiene **26 filas** e es **idéntica al Markdown
+en contenido y en orden**. Las cuatro filas ausentes están presentes, los paquetes abren y siguen sin emojis.
+
+`tools/docx_reconstruir_cuerpo.py` impone cuatro condiciones antes de escribir, y la cuarta es la que
+importa: **una reconstrucción no puede perder información**. Si alguna fila del `.docx` no estuviera en el
+Markdown, la herramienta no toca nada y la reporta — sería una fila que solo existe en el entregable, y
+decidir qué hacer con ella no es cosa de una herramienta. Declara además, como AVISO, que el formato **por
+fila** se normaliza al de la plantilla, con el recuento de esqueletos que había.
+
+**Y una consecuencia de mi propio defecto anterior.** Ese AVISO salió con «2 esqueletos» porque las dos
+filas que reescribí en la pasada anterior quedaron con un `xml:space="preserve"` que no necesitaban:
+`docx_reescribir_celdas.py` lo añadía siempre. Corregido para añadirlo solo cuando el valor tiene espacios
+que preservar. No tenía efecto visual —el documento ya trae 743 `<w:t>` con ese atributo de origen— pero
+rompía la uniformidad estructural que una reconstrucción por plantilla aprovecha, y fue la propia
+herramienta la que lo delató al contar los esqueletos.
+
+**Estado de la propagación de cifras: cero obsoletas y cero tablas divergentes.** Quedan diez cifras solo en
+el Markdown, todas en pasajes de texto reescritos que el `.docx` aún no tiene, más las dos figuras y la
+Tabla 20.
