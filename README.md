@@ -96,7 +96,7 @@ el documento y los datos no puedan divergir en silencio:
 | `desfase_documentos.py` | Qué documentos de estado han envejecido respecto de lo que describen |
 | `docx_replace_terms.py` | Ediciones de texto en los `.docx` preservando el formato. `celda_exacta` ancla en la celda de tabla, no en el texto |
 | `desfase_cifras_docx.py` | Compara **todas** las cifras decimales de un `.docx` contra el Markdown y señala las candidatas a obsoletas |
-| `acceptance_desfasado.py` | Corridas cuyo `acceptance_status.json` quedó con el veredicto de antes de la corrección de puntuación |
+| `derivados_desfasados.py` | Artefactos derivados que la corrección de puntuación dejó atrás: `acceptance_status.json` e informes por corrida, con el consolidado como control |
 
 ## Documentos fechados
 

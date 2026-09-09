@@ -3511,6 +3511,10 @@ Tabla 19, ya especificadas en `tools/terms_restringido.json` para la tanda de ma
 
 ## §F89 — Siete `acceptance_status.json` quedaron con el veredicto de antes de la corrección, y uno invierte el orden
 
+> **Ampliado el 2026-09-09.** El mismo desfase alcanza a los `statistical_report.md` por corrida, y allí
+> es peor: **42 grupos en 9 corridas**, con intervalos y veredictos calculados sobre las cifras viejas. La
+> tesina **no** está afectada, y hay un control que lo acredita. Ver **§F89.bis**.
+
 **2026-09-09.** Al verificar la mitad `kb_rag` de la re-corrida de `gemma4:12b-mlx` apareció que la cifra
 que el equipo remoto había reportado, **0,5929**, no está ni en el CSV ni en el resumen de la corrida, que
 dan **0,5846**. El origen es `acceptance_status.json`, que sigue declarando
@@ -3518,7 +3522,7 @@ dan **0,5846**. El origen es `acceptance_status.json`, que sigue declarando
 
 `src/main.py` escribe ese fichero al cerrar la corrida. La corrección de puntuación del 2026-09-06 rehizo
 los `benchmark_summary.json` pero **no** los `acceptance_status.json`. Mecanizado en
-`tools/acceptance_desfasado.py`, el defecto no es aislado: **7 de 17** corridas están desfasadas, y en las
+`tools/derivados_desfasados.py`, el defecto no es aislado: **7 de 17** corridas están desfasadas, y en las
 siete la cifra vieja es la **más alta**, que es la firma de la corrección.
 
 | Corrida | `acceptance` | Resumen corregido |
@@ -3595,3 +3599,48 @@ falsa, y conviene comprobar las dos cosas por separado. Aquí el reflejo defensi
 sido la peor de las tres opciones: destruye una conclusión que los datos sí respaldan. El orden de las
 comprobaciones importa: primero si el **dato** reproduce, después si la **conclusión** reproduce, y solo
 entonces se decide qué hacer con la fila.
+
+## §F89.bis — El mismo desfase, en un artefacto más consecuente: 42 grupos en los informes por corrida
+
+**2026-09-09.** Al buscar de dónde salía el 0,5929 apareció que no solo lo trae
+`acceptance_status.json`, sino también el `statistical_report.md` de la corrida, y ahí con
+**intervalos de confianza y un veredicto** calculados sobre la cifra vieja:
+
+```
+| gemma4:12b-mlx_kb_rag | 120 | 0.5929 | 0.5583 | 0.6275 | 0.1915 |
+| gemma4:12b-mlx_kb_rag | 0.5929 | 0.5779 | -0.0150 | Decreased |
+```
+
+Mecanizado junto a la comprobación anterior en `tools/derivados_desfasados.py` —antes
+`derivados_desfasados.py`, renombrado porque el nombre ya no describía lo que hace—: de **79 grupos en 17
+corridas**, **42 están desfasados, repartidos en 9 corridas**. Algunas diferencias no son de decimales:
+`deepseek-r1:1.5b_rag_enhanced` declara 0,3516 donde el resumen da **0,1682**, más del doble.
+
+A diferencia de los `acceptance_status.json`, aquí el desplazamiento **no** va siempre en el mismo sentido:
+`qwen3:8b_baseline` de `afectados_thinking_n120_REMOTO` declara 0,4383 donde el resumen da 0,4438, es decir
+**más bajo**. Son de estados distintos de los datos, no de una única corrección.
+
+### El control que importa: la tesina no está afectada
+
+`tools/generar_tabla7.py` lee un `statistical_report.md`, de modo que la pregunta obligada era si la Tabla 7
+del informe bebe de uno de los desfasados. **No.** Lee el del **consolidado**, que `merge_and_analyze.py`
+regenera desde los CSV fusionados, y el consolidado del estudio está al día: **26 de 26 grupos** coinciden
+con `merged_results.csv`. El consolidado, además, se alimenta de `csv_path`, nunca de resúmenes ni de
+informes por corrida.
+
+Esa tercera comprobación es un **control positivo** y está en la herramienta a propósito: sin ella no se
+distinguiría «el consolidado está bien» de «el consolidado no se ha mirado», que es §L57. Probada por
+mutación en los dos sentidos: con un F1 alterado señala el grupo y sale con 1; retirada la cabecera de la
+tabla dice **«NO COMPROBADO»** en lugar de dar por bueno el silencio.
+
+### Y una trampa de lectura que costó una pasada
+
+La primera versión del control daba **26 divergencias de 26**, todas con un «F1 = 120,0000». El patrón
+`| grupo | número | número |` cazaba la **primera** tabla del informe, la de cobertura
+(`| Modelo | Filas | record_id unicos | … |`), y no la de F1, que está más abajo. **Lo delató el valor
+imposible repetido**: una divergencia real no da el mismo número absurdo veintiséis veces. Por eso la
+búsqueda se ancla ahora a la cabecera `| Model | Sample Size (N) | Mean F1-Score |`.
+
+Es la tercera vez en dos días que un patrón aparentemente específico caza otra cosa —`<w:t[^>]*>` con
+`<w:tcPr>` en §F88, `5.33` con `35.33%` en el mismo—, y las tres veces lo destapó mirar la salida con
+desconfianza, no releer el patrón.
