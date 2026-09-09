@@ -48,12 +48,19 @@ Estos documentos describen dónde está el trabajo hoy y son los que hay que lee
 
 ## Verificación
 
-`tools/verificar_informe.py` pasa **25 comprobaciones** sobre el Markdown canónico: referencias cruzadas,
-tablas, bibliografía, higiene del entregable, coherencia entre cifras publicadas y datos crudos, y extensión.
+`tools/verificar_informe.py` pasa una batería de comprobaciones sobre el Markdown canónico: referencias
+cruzadas a secciones, anexos y tablas; numeración y leyendas; bibliografía; higiene del entregable;
+coherencia entre las cifras publicadas y los datos crudos —las seis tablas de datos, las dos figuras, el
+Anexo I, la correlación central, la taxonomía de §5.4, las diferencias del análisis de variantes y las
+cifras titulares del resumen—; y la extensión frente al límite institucional.
+
+**El número exacto lo imprime la herramienta**, y aquí no se repite a propósito: una cifra copiada envejece
+con cada comprobación nueva, y ya ocurrió dos veces en este mismo párrafo. Todas están probadas por prueba
+de mutación: se les introduce el defecto que deben detectar y se comprueba que fallan (`FINDINGS §F78`).
 Una comprobación que no examina nada se marca como **vacía**, no como superada.
 
 ```
-python3 tools/verificar_informe.py          # las 25, sin red
+python3 tools/verificar_informe.py          # todas, sin red
 python3 tools/verificar_informe.py --red    # además abre las URL de la bibliografía
 ```
 
