@@ -161,6 +161,29 @@ conserva la atribución vieja. **Son tres cambios y van juntos:**
 > «OpenSanctions» borraría una referencia correcta. Copia el texto del Markdown, no busques y
 > reemplaces.
 
+### Pieza 9 — Un pasaje del Anexo I que hoy dice algo falso, si decides insertarlo
+
+Va **con la pieza 1**, no aparte: forma parte de los párrafos del Anexo I que no llegaron al
+entregable. Se anota como pieza propia porque si algún día se insertan, hay que insertar **la versión
+corregida** y no la que el `.docx` habría tenido.
+
+El Markdown decía «La re-corrida completa **pendiente** unifica el presupuesto en 4096 para los
+trece». Era cierto al escribirlo y **dejó de serlo el 8 de septiembre**, cuando la re-corrida se
+ejecutó: hay trece corridas `__N120` y las trece declaran `max_tokens=4096`. La fuente ya está
+corregida y ahora **declara las dos mediciones**, dice cuál es la de referencia y por qué, que es lo
+que la regla de integridad de `CLAUDE.md` obliga a hacer.
+
+**Copia el texto del Markdown, no reconstruyas el párrafo de memoria.** Y si decides no insertar
+ninguno de los párrafos del Anexo I, no pasa nada por esta pieza: el entregable no afirma la
+falsedad porque tampoco afirma nada sobre eso.
+
+> **Comprobación nueva que vigila esto, y la vas a ver fallar hasta que hagas la pieza 7.** Se llama
+> **«ninguna frase retirada sobrevive en los entregables»** y va al revés que las demás: en lugar de
+> comprobar que lo que está en la fuente llegó al `.docx`, comprueba que lo que la fuente **retiró**
+> no siga vivo en él. Hoy da **nueve fallos**, tres frases por tres entregables, y son exactamente
+> las dos atribuciones a OpenSanctions y la glosa de la última columna. Cuando termines la pieza 7 y
+> la corrección de la Tabla 1, baja a cero sola.
+
 ### Pieza 8 — El punto 11 de §7.2 y la referencia [39]
 
 Añadidos al Markdown el 2026-09-09 a petición del autor: el punto 11 de la lista de trabajo futuro

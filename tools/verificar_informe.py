@@ -69,6 +69,15 @@ FALLOS_DECLARADOS = {
         'de §7.2 que la cita, que es el contraste pareado como trabajo futuro pedido por el '
         'autor. La cita y su entrada entraron en el MISMO commit, como exige CLAUDE.md; lo que '
         'falta es propagarlas a los tres .docx, que no se regeneran con pandoc. Ver §F147'),
+    'todavia afirma': ('2026-09-10',
+        'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop, y es la PIEZA 7 y la '
+        'correccion de F144 de su encargo. Tres frases retiradas del Markdown siguen vivas en los '
+        'tres .docx: la atribucion del corpus a OpenSanctions en dos sitios —que no es una ausencia '
+        'sino una AFIRMACION FALSA, porque PROCEDENCIA.md declara la lista SDN del Tesoro— y la '
+        'glosa de la Tabla 1 que apunta a la ultima columna, que es Idioma. Se corrigen junto con la '
+        'entrada [19] de la bibliografia, que tambien nombra al proveedor equivocado. La cuarta '
+        'frase retirada, la re-corrida «pendiente», NO aparece en los .docx porque ese pasaje del '
+        'Anexo I es uno de los diez que nunca llegaron al entregable (F121). Ver FINDINGS §F151'),
     '.rebuild_venv.log': ('2026-09-09',
                           'fichero vacio del commit 880f4f9; decision del autor '
                           '(CURRENT-TASKS §1.103)'),
@@ -1247,6 +1256,62 @@ def c_vacios():
     check('ficheros rastreados a cero bytes', len(fich), malos,
           'un fichero vacío no da ningún síntoma; ver FINDINGS §F59')
 
+
+# --- 56. Frases retiradas de la fuente que no pueden sobrevivir en el entregable -----------------
+# Las FRASES RETIRADAS: lo que se corrigio en el Markdown y todavia se afirma en los .docx.
+#
+# La comprobacion de prosa va en UNA sola direccion, del Markdown al entregable, y solo declara
+# ausente un parrafo del que no aparece NINGUNA de sus cinco sondas. Eso deja pasar el caso
+# peligroso: un parrafo cuyo ARRANQUE sigue igual y cuyo FINAL se corrigio. Las sondas del arranque
+# casan, el parrafo se da por presente, y el entregable sigue afirmando lo que la fuente ya
+# desmintio.
+#
+# Ocurrio el 2026-09-09 con la frase «La re-corrida completa pendiente unifica el presupuesto en
+# 4096», que era cierta al escribirla y dejo de serlo cuando la re-corrida se ejecuto, el 8 de
+# septiembre. Se corrigio en el Markdown y el verificador no dijo nada, porque el resto del parrafo
+# no habia cambiado.
+#
+# Esta comprobacion va al reves: toma las frases que la fuente RETIRO y exige que tampoco esten en
+# el entregable. Es lo unico que protege de que el documento que lee el tribunal afirme algo que el
+# autor ya corrigio. Cada entrada lleva por que se retiro y por que la sustituye.
+RETIRADAS = (
+    ('re-corrida completa pendiente',
+     'la re-corrida se ejecuto el 2026-09-08 y esta completa: 13 corridas __N120, todas con '
+     'max_tokens=4096. Declararla pendiente es falso hoy. La fuente declara ahora las DOS '
+     'mediciones y cual es la de referencia, como exige la regla de integridad'),
+    ('tomados de OpenSanctions',
+     'el proveedor esta mal atribuido: PROCEDENCIA.md declara treasury.gov/ofac/downloads/sdn.csv '
+     'y no menciona OpenSanctions. La fuente dice ya «la lista SDN del Departamento del Tesoro»'),
+    ('de la base de datos OpenSanctions',
+     'idem: es la atribucion del corpus del Anexo F, y es una afirmacion falsa, no una ausencia'),
+    ('cifras de la última columna',
+     'la ultima columna de la Tabla 1 es Idioma; las cifras estan en la de desempeno publicado'),
+)
+
+
+def c_frases_retiradas(s):
+    """Ninguna frase que la fuente retiro puede seguir viva en los tres entregables."""
+    fallos, mirados = [], 0
+    for rel in DOCX_ENTREGABLES:
+        base = os.path.basename(rel)
+        txt = _texto_docx(os.path.join(RAIZ, rel))
+        if txt is None:
+            fallos.append('%s no se pudo leer' % base)
+            continue
+        plano = ' '.join(txt.split())
+        for frase, motivo in RETIRADAS:
+            mirados += 1
+            if frase in plano:
+                fallos.append('%s todavia afirma «%s» — %s' % (base, frase, motivo))
+    # Y la otra mitad, que es la que evita que esta comprobacion se quede obsoleta en silencio:
+    # una frase retirada que TAMPOCO este ya en el Markdown es lo esperado; una que SIGA en el
+    # Markdown significa que la retirada no se aplico a la fuente, o que la entrada esta mal escrita.
+    for frase, _motivo in RETIRADAS:
+        mirados += 1
+        if frase in ' '.join(s.split()):
+            fallos.append('«%s» figura como retirada y sigue en el Markdown canonico: o no se '
+                          'corrigio la fuente, o la entrada de RETIRADAS esta mal escrita' % frase)
+    check('ninguna frase retirada sobrevive en los entregables', mirados, fallos)
 
 # --- 2. Referencias cruzadas a secciones --------------------------------------------------------
 def c_secciones(s):
@@ -4212,6 +4277,7 @@ def main():
     ejecutar(c_redondeos, s)
     ejecutar(c_tabla17, s)
     ejecutar(c_prosa_docx, s)
+    ejecutar(c_frases_retiradas, s)
     ejecutar(c_tablas_y_biblio_docx, s)
     ejecutar(c_encabezados_docx, s)
     ejecutar(c_figuras_docx, s)

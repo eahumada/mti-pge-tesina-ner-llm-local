@@ -1105,9 +1105,15 @@ artículos sin extracción de 27 y 49 a 6 y 5. Eso exige una salvedad de compara
 minimizar:
 `gpt-oss:20b` es el único de los trece cuya cifra publicada procede de una corrida con **4096** tokens de
 salida, mientras los otros doce se midieron con **2048**. Su ventaja sobre `qwen2.5:14b` o `llama3.1:8b`, por
-tanto, no es enteramente atribuible al modelo. La re-corrida completa pendiente unifica el presupuesto en
-4096 para los trece y resuelve la asimetría; hasta entonces, las cifras de `gpt-oss:20b` de la Tabla 7 deben
-leerse con esta reserva. Los nueve parámetros restantes —modo de recuperación `kb_combined`, corpus,
+tanto, no es enteramente atribuible al modelo. Esa asimetría la resuelve una re-corrida completa que
+unifica el presupuesto en 4096 tokens para los trece modelos, ejecutada el 8 de septiembre de 2026 y
+consolidada aparte. Existen por tanto **dos mediciones del mismo experimento**, y este informe declara las
+dos. La de referencia es la primera, que es la que sostiene todas las cifras del capítulo de resultados y
+los contrastes de §5.3, y lo es por dos razones. La segunda se completó una vez cerrado ese análisis, de
+modo que adoptarla obligaría a rehacerlo entero. Y las dos no difieren solo en el presupuesto de salida:
+la segunda excluye además siete artículos cuya codificación estaba contaminada, de modo que aporta ciento
+trece registros por grupo y no los ciento veinte de la primera. Mientras la referencia sea la primera, las
+cifras de `gpt-oss:20b` de la Tabla 7 deben leerse con la reserva anterior. Los nueve parámetros restantes —modo de recuperación `kb_combined`, corpus,
 temperatura 0,1, tamaño de lote y los demás— coinciden en las ocho corridas fusionadas.
 
 Tres advertencias de lectura antes de las cifras. Las columnas publicadas se toman del campo almacenado por registro, que es lo que publican las tablas del cuerpo, y las restringidas se recalculan desde el desglose por tipo. En `nemotron-mini:4b_baseline` los dos no cuadran en **siete de sus ciento veinte registros**, los que se reextrajeron fuera del arnés de lotes tras un fallo de contexto (§5.3.1), de modo que su columna restringida arrastra esa incoherencia y conviene leerla con esa reserva. Las dos primeras filas de `llama3.2:latest` reproducen **la misma medición** bajo dos etiquetas de corrida: coinciden en los siete valores y, comprobado registro a registro, en los aciertos y errores de los ciento veinte artículos, de modo que la tabla tiene cuarenta y dos filas pero cuarenta y una configuraciones distintas. Y las dos filas de `gemma4:12b-mlx` proceden de `afectados_thinking_n120_REMOTO` y no de `benchmark_n120_REMOTO`, porque esta última quedó averiada por el modo de razonamiento —sesenta y ocho y noventa y ocho de sus ciento veinte registros no recuperan ninguna entidad— y sus cifras no representan la capacidad del modelo.

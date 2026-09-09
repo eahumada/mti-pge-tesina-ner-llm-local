@@ -7292,3 +7292,70 @@ Y hubo que corregirla dos veces, las dos por ser **demasiado estrecha**:
 afirmación falsa» de «perdió información» exige leer, y eso es juicio humano. Lo que sí hace es
 reducir 82 líneas a 16 y dar el commit de cada una. Una herramienta que prometiera el juicio estaría
 mintiendo; ésta promete el cribado.
+
+---
+
+## §F151 — El informe declaraba pendiente una re-corrida ya hecha, y ninguna comprobación miraba en esa dirección
+
+**Fecha:** 2026-09-09 · **Origen:** dos lotes del workflow `wf_348f89e2-43b` lo señalaron por
+separado, el de tablas y el de anexos, y los dos con confianza alta
+
+### La afirmación falsa
+
+El Anexo I decía: «La re-corrida completa **pendiente** unifica el presupuesto en 4096 para los trece
+y resuelve la asimetría». **La re-corrida se ejecutó el 8 de septiembre** y está completa: trece
+directorios `__N120` en `recorrida_20260908/`, y los trece declaran `max_tokens=4096` y
+`rag_mode=kb_combined` sin una excepción.
+
+Era cierta al escribirla. Dejó de serlo, y nadie lo notó.
+
+### Y la regla de integridad obliga a más que a corregir el tiempo verbal
+
+`CLAUDE.md` es explícito: cuando existen varias corridas del mismo experimento, **el informe declara
+todas**, dice cuál toma como referencia y por qué. Citar una y callar la otra es indistinguible de
+seleccionar el resultado, aunque no haya intención de hacerlo.
+
+El pasaje corregido declara ahora las dos mediciones, mantiene como referencia la publicada —que es
+la que sostiene todo el capítulo de resultados— y da **dos razones**, las dos verdaderas: que la
+segunda se completó una vez cerrado ese análisis, y que **no difieren solo en el presupuesto de
+salida**, porque la segunda excluye siete artículos contaminados y aporta ciento trece registros por
+grupo en lugar de ciento veinte. Esa segunda razón importa: presentar el salto de F = 38,2222 a
+F = 119,7502 como efecto de unificar los tokens sería falso, porque mezcla dos cambios.
+
+**Va en el Anexo I, que la restricción institucional excluye del límite de 25 páginas**, de modo que
+la declaración no cuesta espacio del cuerpo.
+
+### El punto ciego, que es el hallazgo de verdad
+
+Al corregirlo el verificador dijo **cero fallos nuevos**, y no debería. El párrafo cambió en la fuente
+y no en los tres `.docx`.
+
+La comprobación de prosa va en **una sola dirección**, del Markdown al entregable, y solo declara
+ausente un párrafo del que no aparece **ninguna** de sus cinco sondas. Yo cambié el **final** de un
+párrafo cuyo **arranque** sigue igual: las sondas del arranque casaron, el párrafo se dio por
+presente, y el entregable habría seguido afirmando lo que la fuente ya desmintió.
+
+**Es el caso peligroso**, porque el `.docx` es lo que lee el tribunal y la fuente no.
+
+Añadida la comprobación **«ninguna frase retirada sobrevive en los entregables»**, que va al revés:
+toma las frases que la fuente retiró y exige que tampoco estén en el `.docx`. Cada entrada lleva por
+qué se retiró y qué la sustituye. Y comprueba **las dos mitades**: que la frase no esté en el
+entregable, y que **tampoco siga en el Markdown**, porque una entrada cuya frase sigue en la fuente
+significa que la corrección no se aplicó o que la entrada está mal escrita, y una comprobación que no
+puede detectar su propia obsolescencia acaba dando el valor del éxito por mirar el sitio equivocado.
+
+### Lo que encontró al estrenarse
+
+**Nueve fallos, tres frases por tres entregables**, y ninguno es la que motivó la comprobación:
+
+| Frase retirada | ¿En los `.docx`? |
+|:---|:---|
+| «tomados de OpenSanctions» | sí, en los tres |
+| «de la base de datos OpenSanctions» | sí, en los tres |
+| «cifras de la última columna» | sí, en los tres |
+| «re-corrida completa pendiente» | **no**, y por una razón |
+
+Las tres primeras son la **pieza 7** del encargo de maquetación y la corrección de [§F144], ya
+asignadas. La cuarta no aparece porque **ese pasaje del Anexo I nunca llegó al entregable**: es uno
+de los diez párrafos ausentes de [§F121]. De modo que el entregable no afirma la falsedad, pero solo
+porque tampoco afirma nada sobre eso. No es un consuelo: es la misma deuda por otra vía.
