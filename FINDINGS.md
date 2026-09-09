@@ -6207,3 +6207,41 @@ documento, la herramienta correcta es una lista enumerada en el código, no una 
 
 **Estado del verificador:** 55 comprobaciones, 61 fallos (61 declarados, **0 nuevos**), 0 vacías, 25
 declaraciones.
+
+---
+
+## §F134 — `CLAUDE.md` afirmaba «4 fallos» cuando había veinticinco declaraciones
+
+**Fecha:** 2026-09-09 · **Origen:** comprobar si el documento que todos los agentes leen se había
+quedado desfasado
+
+`CLAUDE.md` es el documento de norma del proyecto: lo lee toda sesión antes de trabajar. Y describía
+el aparato con cifras copiadas que habían dejado de ser ciertas:
+
+> «existen fallos **declarados**, cada uno con su motivo y con quien lo tiene —**dos ficheros de
+> registro vacíos, el par de cifras de la conclusión 1 y la referencia al repositorio privado**—.
+> […] El resumen los cuenta aparte: «**4 fallos (4 declarados, 0 nuevos)**»»
+
+Hoy son **61 fallos y 25 declaraciones**, y la enumeración de cuáles se quedó en las cuatro
+primeras. Y en la sección de ramas que escribí ayer: «el verificador y **sus 55 comprobaciones**»,
+cierto el día que lo escribí y falso al siguiente, porque ese mismo día añadí una.
+
+Es [§L69](#l69) en el sitio de mayor alcance: quien lea `CLAUDE.md` y no ejecute la herramienta se
+queda con una cifra vieja y con una lista de declaraciones que ya no describe nada.
+
+**La regla, que es lo que queda escrito.** Un recuento que una herramienta reporta **no se copia a
+un documento de norma**; se ejecuta la herramienta. `CLAUDE.md` dice ahora «N fallos (N declarados,
+0 nuevos)» sin N, apunta a `FALLOS_DECLARADOS` para el detalle, y explica por qué no enumera:
+**esta misma frase enumeraba cuatro cuando ya había veinticinco**.
+
+**La excepción, y no es una laguna.** Esto **no alcanza a los registros fechados** —el §6 de
+`CURRENT-TASKS.md`, los `WORKLOG`, este propio `FINDINGS`—, donde una cifra consigna lo que era
+cierto entonces y por eso **no se actualiza**: a un registro se le añade, no se le edita. Comprobado
+que la única mención que quedaba en `CURRENT-TASKS.md` es una fila del registro, y se deja.
+
+**Predicado 14 de la auditoría de afirmaciones**, que caza la clase en lugar del caso: los
+documentos de norma no pueden contener «N comprobaciones», «N fallos (N declarados…», «N
+declaraciones» ni «sus N comprobaciones». Probado por mutación: devuelta a `CLAUDE.md` una frase con
+los dos recuentos, el predicado la señala con el contexto.
+
+**Auditoría de afirmaciones:** 14 predicados, 0 que no se cumplen.
