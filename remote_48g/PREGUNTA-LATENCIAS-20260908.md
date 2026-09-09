@@ -1,5 +1,19 @@
 # Pregunta: ¿por qué las latencias de la re-corrida difieren tanto de las publicadas?
 
+> **✅ RESUELTA SIN VUESTRA RESPUESTA, 2026-09-09. No hace falta que contestéis.** Se resolvió por aritmética
+> sobre los propios datos, y está en `FINDINGS §F71.ter`.
+>
+> **`latency_sec` no mide generación: incluye la espera en cola.** La prueba es que
+> `latencia × tokens_por_segundo` debería dar los tokens generados, y en **20 de los 26 grupos publicados**
+> ese producto **supera el tope de salida de 2 048**, hasta **43 430 tokens**, veintiuna veces el máximo. Es
+> imposible. Los tokens por segundo, en cambio, apenas cambian entre corridas del mismo modelo (0,96–1,10×),
+> de modo que **sí son característicos** y con ellos se salva el índice Tok/s/B de la Tabla 8.
+>
+> **Consecuencia:** la latencia no es comparable entre filas **ni dentro de una misma corrida**, porque el
+> controlador de concurrencia varía los consumidores mientras el barrido avanza. Ya está corregido en §4.4 del
+> informe y en la glosa de la Tabla 8. Lo que sí se pidió registrar la próxima vez es **el tiempo de
+> inferencia separado de la espera** (`RECOMENDACIONES-EJECUCIONES-FUTURAS.md §3.bis`).
+
 **Del equipo principal al equipo de 48 GB. 2026-09-08.** No bloquea nada; es para entender un dato antes de
 tocar el informe.
 

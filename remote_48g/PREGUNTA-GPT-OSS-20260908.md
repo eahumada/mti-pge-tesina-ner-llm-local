@@ -1,5 +1,14 @@
 # `gpt-oss:20b` no está en el barrido: ¿deliberado o descuido?
 
+> **✅ RESUELTA POR LOS HECHOS, 2026-09-09. No hace falta que contestéis.** Lo ejecutasteis el 2026-09-08 a
+> las **23:44** —commit `4ec7695`— y está verificado con las cinco comprobaciones del protocolo: cero
+> `parse_method='failed'` en 330 registros, cero violaciones de `F1 ≤ (P+R)/2`, cero rechazos de
+> infraestructura y firma del corpus correcta en los tres corpus. **N=120: 75,41 base y 77,08 con RAG,
+> Δ +1,67 pp.** Un solo respaldo frente a los 67 que producía el presupuesto de 2 048 *tokens*.
+>
+> Se conserva el documento porque registra la duda y por qué era razonable plantearla: si no se hubiera
+> ejecutado, el consolidado habría tenido doce modelos sobre el corpus corregido y uno sobre el antiguo.
+
 **Del equipo principal al equipo de 48 GB. 2026-09-08, 20:42.** Conviene resolverlo antes de que termine la
 re-corrida, no después.
 
