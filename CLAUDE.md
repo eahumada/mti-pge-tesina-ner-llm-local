@@ -9,6 +9,8 @@ tras incorporar `gemma4:12b-mlx` y `gpt-oss:20b` y retirar `sonct988/gemma4-26b`
 El análisis conjunto definitivo está en `results/ANALISIS_CONJUNTO_20260907/` (F=38,2222, p=3,4453e-160) y el
 cierre en `CIERRE-BENCHMARKS-20260907.md`.
 
+**Actualización 2026-09-09 (decisión 1, `FINDINGS §F154`/`§F155`):** el informe adoptó un consolidado posterior. El análisis conjunto que hoy sostiene la Tabla 7 y el capítulo de resultados es `results/ANALISIS_CONJUNTO_20260909_FIX/` (F=119,7502, p subdesborda a 0,0; trece modelos, re-corrida completa del 8 de septiembre, sin el defecto de `Locations` sin anotar). El del 07 de septiembre **se conserva** en su directorio — es el que sostuvo el informe hasta esa fecha y el que el Anexo I describe deliberadamente como registro histórico del defecto — pero ya no es «el definitivo».
+
 ---
 
 ## Entregables Finales

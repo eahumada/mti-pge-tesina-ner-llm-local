@@ -7596,3 +7596,35 @@ Todos los `.docx` quedan por detrás del Markdown en los mismos sitios de siempr
 adopción añadió: la Tabla 7 entera, la fila comparativa de la Tabla 1, el resumen y el abstract, y
 el número de resaltes sin propagar (14→18). Todo declarado en el verificador con su responsable;
 el encargo de maquetación se actualiza junto con esta entrada.
+
+---
+
+## §F156 — Tres documentos vivos seguían afirmando que el consolidado publicado era «el definitivo»
+
+**Fecha:** 2026-09-09 · **Origen:** barrido propio tras cerrar la decisión 1, buscando toda mención
+viva a «38,2222» fuera de los documentos de registro
+
+Al cerrar `§F154`/`§F155` quedaba una pregunta sin responder: ¿algún documento que se **lee como
+instrucción vigente** seguía afirmando que el consolidado publicado es el definitivo? Un `grep` de
+«38,2222» fuera de `FINDINGS`/`CURRENT-TASKS`/`DECISION*`/`research/rag/WORKLOG`/`CIERRE-BENCHMARKS`
+encontró seis coincidencias. Tres eran legítimamente históricas y no se tocan —
+`INVENTARIO-AFECTADO-POR-F86-20260909.md` (análisis fechado), y las dos de `doc/versions/`, que son
+un *changelog* de versiones entregadas y una copia congelada de una pasada de sincronización—. **Tres
+no lo eran**, porque afirman en presente:
+
+1. **`CLAUDE.md` mismo**, la sección «RAG Integration Policy»: «El análisis conjunto definitivo está
+   en `results/ANALISIS_CONJUNTO_20260907/`». Es el documento que **toda sesión futura lee primero**.
+2. **`TODO-INFORME-FINAL.md`**, dos sitios: una fila de checklist que declaraba «Completado» con el
+   consolidado publicado como si siguiera siendo el vigente, y un bloque «lo que sí queda pendiente»
+   con una disyuntiva —F=35,5557 vs F=38,2222, `§F66`— que la decisión 1 dejó sin objeto: el estudio
+   ya no se mide sobre el consolidado al que esa disyuntiva se refería.
+3. **`ENCARGO-CIERRE-EQUIPO-48GB-20260910.md`**, instrucción viva para el equipo remoto: decía «no se
+   adoptó» el barrido corregido, y hoy sí se adoptó —no el barrido de las 18 filas problemáticas, que
+   sigue sin adoptarse por las razones que el propio documento explica, sino el consolidado
+   `_FIX` construido desde la re-corrida ya corregida—.
+
+**Corregidos los tres de forma aditiva**, con nota fechada que remite a `§F154`/`§F155` y sin borrar
+el texto original, el mismo tratamiento que `§F149` le dio a los primeros tres documentos de este
+tipo. Es la misma clase de defecto, una tercera vez: una cifra citada en varios sitios y actualizada
+en unos y no en otros, y la instrucción del proyecto — declarar todas las corridas y decir cuál es
+la de referencia — hay que aplicarla en el documento de políticas tanto como en el informe mismo.

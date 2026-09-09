@@ -838,13 +838,14 @@ registro de lo que se detectó y cuándo.
 evidencia. El único punto que sigue pidiendo criterio del autor es el 6, y no bloquea la defensa porque el
 informe no descansa en esas cifras.
 
-**Lo que sí queda pendiente**, y no figuraba en esta lista, es de otra naturaleza:
+**Lo que sí queda pendiente**, y no figuraba en esta lista, es de otra naturaleza (estado al 2026-09-07; ver la actualización debajo):
 
-- **La re-corrida completa**, en curso: dos de trece modelos entregados y verificados.
-- **Adoptar o no F = 35,5557** en lugar de F = 38,2222 (`FINDINGS §F66`), que es la diferencia entre incluir
-  o excluir los siete artículos contaminados. Ninguno de los trece modelos cambia de veredicto.
+- ~~**La re-corrida completa**, en curso: dos de trece modelos entregados y verificados.~~
+- ~~**Adoptar o no F = 35,5557** en lugar de F = 38,2222 (`FINDINGS §F66`), que es la diferencia entre incluir o excluir los siete artículos contaminados. Ninguno de los trece modelos cambia de veredicto.~~
 - **La publicación del repositorio**, que arrastra el 404 de la referencia [37] y espera a la purga.
 - **Resincronizar los tres `.docx`** con el Markdown canónico.
+
+> **Actualización 2026-09-09.** Los dos primeros puntos quedaron **superados por la decisión 1**, no resueltos en sus propios términos: la re-corrida completa terminó, y con ella se adoptó `ANALISIS_CONJUNTO_20260909_FIX` (F=119,7502), que ya excluye los siete artículos contaminados por su propia razón (codificación, no la de `§F66`). La disyuntiva «35,5557 vs 38,2222» sobre el consolidado publicado queda sin objeto: el estudio ya no se mide sobre ese consolidado. Ver `FINDINGS §F154`/`§F155`.
 
 ---
 
@@ -868,7 +869,7 @@ concreta que lo acredita.
 | §3.1 «Tabla 2 partida: una línea vacía deja `nemotron-mini` y `deepseek-r1` fuera del renderizado» | **Resuelto.** La Tabla 2 tiene sus filas contiguas, sin línea vacía intercalada, y ambos modelos se mencionan en el informe (18 y 15 veces respectivamente) |
 | §3.1 «`Informe_Final_Tesina_NER.docx` incompleto: le faltan §4.1.3 y §5.3.5» | **Resuelto.** Ambas secciones están presentes en los dos `.docx`, comprobado sobre el `word/document.xml` |
 | §3.2 «⚠️ el estudio queda con 12 modelos» | **Superado.** El estudio cerró con **13** sobre N=120, tras incorporar `gemma4:12b-mlx` y `gpt-oss:20b`. Ver `CIERRE-BENCHMARKS-20260907.md` y la nota de `CLAUDE.md` |
-| §3.2 «corrida en curso: 7 modelos locales × 2 modos» y «fusionar con la corrida del 2026-09-01» | **Completado.** El análisis conjunto definitivo está en `results/ANALISIS_CONJUNTO_20260907/`, con F = 38,2222 y p = 3,4453 × 10⁻¹⁶⁰ |
+| §3.2 «corrida en curso: 7 modelos locales × 2 modos» y «fusionar con la corrida del 2026-09-01» | **Completado el 2026-09-07.** El análisis conjunto de aquella fecha quedó en `results/ANALISIS_CONJUNTO_20260907/` (F = 38,2222, p = 3,4453 × 10⁻¹⁶⁰). **Actualización 2026-09-09:** ya no es el definitivo — la decisión 1 adoptó `results/ANALISIS_CONJUNTO_20260909_FIX/` (F = 119,7502). El del 07 se conserva como registro histórico. Ver `FINDINGS §F154`/`§F155` |
 | §3.3 «descarga de `gemma4:31b` y `gemma4:31b-mlx` en curso» | **Completada.** Ambas compilaciones figuran en los resultados de N=30 |
 | §3.4 «colocar copia del `.docx` canónico en la raíz» | **Hecho.** `Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.docx` está en la raíz |
 

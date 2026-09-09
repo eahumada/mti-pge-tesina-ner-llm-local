@@ -87,6 +87,8 @@ publica** (F = 38,2222), y `ANALISIS_CONJUNTO_20260909`, el de su barrido (F = 1
 precisamente por estas 18 filas. Al reconstruir, el nuevo sustituye al `_20260907` y hay que dejar constancia
 de cuál se toma como referencia y por qué.
 
+> **Actualización 2026-09-09 (decisión 1, `FINDINGS §F154`/`§F155`): ya se adoptó.** No el barrido `ANALISIS_CONJUNTO_20260909` de las 18 filas problemáticas —ese sigue sin adoptarse, por lo que este documento explica—, sino `ANALISIS_CONJUNTO_20260909_FIX`, construido desde `results/recorrida_20260908/` con las correcciones ya aplicadas (0 `failed`, 0 filas sin telemetría, verificado). El informe ya cita F=119,7502 y las 26 celdas de la Tabla 7 desde ese consolidado. Si el equipo remoto reconstruye un consolidado nuevo por su cuenta, es sobre ese trabajo que hay que decidir si sustituye al ya adoptado, no al `_20260907` publicado.
+
 ## 4. Lo demás que falta no es re-ejecución
 
 ### 4.1 El desglose por tipo — §3.bis.16
