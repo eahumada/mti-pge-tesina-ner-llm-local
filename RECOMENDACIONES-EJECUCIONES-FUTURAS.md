@@ -111,6 +111,53 @@ de *thinking*.
 - **El manifiesto de artículos excluidos junto a cada corrida.** Hoy vive en `data/knowledge_base/` y una
   corrida aislada no lleva constancia de sobre qué población se calculó su métrica.
 
+## 3.ter Cómo se escriben las comprobaciones, y cómo se prueban
+
+Ocho defectos de esta revisión estaban en las propias comprobaciones, no en los datos. Las cuatro reglas que
+los habrían evitado, todas comprobadas contra un caso real:
+
+**Una comprobación declara cuántos elementos examinó, y un recuento que baja es un síntoma.** `§L47` lo fijó
+para el caso de cero, pero el peor no es cero: es que baje de trece a nueve, porque **parece un estado
+normal**. Ocurrió con la comprobación del índice de defensa cuando un artefacto desaparecía, y con las tablas
+del informe cuando una fila dejaba de ser legible: bajaban de 52 a 48 y seguían diciendo «ok»
+(`FINDINGS §F82`, `LEARNING §L60`).
+
+**Lo robusto no es publicar el recuento, sino exigir que todo candidato se procese.** Contar lo que se
+intentó, no solo lo que salió bien. Una fila con formato inesperado tiene que aparecer **como fallo, no como
+ausencia**.
+
+**Un recuento no se comprueba por presencia de la palabra.** Una cifra decimal distintiva —«0,0879»— sí,
+porque no aparece por casualidad; «tres» no, porque aparece en cualquier documento en español por otros
+motivos. Los recuentos exigen anclaje: el número **en la misma oración** que el sustantivo que cuenta
+(`§L59`).
+
+**Una autoprueba de cobertura debe atribuir.** No basta con preguntar «¿falló algo?»: hay que exigir que
+falle **la comprobación que usa ese artefacto**. Varios ficheros los leen dos o tres comprobaciones distintas,
+y basta con que una se entere para que la autoprueba dé el visto bueno mientras las otras siguen ciegas
+(`§L60`).
+
+**Y sobre las pruebas de mutación**, que son las que destaparon todo lo anterior: una mutación debe alcanzar
+**todas** las apariciones de lo que altera. Dos falsos negativos de esta revisión fueron mutaciones mal
+construidas —una cambió una de dos apariciones de la misma cifra— y en ambos casos la conclusión precipitada
+habría sido «la comprobación no funciona».
+
+## 3.quater Órdenes cuyo «no hizo nada» se confunde con «lo hizo bien»
+
+Tres incidentes con la misma forma, y la misma solución:
+
+| Orden | El valor engañoso | El control que lo destapa |
+|:---|:---|:---|
+| Comprobar una purga de GitHub | **404** significa «purgado» o «URL mal escrita» | Pedir en la misma orden la raíz del repositorio y un commit vigente: deben dar 200 (`§L57`) |
+| `git branch -f <rama> main` | No mueve la rama **activa** y el rechazo va a `/dev/null` si se silencia | `git rev-list --count origin/<rama>..<rama>` por cada rama, comparado con cero (`§L58`) |
+| Extraer texto de un PDF | **Cero apariciones** significa «no lo dice» o «el extractor no lee» | Buscar además palabras que **tienen** que estar (`§L57` aplicado) |
+
+**La regla:** toda comprobación cuyo valor bueno sea «algo ya no está» lleva adjunto el control de algo que
+**sí debe seguir estando**. Si el control también falla, el resultado no es un hallazgo: es una avería.
+
+Y su corolario: **un resultado que mejora sin causa conocida se verifica antes de celebrarse**. Se aplicó dos
+veces con signos opuestos —un 404 que parecía éxito y era avería, y una cuenta de acreditaciones que bajó de
+cuatro a tres y era una mejora, porque Zenodo había vuelto a responder—.
+
 ## 4. Para el equipo remoto — qué hacer la próxima vez
 
 - **No re-ejecutar** los 4 modelos con `think=OFF` (decisión cerrada, §F45): sus deltas son ruido de N=15 y
