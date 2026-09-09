@@ -5361,10 +5361,10 @@ la mire.**
 vía». **Eso era un supuesto, no una comprobación**, así que lo verifiqué: de las **20 tablas** con
 leyenda, **11 no se mencionan** en ninguna de las dos herramientas que comprueban el informe.
 
-Nueve de esas once son **descriptivas** —familias de técnicas, estado del arte, arquitectura por
-capas, estructura del repositorio, entorno de pruebas, configuración del módulo, contenido de la
-base de conocimientos, formas corruptas de los nombres— y no hay nada que recalcular: se acreditan
-por su cita o por el código que describen. La décima, la **Tabla 15**, sí está cubierta.
+**Diez de esas once son descriptivas** —las tablas 1, 2, 3, 9, 10, 11, 12, 13, 14 y 16: familias
+de técnicas, estado del arte, arquitectura por capas, estructura del repositorio, entorno de
+pruebas, configuración del módulo, contenido de la base de conocimientos y formas corruptas de los
+nombres— y no hay nada que recalcular: se acreditan por su cita o por el código que describen.
 
 La undécima es la **Tabla 17, «Alcance medido del defecto de codificación sobre el corpus N=120»**,
 que son **seis medidas**.
