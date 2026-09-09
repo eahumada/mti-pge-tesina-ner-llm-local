@@ -4954,6 +4954,35 @@ No es el consolidado publicado con `nemotron` corregido: son **trece corridas de
 heterogéneas; el nuevo de **trece**, una por modelo, y **la intersección de las dos listas es
 vacía**.
 
+### Corrección del 2026-09-09, posterior: el informe SÍ declara §F53, y una de las tres consecuencias no era nueva
+
+> Dos rectificaciones a lo que sigue, hechas al releer el informe y al calcular la métrica restringida.
+> Cambian la urgencia de la decisión 1, de modo que van arriba y no en una nota al pie.
+>
+> **1. El informe declara el defecto por completo.** `§2` dedica un párrafo entero a la categoría
+> fantasma: el 66,0 % de los falsos positivos, la causa exacta —el conversor filtra por
+> `["PER", "ORG"]`—, la corrección del corpus del 8 de septiembre, y la frase «las cifras de este
+> informe son anteriores a esa corrección y se conservan tal como se midieron; sustituirlas exige
+> volver a inferir, **que es lo que hará la re-corrida pendiente**». Además el informe **ya publica
+> una segunda medición restringida** a las categorías anotadas, en el Anexo I, para las 42
+> configuraciones. Decir que «los datos publicados llevan el defecto dentro» es cierto y sigue
+> escrito abajo, pero **no** que el informe lo oculte: lo declara y anticipa exactamente esta
+> entrega.
+>
+> **2. La violación de homocedasticidad no la trae la campaña nueva.** Calculada la métrica
+> restringida sobre los datos **publicados**, Brown-Forsythe da W = 3,7227 y **p = 1,328e-09**. Es
+> decir: el supuesto ya falla en la medición corregida del propio informe, sin re-corrida ninguna.
+> La p = 0,18 que el informe publica solo vale para la métrica de tres categorías, donde la categoría
+> fantasma añade a **todos** los grupos la misma penalización de precisión y **comprime las
+> diferencias de varianza**. Ver `§F114`.
+>
+> **Lo que sí se sostiene entero** es la primera consecuencia, que es la que toca una conclusión:
+> `llama3.2:latest` deja de ser significativo en el consolidado nuevo. Y con un matiz que la mejora:
+> en la métrica **restringida de los datos publicados** los dos modelos siguen significativos
+> (`§F114`), de modo que no se sabe si la pérdida sobrevive a la métrica restringida de la campaña
+> nueva — y **no se puede saber hasta que llegue `§3.bis.16`**, porque 12 de las 13 corridas nuevas
+> no traen `detailed_results.json`.
+
 ### Y la campaña nueva arregla la categoría fantasma de §F53
 
 Es el hecho decisivo, y ningún documento lo dice. El indicador barato que ordena `CLAUDE.md`
@@ -5041,3 +5070,60 @@ nota se equivoca solo al generalizar «la conclusión no cambia» desde el únic
 cifras publicadas y una de las dos conclusiones del capítulo de resultados. Es **decisión del autor**,
 y está en la **decisión 1**, que hay que reabrir: se declaró superada suponiendo que lo único que
 retenía la adopción era `§F85`.
+
+
+---
+
+## §F114 — La categoría fantasma estaba enmascarando la heterocedasticidad, y la conclusión de dos modelos vive en la métrica restringida
+
+**Fecha:** 2026-09-09 · **Origen:** verificar la primera consecuencia de [§F113](#f113)
+
+`§F113` atribuyó a la campaña nueva la violación del supuesto de homocedasticidad. **Es un error de
+atribución.** Calculadas las dos métricas sobre los **mismos datos publicados**, reagregando desde
+`per_type` los 3 120 registros de los 26 grupos:
+
+| Métrica sobre los datos publicados | ANOVA F | p | Brown-Forsythe W | p |
+|:---|---:|---:|---:|---:|
+| Tres categorías (la que publica el informe) | 38,8403 | 1,094e-162 | 1,2078 | **0,2183** |
+| Restringida a Personas + Organizaciones (Anexo I) | 70,2802 | 2,238e-279 | 3,7227 | **1,328e-09** |
+
+**El supuesto ya falla en la medición que el informe presenta como corregida**, sin ninguna
+re-corrida. Y el mecanismo se explica: la categoría inexistente añade a los veintiséis grupos la
+misma penalización de precisión, que **comprime las diferencias de varianza entre ellos**. La
+p = 0,18 no acreditaba homogeneidad de varianzas; acreditaba que un defecto común a todos los grupos
+las estaba igualando. Es la misma lección de `§F53` en otra cifra: **un resultado tranquilizador
+producido por el defecto, no a pesar de él**.
+
+**La conclusión de dos modelos, en cambio, aguanta la métrica restringida:**
+
+| Modelo | Tres categorías | p ajustada | Restringida | p ajustada |
+|:---|---:|---:|---:|---:|
+| `nemotron-mini:4b` | +0,1562 | 0,0000 | +0,1549 | 0,0000 |
+| `llama3.2:latest` | +0,1082 | 0,0070 | +0,1021 | **0,0275** |
+
+Los dos siguen significativos, y ningún tercer modelo entra. La conclusión del capítulo de
+resultados **no depende de la categoría fantasma**, que es la comprobación que faltaba.
+
+**Y la medición restringida es estable entre campañas.** En el único modelo donde se puede comprobar
+—`nemotron-mini:4b`, el único de las trece corridas nuevas con `detailed_results.json`—:
+
+| | Línea base | KB RAG | Δ |
+|:---|---:|---:|---:|
+| Publicada, restringida | 25,2759 | 40,7698 | +15,4939 |
+| Nueva, restringida | 25,0186 | 40,8267 | **+15,8081** |
+| Publicada, tres categorías | 21,4985 | 37,1170 | +15,6185 |
+| Nueva, tres categorías | 27,8626 | 41,5765 | **+13,7139** |
+
+La métrica restringida se mueve **0,31 pp** entre campañas; la de tres categorías, 1,90 pp. Dicho de
+otro modo: **la subida general del F1 de la campaña nueva es la categoría fantasma dejando de
+penalizar, no los modelos midiendo mejor.** Lo que el informe publica en el Anexo I ya es, en lo
+esencial, lo que mediría la campaña nueva.
+
+**Consecuencia práctica, y es la que ordena el cierre.** La pregunta que decide la decisión 1 no es
+si adoptar el consolidado nuevo, sino **si la conclusión de dos modelos sobrevive en la métrica
+restringida de la campaña nueva**. En la métrica de tres categorías `llama3.2:latest` la pierde
+(`§F113`); en la restringida de los datos publicados la conserva. **Las dos cosas son compatibles y
+la que importa no se puede calcular todavía**, porque doce de las trece corridas nuevas no entregan
+`detailed_results.json`. Eso convierte `§3.bis.16` —clasificada como menor— en **la tarea que
+desbloquea la decisión más grande del cierre**, y no requiere inferencia: los ficheros existen en la
+máquina del equipo, solo hay que volcarlos.
