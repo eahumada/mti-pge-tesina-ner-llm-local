@@ -67,10 +67,15 @@ FALLOS_DECLARADOS = {
                                            'maquetacion (FINDINGS §F98). El PDF de enviados/ se '
                                            'conserva y no se toca'),
     'publicado 22.59, per_type': ('2026-09-09',
-        'PENDIENTE del equipo remoto: los dos artefactos de nemotron-mini:4b_baseline '
-        'discrepan porque seis registros se re-extrajeron fuera del arnes y solo el CSV '
-        'recibio las metricas. Lo cierra la re-corrida de §3.bis.15, y al cerrarse hay que '
-        'levantar la exclusion de tools/sensibilidad_combinada.py (FINDINGS §F110)'),
+        'PENDIENTE del autor, ya NO del equipo remoto: los dos artefactos de '
+        'nemotron-mini:4b_baseline discrepan porque seis registros se re-extrajeron fuera del '
+        'arnes y solo el CSV recibio las metricas (§F110). Se declaro esperando que lo cerrara '
+        'la re-corrida de §3.bis.15; la re-corrida LLEGO el 2026-09-09 y NO lo cierra, porque '
+        'fue a un consolidado distinto (ANALISIS_CONJUNTO_20260909_FIX) y el publicado, que es '
+        'el que esta comprobacion lee, sigue intacto. Lo cierra la DECISION 1 —adoptar o no el '
+        'consolidado nuevo—, que es del autor y esta reabierta (§F113). Si se adopta, hay que '
+        'apuntar CSV_CONSOLIDADO al nuevo y levantar la exclusion de '
+        'tools/sensibilidad_combinada.py'),
     'github.com/eahumada/mti-pge-tesina': ('2026-09-09',
                                            'referencia [37]: el repositorio es privado hasta la '
                                            'purga (SEGURIDAD-CLAVE-GOOGLE-20260908.md)'),
