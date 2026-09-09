@@ -6207,3 +6207,108 @@ documento, la herramienta correcta es una lista enumerada en el código, no una 
 
 **Estado del verificador:** 55 comprobaciones, 61 fallos (61 declarados, **0 nuevos**), 0 vacías, 25
 declaraciones.
+
+---
+
+## §F134 — `CLAUDE.md` afirmaba «4 fallos» cuando había veinticinco declaraciones
+
+**Fecha:** 2026-09-09 · **Origen:** comprobar si el documento que todos los agentes leen se había
+quedado desfasado
+
+`CLAUDE.md` es el documento de norma del proyecto: lo lee toda sesión antes de trabajar. Y describía
+el aparato con cifras copiadas que habían dejado de ser ciertas:
+
+> «existen fallos **declarados**, cada uno con su motivo y con quien lo tiene —**dos ficheros de
+> registro vacíos, el par de cifras de la conclusión 1 y la referencia al repositorio privado**—.
+> […] El resumen los cuenta aparte: «**4 fallos (4 declarados, 0 nuevos)**»»
+
+Hoy son **61 fallos y 25 declaraciones**, y la enumeración de cuáles se quedó en las cuatro
+primeras. Y en la sección de ramas que escribí ayer: «el verificador y **sus 55 comprobaciones**»,
+cierto el día que lo escribí y falso al siguiente, porque ese mismo día añadí una.
+
+Es [§L69](#l69) en el sitio de mayor alcance: quien lea `CLAUDE.md` y no ejecute la herramienta se
+queda con una cifra vieja y con una lista de declaraciones que ya no describe nada.
+
+**La regla, que es lo que queda escrito.** Un recuento que una herramienta reporta **no se copia a
+un documento de norma**; se ejecuta la herramienta. `CLAUDE.md` dice ahora «N fallos (N declarados,
+0 nuevos)» sin N, apunta a `FALLOS_DECLARADOS` para el detalle, y explica por qué no enumera:
+**esta misma frase enumeraba cuatro cuando ya había veinticinco**.
+
+**La excepción, y no es una laguna.** Esto **no alcanza a los registros fechados** —el §6 de
+`CURRENT-TASKS.md`, los `WORKLOG`, este propio `FINDINGS`—, donde una cifra consigna lo que era
+cierto entonces y por eso **no se actualiza**: a un registro se le añade, no se le edita. Comprobado
+que la única mención que quedaba en `CURRENT-TASKS.md` es una fila del registro, y se deja.
+
+**Predicado 14 de la auditoría de afirmaciones**, que caza la clase en lugar del caso: los
+documentos de norma no pueden contener «N comprobaciones», «N fallos (N declarados…», «N
+declaraciones» ni «sus N comprobaciones». Probado por mutación: devuelta a `CLAUDE.md` una frase con
+los dos recuentos, la auditoría pasa de código 0 a 1 y señala el recuento con su contexto.
+
+### Y la cuarta vez que el ensayo era el defecto, que ya es un patrón
+
+La primera tentativa de esa mutación **no imprimió nada**, y no porque el predicado fallara: mi
+`grep` buscaba «recuentos de las herramientas» y la salida **trunca la descripción a 52
+caracteres**, de modo que el patrón no casaba con nada. Repetida mirando el **código de salida**,
+funciona.
+
+Van cuatro en la misma sesión, y las cuatro con la misma forma: mutaciones que buscaban una cifra
+**en negrita** cuando el informe la escribe sin resalte ([§F117](#f117)); una que omitía los
+asteriscos y el `>` de una cita en bloque ([§F120](#f120)); una que apuntaba a un espejo que **ya se
+había separado de `main`**, de modo que la premisa había desaparecido; y esta.
+
+**La regla que sale de las cuatro:** un ensayo se juzga por el **código de salida o por el recuento
+de fallos**, no por si un `grep` encuentra una cadena en la salida. Un `grep` que no casa se parece
+demasiado a una comprobación que no detecta, y confundirlos hace dar por validada una comprobación
+vacua — que es exactamente lo que este proyecto lleva toda la revisión intentando no hacer.
+
+**Auditoría de afirmaciones:** 14 predicados, 0 que no se cumplen.
+
+---
+
+## §F135 — El documento de decisiones decía «siete» cuando tenía diecinueve, y el que enseña a detectarlo lo repetía
+
+**Fecha:** 2026-09-09 · **Origen:** el protocolo de seguimiento apunta a `TODO-INFORME-FINAL.md §10`
+para las decisiones pendientes, y nadie había comprobado que esa sección estuviera al día
+
+Dos cifras desfasadas, y la peor está en la fuente:
+
+| Documento | Decía | Es |
+|:---|---:|---:|
+| `DECISIONES-PENDIENTES-20260908.md`, su propio encabezado | «Son **siete**» | **19** |
+| `TODO-INFORME-FINAL.md §10`, la revisión del 2026-09-08 | «las **siete** decisiones del autor» | **19** |
+
+La segunda importa más de lo que parece: **el protocolo de seguimiento manda mirar ahí**, de modo que
+cada informe de avance que he entregado señalaba una lista de siete cuando había diecinueve, y entre
+las doce que faltaban está la **19**, que es la más urgente de todas.
+
+**Y `TODO-INFORME-FINAL.md` contiene, dos párrafos más abajo, la lección sobre este defecto exacto**
+y la orden que lo detecta:
+
+```sh
+git log $(git log -1 --format=%H -- <documento>)..HEAD -- <ruta-que-describe>
+```
+
+Aplicada hoy a los documentos de estado: `CURRENT-TASKS.md` **2** commits por detrás,
+`TODO-INFORME-FINAL.md` **8**, `ESTADO-RECORRIDA` **5**, `DECISIONES-PENDIENTES` **0**. El documento
+que enseña a medir el desfase era el más desfasado de los cuatro.
+
+**Corregido, y de dos formas distintas según lo que sea el número.** En
+`DECISIONES-PENDIENTES-20260908.md` el recuento **es** contenido del documento, así que se declara
+—19, con el desglose de que 3 llevan estado en el título y **16 siguen abiertas**— y se ata: el
+**predicado 15** de la auditoría comprueba que el número declarado coincide con los encabezados
+`## N.` que hay debajo y que la numeración es contigua desde 1. En `TODO-INFORME-FINAL.md` el número
+era una **copia**, así que se retira y se apunta al documento que lo lleva al día, por la regla de
+[§F134](#f134).
+
+**Y el predicado dice qué hacer si no cuadra**, porque es la parte que se puede equivocar:
+**corregir el encabezado, no borrar decisiones**. La política del proyecto es aditiva y ya hubo un
+incidente —el de la Tabla 2 que `CLAUDE.md` narra— en que un conteo que no cuadraba estuvo a punto de
+resolverse borrando datos.
+
+**De paso, actualizada la entrada de la propagación al `.docx`**, que decía que la lista completa de
+lo que falta está en un documento de 2026-09-08. Ya no depende de que nadie recuerde esa lista: las
+comprobaciones **51 a 54** comparan prosa, tablas, bibliografía, encabezados y figuras entre la
+fuente y los tres entregables, de modo que **el inventario lo produce la herramienta** y cualquier
+divergencia nueva corta el commit.
+
+**Auditoría de afirmaciones:** 15 predicados, 0 que no se cumplen.

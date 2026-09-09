@@ -107,6 +107,68 @@ de corrección debe validarse contra el documento y, si toca datos experimentale
 
 ---
 
+## Ramas: se trabaja en `main`
+
+**Instrucción del autor del 2026-09-09. Aplica a todos los equipos y a todas las sesiones: Claude
+Code, Claude Desktop, Antigravity y el equipo remoto de 48 GB.**
+
+**Se trabaja en `main` siempre que sea posible**, y `main` se mantiene actualizada. Es la rama que
+todos los agentes leen, la que el verificador toma como referencia, y la única sobre la que la puerta
+de commit tiene sentido.
+
+**Una rama aparte solo se justifica para una tarea corta, de menos de dos días.** Fuera de ese caso
+no se abre. Y cuando se abre:
+
+1. **Se declara en `CURRENT-TASKS.md`** al crearla: nombre, para qué, quién la usa y la fecha
+   prevista de vuelta. Una rama sin entrada en el documento de coordinación es una rama que nadie
+   sabe que existe.
+2. **Se vuelve a `main` lo antes posible.** Fusionar y retirarla es parte de la tarea, no un remate
+   opcional.
+3. **Se rebasa o se fusiona `main` a diario** mientras esté viva, para que la vuelta no sea una
+   negociación de conflictos.
+4. **Al retirarla se anota en `CURRENT-TASKS.md`** que se fusionó y se borró, con el commit de
+   fusión. Se anota; no se borra la entrada.
+
+**Por qué, y con el caso que lo motiva.** El 2026-09-09 había cinco ramas vivas y **`main` estaba
+dos commits por detrás del remoto**. Entre ellas, `sesion/revision-final-20260905` llevaba un
+commit propio desde el día anterior y **360 de retraso**: añadía `chromadb` a `requirements.txt`,
+que es una dependencia real de `src/kb_rag_manager.py` y `src/rag_manager.py`. Comprobado que su
+contenido **sí** había llegado a `main` por otra vía, de modo que no se perdió nada; pero durante un
+día la única copia declarada de una dependencia del sistema vivió en una rama que nadie miraba, y
+eso es cuestión de suerte y no de método.
+
+**Antes de dar por buena cualquier comprobación, `main` tiene que estar al día.** Un `git pull` que
+falla —por ejemplo, porque la rama no tiene *upstream*— deja trabajando sobre una copia vieja sin
+avisar. Comprobación barata: `git rev-list --count HEAD..origin/main` tiene que dar cero.
+
+**Todo esto lo comprueba `tools/estado_ramas.py`**, y conviene ejecutarlo en lugar de recordarlo:
+verifica que `main` está al día, que toda rama que no sea `backup/*` está declarada en el
+inventario, que ninguna de trabajo pasa de dos días, cuáles son retirables —**por contenido y no
+por SHA**— y que el respaldo que atestigua no se ha movido. Devuelve 0 si la política se cumple. Se
+escribió el mismo día que la política, porque una regla que solo vive en un documento se incumple
+sin que nada avise, y esta ya se había incumplido antes de escribirse.
+
+**Comprobar que una rama no se lleva nada** antes de retirarla, y comprobarlo por **contenido** y no
+por SHA: `git cherry main <rama>` marca con `-` los commits cuyo contenido ya está aplicado en
+`main` aunque su identificador sea otro. Un `git rev-list --count main..<rama>` distinto de cero no
+prueba que haya trabajo pendiente; prueba que hay identificadores distintos.
+
+**Las ramas `backup/*` son la excepción, y hay que distinguir dos clases** que el prefijo confunde:
+
+* **Un respaldo que atestigua** un estado entregado, como `backup/entrega-final-dataset-real-120`.
+  Está **congelado** en la punta de aquel día: no se rebasa, no se fusiona, no se avanza y no se
+  retira. Su valor es exactamente que no se mueve.
+* **Un espejo rodante de `main`**, como `backup/revision-final-20260908`, que se avanzaba a cada
+  empujón como red de seguridad. **Con la política de trabajar en `main` deja de tener sentido**:
+  `main` ya está en el remoto, de modo que el espejo no protege de nada y sí confunde a quien lea el
+  listado de ramas. **No se avanza más**, y se retira cuando el autor lo confirme.
+
+La distinción se escribió el 2026-09-09 porque la primera versión de esta política decía que las
+`backup/*` «no se avanzan» y en el mismo commit se avanzó una de ellas. Un prefijo compartido no
+convierte dos cosas en la misma.
+
+---
+
 ## Concurrencia entre Sesiones
 
 **Otras sesiones (Claude Code, Claude Desktop u otro editor) pueden estar modificando estos archivos al
@@ -209,10 +271,14 @@ de defectos reales encontrados en la revisión final.
 
 > **Están implementadas en `tools/verificar_informe.py`.** Ejecutarlo antes de cada commit sobre el informe;
 > devuelve 0 si no hay fallos **nuevos**. *(Precisión del 2026-09-09: existen fallos **declarados**, cada uno
-> con su motivo y con quien lo tiene —dos ficheros de registro vacíos, el par de cifras de la conclusión 1 y
-> la referencia al repositorio privado—. Antes hacían que devolviera 1 siempre, y una puerta que nunca abre
-> no es una puerta. El resumen los cuenta aparte: «4 fallos (4 declarados, **0 nuevos**)». Con `--estricto`
-> vuelve el comportamiento anterior y cualquier fallo corta.)* Cada comprobación declara **cuántos elementos examinó**, y una que examina
+> con su motivo y con quien lo tiene, en `FALLOS_DECLARADOS`. Antes hacían que devolviera 1 siempre, y una
+> puerta que nunca abre no es una puerta. El resumen los cuenta aparte —«N fallos (N declarados, **0
+> nuevos**)»— y con `--estricto` vuelve el comportamiento anterior, en el que cualquier fallo corta.
+> **Cuántos hay y cuáles son no se anota aquí**: lo dice el propio verificador al ejecutarse, y una lista
+> copiada a este documento se queda desfasada sin que nada avise. Esta misma frase enumeraba cuatro fallos
+> concretos cuando ya había veinticinco declaraciones. La **comprobación 55** audita el mecanismo: que
+> ninguna declaración silencie fallos de más de una comprobación, que ninguna esté anidada con otra y que
+> ninguna haya caducado.)* Cada comprobación declara **cuántos elementos examinó**, y una que examina
 > cero se marca como VACÍA y no como superada: el informe ya documenta una prueba de sensibilidad que no
 > podía marcar nada por construcción (§5.3), y una comprobación que no mira nada es indistinguible de una
 > que pasa. Al añadir una comprobación nueva, comprobar que su recuento no es cero.

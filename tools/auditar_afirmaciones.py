@@ -183,6 +183,78 @@ def _rutas_afirmadas():
     return (not malos), ' · '.join(malos) or '%d rutas afirmadas, todas existen' % mirados
 
 
+def _sin_recuentos_copiados():
+    """Los documentos de norma no copian recuentos que las herramientas reportan.
+
+    `CLAUDE.md` afirmaba «el resumen los cuenta aparte: 4 fallos (4 declarados, 0 nuevos)» y
+    enumeraba cuales eran, cuando ya habia **veinticinco** declaraciones y sesenta y un fallos. Y
+    decia «el verificador y sus 55 comprobaciones», cierto el dia que se escribio y falso al
+    siguiente. Es el defecto de `LEARNING §L69` en el documento que **todos los agentes leen** para
+    saber como trabajar: quien lo lea y no ejecute la herramienta se queda con una cifra vieja.
+
+    La regla: un recuento que una herramienta reporta **no se copia a un documento de norma**. Se
+    ejecuta la herramienta. Esto no alcanza a los **registros fechados** —el §6 de
+    `CURRENT-TASKS.md`, los `WORKLOG`, `FINDINGS`— donde una cifra consigna lo que era cierto
+    entonces y por eso no se actualiza: a un registro se le anade, no se le edita.
+    """
+    DOCS = ['CLAUDE.md', 'ENCARGO-EQUIPO-48GB-SOLO-CORRIDAS-VALIDAS-20260909.md']
+    PATRONES = [
+        (r'\b(\d+)\s+comprobaciones\b', 'un recuento de comprobaciones'),
+        (r'\b(\d+)\s+fallos?\s*\((\d+)\s+declarad', 'el resumen de fallos del verificador'),
+        (r'\b(\d+)\s+declaraciones\b', 'un recuento de declaraciones'),
+        (r'\bsus\s+(\d+)\s+comprobacion', 'un recuento de comprobaciones'),
+    ]
+    malos, mirados = [], 0
+    for rel in DOCS:
+        t = texto(rel)
+        if t is None:
+            continue
+        mirados += 1
+        for pat, que in PATRONES:
+            for m in re.finditer(pat, t):
+                ctx = ' '.join(t[max(0, m.start() - 60):m.start() + 50].split())
+                malos.append('%s copia %s («%s»): ejecutar la herramienta en lugar de anotarlo — '
+                             '...%s...' % (os.path.basename(rel), que, m.group(0), ctx[:90]))
+    if mirados == 0:
+        return False, 'VACIA: no se examino ningun documento de norma'
+    return (not malos), (' · '.join(malos)
+                         or '%d documento(s) de norma sin recuentos copiados' % mirados)
+
+
+def _recuento_de_decisiones():
+    """El numero que el documento de decisiones declara coincide con las que tiene.
+
+    Su encabezado decia «Son **siete**» el 2026-09-09, cuando tenia **diecinueve**, y
+    `TODO-INFORME-FINAL.md` —que es donde el protocolo de seguimiento manda mirar las decisiones
+    pendientes— repetia la misma cifra. Un recuento escrito a mano en el documento que lo define se
+    queda atras con cada entrada que se anade, y nada avisa.
+
+    **Si no cuadra, se corrige el encabezado y no se borran decisiones.** La politica del proyecto es
+    aditiva: cuando un recuento no cuadra, el defecto esta en el recuento.
+    """
+    DEC = 'DECISIONES-PENDIENTES-20260908.md'
+    t = texto(DEC)
+    if t is None:
+        return False, '%s no existe' % DEC
+    reales = re.findall(r'^## (\d+)\. ', t, re.M)
+    n = len(reales)
+    if n == 0:
+        return False, 'VACIA: no se localiza ningun encabezado «## N.» de decision'
+    m = re.search(r'\*\*Son (\d+)\*\*', t)
+    if m is None:
+        return False, ('el encabezado no declara cuantas decisiones hay («**Son N**»), de modo que '
+                       'nada ata el recuento; hay %d' % n)
+    dec = int(m.group(1))
+    if dec != n:
+        return False, ('el encabezado declara %d decisiones y hay %d encabezados «## N.». '
+                       'Corregir el ENCABEZADO, no borrar decisiones' % (dec, n))
+    # y que la numeracion sea contigua desde 1, para que no haya huecos ni repetidas
+    nums = sorted(int(x) for x in reales)
+    if nums != list(range(1, n + 1)):
+        return False, ('la numeracion de las decisiones no es contigua desde 1: %s' % nums)
+    return True, '%d decisiones, el encabezado las declara y la numeracion es contigua' % n
+
+
 def afirmaciones():
     """(descripcion, quien la afirma, predicado). Cada una devuelve (ok, detalle)."""
     def _todos(rel_list, fn):
@@ -243,6 +315,10 @@ def afirmaciones():
                               'Δ F1 por texto de entrada |', 3)),
         ('en §3.3 el resalte cubre solo el porcentaje', '§F96',
          lambda: _resalte_33()),
+        ('el recuento de decisiones cuadra con las que hay', '§F135',
+         lambda: _recuento_de_decisiones()),
+        ('los documentos de norma no copian recuentos de las herramientas', '§F134',
+         lambda: _sin_recuentos_copiados()),
         ('ninguna ruta afirmada como conservada ha desaparecido', '§F124',
          lambda: _rutas_afirmadas()),
         ('DEFENSA usa el ejemplo verificado del duplicado', '§F107',

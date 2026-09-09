@@ -156,10 +156,38 @@ nuevo, y esa decisión no es vuestra.
 
 ---
 
-## 7. Rama
+## 7. Ramas — instrucción del autor del 2026-09-09
 
-Trabajad sobre **`main`**, que es donde está todo fusionado. `fix/recorrida-correcciones-20260908`
-está **totalmente fusionada** —cero commits que no estén en `main`, y 132 detrás— y podéis borrarla.
+**Se trabaja en `main`.** Es la rama que todos los agentes leen, la que el verificador toma como
+referencia y la única sobre la que la puerta de commit tiene sentido. Ya borrasteis
+`fix/recorrida-correcciones-20260908`, que estaba totalmente fusionada: perfecto, eso es lo que la
+política pide.
+
+**Una rama aparte solo se justifica para una tarea corta, de menos de dos días**, y cuando se abre:
+
+1. **Se declara en `CURRENT-TASKS.md`** al crearla: nombre, para qué, quién la usa y la fecha
+   prevista de vuelta.
+2. **Se vuelve a `main` lo antes posible.** Fusionar y retirarla es parte de la tarea.
+3. **Se trae `main` a diario** mientras esté viva, para que la vuelta no sea una negociación de
+   conflictos.
+4. **Al retirarla se anota** que se fusionó y se borró, con el commit de fusión.
+
+**Y antes de dar por buena cualquier comprobación, comprobad que `main` está al día:**
+`git rev-list --count HEAD..origin/main` tiene que dar cero. El 2026-09-09 aquí daba **dos** y no
+lo avisaba nada, porque la rama local no tenía *upstream* y el `git pull` fallaba en silencio.
+
+**Para retirar una rama, comprobad por contenido y no por SHA.** `git cherry main <rama>` marca con
+`-` los commits cuyo contenido ya está en `main` aunque su identificador sea otro. Un
+`git rev-list --count main..<rama>` distinto de cero **no** prueba que haya trabajo pendiente: prueba
+que hay identificadores distintos. Aquí `sesion/revision-final-20260905` mostraba un commit propio y
+su contenido ya estaba aplicado.
+
+Las ramas `backup/*` son la excepción: atestiguan un estado entregado y no se tocan.
+
+Está escrito en `CLAUDE.md`, sección «Ramas: se trabaja en `main`», y **lo comprueba**
+`python3 tools/estado_ramas.py`: `main` al día, ramas declaradas, ninguna de trabajo por encima
+de dos días, cuáles son retirables y que el respaldo que atestigua no se haya movido. Devuelve 0
+si se cumple. Ejecutadlo antes de dar por cerrada una tanda, que os ahorra la conversación.
 
 ---
 
@@ -240,3 +268,20 @@ df = (25, 2912) queda por debajo de lo representable. Si vuestro informe estadí
 `%.4e` saldrá `0.0000e+00`, que **no es la p**: es el límite del tipo de dato. Escribid una cota
 —«p < 1e-300»— y decid que el valor exacto no es representable. Nuestro verificador reventaba
 justamente ahí y ya está arreglado, con el remedio dentro del mensaje de error.
+
+---
+
+## 10. Vuestra pregunta sobre §6 está respondida: es vuestro
+
+`remote_48g/RESPUESTA-BROWN-FORSYTHE-20260909.md`. Resumen: **hacedlo vosotros**, tal como lo
+planteasteis en la opción 1. La frontera es que **medir y declarar no es decidir** — calcular la
+prueba del supuesto y escribirla en vuestro artefacto es una medición, y el artefacto tiene que
+decir lo que los datos dicen; cambiar qué prueba sostiene la conclusión del **informe** es del autor
+y va con la decisión 1. Vosotros añadís información al artefacto; él decide qué hace el informe con
+ella. No hay que esperar una cosa para la otra.
+
+La respuesta lleva las cifras ya calculadas por dos vías para que contrastéis —Brown-Forsythe y las
+dos pruebas robustas, en las cuatro combinaciones de consolidado y métrica— y una observación de
+`§F114` que os ahorra trabajo: el supuesto no ha empeorado, **se ve por primera vez sin el defecto
+que lo enmascaraba**. La categoría fantasma añadía a los veintiséis grupos la misma penalización y
+comprimía las diferencias de varianza.
