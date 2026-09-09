@@ -196,6 +196,17 @@ sí. Ver `FINDINGS.md §F53` y `LEARNING.md §L44`.
 Comprobaciones mecánicas que hay que pasar sobre el Markdown canónico antes de cada commit. Todas surgieron
 de defectos reales encontrados en la revisión final.
 
+> **Desde el 2026-09-09 hay una puerta de commit.** `.githooks/pre-commit` ejecuta el verificador
+> cuando el commit toca el Markdown del informe, `tools/` o los datos de resultados, y **detiene el
+> commit si hay fallos nuevos** —los declarados no cortan—. Va sin `--red`, de modo que tarda menos de un
+> segundo. `git commit --no-verify` la salta, y está para comprometer trabajo a medias: si un fallo es
+> aceptable, se declara en `FALLOS_DECLARADOS` con su motivo y su responsable, no se silencia la puerta.
+>
+> **`core.hooksPath` es configuración local**, así que un clon nuevo **no tiene la puerta** aunque el hook
+> esté versionado. Hay que ejecutar `git config core.hooksPath .githooks` en cada copia de trabajo. Si un
+> commit se detiene con un mensaje del verificador, es esto y no un error del repositorio. Ver
+> `FINDINGS §F93`.
+
 > **Están implementadas en `tools/verificar_informe.py`.** Ejecutarlo antes de cada commit sobre el informe;
 > devuelve 0 si no hay fallos **nuevos**. *(Precisión del 2026-09-09: existen fallos **declarados**, cada uno
 > con su motivo y con quien lo tiene —dos ficheros de registro vacíos, el par de cifras de la conclusión 1 y
