@@ -1198,6 +1198,41 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 
 ---
 
+### 3.bis.15 🔴 PENDIENTE — Re-ejecutar la línea base de `nemotron-mini:4b` en N=120
+
+**Encargo completo en [`remote_48g/ALERTA-NEMOTRON-BASELINE-20260909.md`](./remote_48g/ALERTA-NEMOTRON-BASELINE-20260909.md).**
+Se resume aquí porque esta sección es la que leéis, y la alerta llevaba horas sin referenciarse en ella.
+
+**Qué pasa.** `nemotron-mini_4b__N120` tiene **18 filas con `parse_method='failed'`**, y **las dieciocho caen
+en `_baseline`: ninguna en `_kb_rag`**. No es infraestructura pese a tener su firma —latencia 0, cero tokens—:
+es un **`TypeError` en `src/llm_runner.py:167`**, donde `for k, v in parsed.items()` da por hecho que el modelo
+devuelve un objeto JSON y revienta si devuelve un array. En modo `kb_combined` el ejemplar del prompt lo guía
+al formato correcto, y por eso ese brazo no falla.
+
+**Por qué importa.** Esas filas puntúan 0,00 y entran en la media: la línea base cae de **30,97 a 26,31** y el
+Δ sube de **+9,58 a +14,23 pp**. Como `nemotron-mini` es el punto de mayor influencia del análisis —retirarlo
+anula la correlación central del trabajo— el sesgo no se queda en su fila. El consolidado
+`ANALISIS_CONJUNTO_20260909` que publicasteis incluye 17 de esas 18.
+
+**Qué pedimos, por orden.**
+
+1. Arreglar el `TypeError`: si `parsed` es una lista de diccionarios, fusionarlos antes de normalizar; si es
+   otra cosa, registrarlo como formato inesperado en lugar de perder el registro entero.
+2. Re-ejecutar **solo** `nemotron-mini:4b` en modo baseline sobre N=120. Son ciento veinte artículos.
+3. **Rehacer el consolidado después**, no antes.
+4. Antes de declarar válida una corrida, comprobar que `parse_method='failed'` vale **cero**. Es la primera
+   verificación del protocolo y una línea de código; el commit de cierre decía «39/39 válidas».
+
+**Alcance, comprobado, para que no rehagáis de más.** Los datos publicados no están afectados —cero `failed`
+en sus 3 120 filas—; el mensaje aparece **58 veces y todas en esta corrida**, siendo el único error repetido
+de las treinta y nueve; y N=30 y N=15 del mismo modelo están limpios. **Es un brazo, de un modelo, de un
+corpus.**
+
+**Estado:** pendiente desde 2026-09-09 04:4x. `FINDINGS §F85`, `§F86`.
+
+---
+
+
 ## 4. Workflows
 
 > Todo workflow debe declarar aquí su subsección: objetivo, fases, agentes, archivos tocados y resultado.
@@ -1480,3 +1515,4 @@ Y añadid una fila al **§6 Registro de actualizaciones** con fecha, agente y ca
 | 2026-09-09 08:4x | Claude Code (equipo principal) | ⚠️ §1.135: **hallazgo colateral: `BENCHMARKS.md` narra la exclusión de dos modelos**, con bloques «Retirado del estudio… se elimina del benchmark: su única medición tenía 9 de 15 extracciones fallidas». `CLAUDE.md` lo prohíbe expresamente —«tampoco en una glosa que los declare excluidos: la exclusión se aplica, no se narra»—, pero **la norma no dice a qué lista pertenece `BENCHMARKS.md`**, si a los artefactos derivados o a los que atestiguan. Añadida la **decisión 12** con tres opciones y recomendación de retirarlas **y** anotar en `CLAUDE.md` a qué lista pertenece, para que la duda no vuelva. **Nada tocado.** Y distinguido lo que no está en cuestión: los siete ficheros de **código** que citan esos modelos dan soporte a proveedores, no publican cifras |
 | 2026-09-09 08:5x | Claude Code (equipo principal) | ✅ §1.136: **actualizado el `TODO §10`, que aparentaba seis bloqueantes abiertos cuando hay uno.** La tabla se dejó como se escribió el 2026-09-05 y solo marcaba resuelto el número 7. Añadida una adenda con el estado verificado de los ocho, uno a uno y con la evidencia de cada uno, **sin tocar la tabla original**. Balance real: **un bloqueante abierto** —el #6, que es la decisión 4— y **uno declarado** —el #8, con su advertencia de trazabilidad—. Importa antes de la defensa: una lista que aparenta seis problemas sin resolver pesa distinto que una con uno |
 | 2026-09-09 09:0x | Claude Code (equipo principal) | ✅ §1.137: **investigada una cifra que bajó sin causa aparente, y era buena noticia.** La verificación con `--red` daba «acreditadas por resolución del DOI: **3**» cuando la víspera eran 4. Causa: **Zenodo ha vuelto a responder** —la entrada [18] da HTTP 200 y aterriza en `zenodo.org/records/14027005`—, de modo que se verifica por la vía normal y ya no necesita acreditación. El 403 que documenta `§F80` era real cuando se midió, a las 23:0x del día 8. Actualizado el hallazgo, conservando `zenodo.org` entre los porteros porque solo actúa ante 401 o 403 y el episodio puede repetirse. **Sigue fallando solo [37]**, el repositorio privado, que debe seguir así |
+| 2026-09-09 09:1x | Claude Code (equipo principal) | ✅ §1.138: **la alerta de `nemotron` no estaba donde el equipo la lee.** Se menciona nueve veces en este documento pero **cero dentro de §3.bis**, que es su sección y la que su protocolo les manda consultar. Añadida como **§3.bis.15** con el encargo resumido: la causa en `llm_runner.py:167`, por qué solo falla la línea base, el efecto sobre su Δ, los cuatro pasos por orden —arreglar, re-ejecutar solo ese brazo, rehacer el consolidado **después**, y comprobar `failed=0` antes de declarar válida una corrida— y **el alcance comprobado**, para que no rehagan de más: es un brazo, de un modelo, de un corpus |
