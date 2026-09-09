@@ -6102,4 +6102,24 @@ corresponden al equipo de 48 GB —el manifiesto portable y el `levene.json`— 
 antes** de decidir, porque sin ellos parte del informe no se puede verificar contra el consolidado
 nuevo aunque se adopte.
 
+### Mecanizado, porque habrá que repetirlo
+
+El ensayo lo hice copiando el verificador a `tools/`, sustituyendo un nombre y borrando la copia:
+frágil, irrepetible y sucio. Y **hay que volver a ejecutarlo** cuando el equipo arregle el manifiesto
+y entregue el `levene.json`, porque la lista de trabajo cambiará. Ahora es
+`tools/ensayo_adopcion.py`, que carga el verificador en memoria con las rutas del consolidado que se
+le indique, lo ejecuta, y **compara sus resultados con los del actual**: la salida no es «pasa o
+falla» sino la lista de trabajo. No escribe nada ni toca el verificador del repositorio.
+
+Declara su limitación: la sustitución es **textual**, de modo que una comprobación que construyera
+esa ruta de otra forma seguiría leyendo el consolidado viejo y **aparecería como que no cambia**. Por
+eso imprime el recuento de sustituciones —hoy **8**—: el día que baje sin motivo, alguien ha cambiado
+cómo se nombra el consolidado.
+
+**Y emerge algo que no había visto al hacerlo a mano.** La comprobación 55, la que audita las
+declaraciones, señala que la adopción dejaría **tres declaraciones caducadas**: la de `cita 62.67` y
+la de «el Anexo I dice» —las dos de la decisión 13— y la de la telemetría ausente. Es decir, adoptar
+**resuelve por sí solo tres de las pendencias declaradas**, y la herramienta lo dice sin que nadie
+tenga que acordarse de comprobarlo.
+
 **Estado del verificador:** 55 comprobaciones, 63 fallos (63 declarados, **0 nuevos**), 0 vacías.
