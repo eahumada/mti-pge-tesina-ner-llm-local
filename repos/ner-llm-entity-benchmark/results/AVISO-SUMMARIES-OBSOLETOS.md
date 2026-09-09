@@ -23,7 +23,7 @@ Por tanto, en **todos** los directorios de `results/`:
 - **No citar** ninguna cifra de F1 tomada de un `summary` o de un `statistical_report.md` por corrida.
 - Al promediar desde `detailed_results.json`, **recalcular desde `tp/fp/fn`**; nunca promediar el campo `f1`.
 - El análisis conjunto vigente es **`results/ANALISIS_CONJUNTO_20260907/`** (14 modelos × 2 modos,
-  F = 36.3696, p = 1.4321e-164), generado con `src/merge_and_analyze.py`, que **lee los CSV**.
+  F = 36.3696, p = 1.4321e-164), generado con `src/merge_and_analyze.py`, que **lee los CSV**. **[Corregido el 2026-09-09: esta cifra quedó desfasada y se conserva por ser lo que se afirmó ese día. El artefacto de hoy dice F = 38,2222 y p = 3,4453e-160 sobre 13 modelos × 2 modos, tras la corrección de `gpt-oss` del commit `37ef239`. La autoridad es siempre `ANALISIS_CONJUNTO_20260907/statistical_report.md`, no este documento. Ver FINDINGS §F149.]**
 
 Un incidente real por ignorar esto: la auditoría B1 del equipo remoto (`494dacf`) tomó 0.4959/0.5491 del
 summary como «fuente primaria» de `llama3.1:8b` cuando el valor correcto es **0.4876/0.5075**. Ver

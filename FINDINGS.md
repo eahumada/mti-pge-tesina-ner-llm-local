@@ -7165,3 +7165,67 @@ trece fuentes son disjuntas, una por modelo— de modo que la regla no cambia na
 **inaplicable**, no la comprobación ciega; sobre el publicado, que tiene ocho duplicados, se detecta.
 Distinguirlo importa: es la lección de las cuatro mutaciones mal armadas de §L71, aplicada a tiempo
 en lugar de después.
+
+---
+
+## §F149 — Tres pares (F, p) circulando para un mismo consolidado, y ninguno era un error de cálculo
+
+**Fecha:** 2026-09-09 · **Origen:** el workflow de consistencia `wf_348f89e2-43b`, lote de artefactos;
+único hallazgo marcado **grave**, confirmado por su refutador y **recomprobado aquí**
+
+Para el directorio `ANALISIS_CONJUNTO_20260907`, que es el consolidado **publicado** y el que
+sostiene la cifra titular del trabajo, había **tres pares (F, p) distintos** en circulación:
+
+| Dónde | Dice | Modelos |
+|:---|:---|---:|
+| `AVISO-SUMMARIES-OBSOLETOS.md` | F = 36,3696 · p = 1,4321e-164 | **14** |
+| `RUNS_INDEX.md` | F = 36,3666 · p = 1,2236e-152 | 13 |
+| **El artefacto**, `statistical_report.md` | **F = 38,2222 · p = 3,4453e-160** | 13 |
+
+Y el informe cita la tercera, que es la correcta.
+
+### Y no es un error de cálculo: son tres estados sucesivos del mismo directorio
+
+Lo que parecía una contradicción resultó ser una **secuencia**, y la reconstruye el historial:
+
+1. Commit `10f3ebc` del 7 de septiembre: análisis conjunto con **14 modelos**, F = 36,3696.
+2. Commit `58647f5`, el mismo día: se retira del estudio la cuantización no reproducible y quedan
+   **13 modelos**, F = 36,3666.
+3. Commit `37ef239`: `gpt-oss` corregido cierra el estudio con **F = 38,2222**, que es lo que el
+   directorio contiene hoy.
+
+**Cada cifra fue cierta el día que se escribió.** El defecto no está en el número sino en el
+**tiempo verbal**: tres documentos afirman en presente —«el análisis conjunto **vigente** es», «análisis
+conjunto **definitivo**», «alcance **definitivo** del estudio»— un estado que dejó de serlo esa misma
+tarde.
+
+### Qué se corrigió y qué no, y el criterio
+
+El criterio es el de `CLAUDE.md`: se corrigen los artefactos que **afirman**, se conservan los que
+**atestiguan**. Aquí la línea no cae por tipo de fichero sino por **tiempo verbal**.
+
+**Corregidos, de forma aditiva y sin borrar la cifra vieja**, los tres que afirman en presente:
+`AVISO-SUMMARIES-OBSOLETOS.md`, `RUNS_INDEX.md` y `TODO-INFORME-FINAL.md`. Cada uno conserva su
+número original y lleva ahora una nota fechada que dice cuál es el vigente y **que la autoridad es el
+`statistical_report.md` del propio directorio, no el documento que se está leyendo**.
+
+**No tocados**, porque atestiguan lo que se afirmó en una fecha: `CIERRE-BENCHMARKS-20260907.md`, las
+filas del registro de `CURRENT-TASKS.md`, `research/rag/WORKLOG.md`,
+`CORRECCION-B1-SUMMARIES-20260907.md`, `PROMPT-CLAUDE-DESKTOP-20260907.md` y
+`remote_48g/RESPUESTA-CORRECCION-20260907.md`. Reescribir un documento fechado para que diga lo que
+hoy sabemos no es limpiar: es falsificar el registro.
+
+### El «14 modelos» merece una frase aparte
+
+El decimocuarto era la cuantización *custom* que se retiró del estudio por no ser reproducible, y
+está en la lista cerrada de exclusiones. El aviso **no la nombra** —solo cuenta catorce— y la nota de
+corrección tampoco la nombra, porque la exclusión se aplica y no se narra. Queda dicho aquí, que es
+el registro de hallazgos, y no en un artefacto del estudio.
+
+### Lo que hay que llevarse
+
+**Una cifra en un documento de orientación caduca sin que nada avise.** Es el mismo mecanismo de
+[§F134](#f134), los recuentos mantenidos a mano, aplicado a un resultado estadístico: el número se
+copió a seis sitios y el artefacto se regeneró dos veces el mismo día. La defensa no es acordarse de
+actualizarlos, sino **que el documento remita al artefacto en lugar de repetirlo**, que es lo que
+ahora dicen las tres notas.

@@ -1437,7 +1437,7 @@ Está en `FINDINGS §F65` y `§F65.bis`, con la tabla de ambas.
 
 ### §4.bis Workflow `wf_348f89e2-43b` — consistencia global de la tesina (REINTENTO)
 
-**Agente:** Claude Code (equipo principal) · **Lanzado:** 2026-09-09 · **Estado:** EN CURSO
+**Agente:** Claude Code (equipo principal) · **Lanzado:** 2026-09-09 · **Estado:** COMPLETADA
 
 **Reintenta `wf_ae5d7d69-db5`, que murió sin entregar nada.** Causa: **límite de sesión**, no un
 defecto del script. Pero su diseño contribuyó: **un solo agente** gastó **218 842 tokens y 91
@@ -1477,6 +1477,34 @@ en `RUNS_INDEX.md` o en corridas históricas, porque esos artefactos **atestigua
 
 **Nota sobre el alcance, que el autor ya cerró:** omitir del informe los resultados **parciales**
 está **autorizado**. Que falten no es un hallazgo; que se presenten como definitivos, sí.
+
+#### Resultado
+
+**Cerró: 5 agentes de 5, cero errores, 8,5 minutos.** El intento monolítico había gastado 218 842
+tokens sin entregar nada; éste gastó 375 989 y entregó **22 hallazgos y 81 cifras trazadas**.
+
+| Lote | Hallazgos | Lo que encontró |
+|:---|---:|:---|
+| Cuerpo | 3 | Ninguna cifra de la prosa viene del consolidado nuevo. El 119,7502 **no aparece** en el informe |
+| Tablas | 6 | La re-corrida se describe como pendiente y ya está hecha; la Tabla 7 mezcla 4096 y 2048 tokens |
+| Anexos | 7 | El Anexo I no menciona el segundo consolidado, que la regla de integridad obliga a declarar |
+| Artefactos | 6 | **El único grave**: tres pares (F, p) para un mismo consolidado |
+
+**Lo que el workflow vino a comprobar, comprobado:** ninguna cifra del informe procede del
+consolidado **nuevo**, ninguno de los ocho modelos excluidos aparece, ninguna p se presenta como
+número cuando subdesborda, y los cuatro deltas que distinguen un consolidado del otro coinciden con
+el publicado y contradicen al nuevo. **La mezcla de corpus, que era el riesgo grave, no se ha
+producido.**
+
+**El grave, verificado y corregido:** ver `FINDINGS §F149`. Tres estados sucesivos del mismo
+directorio afirmados en presente. Corregidos aditivamente los tres documentos que afirman;
+conservados los seis que atestiguan.
+
+**Lo que queda y es del autor**, no de un agente: que el informe declare la segunda corrida del mismo
+experimento —que es la regla de integridad de `CLAUDE.md` y coincide con la decisión 1—, la
+convención de agregación de la conclusión 1 (decisión 13, `§F87`), y la salvedad de los 4096 tokens
+en la Tabla 7, que hoy vive a setecientas líneas de ella.
+
 
 
 ## 5. Procesos de fondo activos
@@ -1989,3 +2017,4 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.268: **§F146 — los números de las comprobaciones no identifican nada, y los he citado 22 veces**. El verificador del workflow de propagación avisó de una cita mal puesta y al mirarlo el problema era mayor: **37 marcadores para 56 comprobaciones**, **19 sin marcador**, **34 cuyo número no coincide con su orden de ejecución** y un hueco de **26 a 44**. Derivaron porque inserto las funciones nuevas al principio del fichero y las llamadas en otro sitio. **Doce números citados en la documentación no existen**, y de las cinco citas de los dos encargos vivos **dos apuntaban a otra comprobación** —«la 3» a `c_tablas` cuando hablaba de referencias cruzadas, y «la 44» a nada—. **No se renumera**, porque las citas de `FINDINGS` son registro fechado: se declara en la cabecera del verificador que **el número no identifica** y se cita por **el texto de `check()`**, que sí es estable. Las cinco citas pasadas a nombre. **Y un falso positivo mío corregido a los dos minutos:** reporté «un duplicado en el 2» y **no lo había** — mi patrón `^# --- (\d+)\.` casaba con `# --- 2.bis.`; con el patrón correcto hay **cero duplicados**. Peor: al «arreglarlo» **corrompí el comentario** a `2.bisbis`, detectado y deshecho en la comprobación siguiente. Es **§L71 por quinta vez** —el detector roto, no el documento— y esta vez con daño real |
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.269: **aplicadas las dos correcciones retenidas del Markdown y escrito el trabajo futuro que la decisión B dejaba a medias (§F147).** El workflow de consistencia murió por el límite de sesión, no por un defecto suyo, y con el fichero libre entraron las dos de §F144 y §F145 en el mismo commit: el Anexo G.2 pasa de «tomados de **OpenSanctions**» a «de la lista **SDN** del Tesoro de los Estados Unidos [19]», que es lo que ya decía el Anexo F y lo que dice el artefacto primario; y la glosa de la Tabla 1 deja de apuntar a la «última columna», que es Idioma, y apunta a la «columna de desempeño publicado». **Comprobado lo que NO había que tocar:** las dos menciones legítimas de OpenSanctions siguen ahí —la propuesta de §7.2 y la entrada [38] de `FollowTheMoney`—; corregir de más habría borrado una referencia correcta. Añadido además el **punto 11 de §7.2**, que reúne el **contraste pareado por modelo** con sus tres cifras de tamaño de efecto y las **variantes de F1** que el autor preguntó si podían sostener mejor los resultados: F1 micro y remuestreo pareado. Trae cita nueva **[39]** (Dror et al., ACL 2018), con URL abierta —200— y datos tomados de su BibTeX canónico, **cita y entrada en el mismo commit**. **El precio, declarado y no escondido:** [39] crea tres fallos nuevos porque falta en los tres `.docx`; declarados con responsable —la pasada de maquetación— y añadidos al encargo como **piezas 7 y 8**, donde la 7 es la única del encargo que no es una ausencia sino una **afirmación falsa**. Y la comprobación de referencias colgantes **cazó mi propia cita a §F147** antes de que §F147 existiera, que es la segunda vez en dos días que hace exactamente eso |
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.270: **acreditado que los DOS consolidados se reproducen desde datos que están aquí; el bloqueo de la decisión 1 era de forma (§F148).** El manifiesto del consolidado nuevo declara sus trece fuentes con rutas de otra máquina y ninguna resolvía, de modo que la decisión 1 no se podía comprobar. `tools/manifiesto_local.py` separa las dos cosas que se confundían: que el manifiesto no sea **portable** es forma; que los datos **no estén** sería fondo. Resultado: **13 de 13** fuentes reancladas, **2 938 = 2 938** filas, 26 grupos, **cero** de 26 medias de F1 discrepantes y la tabla `integrity` limpia. El publicado acredita igual, 8 de 8 y 3 120 = 3 120. **El primero de los dos impedimentos de la decisión 1 se cierra**; queda el `levene.json` que falta al nuevo, que sigue siendo el §9 del encargo remoto. **Y por el camino, §L71 por sexta vez, con agravante:** la herramienta declaró NO reproducible el consolidado **publicado**, que sostiene la cifra titular del trabajo. Dos defectos míos encadenados — tomaba el fichero entero de cada fuente en lugar de los grupos que el manifiesto le atribuye, y una fuente trae 453 filas con **dos grupos de `qwen3:8b` parciales, de 99 y 114**, que la fusión descarta con razón; e ignoraba la precedencia `--on-duplicate=first` de los ocho grupos duplicados, lo que daba 4 080 filas en vez de 3 120, exactamente 8×120 de más. **Lo que salvó el día fue el control**: correr la herramienta sobre el publicado antes de creerme el resultado del nuevo. Mutación: **11 de 12 detectadas**, y la que no es **inaplicable** —invertir la precedencia en un consolidado que no tiene duplicados—, no un punto ciego |
+| 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.271: **reintentado el workflow de consistencia que había muerto, y cerró: 5 agentes de 5, cero errores, 8,5 minutos, 22 hallazgos y 81 cifras trazadas.** El monolítico gastó 218 842 tokens sin entregar nada; los cuatro estrechos entregaron. **Lo que vino a comprobar, comprobado:** ninguna cifra del informe viene del consolidado nuevo —el 119,7502 no aparece—, ningún modelo excluido aparece, ninguna p se da como número cuando subdesborda, y los cuatro deltas que distinguen un consolidado del otro coinciden con el publicado. **La mezcla de corpus no se ha producido.** Un solo hallazgo grave, confirmado por su refutador y recomprobado por mí: **tres pares (F, p) circulando para `ANALISIS_CONJUNTO_20260907`** —36,3696 con 14 modelos, 36,3666 con 13, y el 38,2222 del artefacto—. No era un error de cálculo sino **tres estados sucesivos del mismo directorio en un solo día**, y el defecto está en el **tiempo verbal**: tres documentos lo afirman en presente. Corregidos aditivamente los tres que **afirman**, con la cifra vieja conservada y una nota que remite al artefacto; **no tocados** los seis que **atestiguan** (§F149) |

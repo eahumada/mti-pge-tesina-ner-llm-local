@@ -624,7 +624,7 @@ eje de inconsistencia (unos modelos con razonamiento y otros sin él) apoyado en
 **Decisión del autor:** se conservan los **13 modelos actuales** y **se cierra la fase de ejecución**. No se
 lanzan más corridas. Documento de cierre: [`CIERRE-BENCHMARKS-20260907.md`](./CIERRE-BENCHMARKS-20260907.md).
 
-- **Alcance definitivo del estudio N=120:** **13 modelos × 2 modos**, F = 36.3666, p = 1.2236e-152
+- **Alcance definitivo del estudio N=120:** **13 modelos × 2 modos**, F = 36.3666, p = 1.2236e-152 **[Corregido el 2026-09-09: esta cifra quedó desfasada y se conserva por ser lo que se afirmó ese día. El artefacto de hoy dice F = 38,2222 y p = 3,4453e-160 sobre 13 modelos × 2 modos, tras la corrección de `gpt-oss` del commit `37ef239`. La autoridad es siempre `ANALISIS_CONJUNTO_20260907/statistical_report.md`, no este documento. Ver FINDINGS §F149.]**
   (`results/ANALISIS_CONJUNTO_20260907/`).
 - **Integridad:** convención de puntuación única · 0 violaciones de `F1 ≤ (P+R)/2` · 0 filas degeneradas ·
   0 `failed` · `summary` == `CSV` en todas las corridas.

@@ -268,7 +268,7 @@ Añadido de forma aditiva al cerrarse el estudio. El catálogo anterior llegaba 
 | `cloud_n15_limpio_20260905` | 15 | `entities` | `gemma4:31b-cloud` — fuente de su fila en la Tabla 2 |
 | `ablacion_n15_REMOTO` | 15 | `entities` | **Análisis de Variantes de Prompts** — fuente de §5.2 |
 | `test_nothink/` | 15 | mixto | Experimento *thinking* ON/OFF de 4 modelos (`FINDINGS.md §F44-F45`) |
-| **`ANALISIS_CONJUNTO_20260907`** | 120 | `kb_combined` | **Análisis conjunto definitivo: 13 modelos × 2 modos, F=36.3666, p=1.2236e-152.** Generado con `src/merge_and_analyze.py` |
+| **`ANALISIS_CONJUNTO_20260907`** | 120 | `kb_combined` | **Análisis conjunto definitivo: 13 modelos × 2 modos, F=36.3666, p=1.2236e-152.** Generado con `src/merge_and_analyze.py`. **[Corregido el 2026-09-09: esta cifra quedó desfasada y se conserva por ser lo que se afirmó ese día. El artefacto de hoy dice F = 38,2222 y p = 3,4453e-160 sobre 13 modelos × 2 modos, tras la corrección de `gpt-oss` del commit `37ef239`. La autoridad es siempre `ANALISIS_CONJUNTO_20260907/statistical_report.md`, no este documento. Ver FINDINGS §F149.]** |
 
 > **Fuente válida de P/R/F1: `benchmark_results.csv`.** Todas las corridas se re-puntuaron tras corregir el bug
 > del *scorer* (`F1=1.0` en extracción vacía). Ver `results/AVISO-SUMMARIES-OBSOLETOS.md`.
