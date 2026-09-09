@@ -4241,3 +4241,48 @@ cirugía sobre el mismo fichero. Comprobarlo una vez acredita el estado de hoy; 
 mañana. Y la de la rejilla es la que más falta hacía: **clonar y borrar filas es exactamente lo que la
 descuadra**, y Word la dibuja torcida sin quejarse, de modo que un descuadre podría llegar a la defensa sin
 que nada lo delatara.
+
+## §F100 — La regla más costosa del proyecto vivía en una herramienta que nadie ejecuta
+
+**2026-09-09.** `CLAUDE.md` añadió el 2026-09-08, tras el defecto más caro del estudio, esta obligación:
+
+> «Toda categoría que se puntúe debe existir en la anotación de referencia. El indicador barato es **`tp + fn`
+> agregado por categoría**: si esa suma vale cero mientras `fp` crece, la categoría no tiene ni una entidad
+> de referencia en todo el corpus y está puntuando contra el vacío. **Comprobarlo antes de dar por buena
+> cualquier métrica nueva.**»
+
+Comprobado hoy dónde estaba mecanizada: **en ningún sitio que se ejecute**. El aviso existe dentro de
+`tools/composicion_fp.py`, que nadie invoca automáticamente, y el verificador —36 comprobaciones— no la
+tocaba. Una regla que solo vive en una herramienta que nadie llama no protege de nada, y ésta se escribió
+precisamente porque el defecto **sobrevivió dos meses** con cifras internamente coherentes.
+
+**La firma, calculada hoy sobre las 17 corridas con desglose por tipo:**
+
+| Categoría | tp | fp | fn | tp + fn |
+|:---|---:|---:|---:|---:|
+| `Persons` | 22 078 | 2 988 | 17 463 | 39 541 |
+| `Organizations` | 23 194 | 11 050 | 30 427 | 53 621 |
+| `Locations` | **0** | **29 465** | **0** | **0** |
+
+Hay que calcularla desde los `detailed_results.json` por corrida, porque el `merged_results.csv` del
+consolidado **no trae la columna `metrics`** — es el pedido `§3.bis.16`, pendiente del equipo remoto.
+
+### Cómo se mecanizó sin cegar la comprobación
+
+`Locations` es la sabida: el informe la declara en §3.3 y publica en paralelo la métrica restringida a las
+dos categorías anotadas. **No se declaró como fallo tolerado**, porque eso habría cegado la comprobación
+entera (§L64). Se codificó como **esperada**, de modo que la comprobación queda en verde y **sigue siendo
+sensible a que aparezca otra**, que es lo que hay que impedir.
+
+Y lleva una segunda mitad que mira al futuro: **si `Locations` pasara a tener referencias, también falla.**
+El corpus se corrigió el 2026-09-08 —545 localizaciones en 119 de los 120 registros— y la re-corrida
+pendiente las traerá. Cuando eso ocurra, la comprobación dirá que **§3.3, la métrica restringida y el Anexo I
+dejan de describir la medición**, que es exactamente lo que nadie debe descubrir después de publicar.
+
+Probada por mutación en los dos frentes: una categoría `Fechas` inventada con `tp+fn=0` y `fp=98` se detecta
+con su nombre y su recuento; y dar referencias a `Locations` dispara el aviso de que el informe deja de
+describir lo que mide.
+
+**El detalle que más importa del código:** los enteros se suman con `int(v.get(k) or 0)` y no con
+`if v.get(k)`. Aquí más que en ningún sitio — un `tp` de 0 es *falsy*, y descartarlo haría invisible
+justamente el caso que se busca.

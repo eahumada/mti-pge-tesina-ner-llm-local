@@ -265,6 +265,91 @@ PDF_ENVIADO = ('doc/versions/enviados/'
                '2026-09-08_Informe_Final_Tesina_NER_ENVIADO-AL-PROFESOR-GUIA.pdf')
 
 
+# `Locations` puntua contra el vacio en todas las corridas y eso es SABIDO: los prompts piden tres
+# categorias y los corpus anotan dos (§F53). El informe lo declara en §3.3 y publica en paralelo la
+# metrica restringida a las dos anotadas. La comprobacion de abajo lo espera, de modo que no cuenta
+# como fallo y **sigue siendo sensible a que aparezca otra**, que es lo que hay que impedir. No se
+# declara como fallo tolerado a proposito: eso cegaria la comprobacion entera (§L64).
+CATEGORIA_SIN_REFERENCIA_SABIDA = 'Locations'
+
+
+def c_firma_categorias(s):
+    """Ninguna categoria NUEVA puede puntuar contra el vacio: `tp + fn = 0` mientras `fp` crece.
+
+    Es la regla que `CLAUDE.md` puso el 2026-09-08 despues del defecto mas caro del proyecto: el
+    65 % de los falsos positivos procedia de una categoria que ningun corpus anotaba, y sobrevivio
+    dos meses porque las cifras eran internamente coherentes. La regla dice que **el indicador
+    barato es `tp + fn` agregado por categoria** y que hay que comprobarlo «antes de dar por buena
+    cualquier metrica nueva» — pero hasta hoy solo existia dentro de `composicion_fp.py`, que nadie
+    ejecuta automaticamente. Una regla que solo vive en una herramienta que nadie invoca no protege
+    de nada.
+
+    Se calcula desde los `detailed_results.json` por corrida, porque el `merged_results.csv` del
+    consolidado **no trae la columna `metrics`** — es el pedido §3.bis.16, pendiente del equipo
+    remoto—. Comprobado el dia que se anadio: 17 corridas con desglose, y la firma agregada da
+    `Persons` tp+fn=39 541, `Organizations` 53 621 y `Locations` **0** con fp=29 465.
+
+    `Locations` es la sabida y esta esperada; **cualquier otra categoria en la misma situacion es
+    un fallo**. Sumar los enteros con `int(v.get(k) or 0)` y no con `if v.get(k)` importa aqui mas
+    que en ningun sitio: un `tp` de 0 es *falsy* y descartarlo haria invisible justo el caso que se
+    busca.
+    """
+    import json as _json
+    import glob as _glob
+    from collections import Counter as _C
+    res = os.path.join(BENCH_DIR, 'results')
+    tot, corridas = {}, 0
+    for d in sorted(_glob.glob(os.path.join(res, '*'))):
+        ruta = os.path.join(d, 'detailed_results.json')
+        if not os.path.exists(ruta):
+            continue
+        try:
+            with open(ruta, encoding='utf-8') as fh:
+                recs = _json.load(fh)
+        except (ValueError, OSError):
+            continue
+        if not isinstance(recs, list):
+            continue
+        visto = False
+        for r in recs:
+            pt = ((r.get('metrics') or {}).get('per_type')) or {}
+            if pt:
+                visto = True
+            for cat, v in pt.items():
+                c = tot.setdefault(cat, _C())
+                for k in ('tp', 'fp', 'fn'):
+                    c[k] += int(v.get(k) or 0)
+        if visto:
+            corridas += 1
+    fallos, mirados = [], 0
+    if not tot:
+        check('ninguna categoria nueva puntua contra el vacio', 0,
+              ['no se encuentra ningun detailed_results.json con desglose por tipo: la '
+               'comprobacion no puede correr'])
+        return
+    for cat in sorted(tot):
+        mirados += 1
+        c = tot[cat]
+        if c['tp'] + c['fn'] == 0 and c['fp'] > 0:
+            if cat == CATEGORIA_SIN_REFERENCIA_SABIDA:
+                continue                      # sabido, declarado en §3.3 y compensado
+            fallos.append('«%s» puntua contra el vacio: tp+fn=0 con fp=%d. Ninguna entidad de '
+                          'referencia en todo el corpus, de modo que cada acierto del modelo se '
+                          'contabiliza como error. Ver FINDINGS §F53 y CLAUDE.md'
+                          % (cat, c['fp']))
+    # y que la sabida siga siendo la sabida: si de pronto tuviera referencias, el informe cambia
+    mirados += 1
+    sab = tot.get(CATEGORIA_SIN_REFERENCIA_SABIDA)
+    if sab is not None and sab['tp'] + sab['fn'] > 0:
+        fallos.append('«%s» ya tiene %d entidades de referencia: el corpus se corrigio y §3.3, la '
+                      'metrica restringida y el Anexo I dejan de describir la medicion. Revisar '
+                      'antes de dar por buena ninguna cifra'
+                      % (CATEGORIA_SIN_REFERENCIA_SABIDA, sab['tp'] + sab['fn']))
+    check('ninguna categoria nueva puntua contra el vacio', mirados, fallos,
+          '%d corridas con desglose; «%s» esta esperada y documentada en §3.3'
+          % (corridas, CATEGORIA_SIN_REFERENCIA_SABIDA))
+
+
 def c_referencias_findings(s):
     """Todo `§F<n>` y `§L<n>` citado en el proyecto tiene su seccion.
 
@@ -2481,6 +2566,7 @@ def main():
     ejecutar(c_higiene, s)
     ejecutar(c_excluidos, s)
     ejecutar(c_sobriedad_docx, s)
+    ejecutar(c_firma_categorias, s)
     ejecutar(c_referencias_findings, s)
     ejecutar(c_docx_sano, s)
     ejecutar(c_pdf_al_dia, s)
