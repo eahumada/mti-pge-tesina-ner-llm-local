@@ -286,6 +286,71 @@ PAL_EN = {'the', 'of', 'and', 'to', 'in', 'that', 'for', 'with', 'was', 'were', 
           'it', 'be'}
 
 
+NUMERALES = {'un': 1, 'uno': 1, 'dos': 2, 'tres': 3, 'cuatro': 4, 'cinco': 5, 'seis': 6,
+             'siete': 7, 'ocho': 8, 'nueve': 9, 'diez': 10}
+
+
+def c_numeral_soberania(s):
+    """El numeral en palabras del coste de la soberania cuadra con la resta que lo precede.
+
+    El informe escribe, dos veces, «la variante alojada alcanza **80,42 %** frente al **76,55 %**
+    del mejor local … la soberania cuesta del orden de **cuatro puntos** de F1». La resta esta a la
+    vista dos lineas antes, de modo que el numeral tiene que cuadrar con ella.
+
+    **Existe porque yo rompi esto.** El 2026-09-09, al propagar las cifras del F1 restringido a los
+    `.docx`, cambie 81,45 por 80,42 y 76,85 por 76,55 y **deje la palabra «cinco»**, correcta con
+    las viejas —4,60— y falsa con las nuevas —3,87—. Los tres entregables quedaron afirmando en una
+    conclusion algo que su propia resta desmentia. Lo encontro la lectura del informe como lector,
+    no una comprobacion: de ahi esta.
+
+    La clase de defecto es general y merece nombre: **propagar una cifra sin su prosa dependiente
+    deja el documento peor que antes**, porque antes era coherente con datos viejos y despues es
+    incoherente consigo mismo. Se comprueba en el Markdown y en los tres `.docx`.
+    """
+    import zipfile as _zip
+    # El informe usa «alcanza» en §6.1 y «obtiene» en la conclusion 3, y el .docx conserva solo la
+    # segunda. Un patron con un solo verbo encuentra el Markdown y NO los entregables, que es justo
+    # donde estaba el defecto: la comprobacion habria dado por bueno el documento roto mientras
+    # verificaba el que estaba bien. Se aceptan los dos verbos.
+    pat = re.compile(r'(?:alcanza|obtiene)\s+(\d+),(\d+)\s*%\s*frente al\s+(\d+),(\d+)\s*%\s*'
+                     r'del mejor local(.{0,200}?)cuesta[^.]{0,28}?\b('
+                     + '|'.join(NUMERALES) + r')\s+puntos', re.S)
+    fuentes = [('el Markdown', s)]
+    for rel in DOCX_ENTREGABLES:
+        ruta = os.path.join(RAIZ, rel)
+        if not os.path.exists(ruta):
+            fuentes.append((os.path.basename(rel), None))
+            continue
+        with _zip.ZipFile(ruta) as z:
+            x = z.read('word/document.xml').decode('utf-8')
+        fuentes.append((os.path.basename(rel),
+                        ' '.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', x, re.S))))
+    fallos, mirados = [], 0
+    for etiq, txt in fuentes:
+        mirados += 1
+        if txt is None:
+            fallos.append('no existe %s' % etiq)
+            continue
+        hallados = list(pat.finditer(txt))
+        if not hallados:
+            fallos.append('%s: no se encuentra la frase del coste de la soberania con su numeral '
+                          'en palabras: revisar si se reformulo' % etiq)
+            continue
+        for m in hallados:
+            mirados += 1
+            alto = float('%s.%s' % (m.group(1), m.group(2)))
+            bajo = float('%s.%s' % (m.group(3), m.group(4)))
+            dicho = NUMERALES[m.group(6)]
+            real = alto - bajo
+            if abs(real - dicho) > 0.5:
+                fallos.append('%s: dice «%s puntos» y la resta que lo precede da %.2f '
+                              '(%.2f - %.2f). Propagar una cifra sin su prosa dependiente deja el '
+                              'documento incoherente consigo mismo'
+                              % (etiq, m.group(6), real, alto, bajo))
+    check('el numeral del coste de la soberania cuadra con su resta', mirados, fallos,
+          'lo rompi yo el 2026-09-09 al propagar cifras sin la prosa que dependia de ellas')
+
+
 def c_resumen_docx(s):
     """El resumen y el abstract de los `.docx` dicen lo que dice el Markdown, palabra por palabra.
 
@@ -2880,6 +2945,7 @@ def main():
     ejecutar(c_higiene, s)
     ejecutar(c_excluidos, s)
     ejecutar(c_sobriedad_docx, s)
+    ejecutar(c_numeral_soberania, s)
     ejecutar(c_resumen_docx, s)
     ejecutar(c_indice, s)
     ejecutar(c_ninguna_comprobacion_huerfana, s)
