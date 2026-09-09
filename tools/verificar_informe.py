@@ -286,6 +286,63 @@ PAL_EN = {'the', 'of', 'and', 'to', 'in', 'that', 'for', 'with', 'was', 'were', 
           'it', 'be'}
 
 
+def c_indice(s):
+    """El indice de contenidos coincide con la estructura real, anclajes incluidos.
+
+    Un indice desfasado es un defecto clasico y silencioso: nadie lo relee, y el documento va a
+    seguir editandose en la pasada de maquetacion —entran la Tabla 20, dos figuras y varios
+    parrafos—. Se comprueban tres cosas: que cada anclaje del indice corresponda a un encabezado
+    real, que el texto del enlace este contenido en el encabezado al que apunta, y que **ningun
+    encabezado de nivel dos se quede sin entrada**.
+
+    Comprobado el 2026-09-09: **9 entradas y 9 encabezados**, sin un solo desajuste. Los nueve son
+    los siete capitulos numerados mas Referencias y Anexos, que es lo que la norma cuenta como
+    «nueve capitulos». Los anexos son **nueve, A-I**, no ocho: la revision previa decia A-H y el
+    propio registro del proyecto ya lo habia corregido.
+
+    **Trampa del anclaje, que costo una pasada.** El texto del enlace es «Introduccion» —el numero
+    va como marcador de la lista— pero el encabezado es `## 1. Introduccion`, de modo que el
+    anclaje correcto es `1-introduccion`. Derivar el anclaje esperado del **texto del enlace** da
+    siete fallos de nueve, todos falsos. Se deriva del **encabezado**, que es de donde lo saca
+    cualquier renderizador. Siete de nueve fallando fue la senal de §L66: cuando una comprobacion
+    nueva reporta casi todo mal, la primera hipotesis es que esta mal ella.
+    """
+    def _ancla(titulo):
+        z = titulo.strip().lower().replace('\u2014', '').replace('\u2013', '')
+        z = re.sub(r'[^\w\s-]', '', z, flags=re.U)
+        return re.sub(r'\s+', '-', z.strip())
+
+    i = s.find('## \u00cdndice de contenidos')
+    if i < 0:
+        check('el indice coincide con la estructura real', 0,
+              ['no se encuentra el «Indice de contenidos»'])
+        return
+    j = s.find('\n## ', i + 5)
+    entradas = re.findall(r'\[([^\]]+)\]\(#([^)]+)\)', s[i:j if j > 0 else len(s)])
+    enc = [m.group(1).strip() for m in re.finditer(r'^## (.+)$', s, re.M)]
+    enc = [e for e in enc if e not in ('Resumen', 'Abstract', '\u00cdndice de contenidos')]
+    if not entradas or not enc:
+        check('el indice coincide con la estructura real', 0,
+              ['el indice no trae entradas o no hay encabezados de nivel dos'])
+        return
+    reales = {_ancla(e): e for e in enc}
+    fallos, mirados = [], 0
+    for titulo, ancla in entradas:
+        mirados += 1
+        if ancla not in reales:
+            fallos.append('el anclaje «#%s» del indice no corresponde a ningun encabezado' % ancla)
+        elif titulo.strip().lower() not in reales[ancla].lower():
+            fallos.append('la entrada «%s» apunta al encabezado «%s», que no la contiene'
+                          % (titulo, reales[ancla]))
+    usadas = {a for _, a in entradas}
+    for e in enc:
+        mirados += 1
+        if _ancla(e) not in usadas:
+            fallos.append('el encabezado «%s» no tiene entrada en el indice' % e)
+    check('el indice coincide con la estructura real', mirados, fallos,
+          '%d entradas y %d encabezados de nivel dos' % (len(entradas), len(enc)))
+
+
 def c_ninguna_comprobacion_huerfana(s):
     """Ninguna comprobacion definida puede quedarse sin ejecutarse.
 
@@ -2728,6 +2785,7 @@ def main():
     ejecutar(c_higiene, s)
     ejecutar(c_excluidos, s)
     ejecutar(c_sobriedad_docx, s)
+    ejecutar(c_indice, s)
     ejecutar(c_ninguna_comprobacion_huerfana, s)
     ejecutar(c_corpus_idioma, s)
     ejecutar(c_firma_categorias, s)
