@@ -351,6 +351,26 @@ o una fuente que solo tú puedes aportar.
 | 7 | ~~Etiqueta viva en los datos~~ **RESUELTO 2026-09-08** | — | Eliminación total por decisión del autor: 270 filas de resultados, sus JSON, resúmenes, puntos de control, informes derivados, 990 líneas de log y dos filas del Anexo I. Cero rastros en datos y entregables. Ver `FINDINGS.md §F26` |
 | 8 | **Discrepancia tabla vs crudo** en modelos cloud: 0.6754 vs 0.3973 (`gemma4:31b-cloud`), 0.6321 vs 0.2011 (`minimax-m3:cloud`) | `BENCHMARKS.md`, nota de trazabilidad | Requiere decidir cuál es la fuente válida |
 
+### Estado real de los ocho bloqueantes — verificado el 2026-09-09
+
+La tabla de arriba se dejó como se escribió el 2026-09-05 y **solo marca resuelto el número 7**, de modo que
+aparenta seis bloqueantes abiertos. **Comprobados uno a uno contra el informe y los datos de hoy, seis lo
+están.** No se toca la tabla: se declara aquí lo comprobado, con la evidencia.
+
+| # | Estado verificado | Cómo se comprobó |
+|:--|:---|:---|
+| 1 | **Resuelto** | Los F1 imposibles (0.8783 y 0.7667) no están en el informe, y la comprobación aritmética del verificador examina **61 filas sin una sola violación** de `F1 ≤ (P+R)/2` |
+| 2 | **Resuelto** | Las métricas byte-idénticas `67.83/57.29/86.78` no aparecen en el informe |
+| 3 | **Resuelto** | Ni el marcador `[referencia KPMG 2024]` ni las cifras de mercado que sostenía (12.300 y 87.200 millones) siguen en el texto |
+| 4 | **Resuelto** | La contradicción de hardware desaparece al declarar **dos configuraciones**: 16 GB para modelos de hasta ~12B y 48 GB para los 31B y MLX grandes (§4.1 y el anexo de plataforma). La fila de `gemma4:31b` de la Tabla 8 declara además su procedencia del equipo de 48 GB |
+| 5 | **Resuelto** | La Tabla 8 es hoy reproducible: la comprobación «las tablas 5, 6 y 8 reproducen desde sus corridas» examina **32 elementos** y pasa |
+| 6 | **Abierto** | Es la **decisión 4** de `DECISIONES-PENDIENTES-20260908.md`. Las cuatro cifras siguen solo en `BENCHMARKS.md`, ya con su advertencia, y el informe no las usa |
+| 7 | Resuelto 2026-09-08 | Ya marcado en la tabla |
+| 8 | **Declarado** | Las tres filas discrepantes llevan su marca ⚠️ y una nota de trazabilidad que dice cuáles reproducen y cuáles no. Queda a criterio del autor si eso basta o se retiran |
+
+**Conclusión: un bloqueante abierto y uno declarado**, no seis. Conviene saberlo antes de la defensa, porque
+una lista que aparenta seis problemas sin resolver pesa distinto que una con uno.
+
 ### Modelos evaluados sin declarar — ✅ RESUELTO (2026-09-05)
 `AGENTS.md §8.6` catalogaba como «Active» a `gliner:medium`, `gemini-3.1-flash-lite`, `gemini-3.5-flash` y
 `phi3.5`.
