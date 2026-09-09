@@ -3782,3 +3782,40 @@ habla. Probada mutando cada una por separado: las dos se detectan.
 **Estado de la cobertura estadística del informe:** el ANOVA principal, Levene, el recuento de Tukey con sus
 dos p, las tres ANOVA secundarias y la correlación de capacidad se recalculan todos desde los datos. No
 queda ninguna afirmación estadística publicada sin comprobación.
+
+## §F92 — La autoprueba decía «9 de 9» sobre 26 dependencias
+
+**2026-09-09.** La autoprueba del verificador cerraba con «9 de 9: ningún artefacto puede faltar sin que se
+note». La frase se lee como universal, y no lo era: **9 de los artefactos que ella misma lista**, mientras el
+verificador cita **26 rutas** en su fuente. Es §L47 en su forma más cómoda de pasar por alto — el
+denominador es el que la propia herramienta elige.
+
+Enumeradas las dependencias y escondidas una a una, **siete no estaban vigiladas y su ausencia sí producía
+un fallo atribuible**, de modo que podían añadirse sin más:
+
+| Artefacto | Comprobación que falla al esconderlo |
+|:---|:---|
+| `ANALISIS_CONJUNTO_20260907/statistical_report.md` | el ANOVA titular |
+| `ablacion_n15_REMOTO/benchmark_results.csv` | las ANOVA secundarias, y la Tabla 4 |
+| `n30_rerun_REMOTO/benchmark_results.csv` | las ANOVA secundarias |
+| `benchmark_balanced_120_…071207/benchmark_results.csv` | las ANOVA secundarias, y la taxonomía de §5.4 |
+| `cloud_n15_limpio_20260905/benchmark_results.csv` | la Tabla 4 |
+| `gemma4_31b_n15_REMOTO/benchmark_results.csv` | la Tabla 4, y las tablas 5, 6 y 8 |
+| `results/benchmark_results.csv` | la Tabla 4 |
+
+La autoprueba pasa de **9** a **16** artefactos vigilados, y de las 26 rutas citadas quedan 8 sin vigilar:
+5 nombres genéricos que se resuelven en tiempo de ejecución, 1 ruta de directorio y **2 fuera a propósito**
+—los respaldos rotos de la decisión 3, cuya comprobación es un AVISO declarado, de modo que esconderlos no
+cambia nada y la prueba no podría atribuir el fallo—. Cero ficheros sin vigilar y sin motivo.
+
+### Un cociente entre conjuntos que no están anidados es peor que ningún cociente
+
+La primera corrección imprimía «cobertura: 15 de las 26 rutas que el verificador cita». Eso sugiere que los
+15 vigilados son un **subconjunto** de las 26, y no lo son: varios artefactos —el de composición de falsos
+positivos, el de mojibake, el de correlación— se construyen con variables y **no aparecen** en el recuento
+de literales. El cociente daba una impresión de cobertura parcial cuando en realidad los dos conjuntos solo
+se solapan.
+
+Sustituido por la **diferencia real**, derivada de la fuente y clasificada: cuántas dependencias hay,
+cuántas sin vigilar, y de qué clase es cada una. El denominador ya no se escribe a mano, que es §L63: una
+cobertura con el denominador literal deja de ser cierta en cuanto se añade una dependencia, y calla.

@@ -35,7 +35,78 @@ ARTEFACTOS = [
     ('DEFENSA-PREGUNTAS-Y-RESPUESTAS.md', 'indice de defensa'),
     (f'{BENCH}/ROBUSTEZ_ESTADISTICA_20260909/robustez.json', 'indice de defensa'),
     (f'{BENCH}/ANALISIS_CONJUNTO_20260907/levene.json', 'homocedasticidad'),
+    # Anadidos el 2026-09-09: el verificador cita 26 rutas y esta lista cubria 9. Las seis de
+    # abajo respaldan cifras PUBLICADAS y su ausencia produce un fallo atribuible, comprobado
+    # escondiendolas una a una. Ver FINDINGS §F92.
+    (f'{BENCH}/ANALISIS_CONJUNTO_20260907/statistical_report.md', 'ANOVA titular'),
+    (f'{BENCH}/ablacion_n15_REMOTO/benchmark_results.csv', 'ANOVA secundarias'),
+    (f'{BENCH}/n30_rerun_REMOTO/benchmark_results.csv', 'ANOVA secundarias'),
+    (f'{BENCH}/benchmark_balanced_120_20260825_071207/benchmark_results.csv', 'ANOVA secundarias'),
+    (f'{BENCH}/cloud_n15_limpio_20260905/benchmark_results.csv', 'Tabla 4'),
+    (f'{BENCH}/gemma4_31b_n15_REMOTO/benchmark_results.csv', 'tablas 5, 6 y 8'),
+    (f'{BENCH}/benchmark_results.csv', 'Tabla 4'),
 ]
+
+
+def _rutas_del_verificador():
+    """Rutas o nombres de fichero que cita el verificador, leidos de su fuente.
+
+    Se derivan, no se escriben a mano: un denominador escrito a mano deja de ser cierto en cuanto
+    se anade una dependencia, y calla (§L63).
+    """
+    import re as _re
+    try:
+        with open(os.path.join(RAIZ, 'tools/verificar_informe.py'), encoding='utf-8') as fh:
+            src = fh.read()
+    except OSError:
+        return 0
+    lit = set()
+    for m in _re.finditer(r"[\'\"]((?:results|repos|doc|tools)/[A-Za-z0-9_./:-]+)[\'\"]", src):
+        lit.add(m.group(1))
+    for m in _re.finditer(r"[\'\"]([A-Za-z0-9_.-]+\.(?:json|csv|md|py))[\'\"]", src):
+        lit.add(m.group(1))
+    return lit
+
+
+def _informe_cobertura():
+    """Dice que dependencias del verificador NO estan vigiladas, y por que es aceptable.
+
+    La primera version imprimia «15 de las 26 rutas que el verificador cita», y eso sugeria que
+    los 15 vigilados son un subconjunto de las 26, cuando no lo son: varios se construyen con
+    variables y no aparecen en ese recuento. Un cociente entre dos conjuntos que no estan
+    anidados es peor que no dar cociente. Aqui se enumera la diferencia real.
+    """
+    citadas = _rutas_del_verificador()
+    vigilados = {rel for rel, _ in ARTEFACTOS}
+
+    def _vigilada(r):
+        return any(r in v or v.endswith(r) for v in vigilados)
+
+    sin = sorted(r for r in citadas if not _vigilada(r))
+    generico = [r for r in sin if '/' not in r]
+    directorio = [r for r in sin if '/' in r
+                  and not os.path.splitext(r)[1]]
+    resto = [r for r in sin if r not in generico and r not in directorio]
+    print('  dependencias citadas en la fuente del verificador: %d · sin vigilar: %d'
+          % (len(citadas), len(sin)))
+    print('    %d nombres genericos que se resuelven en tiempo de ejecucion' % len(generico))
+    print('    %d rutas de directorio, no de fichero' % len(directorio))
+    # Los dos respaldos de la decision 3 quedan fuera A PROPOSITO: su comprobacion es un AVISO
+    # declarado —«2 JSON rotos declarados, pendientes de decision del autor»—, de modo que
+    # esconderlos no cambia el resultado y la prueba no podria atribuir nada.
+    APOSTA = {'benchmark_summary.json.bak_prescore', 'detailed_results.json.bak_prescore'}
+    aposta = [r for r in resto if os.path.basename(r) in APOSTA]
+    inesperados = [r for r in resto if r not in aposta]
+    if aposta:
+        print('    %d fuera a proposito: los respaldos rotos de la decision 3, cuya '
+              'comprobacion es un AVISO declarado' % len(aposta))
+    if inesperados:
+        print('    %d ficheros concretos SIN VIGILAR Y SIN MOTIVO:' % len(inesperados))
+        for r in inesperados:
+            print('      - %s' % r)
+    print('  (el recuento se deriva de la fuente; los artefactos que el verificador construye')
+    print('   con variables no aparecen en el, de modo que no es un cociente entre conjuntos')
+    print('   anidados y no se presenta como tal)')
 
 
 def verificador():
@@ -119,7 +190,12 @@ def main():
         for rel, por in fallos:
             print(f'  - {rel}: {por}')
         return 1
-    print(f'{len(ARTEFACTOS)} de {len(ARTEFACTOS)}: ningun artefacto puede faltar sin que se note')
+    # La cifra que importa no es «N de N», que siempre sale redonda: es cuantos de los
+    # artefactos que el verificador REALMENTE lee estan vigilados. Un «9 de 9» sobre 26
+    # dependencias se lee como universal y no lo es (§L47).
+    print(f'{len(ARTEFACTOS)} de {len(ARTEFACTOS)} artefactos vigilados: ninguno puede faltar '
+          f'sin que se note')
+    _informe_cobertura()
     return 0
 
 
