@@ -1,0 +1,21 @@
+{
+  "models": [
+    "mistral-nemo:latest"
+  ],
+  "batch_size": 10,
+  "num_workers": 1,
+  "max_retries": 2,
+  "fuzzy_threshold": 85,
+  "redis_url": "redis://localhost:6379",
+  "data_file": "data/kleptotrace_augmented_30.json",
+  "results_dir": "results/recorrida_20260908/mistral-nemo_latest__N30",
+  "checkpoint_file": "results/recorrida_20260908/mistral-nemo_latest__N30/.checkpoint.json",
+  "system_prompt_file": "SYSTEM_PROMPT.md",
+  "ollama_base_url": "http://localhost:11434",
+  "temperature": 0.1,
+  "max_tokens": 4096,
+  "seed": 42,
+  "rag_study": true,
+  "rag_mode": "kb_combined",
+  "ablation": false
+}

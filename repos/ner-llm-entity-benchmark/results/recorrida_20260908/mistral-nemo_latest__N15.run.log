@@ -1,0 +1,199 @@
+2026-09-09 00:04:57,265 [INFO] ner_benchmark: Initializing NER-LLM Sanctions Evaluator Pipeline...
+2026-09-09 00:04:57,287 [INFO] ner_benchmark: Loaded System Prompt (Length: 1178 chars)
+2026-09-09 00:04:57,287 [INFO] ner_benchmark: Starting a new benchmark session.
+2026-09-09 00:04:57,288 [INFO] ner_benchmark: Corpus loaded: 15 articles split into 2 batches.
+2026-09-09 00:04:57,288 [INFO] ner_benchmark: Main thread acting as Producer: Publishing pending tasks to queue...
+2026-09-09 00:04:57,331 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-09 00:04:57,333 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-09 00:04:57,333 [INFO] ner_benchmark: [RAG] Using Knowledge Base mode: 'kb_combined'
+2026-09-09 00:04:57,346 [INFO] ner_benchmark.pub_sub: Published task mistral-nemo:latest_baseline-b0-1788923097 for batch 0 to memory queue.
+2026-09-09 00:04:57,346 [INFO] ner_benchmark.pub_sub: Published task mistral-nemo:latest_baseline-b1-1788923097 for batch 1 to memory queue.
+2026-09-09 00:04:57,346 [INFO] ner_benchmark.pub_sub: Published task mistral-nemo:latest_kb_rag-b0-1788923097 for batch 0 to memory queue.
+2026-09-09 00:04:57,346 [INFO] ner_benchmark.pub_sub: Published task mistral-nemo:latest_kb_rag-b1-1788923097 for batch 1 to memory queue.
+2026-09-09 00:04:57,346 [INFO] ner_benchmark.adaptive_workers: [AIMD] AdaptiveWorkerController initialized | workers=1 | min=1 | max=12 | ai_ceiling=9 | stable_window=600.0s | increase_interval=120.0s
+2026-09-09 00:04:57,348 [INFO] src.kb_rag_manager: [KBRAGManager] Initialized | mode='kb_combined' | db='data/chroma_db'
+2026-09-09 00:04:57,348 [INFO] src.kb_rag_manager: [KBRAGManager] Knowledge Base already has 12 documents. Skipping load.
+2026-09-09 00:04:57,348 [INFO] ner_benchmark: [RAG] Worker phase — Knowledge Base mode: 'kb_combined'
+2026-09-09 00:04:57,361 [INFO] ner_benchmark.pub_sub: Published task mistral-nemo:latest_baseline-b0-1788923097 for batch 0 to memory queue.
+2026-09-09 00:04:57,361 [INFO] ner_benchmark.pub_sub: Published task mistral-nemo:latest_baseline-b1-1788923097 for batch 1 to memory queue.
+2026-09-09 00:04:57,361 [INFO] ner_benchmark: Running RAG study 'mistral-nemo:latest_baseline' with 1 workers...
+2026-09-09 00:04:57,361 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task mistral-nemo:latest_baseline-b0-1788923097 from memory queue.
+2026-09-09 00:04:57,361 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-09 00:04:57,361 [INFO] ner_benchmark: [Worker 1] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_baseline') -> Extracting entities for record '1'...
+2026-09-09 00:04:57,362 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:04:57,366 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:05:08,025 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:05:08,546 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:05:08,569 [INFO] ner_benchmark: [Worker 2] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_baseline') -> Extracting entities for record '2'...
+2026-09-09 00:05:08,570 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:05:08,574 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:05:12,658 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:05:13,166 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:05:13,192 [INFO] ner_benchmark: [Worker 3] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_baseline') -> Extracting entities for record '3'...
+2026-09-09 00:05:13,192 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:05:13,197 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:05:24,881 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:05:25,366 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:05:25,384 [INFO] ner_benchmark: [Worker 4] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_baseline') -> Extracting entities for record '4'...
+2026-09-09 00:05:25,384 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:05:25,388 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:05:34,090 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:05:34,539 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:05:34,570 [INFO] ner_benchmark: [Worker 5] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_baseline') -> Extracting entities for record '5'...
+2026-09-09 00:05:34,570 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:05:34,575 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:05:37,140 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:05:37,638 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:05:37,647 [INFO] ner_benchmark: [Worker 6] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_baseline') -> Extracting entities for record '6'...
+2026-09-09 00:05:37,648 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:05:37,653 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:05:40,383 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:05:40,720 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:05:40,727 [INFO] ner_benchmark: [Worker 7] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_baseline') -> Extracting entities for record '7'...
+2026-09-09 00:05:40,728 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:05:40,733 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:05:49,254 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:05:49,373 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:05:49,385 [INFO] ner_benchmark: [Worker 8] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_baseline') -> Extracting entities for record '8'...
+2026-09-09 00:05:49,385 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:05:49,390 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:05:51,629 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:05:51,946 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:05:51,951 [INFO] ner_benchmark: [Worker 9] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_baseline') -> Extracting entities for record '9'...
+2026-09-09 00:05:51,952 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:05:51,959 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:05:59,378 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:05:59,588 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:05:59,603 [INFO] ner_benchmark: [Worker 10] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_baseline') -> Extracting entities for record '10'...
+2026-09-09 00:05:59,603 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:05:59,609 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:06:11,837 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:06:12,284 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:06:12,318 [INFO] ner_benchmark.pub_sub: Acknowledged task mistral-nemo:latest_baseline-b0-1788923097 in memory queue.
+2026-09-09 00:06:12,321 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task mistral-nemo:latest_baseline-b1-1788923097 from memory queue.
+2026-09-09 00:06:12,321 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-09 00:06:12,321 [INFO] ner_benchmark: [Worker 1] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_baseline') -> Extracting entities for record '11'...
+2026-09-09 00:06:12,321 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:06:12,325 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:06:24,208 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:06:24,508 [DEBUG] ner_benchmark.llm_runner: Successfully parsed JSON via brace-scanner.
+2026-09-09 00:06:24,560 [INFO] ner_benchmark: [Worker 2] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_baseline') -> Extracting entities for record '12'...
+2026-09-09 00:06:24,560 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:06:24,564 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:06:35,339 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:06:35,735 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:06:35,768 [INFO] ner_benchmark: [Worker 3] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_baseline') -> Extracting entities for record '13'...
+2026-09-09 00:06:35,768 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:06:35,772 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:06:41,769 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:06:41,878 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:06:41,908 [INFO] ner_benchmark: [Worker 4] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_baseline') -> Extracting entities for record '14'...
+2026-09-09 00:06:41,908 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:06:41,912 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:06:48,604 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:06:49,021 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:06:49,046 [INFO] ner_benchmark: [Worker 5] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_baseline') -> Extracting entities for record '15'...
+2026-09-09 00:06:49,046 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:06:49,051 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:06:56,013 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:06:56,173 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:06:56,185 [INFO] ner_benchmark.pub_sub: Acknowledged task mistral-nemo:latest_baseline-b1-1788923097 in memory queue.
+2026-09-09 00:06:56,188 [INFO] ner_benchmark.pub_sub: Published task mistral-nemo:latest_kb_rag-b0-1788923216 for batch 0 to memory queue.
+2026-09-09 00:06:56,188 [INFO] ner_benchmark.pub_sub: Published task mistral-nemo:latest_kb_rag-b1-1788923216 for batch 1 to memory queue.
+2026-09-09 00:06:56,188 [INFO] ner_benchmark: Running RAG study 'mistral-nemo:latest_kb_rag' with 1 workers...
+2026-09-09 00:06:56,188 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task mistral-nemo:latest_kb_rag-b0-1788923216 from memory queue.
+2026-09-09 00:06:56,188 [INFO] ner_benchmark: Processing batch 1 with 1 parallel workers...
+2026-09-09 00:06:56,188 [INFO] ner_benchmark: [Worker 1] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_kb_rag') -> Extracting entities for record '1'...
+2026-09-09 00:06:56,318 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:06:56,321 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:07:08,010 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:07:08,510 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:07:08,526 [INFO] ner_benchmark: [Worker 2] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_kb_rag') -> Extracting entities for record '2'...
+2026-09-09 00:07:08,613 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:07:08,616 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:07:13,907 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:07:14,215 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:07:14,239 [INFO] ner_benchmark: [Worker 3] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_kb_rag') -> Extracting entities for record '3'...
+2026-09-09 00:07:14,334 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:07:14,337 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:07:26,315 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:07:26,487 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:07:26,511 [INFO] ner_benchmark: [Worker 4] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_kb_rag') -> Extracting entities for record '4'...
+2026-09-09 00:07:26,601 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:07:26,605 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:07:35,014 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:07:35,216 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:07:35,250 [INFO] ner_benchmark: [Worker 5] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_kb_rag') -> Extracting entities for record '5'...
+2026-09-09 00:07:35,339 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:07:35,342 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:07:39,468 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:07:39,921 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:07:39,931 [INFO] ner_benchmark: [Worker 6] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_kb_rag') -> Extracting entities for record '6'...
+2026-09-09 00:07:40,024 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:07:40,027 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:07:42,621 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:07:43,094 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:07:43,102 [INFO] ner_benchmark: [Worker 7] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_kb_rag') -> Extracting entities for record '7'...
+2026-09-09 00:07:43,206 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:07:43,209 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:07:53,722 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:07:53,838 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:07:53,855 [INFO] ner_benchmark: [Worker 8] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_kb_rag') -> Extracting entities for record '8'...
+2026-09-09 00:07:53,951 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:07:53,955 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:07:55,917 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:07:55,978 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:07:55,982 [INFO] ner_benchmark: [Worker 9] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_kb_rag') -> Extracting entities for record '9'...
+2026-09-09 00:07:56,078 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:07:56,082 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:08:03,130 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:08:03,196 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:08:03,207 [INFO] ner_benchmark: [Worker 10] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_kb_rag') -> Extracting entities for record '10'...
+2026-09-09 00:08:03,301 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:08:03,304 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:08:15,376 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:08:15,460 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:08:15,480 [INFO] ner_benchmark.pub_sub: Acknowledged task mistral-nemo:latest_kb_rag-b0-1788923216 in memory queue.
+2026-09-09 00:08:15,485 [INFO] ner_benchmark.pub_sub: Subscribed/Claimed task mistral-nemo:latest_kb_rag-b1-1788923216 from memory queue.
+2026-09-09 00:08:15,485 [INFO] ner_benchmark: Processing batch 2 with 1 parallel workers...
+2026-09-09 00:08:15,486 [INFO] ner_benchmark: [Worker 1] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_kb_rag') -> Extracting entities for record '11'...
+2026-09-09 00:08:15,581 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:08:15,585 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:08:31,026 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:08:31,293 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:08:31,336 [INFO] ner_benchmark: [Worker 2] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_kb_rag') -> Extracting entities for record '12'...
+2026-09-09 00:08:31,425 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:08:31,428 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:08:39,899 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:08:40,038 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:08:40,075 [INFO] ner_benchmark: [Worker 3] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_kb_rag') -> Extracting entities for record '13'...
+2026-09-09 00:08:40,160 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:08:40,163 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:08:46,430 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:08:46,780 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:08:46,815 [INFO] ner_benchmark: [Worker 4] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_kb_rag') -> Extracting entities for record '14'...
+2026-09-09 00:08:46,908 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:08:46,911 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:08:54,043 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:08:54,532 [DEBUG] ner_benchmark.llm_runner: Successfully parsed JSON via brace-scanner.
+2026-09-09 00:08:54,554 [INFO] ner_benchmark: [Worker 5] Model 'mistral-nemo:latest' (Mapped: 'mistral-nemo:latest_kb_rag') -> Extracting entities for record '15'...
+2026-09-09 00:08:54,646 [DEBUG] ner_benchmark.providers.factory: Factory: model 'mistral-nemo:latest' → OllamaProvider (default)
+2026-09-09 00:08:54,649 [INFO] ner_benchmark.providers.ollama: OLLAMA effective config: model=mistral-nemo:latest options={'temperature': 0.1, 'num_predict': 4096, 'seed': 42} think=None cloud=False
+2026-09-09 00:09:01,933 [INFO] httpx: HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-09-09 00:09:02,273 [DEBUG] ner_benchmark.llm_runner: Successfully parsed LLM response directly as JSON.
+2026-09-09 00:09:02,292 [INFO] ner_benchmark.pub_sub: Acknowledged task mistral-nemo:latest_kb_rag-b1-1788923216 in memory queue.
+2026-09-09 00:09:02,305 [INFO] ner_benchmark: Unloading model weights for mistral-nemo:latest to protect VRAM.
+2026-09-09 00:09:02,351 [INFO] ner_benchmark.llm_runner: Successfully unloaded weights for mistral-nemo:latest from VRAM.
+2026-09-09 00:09:04,352 [INFO] ner_benchmark: ==================================================
+2026-09-09 00:09:04,353 [INFO] ner_benchmark: BENCHMARK EXTRACTIONS COMPLETE. PROCESSING METRICS...
+2026-09-09 00:09:04,353 [INFO] ner_benchmark: ==================================================
+2026-09-09 00:09:04,447 [INFO] ner_benchmark: Successfully exported all results to results/ output directory.
+
+==================================================
+      FINAL BENCHMARK PERFORMANCE RESULTS
+==================================================
+                                    f1  precision    recall  hallucination_rate  latency_sec
+mistral-nemo:latest_baseline  0.608082   0.773535  0.527032            0.008333     7.894061
+mistral-nemo:latest_kb_rag    0.622016   0.771758  0.551350            0.017284     8.286525
+==================================================
+Full reports saved under: results/ directory.
