@@ -6383,10 +6383,13 @@ separado es la mejor señal disponible.
 Calculada la métrica restringida a las dos categorías que el corpus anota: **4 de 13**, y el que
 entra es `llama3.1:8b`. Con dos consecuencias:
 
-**Primera, y favorece al trabajo:** `mistral-nemo:latest` **pierde el signo negativo** que tenía en
-la métrica de tres categorías —de −0,0206 con p cruda 0,0058, el que más cerca quedaba de entrar, a
-+0,0000 con p 0,111—. El «efecto adverso en los modelos mayores» es más débil de lo que la métrica de
-tres categorías sugiere.
+**Primera, y favorece al trabajo aunque menos de lo que escribí primero:** `mistral-nemo:latest`
+pasa de p cruda 0,0058 —el que más cerca quedaba de entrar— a **0,111**, y su **mediana** de −0,0206
+a +0,0000. **Corrección del mismo día:** escribí que «pierde el signo negativo», y eso vale para la
+mediana y no para el resto. Su **media sigue en −0,0272** y **46 artículos empeoran frente a 36 que
+mejoran**. Lo correcto es que el efecto adverso **deja de ser significativo**, no que deje de
+existir. Lo vi al mecanizar el cálculo y ver el reparto completo, que a mano no había mirado: es el
+mismo argumento por el que hay que dar tres cifras y no una, aplicado contra mi propia frase.
 
 **Segunda, y es una advertencia:** **dos de los cuatro significativos tienen mediana exactamente
 +0,0000.** El equipo ya avisaba de que `gemma4:12b-mlx` era significativo con una mediana de 1 pp; en

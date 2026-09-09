@@ -44,10 +44,12 @@ La calculé. **Da 4 de 13**, no 3, y el que entra es `llama3.1:8b`:
 | `deepseek-r1:1.5b` | 113 | +0,0301 | 1,42e-01 | 0,4429 | no |
 | `qwen3:8b` | 113 | +0,0000 | 7,75e-01 | 0,7746 | no |
 
-**Un dato relevante para la conclusión del trabajo:** en la restringida `mistral-nemo:latest` deja
-de tener el signo negativo que tenía en la de tres categorías (−0,0206, p cruda 0,0058, el que más
-cerca quedaba de entrar). Su Δ pasa a +0,0000 y su p a 0,111. El «efecto adverso en los modelos
-mayores» es más débil de lo que la métrica de tres categorías sugiere.
+**Un dato para la conclusión del trabajo, con la precisión que exige.** En la restringida
+`mistral-nemo:latest` pasa de p cruda 0,0058 —el que más cerca quedaba de entrar— a **0,111**, y su
+**mediana** pasa de −0,0206 a +0,0000. Pero **el signo adverso no desaparece**: su **media sigue en
+−0,0272** y **46 artículos empeoran frente a 36 que mejoran**. Lo correcto es decir que el efecto
+adverso **deja de ser significativo**, no que deje de existir. Escribimos primero «pierde el signo
+negativo» y es inexacto: lo pierde la mediana, no la media ni el reparto.
 
 ## 3. Y una advertencia que agrava la vuestra sobre significancia y relevancia
 
