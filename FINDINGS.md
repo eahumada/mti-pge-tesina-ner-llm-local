@@ -3029,3 +3029,48 @@ Antes de escribir un hallazgo hay que **buscar si ya está escrito**, con un `gr
 por el número de sección. Y al leer un hallazgo antiguo, su conclusión tranquilizadora —«no afecta a las
 cifras publicadas»— merece la misma comprobación que una alarmante: aquí bastaba un ejemplo de tres entidades
 en una servilleta para ver que la inmunidad no se sostenía, y sobrevivió dos días sin que nadie lo hiciera.
+
+---
+
+## §F83 — Los contrastes de robustez no tenían herramienta, y al escribirla apareció un adelanto que conviene mirar
+
+**2026-09-09, 03:3x.** Los tres artefactos de `results/ROBUSTEZ_ESTADISTICA_20260908/` —Friedman, post-hoc
+pareado y potencia— sostienen `§F75`, `§F76` y `§F77`, y con ellos la **decisión 7**, que pregunta si el
+informe adopta el post-hoc apropiado al diseño. Se calcularon a mano en una sesión y **ningún script los
+reproducía**: `verificar_informe.py` los lee, pero nadie los genera.
+
+Eso los convertía en un callejón sin salida. Cuando la re-corrida sustituya los datos, esos tres hallazgos
+habría que rehacerlos desde cero, y la decisión 7 no podría actualizarse.
+
+**Escrita `tools/robustez_estadistica.py`**, que calcula ambos contrastes desde un CSV consolidado. Validada
+con `--validar`, que exige reproducir lo publicado: **χ² = 1169,2327 con 25 grados de libertad y 8 de 13
+significativos tras Holm**, sin una sola discrepancia. La herramienta calcula lo mismo que se calculó a mano.
+
+### El adelanto, y hay que leerlo con cuidado
+
+Ejecutada sobre los **once** modelos que la re-corrida lleva entregados —el consolidado provisional del
+ensayo de fusión— el resultado cambia mucho:
+
+| | Datos publicados (13 modelos) | Re-corrida provisional (11 modelos) |
+|:---|---:|---:|
+| Friedman χ² | 1 169,23 | 1 131,62 |
+| Significativos tras Holm | **8 de 13** | **2 de 11** |
+| Mayor Δ | +14,52 pp (`nemotron-mini:4b`) | +6,73 pp (`llama3.2:latest`) |
+
+Los dos que sobreviven son `llama3.2:latest` (+6,73) y `gemma4:12b-mlx` (+2,29). Dos más quedan **al borde**:
+`gemma4:latest` con Holm = 0,0529 y `mistral-nemo:latest` con 0,0520, este último con efecto **negativo** de
+−4,29 pp.
+
+**Tres advertencias, y son importantes.**
+
+1. **Faltan dos modelos, y uno de ellos es el de mayor efecto.** `nemotron-mini:4b` daba +14,52 pp y era el
+   más significativo de todos; `deepseek-r1:1.5b` sigue en curso. Con los trece la fotografía puede cambiar,
+   y precisamente en la dirección que más importa, porque ambos son de los pequeños.
+2. **Esta cifra no debe citarse todavía en ninguna parte.** Es un adelanto de un consolidado provisional
+   construido en un directorio temporal para ensayar la fusión, no un resultado del estudio.
+3. **Lo que sí se puede afirmar ya** es que el efecto del RAG sobre el corpus corregido es **bastante menor**
+   que sobre el defectuoso, y que la tesis de la proporcionalidad inversa se apoyará en menos modelos. El
+   sentido no se invierte —el que más gana sigue siendo de los pequeños— pero la magnitud se reduce.
+
+Cuando lleguen los trece, `CIERRE-RECORRIDA-PROCEDIMIENTO.md` debe incluir la ejecución de esta herramienta
+junto al `merge_and_analyze.py`, y §5.3.1 habrá de reescribirse con las cifras que salgan.
