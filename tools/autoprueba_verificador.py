@@ -62,6 +62,70 @@ ARTEFACTOS = [
 ]
 
 
+# --- Diario de artefactos escondidos, para sobrevivir a un kill ------------------------------
+# El 2026-09-09 esta autoprueba se quedo sin tiempo y **dejo un fichero rastreado borrado**:
+# `benchmark_balanced_120_.../benchmark_results.csv`. Lo esconde con `shutil.move` y lo devuelve en
+# un `finally`, y un `finally` **no corre si el proceso recibe una senal**. Se recupero con
+# `git checkout --`, pero un artefacto no rastreado no se habria podido recuperar.
+#
+# El diario se escribe ANTES de mover y se borra DESPUES de devolver, de modo que su existencia al
+# arrancar significa que la ejecucion anterior no termino. Ver FINDINGS §F122.
+DIARIO = os.path.join(RAIZ, '.autoprueba_pendiente')
+
+
+def _diario_apunta(orig, guardado):
+    with open(DIARIO, 'a', encoding='utf-8') as fh:
+        fh.write('%s\t%s\n' % (orig, guardado))
+        fh.flush()
+        os.fsync(fh.fileno())
+
+
+def _diario_limpia():
+    if os.path.exists(DIARIO):
+        os.remove(DIARIO)
+
+
+def _recupera_pendientes():
+    """Devuelve a su sitio lo que una ejecucion interrumpida dejo escondido."""
+    if not os.path.exists(DIARIO):
+        return
+    print('  ATENCION: la ejecucion anterior no termino y dejo artefactos escondidos.')
+    with open(DIARIO, encoding='utf-8') as fh:
+        lineas = [l.rstrip('\n').split('\t') for l in fh if '\t' in l]
+    for orig, guardado in lineas:
+        rel = os.path.relpath(orig, RAIZ)
+        if os.path.isfile(orig):
+            print('    %s ya esta en su sitio' % rel)
+        elif os.path.isfile(guardado):
+            shutil.move(guardado, orig)
+            print('    %s DEVUELTO desde %s' % (rel, guardado))
+        else:
+            r = subprocess.run(['git', 'checkout', '--', rel], cwd=RAIZ,
+                               capture_output=True, text=True)
+            if r.returncode == 0 and os.path.isfile(orig):
+                print('    %s recuperado con git checkout (la copia escondida ya no existe)' % rel)
+            else:
+                print('    %s ** PERDIDO **: no esta en su sitio, no esta en %s y git no lo '
+                      'recupera. Si no estaba rastreado, no hay copia.' % (rel, guardado))
+    _diario_limpia()
+    print()
+
+
+def _sin_borrados(momento):
+    """Ningun fichero rastreado puede quedar borrado por esta herramienta."""
+    r = subprocess.run(['git', 'status', '--porcelain'], cwd=RAIZ,
+                       capture_output=True, text=True)
+    malos = [l[3:] for l in r.stdout.split('\n') if l[:2] in (' D', 'D ')]
+    if malos:
+        print('  ATENCION (%s): %d fichero(s) rastreado(s) borrado(s); se restauran:' %
+              (momento, len(malos)))
+        for m in malos:
+            subprocess.run(['git', 'checkout', '--', m], cwd=RAIZ, capture_output=True)
+            print('    %s' % m)
+        print()
+    return len(malos)
+
+
 def _rutas_del_verificador():
     """Rutas o nombres de fichero que cita el verificador, leidos de su fuente.
 
@@ -150,6 +214,14 @@ def malas(r):
 
 
 def main():
+    # ANTES de la corrida de control: si una ejecucion interrumpida dejo un artefacto
+    # escondido, el control corre sin el y da por «ya fallidas» once comprobaciones que
+    # en realidad estan bien, lo que descuenta esos centinelas y **invalida la prueba
+    # entera**. Paso al colocarlo despues, y se vio porque el aviso listaba el ANOVA
+    # titular entre las fallidas.
+    _recupera_pendientes()
+    _sin_borrados('al arrancar')
+
     partida = verificador()
     previas = malas(partida)
     if previas:
@@ -170,12 +242,14 @@ def main():
             continue
         tmp = tempfile.mkdtemp(prefix='autoprueba-')
         guardado = os.path.join(tmp, os.path.basename(rel))
+        _diario_apunta(ruta, guardado)      # antes de mover: un `finally` no sobrevive a una senal
         shutil.move(ruta, guardado)
         try:
             r = verificador()
         finally:
             shutil.move(guardado, ruta)
             shutil.rmtree(tmp, ignore_errors=True)
+            _diario_limpia()
 
         nuevas = malas(r) - previas
         # Comparacion insensible a acentos: la primera version esperaba «protocolo homogeneo» y la
@@ -228,6 +302,7 @@ def main():
     n_vig = len(ARTEFACTOS) - len(bloqueadas)
     print(f'{n_vig} de {len(ARTEFACTOS)} artefactos vigilados: ninguno puede faltar sin que se '
           f'note' + (f' ({len(bloqueadas)} bloqueado(s) por un fallo abierto)' if bloqueadas else ''))
+    _sin_borrados('al terminar')
     _informe_cobertura()
     return 0
 

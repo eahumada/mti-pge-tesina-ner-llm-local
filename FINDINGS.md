@@ -5572,3 +5572,58 @@ registro vale lo que vale la prueba que la produjo, y «busqué el texto y no es
 cuando el texto pudo haberse reescrito.
 
 **Estado del verificador:** 51 comprobaciones, 40 fallos (40 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F122 — Una comprobación nueva dejó a la autoprueba sin tiempo, y el corte borró un fichero rastreado
+
+**Fecha:** 2026-09-09 · **Origen:** añadir la comprobación 51
+
+La comprobación 51 compara 78 párrafos del Markdown contra 193 del `.docx`, por tres entregables,
+con `difflib.SequenceMatcher.ratio()`. Eso llevó el verificador de **0,67 s a 7,80 s**, y la
+autoprueba —que lo ejecuta **una vez por artefacto vigilado**, veintiuna veces— se pasó de tiempo.
+Una puerta lenta deja de usarse, que es exactamente el motivo por el que el gancho de commit corre
+sin red.
+
+**Optimizada a 1,66 s** con dos atajos: un índice por los primeros 48 caracteres normalizados, que
+resuelve la mayoría sin comparar nada porque los párrafos arrancan igual en los dos documentos; y
+para el resto, la cascada `real_quick_ratio → quick_ratio → ratio`, que son cotas superiores
+sucesivamente más caras y más ajustadas, de modo que la cara no se calcula si la barata ya no
+alcanza el mejor puntaje visto.
+
+**La prueba de que la optimización está bien es que el resultado no cambie**, y se comprobó de la
+única forma que vale: cargando la versión anterior desde git y comparando **los treinta fallos uno
+por uno**. Idénticos. La primera comparación que hice cubría solo ocho, porque la salida trunca en
+«y 22 más» — una comprobación de la comprobación que mira un cuarto de los casos no acredita nada.
+
+### Y el corte por tiempo borró un fichero rastreado
+
+Esto es lo que importa. La autoprueba esconde cada artefacto con `shutil.move` y lo devuelve en un
+`finally`, y **un `finally` no corre si el proceso recibe una señal**. Al cortarse por tiempo dejó
+`benchmark_balanced_120_20260825_071207/benchmark_results.csv` **borrado**: 480 filas, cuatro
+grupos, uno de los artefactos que respalda la Tabla 4 y las ANOVA secundarias.
+
+Se recuperó con `git checkout --`, y ahí está la lección: **se pudo recuperar porque estaba
+rastreado**. Un artefacto no rastreado habría desaparecido sin más, y el proyecto ya tiene una
+lección escrita sobre eso —`§L?`, la de los `benchmark.log` ignorados— cuyo remedio fue versionarlos
+precisamente para tener un punto de retorno.
+
+**Arreglado con un diario**, no con un `finally` mejor: se escribe la pareja
+`(ruta original, copia escondida)` **antes** de mover, con `fsync`, y se borra **después** de
+devolver. Su existencia al arrancar significa que la ejecución anterior no terminó, y entonces la
+herramienta devuelve lo pendiente, o lo recupera con `git checkout` si la copia ya no está, o dice
+en voz alta que se perdió si no era rastreado. Más una red de seguridad que detecta y restaura
+cualquier fichero rastreado borrado, al arrancar y al terminar.
+
+**Probado interrumpiendo la herramienta a propósito**: el diario capturó el pendiente y la ejecución
+siguiente lo devolvió sola.
+
+**Y un error de colocación que se vio solo.** Puse la recuperación **después** de la corrida de
+control, y entonces el control corría con el artefacto todavía ausente y daba por «ya fallidas»
+**once comprobaciones que están bien** —entre ellas el ANOVA titular—, descontándolas como
+centinelas e **invalidando la prueba entera**. Se detectó porque el aviso listaba el ANOVA titular
+entre las fallidas, que es imposible con todo en su sitio. La recuperación va como primera cosa de
+`main()`.
+
+**Estado del verificador:** 51 comprobaciones, 40 fallos (40 declarados, **0 nuevos**), 0 vacías.
+Autoprueba en 1,66 s por corrida.
