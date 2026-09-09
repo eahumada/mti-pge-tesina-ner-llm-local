@@ -2721,6 +2721,13 @@ agotado, y luego HTTP 504. Aplicando el control de `§L57` —pedir algo que sí
 acredita, como manda la norma del proyecto, por **resolución del DOI**: `10.5281/zenodo.14027005` responde 302
 con destino, luego el registro existe.
 
+> **Actualización del 2026-09-09.** Zenodo **ha vuelto a responder**: la entrada [18] da hoy HTTP 200 y
+> aterriza en `zenodo.org/records/14027005`, de modo que se verifica por la vía normal y ya no necesita
+> acreditarse por DOI —el recuento de acreditadas baja de cuatro a tres, y es una mejora, no una regresión—.
+> El 403 que se describe abajo era real cuando se midió, a las 23:0x del día 8. **Se conserva `zenodo.org` en
+> la lista de porteros**: no estorba, porque solo actúa ante un 401 o un 403, y el episodio demuestra que
+> puede repetirse.
+
 **Un identificador de ACM que no es un DOI.** Al exigir resolución del DOI a las entradas de un portero, falló
 la [17], el artículo de Lafferty, McCallum y Pereira sobre *conditional random fields*. Su URL es
 `dl.acm.org/doi/10.5555/645530.655813`, y **`10.5555` no es un DOI registrado**: doi.org devuelve 404 y
