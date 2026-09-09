@@ -1176,3 +1176,137 @@ siguiente pasada lee el registro, no el documento.
 **Y una advertencia sobre esa herramienta:** su lista se mantiene a mano, de modo que **solo cubre lo que
 alguien se acordó de anotar**. No pretende ser exhaustiva. Pretende que las correcciones de más peso no puedan
 quedarse en el registro sin estar en el fichero — que es exactamente lo que pasó una vez hoy.
+
+---
+
+## §L71 — Un ensayo mal armado no refuta ni confirma, y confundirlo con «no detecta» valida comprobaciones vacías
+
+**Cuatro veces en una sesión**, y las cuatro con la misma forma: la mutación no disparó y el defecto
+estaba en el ensayo, no en la comprobación.
+
+- Busqué la cifra a mutar **en negrita** y el informe la escribe sin resalte (`§F117`).
+- Omití los asteriscos y el `>` de una cita en bloque (`§F120`).
+- Apunté la prueba a un espejo de `main` que **ya se había separado**, de modo que la premisa había
+  desaparecido (`§F133`).
+- Mi `grep` buscaba una cadena que **la salida trunca a 52 caracteres** (`§F134`).
+
+Las cuatro veces la primera lectura fue «la comprobación no detecta», que es lo contrario de lo que
+pasaba. Y esa confusión es peligrosa en una dirección concreta: **hace dar por validada una
+comprobación que en realidad no se ha probado**, que es exactamente la comprobación vacua contra la
+que existe todo este aparato.
+
+**La regla:** un ensayo se juzga por el **código de salida o el recuento de fallos**, nunca por si un
+`grep` encuentra algo en la salida. Y si la mutación no encuentra su ancla, eso es un **ensayo
+fallido**, que se arregla y se repite; no un resultado.
+
+---
+
+## §L72 — Una cifra correcta sobre el artefacto equivocado hace más daño que una mal calculada
+
+Toda una sesión advirtiendo de que «el cuerpo está en 23,0 de 25 páginas y no cabe lo que falta».
+Los 23,05 eran **exactos**: la comprobación los calcula bien, con una densidad medida sobre el PDF
+entregado y un ancla verificada. Lo que ocurría es que describen **el Markdown**, y yo los usaba como
+si describieran **el entregable** — que es más corto precisamente porque le falta el contenido que
+discutíamos (`§F140`).
+
+**Nada lo detecta**, y ahí está el daño: no hay error de cálculo que encontrar, no hay comprobación
+que falle, y la cifra resiste cualquier revisión de su aritmética. La equivocación vive en el salto
+entre lo que la cifra mide y aquello para lo que se invoca.
+
+**La pregunta que faltaba no era «¿está bien calculado?» sino «¿de qué artefacto habla?»**, y hay
+que hacérsela a toda cifra que se herede de una herramienta. Cambió una decisión: de «probablemente
+no cabe» a «cabe con margen».
+
+---
+
+## §L73 — Un recuento copiado a un documento envejece sin avisar, y en un procedimiento es peor
+
+`CLAUDE.md` decía «4 fallos (4 declarados, 0 nuevos)» y enumeraba cuáles, cuando había veinticinco
+declaraciones. `doc/prompts/00-revision-completa.md` decía «cubre diez comprobaciones» y las listaba,
+cuando había cincuenta y cinco (`§F134`, `§F136`).
+
+**Y la gravedad depende de qué clase de documento sea.** En un documento de **norma**, una cifra vieja
+desinforma. En uno de **procedimiento** —de los que alguien pega en una sesión nueva para ejecutar una
+revisión— hace algo peor: **declarar de menos manda hacer menos**. Quien lo lea creerá que el aparato
+cubre diez cosas y verificará a mano las otras cuarenta y cinco, o no las verificará.
+
+**La regla:** un recuento que una herramienta reporta **no se copia**; se ejecuta la herramienta. Si
+el recuento **es** el contenido del documento —como en una lista de decisiones—, entonces se declara
+y **se ata con una comprobación** que verifique que coincide con lo que hay debajo.
+
+**La excepción, que no es una laguna:** los **registros fechados** —un `WORKLOG`, el registro de
+actualizaciones, este propio fichero— consignan lo que era cierto entonces y **por eso no se
+actualizan**. A un registro se le añade, no se le edita.
+
+---
+
+## §L74 — Un mecanismo de excepciones se ciega si se lo aplica a sí mismo
+
+`FALLOS_DECLARADOS` silencia un fallo buscando un fragmento **en el texto de su mensaje**. Al declarar
+el aviso de la comprobación que audita las declaraciones, usé como clave un trozo de **la plantilla
+de ese mensaje**. Resultado: la declaración casaba con **cualquier** aviso de huérfana y **anuló la
+detección completa** de declaraciones caducadas, presentes y futuras (`§F133`).
+
+El síntoma que lo delató tiene forma reconocible: la comprobación **se acusaba a sí misma** —«la
+declaración n.25 no tapa ningún fallo», sobre la n.25—. Una excepción que se nombra a sí misma
+describe el mensaje y no el defecto.
+
+**La regla:** cuando lo que hay que declarar es un **estado del entorno** y no un defecto del
+documento, la herramienta correcta es una **lista enumerada en el código**, no una excepción. Y toda
+comprobación que audite un mecanismo debe emitir sus mensajes de forma que **el mecanismo no pueda
+capturarlos**: un prefijo estricto de la clave, nunca la clave entera.
+
+---
+
+## §L75 — El código fuente se lee con un analizador sintáctico, y el síntoma de no hacerlo es que faltan cosas
+
+Extraía literales de una fuente Python con una expresión regular sobre las comillas. **Un apóstrofo
+suelto dentro de un docstring desalinea el emparejamiento** y, a partir de ahí, todos los literales
+quedan mal delimitados. Daba **713 fragmentos mal cortados** y **cero** con la palabra que buscaba,
+sobre un fichero que la usa cuatro veces. Con `ast`, **402** reales (`§F116`).
+
+**Lo que hace este defecto difícil es su síntoma:** no produce basura evidente, produce **ausencias**.
+Una lista con 713 entradas parece más completa que una con 402, y el hueco solo se nota si por
+casualidad sabes que algo tenía que estar. Aquí se notó porque una comprobación conocida aparecía como
+no cubierta.
+
+**La regla:** para leer código se usa `ast` y no un regex. Y **una cadena que compila como expresión
+regular no es por ello una expresión regular**: `| Columna | Otra |` compila sin error y significa
+alternancia con ramas vacías, de modo que casa con todo. El guardián preciso es que **un patrón que
+casa con la cadena vacía no sirve como ancla**.
+
+---
+
+## §L76 — Una regla que solo vive en un documento se incumple sin que nada avise
+
+La política de ramas se escribió, quedó en `CLAUDE.md` y en el documento de coordinación, y **nada la
+comprobaba**. Y ya se había incumplido **antes** de escribirse: `main` iba dos commits por detrás del
+remoto en silencio —la rama no tenía *upstream* y el `git pull` fallaba sin avisar— y una rama del día
+anterior guardaba la única copia declarada de una dependencia real del sistema.
+
+Es el patrón que esta revisión ha encontrado una docena de veces con formas distintas: la regla de las
+categorías puntuadas, la de los recuentos copiados, la de las rutas afirmadas como conservadas. En
+todas, el documento decía lo correcto y la realidad iba por otro lado.
+
+**La regla:** al escribir una regla, escribir a la vez **lo que la comprueba**. Si no se puede
+comprobar mecánicamente, decirlo en la propia regla, para que quien la lea sepa que descansa en la
+disciplina y no en una puerta.
+
+---
+
+## §L77 — Un hallazgo puede detectar bien y encuadrar mal, y el encuadre es lo que se ejecuta
+
+La comprobación de tablas informó «la Tabla 9 tiene 42 filas y el Markdown 45». La detección era
+**correcta**. El encuadre con que lo trasladé —«le faltan tres filas»— era **falso**: las dos tablas
+usan convenciones distintas, árbol indentado con espacios duros frente a rutas completas, y el mapeo
+entre sus filas **no es uno a uno**. Pegar tres filas con ruta completa habría **roto la convención
+del entregable**, que además se lee mejor (`§F141`).
+
+La causa es concreta y vale para cualquier comprobación de este tipo: **compara recuentos y se detiene
+antes de comparar contenido**, de modo que informa de lo que vio primero y no de lo que manda.
+
+**La regla, que el proyecto ya tenía y esto confirma:** un hallazgo de auditoría es una **hipótesis**,
+y hay que verificarlo contra la fuente antes de convertirlo en instrucción. Con una precisión que
+faltaba: **verificar no es solo confirmar que el defecto existe, es confirmar que es el defecto que se
+cree**. Y cuando una divergencia resulta ser una convención deliberada, la salida correcta es
+**declararla como tal**, no igualar los documentos.
