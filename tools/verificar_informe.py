@@ -158,6 +158,78 @@ def c_tabla7_desde_per_type(s):
           'ruta independiente de c_tabla7_vs_datos; su unico fallo depende de la decision 1')
 
 
+# --- 46. El recuento de Tukey del informe, y la coherencia interna del artefacto ----------------
+def c_tukey_recuento(s):
+    """«158 comparaciones significativas de las 325 posibles»: nadie la recalculaba.
+
+    Es el patron de §F91 una vez mas, en el mismo parrafo que ya obligo a anadir el ANOVA y Levene.
+    La cifra es correcta —contrastada el 2026-09-09 con `statsmodels`, que da exactamente 158 de
+    325—, pero comprobarla exigia el venv, de modo que aqui se comprueba por dos vias que si
+    caben en biblioteca estandar:
+
+    1. **Contra el artefacto**: el `statistical_report.md` del consolidado publica la tabla completa
+       de pares con su p ajustada y su veredicto. Se cuentan sus filas y sus veredictos afirmativos
+       y se contrastan con lo que el informe declara, y con C(26,2) = 325.
+    2. **Coherencia interna del artefacto**: cada veredicto se contrasta contra **su propia p**.
+       Un «significativo» con p >= 0,05, o un «no» con p < 0,05, es una incoherencia del artefacto
+       que ninguna comparacion de totales detecta, porque dos errores de signo contrario se
+       compensan en el recuento.
+
+    La distribucion del rango estudentizado no esta en la biblioteca estandar, asi que esta
+    comprobacion **no recalcula Tukey**: verifica el recuento y la coherencia. Se declara aqui para
+    que nadie la lea como mas fuerte de lo que es.
+    """
+    cons = os.path.join(BENCH_DIR, 'results/ANALISIS_CONJUNTO_20260907')
+    art = os.path.join(cons, 'statistical_report.md')
+    if not os.path.exists(art):
+        check('el recuento de Tukey del informe cuadra con el artefacto', 0,
+              ['no existe %s' % os.path.relpath(art, RAIZ)])
+        return
+    with open(art, encoding='utf-8') as fh:
+        t = fh.read()
+    # Filas de par: «| A vs B | dif | p | veredicto | IC |»
+    pares = []
+    for l in t.split('\n'):
+        m = re.match(r'^\|\s*(\S.*?)\s+vs\s+(\S.*?)\s*\|\s*(-?[\d.]+)\s*\|'
+                     r'\s*([\d.eE+-]+)\s*\|\s*([^|]+?)\s*\|', l)
+        if m:
+            pares.append((m.group(1), m.group(2), float(m.group(4)), m.group(5)))
+    fallos = []
+    n = len(pares)
+    if n == 0:
+        check('el recuento de Tukey del informe cuadra con el artefacto', 0,
+              ['no se puede leer ninguna fila de pares del artefacto: revisar su formato'])
+        return
+    # 1) totales contra el informe y contra C(26,2)
+    esp = 26 * 25 // 2
+    if n != esp:
+        fallos.append('el artefacto trae %d filas de par y C(26,2) son %d' % (n, esp))
+    afirm = [x for x in pares if 'Yes' in x[3] or 'Sí' in x[3] or 'Si' in x[3]]
+    m = re.search(r'Tukey identifica (\d+) comparaciones significativas de las (\d+) posibles', s)
+    if m is None:
+        fallos.append('no se encuentra en el informe la frase del recuento de Tukey: '
+                      'revisar si se reformulo')
+    else:
+        pub_sig, pub_tot = int(m.group(1)), int(m.group(2))
+        if pub_sig != len(afirm):
+            fallos.append('el informe declara %d significativas y el artefacto trae %d'
+                          % (pub_sig, len(afirm)))
+        if pub_tot != n:
+            fallos.append('el informe declara %d comparaciones posibles y el artefacto trae %d'
+                          % (pub_tot, n))
+    # 2) cada veredicto contra su propia p: dos errores de signo contrario se compensarian
+    #    en el recuento y ninguna comparacion de totales los veria.
+    for a, b, pv, ver in pares:
+        af = ('Yes' in ver or 'Sí' in ver or 'Si' in ver)
+        if af and pv >= 0.05:
+            fallos.append('%s vs %s: marcado significativo con p = %.4g' % (a, b, pv))
+        elif not af and pv < 0.05:
+            fallos.append('%s vs %s: marcado no significativo con p = %.4g' % (a, b, pv))
+    check('el recuento de Tukey del informe cuadra con el artefacto', n, fallos,
+          'no recalcula Tukey —el rango estudentizado no esta en la biblioteca estandar—: '
+          'verifica el recuento y la coherencia interna del artefacto')
+
+
 def check(nombre, examinados, fallos, nota=''):
     resultados.append((nombre, examinados, list(fallos), nota))
 
@@ -3114,6 +3186,7 @@ def main():
     ejecutar(c_anexo_vs_tabla7, s)
     ejecutar(c_tabla7_vs_datos, s)
     ejecutar(c_tabla7_desde_per_type, s)
+    ejecutar(c_tukey_recuento, s)
     ejecutar(c_tabla4_vs_datos, s)
     ejecutar(c_figura1_vs_artefacto, s)
     ejecutar(c_tablas_menores, s)
