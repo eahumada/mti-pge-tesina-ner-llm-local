@@ -1261,6 +1261,74 @@ def c_fuentes_de_los_grupos(_s):
     check('cada grupo se lee de la corrida que el consolidado usa', mirados, list(descuadres))
 
 
+def c_titulares(s):
+    """Las dos cifras que el resumen y el abstract ponen en primera linea, atadas a su corrida.
+
+    «El mejor modelo local alcanza **76,55 %** de F1 en espanol y **90,16 %** en el dominio.» Son
+    las cifras con las que se abre el trabajo y **no las cubria ninguna comprobacion**: la primera
+    aparece diez veces en el informe y la segunda tres.
+
+    Ambas son la **metrica restringida** —puntuando solo Personas y Organizaciones, las categorias
+    que el corpus anota— de `gemma4:31b-mlx`, y se calculan del detalle por registro. Dos avisos
+    que costaron encontrarlas: el 76,55 se computa sobre los **120** registros y no sobre los 113
+    del manifiesto de contaminados —con 113 sale 76,78— y el del dominio es sobre `n30_rerun_REMOTO`
+    con el nombre de grupo `gemma4:31b-mlx`, sin sufijo `_baseline`.
+    """
+    import json as _json
+    # La corrida del 76,55 se resuelve DESDE EL MANIFIESTO y no se escribe aqui: es el grupo
+    # `gemma4:31b-mlx_baseline` y el consolidado se queda con la primera fuente que lo trae
+    # (`--on-duplicate=first`). Fijar la ruta a mano fue el primer intento y apuntaba a la corrida
+    # equivocada, que es el defecto de `FINDINGS §F81.bis` repetido.
+    dir_n120 = None
+    if os.path.exists(MANIFIESTO):
+        with open(MANIFIESTO, encoding='utf-8') as fh:
+            for src in _json.load(fh)['sources']:
+                if 'gemma4:31b-mlx_baseline' in src.get('models', []):
+                    dir_n120 = os.path.dirname(src['csv_path'])
+                    break
+    CASOS = (('76,55', r'76[.,]55', dir_n120, 'gemma4:31b-mlx_baseline',
+              None, 'F1 en espanol sobre N=120'),
+             ('90,16', r'90[.,]16', 'results/n30_rerun_REMOTO', 'gemma4:31b-mlx',
+              None, 'F1 sobre el corpus del dominio'))
+    fallos, mirados = [], 0
+    for etiq, patron, rel, grupo, _x, desc in CASOS:
+        mirados += 1
+        if rel is None:
+            fallos.append('el manifiesto no dice de que corrida sale el %s %%' % etiq)
+            continue
+        ruta = os.path.join(BENCH_DIR, rel, 'detailed_results.json')
+        if not os.path.exists(ruta):
+            fallos.append('no existe %s, del que sale el %s %%' % (rel, etiq))
+            continue
+        with open(ruta, encoding='utf-8') as fh:
+            R = [r for r in _json.load(fh) if r.get('model') == grupo]
+        if not R:
+            fallos.append('la corrida %s no trae el grupo %s' % (rel, grupo))
+            continue
+        vals = []
+        for r in R:
+            pt = ((r.get('metrics') or {}).get('per_type')) or {}
+            tp = sum((pt.get(c, {}).get('tp', 0) or 0) for c in ('Persons', 'Organizations'))
+            fp = sum((pt.get(c, {}).get('fp', 0) or 0) for c in ('Persons', 'Organizations'))
+            fn = sum((pt.get(c, {}).get('fn', 0) or 0) for c in ('Persons', 'Organizations'))
+            if tp + fp + fn == 0:
+                vals.append(1.0)
+                continue
+            pr = tp / (tp + fp) if tp + fp else 0.0
+            rc = tp / (tp + fn) if tp + fn else 0.0
+            vals.append(2 * pr * rc / (pr + rc) if pr + rc else 0.0)
+        obt = 100 * sum(vals) / len(vals)
+        esp = float(etiq.replace(',', '.'))
+        if abs(obt - esp) > 0.006:
+            fallos.append('%s: el informe dice %s %% y el dato da %.2f %% sobre %d registros'
+                          % (desc, etiq, obt, len(R)))
+        mirados += 1
+        if not re.search(patron, s):
+            fallos.append('el informe ya no cita el %s %% (%s)' % (etiq, desc))
+    check('las dos cifras titulares del resumen reproducen desde su corrida', mirados, fallos,
+          'metrica restringida a Personas y Organizaciones; el 76,55 va sobre 120 registros, no 113')
+
+
 def c_ablacion(s):
     """Las tres diferencias del analisis de variantes de prompt, contra su corrida.
 
@@ -1370,6 +1438,7 @@ def main():
     ejecutar(c_alucinaciones, s)
     ejecutar(c_defensa, s)
     ejecutar(c_fuentes_de_los_grupos, s)
+    ejecutar(c_titulares, s)
     ejecutar(c_ablacion, s)
     ejecutar(c_extension, s)
     if '--red' in sys.argv:
