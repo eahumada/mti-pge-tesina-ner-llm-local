@@ -5277,3 +5277,64 @@ negrita.
 encuentra un defecto de quien las escribe.
 
 **Estado del verificador:** 48 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F118 — El informe se cita a sí mismo redondeado, y ese redondeo no lo comprobaba nadie
+
+**Fecha:** 2026-09-09 · **Origen:** reducir el ruido del barrido de [§F116](#f116) en lugar de
+triar cincuenta cifras a mano
+
+Triar las candidatas una a una es lo que §L61 dice que no se haga, así que en vez de eso mecanicé el
+triaje que ya había hecho a mano en [§F117](#f117). Tres rutas de cobertura nuevas, y la lista pasa
+de **50 a 12**:
+
+| Ruta | Qué reconoce | Efecto |
+|:---|:---|---:|
+| Segunda fuente de anclas | `auditar_afirmaciones.py` también comprueba el informe | −4 |
+| Fallos declarados | una cifra en rojo a propósito **está** vigilada | −3 |
+| Valores de artefactos | las comprobaciones que no se anclan en prosa leen el JSON y buscan la cifra | −34 |
+
+De las 12 restantes, dos son **cifras de la literatura** —el 88,43 % del ajuste fino de BERT sobre
+CoNLL-2002 y su comparación— y no hay nada que recalcular: se acreditan por la cita. Las otras diez
+son **una sola clase de defecto**, y es la que faltaba: **el informe se cita a sí mismo redondeado**.
+
+| Sitio | Forma redondeada | Cifra precisa de §5 |
+|:---|:---|:---|
+| Resumen y abstract | +14,5 y +10,8 puntos | +14,52 y +10,82 |
+| Resumen | +10,4 puntos | 10,40 |
+| Conclusiones | ρ = −0,52, p = 0,071 | −0,5165, p = 0,0707 |
+| §2 y §6, cuatro veces | 20,1 % | 283 de 1 406 |
+| §5.5 y §6 | 99,4 % | 1 − 0,052 / 8,75 |
+
+Es exactamente la forma en que entró el defecto de [§L69](#l69): propagadas las cifras precisas
+81,45 → 80,42 y 76,85 → 76,55, quedó «cinco puntos» describiendo una resta de 3,87, y el documento
+pasó de coherente-con-datos-viejos a **incoherente consigo mismo**. Y afecta al **resumen**, que es
+la primera página y lo único que algunos lectores leen.
+
+**Las diez cuadran.** 14,52 → 14,5; 10,82 → 10,8; 10,3996 → 10,4; 0,5165 → 0,52; 0,0707 → 0,071;
+283/1 406 = 20,128 → 20,1; 1 − 0,052/8,75 = 0,99406 → 99,4 %.
+
+**Comprobación 49**, que **no escribe ninguna cifra**: lee las dos formas del documento y comprueba
+que la redondeada sea el redondeo de la precisa. Una constante copiada aquí detectaría una deriva de
+los datos pero no una del texto, que es el defecto que la comprobación 22 ya tuvo y que
+[§L63](#l63) deja escrito. Comprueba además que la reducción de coste **siga declarada como
+estimación** en los dos sitios donde aparece, que es una regla de `CLAUDE.md` y no una cifra.
+
+**Y repetí §L59 escribiéndola.** La primera versión leía el porcentaje del *mojibake* con
+`re.search`, y ese porcentaje aparece **cuatro veces** en redacciones distintas —dos en prosa, una
+en la lista de limitaciones y una en una tabla—. Alterar la de la tabla no lo notaba nadie. Es
+literalmente la lección que dice que `re.search` ve solo la primera aparición, escrita a propósito
+después de que pasara con la frase del «efecto que se anula». Corregido a `finditer` sobre todas las
+apariciones, y añadida la comprobación de que no haya dos valores distintos entre ellas; probado
+mutando **solo la de la tabla**, que antes era invisible.
+
+**Dos anclas de prueba mal puestas, otra vez.** Tres mutaciones de §F117 fallaron por buscar las
+cifras en negrita, y aquí una falló por omitir los asteriscos y el `>` de una cita en bloque. En los
+dos casos la comprobación funcionaba y **el ensayo no ensayaba nada**. Vale la pena el recordatorio:
+una mutación que no encuentra su ancla es un ensayo fallido, no una comprobación validada, y hay que
+distinguirlo del caso en que la comprobación no detecta el cambio.
+
+**Estado del verificador:** 49 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
+El barrido queda en **12 candidatas, dos de ellas de la literatura y diez ya cubiertas** por esta
+comprobación.

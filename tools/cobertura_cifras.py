@@ -40,6 +40,7 @@ RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MD = os.path.join(RAIZ, 'doc/organized/Hito_5_Tarea4_Informe_Final/'
                         '2026-07-04_Borrador-Informe-Final-Tesina.md')
 VER = os.path.join(RAIZ, 'tools/verificar_informe.py')
+AUD = os.path.join(RAIZ, 'tools/auditar_afirmaciones.py')
 
 # Tipos de afirmacion, de mas a menos grave si nadie la recalcula.
 PATRONES = [
@@ -65,21 +66,19 @@ def cuerpo():
     return '\n'.join(out)
 
 
-def anclas():
-    """Literales de la fuente del verificador que sirven de ancla al texto del informe.
+def _literales(ruta):
+    """Cadenas largas de un fichero .py, leidas con `ast`.
 
-    Se leen con `ast`, no con una expresion regular. La primera version usaba un regex sobre el
-    codigo fuente y **perdia anclas en silencio**: un apostrofo suelto dentro de un docstring
-    desalinea el emparejamiento de comillas y, a partir de ahi, los literales siguientes quedan mal
-    delimitados. Se detecto porque la comprobacion de Levene, que **si** se ancla en el informe con
-    un regex explicito, aparecia como ausente: cero anclas con la palabra «Levene» sobre un fichero
-    que la usa cuatro veces.
-
-    Se toman las cadenas largas: las cortas coinciden por casualidad y marcarian casi todo como
-    cubierto.
+    Con `ast` y no con una expresion regular sobre el codigo: un apostrofo suelto dentro de un
+    docstring desalinea el emparejamiento de comillas y, a partir de ahi, los literales quedan mal
+    delimitados. La primera version de esta herramienta lo hacia asi y **perdia anclas en silencio**
+    —713 fragmentos mal cortados y cero con la palabra «Levene», sobre un fichero que la usa cuatro
+    veces—. El sintoma de leer codigo con un regex es que faltan cosas, no que sobren.
     """
     import ast as _ast
-    with open(VER, encoding='utf-8') as fh:
+    if not os.path.exists(ruta):
+        return set()
+    with open(ruta, encoding='utf-8') as fh:
         src = fh.read()
     out = set()
     for nodo in _ast.walk(_ast.parse(src)):
@@ -96,13 +95,128 @@ def anclas():
     return out
 
 
+def anclas():
+    """Anclas al texto del informe, de TODAS las herramientas que lo comprueban.
+
+    Al principio solo se leia el verificador, y eso producia falsos descubiertos en masa: las tres
+    cifras del F1 restringido y el 66,0 % de la categoria fantasma **si** estan vigiladas, pero por
+    `auditar_afirmaciones.py`, que es otra herramienta. Se leen las dos.
+    """
+    out = set()
+    for r in (VER, AUD):
+        out |= _literales(r)
+    return out
+
+
+def valores_de_artefactos():
+    """Cifras que viven en un artefacto JSON que el verificador lee.
+
+    Es la tercera ruta de cobertura, y hace falta porque varias comprobaciones **no se anclan en la
+    prosa**: leen un valor del artefacto, lo formatean a la espanola y buscan esa cadena en el
+    documento. `c_correlacion` es el caso —el `rho = -0,5165` de Spearman y sus dos p estan
+    verificados, comprobado por mutacion, y la herramienta los daba por descubiertos porque no hay
+    ninguna frase que anclar—.
+
+    Se recogen los numeros de los JSON bajo `results/` **que la fuente del verificador nombra**, no
+    de todos: un artefacto que nadie lee no acredita nada. La correspondencia es por los digitos,
+    con dos y cuatro decimales, que es como el informe los escribe.
+    """
+    import json as _json
+    import glob as _glob
+    citados = set()
+    for t in _literales(VER) | {c for c in _crudos(VER)}:
+        for m in re.finditer(r'[\w./-]+\.json', t):
+            citados.add(os.path.basename(m.group(0)))
+    if not citados:
+        return set()
+    out = set()
+
+    def _hoja(v):
+        if isinstance(v, dict):
+            for x in v.values():
+                _hoja(x)
+        elif isinstance(v, list):
+            for x in v:
+                _hoja(x)
+        elif isinstance(v, (int, float)) and not isinstance(v, bool):
+            for d in (2, 4):
+                out.add(('%.*f' % (d, abs(v))).replace('.', ','))
+                out.add(('%.*f' % (d, abs(v) * 100)).replace('.', ','))
+    base = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark/results')
+    for ruta in _glob.glob(os.path.join(base, '**', '*.json'), recursive=True):
+        if os.path.basename(ruta) not in citados:
+            continue
+        try:
+            with open(ruta, encoding='utf-8') as fh:
+                _hoja(_json.load(fh))
+        except (OSError, ValueError):
+            continue
+    return out
+
+
+def _crudos(ruta):
+    """Los literales cortos tambien, solo para buscar nombres de fichero .json en ellos."""
+    import ast as _ast
+    if not os.path.exists(ruta):
+        return set()
+    with open(ruta, encoding='utf-8') as fh:
+        arbol = _ast.parse(fh.read())
+    return {n.value for n in _ast.walk(arbol)
+            if isinstance(n, _ast.Constant) and isinstance(n.value, str)}
+
+
+def declaradas():
+    """Cifras que el verificador tiene como FALLO DECLARADO: vigiladas y en rojo a proposito.
+
+    Aparecian como no cubiertas y son el caso contrario: hay una comprobacion que las mira, falla, y
+    el fallo esta declarado con su motivo y su responsable. Marcarlas como descubiertas manda a
+    revisar algo que ya esta decidido.
+    """
+    out = set()
+    # las claves de FALLOS_DECLARADOS son fragmentos del mensaje de fallo; se leen del diccionario
+    import ast as _ast
+    if not os.path.exists(VER):
+        return out
+    with open(VER, encoding='utf-8') as fh:
+        arbol = _ast.parse(fh.read())
+    for nodo in _ast.walk(arbol):
+        if not isinstance(nodo, _ast.Assign):
+            continue
+        if not any(isinstance(d, _ast.Name) and d.id == 'FALLOS_DECLARADOS' for d in nodo.targets):
+            continue
+        if isinstance(nodo.value, _ast.Dict):
+            for k in nodo.value.keys:
+                if isinstance(k, _ast.Constant) and isinstance(k.value, str):
+                    for m in re.finditer(r'\d+[.,]\d+', k.value):
+                        out.add(m.group(0).replace('.', ','))
+    return out
+
+
 
 def _a_regex(anc):
-    """Un ancla puede ser una expresion regular o texto literal; se prueban las dos."""
+    """Un ancla puede ser una expresion regular o texto literal, y distinguirlo importa.
+
+    La version anterior compilaba el ancla como regex y solo caia al literal **si la compilacion
+    fallaba**. Eso deja pasar lo peor: una cadena que compila sin error y significa otra cosa. Los
+    dos encabezados de tabla de `auditar_afirmaciones.py` —«| Configuracion | Corrida | P | R |
+    ...»— contienen `|`, que en una expresion regular es **alternancia con ramas vacias**, de modo
+    que casaban **129 734 veces** cada uno en el informe y marcaban como cubiertas las 84 cifras.
+    El resultado era una herramienta que reportaba cero descubiertas, o sea exactamente la
+    comprobacion vacua contra la que este proyecto lleva toda la revision avisando.
+
+    El guardian es preciso y no heuristico: **un patron que casa con la cadena vacia no es un
+    ancla**. Una alternancia con ramas vacias lo hace; `Tabla\\s+(\\d+)\\b` no. Asi que se compila, se
+    prueba contra `''`, y si casa se trata como texto literal.
+
+    La leccion general: que una cadena compile como expresion regular no la convierte en una.
+    """
     try:
-        return re.compile(anc)
+        r = re.compile(anc)
     except re.error:
         return re.compile(re.escape(anc))
+    if r.search('') is not None:
+        return re.compile(re.escape(anc))
+    return r
 
 
 def main():
@@ -131,16 +245,40 @@ def main():
             mejor[k] = (tipo, i, t)
     hallados = sorted(mejor.values(), key=lambda x: (ORDEN[x[0]], x[1]))
 
-    desc = []
+    decl = declaradas()
+    arte = valores_de_artefactos()
+    desc, en_rojo, por_arte = [], [], []
     for tipo, i, t in hallados:
         ven = txt[max(0, i - a.ventana): i + a.ventana]
-        if not any(r.search(ven) for r in anc):
-            desc.append((tipo, i, t, ' '.join(ven.split())[:150]))
+        if any(r.search(ven) for r in anc):
+            continue
+        # Una cifra que es FALLO DECLARADO no esta sin vigilar: esta vigilada, falla, y el fallo
+        # tiene motivo y responsable. Marcarla como descubierta manda a revisar algo ya decidido.
+        num = re.search(r'\d+,\d+', t)
+        if num and num.group(0) in decl:
+            en_rojo.append((tipo, t))
+            continue
+        if num and num.group(0) in arte:
+            por_arte.append((tipo, t))
+            continue
+        desc.append((tipo, i, t, ' '.join(ven.split())[:150]))
 
-    print('  %d afirmaciones numericas en el cuerpo · %d sin ancla de ninguna comprobacion'
+    print('  %d afirmaciones numericas en el cuerpo · %d sin ninguna comprobacion que las mire'
           % (len(hallados), len(desc)))
-    print('  (%d anclas extraidas de la fuente del verificador, ventana de %d caracteres)\n'
-          % (len(anc), a.ventana))
+    print('  (%d anclas de verificar_informe.py y auditar_afirmaciones.py, ventana de %d '
+          'caracteres)' % (len(anc), a.ventana))
+    if por_arte:
+        print('  %d mas coinciden con un valor de un artefacto JSON que el verificador lee, que es'
+              % len(por_arte))
+        print('     como las comprueban las que no se anclan en la prosa (p. ej. c_correlacion):')
+        for tipo, t in por_arte:
+            print('     [%s] %s' % (tipo, t))
+    if en_rojo:
+        print('  %d mas estan vigiladas y en FALLO DECLARADO, que no es lo mismo que sin vigilar:'
+              % len(en_rojo))
+        for tipo, t in en_rojo:
+            print('     [%s] %s' % (tipo, t))
+    print()
     porTipo = {}
     for tipo, _, _, _ in desc:
         porTipo[tipo] = porTipo.get(tipo, 0) + 1

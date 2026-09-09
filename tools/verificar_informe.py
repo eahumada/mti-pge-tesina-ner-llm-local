@@ -416,6 +416,118 @@ def c_ablacion_idioma(s):
           'la celda de referencia es zs-en; el ANOVA de esta misma ablacion lo verifica la 33')
 
 
+# --- 49. El informe se cita a si mismo redondeado, y el redondeo tiene que seguir cuadrando ----
+def c_redondeos(s):
+    """Los restatements redondeados del resumen y de las conclusiones, contra su cifra precisa.
+
+    El resumen dice «+14,5 y +10,8 puntos» donde §5 mide +14,52 y +10,82; las conclusiones dicen
+    «rho = -0,52 con p = 0,071» donde §5 da -0,5165 y 0,0707. Son la **misma cifra escrita dos
+    veces con distinta precision**, y esa es exactamente la forma en que se cuelan las
+    incoherencias: `§L69` fue eso —propagados 81,45 -> 80,42 y 76,85 -> 76,55, quedo «cinco
+    puntos» describiendo una resta de 3,87, y el documento paso de coherente-con-datos-viejos a
+    incoherente-consigo-mismo—.
+
+    Ninguna cifra se escribe aqui. Se leen **las dos del documento** y se comprueba que la
+    redondeada sea el redondeo de la precisa. Una constante copiada del informe detectaria una
+    deriva de los datos pero no una del texto, que es el defecto que la comprobacion 22 ya tuvo y
+    que `§L63` deja escrito.
+
+    Cubre tambien dos cifras derivadas que el barrido de `§F116` dejo al descubierto y que se
+    pueden recomputar de sus propios operandos, los dos presentes en la frase: la proporcion de
+    entidades con *mojibake* y la reduccion de coste, **que es una estimacion y el informe la
+    declara como tal** en los dos sitios donde aparece.
+    """
+    fallos, mirados = [], 0
+
+    def _f(t):
+        return float(t.replace('−', '-').replace(' ', '').replace(' ', '')
+                     .replace(',', '.'))
+
+    # (nombre, regex de la precisa, regex de la redondeada, decimales)
+    PARES = [
+        ('mejora de nemotron-mini:4b', r'\*\*\+?(14),(\d{2}) pp\*\*', r'\+(14),(\d) y \+10,8', 1),
+        ('mejora de llama3.2:latest', r'\*\*\+?(10),(82) pp\*\*', r'\+14,5 y \+(10),(\d)', 1),
+        ('efecto del idioma', r'aporta (10),(40) puntos', r'aporta \+(10),(\d) puntos', 1),
+        # El signo va DENTRO de la negrita: «**Spearman de −0,5165**». Y la p redondeada hay que
+        # anclarla a su propia frase: «con p = (0),(\d{3})» a secas casaba con la p = 0,6382 de
+        # un ANOVA secundario, que esta en otro sitio y no tiene nada que ver.
+        ('rho de Spearman', r'\*\*Spearman de −?(0),(\d{4})\*\*', r'ρ = −(0),(\d{2}) con p', 2),
+        ('p de Spearman', r'\(p = (0),(0707)\)', r'ρ = −0,\d+ con p = (0),(\d{3})', 3),
+    ]
+    for nombre, p_pre, p_red, dec in PARES:
+        mirados += 1
+        a, b = re.search(p_pre, s), re.search(p_red, s)
+        if a is None or b is None:
+            fallos.append('no se encuentran las dos formas de «%s» (precisa: %s, redondeada: %s): '
+                          'revisar si se reformulo' % (nombre, a is not None, b is not None))
+            continue
+        pre = _f('%s.%s' % (a.group(1), a.group(2)))
+        red = _f('%s.%s' % (b.group(1), b.group(2)))
+        esp = round(pre, dec)
+        if abs(red - esp) > 1e-9:
+            fallos.append('«%s»: el informe dice %s donde %s redondeado a %d decimal(es) es %s'
+                          % (nombre, red, pre, dec, esp))
+
+    # mojibake: la proporcion sale de sus dos operandos, que estan en la misma frase
+    mirados += 1
+    m = re.search(r'\*\*(\d+) de ([\d\s ]+) entidades de\s*(?:>\s*)?referencia '
+                  r'\((\d+),(\d) ?%\)\*\*', s)
+    if m is None:
+        fallos.append('no se encuentra la frase del mojibake con sus dos operandos y su porcentaje')
+    else:
+        n_, d_ = _f(m.group(1)), _f(m.group(2))
+        calc = round(100 * n_ / d_, 1) if d_ else None
+        # TODAS las apariciones, no la primera: el porcentaje se repite cuatro veces en
+        # redacciones distintas —dos en prosa, una en la lista de limitaciones y una en una
+        # tabla— y `re.search` solo veria una. Es §L59, que ya paso una vez con la frase del
+        # «efecto que se anula» y que acabo de repetir al escribir esta comprobacion.
+        vistos = set()
+        for mm in re.finditer(r'\*{0,2}283 \(?(\d+),(\d) ?%\)?\*{0,2}'
+                              r'|entidades de\s*(?:>\s*)?referencia \((\d+),(\d) ?%\)', s):
+            gr = [x for x in mm.groups() if x is not None]
+            if len(gr) == 2:
+                vistos.add(_f('%s.%s' % (gr[0], gr[1])))
+        if not vistos:
+            fallos.append('mojibake: no se localiza ninguna aparicion del porcentaje')
+        for pub in sorted(vistos):
+            if calc is None or abs(pub - calc) > 1e-9:
+                fallos.append('mojibake: %g de %g son %s %% y el informe dice %s %% en alguna de '
+                              'sus %d apariciones' % (n_, d_, calc, pub, len(vistos)))
+        if len(vistos) > 1:
+            fallos.append('mojibake: el porcentaje aparece con %d valores distintos (%s)'
+                          % (len(vistos), sorted(vistos)))
+
+    # reduccion de coste: estimacion declarada, pero su aritmetica interna debe cuadrar
+    mirados += 1
+    mc = re.search(r'Frente a esos USD (0),(\d+), la revisión manual cuesta unos USD '
+                   r'(\d+),(\d+) por artículo', s)
+    # las DOS apariciones de la reduccion: §5.5 la resalta y §6 la repite sin resalte
+    todas_r = [_f('%s.%s' % (x.group(1), x.group(2))) for x in
+               re.finditer(r'reducci[óo]n (?:del|estimada es del) \*{0,2}(\d+),(\d) ?%\*{0,2}', s)]
+    mr = re.search(r'reducción del \*\*(\d+),(\d) ?%\*\* en coste unitario', s)
+    if mc is None or mr is None:
+        fallos.append('no se encuentran los dos costes y su reduccion en §5.5: '
+                      'revisar si se reformulo')
+    else:
+        loc = _f('%s.%s' % (mc.group(1), mc.group(2)))
+        man = _f('%s.%s' % (mc.group(3), mc.group(4)))
+        pub = _f('%s.%s' % (mr.group(1), mr.group(2)))
+        calc = round(100 * (1 - loc / man), 1) if man else None
+        for v in (todas_r or [pub]):
+            if calc is None or abs(v - calc) > 1e-9:
+                fallos.append('coste: 1 - %s/%s es %s %% y el informe dice %s %%'
+                              % (loc, man, calc, v))
+        if len(set(todas_r)) > 1:
+            fallos.append('coste: la reduccion aparece con %d valores distintos (%s)'
+                          % (len(set(todas_r)), sorted(set(todas_r))))
+        # y que siga declarada como estimacion en los dos sitios (regla de CLAUDE.md)
+        if s.count('estimaciones y no mediciones') < 1 or 'igualmente estimada' not in s:
+            fallos.append('la reduccion de coste ha dejado de declararse como estimacion en alguno '
+                          'de los dos sitios donde aparece')
+    check('los redondeos que el informe se cita a si mismo cuadran', mirados, fallos,
+          'las dos formas se LEEN del documento; una constante aqui no veria una deriva del texto')
+
+
 def check(nombre, examinados, fallos, nota=''):
     resultados.append((nombre, examinados, list(fallos), nota))
 
@@ -3375,6 +3487,7 @@ def main():
     ejecutar(c_tukey_recuento, s)
     ejecutar(c_friedman, s)
     ejecutar(c_ablacion_idioma, s)
+    ejecutar(c_redondeos, s)
     ejecutar(c_tabla4_vs_datos, s)
     ejecutar(c_figura1_vs_artefacto, s)
     ejecutar(c_tablas_menores, s)
