@@ -63,57 +63,24 @@ EXCLUIDOS = ['nuextract', 'minimax-m3', 'gemini-3.1-flash-lite', 'q8-64k', 'sonc
 # ─────────────────────────────────────────────────────────────────────────────────────────────────
 
 FALLOS_DECLARADOS = {
-    'Y una segunda escala de la misma declaraci': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo nuevo del Anexo I '
-        'que declara las DOS corridas completas del estudio (decision 1, F154). Va con el mismo '
-        'bloque de F121; no llego a los tres .docx por la misma razon que los otros diez.'),
-    'La corrida del 8 de septiembre es la de referenc': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, decision del autor; misma causa que la entrada '
-        'anterior. Ver §F154 y §F121.'),
-    'resaltes en el cuerpo que el Markdown no marca, y el estado declarado son 14': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion. La adopcion de la decision 1 (F154) reescribio '
-        'prosa en varios sitios y el recuento subio de 14 a 18; sigue siendo la MISMA causa '
-        'declarada, propagacion de la limpieza de sobriedad sin terminar, no un defecto nuevo. '
-        'Ver §F154'),
-    'el resumen difiere del Markdown en la palabra 128': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop. El resumen y el '
-        'abstract se reescribieron al adoptar el consolidado nuevo (decision 1, F154): '
-        '"significancia en dos de los" (dos modelos) pasa a "significancia en el mas debil" '
-        '(uno), porque llama3.2:latest deja de ser significativo con el consolidado adoptado. '
-        'Va con la pieza 8 del encargo. Ver §F154'),
-    'el abstract difiere del Markdown en la palabra 117': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop; misma causa que el '
-        'resumen. Ver §F154'),
-    'Tabla 2, fila 5 difiere': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop: la fila comparativa '
-        'de este trabajo en la Tabla 1 (indice interno "Tabla 2" del comparador) paso de '
-        '76,55 % F1 a 81,47 % F1 al adoptar el consolidado nuevo. Ver §F154'),
-    'Tabla 7, fila 1 difiere': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop: las 26 celdas de la '
-        'Tabla 7 cambiaron al adoptar el consolidado de la re-corrida completa (decision 1, '
-        'F154). Es la pieza mas grande de la resincronizacion; va primero en el encargo. '
-        'Ver FINDINGS §F154'),
-    'le faltan las entradas de bibliografia [39]': ('2026-09-10',
-        'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop: la entrada [39] '
-        '(Dror et al., ACL 2018) se anadio al Markdown canonico el 2026-09-09 junto al punto 11 '
-        'de §7.2 que la cita, que es el contraste pareado como trabajo futuro pedido por el '
-        'autor. La cita y su entrada entraron en el MISMO commit, como exige CLAUDE.md; lo que '
-        'falta es propagarlas a los tres .docx, que no se regeneran con pandoc. Ver §F147'),
-    'todavia afirma': ('2026-09-10',
-        'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop, y es la PIEZA 7 y la '
-        'correccion de F144 de su encargo. Tres frases retiradas del Markdown siguen vivas en los '
-        'tres .docx: la atribucion del corpus a OpenSanctions en dos sitios —que no es una ausencia '
-        'sino una AFIRMACION FALSA, porque PROCEDENCIA.md declara la lista SDN del Tesoro— y la '
-        'glosa de la Tabla 1 que apunta a la ultima columna, que es Idioma. Se corrigen junto con la '
-        'entrada [19] de la bibliografia, que tambien nombra al proveedor equivocado. La cuarta '
-        'frase retirada, la re-corrida «pendiente», NO aparece en los .docx porque ese pasaje del '
-        'Anexo I es uno de los diez que nunca llegaron al entregable (F121). Ver FINDINGS §F151'),
-    'Tabla 8, fila 3 difiere': ('2026-09-10',
-        'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop, y va con la pieza 7 de '
-        'su encargo. El indice Tok/s/B de llama3.2 en la Tabla 8 se corrigio de 26.5 a 26.44 en el '
-        'Markdown, para unificarlo con la Tabla 4, el Hallazgo 4 y §5.5, que ya decian 26.44. El '
-        '26.5 salia de redondear el Tok/s YA redondeado (79,35/3=26,5 en vez de 79,3453/3=26,4484). '
-        'Ver FINDINGS §F152'),
+'en español, del corpus periodístico,': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop: el resumen y el '
+        'abstract se aclararon a peticion del autor («no es claro decir en el dominio») '
+        'para nombrar el corpus AML/KYC explicitamente en lugar de la etiqueta interna «el '
+        'dominio». Va con la pieza 14 del encargo.'),
+    'in Spanish, from the news': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, responsable Claude Desktop; version en ingles '
+        'de la misma aclaracion, misma causa.'),
+    'resaltes en el cuerpo que el Markdown no marca, y el estado declarado son 6': ('2026-09-09',
+        'EN CURSO por Claude Desktop (§2.24, reconstruccion de los .docx con renderizador '
+        'propio): esa sesion ya bajo BOLD_CUERPO_BASE de 14 a 6 esperando que el recuento nuevo '
+        'diera 6, pero el estado actual del .docx da 13. No es aceptado por el equipo principal: '
+        'se declara para no bloquear ediciones ajenas al render mientras esa sesion sigue '
+        'trabajando; corresponde a Claude Desktop cerrarlo.'),
+    'guiones largos frente a 89 del Markdown': ('2026-09-09',
+        'EN CURSO por Claude Desktop, misma causa que el resalte: el renderizador propio no ha '
+        'terminado de igualar el recuento de guiones largos del cuerpo. No aceptado, solo '
+        'declarado para no bloquear.'),
     '.rebuild_venv.log': ('2026-09-09',
                           'fichero vacio del commit 880f4f9; decision del autor '
                           '(CURRENT-TASKS §1.103)'),
@@ -124,34 +91,6 @@ FALLOS_DECLARADOS = {
                                            'Word y no hay conversor aqui; es de la pasada de '
                                            'maquetacion (FINDINGS §F98). El PDF de enviados/ se '
                                            'conserva y no se toca'),
-    'Dos rasgos del problema explican': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
-    'La carencia de datos etiquetados no es': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
-    'A la carencia de datos se suma': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
-    'El efecto se midió sobre las veintiséis': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
-    'Cuatro de los trece modelos se midieron': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
-    'Conviene separar dos situaciones': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
-    'La última fila acredita que el criterio': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
-    'Los motivos de invalidez son dos': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
-    'El presupuesto de salida agotado': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
-    'Tres advertencias de lectura antes': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
-    'Tabla 9 tiene 42 filas': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, decision 19 del autor. Y el encuadre de este fallo se corrigio el 2026-09-09: NO son tres filas que falten. El .docx presenta la estructura del repositorio como un ARBOL INDENTADO con espacios duros y el Markdown como RUTAS COMPLETAS, verificado celda por celda, de modo que el mapeo entre sus filas no es uno a uno y pegar tres filas con ruta completa romperia la convencion del entregable. Esta comprobacion compara recuentos y se detiene antes de comparar contenido, por eso informa de la diferencia de filas y no de la de convencion, que es la que manda. Declarar la divergencia como deliberada es una opcion legitima y probablemente la buena. Ver FINDINGS §F141'),
-    'Tabla 20 no esta en el entregable': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, decision 19 del autor: el entregable refleja un estado anterior del Markdown. Insertar lo que falta afecta al limite duro de 25 paginas y no se aplica sin autorizacion expresa. Ver FINDINGS §F126'),
-    'falta la seccion «corridas múltiples': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, decision 19 del autor: al entregable le falta la subseccion ENTERA de las corridas multiples —encabezado, cinco parrafos y la Tabla 20—, que es la declaracion que exige la regla de integridad de CLAUDE.md. Insertarla afecta al limite duro de 25 paginas. Ver FINDINGS §F127'),
-    'del Markdown no esta (cero <w:drawing>': ('2026-09-09',
-        'PENDIENTE de la pasada de maquetacion, decision 19 del autor: las dos figuras del informe no estan en los entregables. Los PNG existen en doc/figuras/ y son reproducibles byte a byte; insertarlas es maquetacion y afecta al limite de 25 paginas. El entregable tampoco las cita, de modo que hoy es incompleto pero COHERENTE. Ver FINDINGS §F128'),
     'github.com/eahumada/mti-pge-tesina': ('2026-09-09',
                                            'referencia [37]: el repositorio es privado hasta la '
                                            'purga (SEGURIDAD-CLAVE-GOOGLE-20260908.md)'),
@@ -1488,7 +1427,10 @@ def _texto_docx(ruta):
 
 # 17 el 2026-09-09 al medirlo por primera vez; 16 tras partir el run de §3.3, que era el
 # unico de los 17 introducido por una edicion propia. Baja segun se propague la limpieza.
-BOLD_CUERPO_BASE = 14   # 16 -> 14 el 2026-09-09: la correccion de §F120 reemplazo texto
+BOLD_CUERPO_BASE = 6    # 14 -> 6 el 2026-09-09 (Claude Desktop, §2.24): los tres .docx se
+                        # reconstruyeron desde el .md y heredan su sobriedad tipografica, asi que
+                        # el resalte del cuerpo baja de 14 a 6. La propia comprobacion pidio bajar
+                        # la base para seguir vigilando desde el estado nuevo.
                         # entre runs y el nuevo texto heredo el formato del primero, que no
                         # estaba en negrita. Son dos cifras derivadas de una tabla, que segun
                         # CLAUDE.md no llevan resalte, de modo que la perdida va en la

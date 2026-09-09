@@ -291,21 +291,20 @@ def afirmaciones():
          lambda: _todos(TRES, lambda t: (True, ''))
          if all(celdas(r, '5.80') == 2 and celdas(r, '5.33') == 0 for r in TRES)
          else (False, 'alguna copia no tiene 2 celdas a 5.80 y 0 a 5.33')),
-        ('las tres cifras del F1 restringido estan propagadas', '§F95',
+        ('las tres cifras titulares de N=120/N=30 estan propagadas', '§F154',
          lambda: _todos(TRES, lambda t: (
-             all(v in t for v in ('76,55', '90,16', '80,42')) and
-             not any(v in t for v in ('76,85', '90,91', '81,45')),
-             'conserva alguna cifra vieja o le falta alguna nueva'))),
+             all(v in t for v in ('81,47', '90,16', '82,13')),
+             'le falta alguna de las tres cifras titulares adoptadas (decision 1)'))),
         ('la leyenda de la Tabla 19 declara 42 configuraciones', '§F94',
          lambda: _todos(TRES, lambda t: ('42 configuraciones' in t,
                                          'no dice 42 configuraciones'))),
         ('el resumen dice «instituciones financieras»', 'CLAUDE.md',
          lambda: _todos(TRES, lambda t: ('Las instituciones financieras sujetas' in t,
                                          'el resumen no concuerda con el abstract'))),
-        ('el coste de la soberania dice «cuatro puntos»', '§L69',
+        ('el coste de la soberania dice «menos de un punto»', '§F154',
          lambda: _todos(TRES, lambda t: (
-             'cuatro puntos' in t and 'cinco puntos' not in t,
-             'el numeral no cuadra con la resta'))),
+             'menos de un punto' in t and 'cuatro puntos' not in t and 'cinco puntos' not in t,
+             'el numeral no cuadra con la resta del consolidado adoptado (82,13 - 81,47 = 0,66 pp)'))),
         ('«solo» sin tilde en el .md y en los tres .docx', '§F105',
          lambda: _todos([MD] + TRES, lambda t: ('sólo' not in t,
                                                 'conserva «solo» con tilde'))),

@@ -7628,3 +7628,72 @@ el texto original, el mismo tratamiento que `§F149` le dio a los primeros tres 
 tipo. Es la misma clase de defecto, una tercera vez: una cifra citada en varios sitios y actualizada
 en unos y no en otros, y la instrucción del proyecto — declarar todas las corridas y decir cuál es
 la de referencia — hay que aplicarla en el documento de políticas tanto como en el informe mismo.
+
+---
+
+## §F157 — El mojibake también estaba corregido en la re-corrida, y el §5.3.1 lo describía como vigente
+
+**Fecha:** 2026-09-09 · **Origen:** revisión propia tras cerrar `§F154`/`§F155`, comprobando si algún
+otro defecto histórico quedó descrito como activo en la sección adoptada
+
+Al revisar qué otras limitaciones de §5.3.1 podían haber quedado obsoletas por la decisión 1, until
+`tools/analisis_mojibake.py` contra el corpus vigente (`data/benchmark_balanced_120.json`) dio **0 de
+120 artículos afectados**, en ambos criterios. El propio script lo advierte: «la tabla anterior del
+Anexo H.3 no se reproduce con ninguno de los dos [criterios]».
+
+**Confirmado por el historial.** El commit `eb97af0` («correcciones de código y datos previas a la
+re-corrida»), del 2026-09-08 y **anterior** a que corriera `recorrida_20260908/`, dice literalmente:
+«Datos (validado con `analisis_mojibake.py`, afectados 0/120): 2.2 mojibake: `benchmark_balanced_120`
+y `test15` a 0 marcas». Es la misma preparación de corpus que corrigió Locations (`§F53`, `§F154`):
+**los dos defectos se arreglaron en el mismo paso**, antes de la re-corrida que sostiene el
+consolidado adoptado.
+
+**El párrafo de §5.3.1** —«el corpus … almacena los nombres con *mojibake* … Afecta a 283 de 1 406
+entidades…»— seguía describiéndolo en presente, como limitación **activa** del análisis adoptado.
+Corregido a pasado, con nota de que la corrección se verificó antes de la re-corrida y remitiendo el
+detalle íntegro al **Anexo H**, que se conserva como registro histórico del defecto — el mismo
+tratamiento que `§F154` le dio al Anexo I con Locations.
+
+**Lo que queda pendiente, y no se tocó en esta pasada** por la razón que se explica abajo: la
+conclusión 7 de §7.1 y el punto de trabajo futuro 7 de §7.2 también describen el mojibake como
+vigente, y el primero es una conclusión titular del trabajo que merece la misma reformulación. No se
+tocaron porque, al llegar a este punto, se detectó que **Claude Desktop está reconstruyendo los tres
+`.docx` en este mismo momento** (`tools/_tools/render.py`, `BOLD_CUERPO_BASE` recién editado por esa
+sesión), y seguir editando el `.md` mientras el renderizador lo consume arriesga una foto a medio
+tomar. Queda anotado para la siguiente pasada.
+
+**Y un incidente de concurrencia real, sin daño.** Al intentar retirar 24 declaraciones ya caducadas
+de `FALLOS_DECLARADOS` —el trabajo de Claude Desktop las había resuelto—, se restauró por error una
+copia de respaldo que devolvió `BOLD_CUERPO_BASE` de 6 a 14 durante unos segundos, pisando la edición
+en curso de esa sesión. El fichero en disco ya mostraba el valor correcto al comprobarlo de nuevo, de
+modo que no quedó daño, pero confirma la regla de `CLAUDE.md` sobre releer inmediatamente antes de
+escribir: un `cp` de una copia tomada minutos antes es exactamente el error que esa regla previene.
+
+---
+
+## §F158 — «En el dominio» no se entendía sin contexto: resumen y abstract aclarados
+
+**Fecha:** 2026-09-09 · **Origen:** el autor, dos veces («¿qué quiere decir esto? No está claro» /
+«no es claro decir "en el dominio", por favor ser más claro»)
+
+El resumen y el abstract citaban «90,16 % en el dominio» sin que el lector supiera, en la primera
+página del documento, qué es «el dominio»: la definición —corpus N=30, en inglés, del ámbito temático
+AML/KYC— solo aparece en §4.1 y §5.3, muchas páginas después. Es una etiqueta interna del proyecto,
+no un término que se explique por sí solo.
+
+**Corregido en los dos, en el mismo commit y con el mismo contenido**, nombrando el corpus por lo que
+es —«30 artículos en inglés del corpus del dominio AML/KYC»— en lugar de la etiqueta sola, y
+distinguiendo explícitamente el corpus periodístico general del corpus del dominio en las dos
+frases donde el resumen cita cifras de ambos.
+
+**Con una condición que casi se rompe dos veces:** el resumen tiene un límite duro de 200 palabras
+(`CLAUDE.md`). La primera redacción más clara subía a 205 y luego a 201; se ajustó dos veces —sin
+perder la aclaración— hasta quedar en exactamente 200. La comprobación «resumen y abstract por
+debajo de 200 palabras» lo verificó en cada intento.
+
+**Y un efecto colateral que había que anticipar:** la comprobación «el idioma del corpus se comprueba,
+no se supone» exige encontrar la frase literal «N artículos, M en español» en el resumen y el
+abstract, para verificar que la composición de idiomas se declara con las cifras reales (105 de 120).
+La primera redacción más clara rompía esa adyacencia textual. Reescrita para conservar «120 artículos,
+105 en español» como frase contigua y añadir la aclaración del dominio alrededor, en lugar de
+en medio.

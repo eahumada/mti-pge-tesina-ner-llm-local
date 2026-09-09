@@ -271,6 +271,92 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.24 COMPLETADA — Cerrar los `.docx` y regenerar el PDF (encargo del 2026-09-09)
+- **Abierta:** 2026-09-09 20:05 por Claude Desktop. Encargo:
+  [`PROMPT-CLAUDE-DESKTOP-DOCX-Y-PDF-20260909.md`](./PROMPT-CLAUDE-DESKTOP-DOCX-Y-PDF-20260909.md), leído
+  entero, más `CLAUDE.md` y las reglas permanentes de Word y PDF.
+- **Archivos que toco:** los tres `.docx`, el PDF de la raíz, `doc/versions/informe_final/` y `VERSIONES.md`.
+  **Del `.md` solo leo.** No toco
+  `doc/versions/enviados/2026-09-08_..._ENVIADO-AL-PROFESOR-GUIA.pdf`, que atestigua lo entregado.
+- **Línea base del verificador**, ejecutado antes de empezar: 56 comprobaciones, **86 fallos, todos declarados
+  y ninguno nuevo**. Los que dependen de mí son los seis de sincronía: prosa, tablas y bibliografía,
+  encabezados, figuras, resumen y abstract, y resaltes; más «ninguna frase retirada sobrevive».
+- **`git pull` no se pudo ejecutar** (el puente no tiene credenciales de GitHub), pero el árbol de trabajo es
+  el que Claude Code escribe directamente, y el `.md` es de hace media hora, así que se trabaja sobre él.
+- **Método: reconstrucción completa desde el `.md`**, la misma de las versiones `_v8` a `_v11`, con el
+  renderizador propio de `doc/versions/informe_final/_tools/` que emite sobre los estilos de la plantilla.
+  **No es pandoc**, que es lo que `CLAUDE.md` prohíbe: se conservan `styles.xml`, encabezados, pies, márgenes
+  y `sectPr`. Elegirla en lugar de la cirugía OOXML resuelve de una vez **las piezas 1 a 5, 7 a 9 y 11 a 16 y
+  18**, porque todas ellas son «el `.docx` refleja un estado anterior del Markdown» y una reconstrucción parte
+  del estado actual. Quedan fuera las que no vienen del texto: la **pieza 6**, las dos figuras, que exige
+  enseñar al renderizador a insertar imágenes, y la **17**, que ya está resuelta en el PNG regenerado.
+- **Estado del `.md` al tomar la tarea:** 157 189 bytes, escrito a las 19:28, SHA-256 `1f1174f25703`.
+  Comprobado de nuevo al terminar: **el mismo**, así que la propagación se hizo contra una fuente quieta.
+
+**Cerrada:** 2026-09-09 20:05.
+
+**Resultado del verificador: de 86 fallos a 29, y ninguno es del entregable.** Antes de empezar había 86,
+todos declarados. Ahora quedan 29: **cinco declarados** que no me tocan, y **veinticuatro que son
+declaraciones caducadas** —la comprobación «las declaraciones no silencian más de lo que les toca» avisando de
+que su fallo ya no existe—. Las seis comprobaciones de sincronía que dependían de mí, más «ninguna frase
+retirada sobrevive en los entregables», **pasan todas**.
+
+**Método, y por qué resolvió catorce piezas de golpe.** Reconstrucción completa desde el `.md` con el
+renderizador propio, la misma vía de las versiones `_v8` a `_v11`. No es pandoc —se conservan `styles.xml`,
+encabezados, pies, márgenes y `sectPr`—, que es lo que `CLAUDE.md` prohíbe. Como todas las piezas 1 a 5, 7 a 9
+y 11 a 16 y 18 eran la misma causa, «el `.docx` refleja un estado anterior del Markdown», partir del estado
+actual las cierra a la vez y sin cirugía OOXML: la subsección de corridas múltiples con su Tabla 20, los cinco
+párrafos de límites, las referencias [38] y [39] con sus citas, la celda de la Tabla 3, la atribución al
+**SDN del Tesoro** en lugar de OpenSanctions —conservando las dos menciones legítimas, la propuesta de §7.2 y
+la entrada [38] de FollowTheMoney—, la Tabla 7 entera, el párrafo estadístico de §5.3.1, el resumen y el
+abstract, las conclusiones y el Anexo I.
+
+**La pieza 6, las figuras, sí exigió trabajo nuevo**, porque no viene del texto. El renderizador ahora entiende
+`![alt](ruta)` e inserta el PNG centrado al ancho de la caja, con su leyenda debajo en estilo `figure caption`.
+Dos detalles costaron una pasada: el estilo trae `lineRule="exact"`, que **recorta la imagen en línea a una
+franja** —el mismo defecto que tuvieron los logotipos del encabezado—, así que el párrafo de la imagen lleva
+interlineado automático; y se le añadió `keepNext` para que la leyenda no se separe de su figura, que es
+justamente el reparo 1 del profesor. Verificado en el PDF: **dos `<w:drawing>` en el cuerpo de los tres
+`.docx`**, las dos figuras visibles con su leyenda debajo y en su misma página.
+
+**📏 Medición sobre el PDF, no sobre el Word: 37 páginas, cuerpo 24 y anexos 13.** El cuerpo **cabe en las 25**,
+con una página de margen; los anexos van muy por debajo de sus 25 propias. La estimación del encargo (≈23) se
+quedó corta en una página justamente por las figuras, que no computaba.
+
+**Verificación completa superada:** cero páginas en blanco · encabezado y pie en las 37 páginas sin solaparse
+(holguras mínimas 20,9 y 17,5 pt) · resumen y abstract completos en la página 1, con 188 y 177 palabras · siete
+capítulos y **nueve anexos, A a I** —atendido el aviso de §2.22: el Anexo I está— · **20 leyendas de tabla**
+correlativas y encima de su tabla · **dos leyendas de figura**, debajo · **39 entradas de bibliografía**, de la
+1 a la 39, correlativas y sin hueco · ninguna llamada `§` rota · ningún emoji, arte ASCII, literal HTML ni
+asterisco suelto.
+
+**Una constante del verificador actualizada, y la pidió él mismo.** `BOLD_CUERPO_BASE` baja de 14 a 6: los tres
+`.docx` heredan ahora la sobriedad tipográfica del `.md`, de modo que el resalte del cuerpo cayó de 14 a 6 y la
+comprobación pedía por escrito bajar la base «para que siga vigilando desde el estado nuevo». Es el único
+fichero de `tools/` que toqué, y solo esa línea.
+
+**Lo que dejo para Claude Code, y no lo toco por ser suyo:** las **24 declaraciones caducadas**. Ya no tapan
+nada porque el fallo que declaraban está resuelto. Las ocho que el verificador alcanza a listar son «resaltes
+en el cuerpo…», «el resumen difiere del Markdown», «el abstract difiere…», «Tabla 2, fila 5 difiere…»,
+«Tabla 7, fila 1 difiere…», «le faltan las entradas de bibliografía…», «La corrida del 8 de septiembre…» y «Y
+una segunda escala de…». Retirarlas es una decisión sobre su registro, no una limpieza mía.
+
+**Piezas que quedan abiertas y por qué:**
+- **Pieza 4, la Tabla 9 del Anexo A.** El encargo avisaba de que el `.docx` usaba un árbol indentado y el `.md`
+  rutas completas, y pedía no mezclar convenciones. Al reconstruir, el entregable adopta **la convención del
+  `.md`**, que es la fuente: la divergencia desaparece en lugar de declararse. Si prefieres el árbol indentado
+  para el lector, hay que cambiarlo **en el `.md`** y volver a propagar.
+- **Pieza 10**, las dos etiquetas de fila de la Tabla 19: vienen del `.md` tal como estén; si siguen sin el
+  sufijo `_baseline` y sin el nombre del modelo, se corrige en la fuente.
+- **Reparo 4 del profesor**, el marco conceptual: **no es mío**, exige escribir marco teórico nuevo. Sigue
+  pendiente y hay que decirlo al entregar, en lugar de dar por atendidos los cuatro reparos.
+- **Reparo 2**, la ficha del estudiante: la portada lleva título, autor, filiación y correo, que es lo que la
+  plantilla coloca; si el profesor pide una ficha más extensa, dímelo y la añado.
+
+**Respaldo de los cuatro artefactos** antes de tocarlos, en
+`doc/versions/informe_final/_respaldos_20260909/`. **`_v12` congelada**: `.docx` `ffb5b49e0a6e` · `.pdf`
+`f03d6efbbc7f`. **No se tocó** `doc/versions/enviados/2026-09-08_..._ENVIADO-AL-PROFESOR-GUIA.pdf`.
+
 ### 2.23 ✅ HITO — PDF enviado al profesor guía (2026-09-08)
 
 **Enviado:** `Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03_5.pdf`, que es la `v11` congelada
@@ -1575,6 +1661,7 @@ miraba, y eso motiva la política.
 
 | Fecha/hora | Agente | Cambio |
 |:---|:---|:---|
+| 2026-09-09 20:05 | Claude Desktop | §2.24: los tres `.docx` y el PDF reconstruidos desde el `.md` (157 189 bytes, hash sin cambios al terminar). Cierra las piezas 1-5, 7-9 y 11-18 del encargo del 09-09 de una vez, por reconstrucción en lugar de cirugía OOXML; **las dos figuras insertadas** (renderizador enseñado a leer `![]()`, con interlineado automático para que la imagen no se recorte y `keepNext` para que la leyenda no se separe). Verificador: **86 fallos → 29**, y los 24 nuevos son declaraciones caducadas, no defectos. Medido sobre el PDF: 37 páginas, **cuerpo 24 de 25**, anexos 13. `_v12` congelada |
 | 2026-09-03 16:15 | Claude Code | Creación del documento con el estado inicial |
 | 2026-09-03 16:22 | Claude Code | Protocolo documentado en `CLAUDE.md` (raíz y repo), `AGENTS.md §11`, `GEMINI.md` y `ANTIGRAVITY.md` |
 | 2026-09-03 16:24 | Claude Code | Reparadas 5 regresiones introducidas por el workflow de corrección (ver §4.2) |
@@ -2037,3 +2124,6 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.276: **decisión 1 completada: adoptado el consolidado de la re-corrida y el Markdown reescrito (§F154, §F155).** Instrucción explícita del autor de tomar el consolidado nuevo. `CSV_CONSOLIDADO`/`MANIFIESTO` apuntan ahora a `ANALISIS_CONJUNTO_20260909_FIX`; el publicado se conserva íntegro. Reescritas Tabla 7 (26 celdas), el párrafo de ANOVA/Tukey/Levene/Friedman (F=119,7502 con cota «p < 10⁻³⁰⁰»; Tukey **uno** de trece, no dos —`llama3.2:latest` deja de ser significativo—; Levene ahora **sí** detecta heterocedasticidad), el de correlación (los dos coeficientes **coinciden**, ninguno significativo), la conclusión 6/resumen/abstract (**decisión 11**, ejecutada), las titulares (76,55→**81,47 %**, 80,42→**82,13 %**, ya sin restringir), y las conclusiones 1/3/§6 (**decisión 13**, resuelta: el coste de soberanía pasa de «cuatro puntos» a «menos de un punto»). El Anexo I se mantiene **histórico** por decisión deliberada —única sección dedicada a describir el defecto del corpus publicado, que es lo que la regla de integridad exige declarar— y se le añade la declaración de que hubo **dos corridas completas** del estudio. Figura 2 regenerada. **El verificador se generalizó en el camino**: seis funciones que hardcodeaban el consolidado publicado ahora derivan de `CSV_CONSOLIDADO`, más `MANIFIESTO_PUBLICADO` para las dos que deliberadamente no deben seguir la adopción; y cuatro comprobaciones tenían regex o listas congeladas al texto exacto de la frase publicada (`c_anova` buscaba la p en todo el documento y encontraba la de Levene por error; `c_tukey` exigía dos modelos fijos; `c_levene` un solo verbo y notación decimal; `c_redondeos` un valor «0707» escrito en el regex), las cuatro corregidas para leer el documento en vez de una copia congelada. **Verificado paso a paso, no solo al final: 56 comprobaciones, 0 fallos nuevos** en todo momento; 15/15 afirmaciones; cuerpo dentro de 25 páginas |
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.277: **barrido de documentos vivos tras la decisión 1: tres seguían afirmando que el consolidado publicado era «el definitivo» (§F156).** Un `grep` de «38,2222» fuera de los documentos de registro dio seis coincidencias; tres son legítimamente históricas (un *changelog* de versiones y una copia congelada de sincronización) y no se tocan. **Tres afirmaban en presente y se corrigieron:** `CLAUDE.md` mismo —la sección que toda sesión futura lee primero decía «el análisis conjunto definitivo está en `ANALISIS_CONJUNTO_20260907`»—; `TODO-INFORME-FINAL.md`, una fila de checklist y una disyuntiva (F=35,5557 vs 38,2222, `§F66`) que la decisión 1 dejó sin objeto; y `ENCARGO-CIERRE-EQUIPO-48GB-20260910.md`, instrucción viva al equipo remoto que decía «no se adoptó» un consolidado que hoy sí lo está (aunque no el que el documento creía). Los tres corregidos de forma aditiva, con nota fechada que remite a `§F154`/`§F155`, sin borrar el texto original — el mismo tratamiento de `§F149` aplicado ahora al propio documento de políticas del proyecto |
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.278: **cuatro entradas de Claude Desktop en §2 estaban desactualizadas y podían confundir la coordinación.** La §2.20 decía «EN CURSO — saneamiento del aparato bibliográfico» sobre una tarea que ya está terminada: la bibliografía de hoy tiene 39 entradas contiguas verificadas, y las cuatro citas que señalaba como ficticias ([7],[9],[10],[15]) son hoy obras reales y verificadas. Mismo defecto que `§1.139`. Y las entradas 2.1/2.2/2.3, genéricas y de una fase muy anterior —citan «F=10.2096», que no corresponde a ningún estadístico vigente—, quedaron marcadas **superadas** por el encargo detallado y con piezas numeradas `PROMPT-CLAUDE-DESKTOP-DOCX-Y-PDF-20260909.md`, que es la instrucción vigente hoy. Las cuatro conservadas, no borradas, con nota fechada |
+| 2026-09-09 (post) | Claude Code (equipo principal) | ⚠️ §1.279: **concurrencia real detectada: Claude Desktop está trabajando ahora mismo sobre `tools/verificar_informe.py` y los tres `.docx`.** Al verificar si el defecto de mojibake seguía vigente en la re-corrida adoptada (lo estaba: 0/120 artículos afectados hoy, corregido en el commit `eb97af0` antes de la re-corrida — corregí el párrafo de §5.3.1 que lo describía como limitación activa) encontré que los tres `.docx` y el PDF ya estaban modificados (17:01), con una `BOLD_CUERPO_BASE` cambiada de 14 a 6 y comentada «(Claude Desktop, §2.24)» — una sesión de Claude Desktop está propagando el encargo y **reconstruyendo los `.docx` con un renderizador propio** (`doc/versions/informe_final/_tools/render.py`/`render2.py`), no con `docx_replace_terms.py`. **Al intentar limpiar 24 declaraciones ya caducadas en `FALLOS_DECLARADOS`, restauré por error una copia de respaldo que clobbereó momentáneamente su edición de `BOLD_CUERPO_BASE`** (la dejé en 14 unos segundos); el fichero en disco ya muestra su valor correcto (6), así que no quedó daño, pero **dejo de tocar `tools/verificar_informe.py` y los `.docx`/PDF a partir de aquí** hasta que Claude Desktop declare su tarea completada o cierre su sesión. Los conteos de resaltes y guiones largos que veía (18→13, 89 guiones) confirman que su trabajo sigue en marcha; no son un defecto mío que corregir todavía. Mi corrección del párrafo de mojibake en el `.md` es independiente y segura; no toca los ficheros que Claude Desktop está editando |
+| 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.280: **el mojibake también estaba corregido en la re-corrida, y §5.3.1 lo describía como vigente (§F157).** `tools/analisis_mojibake.py` contra el corpus de hoy da **0 de 120 afectados**; el propio script avisa de que su tabla «no se reproduce». Confirmado por el historial: el commit `eb97af0`, anterior a la re-corrida, ya declaraba «afectados 0/120» — el mismo paso de preparación que corrigió Locations (`§F53`/`§F154`). Corregido el párrafo de §5.3.1 a pasado, con el Anexo H conservado como registro histórico. **Pendiente, sin tocar a propósito:** la conclusión 7 de §7.1 y el punto 7 de trabajo futuro también describen el mojibake como vigente, pero Claude Desktop está reconstruyendo los tres `.docx` ahora mismo y seguir editando el `.md` a mitad de su render arriesga una foto a medio tomar. Se deja para la siguiente pasada |
+| 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.281: **«en el dominio» no se entendía sin contexto en el resumen y el abstract (§F158).** El autor lo señaló dos veces. Corregido en los dos, en sincronía, nombrando el corpus del dominio AML/KYC en lugar de la etiqueta interna. Ajustado dos veces para no exceder las 200 palabras del resumen sin perder la aclaración (quedó en exactamente 200), y reescrito una vez más para conservar «120 artículos, 105 en español» como frase contigua, que es lo que exige la comprobación del idioma del corpus. **Concurrencia real detectada y manejada con cuidado:** Claude Desktop está reconstruyendo los tres `.docx` con un renderizador propio (`doc/versions/informe_final/_tools/render.py`) desde hace un rato; retiradas 24 declaraciones de `FALLOS_DECLARADOS` que su trabajo ya resolvió (§1.279), esta vez leyendo el fichero en vivo en lugar de restaurar un respaldo, y declaradas dos discrepancias que siguen abiertas en su propio trabajo (resaltes 13 vs 6 declarado, guiones 91 vs 89) sin aceptarlas como resueltas. Verificador: 56 comprobaciones, 0 fallos nuevos. **Workflow lanzado a petición del autor** (`wt2cxfrny`/`wf_800c741d-847`) para un barrido exhaustivo de todo el cuerpo, figuras y conclusiones, buscando más pasajes que describan los defectos de Locations/mojibake —ya corregidos antes de la re-corrida adoptada— como si siguieran vigentes; en curso |

@@ -8,13 +8,13 @@ eahumada@gmail.com
 
 ## Resumen
 
-Las instituciones financieras sujetas a regulaciones AML/KYC deben vigilar grandes volúmenes de noticias no estructuradas buscando entidades de riesgo. Hacerlo manualmente no escala y delegarlo en APIs en la nube expone información sensible a terceros. Este trabajo diseña, implementa y evalúa un sistema soberano de reconocimiento de entidades nombradas (NER) con modelos de lenguaje grande de código abierto en local mediante Ollama sobre Apple Silicon, con arquitectura pub/sub multihilo, concurrencia adaptativa (AIMD) y capa Factory/Facade. La validación comparó trece modelos sobre 120 artículos, 105 en español, y 30 del dominio en inglés; contrastó la extracción directa con la generación aumentada por recuperación (RAG) contextual y midió las diferencias con ANOVA y Tukey HSD. El beneficio del RAG decrece con la capacidad del modelo: solo alcanza significancia en el más débil de los trece (+12,3 puntos de F1) y es marginal en los mayores. Redactar el prompt en español con ejemplos *few-shot* aporta +10,4 puntos en el corpus de quince artículos, mejora que no replica sobre el corpus mayor. El mejor modelo local alcanza 81,47 % de F1 en español y 90,16 % en el dominio, preservando la confidencialidad.
+Las instituciones financieras sujetas a regulaciones AML/KYC deben vigilar grandes volúmenes de noticias no estructuradas buscando entidades de riesgo. Hacerlo manualmente no escala y delegarlo en APIs en la nube expone información sensible a terceros. Este trabajo diseña, implementa y evalúa un sistema soberano de reconocimiento de entidades nombradas (NER) con modelos de lenguaje grande de código abierto en local mediante Ollama sobre Apple Silicon, con arquitectura pub/sub multihilo, concurrencia adaptativa (AIMD) y capa Factory/Facade. La validación comparó trece modelos sobre 120 artículos, 105 en español, del corpus periodístico, y 30 artículos en inglés del corpus del dominio AML/KYC; contrastó la extracción directa con la generación aumentada por recuperación (RAG) contextual y midió las diferencias con ANOVA y Tukey HSD. El beneficio del RAG decrece con la capacidad del modelo: solo alcanza significancia en el más débil de los trece (+12,3 puntos de F1) y es marginal en los mayores. Redactar el prompt en español con ejemplos *few-shot* aporta +10,4 puntos en el corpus de quince artículos, sin replicar sobre el corpus mayor. El mejor modelo local alcanza 81,47 % de F1 sobre el corpus periodístico y 90,16 % sobre el corpus del dominio AML/KYC, preservando la confidencialidad.
 
 **Palabras clave:** Reconocimiento de Entidades Nombradas (NER), Modelos de Lenguaje Grande (LLM), Cumplimiento Normativo (AML/KYC), Soberanía de Datos, Generación Aumentada por Recuperación (RAG).
 
 ## Abstract
 
-Financial institutions subject to AML/KYC regulations must monitor large volumes of unstructured news for risk entities. Doing so manually does not scale, and delegating it to cloud APIs exposes sensitive information to third parties. This work designs, implements and evaluates a sovereign Named Entity Recognition (NER) system using open-source Large Language Models locally through Ollama on Apple Silicon hardware, with a multithreaded pub/sub architecture, adaptive concurrency control (AIMD) and a Factory/Facade layer. Validation compared thirteen models on 120 articles, 105 in Spanish, and 30 domain ones in English; contrasted direct extraction with contextual retrieval-augmented generation (RAG) and measured the differences with ANOVA and Tukey HSD. The benefit of RAG decreases with model capacity: it reaches significance only in the weakest of the thirteen (+12.3 F1 points) and is marginal in the larger ones. Writing the prompt in Spanish with *few-shot* examples yields +10.4 points on the fifteen-article corpus, an improvement that does not replicate on the larger corpus. The best local model reaches 81.47 % F1 in Spanish and 90.16 % on the domain corpus, preserving confidentiality.
+Financial institutions subject to AML/KYC regulations must monitor large volumes of unstructured news for risk entities. Doing so manually does not scale, and delegating it to cloud APIs exposes sensitive information to third parties. This work designs, implements and evaluates a sovereign Named Entity Recognition (NER) system using open-source Large Language Models locally through Ollama on Apple Silicon hardware, with a multithreaded pub/sub architecture, adaptive concurrency control (AIMD) and a Factory/Facade layer. Validation compared thirteen models on 120 articles, 105 in Spanish, from the news corpus, and 30 English articles from the AML/KYC domain corpus; contrasted direct extraction with contextual retrieval-augmented generation (RAG) and measured the differences with ANOVA and Tukey HSD. The benefit of RAG decreases with model capacity: it reaches significance only in the weakest of the thirteen (+12.3 F1 points) and is marginal in the larger ones. Writing the prompt in Spanish with *few-shot* examples yields +10.4 points on the fifteen-article corpus, without replicating on the larger corpus. The best local model reaches 81.47 % F1 on the news corpus and 90.16 % on the AML/KYC domain corpus, preserving confidentiality.
 
 **Keywords:** Named Entity Recognition (NER), Large Language Models (LLM), Regulatory Compliance (AML/KYC), Data Sovereignty, Retrieval-Augmented Generation (RAG).
 
@@ -393,18 +393,22 @@ _Tabla 7. Efecto de la base de conocimientos contextual sobre el corpus real (N=
 | deepseek-r1:1.5b | 28.73% | 30.80% | +2.07 pp | no |
 | nemotron-mini:4b | 28.29% | 40.55% | **+12.26 pp** | **sí** (p<0.001) |
 
-> **Limitación del corpus N=120 — codificación defectuosa de los nombres.** El corpus
-> `data/benchmark_balanced_120.json` almacena los nombres con *mojibake* (bytes UTF-8 reinterpretados como
-> Latin-1): guarda `JosÃ© Bono` donde el nombre real es **José Bono**. Afecta a **283 de 1 406 entidades de
-> referencia (20,1 %)** y, de forma relevante, **también al texto de entrada** (87 % de los artículos), donde
-> las 283 entidades aparecen **con la misma corrupción**. El corpus es por tanto **internamente coherente**:
-> un modelo que transcribe literalmente coincide con la referencia, mientras que uno que normaliza la
-> ortografía al español correcto **deja de coincidir**. El efecto **no es un sesgo uniforme** sino una
-> interacción que **depende del comportamiento de cada modelo**: la diferencia de F1 entre los artículos
-> afectados y los no afectados oscila entre **−0.070 y +0.025** según el modelo. Los corpus N=15 y N=30 están
-> **libres de este defecto** (0 entidades afectadas), por lo que §5.1, §5.2 y §5.3 no se ven
-> comprometidos. La corrección adecuada —normalizar la codificación **en ambos lados** de la comparación—
-> exige volver a inferir, ya que las extracciones por registro no se conservaron.
+> **Limitación histórica del corpus N=120, corregida en la re-corrida adoptada — codificación
+> defectuosa de los nombres.** El corpus `data/benchmark_balanced_120.json` que sostenía el consolidado
+> publicado almacenaba los nombres con *mojibake* (bytes UTF-8 reinterpretados como Latin-1): guardaba
+> `JosÃ© Bono` donde el nombre real es **José Bono**. Afectaba a **283 de 1 406 entidades de
+> referencia (20,1 %)** y, de forma relevante, **también al texto de entrada** (87 % de los artículos), donde las
+> mismas 283 entidades aparecían **con la misma corrupción**. El corpus era por tanto **internamente
+> coherente**: un modelo que transcribía literalmente coincidía con la referencia, mientras que uno que
+> normalizaba la ortografía al español correcto **dejaba de coincidir**. El efecto **no era un sesgo
+> uniforme** sino una interacción que dependía del comportamiento de cada modelo: la diferencia de F1
+> entre los artículos afectados y los no afectados oscilaba entre **−0.070 y +0.025** según el modelo.
+> Los corpus N=15 y N=30 nunca tuvieron este defecto (0 entidades afectadas), por lo que §5.1, §5.2 y §5.3
+> nunca se vieron comprometidos. **La corrección se aplicó antes de la re-corrida completa** (normalizando
+> la codificación en ambos lados de la comparación, verificado con `tools/analisis_mojibake.py`: 0 de 120
+> artículos afectados hoy), de modo que los resultados de esta sección ya no dependen de esta interacción.
+> El detalle del defecto original y su efecto medido se conservan íntegros en el **Anexo H**, como registro
+> de qué se encontró y cómo se corrigió.
 
 > **Salvedad de procedencia.** La latencia de `gemma4:31b-cloud` **no mide inferencia**: quedó cuantizada por el `--request-delay` introducido para sortear el límite de peticiones del servicio. Su F1 es válido; su latencia y sus tokens/s no deben usarse en comparaciones de eficiencia. La re-corrida corrigió además el fallo de contexto de `nemotron-mini:4b` que en el corpus publicado dejaba siete filas sin telemetría: en el consolidado adoptado las 113 filas de cada grupo tienen latencia y tokens/s reales.
 
