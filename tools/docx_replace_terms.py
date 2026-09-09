@@ -482,7 +482,17 @@ def main(argv=None):
         elif args.in_place:
             dst = src
             if not args.no_backup:
+                # Un respaldo no puede pisar otro. El 2026-09-09 esta herramienta y
+                # docx_borrar_filas.py corrieron en el mismo segundo sobre los mismos ficheros
+                # y, como las dos derivan el sufijo de la marca de tiempo, la segunda
+                # sobrescribio el respaldo de la primera: el .bak acabo con el estado
+                # intermedio en lugar del original. No se perdio nada —estaba en git—, pero un
+                # respaldo que se pisa no es un respaldo.
                 bak = "%s.bak_%s" % (src, stamp)
+                _n = 2
+                while os.path.exists(bak):
+                    bak = "%s.bak_%s-%d" % (src, stamp, _n)
+                    _n += 1
                 shutil.copy2(src, bak)
                 print("respaldo: %s" % bak)
         else:

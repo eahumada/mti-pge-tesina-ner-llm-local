@@ -1,0 +1,39 @@
+{
+  "_comment": [
+    "Supresion de la glosa que narra la exclusion, y correccion de la leyenda de la Tabla 19",
+    "(2026-09-09). FINDINGS §F94.",
+    "",
+    "CLAUDE.md: «Tampoco en una glosa que los declare excluidos: la exclusion se aplica, no se",
+    "narra». El Markdown no reescribio la frase, la ELIMINO —cero apariciones de «Quedan fuera de",
+    "la tabla», «Excluidos del estudio» y «modelos excluidos»—, de modo que aqui se suprime.",
+    "",
+    "Tras suprimirla el parrafo queda «...no son comparables entre filas; el indice Tok/s/B si lo",
+    "es. La columna «Parametros» recoge...», que se lee bien y no nombra a nadie excluido. El",
+    "parrafo del Markdown esta ademas REESCRITO por otros motivos —dice «si es estable entre",
+    "corridas del mismo modelo, y por eso el indice Tok/s/B que deriva de el es la magnitud que",
+    "aqui se compara»—, y esa alineacion es parte de la propagacion general, no de §F94.",
+    "",
+    "G2 acompana a la supresion de las 7 filas de la Tabla 19: su leyenda declara «49",
+    "configuraciones» y el Markdown declara 42. Sin este cambio la tabla quedaria con 42 filas",
+    "bajo una leyenda que dice 49. Ejecutar DESPUES de docx_borrar_filas.py."
+  ],
+  "parts": [
+    "word/document.xml"
+  ],
+  "rules": [
+    {
+      "id": "G1",
+      "_where": "Nota de la Tabla 4: la glosa que narra la exclusion",
+      "find": "Quedan fuera de la tabla los modelos excluidos del estudio (nuextract:latest, gemini-3.1-flash-lite, minimax-m3). ",
+      "replace": "",
+      "expect": 1
+    },
+    {
+      "id": "G2",
+      "_where": "Leyenda de la Tabla 19, tras suprimir sus 7 filas excluidas",
+      "find": "49 configuraciones",
+      "replace": "42 configuraciones",
+      "expect": 1
+    }
+  ]
+}

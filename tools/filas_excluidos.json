@@ -1,0 +1,56 @@
+{
+  "_comment": [
+    "Supresion de las filas de modelos excluidos del estudio en los tres .docx (2026-09-09).",
+    "FINDINGS §F94. El Markdown tiene cero apariciones; los .docx nombraban cuatro modelos",
+    "excluidos en quince sitios. La correccion es SUPRIMIR, no reformular: el Markdown no",
+    "reescribio la glosa, la elimino.",
+    "",
+    "Por que la supresion es segura ahora y el parcheo de valores no: suprimir una fila entera",
+    "deja intactas las que quedan, mientras cambiar un valor dentro de una fila cuyas otras",
+    "columnas estan sustituidas produce una fila incoherente. Los valores y las filas que faltan",
+    "esperan al reemplazo de tablas de la pasada de maquetacion.",
+    "",
+    "Recuentos comprobados contra el Markdown antes de escribir estas reglas:",
+    "  Tabla 15 (fuentes): docx 5 filas de datos -> 4, identica al Markdown",
+    "  Tabla 18 (deltas):  docx 24 -> 22. El Markdown tiene 26: le siguen faltando 4 filas",
+    "                      legitimas y 2 de las comunes tienen valores distintos (reemplazo)",
+    "  Tabla 19:           docx 49 -> 42, que es lo que declara el Markdown. La LEYENDA dice",
+    "                      «49 configuraciones» y hay que pasarla a 42 con docx_replace_terms"
+  ],
+  "reglas": [
+    {
+      "id": "E1",
+      "_where": "Tabla 15, procedencia de las filas del benchmark exploratorio",
+      "tabla_contiene": "Filas de la Tabla 4",
+      "primera_celda": [
+        "Excluidos del estudio"
+      ],
+      "esperadas": 1
+    },
+    {
+      "id": "E2",
+      "_where": "Tabla 18, efecto diferencial del mojibake",
+      "tabla_contiene": "Δ F1 por entidad de referencia",
+      "primera_celda": [
+        "nuextract:latest_baseline",
+        "nuextract:latest_kb_rag"
+      ],
+      "esperadas": 2
+    },
+    {
+      "id": "E3",
+      "_where": "Tabla 19, desempeño publicado y restringido",
+      "tabla_contiene": "F1 restr.",
+      "primera_celda": [
+        "nuextract:latest_baseline",
+        "nuextract:latest_kb_rag",
+        "nuextract:latest_rag_enhanced",
+        "gemma4-12b-mlx-q8-64k:latest_baseline",
+        "gemma4-12b-mlx-q8-64k:latest_rag_enhanced",
+        "minimax-m3:cloud_baseline",
+        "minimax-m3:cloud_rag_enhanced"
+      ],
+      "esperadas": 7
+    }
+  ]
+}

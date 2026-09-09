@@ -3901,3 +3901,48 @@ vez.
 
 **Estado:** declarado en `FALLOS_DECLARADOS` como **pendiente de corrección, no aceptado**, con su
 inventario y su tanda. Se retira de esa lista al corregirlo, que es lo que mantiene la lista útil.
+
+### Corrección aplicada el 2026-09-09
+
+Aplicado a los tres `.docx`, con respaldo, en dos pasos y verificado despues:
+
+| | Antes | Ahora |
+|:---|---:|---:|
+| Menciones de modelos excluidos | **15** | **0** |
+| Tabla 15, filas de datos | 5 | **4** — idéntica al Markdown |
+| Tabla 18, filas de datos | 24 | **22** |
+| Tabla 19, filas de datos | 49 | **42** — el recuento que declara el Markdown |
+| Leyenda de la Tabla 19 | «49 configuraciones» | «**42** configuraciones» |
+| Glosa «Quedan fuera de la tabla…» | 1 | **0** |
+| Emojis | 0 | 0 |
+| Palabras | 18 347 | 18 262 |
+
+Los tres paquetes abren y conservan sus 29 y 15 partes. El párrafo de la nota de la Tabla 4 queda «…no son
+comparables entre filas; el índice Tok/s/B sí lo es. La columna «Parámetros» recoge…», que se lee bien y no
+nombra a nadie.
+
+**Lo que se hizo y lo que no.** Se **suprimió**; no se parcheó ninguna cifra. La distinción importa y es la
+que autorizó a actuar hoy en lugar de esperar a la maquetación: cambiar un valor dentro de una fila cuyas
+otras columnas están sustituidas deja una fila internamente incoherente, mientras **suprimir la fila entera
+no altera las que quedan**. De modo que la conformidad con la lista cerrada se resuelve ya y el reemplazo de
+valores sigue pendiente.
+
+**Lo que sigue pendiente en esas tablas**, y conviene no darlo por hecho: a la Tabla 18 del `.docx` le faltan
+**4 filas legítimas** —las de `nemotron-mini:4b` y `qwen3:8b`, en sus dos modos— y **2 de sus 22 filas
+comunes traen valores distintos** de los del Markdown, las de `gemma4:12b-mlx`; las otras 20 coinciden. Y la
+Tabla 19 conserva las cifras sustituidas de §F88. Las dos exigen reemplazo, no parcheo.
+
+**Herramienta nueva:** `tools/docx_borrar_filas.py`, que suprime `<w:tr>` identificando la tabla por un
+fragmento de texto que solo ella contiene y la fila por su primera celda, exigiendo el número de filas
+esperado y sin tocar nada si no cuadra.
+
+**Y un defecto que la propia operación destapó.** `docx_borrar_filas.py` y `docx_replace_terms.py` corrieron
+en el mismo segundo sobre los mismos ficheros, y como las dos derivan el sufijo del respaldo de la marca de
+tiempo, **la segunda sobrescribió el respaldo de la primera**: el `.bak` acabó guardando el estado intermedio
+en lugar del original. No se perdió nada —el original estaba en git y en los respaldos de las 12:24 y las
+12:31—, pero **un respaldo que se pisa no es un respaldo**. Las dos herramientas añaden ahora un contador, y
+está probado: dos ejecuciones en el mismo segundo dan `.bak_…` y `.bak_…-2`.
+
+**Consecuencia en la autoprueba, que confirma §L64.** Retirado el fallo de la lista de declarados, los tres
+`.docx` **vuelven a ser vigilables**: la autoprueba pasa de «16 de 19, 3 bloqueados» a **19 de 19**. Era
+exactamente lo que §L64 predecía, y sirve de comprobación de que el diagnóstico era correcto.

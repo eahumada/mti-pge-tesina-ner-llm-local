@@ -42,10 +42,6 @@ FALLOS_DECLARADOS = {
     'cita 80.51': 'decision 13, pendiente del autor (FINDINGS §F87)',
     'el Anexo I dice': 'decision 13, ampliada a la tercera instancia del defecto '
                        '(FINDINGS §F87.bis)',
-    '.docx: aparece': 'PENDIENTE DE CORRECCION, no aceptado: la exclusion no se propago a los '
-                       'tres .docx. Inventario en FINDINGS §F94 y tanda de correccion en '
-                       'PROPAGACION-PENDIENTE-DOCX-20260908.md. Se retira de esta lista al '
-                       'corregirlo, que es lo que la hace util',
     'github.com/eahumada/mti-pge-tesina': 'referencia [37]: el repositorio es privado hasta la purga '
                                           '(SEGURIDAD-CLAVE-GOOGLE-20260908.md)',
 }
