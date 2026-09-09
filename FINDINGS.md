@@ -5161,3 +5161,63 @@ contraste. Alterado en el artefacto un veredicto de «no» a «sí» sobre una f
 acredita que la segunda vía no es decorativa.
 
 **Estado del verificador:** 46 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F116 — La cifra que responde a la objeción metodológica más fácil de plantear no la comprobaba nadie
+
+**Fecha:** 2026-09-09 · **Origen:** dejar de encontrar estas cosas por casualidad
+
+Tres cifras del mismo párrafo de §5 obligaron a añadir tres comprobaciones distintas —el ANOVA
+titular en [§F91](#f91), Levene en la misma tanda, el recuento de Tukey en [§F115](#f115)— y **las
+tres se encontraron tropezándose con ellas**. Tres veces el mismo patrón en el mismo párrafo
+significa que el método no sirve, de modo que en lugar de esperar la cuarta hice el barrido:
+`tools/cobertura_cifras.py`, que enumera las afirmaciones numéricas del cuerpo del informe y dice
+cuáles no tienen ninguna comprobación anclada en su vecindad.
+
+Son **84 afirmaciones numéricas** en el cuerpo, fuera de tablas y bloques de código. La herramienta
+señaló 53 candidatas, y declara por qué esa cifra no es un veredicto: da falsos cubiertos —un ancla
+cerca no prueba que compruebe esa cifra— y falsos descubiertos. Las dos cosas se confirmaron al
+comprobarlas a mano, y la segunda es la que importa:
+
+**Falso descubierto, confirmado por mutación.** El barrido marcó como no cubiertos el `ρ = −0,5165`
+de Spearman y sus dos p. Alterados en el informe, `c_correlacion` los detecta con **2 fallos
+nuevos**. Estaban cubiertos por una ruta que la herramienta no reconoce.
+
+**Y un descubierto real, también por mutación.** El `χ² = 1 169,23` de Friedman: alterado a
+9 999,99, el verificador da **cero fallos nuevos** sobre sus 46 comprobaciones. La razón es sutil:
+`c_defensa` sí verifica ese mismo χ², pero en `DEFENSA-PREGUNTAS-Y-RESPUESTAS.md`, **que es otro
+documento**. La cifra estaba vigilada en la copia y no en el original.
+
+**Y es la peor de las 84 para tener sin vigilar.** Es la frase con la que §5 salva la limitación que
+él mismo declara —los 26 grupos evalúan los mismos 120 artículos, de modo que las observaciones
+están apareadas y un ANOVA de una vía no es estrictamente el procedimiento correcto—: «repetido con
+la prueba de Friedman, que es la que corresponde a un diseño de medidas repetidas, el rechazo se
+sostiene con holgura (χ² = 1 169,23), de modo que la conclusión no depende de esa elección». Es la
+respuesta a la objeción metodológica más fácil de plantear en una defensa.
+
+**La cifra es correcta.** Recalculada desde el CSV consolidado: rangando los 26 valores dentro de
+cada artículo sobre los 120 bloques completos, χ² = **1 169,2327**, que coincide con el informe y
+con `friedman.json` al cuarto decimal.
+
+**Comprobación 47**, que lo **recalcula** en lugar de comparar contra el artefacto y nada más, y
+contrasta las tres vías. Un detalle que merece quedar escrito porque es donde una reimplementación
+se equivocaría: **la corrección por empates es imprescindible**. Sin ella el estadístico sale
+**1 123,0730** y con ella 1 169,2327, de modo que una implementación que la olvide reporta un fallo
+donde no lo hay. Con 26 grupos sobre 120 artículos los empates abundan.
+
+**Un defecto propio, encontrado por la herramienta contra sí misma.** La primera versión extraía las
+anclas con una expresión regular sobre el código fuente del verificador, y **perdía anclas en
+silencio**: un apóstrofo suelto dentro de un docstring desalinea el emparejamiento de comillas y, a
+partir de ahí, todos los literales quedan mal delimitados. Daba **713** fragmentos mal cortados y
+**cero** con la palabra «Levene», sobre un fichero que la usa cuatro veces y que se ancla al informe
+con un regex explícito. Se detectó justamente porque Levene aparecía como no cubierto cuando yo
+sabía que lo estaba. Con `ast` son **402** anclas reales. La lección general es corta: **el código
+fuente se lee con un analizador sintáctico, no con una expresión regular**, y el síntoma de haberlo
+hecho mal es que faltan cosas, no que sobren.
+
+**Y una precisión sobre mi propio aviso anterior.** En [§F114](#f114) dije que la frase de Levene
+convenía precisarla; en [§F115](#f115) me retracté porque el texto está bien. Este hallazgo no la
+reabre: lo que faltaba no era corregir el texto sino **vigilar una cifra vecina**.
+
+**Estado del verificador:** 47 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.

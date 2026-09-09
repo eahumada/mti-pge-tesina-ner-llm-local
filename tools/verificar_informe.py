@@ -230,6 +230,110 @@ def c_tukey_recuento(s):
           'verifica el recuento y la coherencia interna del artefacto')
 
 
+# --- 47. El chi cuadrado de Friedman del informe, recalculado --------------------------------
+def c_friedman(s):
+    """La prueba que sostiene «la conclusion no depende de esa eleccion», y nadie la miraba.
+
+    §5 declara una limitacion del contraste —los 26 grupos evaluan los mismos 120 articulos, de
+    modo que las observaciones estan apareadas— y la salva con Friedman: «repetido con la prueba de
+    Friedman, que es la que corresponde a un diseno de medidas repetidas, el rechazo se sostiene con
+    holgura (chi2 = 1 169,23), de modo que la conclusion no depende de esa eleccion». Es la frase
+    que responde a la objecion metodologica mas facil de plantear en una defensa.
+
+    **Su cifra no la comprobaba nadie.** `c_defensa` verifica ese mismo chi2, pero en
+    `DEFENSA-PREGUNTAS-Y-RESPUESTAS.md`, que es otro documento: si la copia del informe se desviara
+    del artefacto, no lo notaria ninguna de las 46 comprobaciones anteriores. Detectado por el
+    barrido de `tools/cobertura_cifras.py` y confirmado por mutacion —alterada a 9 999,99, cero
+    fallos nuevos— antes de escribir esto (`§F116`).
+
+    Se **recalcula**, no se compara contra el artefacto y nada mas. Friedman cabe en la biblioteca
+    estandar: se rangan los 26 valores dentro de cada articulo, se suman los rangos por grupo y
+    chi2 = 12/(n*k*(k+1)) * suma(Rj^2) - 3n(k+1). **La correccion por empates es imprescindible**:
+    sin ella sale 1 123,0730 y con ella 1 169,2327, de modo que una implementacion que la olvide
+    da un fallo donde no lo hay. Las tres vias —este recalculo, el artefacto y el informe—
+    coinciden al cuarto decimal.
+    """
+    import collections as _c
+    if not os.path.exists(CSV_CONSOLIDADO):
+        check('el chi2 de Friedman se recalcula desde el CSV', 0,
+              ['no existe %s' % os.path.relpath(CSV_CONSOLIDADO, RAIZ)])
+        return
+    import csv as _csv
+    por = _c.defaultdict(dict)
+    with open(CSV_CONSOLIDADO, encoding='utf-8') as fh:
+        for r in _csv.DictReader(fh):
+            if r.get('f1') not in (None, ''):        # `is not None`: un F1 de 0,0 es un dato
+                por[r['record_id']][r['model']] = float(r['f1'])
+    grupos = sorted({g for d in por.values() for g in d})
+    comp = [rid for rid, d in por.items() if len(d) == len(grupos)]
+    k, n = len(grupos), len(comp)
+    if k < 2 or n < 2:
+        check('el chi2 de Friedman se recalcula desde el CSV', 0,
+              ['no hay bloques completos que rangar: %d grupos, %d bloques' % (k, n)])
+        return
+
+    def _rangos(v):
+        idx = sorted(range(len(v)), key=lambda i: v[i])
+        out = [0.0] * len(v)
+        i = 0
+        while i < len(idx):
+            j = i
+            while j + 1 < len(idx) and v[idx[j + 1]] == v[idx[i]]:
+                j += 1
+            med = (i + j) / 2.0 + 1
+            for t in range(i, j + 1):
+                out[idx[t]] = med
+            i = j + 1
+        return out
+
+    Rj, T = [0.0] * k, 0.0
+    for rid in comp:
+        rr = _rangos([por[rid][g] for g in grupos])
+        for a in range(k):
+            Rj[a] += rr[a]
+        T += sum(t ** 3 - t for t in _c.Counter(rr).values())
+    chi = 12.0 / (n * k * (k + 1)) * sum(x * x for x in Rj) - 3 * n * (k + 1)
+    corr = 1 - T / (n * (k ** 3 - k))
+    if corr <= 0:
+        check('el chi2 de Friedman se recalcula desde el CSV', 0,
+              ['la correccion por empates sale <= 0 (%r): no se puede dividir' % corr])
+        return
+    chi /= corr
+
+    fallos, mirados = [], 0
+    # 1) contra el informe
+    mirados += 1
+    m = re.search(r'holgura \(χ² = ([\d\s]+),(\d+)\)', s)
+    if m is None:
+        fallos.append('no se encuentra en el informe la frase de Friedman con su χ²: '
+                      'revisar si se reformulo')
+    else:
+        pub = float('%s.%s' % (m.group(1).replace(' ', '').replace('\u00a0', ''), m.group(2)))
+        if abs(pub - chi) > 0.011:
+            fallos.append('el informe publica χ² = %s y el recalculo da %.4f' % (pub, chi))
+    # 2) contra el artefacto, y su gl
+    art = os.path.join(BENCH_DIR, 'results/ROBUSTEZ_ESTADISTICA_20260908/friedman.json')
+    if not os.path.exists(art):
+        fallos.append('falta %s, del que el indice de defensa toma esta misma cifra'
+                      % os.path.relpath(art, RAIZ))
+    else:
+        import json as _json
+        with open(art, encoding='utf-8') as fh:
+            fr = (_json.load(fh) or {}).get('friedman_medidas_repetidas') or {}
+        mirados += 1
+        a_chi = fr.get('chi2')
+        if a_chi is None:
+            fallos.append('friedman.json no trae chi2')
+        elif abs(a_chi - chi) > 1e-3:
+            fallos.append('friedman.json dice χ² = %.4f y el recalculo da %.4f' % (a_chi, chi))
+        mirados += 1
+        gl = fr.get('gl')
+        if gl is not None and gl != k - 1:
+            fallos.append('friedman.json dice gl = %s y con %d grupos son %d' % (gl, k, k - 1))
+    check('el chi2 de Friedman se recalcula desde el CSV', mirados, fallos,
+          'con correccion por empates: sin ella daria 1123,07 en lugar de 1169,23')
+
+
 def check(nombre, examinados, fallos, nota=''):
     resultados.append((nombre, examinados, list(fallos), nota))
 
@@ -3187,6 +3291,7 @@ def main():
     ejecutar(c_tabla7_vs_datos, s)
     ejecutar(c_tabla7_desde_per_type, s)
     ejecutar(c_tukey_recuento, s)
+    ejecutar(c_friedman, s)
     ejecutar(c_tabla4_vs_datos, s)
     ejecutar(c_figura1_vs_artefacto, s)
     ejecutar(c_tablas_menores, s)
