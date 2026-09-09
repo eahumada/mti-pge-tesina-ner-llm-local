@@ -107,6 +107,25 @@ control de `LEARNING §L57` —buscar además palabras que **tienen** que estar�
 «gemma» y «Ahumada» también daban cero, de modo que el extractor no leía nada. Con `pypdf` el control pasa
 (11, 91 y 2 apariciones) y las cuatro frases aparecen.
 
+## El presupuesto de la reescritura, medido
+
+Conviene tenerlo antes de empezar, porque las tres restricciones son distintas y una de ellas no admite
+negociación:
+
+| Dónde | Situación hoy | Margen |
+|:---|:---|:---|
+| **Resumen (español)** | **exactamente 200** palabras | **cero.** El tope es 200 |
+| **Abstract (inglés)** | 189 palabras | once, pero no utilizables: debe decir lo mismo que el resumen |
+| **Cuerpo del informe** | 16 926 palabras · **23,0 de 25 páginas** | **1 336 palabras**, unas dos páginas |
+
+De modo que §5.3.1 y §6 tienen sitio para explicarse —y probablemente lo necesiten, porque «no hay relación
+monótona pero tres modelos mejoran» cuesta más de contar que «es inversamente proporcional»—, mientras que el
+resumen **tiene que reformularse sin crecer ni una palabra**. Es la restricción que conviene resolver primero,
+porque condiciona cómo se enuncia la conclusión en todo lo demás.
+
+La densidad de referencia es de **684 palabras por página**, medida sobre el PDF entregado, y es la que usa
+`tools/verificar_informe.py` para estimar la extensión.
+
 ## Orden recomendado
 
 1. Esperar a que el equipo resuelva `§F85` y rehaga el consolidado.
