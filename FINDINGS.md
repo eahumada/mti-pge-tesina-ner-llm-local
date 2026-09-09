@@ -1930,6 +1930,12 @@ explícita y el `.gitignore` deja constancia de por qué.
 
 ## §F68 — Con el corpus corregido, el RAG deja de perjudicar a los modelos grandes
 
+> **Aviso, 2026-09-09: este hallazgo tiene tres continuaciones y una de ellas refuta a otra.**
+> `§F68.bis` propuso que la emisión de localizaciones explicaba la dispersión; **`§F68.ter` demuestra que es
+> falsa** —la métrica restringida *aumenta* la dispersión, de 15,70 a 17,92— y que la «convergencia» que se
+> había leído estaba medida sobre cinco modelos excluyendo los dos extremos. `§F68.quater` cierra el asunto.
+> **No tomar la hipótesis de abajo sin leer antes la `.ter`.**
+
 **Fecha:** 2026-09-08. **Observación provisional: 3 de 13 modelos.** No debe llevarse al informe hasta tener
 la re-corrida completa, pero sí debe conocerse ya, porque afecta a una afirmación del capítulo de resultados.
 
@@ -2087,6 +2093,13 @@ que hoy esa referencia no se puede seguir desde `main`.
 ---
 
 ## §F71 — Las latencias de la re-corrida no son comparables con las publicadas, y la causa no está clara
+
+> **Aviso, 2026-09-09: este hallazgo quedó resuelto en sus continuaciones.** `§F71.bis` refuta la hipótesis
+> de que la diferencia viniera de la máquina, con la propia telemetría; **`§F71.ter` da la explicación
+> definitiva**: `latency_sec` no mide generación, incluye la espera en cola, y la prueba es que
+> `latencia × tokens/s` supera el tope de salida en **veinte de los veintiséis grupos**. Lo que sí es
+> característico del modelo son los tokens por segundo, y con ellos se salva el índice Tok/s/B de la Tabla 8.
+> **La pregunta de abajo está contestada; la respuesta está en la `.ter`.**
 
 **Fecha:** 2026-09-08. **Observación, no diagnóstico.** Cuatro modelos rehechos.
 
@@ -2841,7 +2854,7 @@ referencias casadas son `len(gt) - fn`. Con eso se rehace cada registro contando
 Artefacto en `results/EMPAREJAMIENTO_DUPLICADO_20260908/efecto.json`, reproducible con
 `tools/efecto_emparejamiento_duplicado.py`.
 
-> **Las cuatro cifras de este bloque están corregidas en `§F81.bis`.** Se calcularon leyendo ocho de los
+> **Las cuatro cifras de este bloque están corregidas en `§F81.bis`.** Y **`§F81.ter`** añade algo más grave: este hallazgo era un **redescubrimiento** de `§F49`, que ya lo había documentado el 2026-09-07 y cuyo defecto ya estaba corregido en la rama de la re-corrida. Se calcularon leyendo ocho de los
 > veintiséis grupos de la corrida equivocada. El mecanismo, la dirección y la conclusión no cambian; las
 > cifras y una de las afirmaciones, sí.
 
