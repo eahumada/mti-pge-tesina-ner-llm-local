@@ -5693,3 +5693,43 @@ hallazgo posterior porque no releí el anterior. Y es la segunda vez en la sesi�
 misma frase.
 
 **Estado del verificador:** 51 comprobaciones, 40 fallos (40 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F124 — Una afirmación sobre una ruta sobrevivió a la desaparición de la ruta
+
+**Fecha:** 2026-09-09 · **Origen:** comprobar qué dejó colgando la retirada de los artefactos
+defectuosos
+
+Retirado `nemotron-mini_4b__N120_F85_BUGGY` por instrucción del autor —«en el estudio deben existir
+solo corridas y *benchmarks* exitosos, no conservar nada defectuoso»—, revisé qué quedaba apuntando
+a esa ruta. **Ninguna herramienta la lee**, así que nada se rompió. Pero la nota del consolidado
+nuevo, que el propio equipo escribió, decía:
+
+> «La corrida *buggy* **se conserva** en `results/recorrida_20260908/nemotron-mini_4b__N120_F85_BUGGY/`
+> con su `benchmark.log` (58 mensajes del TypeError), porque es la prueba del defecto. **No se
+> borra.**»
+
+Y el directorio se había retirado **ese mismo día**, en el mismo commit que entregó `§3.bis.16`.
+
+Es [§L70](#l70) otra vez, aplicado a una ruta en lugar de a una cifra: **la afirmación sobrevivió al
+hecho que describía**. Y es de la clase más silenciosa, porque un `git status` limpio no lo detecta
+—la nota se escribió correctamente— y ninguna comprobación fallaba, porque nada la leía.
+
+**Corregido de forma aditiva**, que es la política: el texto original queda **tachado** y no
+borrado, con una nota que explica qué cambió, cuándo y por qué, y que precisa lo que sigue siendo
+verdad —la evidencia del defecto está escrita con sus cifras en `§F85`, `§F108` y `§F113`, de modo
+que **la prueba sobrevive como registro aunque el fichero ya no esté**—. El `WORKLOG` no se toca:
+registra un suceso que fue cierto cuando se escribió, y a un registro se le añade, no se le edita.
+
+**Predicado 13 de la auditoría de afirmaciones**, y generaliza la clase en lugar de parchear el
+caso: revisa las frases que **afirman conservación** —«se conserva», «no se borra», «conservado
+en»— y comprueba que la ruta entre acentos graves exista. Ignora las que van en cita en bloque o
+tachadas, porque ahí el texto está marcado como histórico a propósito, que es justamente lo que
+permite corregir de forma aditiva sin que la comprobación se queje del texto viejo.
+
+**Probado por mutación en dos frentes**: devuelta la nota a su afirmación original, el predicado la
+señala con la ruta; y añadida a `FINDINGS` una frase que dice conservar `results/inventada_que_no_existe/`,
+también la señala. Los dos con el nombre del fichero y la ruta concreta.
+
+**Auditoría de afirmaciones:** 13 predicados, 0 que no se cumplen.
