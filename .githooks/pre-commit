@@ -3,10 +3,10 @@
 #
 # Por qué existe
 # --------------
-# `tools/verificar_informe.py` tiene 33 comprobaciones y hasta hoy solo corría cuando alguien se
+# `tools/verificar_informe.py` tiene decenas de comprobaciones y hasta hoy solo corría cuando alguien se
 # acordaba. La regla de CLAUDE.md —«ejecutarlo antes de cada commit sobre el informe»— era una
 # disciplina, no una puerta, y el código de salida se arregló el 2026-09-09 precisamente para que
-# pudiera serlo: devuelve 0 si no hay fallos NUEVOS, de modo que los cinco declarados no cortan.
+# pudiera serlo: devuelve 0 si no hay fallos NUEVOS, de modo que los declarados no cortan.
 #
 # Alcance
 # -------
@@ -57,7 +57,9 @@ if [ -z "$RELEVANTE" ]; then
   exit 0
 fi
 
-echo "  verificando el informe (33 comprobaciones, sin red)..."
+# El recuento se DERIVA de la salida del propio verificador. Escrito a mano decia «33»
+# cuando ya habia 45: un rotulo desfasado en una puerta resta credibilidad a la puerta.
+echo "  verificando el informe (sin red)..."
 if python3 tools/verificar_informe.py > /tmp/verificar_informe.salida 2>&1; then
   tail -3 /tmp/verificar_informe.salida | sed 's/^/  /'
   exit 0
