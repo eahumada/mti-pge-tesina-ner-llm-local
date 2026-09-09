@@ -164,6 +164,23 @@ Esto no se automatiza. Por orden de importancia:
 
 ---
 
+## 5.bis. Volver a persistir el estudio completo
+
+`LEARNING §L41` fija la regla de **conservar el estudio completo en un zip versionado**, y se cumple: existe
+`remote_48g/estudio_completo_20260907.zip`, rastreado, con 95 entradas. **Pero es del 7 de septiembre y no
+contiene la re-corrida**: comprobado, no trae ni `recorrida_20260908/` ni `ANALISIS_CONJUNTO_20260909/`.
+
+De modo que al cerrar hay que generar uno nuevo con los datos definitivos —los trece modelos, el consolidado
+y sus artefactos estadísticos— y versionarlo junto al anterior, **sin sustituirlo**: el de septiembre 7 es la
+instantánea de lo que sostenía el PDF entregado al profesor guía, y esa correspondencia es justamente lo que
+lo hace útil.
+
+**Comprobar antes de darlo por bueno** que el zip nuevo contiene `recorrida_20260908/`, el consolidado y
+`ROBUSTEZ_ESTADISTICA_<fecha>/`, y que su tamaño es coherente con lo que debería llevar. Un zip que se genera
+mal no da ningún síntoma hasta que hace falta.
+
+---
+
 ## 6. Verificar
 
 ```sh
