@@ -1246,6 +1246,38 @@ corpus.**
 ---
 
 
+### 3.bis.16 🔴 PENDIENTE — Entregar los `detailed_results.json` de la re-corrida
+
+**Pedido original:** [`remote_48g/PEDIDO-COMMITEAR-BARRIDO-Y-DETALLE-20260908.md`](./remote_48g/PEDIDO-COMMITEAR-BARRIDO-Y-DETALLE-20260908.md)
+(2026-09-08, 18:15). Se repite aquí porque **no estaba en esta sección**, que es la que consultáis.
+
+**Qué falta.** De la re-corrida llegaron los **39 `benchmark_results.csv`** y **cero
+`detailed_results.json`**. Los primeros traen la métrica agregada por registro; los segundos, el desglose
+**por tipo de entidad**, que es lo que no se puede reconstruir después sin volver a inferir.
+
+**Qué se bloquea sin ellos, comprobado ejecutándolo:**
+
+1. **La composición de los falsos positivos** —el paso 4 del cierre—. `tools/composicion_fp.py` sobre el
+   consolidado nuevo cubre **0 de 26 grupos**. De ahí sale el 66 % de falsos positivos de localización que el
+   informe publica en su Figura 1 y en §7.2, y no hay forma de recalcularlo.
+2. **La corrección del emparejamiento duplicado** (`FINDINGS §F81`). Se despeja de `recall = tp / len(gt)`
+   **por tipo de entidad**, de modo que sin el desglose no puede aplicarse ni comprobarse.
+3. **La comprobación de `§F53`** —que ninguna categoría puntúe contra el vacío—, que necesita `tp + fn`
+   agregado **por categoría**.
+
+**Lo que pedimos.** Versionar el `detailed_results.json` de cada una de las 39 corridas de
+`results/recorrida_20260908/`. Son ficheros grandes pero comprimibles y el repositorio ya versiona los de las
+corridas anteriores, de modo que no hay novedad de criterio.
+
+**Y una razón que va más allá de esta tarea:** sin el detalle por registro, **cualquier corrección de método
+futura obliga a repetir la inferencia entera**. Es exactamente lo que permitió corregir `§F81` sobre los datos
+antiguos sin gastar una hora de máquina.
+
+**Estado:** pendiente desde 2026-09-08 18:15.
+
+---
+
+
 ## 4. Workflows
 
 > Todo workflow debe declarar aquí su subsección: objetivo, fases, agentes, archivos tocados y resultado.
@@ -1537,3 +1569,4 @@ corpus.**
 | 2026-09-09 10:2x | Claude Code (equipo principal) | ✅ §1.144: **comprobadas las dos lecciones que fijan reglas aplicables, y ambas se cumplen** —era la duda razonable, porque una regla escrita y no aplicada es el mismo defecto que un dato sin verificar—. `§L38`, fecha y hora en los logs: los de la re-corrida abren con `2026-09-08 16:42:25` y hay **41 ficheros de log con fecha en el nombre**. `§L41`, zip versionado del estudio: existe `remote_48g/estudio_completo_20260907.zip`, rastreado, con 95 entradas. **Pero es del 7 de septiembre y no contiene la re-corrida**: comprobado, no trae `recorrida_20260908/` ni el consolidado nuevo. Añadido al procedimiento de cierre el **paso 5.bis**, generar uno nuevo **sin sustituir el anterior** —el viejo es la instantánea de lo que sostenía el PDF entregado, y esa correspondencia es lo que lo hace útil— con la comprobación de que el zip nuevo lleva de verdad lo que debe |
 | 2026-09-09 10:3x | Claude Code (equipo principal) | 🔴 §1.145: **el paso 4 del cierre no puede ejecutarse, y lo he comprobado en vez de suponerlo.** Llegaron los **39 `benchmark_results.csv`** de la re-corrida y **cero `detailed_results.json`**: `composicion_fp.py` sobre el consolidado nuevo cubre **0 de 26 grupos**. Sin ese detalle tampoco es aplicable la corrección de `§F81`, que se despeja de las métricas por tipo. Actualizados los pasos **0** —la puerta no basta con contar trece modelos, hay que exigir `failed=0` en los trece—, **1** —ya hecho: su rama está contenida en `HEAD` y el manifiesto está en el árbol— y **4**, marcado bloqueado |
 | 2026-09-09 10:3x | Claude Code (equipo principal) | ✅ §1.146: **y la cobertura nula pasaba por resultado.** `composicion_fp.py` imprimía `TOTAL fp=0 · Locations=0`, «los 0 grupos reproducen la media» y el **aviso de `§F53`**, todo con código de salida **0**. Lo del `§F53` era lo peor: se disparaba por **ausencia de datos** y no por el defecto del corpus, invitando a confundir «no hay nada que medir» con «el corpus sigue sin anotar localizaciones». Ahora **falla de forma explícita con código 1** y dice qué pedir. Sexta vez en esta revisión que un cero se presentaba como medición |
+| 2026-09-09 10:4x | Claude Code (equipo principal) | ✅ §1.147: **el pedido de los `detailed_results.json` tampoco estaba en §3.bis**, igual que la alerta de `nemotron`: llevaba desde el 2026-09-08 a las 18:15 solo en `remote_48g/`. Añadido como **§3.bis.16** con lo que se bloquea sin ellos, **comprobado ejecutándolo**: la composición de falsos positivos cubre **0 de 26 grupos** —y de ahí sale el 66 % que el informe publica en la Figura 1 y en §7.2—, la corrección de `§F81` no puede aplicarse porque se despeja de las métricas **por tipo**, y la comprobación de `§F53` necesita `tp+fn` por categoría. Con la razón de fondo: **sin el detalle por registro, cualquier corrección de método futura obliga a repetir la inferencia entera**, que es justo lo que permitió corregir `§F81` sobre los datos antiguos a coste cero de máquina |
