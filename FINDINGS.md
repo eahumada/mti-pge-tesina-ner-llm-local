@@ -4029,3 +4029,52 @@ herramienta la que lo delató al contar los esqueletos.
 **Estado de la propagación de cifras: cero obsoletas y cero tablas divergentes.** Quedan diez cifras solo en
 el Markdown, todas en pasajes de texto reescritos que el `.docx` aún no tiene, más las dos figuras y la
 Tabla 20.
+
+## §F96 — La obligación de contar guiones y resaltes del `.docx` nunca se había cumplido
+
+**2026-09-09.** `CLAUDE.md` obliga a que «quien produce el `.docx` y el PDF cuente guiones y resaltes del
+cuerpo del documento generado y los compare con los de la fuente, porque el renderizador no debe añadir
+énfasis». Comprobado hoy por primera vez.
+
+**Guiones largos: bien.** 81 en el Markdown y **67** en el `.docx`. Menos, no más, de modo que no hay
+énfasis añadido por esa vía.
+
+**Resaltes: el `.docx` añade 17 en el cuerpo.** Y aquí el recuento ingenuo engaña: 273 tramos en negrita en
+el `.docx` frente a 229 marcas `**...**` en el Markdown parece una diferencia de 44, pero clasificados por
+dónde caen queda otra cosa:
+
+| Dónde | Tramos que el Markdown no marca | Juicio |
+|:---|---:|:---|
+| Dentro de tablas | **76** | **legítimo**: Word pone cabeceras y celdas en negrita por estilo, y el Markdown no las marca |
+| En encabezados | **0** | — |
+| **En el cuerpo** | **17** | la limpieza de sobriedad que el `.md` hizo y el `.docx` no recibió |
+
+Los 17 son el residuo de la pasada que llevó el Markdown de 164 negritas a 108. `CLAUDE.md` ya advierte que
+«los recuentos absolutos no son reproducibles entre métodos de conteo distintos» —tres auditores dieron
+19/108, 28/127 y 31/150 sobre el mismo texto—, y este caso lo confirma: **la cifra que importa no es el total
+sino la diferencia clasificada**.
+
+### Por qué la comprobación no exige que sean cero
+
+Varios de los 17 parecen **encabezados de párrafo** del anexo —«Ejemplo few-shot 1 (caso persona
+sancionada):», «Ejemplos few-shot de la configuración FS-ES»— y quitarles la negrita destruiría estructura.
+Otros son frases enteras resaltadas que el Markdown ya desmarcó y que sí habría que limpiar. Son decisiones
+de una en una, de la pasada de maquetación.
+
+De modo que la comprobación **34** vigila que **no crezcan**, con el estado actual como umbral. Eso convierte
+un pendiente en una línea de defensa: si alguien añade un resalte al entregable, se ve. Y si el recuento
+**baja**, también avisa, pidiendo actualizar el umbral para que la comprobación siga vigilando desde el nuevo
+estado en lugar de quedarse holgada. Probada por mutación en los dos sentidos, sobre el `.docx` real y con
+restauración: añadido un resalte da 18 y lo reporta; retirado uno da 16 y pide bajar el umbral.
+
+**Uno de los 17 es mío.** En §3.3 el Markdown resalta solo el porcentaje y el `.docx` tiene la frase entera
+en negrita, porque el reemplazo de texto del 2026-09-09 escribió la cifra nueva **dentro** del run que ya
+estaba resaltado. Arreglarlo exige partir el run, que ninguna herramienta del proyecto hace todavía.
+
+### Y lo que la propagación de texto ya no puede resolver sola
+
+Las diez cifras que siguen solo en el Markdown están en pasajes que el `.docx` **no tiene en ninguna
+versión**: el χ² de medidas repetidas, la potencia y la *d* de Cohen, el rango de alucinación, la similitud
+de siglas y las filas de la Tabla 20. Comprobado sonda a sonda: ninguna tiene contrapartida en el
+entregable. No es propagación de cifras, es **inserción de párrafos y de una tabla nueva**, con decisiones
+de posición y estilo que son de maquetación.

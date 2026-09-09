@@ -215,6 +215,92 @@ def _texto_docx(ruta):
     return ' '.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', x, re.S))
 
 
+BOLD_CUERPO_BASE = 17
+
+
+def c_sobriedad_docx(s):
+    """El `.docx` no puede AÑADIR resaltes respecto del Markdown, y hoy añade 17 en el cuerpo.
+
+    `CLAUDE.md` obliga a que «quien los produce cuente guiones y resaltes del cuerpo del documento
+    generado y los compare con los de la fuente, porque el renderizador no debe añadir énfasis».
+    Comprobado el 2026-09-09 y nunca antes: el `.docx` canonico tiene **17 tramos en negrita en el
+    cuerpo** que el Markdown no marca. Los guiones largos, en cambio, bajan de 81 a 67, sin
+    añadidos.
+
+    Clasificados, para no contar de mas: **76** de los resaltes que el Markdown no marca estan
+    **dentro de tablas** —cabeceras y celdas, que Word pone en negrita por estilo mientras el
+    Markdown no las marca— y **0** en encabezados. Esos son legitimos. Los 17 del cuerpo son la
+    limpieza de sobriedad que el `.md` hizo (de 164 negritas a 108) y el `.docx`, congelado antes,
+    no recibio.
+
+    **Esta comprobacion no exige que sean cero**, porque varios de los 17 parecen encabezados de
+    parrafo del anexo —«Ejemplo few-shot 1 (caso persona sancionada):»— y quitarles la negrita
+    destruiria estructura: son decisiones de una por una, de la pasada de maquetacion. Lo que
+    exige es que **no crezcan**. Un umbral fijo con el estado actual convierte el pendiente en una
+    linea de defensa: si alguien anade un resalte al entregable, se ve.
+
+    Uno de los 17 es consecuencia de una edicion propia: en §3.3 el Markdown resalta solo el
+    porcentaje y el `.docx` tiene la frase entera en negrita, porque el reemplazo de texto escribio
+    la cifra nueva dentro del run que ya estaba resaltado. Arreglarlo exige partir el run.
+    """
+    import zipfile as _zip
+    norm = lambda z: re.sub(r'\s+', ' ', z.strip().strip('`'))
+    marcados = set(norm(m.group(1)) for m in re.finditer(r'\*\*([^*]+)\*\*', s))
+    fallos, mirados = [], 0
+    for rel in DOCX_ENTREGABLES:
+        ruta = os.path.join(RAIZ, rel)
+        mirados += 1
+        if not os.path.exists(ruta):
+            fallos.append('no existe el entregable %s' % rel)
+            continue
+        with _zip.ZipFile(ruta) as z:
+            x = z.read('word/document.xml').decode('utf-8')
+        tablas = [(m.start(), m.end()) for m in re.finditer(r'<w:tbl>.*?</w:tbl>', x, re.S)]
+        en_tabla = lambda i: any(a <= i < b for a, b in tablas)
+        cuerpo = 0
+        for pm in re.finditer(r'<w:p[ >].*?</w:p>', x, re.S):
+            par = pm.group(0)
+            est = re.search(r'<w:pStyle w:val="([^"]+)"', par)
+            est = est.group(1) if est else ''
+            if en_tabla(pm.start()) or est.startswith('Heading'):
+                continue
+            actual = []
+            tramos = []
+            for r in re.findall(r'<w:r[ >].*?</w:r>', par, re.S):
+                txt = ''.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', r, re.S))
+                if re.search(r'<w:b\s*/>', r) and txt:
+                    actual.append(txt)
+                else:
+                    if actual:
+                        tramos.append(''.join(actual))
+                        actual = []
+            if actual:
+                tramos.append(''.join(actual))
+            cuerpo += sum(1 for x_ in tramos if norm(x_) not in marcados)
+        mirados += 1
+        if cuerpo > BOLD_CUERPO_BASE:
+            fallos.append('%s: %d resaltes en el cuerpo que el Markdown no marca, y el estado '
+                          'declarado son %d. No se ha propagado la limpieza de sobriedad y ademas '
+                          'ha crecido: revisar que se ha resaltado'
+                          % (os.path.basename(rel), cuerpo, BOLD_CUERPO_BASE))
+        # que baje es una buena noticia y hay que actualizar la base para que siga vigilando
+        elif cuerpo < BOLD_CUERPO_BASE:
+            fallos.append('%s: %d resaltes en el cuerpo, menos que los %d declarados. Es una '
+                          'mejora: bajar BOLD_CUERPO_BASE a %d para que la comprobacion siga '
+                          'vigilando desde el nuevo estado'
+                          % (os.path.basename(rel), cuerpo, BOLD_CUERPO_BASE, cuerpo))
+        # guiones largos: el .docx no puede tener MAS que la fuente
+        mirados += 1
+        td = ' '.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', x, re.S))
+        if td.count('\u2014') > s.count('\u2014'):
+            fallos.append('%s: %d guiones largos frente a %d del Markdown: el renderizador no '
+                          'puede anadir'
+                          % (os.path.basename(rel), td.count('\u2014'), s.count('\u2014')))
+    check('el .docx no anade resaltes ni guiones respecto del Markdown', mirados, fallos,
+          'los 17 del cuerpo son la limpieza de sobriedad sin propagar; lo que se vigila es que '
+          'no crezcan')
+
+
 def c_excluidos(s):
     """Los modelos excluidos no pueden aparecer, y la regla alcanza a los `.docx`, no solo al `.md`.
 
@@ -2093,6 +2179,7 @@ def main():
     ejecutar(c_resumen, s)
     ejecutar(c_higiene, s)
     ejecutar(c_excluidos, s)
+    ejecutar(c_sobriedad_docx, s)
     ejecutar(c_figura_vs_tabla, s)
     ejecutar(c_identificadores)
     ejecutar(c_aritmetica, s)
