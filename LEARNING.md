@@ -1049,3 +1049,28 @@ por omisión.
 **Comprobado en los dos sentidos:** con las fechas reales el resumen dice «la más antigua lleva 0 días»; con
 una fecha de hace veinte, emite el aviso. Las fechas, además, se verificaron contra el historial de git en
 lugar de suponerse — las siete se habían añadido el mismo día.
+
+## §L66 — Una comprobación tiene que distinguir «el documento está mal» de «mi detector está roto»
+
+La comprobación que verifica que todo `§F<n>` y `§L<n>` citado tenga su sección reportó, en su primera
+versión, **40 referencias colgando**. Ninguna lo estaba. El proyecto tiene **dos convenciones de
+encabezado** —las secciones antiguas son `### L47. …`, sin `§`, y las nuevas `## §L61 — …`— y el patrón solo
+aceptaba la nueva: encontraba **9** secciones §L donde hay **65**, y todo lo que no cabía en esas nueve
+salía como colgante.
+
+**Lo delató mirar la lista, no el número.** Entre las supuestas colgantes estaban §L43, §L44 y §L47, que
+`CLAUDE.md` cita y que obviamente existen. Un recuento de 40 es plausible; que §L47 no exista, no.
+
+**La regla:** una comprobación cuyo veredicto depende de un detector propio —un patrón, un extractor, un
+parseo— tiene que **comprobar antes que su detector funciona**, y decirlo cuando no. Si no, informa del fallo
+de su detector como si fuera un fallo del documento, y esa confusión es peor que no comprobar: manda a
+corregir cuarenta cosas que están bien.
+
+**Cómo se implementó:** la comprobación exige detectar un mínimo razonable de secciones de cada clase antes
+de emitir un solo veredicto sobre referencias. Si detecta menos, dice **«el patrón de encabezados está roto y
+esta comprobación daría falsos positivos en masa»** y no reporta ninguna referencia. Probado degradando el
+detector a propósito: emite el aviso de guarda en lugar de los cuarenta falsos positivos.
+
+**Y el corolario, que es el mismo de §L61 desde otro ángulo:** cuando una comprobación nueva reporta *muchos*
+fallos a la vez, la primera hipótesis no es que el proyecto esté lleno de defectos — es que la comprobación
+está mal. Conviene mirar tres de los fallos antes de creerse el recuento.

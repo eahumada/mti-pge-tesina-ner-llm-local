@@ -265,6 +265,74 @@ PDF_ENVIADO = ('doc/versions/enviados/'
                '2026-09-08_Informe_Final_Tesina_NER_ENVIADO-AL-PROFESOR-GUIA.pdf')
 
 
+def c_referencias_findings(s):
+    """Todo `§F<n>` y `§L<n>` citado en el proyecto tiene su seccion.
+
+    La comprobacion hermana vigila que ningun identificador se defina **dos veces**; esta vigila lo
+    contrario: que ninguno se **cite sin existir**. Son defectos distintos y ninguno implica al
+    otro. Un puntero colgando pierde exactamente la informacion que pretendia conservar, y como los
+    hallazgos se citan desde `CLAUDE.md`, desde los encargos al equipo remoto y desde el codigo de
+    las propias herramientas, el rastro se rompe sin que nada lo diga.
+
+    **La trampa: hay dos convenciones de encabezado.** Las secciones antiguas son `### L47. ...`,
+    sin `§`, y las nuevas `## §L61 — ...`. Un patron que solo acepte la nueva encuentra **9**
+    secciones §L donde hay **65**, y entonces reporta **40 referencias colgando** que estan
+    perfectamente bien. Ocurrio el 2026-09-09 al escribir esta comprobacion, y lo delato mirar la
+    lista: entre las supuestas colgantes estaban §L43, §L44 y §L47, que cita `CLAUDE.md` y que
+    obviamente existen. Se aceptan **las dos** convenciones.
+
+    Comprobado el dia que se anadio: **185** secciones definidas —120 §F y 65 §L—, **118**
+    identificadores citados en 290 ficheros y **cero** sin destino.
+    """
+    import glob as _glob
+    def _definidas(fich, pref):
+        ruta = os.path.join(RAIZ, fich)
+        if not os.path.exists(ruta):
+            return None
+        with open(ruta, encoding='utf-8') as fh:
+            txt = fh.read()
+        out = set()
+        for m in re.finditer(r'^#{1,4}\s+\u00a7?%s(\d+)((?:\.[a-z]+)*)\s*[\u2014.\-]' % pref,
+                             txt, re.M):
+            out.add('\u00a7%s%s%s' % (pref, m.group(1), m.group(2)))
+        return out
+
+    dF, dL = _definidas('FINDINGS.md', 'F'), _definidas('LEARNING.md', 'L')
+    if dF is None or dL is None:
+        check('toda referencia §F y §L tiene su seccion', 0,
+              ['falta FINDINGS.md o LEARNING.md'])
+        return
+    existe = dF | dL
+    fallos, mirados = [], 0
+    # una definicion vacia no es un fallo de referencias, pero sí una senal de deteccion rota
+    if len(dL) < 20 or len(dF) < 20:
+        fallos.append('solo se detectan %d secciones §F y %d §L: el patron de encabezados esta '
+                      'roto y esta comprobacion daria falsos positivos en masa' % (len(dF), len(dL)))
+        check('toda referencia §F y §L tiene su seccion', len(existe), fallos)
+        return
+    citados = {}
+    ficheros = [f for f in (_glob.glob(os.path.join(RAIZ, '*.md'))
+                            + _glob.glob(os.path.join(RAIZ, 'tools/*.py'))
+                            + _glob.glob(os.path.join(RAIZ, 'doc/**/*.md'), recursive=True))
+                if os.path.isfile(f)]
+    for f in ficheros:
+        try:
+            with open(f, encoding='utf-8') as fh:
+                txt = fh.read()
+        except (OSError, UnicodeDecodeError):
+            continue
+        for m in re.finditer(r'\u00a7([FL])(\d+)((?:\.[a-z]+)*)', txt):
+            k = '\u00a7%s%s%s' % (m.group(1), m.group(2), m.group(3))
+            citados.setdefault(k, set()).add(os.path.relpath(f, RAIZ))
+    for k in sorted(citados):
+        mirados += 1
+        if k not in existe:
+            fallos.append('%s se cita en %s y no tiene seccion'
+                          % (k, ', '.join(sorted(citados[k]))[:80]))
+    check('toda referencia §F y §L tiene su seccion', mirados, fallos,
+          'hay dos convenciones de encabezado, «### L47.» y «## §L61 —»: se aceptan las dos')
+
+
 def c_docx_sano(s):
     """Los tres `.docx` siguen siendo OOXML estructuralmente sano tras la cirugia sobre su XML.
 
@@ -2413,6 +2481,7 @@ def main():
     ejecutar(c_higiene, s)
     ejecutar(c_excluidos, s)
     ejecutar(c_sobriedad_docx, s)
+    ejecutar(c_referencias_findings, s)
     ejecutar(c_docx_sano, s)
     ejecutar(c_pdf_al_dia, s)
     ejecutar(c_figura_vs_tabla, s)
