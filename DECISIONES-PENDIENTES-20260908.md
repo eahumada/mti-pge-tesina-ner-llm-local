@@ -82,6 +82,32 @@ Evidencia: `FINDINGS §F67.bis`.
 > Eso acota la decisión: no hay un problema general con los respaldos versionados, hay dos ficheros
 > concretos, y son los del barrido que retiró un modelo excluido. **Y siguen sin parsear**, verificado hoy.
 
+
+> ### Daño localizado y reparación viable — comprobado el 2026-09-09
+>
+> Los dos ficheros están roto por el mismo motivo: el nombre del modelo excluido se retiró **como texto**, y
+> eso dejó el JSON sin sintaxis válida.
+>
+> | Fichero | Qué está roto | Alcance |
+> |:---|:---|---:|
+> | `benchmark_summary.json.bak_prescore` | Dos claves quedaron sin nombre: la línea dice `: {` en lugar de `"modelo": {` | **2** de 4 claves |
+> | `detailed_results.json.bak_prescore` | El valor de `"model":` quedó vacío | **240** de 480 registros |
+>
+> Las mitades intactas son las de `gpt-oss:20b`, que es el modelo que sí forma parte del estudio: el fichero
+> vigente `benchmark_summary.json` tiene exactamente `gpt-oss:20b_baseline` y `gpt-oss:20b_kb_rag`.
+>
+> **La reparación es viable y no exige restituir el nombre prohibido:** basta poner un marcador neutro
+> —`"modelo_retirado"`— en las dos claves y en los 240 valores. El fichero vuelve a parsear, la lista cerrada
+> se sigue respetando y **no se pierde nada más de lo que ya se perdió**.
+>
+> | Opción | Qué implica |
+> |:---|:---|
+> | **a) Reparar con marcador neutro** | Dos claves y 240 valores. El artefacto vuelve a ser legible por cualquier herramienta y deja de necesitar la excepción del verificador |
+> | **b) Dejarlos rotos y declarados** | Es el estado actual. Un JSON roto **no es evidencia legible**: nadie puede abrirlo para comprobar nada |
+> | **c) Retirarlos** | **Se desaconseja.** Son respaldos previos a la corrección de puntuación, versionados a propósito como prueba de qué había antes |
+>
+> **Recomendación: (a).** Un respaldo que no se puede abrir no cumple la función por la que se versionó.
+
 ### Planteamiento original (2026-09-08)
 
 
