@@ -196,13 +196,19 @@ def main():
     if os.path.exists(destino):
         with open(destino, encoding='utf-8') as fh:
             previo = fh.read()
+    # Si lo unico que cambiaria es la marca de tiempo, NO se escribe. Hasta el 2026-09-09 se
+    # reescribia siempre, de modo que cada ejecucion ensuciaba el arbol de trabajo con un diff de
+    # una linea que no dice nada — y un diff que no dice nada puede tapar uno que si. La
+    # herramienta ya sabia distinguirlo: lo imprimia como «sin cambios de fondo» y escribia
+    # igualmente.
+    sin_fondo = previo and previo.split('\n')[3:] == (texto + '\n').split('\n')[3:]
+    if sin_fondo:
+        print('sin cambios de fondo: %s se deja como estaba (%d lineas)'
+              % (os.path.relpath(destino, RAIZ), len(out)))
+        return 0
     with open(destino, 'w', encoding='utf-8') as fh:
         fh.write(texto + '\n')
-    print('escrito: %s (%d lineas%s)'
-          % (os.path.relpath(destino, RAIZ), len(out),
-             ', sin cambios de fondo' if previo.split('\n')[3:] == (texto + '\n').split('\n')[3:]
-             else ''))
-    return 0
+    print('escrito: %s (%d lineas)' % (os.path.relpath(destino, RAIZ), len(out)))
     return 0
 
 
