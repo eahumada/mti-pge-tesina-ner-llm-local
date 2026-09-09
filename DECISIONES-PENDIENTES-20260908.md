@@ -10,7 +10,72 @@ capítulo de resultados.
 
 ---
 
-## 1. ¿El informe adopta ya F = 35,5557, o espera al consolidado nuevo? — **SUPERADA**
+## 1. ¿El informe adopta el consolidado nuevo? — **REABIERTA el 2026-09-09, y es la decisión más grande del cierre**
+
+> **Reabierta.** Se declaró **SUPERADA** el 2026-09-09 con el argumento de que lo único que retenía la
+> adopción del consolidado nuevo era `§F85`, y `§F85` ya está arreglado — el equipo de 48 GB lo entregó
+> ese mismo día. Pero al verificar la entrega apareció que **adoptarlo no es refrescar cifras**
+> (`FINDINGS §F113`):
+>
+> 1. La campaña nueva **arregla la categoría fantasma de `§F53`**: `Locations` pasa de `tp+fn = 0`
+>    con 720 falsos positivos a `tp+fn = 1 090`. Los datos **publicados** penalizan a todos los
+>    modelos por una categoría que su corpus no anota. Es la medición **corregida**, no otra corrida.
+> 2. **`llama3.2:latest` deja de ser significativo** (p ajustada 0,0069 → **0,2334**): el informe
+>    concluye que **dos** modelos mejoran de forma significativa, y con el consolidado nuevo es
+>    **uno**. Y no es por el N menor: `§F66` ya midió que excluir los contaminados le dejaba la
+>    significación intacta.
+> 3. **El supuesto de homocedasticidad se viola** en los datos nuevos (Brown-Forsythe p = 0,1842 →
+>    **1,39e-11**), de modo que el ANOVA de una vía deja de ser la prueba adecuada. **Aguanta con
+>    prueba robusta**: Alexander-Govern p = 9,89e-274, Kruskal-Wallis p = 3,52e-265.
+>
+> **Recomendación: adoptarlo, y con las tres consecuencias declaradas.** Publicar cifras que un
+> artefacto del propio repositorio demuestra calculadas con una categoría fantasma es lo que un
+> tribunal juzga, y la regla de integridad de `CLAUDE.md` ya obliga a declarar todas las corridas del
+> mismo experimento. Pero es **mucho trabajo** —toca casi todas las cifras, la Tabla 7, el Anexo I,
+> las figuras y una conclusión de `§5`— y **no se empieza sin autorización expresa**.
+>
+> Lo que **no** conviene es adoptarlo a medias: tomar el F nuevo y conservar el veredicto de dos
+> modelos significativos sería incoherente, y peor que cualquiera de las dos opciones enteras.
+>
+> ---
+>
+> **Recomendación revisada el 2026-09-09, mejor fundada — `FINDINGS §F114`. Sustituye a la de
+> arriba.** Al calcular la métrica restringida del Anexo I aparecieron tres cosas que cambian el
+> cuadro, y dos de ellas tranquilizan:
+>
+> 1. **El informe ya declara el defecto y ya publica la medición corregida.** `§2` explica la
+>    categoría fantasma completa —el 66,0 %, la causa en el conversor, la corrección del corpus del
+>    8 de septiembre— y dice que las cifras «se conservan tal como se midieron; sustituirlas exige
+>    volver a inferir, que es lo que hará la re-corrida pendiente». El Anexo I trae la medición
+>    restringida de las 42 configuraciones. No hay nada oculto que corregir con urgencia.
+> 2. **La conclusión de dos modelos no depende de la categoría fantasma.** En la métrica restringida
+>    de los datos publicados los dos siguen significativos: `nemotron-mini:4b` +0,1549 (p = 0,0000) y
+>    `llama3.2:latest` +0,1021 (**p = 0,0275**).
+> 3. **La medición restringida es estable entre campañas.** En el único modelo comprobable el Δ
+>    restringido pasa de +15,4939 a +15,8081, **0,31 pp**, mientras el de tres categorías se mueve
+>    1,90 pp. La subida general del F1 en la campaña nueva es la categoría fantasma dejando de
+>    penalizar, no los modelos midiendo mejor.
+>
+> **Y una que obliga a un cambio pequeño con independencia de lo que se decida:** la afirmación de
+> `§5` de que «la prueba de Levene no detecta heterocedasticidad (p = 0,18)» **solo vale para la
+> métrica de tres categorías**. En la restringida, sobre los mismos datos publicados,
+> Brown-Forsythe da **p = 1,328e-09**. La p = 0,18 no acreditaba homogeneidad de varianzas:
+> acreditaba que un defecto común a los 26 grupos las estaba igualando. Esto **no** depende de
+> adoptar nada y conviene precisarlo en el informe, acompañado de una prueba robusta —Alexander-Govern
+> o Kruskal-Wallis, las dos con p abrumadora en todas las combinaciones—.
+>
+> **Recomendación: no adoptar todavía, y esperar a `§3.bis.16`.** La pregunta que de verdad decide
+> esto es si la conclusión de dos modelos sobrevive en la métrica **restringida de la campaña
+> nueva**. En la de tres categorías `llama3.2:latest` la pierde; en la restringida de los datos
+> publicados la conserva. **Esa cifra no se puede calcular hoy** porque 12 de las 13 corridas nuevas
+> no traen `detailed_results.json` — y es un volcado, no una re-inferencia. Con ellos, la decisión se
+> resuelve en una tarde y con la respuesta delante en lugar de a ciegas. Mientras tanto el informe
+> es entregable tal como está: declara su defecto, publica las dos mediciones y su conclusión se
+> sostiene en las dos.
+
+### Planteamiento original (2026-09-08), conservado
+
+
 
 > **Resuelta por los hechos el 2026-09-09.** Se recomendaba esperar al consolidado nuevo y **ya existe**:
 > `ANALISIS_CONJUNTO_20260909`, trece modelos sobre el corpus corregido, **F = 121,5602**, verificado de

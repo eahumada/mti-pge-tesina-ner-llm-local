@@ -45,6 +45,15 @@ ARTEFACTOS = [
     (f'{BENCH}/cloud_n15_limpio_20260905/benchmark_results.csv', 'Tabla 4'),
     (f'{BENCH}/gemma4_31b_n15_REMOTO/benchmark_results.csv', 'tablas 5, 6 y 8'),
     (f'{BENCH}/benchmark_results.csv', 'Tabla 4'),
+    # Anadido el 2026-09-09: lo detecto la propia cobertura de esta autoprueba al aparecer la
+    # comprobacion 45, que es para lo que se escribio (§F112). Su comprobacion ya falla —fallo
+    # declarado a nombre del equipo remoto—, de modo que esconderlo cambia el TEXTO del fallo y no
+    # su existencia; la autoprueba lo situa en el tercer estado, «bloqueado por un fallo abierto»,
+    # y eso es lo correcto: no puede acreditarse hasta que §3.bis.15 cierre.
+    ('tools/sensibilidad_combinada.py', 'per_type'),
+    # Anadido el 2026-09-09 con la comprobacion 47: hasta entonces `friedman.json` solo lo leia
+    # `c_defensa`, y esconderlo no producia un fallo atribuible a esa cifra (§F116).
+    (f'{BENCH}/ROBUSTEZ_ESTADISTICA_20260908/friedman.json', 'Friedman'),
     # Los tres entregables: desde §F94 el verificador los lee, y esconder uno debe notarse.
     ('Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.docx', 'modelos excluidos'),
     ('Informe_Final_Tesina_NER.docx', 'modelos excluidos'),

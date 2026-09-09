@@ -66,6 +66,16 @@ FALLOS_DECLARADOS = {
                                            'Word y no hay conversor aqui; es de la pasada de '
                                            'maquetacion (FINDINGS §F98). El PDF de enviados/ se '
                                            'conserva y no se toca'),
+    'publicado 22.59, per_type': ('2026-09-09',
+        'PENDIENTE del autor, ya NO del equipo remoto: los dos artefactos de '
+        'nemotron-mini:4b_baseline discrepan porque seis registros se re-extrajeron fuera del '
+        'arnes y solo el CSV recibio las metricas (§F110). Se declaro esperando que lo cerrara '
+        'la re-corrida de §3.bis.15; la re-corrida LLEGO el 2026-09-09 y NO lo cierra, porque '
+        'fue a un consolidado distinto (ANALISIS_CONJUNTO_20260909_FIX) y el publicado, que es '
+        'el que esta comprobacion lee, sigue intacto. Lo cierra la DECISION 1 —adoptar o no el '
+        'consolidado nuevo—, que es del autor y esta reabierta (§F113). Si se adopta, hay que '
+        'apuntar CSV_CONSOLIDADO al nuevo y levantar la exclusion de '
+        'tools/sensibilidad_combinada.py'),
     'github.com/eahumada/mti-pge-tesina': ('2026-09-09',
                                            'referencia [37]: el repositorio es privado hasta la '
                                            'purga (SEGURIDAD-CLAVE-GOOGLE-20260908.md)'),
@@ -92,6 +102,602 @@ def _motivo_declarado(clave):
     return FALLOS_DECLARADOS[clave][1] + _edad_declarado(clave)
 
 resultados = []
+
+
+# --- 45. La Tabla 7 tambien reproduce desde los recuentos crudos --------------------------------
+def c_tabla7_desde_per_type(s):
+    """La misma tabla, por la OTRA ruta: `per_type` en lugar de la columna `f1` del CSV.
+
+    `c_tabla7_vs_datos` la ata al CSV consolidado, que es la fuente de la que se escribio. Esta la
+    ata a los **recuentos** de los que ese CSV sale, y por tanto puede discrepar de la anterior.
+    Discrepa: en `nemotron-mini:4b_baseline` los dos artefactos del grupo dicen cosas distintas,
+    porque seis de sus registros se re-extrajeron fuera del arnes y solo el CSV recibio las
+    metricas (§F110). Los otros 25 grupos coinciden por las dos rutas, y eso es lo que acredita
+    sus cifras: coinciden por dos caminos distintos.
+
+    Se declaro esperando que la re-corrida de `§3.bis.15` lo cerrase. **Llego el 2026-09-09 y no lo
+    cierra**: fue a `ANALISIS_CONJUNTO_20260909_FIX`, un consolidado construido sobre trece corridas
+    que no comparten ni una fuente con el publicado, y el publicado —que es el que esta
+    comprobacion lee— sigue intacto. De modo que ahora depende de la **decision 1**, reabierta en
+    `§F113`: si el informe adopta el consolidado nuevo, hay que apuntar `CSV_CONSOLIDADO` al nuevo y
+    levantar la exclusion de `tools/sensibilidad_combinada.py`; si no lo adopta, este fallo se queda
+    y hay que redeclararlo como permanente.
+    """
+    import importlib.util as _iu
+    ruta = os.path.join(RAIZ, 'tools/sensibilidad_combinada.py')
+    if not os.path.exists(ruta):
+        check('la Tabla 7 reproduce tambien desde per_type', 0,
+              ['no existe tools/sensibilidad_combinada.py'])
+        return
+    _sp = _iu.spec_from_file_location('_sc', ruta)
+    _sc = _iu.module_from_spec(_sp)
+    _sp.loader.exec_module(_sc)
+    datos = _sc.cargar()
+    i = s.find('_Tabla 7.')
+    if i < 0:
+        check('la Tabla 7 reproduce tambien desde per_type', 0, ['no se encuentra la Tabla 7'])
+        return
+    t7 = {}
+    for l in s[i:i + 3000].split('\n'):
+        m = re.match(r'^\|\s*([^|]+?)\s*\|\s*\*{0,2}([\d.]+)%\*{0,2}\s*\|'
+                     r'\s*\*{0,2}([\d.]+)%\*{0,2}\s*\|', l)
+        if m and not m.group(1).startswith('Modelo'):
+            t7[m.group(1).strip()] = (float(m.group(2)), float(m.group(3)))
+    fallos, n = [], 0
+    for mod, (b, r) in sorted(t7.items()):
+        for suf, pub in (('_baseline', b), ('_kb_rag', r)):
+            g = mod + suf
+            if g not in datos:
+                fallos.append('%s no tiene per_type en ninguna fuente' % g)
+                continue
+            n += 1
+            got = 100 * sum(x[0] for x in datos[g]) / len(datos[g])
+            if abs(got - pub) > 0.05:
+                fallos.append('%s: publicado %.2f, per_type %.4f (%+.4f)' % (g, pub, got, got - pub))
+    check('la Tabla 7 reproduce tambien desde per_type', n, fallos,
+          'ruta independiente de c_tabla7_vs_datos; su unico fallo depende de la decision 1')
+
+
+# --- 46. El recuento de Tukey del informe, y la coherencia interna del artefacto ----------------
+def c_tukey_recuento(s):
+    """«158 comparaciones significativas de las 325 posibles»: nadie la recalculaba.
+
+    Es el patron de §F91 una vez mas, en el mismo parrafo que ya obligo a anadir el ANOVA y Levene.
+    La cifra es correcta —contrastada el 2026-09-09 con `statsmodels`, que da exactamente 158 de
+    325—, pero comprobarla exigia el venv, de modo que aqui se comprueba por dos vias que si
+    caben en biblioteca estandar:
+
+    1. **Contra el artefacto**: el `statistical_report.md` del consolidado publica la tabla completa
+       de pares con su p ajustada y su veredicto. Se cuentan sus filas y sus veredictos afirmativos
+       y se contrastan con lo que el informe declara, y con C(26,2) = 325.
+    2. **Coherencia interna del artefacto**: cada veredicto se contrasta contra **su propia p**.
+       Un «significativo» con p >= 0,05, o un «no» con p < 0,05, es una incoherencia del artefacto
+       que ninguna comparacion de totales detecta, porque dos errores de signo contrario se
+       compensan en el recuento.
+
+    La distribucion del rango estudentizado no esta en la biblioteca estandar, asi que esta
+    comprobacion **no recalcula Tukey**: verifica el recuento y la coherencia. Se declara aqui para
+    que nadie la lea como mas fuerte de lo que es.
+    """
+    cons = os.path.join(BENCH_DIR, 'results/ANALISIS_CONJUNTO_20260907')
+    art = os.path.join(cons, 'statistical_report.md')
+    if not os.path.exists(art):
+        check('el recuento de Tukey del informe cuadra con el artefacto', 0,
+              ['no existe %s' % os.path.relpath(art, RAIZ)])
+        return
+    with open(art, encoding='utf-8') as fh:
+        t = fh.read()
+    # Filas de par: «| A vs B | dif | p | veredicto | IC |»
+    pares = []
+    for l in t.split('\n'):
+        m = re.match(r'^\|\s*(\S.*?)\s+vs\s+(\S.*?)\s*\|\s*(-?[\d.]+)\s*\|'
+                     r'\s*([\d.eE+-]+)\s*\|\s*([^|]+?)\s*\|', l)
+        if m:
+            pares.append((m.group(1), m.group(2), float(m.group(4)), m.group(5)))
+    fallos = []
+    n = len(pares)
+    if n == 0:
+        check('el recuento de Tukey del informe cuadra con el artefacto', 0,
+              ['no se puede leer ninguna fila de pares del artefacto: revisar su formato'])
+        return
+    # 1) totales contra el informe y contra C(26,2)
+    esp = 26 * 25 // 2
+    if n != esp:
+        fallos.append('el artefacto trae %d filas de par y C(26,2) son %d' % (n, esp))
+    afirm = [x for x in pares if 'Yes' in x[3] or 'Sí' in x[3] or 'Si' in x[3]]
+    m = re.search(r'Tukey identifica (\d+) comparaciones significativas de las (\d+) posibles', s)
+    if m is None:
+        fallos.append('no se encuentra en el informe la frase del recuento de Tukey: '
+                      'revisar si se reformulo')
+    else:
+        pub_sig, pub_tot = int(m.group(1)), int(m.group(2))
+        if pub_sig != len(afirm):
+            fallos.append('el informe declara %d significativas y el artefacto trae %d'
+                          % (pub_sig, len(afirm)))
+        if pub_tot != n:
+            fallos.append('el informe declara %d comparaciones posibles y el artefacto trae %d'
+                          % (pub_tot, n))
+    # 2) cada veredicto contra su propia p: dos errores de signo contrario se compensarian
+    #    en el recuento y ninguna comparacion de totales los veria.
+    for a, b, pv, ver in pares:
+        af = ('Yes' in ver or 'Sí' in ver or 'Si' in ver)
+        if af and pv >= 0.05:
+            fallos.append('%s vs %s: marcado significativo con p = %.4g' % (a, b, pv))
+        elif not af and pv < 0.05:
+            fallos.append('%s vs %s: marcado no significativo con p = %.4g' % (a, b, pv))
+    check('el recuento de Tukey del informe cuadra con el artefacto', n, fallos,
+          'no recalcula Tukey —el rango estudentizado no esta en la biblioteca estandar—: '
+          'verifica el recuento y la coherencia interna del artefacto')
+
+
+# --- 47. El chi cuadrado de Friedman del informe, recalculado --------------------------------
+def c_friedman(s):
+    """La prueba que sostiene «la conclusion no depende de esa eleccion», y nadie la miraba.
+
+    §5 declara una limitacion del contraste —los 26 grupos evaluan los mismos 120 articulos, de
+    modo que las observaciones estan apareadas— y la salva con Friedman: «repetido con la prueba de
+    Friedman, que es la que corresponde a un diseno de medidas repetidas, el rechazo se sostiene con
+    holgura (chi2 = 1 169,23), de modo que la conclusion no depende de esa eleccion». Es la frase
+    que responde a la objecion metodologica mas facil de plantear en una defensa.
+
+    **Su cifra no la comprobaba nadie.** `c_defensa` verifica ese mismo chi2, pero en
+    `DEFENSA-PREGUNTAS-Y-RESPUESTAS.md`, que es otro documento: si la copia del informe se desviara
+    del artefacto, no lo notaria ninguna de las 46 comprobaciones anteriores. Detectado por el
+    barrido de `tools/cobertura_cifras.py` y confirmado por mutacion —alterada a 9 999,99, cero
+    fallos nuevos— antes de escribir esto (`§F116`).
+
+    Se **recalcula**, no se compara contra el artefacto y nada mas. Friedman cabe en la biblioteca
+    estandar: se rangan los 26 valores dentro de cada articulo, se suman los rangos por grupo y
+    chi2 = 12/(n*k*(k+1)) * suma(Rj^2) - 3n(k+1). **La correccion por empates es imprescindible**:
+    sin ella sale 1 123,0730 y con ella 1 169,2327, de modo que una implementacion que la olvide
+    da un fallo donde no lo hay. Las tres vias —este recalculo, el artefacto y el informe—
+    coinciden al cuarto decimal.
+    """
+    import collections as _c
+    if not os.path.exists(CSV_CONSOLIDADO):
+        check('el chi2 de Friedman se recalcula desde el CSV', 0,
+              ['no existe %s' % os.path.relpath(CSV_CONSOLIDADO, RAIZ)])
+        return
+    import csv as _csv
+    por = _c.defaultdict(dict)
+    with open(CSV_CONSOLIDADO, encoding='utf-8') as fh:
+        for r in _csv.DictReader(fh):
+            if r.get('f1') not in (None, ''):        # `is not None`: un F1 de 0,0 es un dato
+                por[r['record_id']][r['model']] = float(r['f1'])
+    grupos = sorted({g for d in por.values() for g in d})
+    comp = [rid for rid, d in por.items() if len(d) == len(grupos)]
+    k, n = len(grupos), len(comp)
+    if k < 2 or n < 2:
+        check('el chi2 de Friedman se recalcula desde el CSV', 0,
+              ['no hay bloques completos que rangar: %d grupos, %d bloques' % (k, n)])
+        return
+
+    def _rangos(v):
+        idx = sorted(range(len(v)), key=lambda i: v[i])
+        out = [0.0] * len(v)
+        i = 0
+        while i < len(idx):
+            j = i
+            while j + 1 < len(idx) and v[idx[j + 1]] == v[idx[i]]:
+                j += 1
+            med = (i + j) / 2.0 + 1
+            for t in range(i, j + 1):
+                out[idx[t]] = med
+            i = j + 1
+        return out
+
+    Rj, T = [0.0] * k, 0.0
+    for rid in comp:
+        rr = _rangos([por[rid][g] for g in grupos])
+        for a in range(k):
+            Rj[a] += rr[a]
+        T += sum(t ** 3 - t for t in _c.Counter(rr).values())
+    chi = 12.0 / (n * k * (k + 1)) * sum(x * x for x in Rj) - 3 * n * (k + 1)
+    corr = 1 - T / (n * (k ** 3 - k))
+    if corr <= 0:
+        check('el chi2 de Friedman se recalcula desde el CSV', 0,
+              ['la correccion por empates sale <= 0 (%r): no se puede dividir' % corr])
+        return
+    chi /= corr
+
+    fallos, mirados = [], 0
+    # 1) contra el informe
+    mirados += 1
+    m = re.search(r'holgura \(χ² = ([\d\s]+),(\d+)\)', s)
+    if m is None:
+        fallos.append('no se encuentra en el informe la frase de Friedman con su χ²: '
+                      'revisar si se reformulo')
+    else:
+        pub = float('%s.%s' % (m.group(1).replace(' ', '').replace('\u00a0', ''), m.group(2)))
+        if abs(pub - chi) > 0.011:
+            fallos.append('el informe publica χ² = %s y el recalculo da %.4f' % (pub, chi))
+    # 2) contra el artefacto, y su gl
+    art = os.path.join(BENCH_DIR, 'results/ROBUSTEZ_ESTADISTICA_20260908/friedman.json')
+    if not os.path.exists(art):
+        fallos.append('falta %s, del que el indice de defensa toma esta misma cifra'
+                      % os.path.relpath(art, RAIZ))
+    else:
+        import json as _json
+        with open(art, encoding='utf-8') as fh:
+            fr = (_json.load(fh) or {}).get('friedman_medidas_repetidas') or {}
+        mirados += 1
+        a_chi = fr.get('chi2')
+        if a_chi is None:
+            fallos.append('friedman.json no trae chi2')
+        elif abs(a_chi - chi) > 1e-3:
+            fallos.append('friedman.json dice χ² = %.4f y el recalculo da %.4f' % (a_chi, chi))
+        mirados += 1
+        gl = fr.get('gl')
+        if gl is not None and gl != k - 1:
+            fallos.append('friedman.json dice gl = %s y con %d grupos son %d' % (gl, k, k - 1))
+    check('el chi2 de Friedman se recalcula desde el CSV', mirados, fallos,
+          'con correccion por empates: sin ella daria 1123,07 en lugar de 1169,23')
+
+
+# --- 48. Los tres deltas del 2x2 del idioma del prompt -----------------------------------------
+def c_ablacion_idioma(s):
+    """El factor que §5 pone primero para explicar sus resultados, atado a su ablacion.
+
+    §5 abre la explicacion de los resultados con el idioma: «Redactar ambos en espanol aporta
+    10,40 puntos de F1 sin cambiar de modelo, mejora que ninguno de los dos factores consigue por
+    separado: traducir solo el prompt aporta 4,38 puntos y anadir ejemplos en ingles resta 0,72».
+    Son tres cifras y una afirmacion de interaccion.
+
+    Las cifras van **sin resalte**, por la regla de sobriedad tipografica del proyecto, y por eso el
+    patron sin asteriscos se prueba primero y el resaltado como alternativa. Al escribir esta
+    comprobacion lo hice al reves y las tres primeras mutaciones «no encontraron el ancla»: el fallo
+    era del ensayo, no de la comprobacion, y conviene dejarlo escrito porque la proxima cifra que se
+    verifique aqui tampoco estara en negrita.
+
+    **La comprobacion 33 verifica el ANOVA de esa misma ablacion** (F = 1,1379, p = 0,3417), y la
+    frase de replicacion de §7 —+3,11 y −0,43 con p = 0,9328— tambien esta cubierta alli. Los tres
+    deltas, en cambio, no los tocaba nadie: comprobado por mutacion antes de escribir esto, alterar
+    el 10,40 a 99,99 y el 4,38 a 9,99 daba **cero fallos nuevos** sobre 47 comprobaciones (`§F117`).
+
+    Reproducen desde `ablacion_n15_REMOTO`, que trae las cuatro celdas del diseno con 15 registros
+    cada una: `zs-en` 64,0451, `zs-es` 68,4273, `fs-en` 63,3210, `fs-es` 74,4447. La celda de
+    referencia es `zs-en`, la de menos ayuda.
+
+    Se comprueba tambien **la afirmacion de interaccion**, que es la que sostiene el argumento y no
+    es una cifra: que ninguno de los dos factores por separado alcance el efecto conjunto. Una
+    comprobacion que solo cotejara los tres numeros dejaria pasar un texto que los citara bien y
+    concluyera lo contrario.
+    """
+    import csv as _csv
+    import collections as _c
+    d = os.path.join(BENCH_DIR, 'results/ablacion_n15_REMOTO/benchmark_results.csv')
+    if not os.path.exists(d):
+        check('los deltas del 2x2 del idioma reproducen desde la ablacion', 0,
+              ['no existe %s' % os.path.relpath(d, RAIZ)])
+        return
+    g = _c.defaultdict(list)
+    with open(d, encoding='utf-8') as fh:
+        for r in _csv.DictReader(fh):
+            if r.get('f1') not in (None, ''):     # un F1 de 0,0 es un dato, no un hueco
+                g[r['model']].append(float(r['f1']))
+    M = {k: 100 * sum(v) / len(v) for k, v in g.items()}
+    faltan = [c for c in ('zs-en', 'zs-es', 'fs-en', 'fs-es') if c not in M]
+    if faltan:
+        check('los deltas del 2x2 del idioma reproducen desde la ablacion', 0,
+              ['la ablacion no trae las celdas %s; trae %s' % (faltan, sorted(M))])
+        return
+    juntos = M['fs-es'] - M['zs-en']
+    solo_p = M['zs-es'] - M['zs-en']
+    solo_e = M['fs-en'] - M['zs-en']
+
+    fallos, mirados = [], 0
+    CASOS = [('ambos en espanol', juntos,
+              r'Redactar ambos en espa\u00f1ol aporta \*\*(\d+),(\d+)\*\* puntos'),
+             ('solo el prompt', solo_p,
+              r'traducir solo el prompt aporta \*\*(\d+),(\d+)\*\* puntos'),
+             ('ejemplos en ingles', -solo_e,
+              r'a\u00f1adir ejemplos en ingl\u00e9s resta \*\*(\d+),(\d+)\*\*')]
+    for nombre, calc, pat in CASOS:
+        mirados += 1
+        # sin resalte primero: es como el informe las escribe
+        m = re.search(pat.replace(r'\*\*', ''), s) or re.search(pat, s)
+        if m is None:
+            fallos.append('no se encuentra en el informe la cifra de «%s»: revisar si se reformulo'
+                          % nombre)
+            continue
+        pub = float('%s.%s' % (m.group(1), m.group(2)))
+        if abs(pub - calc) > 0.011:
+            fallos.append('«%s»: el informe dice %.2f y la ablacion da %.4f' % (nombre, pub, calc))
+    # La afirmacion de interaccion, que no es una cifra y es la que sostiene el argumento.
+    mirados += 1
+    if 'mejora que ninguno de los dos factores consigue por separado' in s:
+        if not (solo_p < juntos and solo_e < juntos):
+            fallos.append('el informe afirma que ningun factor por separado alcanza el efecto '
+                          'conjunto, y los datos dan juntos=%.4f, solo prompt=%.4f, solo '
+                          'ejemplos=%.4f' % (juntos, solo_p, solo_e))
+    else:
+        fallos.append('no se encuentra la afirmacion de interaccion en §5: revisar si se reformulo')
+    check('los deltas del 2x2 del idioma reproducen desde la ablacion', mirados, fallos,
+          'la celda de referencia es zs-en; el ANOVA de esta misma ablacion lo verifica la 33')
+
+
+# --- 49. El informe se cita a si mismo redondeado, y el redondeo tiene que seguir cuadrando ----
+def c_redondeos(s):
+    """Los restatements redondeados del resumen y de las conclusiones, contra su cifra precisa.
+
+    El resumen dice «+14,5 y +10,8 puntos» donde §5 mide +14,52 y +10,82; las conclusiones dicen
+    «rho = -0,52 con p = 0,071» donde §5 da -0,5165 y 0,0707. Son la **misma cifra escrita dos
+    veces con distinta precision**, y esa es exactamente la forma en que se cuelan las
+    incoherencias: `§L69` fue eso —propagados 81,45 -> 80,42 y 76,85 -> 76,55, quedo «cinco
+    puntos» describiendo una resta de 3,87, y el documento paso de coherente-con-datos-viejos a
+    incoherente-consigo-mismo—.
+
+    Ninguna cifra se escribe aqui. Se leen **las dos del documento** y se comprueba que la
+    redondeada sea el redondeo de la precisa. Una constante copiada del informe detectaria una
+    deriva de los datos pero no una del texto, que es el defecto que la comprobacion 22 ya tuvo y
+    que `§L63` deja escrito.
+
+    Cubre tambien dos cifras derivadas que el barrido de `§F116` dejo al descubierto y que se
+    pueden recomputar de sus propios operandos, los dos presentes en la frase: la proporcion de
+    entidades con *mojibake* y la reduccion de coste, **que es una estimacion y el informe la
+    declara como tal** en los dos sitios donde aparece.
+    """
+    fallos, mirados = [], 0
+
+    def _f(t):
+        return float(t.replace('−', '-').replace(' ', '').replace(' ', '')
+                     .replace(',', '.'))
+
+    # (nombre, regex de la precisa, regex de la redondeada, decimales)
+    PARES = [
+        ('mejora de nemotron-mini:4b', r'\*\*\+?(14),(\d{2}) pp\*\*', r'\+(14),(\d) y \+10,8', 1),
+        ('mejora de llama3.2:latest', r'\*\*\+?(10),(82) pp\*\*', r'\+14,5 y \+(10),(\d)', 1),
+        ('efecto del idioma', r'aporta (10),(40) puntos', r'aporta \+(10),(\d) puntos', 1),
+        # El signo va DENTRO de la negrita: «**Spearman de −0,5165**». Y la p redondeada hay que
+        # anclarla a su propia frase: «con p = (0),(\d{3})» a secas casaba con la p = 0,6382 de
+        # un ANOVA secundario, que esta en otro sitio y no tiene nada que ver.
+        ('rho de Spearman', r'\*\*Spearman de −?(0),(\d{4})\*\*', r'ρ = −(0),(\d{2}) con p', 2),
+        ('p de Spearman', r'\(p = (0),(0707)\)', r'ρ = −0,\d+ con p = (0),(\d{3})', 3),
+    ]
+    for nombre, p_pre, p_red, dec in PARES:
+        mirados += 1
+        a, b = re.search(p_pre, s), re.search(p_red, s)
+        if a is None or b is None:
+            fallos.append('no se encuentran las dos formas de «%s» (precisa: %s, redondeada: %s): '
+                          'revisar si se reformulo' % (nombre, a is not None, b is not None))
+            continue
+        pre = _f('%s.%s' % (a.group(1), a.group(2)))
+        red = _f('%s.%s' % (b.group(1), b.group(2)))
+        esp = round(pre, dec)
+        if abs(red - esp) > 1e-9:
+            fallos.append('«%s»: el informe dice %s donde %s redondeado a %d decimal(es) es %s'
+                          % (nombre, red, pre, dec, esp))
+
+    # mojibake: la proporcion sale de sus dos operandos, que estan en la misma frase
+    mirados += 1
+    m = re.search(r'\*\*(\d+) de ([\d\s ]+) entidades de\s*(?:>\s*)?referencia '
+                  r'\((\d+),(\d) ?%\)\*\*', s)
+    if m is None:
+        fallos.append('no se encuentra la frase del mojibake con sus dos operandos y su porcentaje')
+    else:
+        n_, d_ = _f(m.group(1)), _f(m.group(2))
+        calc = round(100 * n_ / d_, 1) if d_ else None
+        # TODAS las apariciones, no la primera: el porcentaje se repite cuatro veces en
+        # redacciones distintas —dos en prosa, una en la lista de limitaciones y una en una
+        # tabla— y `re.search` solo veria una. Es §L59, que ya paso una vez con la frase del
+        # «efecto que se anula» y que acabo de repetir al escribir esta comprobacion.
+        vistos = set()
+        for mm in re.finditer(r'\*{0,2}283 \(?(\d+),(\d) ?%\)?\*{0,2}'
+                              r'|entidades de\s*(?:>\s*)?referencia \((\d+),(\d) ?%\)', s):
+            gr = [x for x in mm.groups() if x is not None]
+            if len(gr) == 2:
+                vistos.add(_f('%s.%s' % (gr[0], gr[1])))
+        if not vistos:
+            fallos.append('mojibake: no se localiza ninguna aparicion del porcentaje')
+        for pub in sorted(vistos):
+            if calc is None or abs(pub - calc) > 1e-9:
+                fallos.append('mojibake: %g de %g son %s %% y el informe dice %s %% en alguna de '
+                              'sus %d apariciones' % (n_, d_, calc, pub, len(vistos)))
+        if len(vistos) > 1:
+            fallos.append('mojibake: el porcentaje aparece con %d valores distintos (%s)'
+                          % (len(vistos), sorted(vistos)))
+
+    # reduccion de coste: estimacion declarada, pero su aritmetica interna debe cuadrar
+    mirados += 1
+    mc = re.search(r'Frente a esos USD (0),(\d+), la revisión manual cuesta unos USD '
+                   r'(\d+),(\d+) por artículo', s)
+    # las DOS apariciones de la reduccion: §5.5 la resalta y §6 la repite sin resalte
+    todas_r = [_f('%s.%s' % (x.group(1), x.group(2))) for x in
+               re.finditer(r'reducci[óo]n (?:del|estimada es del) \*{0,2}(\d+),(\d) ?%\*{0,2}', s)]
+    mr = re.search(r'reducción del \*\*(\d+),(\d) ?%\*\* en coste unitario', s)
+    if mc is None or mr is None:
+        fallos.append('no se encuentran los dos costes y su reduccion en §5.5: '
+                      'revisar si se reformulo')
+    else:
+        loc = _f('%s.%s' % (mc.group(1), mc.group(2)))
+        man = _f('%s.%s' % (mc.group(3), mc.group(4)))
+        pub = _f('%s.%s' % (mr.group(1), mr.group(2)))
+        calc = round(100 * (1 - loc / man), 1) if man else None
+        for v in (todas_r or [pub]):
+            if calc is None or abs(v - calc) > 1e-9:
+                fallos.append('coste: 1 - %s/%s es %s %% y el informe dice %s %%'
+                              % (loc, man, calc, v))
+        if len(set(todas_r)) > 1:
+            fallos.append('coste: la reduccion aparece con %d valores distintos (%s)'
+                          % (len(set(todas_r)), sorted(set(todas_r))))
+        # y que siga declarada como estimacion en los dos sitios (regla de CLAUDE.md)
+        if s.count('estimaciones y no mediciones') < 1 or 'igualmente estimada' not in s:
+            fallos.append('la reduccion de coste ha dejado de declararse como estimacion en alguno '
+                          'de los dos sitios donde aparece')
+    check('los redondeos que el informe se cita a si mismo cuadran', mirados, fallos,
+          'las dos formas se LEEN del documento; una constante aqui no veria una deriva del texto')
+
+
+# --- 50. La Tabla 17 reproduce desde el corpus HISTORICO -----------------------------------
+CORPUS_REL = 'repos/ner-llm-entity-benchmark/data/benchmark_balanced_120.json'
+# El corpus se corrigio el 2026-09-08 y la Tabla 17 mide el estado ANTERIOR. Este commit es el
+# ultimo que lo conserva con el defecto; localizado recorriendo `git log --follow` sobre el
+# corpus y midiendo cada version (§F119).
+CORPUS_HIST = 'df9b4c4'
+
+
+def _fuzz_ratio(a, b):
+    """`fuzz.ratio` de rapidfuzz en biblioteca estandar: 200 * LCS / (len(a) + len(b)).
+
+    Es la similitud de Indel normalizada. `rapidfuzz` solo esta en el venv del proyecto, y una
+    comprobacion que solo corre en un entorno no corre. **Validada contra rapidfuzz sobre los 283
+    pares del corpus historico: diferencia maxima 0,0 y cero discrepancias de veredicto.**
+
+    No sirve `difflib.SequenceMatcher.ratio`, que usa bloques coincidentes y no la subsecuencia
+    comun mas larga: da valores parecidos y no iguales, y aqui se compara contra un umbral.
+    """
+    if not a and not b:
+        return 100.0
+    m, n = len(a), len(b)
+    ant = [0] * (n + 1)
+    for i in range(1, m + 1):
+        act = [0] * (n + 1)
+        ai = a[i - 1]
+        for j in range(1, n + 1):
+            act[j] = ant[j - 1] + 1 if ai == b[j - 1] else max(ant[j], act[j - 1])
+        ant = act
+    return 200.0 * ant[n] / (m + n)
+
+
+def _sin_mojibake(t):
+    """La forma correcta de una cadena con mojibake, o None si no lo tiene.
+
+    Se usa la **definicion** del defecto y no una clase de caracteres: una cadena esta corrupta si
+    recodificarla de latin-1 a utf-8 tiene exito y cambia el resultado, que es exactamente lo que
+    significa «bytes UTF-8 reinterpretados como Latin-1».
+    """
+    if not isinstance(t, str):
+        return None
+    try:
+        v = t.encode('latin-1').decode('utf-8')
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        return None
+    return v if v != t else None
+
+
+def c_tabla17(s):
+    """Una medicion que el corpus actual ya NO puede reproducir, atada a la version que si.
+
+    La Tabla 17 mide el alcance del defecto de codificacion sobre el corpus N=120, y el informe
+    declara en §2 que «el defecto esta corregido en el corpus desde el 8 de septiembre de 2026» y
+    que sus cifras «se conservan tal como se midieron». De modo que **medirla contra el corpus
+    actual da cero en todas sus filas**: no porque la tabla este mal, sino porque describe un
+    estado que ya no existe. Comprobado: hoy el fichero trae 0 entidades con mojibake y 545
+    localizaciones que entonces no tenia.
+
+    Eso la dejaba fuera del alcance de cualquier comprobacion, y es una tabla de **seis medidas**.
+    La ruta que si funciona es la historia de git, que es un artefacto que **atestigua** y por
+    tanto se conserva: `git show df9b4c4:<corpus>` devuelve la version con el defecto, y sobre ella
+    las seis filas reproducen exactas.
+
+    Las cifras se **leen de la tabla**, no se escriben aqui (`§L63`). La fila del umbral difuso
+    exige reimplementar `fuzz.ratio`, y esta validada contra `rapidfuzz` en los 283 pares.
+    """
+    fallos, mirados = [], 0
+    i = s.find('_Tabla 17.')
+    if i < 0:
+        check('la Tabla 17 reproduce desde el corpus historico', 0,
+              ['no se encuentra la Tabla 17'])
+        return
+    bloque = s[i:i + 1400]
+
+    def fila(pat):
+        m = re.search(pat, bloque)
+        return m
+
+    r = subprocess.run(['git', 'show', '%s:%s' % (CORPUS_HIST, CORPUS_REL)],
+                       cwd=RAIZ, capture_output=True, text=True)
+    if r.returncode != 0 or not r.stdout.strip():
+        check('la Tabla 17 reproduce desde el corpus historico', 0,
+              ['no se puede leer %s:%s — un clon superficial no trae ese commit, y sin el la '
+               'Tabla 17 no se puede verificar contra nada: el corpus actual ya no tiene el '
+               'defecto' % (CORPUS_HIST, CORPUS_REL)])
+        return
+    import json as _json
+    try:
+        recs = _json.loads(r.stdout)['dataset']
+    except (ValueError, KeyError, TypeError) as e:
+        check('la Tabla 17 reproduce desde el corpus historico', 0,
+              ['el corpus historico no se puede interpretar: %s: %s' % (type(e).__name__, e)])
+        return
+
+    CAMPOS = ('name_entities', 'organizations', 'locations')
+    tot = moj = arts = igual = correcta = irrec = 0
+    for reg in recs:
+        t = reg.get('text') or ''
+        if _sin_mojibake(t) is not None:
+            arts += 1
+        for c in CAMPOS:
+            for x in (reg.get(c) or []):
+                tot += 1
+                lim = _sin_mojibake(x)
+                if lim is None:
+                    continue
+                moj += 1
+                if x in t:
+                    igual += 1
+                elif lim in t:
+                    correcta += 1
+                if _fuzz_ratio(x.lower(), lim.lower()) < 85:
+                    irrec += 1
+
+    def comp(nombre, pat, calc, grupo=1):
+        nonlocal mirados
+        mirados += 1
+        m = fila(pat)
+        if m is None:
+            fallos.append('no se encuentra en la Tabla 17 la fila de «%s»: revisar si se '
+                          'reformulo' % nombre)
+            return
+        pub = int(m.group(grupo).replace(' ', '').replace(' ', ''))
+        if pub != calc:
+            fallos.append('«%s»: la Tabla 17 dice %d y el corpus historico da %d'
+                          % (nombre, pub, calc))
+
+    comp('entidades de referencia totales',
+         r'Entidades de referencia totales \|\s*\*{0,2}([\d\s ]+?)\*{0,2}\s*\|', tot)
+    comp('entidades con mojibake',
+         r'Entidades con \*mojibake\* \|\s*\*{0,2}([\d\s ]+?) \(', moj)
+    comp('irrecuperables en el cotejo difuso',
+         r'irrecuperables en el cotejo difuso[^|]*\|\s*\*{0,2}([\d\s ]+?) \(', irrec)
+    comp('articulos con mojibake en el texto',
+         r'Artículos con \*mojibake\* en el campo `text` \|\s*\*{0,2}([\d\s ]+?) de', arts)
+    comp('corruptas que aparecen igual de corruptas',
+         r'aparecen igual de corruptas en el texto \|\s*\*{0,2}([\d\s ]+?) de', igual)
+    comp('corruptas que aparecen correctas en el texto',
+         r'aparecen correctas en el texto \|\s*\*{0,2}([\d\s ]+?)\*{0,2}\s*\|', correcta)
+
+    # Los dos porcentajes derivados de la propia tabla
+    mirados += 1
+    m = re.search(r'irrecuperables en el cotejo difuso[^|]*\|\s*\*{0,2}[\d\s]+ \((\d+),(\d) ?%'
+                  r' del total\)', bloque)
+    if m is None:
+        fallos.append('no se encuentra el porcentaje de irrecuperables en la Tabla 17')
+    else:
+        pub = float('%s.%s' % (m.group(1), m.group(2)))
+        calc = round(100 * irrec / tot, 1) if tot else None
+        if calc is None or abs(pub - calc) > 1e-9:
+            fallos.append('irrecuperables: %d de %d son %s %% y la tabla dice %s %%'
+                          % (irrec, tot, calc, pub))
+    # Y el ejemplo que la prosa cita como recuperable
+    mirados += 1
+    m = re.search(r'`Emiliano Garc[^`]*` obtiene (\d+)', s)
+    if m is None:
+        fallos.append('no se encuentra en la prosa el ejemplo de cotejo recuperable')
+    else:
+        par = [(x, _sin_mojibake(x)) for reg in recs for c in CAMPOS
+               for x in (reg.get(c) or [])
+               if _sin_mojibake(x) and 'Page' in (_sin_mojibake(x) or '')]
+        if not par:
+            fallos.append('el ejemplo de la prosa no esta en el corpus historico')
+        else:
+            got = round(_fuzz_ratio(par[0][0].lower(), par[0][1].lower()))
+            if got != int(m.group(1)):
+                fallos.append('el ejemplo de la prosa: la razon es %d y el informe dice %s'
+                              % (got, m.group(1)))
+    check('la Tabla 17 reproduce desde el corpus historico', mirados, fallos,
+          'el corpus ACTUAL da cero en todas sus filas: la tabla mide el estado anterior a la '
+          'correccion del 2026-09-08 y solo la historia de git lo conserva')
 
 
 def check(nombre, examinados, fallos, nota=''):
@@ -262,7 +868,12 @@ def _texto_docx(ruta):
 
 # 17 el 2026-09-09 al medirlo por primera vez; 16 tras partir el run de §3.3, que era el
 # unico de los 17 introducido por una edicion propia. Baja segun se propague la limpieza.
-BOLD_CUERPO_BASE = 16
+BOLD_CUERPO_BASE = 14   # 16 -> 14 el 2026-09-09: la correccion de §F120 reemplazo texto
+                        # entre runs y el nuevo texto heredo el formato del primero, que no
+                        # estaba en negrita. Son dos cifras derivadas de una tabla, que segun
+                        # CLAUDE.md no llevan resalte, de modo que la perdida va en la
+                        # direccion correcta. Se baja la base para que la comprobacion siga
+                        # vigilando que no CREZCAN desde el estado nuevo.
 
 
 PDF_RAIZ = 'Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.pdf'
@@ -3049,6 +3660,12 @@ def main():
     ejecutar(c_protocolo, s)
     ejecutar(c_anexo_vs_tabla7, s)
     ejecutar(c_tabla7_vs_datos, s)
+    ejecutar(c_tabla7_desde_per_type, s)
+    ejecutar(c_tukey_recuento, s)
+    ejecutar(c_friedman, s)
+    ejecutar(c_ablacion_idioma, s)
+    ejecutar(c_redondeos, s)
+    ejecutar(c_tabla17, s)
     ejecutar(c_tabla4_vs_datos, s)
     ejecutar(c_figura1_vs_artefacto, s)
     ejecutar(c_tablas_menores, s)

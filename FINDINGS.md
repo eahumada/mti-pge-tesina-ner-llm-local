@@ -4895,3 +4895,614 @@ hacer la combinación: dos efectos individualmente insuficientes cuyo efecto con
 **Lo que esto añade a la decisión 18:** ya no es un modelo sino **dos**, y uno de ellos solo aparece al
 combinar. Si se declara la sensibilidad, conviene declararla **como combinación** y no como dos notas
 sueltas, porque por separado ninguna de las dos habría mostrado el caso de `gemma4:latest`.
+
+---
+
+## §F112 — La misma tabla por dos rutas: 25 grupos de 26 coinciden, y el que no ya se sabía
+
+**Fecha:** 2026-09-09 · **Origen:** mecanizar el análisis de [§F111](#f111)
+
+La Tabla 7 se escribió desde la columna `f1` del CSV consolidado, y `c_tabla7_vs_datos` la ata a
+esa fuente. Eso comprueba la transcripción, no la cifra: si el CSV estuviera mal, la tabla y el CSV
+coincidirían igual.
+
+Al mecanizar la sensibilidad combinada quedó disponible la otra ruta —el F1 recalculado desde los
+`per_type`, que son los recuentos de los que ese CSV sale— y contrastar las dos cuesta 0,16 s. De
+los **26 grupos, 25 coinciden por las dos rutas** con tolerancia de 0,05 puntos. El único que no es
+`nemotron-mini:4b_baseline`: publicado 22,59, desde `per_type` 21,4985, **−1,0915**.
+
+No es un hallazgo nuevo, y eso es exactamente lo que lo hace útil: es [§F110](#f110) otra vez, seis
+registros re-extraídos fuera del arnés cuyas métricas solo llegaron al CSV. Que la comprobación
+independiente encuentre **ese** grupo y ninguno más acredita dos cosas a la vez: que las otras 25
+cifras publicadas son correctas por dos caminos, y que el defecto de §F110 está acotado a un grupo
+y no es la punta de algo mayor.
+
+**Lo que se ha hecho.** `tools/sensibilidad_combinada.py`, que reproduce los cuatro escenarios de
+§F111 —`per_type` tal cual, aislando el parseo alterno, corrigiendo el emparejamiento duplicado, y
+las dos cosas— y confirma el resultado: `gemma4:latest` pasa de −1,1698 a **+0,4739**, y solo al
+combinar; `gemma4:31b-mlx` también cambia de signo, pero le basta una de las dos. La herramienta
+reutiliza `recalcula` de `efecto_emparejamiento_duplicado.py` en lugar de reimplementarla, y
+**no usa `overall.f1`**, que es lo que invalidó la primera versión del análisis.
+
+Y comprobación **45** del verificador, que es donde esto deja de depender de que alguien se acuerde.
+Su fallo está declarado con su responsable —el equipo remoto, `§3.bis.15`—, de modo que **al
+cerrarse la re-corrida el fallo desaparece solo y hay que levantar la exclusión** de
+`nemotron-mini:4b_baseline` en la herramienta. La herramienta lo dice en cada ejecución: comprueba
+si el grupo ya es coherente con su CSV y, cuando lo sea, imprime que se puede quitar de `EXCLUIDOS`.
+
+**Probado por mutación**, en el documento y no en la herramienta: alterada la cifra publicada de
+`qwen2.5:14b` de 50,22 a 99,99, la comprobación pasa de `CONOC` a `FALLA` y añade la fila con la
+divergencia de −49,77. Y sobre la propia herramienta, invertida la detección de cambio de signo,
+los modelos señalados pasan de 2 a 12.
+
+**Estado del verificador:** 45 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F113 — La campaña nueva no refresca cifras: arregla §F53, y con ello el estudio pierde una de sus dos conclusiones significativas
+
+**Fecha:** 2026-09-09 · **Origen:** verificar la entrega de `§3.bis.15` del equipo de 48 GB
+
+El equipo entregó el arreglo del `TypeError` de `§F85` y un consolidado nuevo,
+`ANALISIS_CONJUNTO_20260909_FIX`, con la nota «la conclusión no cambia; la magnitud sí». **El
+arreglo es correcto y su F reproduce exacto.** Lo que la nota no dice es todo lo demás, y es mucho.
+
+### El consolidado nuevo no comparte ni una fuente con el publicado
+
+No es el consolidado publicado con `nemotron` corregido: son **trece corridas de
+`recorrida_20260908/`**, una campaña completa distinta. El publicado se fusiona de **ocho** fuentes
+heterogéneas; el nuevo de **trece**, una por modelo, y **la intersección de las dos listas es
+vacía**.
+
+### Corrección del 2026-09-09, posterior: el informe SÍ declara §F53, y una de las tres consecuencias no era nueva
+
+> Dos rectificaciones a lo que sigue, hechas al releer el informe y al calcular la métrica restringida.
+> Cambian la urgencia de la decisión 1, de modo que van arriba y no en una nota al pie.
+>
+> **1. El informe declara el defecto por completo.** `§2` dedica un párrafo entero a la categoría
+> fantasma: el 66,0 % de los falsos positivos, la causa exacta —el conversor filtra por
+> `["PER", "ORG"]`—, la corrección del corpus del 8 de septiembre, y la frase «las cifras de este
+> informe son anteriores a esa corrección y se conservan tal como se midieron; sustituirlas exige
+> volver a inferir, **que es lo que hará la re-corrida pendiente**». Además el informe **ya publica
+> una segunda medición restringida** a las categorías anotadas, en el Anexo I, para las 42
+> configuraciones. Decir que «los datos publicados llevan el defecto dentro» es cierto y sigue
+> escrito abajo, pero **no** que el informe lo oculte: lo declara y anticipa exactamente esta
+> entrega.
+>
+> **2. La violación de homocedasticidad no la trae la campaña nueva.** Calculada la métrica
+> restringida sobre los datos **publicados**, Brown-Forsythe da W = 3,7227 y **p = 1,328e-09**. Es
+> decir: el supuesto ya falla en la medición corregida del propio informe, sin re-corrida ninguna.
+> La p = 0,18 que el informe publica solo vale para la métrica de tres categorías, donde la categoría
+> fantasma añade a **todos** los grupos la misma penalización de precisión y **comprime las
+> diferencias de varianza**. Ver `§F114`.
+>
+> **Lo que sí se sostiene entero** es la primera consecuencia, que es la que toca una conclusión:
+> `llama3.2:latest` deja de ser significativo en el consolidado nuevo. Y con un matiz que la mejora:
+> en la métrica **restringida de los datos publicados** los dos modelos siguen significativos
+> (`§F114`), de modo que no se sabe si la pérdida sobrevive a la métrica restringida de la campaña
+> nueva — y **no se puede saber hasta que llegue `§3.bis.16`**, porque 12 de las 13 corridas nuevas
+> no traen `detailed_results.json`.
+
+### Y la campaña nueva arregla la categoría fantasma de §F53
+
+Es el hecho decisivo, y ningún documento lo dice. El indicador barato que ordena `CLAUDE.md`
+—`tp + fn` agregado por categoría— sobre el `nemotron` de cada campaña:
+
+| Campaña | `Locations` tp | fp | fn | tp+fn |
+|:---|---:|---:|---:|---:|
+| Publicada (`nemotron_rerun_n120_REMOTO`) | 0 | 720 | 0 | **0** |
+| Nueva (`recorrida_20260909_nemotron_fix`) | 343 | 312 | 747 | **1 090** |
+
+En la campaña publicada `Locations` **puntúa contra el vacío**: cada acierto del modelo cuenta como
+falso positivo porque el corpus no anota una sola entidad de esa categoría. En la nueva, la
+referencia sí la anota. Es exactamente el defecto de [§F53](#f53), y **los datos publicados lo
+llevan dentro**.
+
+Eso explica la subida general del F1, que no es pequeña ni atribuible a la configuración
+—`max_tokens` sube de 2 048 a 4 096 y `num_workers` baja de 9 a 1, pero corpus, `rag_mode`,
+`fuzzy_threshold`, `system_prompt_file` y semilla son idénticos—:
+
+| Modelo (línea base) | Publicado | Nuevo |
+|:---|---:|---:|
+| `llama3.2:latest` | 0,3611 | **0,6325** |
+| `gemma:latest` | 0,4400 | **0,5955** |
+| `mistral-nemo:latest` | 0,4338 | **0,6063** |
+| `nemotron-mini:4b` | 0,2259 | **0,2829** |
+
+### Las tres consecuencias que la nota del equipo no recoge
+
+**Primera, y la que toca una conclusión del informe: `llama3.2:latest` deja de ser significativo.**
+El informe concluye que **dos** de los trece modelos mejoran de forma significativa. En el
+consolidado nuevo es **uno**.
+
+| Modelo | Publicado | p ajustada | Nuevo | p ajustada | Veredicto |
+|:---|---:|---:|---:|---:|:---|
+| `nemotron-mini:4b` | +0,1452 | 0,0000 | +0,1226 | 0,0000 | se mantiene |
+| `llama3.2:latest` | +0,1082 | 0,0069 | +0,0673 | **0,2334** | **se pierde** |
+
+Y la pérdida **no es por el N menor**. Las dos cosas iban entrelazadas —el consolidado nuevo excluye
+los 7 contaminados y el publicado no—, pero [§F66](#f66) ya midió el efecto de la exclusión por
+separado sobre el corpus antiguo: `llama3.2:latest` pasaba de +0,1082 a +0,1006 con p de 6,9e-3 a
+3,6e-2, **seguía siendo significativo**. Lo que le quita la significación es la **medición
+corregida**, no el tamaño de muestra.
+
+Dos modelos más cambian de signo, ninguno significativo: `mistral-nemo:latest` de +0,0237 a
+**−0,0429**, y `gemma:latest` se desploma de +0,0736 a **+0,0003**.
+
+**Segunda: el supuesto que sostiene el ANOVA titular se viola en los datos nuevos.** El informe
+publica que «la prueba de Levene no detecta heterocedasticidad (p = 0,18)». Sobre el consolidado
+nuevo, **no se sostiene**, y su `statistical_report.md` no menciona Levene ni una vez:
+
+| | Brown-Forsythe W | p |
+|:---|---:|---:|
+| Publicado | 1,2475 | 0,1842 |
+| Nuevo | **4,2124** | **1,394e-11** |
+
+**El remedio está y la conclusión general aguanta.** Bajo pruebas robustas a varianzas desiguales el
+resultado global es abrumador en los dos consolidados, de modo que esto obliga a **cambiar de prueba**,
+no a retirar la conclusión:
+
+| | Publicado | Nuevo |
+|:---|---:|---:|
+| ANOVA clásico | F = 38,2222 · p = 3,4453e-160 | F = 119,7502 · p ≈ 0 |
+| Alexander-Govern | A = 724,61 · p = 9,10e-137 | A = 1 369,97 · p = 9,89e-274 |
+| Kruskal-Wallis | H = 744,01 · p = 7,58e-141 | H = 1 329,91 · p = 3,52e-265 |
+
+**Tercera: η² se duplica.** De 0,2360 a **0,5069**. La campaña nueva separa los grupos mucho mejor,
+que es lo que cabe esperar al dejar de penalizar a todos los modelos por una categoría inexistente.
+
+### Verificación
+
+`F = 119,7502` reproducido por dos vías independientes —mi implementación en biblioteca estándar y
+`scipy` del venv— coincidiendo al cuarto decimal, igual que `F = 38,2222` del publicado. Brown-Forsythe
+comprobado con centrado en mediana y en media, y con las dos implementaciones. Los deltas y las p
+ajustadas de Tukey salen de `statsmodels`, y **la columna del publicado reproduce exactamente las
+cifras del informe** (+0,1452 y +0,1082), que es lo que acredita el método antes de leer la columna
+nueva.
+
+### Lo que esto NO es
+
+No es un fallo del equipo de 48 GB: su encargo era arreglar `§F85` y re-ejecutar un brazo, y eso lo
+hizo bien, con la corrida defectuosa conservada como prueba y con `failed == 0` ahora bloqueante. La
+nota se equivoca solo al generalizar «la conclusión no cambia» desde el único modelo que comprobaron.
+
+**Y no lo he tocado en el informe.** Adoptar el consolidado nuevo cambia prácticamente todas las
+cifras publicadas y una de las dos conclusiones del capítulo de resultados. Es **decisión del autor**,
+y está en la **decisión 1**, que hay que reabrir: se declaró superada suponiendo que lo único que
+retenía la adopción era `§F85`.
+
+
+---
+
+## §F114 — La categoría fantasma estaba enmascarando la heterocedasticidad, y la conclusión de dos modelos vive en la métrica restringida
+
+**Fecha:** 2026-09-09 · **Origen:** verificar la primera consecuencia de [§F113](#f113)
+
+`§F113` atribuyó a la campaña nueva la violación del supuesto de homocedasticidad. **Es un error de
+atribución.** Calculadas las dos métricas sobre los **mismos datos publicados**, reagregando desde
+`per_type` los 3 120 registros de los 26 grupos:
+
+| Métrica sobre los datos publicados | ANOVA F | p | Brown-Forsythe W | p |
+|:---|---:|---:|---:|---:|
+| Tres categorías (la que publica el informe) | 38,8403 | 1,094e-162 | 1,2078 | **0,2183** |
+| Restringida a Personas + Organizaciones (Anexo I) | 70,2802 | 2,238e-279 | 3,7227 | **1,328e-09** |
+
+**El supuesto ya falla en la medición que el informe presenta como corregida**, sin ninguna
+re-corrida. Y el mecanismo se explica: la categoría inexistente añade a los veintiséis grupos la
+misma penalización de precisión, que **comprime las diferencias de varianza entre ellos**. La
+p = 0,18 no acreditaba homogeneidad de varianzas; acreditaba que un defecto común a todos los grupos
+las estaba igualando. Es la misma lección de `§F53` en otra cifra: **un resultado tranquilizador
+producido por el defecto, no a pesar de él**.
+
+**La conclusión de dos modelos, en cambio, aguanta la métrica restringida:**
+
+| Modelo | Tres categorías | p ajustada | Restringida | p ajustada |
+|:---|---:|---:|---:|---:|
+| `nemotron-mini:4b` | +0,1562 | 0,0000 | +0,1549 | 0,0000 |
+| `llama3.2:latest` | +0,1082 | 0,0070 | +0,1021 | **0,0275** |
+
+Los dos siguen significativos, y ningún tercer modelo entra. La conclusión del capítulo de
+resultados **no depende de la categoría fantasma**, que es la comprobación que faltaba.
+
+**Y la medición restringida es estable entre campañas.** En el único modelo donde se puede comprobar
+—`nemotron-mini:4b`, el único de las trece corridas nuevas con `detailed_results.json`—:
+
+| | Línea base | KB RAG | Δ |
+|:---|---:|---:|---:|
+| Publicada, restringida | 25,2759 | 40,7698 | +15,4939 |
+| Nueva, restringida | 25,0186 | 40,8267 | **+15,8081** |
+| Publicada, tres categorías | 21,4985 | 37,1170 | +15,6185 |
+| Nueva, tres categorías | 27,8626 | 41,5765 | **+13,7139** |
+
+La métrica restringida se mueve **0,31 pp** entre campañas; la de tres categorías, 1,90 pp. Dicho de
+otro modo: **la subida general del F1 de la campaña nueva es la categoría fantasma dejando de
+penalizar, no los modelos midiendo mejor.** Lo que el informe publica en el Anexo I ya es, en lo
+esencial, lo que mediría la campaña nueva.
+
+**Consecuencia práctica, y es la que ordena el cierre.** La pregunta que decide la decisión 1 no es
+si adoptar el consolidado nuevo, sino **si la conclusión de dos modelos sobrevive en la métrica
+restringida de la campaña nueva**. En la métrica de tres categorías `llama3.2:latest` la pierde
+(`§F113`); en la restringida de los datos publicados la conserva. **Las dos cosas son compatibles y
+la que importa no se puede calcular todavía**, porque doce de las trece corridas nuevas no entregan
+`detailed_results.json`. Eso convierte `§3.bis.16` —clasificada como menor— en **la tarea que
+desbloquea la decisión más grande del cierre**, y no requiere inferencia: los ficheros existen en la
+máquina del equipo, solo hay que volcarlos.
+
+---
+
+## §F115 — La tercera cifra del párrafo estadístico que nadie recalculaba
+
+**Fecha:** 2026-09-09 · **Origen:** revisar si la frase de Levene necesitaba corrección
+
+Buscando si el informe hacía alguna afirmación inferencial sobre la métrica restringida —que
+[§F114](#f114) dejó sin cubrir— apareció que **no la hace**: la medición restringida del Anexo I es
+descriptiva, sin ANOVA ni Tukey. Y la frase de Levene está bien: es cierta para la métrica sobre la
+que se calcula, y ya viene matizada con «no equivalga a demostrar que las varianzas son iguales».
+**No había nada que corregir**, y la recomendación de §F114 de «precisarla» era más fuerte que lo
+que el texto merece.
+
+Lo que sí apareció es que **el mismo párrafo publica una tercera cifra que ninguna comprobación
+tocaba**: «el post-hoc de Tukey identifica 158 comparaciones significativas de las 325 posibles». Es
+el patrón de [§F91](#f91) por tercera vez en el mismo párrafo — el ANOVA y Levene ya habían obligado
+a añadir las comprobaciones 30 y 31.
+
+**La cifra es correcta.** Recalculada con `statsmodels`: 325 filas de par, que son C(26,2), y
+**exactamente 158** significativas al 0,05.
+
+**Comprobación 46**, y con una limitación declarada en su propia nota: la distribución del rango
+estudentizado no está en la biblioteca estándar, de modo que **no recalcula Tukey**. Verifica dos
+cosas que sí caben: el recuento contra el artefacto y contra C(26,2), y **cada veredicto del
+artefacto contra su propia p ajustada**. La segunda es la que aporta: un recuento de totales no
+puede ver dos errores de signo contrario, porque se compensan.
+
+**Probada por mutación en los dos frentes.** Alterado el 158 del informe a 157, falla con el
+contraste. Alterado en el artefacto un veredicto de «no» a «sí» sobre una fila con p = 1,0, falla
+**por las dos vías a la vez** —el recuento sube a 159 y la coherencia señala la fila—, que es lo que
+acredita que la segunda vía no es decorativa.
+
+**Estado del verificador:** 46 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F116 — La cifra que responde a la objeción metodológica más fácil de plantear no la comprobaba nadie
+
+**Fecha:** 2026-09-09 · **Origen:** dejar de encontrar estas cosas por casualidad
+
+Tres cifras del mismo párrafo de §5 obligaron a añadir tres comprobaciones distintas —el ANOVA
+titular en [§F91](#f91), Levene en la misma tanda, el recuento de Tukey en [§F115](#f115)— y **las
+tres se encontraron tropezándose con ellas**. Tres veces el mismo patrón en el mismo párrafo
+significa que el método no sirve, de modo que en lugar de esperar la cuarta hice el barrido:
+`tools/cobertura_cifras.py`, que enumera las afirmaciones numéricas del cuerpo del informe y dice
+cuáles no tienen ninguna comprobación anclada en su vecindad.
+
+Son **84 afirmaciones numéricas** en el cuerpo, fuera de tablas y bloques de código. La herramienta
+señaló 53 candidatas, y declara por qué esa cifra no es un veredicto: da falsos cubiertos —un ancla
+cerca no prueba que compruebe esa cifra— y falsos descubiertos. Las dos cosas se confirmaron al
+comprobarlas a mano, y la segunda es la que importa:
+
+**Falso descubierto, confirmado por mutación.** El barrido marcó como no cubiertos el `ρ = −0,5165`
+de Spearman y sus dos p. Alterados en el informe, `c_correlacion` los detecta con **2 fallos
+nuevos**. Estaban cubiertos por una ruta que la herramienta no reconoce.
+
+**Y un descubierto real, también por mutación.** El `χ² = 1 169,23` de Friedman: alterado a
+9 999,99, el verificador da **cero fallos nuevos** sobre sus 46 comprobaciones. La razón es sutil:
+`c_defensa` sí verifica ese mismo χ², pero en `DEFENSA-PREGUNTAS-Y-RESPUESTAS.md`, **que es otro
+documento**. La cifra estaba vigilada en la copia y no en el original.
+
+**Y es la peor de las 84 para tener sin vigilar.** Es la frase con la que §5 salva la limitación que
+él mismo declara —los 26 grupos evalúan los mismos 120 artículos, de modo que las observaciones
+están apareadas y un ANOVA de una vía no es estrictamente el procedimiento correcto—: «repetido con
+la prueba de Friedman, que es la que corresponde a un diseño de medidas repetidas, el rechazo se
+sostiene con holgura (χ² = 1 169,23), de modo que la conclusión no depende de esa elección». Es la
+respuesta a la objeción metodológica más fácil de plantear en una defensa.
+
+**La cifra es correcta.** Recalculada desde el CSV consolidado: rangando los 26 valores dentro de
+cada artículo sobre los 120 bloques completos, χ² = **1 169,2327**, que coincide con el informe y
+con `friedman.json` al cuarto decimal.
+
+**Comprobación 47**, que lo **recalcula** en lugar de comparar contra el artefacto y nada más, y
+contrasta las tres vías. Un detalle que merece quedar escrito porque es donde una reimplementación
+se equivocaría: **la corrección por empates es imprescindible**. Sin ella el estadístico sale
+**1 123,0730** y con ella 1 169,2327, de modo que una implementación que la olvide reporta un fallo
+donde no lo hay. Con 26 grupos sobre 120 artículos los empates abundan.
+
+**Un defecto propio, encontrado por la herramienta contra sí misma.** La primera versión extraía las
+anclas con una expresión regular sobre el código fuente del verificador, y **perdía anclas en
+silencio**: un apóstrofo suelto dentro de un docstring desalinea el emparejamiento de comillas y, a
+partir de ahí, todos los literales quedan mal delimitados. Daba **713** fragmentos mal cortados y
+**cero** con la palabra «Levene», sobre un fichero que la usa cuatro veces y que se ancla al informe
+con un regex explícito. Se detectó justamente porque Levene aparecía como no cubierto cuando yo
+sabía que lo estaba. Con `ast` son **402** anclas reales. La lección general es corta: **el código
+fuente se lee con un analizador sintáctico, no con una expresión regular**, y el síntoma de haberlo
+hecho mal es que faltan cosas, no que sobren.
+
+**Y una precisión sobre mi propio aviso anterior.** En [§F114](#f114) dije que la frase de Levene
+convenía precisarla; en [§F115](#f115) me retracté porque el texto está bien. Este hallazgo no la
+reabre: lo que faltaba no era corregir el texto sino **vigilar una cifra vecina**.
+
+**Estado del verificador:** 47 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F117 — El primer factor con que §5 explica sus resultados tampoco tenía quien lo recalculara
+
+**Fecha:** 2026-09-09 · **Origen:** revisar a mano las candidatas del barrido de [§F116](#f116)
+
+El barrido dejó 52 candidatas, y la utilidad de la lista se ve en el triaje: **la mayoría eran
+falsos descubiertos**, y comprobarlo cuesta poco.
+
+| Candidata | Veredicto |
+|:---|:---|
+| `76,55 %`, `90,16 %`, `80,42 %` | cubiertas, pero por `auditar_afirmaciones.py`, que el barrido no mira |
+| `66,0 %` | cubierta por `c_figura1_vs_artefacto` y por la auditoría de afirmaciones |
+| `62,67 %`, `80,51 %` | son los dos **fallos declarados** de la decisión 13, o sea vigiladas y en rojo a propósito |
+| `ρ = −0,5165`, `p = 0,0707`, `p = 0,0300` | cubiertas por `c_correlacion`, probado por mutación |
+| `+3,11`, `−0,43`, `p = 0,9328` | cubiertas por la comprobación 33 y documentadas en [§F55](#f55) |
+| **`+10,40`, `+4,38`, `−0,72`** | **descubiertas de verdad** |
+
+Las tres últimas son el **primer factor** con que §5 explica la distribución de resultados:
+«Redactar ambos en español aporta 10,40 puntos de F1 sin cambiar de modelo, mejora que ninguno de
+los dos factores consigue por separado: traducir solo el prompt aporta 4,38 puntos y añadir ejemplos
+en inglés resta 0,72». La comprobación 33 verifica el **ANOVA** de esa misma ablación (F = 1,1379,
+p = 0,3417) y §7 tiene cubierta la frase de que el efecto no replica, pero **los tres deltas no los
+tocaba nadie**: alterados el 10,40 a 99,99 y el 4,38 a 9,99, cero fallos nuevos sobre 47
+comprobaciones.
+
+**Las tres son correctas.** Reproducen desde `ablacion_n15_REMOTO`, que trae las cuatro celdas del
+diseño con quince registros cada una:
+
+| Celda | F1 | Contraste contra `zs-en` | Publicado |
+|:---|---:|---:|---:|
+| `zs-en` | 64,0451 | referencia | — |
+| `zs-es` | 68,4273 | +4,3821 | 4,38 |
+| `fs-en` | 63,3210 | −0,7242 | 0,72 |
+| `fs-es` | 74,4447 | **+10,3996** | 10,40 |
+
+**Comprobación 48**, y con una cuarta cosa que no es una cifra: **la afirmación de interacción**.
+Que ninguno de los dos factores por separado alcance el efecto conjunto es lo que sostiene el
+argumento, y una comprobación que solo cotejara los tres números dejaría pasar un texto que los
+citara bien y concluyera lo contrario. Probada por mutación en los cuatro frentes, los cuatro
+detectados; el cuarto se ensayó cambiando «ninguno» por «cualquiera».
+
+**Un fallo del ensayo, no de la comprobación, que conviene dejar escrito.** Las tres primeras
+mutaciones no encontraron su ancla porque las busqué en negrita, y el informe escribe esas cifras
+**sin resalte** por la regla de sobriedad tipográfica del proyecto. La comprobación funcionaba —su
+patrón alternativo casaba— pero mi prueba no probaba nada, que es el modo más silencioso de dar por
+validada una comprobación vacua. Corregido el orden de los patrones para que el caso sin resalte sea
+el primero, y anotado en el docstring: la próxima cifra que se verifique ahí tampoco estará en
+negrita.
+
+**Y por segunda vez seguida, la comprobación 43 detectó mi propia referencia colgante** a este mismo
+`§F117` mientras lo escribía. Es la tercera vez en la sesión que una comprobación del proyecto
+encuentra un defecto de quien las escribe.
+
+**Estado del verificador:** 48 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F118 — El informe se cita a sí mismo redondeado, y ese redondeo no lo comprobaba nadie
+
+**Fecha:** 2026-09-09 · **Origen:** reducir el ruido del barrido de [§F116](#f116) en lugar de
+triar cincuenta cifras a mano
+
+Triar las candidatas una a una es lo que §L61 dice que no se haga, así que en vez de eso mecanicé el
+triaje que ya había hecho a mano en [§F117](#f117). Tres rutas de cobertura nuevas, y la lista pasa
+de **50 a 12**:
+
+| Ruta | Qué reconoce | Efecto |
+|:---|:---|---:|
+| Segunda fuente de anclas | `auditar_afirmaciones.py` también comprueba el informe | −4 |
+| Fallos declarados | una cifra en rojo a propósito **está** vigilada | −3 |
+| Valores de artefactos | las comprobaciones que no se anclan en prosa leen el JSON y buscan la cifra | −34 |
+
+De las 12 restantes, dos son **cifras de la literatura** —el 88,43 % del ajuste fino de BERT sobre
+CoNLL-2002 y su comparación— y no hay nada que recalcular: se acreditan por la cita. Las otras diez
+son **una sola clase de defecto**, y es la que faltaba: **el informe se cita a sí mismo redondeado**.
+
+| Sitio | Forma redondeada | Cifra precisa de §5 |
+|:---|:---|:---|
+| Resumen y abstract | +14,5 y +10,8 puntos | +14,52 y +10,82 |
+| Resumen | +10,4 puntos | 10,40 |
+| Conclusiones | ρ = −0,52, p = 0,071 | −0,5165, p = 0,0707 |
+| §2 y §6, cuatro veces | 20,1 % | 283 de 1 406 |
+| §5.5 y §6 | 99,4 % | 1 − 0,052 / 8,75 |
+
+Es exactamente la forma en que entró el defecto de [§L69](#l69): propagadas las cifras precisas
+81,45 → 80,42 y 76,85 → 76,55, quedó «cinco puntos» describiendo una resta de 3,87, y el documento
+pasó de coherente-con-datos-viejos a **incoherente consigo mismo**. Y afecta al **resumen**, que es
+la primera página y lo único que algunos lectores leen.
+
+**Las diez cuadran.** 14,52 → 14,5; 10,82 → 10,8; 10,3996 → 10,4; 0,5165 → 0,52; 0,0707 → 0,071;
+283/1 406 = 20,128 → 20,1; 1 − 0,052/8,75 = 0,99406 → 99,4 %.
+
+**Comprobación 49**, que **no escribe ninguna cifra**: lee las dos formas del documento y comprueba
+que la redondeada sea el redondeo de la precisa. Una constante copiada aquí detectaría una deriva de
+los datos pero no una del texto, que es el defecto que la comprobación 22 ya tuvo y que
+[§L63](#l63) deja escrito. Comprueba además que la reducción de coste **siga declarada como
+estimación** en los dos sitios donde aparece, que es una regla de `CLAUDE.md` y no una cifra.
+
+**Y repetí §L59 escribiéndola.** La primera versión leía el porcentaje del *mojibake* con
+`re.search`, y ese porcentaje aparece **cuatro veces** en redacciones distintas —dos en prosa, una
+en la lista de limitaciones y una en una tabla—. Alterar la de la tabla no lo notaba nadie. Es
+literalmente la lección que dice que `re.search` ve solo la primera aparición, escrita a propósito
+después de que pasara con la frase del «efecto que se anula». Corregido a `finditer` sobre todas las
+apariciones, y añadida la comprobación de que no haya dos valores distintos entre ellas; probado
+mutando **solo la de la tabla**, que antes era invisible.
+
+**Dos anclas de prueba mal puestas, otra vez.** Tres mutaciones de §F117 fallaron por buscar las
+cifras en negrita, y aquí una falló por omitir los asteriscos y el `>` de una cita en bloque. En los
+dos casos la comprobación funcionaba y **el ensayo no ensayaba nada**. Vale la pena el recordatorio:
+una mutación que no encuentra su ancla es un ensayo fallido, no una comprobación validada, y hay que
+distinguirlo del caso en que la comprobación no detecta el cambio.
+
+### Corrección inmediata, y es el mismo defecto del que trata este hallazgo
+
+Escribí arriba que el barrido «queda en 12 candidatas». **Dejó de ser cierto en el mismo commit**:
+al añadirse la comprobación 49, sus anclas cuentan como cobertura y el barrido pasó a **5**. Luego
+a **3**, tras arreglar el filtro de anclas —exigía cuatro letras seguidas, y el ancla
+`ρ = −(0),(\d{2}) con p` no las tiene, de modo que sus dos cifras salían descubiertas estando
+cubiertas—. Anotar una cifra que la siguiente línea de trabajo invalida es exactamente lo que este
+hallazgo describe, y no lo evité escribiéndolo.
+
+**Estado final del barrido: 3 candidatas.** Dos son las cifras de la literatura, que no hay nada que
+recalcular, y la tercera es una aparición del `66,0 %` cubierta por otras dos comprobaciones y por
+la auditoría de afirmaciones. **Ninguna afirmación numérica del cuerpo del informe queda sin quien
+la mire.**
+
+**Estado del verificador:** 49 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F119 — Una tabla de seis medidas que el corpus actual ya no puede reproducir
+
+**Fecha:** 2026-09-09 · **Origen:** comprobar un supuesto que yo mismo había escrito
+
+`tools/cobertura_cifras.py` excluye las tablas del barrido con el comentario «se verifican por otra
+vía». **Eso era un supuesto, no una comprobación**, así que lo verifiqué: de las **20 tablas** con
+leyenda, **11 no se mencionan** en ninguna de las dos herramientas que comprueban el informe.
+
+**Diez de esas once son descriptivas** —las tablas 1, 2, 3, 9, 10, 11, 12, 13, 14 y 16: familias
+de técnicas, estado del arte, arquitectura por capas, estructura del repositorio, entorno de
+pruebas, configuración del módulo, contenido de la base de conocimientos y formas corruptas de los
+nombres— y no hay nada que recalcular: se acreditan por su cita o por el código que describen.
+
+La undécima es la **Tabla 17, «Alcance medido del defecto de codificación sobre el corpus N=120»**,
+que son **seis medidas**.
+
+### Por qué estaba fuera del alcance de todo
+
+Medirla contra el corpus actual **da cero en todas sus filas**. No porque la tabla esté mal, sino
+porque describe un estado que ya no existe: el informe declara en §2 que «el defecto está corregido
+en el corpus desde el 8 de septiembre de 2026» y que sus cifras «se conservan tal como se midieron».
+Hoy el fichero trae **0 entidades con *mojibake*** y **545 localizaciones** que entonces no tenía
+—de ahí que el total pase de 1 406 a 1 951—.
+
+Es una clase de afirmación que el verificador no cubría en absoluto: **una medición histórica**. No
+se puede atar al dato actual, y no atarla a nada la deja indefinidamente sin vigilancia.
+
+### La ruta que sí funciona
+
+La historia de git, que es un artefacto que **atestigua** y por eso se conserva. Recorriendo
+`git log --follow` sobre el corpus y midiendo cada versión aparece exactamente dónde vive la tabla:
+
+| Commit | Fecha | Entidades P+O | `locations` | Con *mojibake* | Artículos afectados |
+|:---|:---|---:|---:|---:|---:|
+| `f49c03c` | 2026-09-08 | 1 406 | 545 | 0 | 0 |
+| `c776fe0` | 2026-09-08 | 1 406 | 482 | 0 | 0 |
+| `eb97af0` | 2026-09-08 | 1 406 | 0 | 0 | 0 |
+| **`df9b4c4`** | **2026-09-06** | **1 406** | 0 | **283** | **104** |
+
+Sobre `df9b4c4` las seis filas reproducen **exactas**: 1 406 entidades, 283 con *mojibake*, 66
+irrecuperables con umbral 85 (4,69 % → 4,7 %), 104 de 120 artículos, 283 de 283 igual de corruptas y
+0 correctas. Y el ejemplo que la prosa cita como recuperable, `Emiliano GarcÃ­a-Page`, da razón
+**92,7**, que redondea al 93 publicado.
+
+### Comprobación 50, con dos reimplementaciones
+
+La primera es la **detección del defecto por su definición** y no por una clase de caracteres: una
+cadena está corrupta si recodificarla de `latin-1` a `utf-8` tiene éxito y cambia el resultado, que
+es exactamente lo que significa «bytes UTF-8 reinterpretados como Latin-1». Más corto y más exacto
+que enumerar los caracteres sospechosos.
+
+La segunda es **`fuzz.ratio` en biblioteca estándar**, porque `rapidfuzz` solo está en el venv y una
+comprobación que solo corre en un entorno no corre. Es la similitud de Indel normalizada,
+`200 · LCS / (len a + len b)`, y está **validada contra `rapidfuzz` sobre los 283 pares del corpus
+histórico: diferencia máxima 0,0 y cero discrepancias de veredicto**. No sirve
+`difflib.SequenceMatcher.ratio`, que usa bloques coincidentes en lugar de la subsecuencia común más
+larga: da valores parecidos y no iguales, y aquí se compara contra un umbral.
+
+**Y un detalle de operación que la comprobación declara en su fallo**: un clon superficial no trae
+`df9b4c4`, y sin ese commit la Tabla 17 **no se puede verificar contra nada**. La comprobación lo
+dice con esas palabras en lugar de pasar en silencio.
+
+**El propio verificador encontró mi error al escribirla.** La primera versión usaba `json` sin
+importarlo en la función, y `ejecutar` lo reportó como **VACÍA (reventó) — NameError**, que es su
+comportamiento diseñado: una comprobación que revienta tiene que decir cuál es y seguir.
+
+**Estado del verificador:** 50 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F120 — El entregable contradecía a su propia tabla, y las cincuenta comprobaciones miraban el otro fichero
+
+**Fecha:** 2026-09-09 · **Origen:** notar que las comprobaciones 45 a 50 leen todas el Markdown
+
+Las seis comprobaciones añadidas hoy verifican el **Markdown canónico**. El entregable es el
+`.docx`, y si una de esas cifras divergiera allí, ninguna lo vería. Ejecutado
+`tools/desfase_cifras_docx.py`, resultó que **diez cifras están en el Markdown y no en los `.docx`**,
+y comparando por **párrafo** —no por cifra— aparecieron dos párrafos de la fuente ausentes de los
+tres entregables y siete emparejados pero distintos.
+
+### El más grave: el texto contradice a la tabla que introduce
+
+| | Texto |
+|:---|:---|
+| Markdown | «**veintiuna de las veintiséis** configuraciones puntúan mejor […] y **veintitrés** puntúan peor» |
+| Los tres `.docx` | «**19 de las 24** configuraciones puntúan mejor […] y **5 de las 24** puntúan peor» |
+
+La Tabla 18 del `.docx` tiene **26 filas de datos, idénticas a las del Markdown** —es lo que la
+comprobación 27 verifica, con sus 52 elementos—. De modo que **la tabla se propagó y la prosa que la
+describe no**, y el entregable afirmaba una cosa justo encima de una tabla que dice otra.
+
+**Recalculado desde esas 26 filas**, el Markdown es el que cuadra:
+
+| Criterio | Δ > 0 (mejor) | Δ < 0 (peor) |
+|:---|---:|---:|
+| Por entidad de referencia | **21** | 5 |
+| Por texto de entrada | 3 | **23** |
+
+Y el error del `.docx` era doble: el 19 es un recuento antiguo sobre 24 configuraciones, y **el 5 es
+el recuento de la otra columna** —los que puntúan peor por entidad de referencia—, de modo que el
+texto además **confundía el criterio**. Es exactamente el defecto que §5.x advierte que hay que
+evitar: el signo del efecto depende de qué criterio se elija, y esa dependencia es el resultado.
+
+**Corregido** con `tools/docx_replace_terms.py` y las reglas de `tools/terms_desfase_mojibake.json`:
+tres reemplazos en cada uno de los tres entregables, todos aplicados según lo esperado, con respaldo
+previo. No es una decisión editorial: **el Markdown canónico ya decía 21 y 23**, y esto solo lo
+propaga, que es el flujo que `CLAUDE.md` fija.
+
+Un efecto lateral que la comprobación 39 detectó y explicó sola: el reemplazo de `R2` fue entre
+`runs` y el texto nuevo heredó el formato del primero, que no estaba en negrita, así que los
+resaltes del cuerpo bajaron de 16 a **14**. Van en la dirección correcta —son dos cifras derivadas
+de una tabla, y `CLAUDE.md` reserva la negrita para las que la tabla no recoge—, de modo que se bajó
+`BOLD_CUERPO_BASE` a 14 para que la comprobación siga vigilando que no **crezcan** desde el estado
+nuevo, que es lo que vigila.
+
+### Lo que NO he corregido, y por qué
+
+Tres divergencias más, todas en la misma dirección —el `.docx` conserva una versión anterior—, que
+**no toco porque son inserciones de texto y el cuerpo tiene un límite duro de 25 páginas**. Van aquí
+con el texto exacto para la pasada de maquetación:
+
+**1. Falta la prueba de Friedman, y con ella la respuesta a la objeción del diseño apareado.** La
+palabra «Friedman» aparece **cero veces** en los tres `.docx`, y `169,23` también.
+
+| | Texto |
+|:---|:---|
+| Markdown | «La prueba de Levene **no detecta heterocedasticidad** (p = 0,18), lo que con 3 120 observaciones sí es informativo, **aunque no equivalga a demostrar que las varianzas son iguales**. Y tratar como independientes unas observaciones apareadas hace el contraste conservador: repetido con la prueba de **Friedman**, que es la que corresponde a un diseño de medidas repetidas, el rechazo se sostiene con holgura (χ² = 1 169,23), de modo que la conclusión no depende de esa elección.» |
+| Los tres `.docx` | «La homocedasticidad **se verifica** (Levene, p = 0,18) y, al ser el diseño pareado más potente que el independiente, la significancia obtenida por esta vía es conservadora.» |
+
+Dos problemas, y el segundo es peor que la ausencia. El `.docx` **afirma lo que el Markdown dice
+expresamente que no se puede afirmar**: Levene no verifica la homocedasticidad, solo no la rechaza,
+y una p de 0,18 no demuestra que las varianzas sean iguales. Y donde el Markdown aporta **una
+prueba** —Friedman, con su χ²—, el `.docx` argumenta por aserción. Es el párrafo que sostiene la
+principal debilidad metodológica declarada del trabajo, y la versión del entregable es la más
+atacable de las dos. Añade unos 300 caracteres, unas 50 palabras.
+
+**2. Dos párrafos de la fuente que no están en ningún `.docx`**, los que empiezan por «Los motivos
+de invalidez son dos» y «Conviene separar dos situaciones que no son la misma». Los dos explican por
+qué ocho grupos tienen una corrida previa que no es una medición alternativa sino inválida, que es
+la distinción que la regla de integridad de `CLAUDE.md` obliga a declarar.
+
+**3. Cinco párrafos más emparejados pero no idénticos**, con similitud entre 0,85 y 0,91: la
+formulación de los objetivos específicos, la definición de RAG, la frase de la brecha —a la que el
+Markdown añade «y con una medición cuyos límites estén declarados»—, el módulo KB RAG y la cautela
+metodológica de la tabla, que en el Markdown advierte de **dos** versiones anteriores y en el
+`.docx` de una.
+
+**La lección, que es la que importa.** Cincuenta comprobaciones sobre el Markdown no acreditan el
+entregable. `c_excluidos`, `c_sobriedad_docx`, `c_docx_sano` y las dos de tablas sí lo leen, pero
+ninguna comparaba **la prosa**, y el desfase vivía precisamente ahí. Un documento cuyo texto
+contradice a su propia tabla pasa las cincuenta.
+
+**Estado del verificador:** 50 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
