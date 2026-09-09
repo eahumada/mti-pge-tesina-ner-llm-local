@@ -851,3 +851,32 @@ done
 Es el mismo patrón de `[[L57]]`: una orden cuyo «no hizo nada» es indistinguible de «lo hizo bien» si nadie
 mira el resultado. Allí un 404 podía significar éxito o URL rota; aquí un `push` sin error puede significar
 sincronizado o nada que empujar.
+
+---
+
+## §L59 — Un recuento no se comprueba por presencia de la palabra
+
+**2026-09-09, 07:1x.** Tras escribir en el índice de defensa que los modelos con mejora significativa eran
+«dos» cuando son tres (`FINDINGS §F86`), se amplió la comprobación 24 del verificador para atar las cifras de
+la re-corrida a su artefacto. Entre ellas, el recuento de significativos.
+
+La primera versión lo comprobaba como todas las demás: **buscando si «3» o «tres» aparece en el documento**.
+Sometida a la mutación exacta del error —cambiar esa frase de «tres» a «dos»— **la comprobación pasó**.
+
+La razón es obvia una vez vista: «tres» aparece muchas veces en ese documento por otros motivos —«tres
+comprobaciones», «los tres corpus», «tres advertencias»— de modo que la presencia de la palabra no dice nada
+sobre la frase que interesa. La comprobación no verificaba una afirmación: verificaba un vocabulario.
+
+**Corregido** exigiendo que el número aparezca **en la misma oración** que la palabra `significativ`, con una
+expresión regular que admite las dos direcciones. Repetida la mutación, ahora falla y nombra el problema.
+
+### Lo que generaliza
+
+- **Una cifra decimal distintiva —«0,0879»— sí puede comprobarse por presencia**, porque no aparece por
+  casualidad. Un número pequeño en letra o en dígito, **no**.
+- **Toda comprobación de recuento necesita anclaje**: el número junto al sustantivo que cuenta, en la misma
+  oración. Sin eso comprueba que el documento está escrito en español.
+- Y una vez más, **lo destapó la mutación y no la lectura**. El código parecía correcto, era simétrico con las
+  demás cifras y pasaba en verde. Es la cuarta vez en dos días que una comprobación escrita hace minutos
+  resulta no comprobar nada, y la cuarta que la prueba de mutación lo dice en un segundo. Ver `[[L47]]`,
+  `[[L57]]` y `[[L58]]`.

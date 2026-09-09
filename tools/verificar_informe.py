@@ -1106,6 +1106,39 @@ def c_defensa(s):
                        '{:,}'.format(fp['fp_locations']).replace(',', ' ')),
                       ('falsos positivos totales',
                        '{:,}'.format(fp['fp_total']).replace(',', ' '))]
+    # Las cifras de la re-corrida, que son las que el indice cita primero desde el 2026-09-09.
+    # Se anaden porque el error de escribir «dos modelos significativos» cuando son tres estuvo en
+    # ese documento y no lo detecto nada: la comprobacion solo miraba los artefactos antiguos.
+    rb = carga('ROBUSTEZ_ESTADISTICA_20260909/robustez.json')
+    if rb:
+        co2 = rb.get('correlacion_capacidad_beneficio') or {}
+        mi = rb.get('modelo_mas_influyente')
+        inf = (rb.get('influencia_al_retirar_cada_modelo') or {}).get(mi or '', {})
+        if co2:
+            esperadas += [
+                ('rho de Spearman de la re-corrida',
+                 ('%.4f' % abs(co2['spearman']['rho'])).replace('.', ',')),
+                ('p de Spearman de la re-corrida',
+                 ('%.4f' % co2['spearman']['p']).replace('.', ',')),
+                ('r de Pearson de la re-corrida',
+                 ('%.4f' % abs(co2['pearson']['r'])).replace('.', ',')),
+            ]
+        if inf:
+            esperadas.append(('Pearson al retirar el punto mas influyente',
+                              ('%.4f' % abs(inf['pearson_r'])).replace('.', ',')))
+        if rb.get('significativos_pareado') is not None:
+            # Un recuento NO se comprueba por presencia de la palabra: «tres» aparece muchas veces en
+            # el documento por otros motivos, de modo que la comprobacion pasaria aunque la frase
+            # dijera «dos». Comprobado por mutacion el 2026-09-09, que es como se descubrio: hay que
+            # exigir que el numero este JUNTO a «significativ», en la misma oracion.
+            n_ = rb['significativos_pareado']
+            patron = r'(?:%s)\b[^.]{0,120}significativ|significativ[^.]{0,120}\b(?:%s)\b' % (
+                '|'.join(formas(n_)), '|'.join(formas(n_)))
+            mirados += 1
+            if not re.search(patron, d, re.I):
+                fallos.append('el indice no dice que los significativos de la re-corrida son %d, '
+                              'o no lo dice junto a la palabra' % n_)
+
     for etiq, val in esperadas:
         mirados += 1
         opciones = val if isinstance(val, list) else [val]
