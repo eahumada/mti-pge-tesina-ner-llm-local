@@ -2445,3 +2445,57 @@ sostiene la conclusión: la conclusión aguanta con ambos.
 **Para la defensa.** Si se pregunta por qué se usó un ANOVA de una vía sobre datos apareados, la respuesta
 tiene dos partes: el informe lo declara como limitación —no lo esconde— y se ha verificado que la conclusión
 no depende de esa elección. Queda en `results/ROBUSTEZ_ESTADISTICA_20260908/`.
+
+---
+
+## §F76 — Con el contraste apropiado al diseño, ocho de trece modelos mejoran, no dos
+
+**Fecha:** 2026-09-08, 21:33. **Afecta a una afirmación central del informe. Requiere decisión del autor.**
+
+§5.3.1 concluye que la mejora por recuperación «solo supera la corrección por comparaciones múltiples en
+`nemotron-mini:4b` y en `llama3.2:latest`», y de ahí deriva que el beneficio del RAG es demostrable en los
+dos modelos más débiles y «positivo pero no concluyente en la franja intermedia».
+
+**Esa conclusión depende del contraste elegido, y el elegido no es el que corresponde al diseño.** El Tukey
+HSD publicado trata las 3 120 observaciones como independientes cuando son apareadas —los veintiséis grupos
+evalúan los mismos artículos, como el propio informe declara— y corrige por las **325** comparaciones
+posibles entre los veintiséis grupos, cuando las que interesan son **trece**: cada modelo consigo mismo.
+
+**Repetido con el contraste apropiado** —Wilcoxon de rangos con signo sobre los mismos registros, con
+corrección de Holm sobre las trece comparaciones de interés:
+
+| Modelo | Δ pp | p ajustada | ¿Significativo? |
+|:---|---:|---:|:---:|
+| `nemotron-mini:4b` | +14,52 | <0,0001 | **sí** |
+| `llama3.2:latest` | +10,82 | <0,0001 | **sí** |
+| `qwen2.5:14b` | +4,62 | 0,0001 | **sí** |
+| `gemma:latest` | +7,36 | 0,0005 | **sí** |
+| `qwen3:8b` | +3,25 | 0,0007 | **sí** |
+| `gpt-oss:20b` | +3,28 | 0,0044 | **sí** |
+| `gemma4:12b-mlx` | +2,28 | 0,0184 | **sí** |
+| `llama3.1:8b` | +1,99 | 0,0432 | **sí** |
+| `gemma4:31b-mlx` | −0,18 | 0,3004 | no |
+| `mistral-nemo:latest` | +2,37 | 0,4444 | no |
+| `deepseek-r1:1.5b` | −0,90 | 1,0000 | no |
+| `gemma4:latest` | −1,17 | 1,0000 | no |
+| `gemma4:31b-cloud` | −0,54 | 1,0000 | no |
+
+**Ocho de trece, no dos.** Y los cinco que no alcanzan significancia son precisamente aquellos cuyo efecto es
+nulo o negativo, lo que da al resultado una coherencia que el publicado no tiene: hoy el informe agrupa como
+«no concluyentes» a modelos con +7,36 pp y a otros con −0,54.
+
+**El Tukey no es incorrecto: responde a otra pregunta.** Contrasta todos los pares entre los veintiséis
+grupos, lo que incluye comparar `nemotron-mini` con `gemma4:31b`, y para esa pregunta su corrección es la
+adecuada. Pero la pregunta del informe es «¿ayuda la recuperación a **este** modelo?», y para esa el
+contraste pareado con trece comparaciones es el que corresponde.
+
+**Qué cambiaría en el informe.** La afirmación se vuelve **más fuerte y más matizada a la vez**: el beneficio
+es demostrable en ocho de trece modelos, se concentra en los de menor capacidad —los dos mayores efectos son
+los dos modelos más pequeños— y se anula en los de mayor capacidad. La tesis de la proporcionalidad inversa
+sale reforzada, no debilitada.
+
+**Por qué no se aplica ya.** Primero, porque cambia una conclusión central y eso es decisión del autor.
+Segundo, porque la re-corrida va a sustituir estos datos y habrá que repetir el contraste. Lo que **sí**
+permanece es el argumento metodológico, que valdrá igual para los datos nuevos.
+
+Artefacto en `results/ROBUSTEZ_ESTADISTICA_20260908/posthoc_pareado.json`.
