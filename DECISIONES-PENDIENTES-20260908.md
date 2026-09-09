@@ -1,8 +1,20 @@
 # Decisiones que esperan al autor
 
-**Actualizado: 2026-09-08, 21:36.** Reunidas aquí porque estaban repartidas entre `FINDINGS.md`,
-`CURRENT-TASKS.md` y varios documentos sueltos, mezcladas con decisiones ya tomadas. Son **siete**, todas con
-recomendación y ninguna bloquea a otra.
+**Actualizado: 2026-09-09.** Reunidas aquí porque estaban repartidas entre `FINDINGS.md`,
+`CURRENT-TASKS.md` y varios documentos sueltos, mezcladas con decisiones ya tomadas. Todas llevan
+recomendación.
+
+**Son 19**, de las cuales **3 tienen estado marcado en su título** —la 1 respondida y reabierta con su
+precio calculado, la 2 con el recuento corregido y la 6 hecha— y **16 siguen abiertas**. La más urgente
+es la **19**: al entregable le falta una subsección entera de §5.
+
+> **Este encabezado decía «Son siete» hasta el 2026-09-09, cuando ya había diecinueve.** Y
+> `TODO-INFORME-FINAL.md`, que es donde el protocolo de seguimiento manda mirar las decisiones
+> pendientes, repetía la misma cifra. Un recuento escrito a mano en el documento que lo define se
+> queda atrás con cada decisión que se añade, y nada avisa. Lo comprueba ahora el **predicado 15**
+> de `tools/auditar_afirmaciones.py`: el número que este encabezado declara tiene que coincidir con
+> el de encabezados `## N.` que hay debajo. Si no cuadra, corregir **el encabezado**, no borrar
+> decisiones.
 
 Las dos últimas —la **6**, sobre `gpt-oss:20b`, y la **7**, sobre el post-hoc— son las que más conviene
 resolver pronto: la primera porque afecta a horas de máquina y la segunda porque toca una conclusión del

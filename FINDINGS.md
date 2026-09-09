@@ -6262,3 +6262,53 @@ demasiado a una comprobación que no detecta, y confundirlos hace dar por valida
 vacua — que es exactamente lo que este proyecto lleva toda la revisión intentando no hacer.
 
 **Auditoría de afirmaciones:** 14 predicados, 0 que no se cumplen.
+
+---
+
+## §F135 — El documento de decisiones decía «siete» cuando tenía diecinueve, y el que enseña a detectarlo lo repetía
+
+**Fecha:** 2026-09-09 · **Origen:** el protocolo de seguimiento apunta a `TODO-INFORME-FINAL.md §10`
+para las decisiones pendientes, y nadie había comprobado que esa sección estuviera al día
+
+Dos cifras desfasadas, y la peor está en la fuente:
+
+| Documento | Decía | Es |
+|:---|---:|---:|
+| `DECISIONES-PENDIENTES-20260908.md`, su propio encabezado | «Son **siete**» | **19** |
+| `TODO-INFORME-FINAL.md §10`, la revisión del 2026-09-08 | «las **siete** decisiones del autor» | **19** |
+
+La segunda importa más de lo que parece: **el protocolo de seguimiento manda mirar ahí**, de modo que
+cada informe de avance que he entregado señalaba una lista de siete cuando había diecinueve, y entre
+las doce que faltaban está la **19**, que es la más urgente de todas.
+
+**Y `TODO-INFORME-FINAL.md` contiene, dos párrafos más abajo, la lección sobre este defecto exacto**
+y la orden que lo detecta:
+
+```sh
+git log $(git log -1 --format=%H -- <documento>)..HEAD -- <ruta-que-describe>
+```
+
+Aplicada hoy a los documentos de estado: `CURRENT-TASKS.md` **2** commits por detrás,
+`TODO-INFORME-FINAL.md` **8**, `ESTADO-RECORRIDA` **5**, `DECISIONES-PENDIENTES` **0**. El documento
+que enseña a medir el desfase era el más desfasado de los cuatro.
+
+**Corregido, y de dos formas distintas según lo que sea el número.** En
+`DECISIONES-PENDIENTES-20260908.md` el recuento **es** contenido del documento, así que se declara
+—19, con el desglose de que 3 llevan estado en el título y **16 siguen abiertas**— y se ata: el
+**predicado 15** de la auditoría comprueba que el número declarado coincide con los encabezados
+`## N.` que hay debajo y que la numeración es contigua desde 1. En `TODO-INFORME-FINAL.md` el número
+era una **copia**, así que se retira y se apunta al documento que lo lleva al día, por la regla de
+[§F134](#f134).
+
+**Y el predicado dice qué hacer si no cuadra**, porque es la parte que se puede equivocar:
+**corregir el encabezado, no borrar decisiones**. La política del proyecto es aditiva y ya hubo un
+incidente —el de la Tabla 2 que `CLAUDE.md` narra— en que un conteo que no cuadraba estuvo a punto de
+resolverse borrando datos.
+
+**De paso, actualizada la entrada de la propagación al `.docx`**, que decía que la lista completa de
+lo que falta está en un documento de 2026-09-08. Ya no depende de que nadie recuerde esa lista: las
+comprobaciones **51 a 54** comparan prosa, tablas, bibliografía, encabezados y figuras entre la
+fuente y los tres entregables, de modo que **el inventario lo produce la herramienta** y cualquier
+divergencia nueva corta el commit.
+
+**Auditoría de afirmaciones:** 15 predicados, 0 que no se cumplen.

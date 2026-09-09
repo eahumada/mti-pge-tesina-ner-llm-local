@@ -877,11 +877,19 @@ concreta que lo acredita.
 - **§3.4, propagar las correcciones del `.md` a los tres `.docx`.** Es el pendiente vivo más importante. La
   lista completa de qué falta está en `PROPAGACION-PENDIENTE-DOCX-20260908.md`, **incluida su adenda**, que
   añade cinco cambios posteriores que la lista original no recogía.
+  **Actualización del 2026-09-09:** eso ya no depende de que nadie recuerde la lista. Las comprobaciones
+  **51 a 54** del verificador comparan prosa, tablas, bibliografía, encabezados y figuras entre la fuente y
+  los tres `.docx`, de modo que **el inventario de lo que falta lo produce la herramienta** y cualquier
+  divergencia nueva corta el commit. Lo que falta hoy está declarado a nombre de la **decisión 19**.
 - **§3.4, verificar que el cuerpo sigue dentro de las 25 páginas.** El verificador lo estima en **23,0**,
   pero el recuento fiable exige generar el PDF y contar: el metadato de páginas del `.docx` no sirve, por la
   razón que explica el documento de propagación.
 - **§7, las tareas de maquetación asignadas a Claude Desktop**, que dependen de lo anterior.
-- Las **siete decisiones del autor** de `DECISIONES-PENDIENTES-20260908.md`, que ningún agente puede tomar.
+- **Las decisiones del autor** de `DECISIONES-PENDIENTES-20260908.md`, que ningún agente puede tomar.
+  **Aquí decía «las siete» y el 2026-09-09 eran diecinueve**; ese documento lleva el recuento al día y su
+  encabezado lo declara, de modo que la cifra no se copia aquí. La más urgente es la **19**: al entregable
+  le falta una subsección entera de §5 —encabezado, cinco párrafos y la Tabla 20—, más las dos figuras.
+  Es la misma lección que este documento explica dos párrafos más abajo, cometida en él.
 
 ### Lo que enseña este desfase
 
