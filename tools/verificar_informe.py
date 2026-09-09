@@ -303,6 +303,10 @@ def c_ninguna_comprobacion_huerfana(s):
     Se comprueba sobre la **fuente** del propio fichero, que es la unica forma de ver una funcion
     que nunca se llama. Y se declara el recuento, para que la comprobacion no pueda pasar mirando
     cero funciones.
+
+    **Solo vigila una direccion**, y a proposito. El caso inverso —registrada y no definida— no
+    necesita comprobacion: levanta un `NameError` en la linea del `ejecutar` y aborta el
+    verificador con salida 1. Python lo detecta antes y de forma mas terminante.
     """
     ruta = os.path.abspath(__file__)
     try:
@@ -327,11 +331,12 @@ def c_ninguna_comprobacion_huerfana(s):
                       'el orquestador o retirarlas; una comprobacion que no corre es '
                       'indistinguible de una que no existe'
                       % (len(huerfanas), ', '.join(huerfanas)))
-    # y al reves: registrada pero no definida seria un NameError en ejecucion, no aqui
-    fantasmas = sorted(registradas - definidas)
-    if fantasmas:
-        fallos.append('%d comprobacion(es) registrada(s) y no definida(s): %s'
-                      % (len(fantasmas), ', '.join(fantasmas)))
+    # El caso inverso —registrada y no definida— NO se comprueba aqui, y la primera version si lo
+    # intentaba. Es codigo vacuo: `ejecutar(c_inexistente, s)` levanta un NameError en la propia
+    # linea, de modo que el verificador aborta con salida 1 antes de que esta comprobacion pueda
+    # opinar. Comprobado el 2026-09-09 mutandolo: sale un traceback, no un fallo. Python lo detecta
+    # antes y de forma mas terminante que cualquier rama que se escriba aqui, y una rama que no
+    # puede dispararse es peor que no tenerla: se lee como cobertura y no cubre nada.
     check('ninguna comprobacion queda sin ejecutarse', len(definidas), fallos,
           '%d definidas · %d por el orquestador · %d invocadas aparte (%s)'
           % (len(definidas), len(registradas), len(directas),

@@ -1099,3 +1099,25 @@ versión de `HEAD`», que es una operación destructiva sobre todo lo que haya e
 mutación hay que restaurar desde **una copia hecha inmediatamente antes de mutar** — que es lo que hice con
 los `.docx`, con el corpus y con el Markdown durante todo el día, y lo que olvidé precisamente en el fichero
 donde acababa de escribir.
+
+## §L68 — Una rama que no puede dispararse se lee como cobertura y no cubre nada
+
+La comprobación que detecta comprobaciones huérfanas llevaba, en su primera versión, una segunda mitad para
+el caso inverso: una función **registrada y no definida**. Probada por mutación, no produjo ningún fallo —
+`ejecutar(c_inexistente, s)` levanta un `NameError` en esa misma línea y **aborta el verificador con salida
+1** antes de que la comprobación pueda opinar.
+
+Es decir: la rama era **inalcanzable**. No estaba mal escrita; no podía ejecutarse nunca.
+
+**La regla:** antes de escribir una rama defensiva, hay que preguntarse si el caso que cubre puede llegar
+hasta ella. Si el lenguaje, el sistema o una capa anterior ya lo interceptan, la rama no añade proteccion —
+añade la **apariencia** de protección, que es peor, porque quien lea el código contará una cobertura que no
+existe. Aquí Python detecta el caso antes y de forma más terminante que cualquier comprobación propia.
+
+**Cómo se descubrió:** por mutación, y solo porque la mutación **no produjo salida**. Un fallo que no
+aparece es tan informativo como uno que sí, y la tentación es darlo por «no aplicable» y seguir. Conviene
+mirar por qué no apareció: aquí la respuesta era que el programa había muerto antes.
+
+**Corolario, que enlaza con §L66:** una comprobación puede fallar de tres maneras y hay que distinguirlas —
+porque el documento está mal, porque su detector está roto, o porque el caso **nunca llega**. La tercera no
+se arregla mejorando la comprobación; se arregla **retirándola** y diciendo quién cubre ese caso.
