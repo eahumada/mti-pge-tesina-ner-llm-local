@@ -256,6 +256,32 @@ tres filas y dejar la tercera con datos de otra corrida sería peor que no tocar
 
 ---
 
+## 11. Cómo se reformula la tesis central — *la decisión de fondo*
+
+`FINDINGS §F86` deja establecido que la proporcionalidad inversa entre capacidad y beneficio del RAG **no se
+sostiene sobre el corpus corregido**: Spearman cae de −0,5165 a **−0,0879 (p = 0,7752)**, el Pearson que queda
+**descansa en un solo punto** —sin `nemotron-mini:4b` es +0,0120 con p = 0,971— y los cinco modelos de mayor
+capacidad tienen **todos** mejora positiva, lo que desmiente la frase literal del informe.
+
+`INVENTARIO-AFECTADO-POR-F86-20260909.md` localiza los cuatro pasajes que hay que tocar y, tan importante como
+eso, los que **no** hay que tocar.
+
+| Opción | Qué implica |
+|:---|:---|
+| **a) Reformular a lo que los datos sostienen** | «Dos modelos pequeños se benefician de forma significativa, el resto apenas se mueve y ninguno de los grandes empeora.» Más modesto, verdadero y defendible. Exige reescribir §5.3.1, §6, el resumen y el abstract |
+| **b) Publicar ambas mediciones** | Presentar la relación como dependiente del corpus: fuerte en el defectuoso, ausente en el corregido. Es honesto y da material de discusión, pero **alarga** un informe que ya va por 23 de 25 páginas |
+| **c) Mantener la tesis publicada** | **No procede.** Los datos que la sostenían son los del corpus con las localizaciones sin anotar |
+
+**Recomendación: (a).** Y una observación que conviene tener presente: la conclusión resultante **es más
+fuerte de lo que parece**. Que la recuperación aporte de forma significativa a los modelos pequeños y no
+perjudique a los grandes es exactamente lo que justifica la arquitectura en dos niveles del capítulo 6.
+El argumento práctico del trabajo no depende de la forma funcional que se cae.
+
+**Antes de escribir nada hay que esperar a `§F85`**: el punto que más pesa en el análisis es el que arrastra
+los diecisiete ceros del `TypeError`.
+
+---
+
 ## Y un aviso que todavía no es decisión
 
 Con tres de los trece modelos rehechos, el efecto del KB RAG **cambia de signo en los dos de 31B**: de −0,53
