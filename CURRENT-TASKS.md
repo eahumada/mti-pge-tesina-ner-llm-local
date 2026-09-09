@@ -74,20 +74,30 @@ Para **cada tarea** que ejecutes:
 - **Nota:** los `detailed_results.json` legacy están en `.gitignore` → corregidos en local, no versionados.
 - **ANOVA:** no requiere recálculo; los valores no se movieron.
 
-### 1.4 ▶️ EN CURSO — Revisión del informe pedida por el profesor guía (2026-09-07)
+### 1.4 ✅ COMPLETADA (encabezado corregido 2026-09-09; era: ▶️ EN CURSO) — Revisión del informe pedida por el profesor guía (2026-09-07)
 
-> **Lo que queda cambió por completo el 2026-09-09, y esta entrada era del día 7.** Lo de abajo describe la
-> respuesta a los cuatro reparos del profesor, que sigue siendo correcta. Pero la re-corrida completa
-> **desmiente la tesis central tal como está escrita** (`FINDINGS §F86`), de modo que a esta tarea se le
-> añade reescribir **§5.3.1, §6, el resumen y el abstract**, con el detalle en
+> **Corregido el encabezado, no el cuerpo.** La nota de abajo, del 2026-09-09, dejaba pendiente reescribir
+> §5.3.1, §6, el resumen y el abstract «a la espera de `§F85`», con dos restricciones de espacio. Las cuatro
+> piezas están hoy reescritas y verificadas: el resumen dice **81,47 %** (corpus periodístico) y **90,16 %**
+> (corpus del dominio AML/KYC), §6 dice «la soberanía cuesta **menos de un punto**» (82,13 % frente a
+> 81,47 %), y las conclusiones 1, 3 y 6 (§7.1) citan las mismas cifras. `§F85` (el `TypeError` de
+> `nemotron-mini`) está resuelto, y su arreglo es lo que trajo el consolidado adoptado en la decisión 1
+> (`ANALISIS_CONJUNTO_20260909_FIX`, `FINDINGS §F154`/`§F155`). Ejecutado y verificado en `§1.276`-`§1.282` de
+> este mismo documento; `tools/verificar_informe.py` en 0 fallos nuevos. Mismo defecto que `§1.139`/`§1.278`:
+> un encabezado que sigue anunciando un trabajo que el propio texto ya completó.
+
+> **Nota original (2026-09-09), conservada.** Lo que sigue describía el estado antes de la decisión 1: Lo de
+> abajo describe la respuesta a los cuatro reparos del profesor, que sigue siendo correcta. Pero la
+> re-corrida completa **desmentía la tesis central tal como estaba escrita** (`FINDINGS §F86`), de modo que a
+> esta tarea se le añadía reescribir **§5.3.1, §6, el resumen y el abstract**, con el detalle en
 > `INVENTARIO-AFECTADO-POR-F86-20260909.md` y la decisión de fondo en la **11**.
 >
 > Dos restricciones medidas hoy, para que nadie las descubra a mitad: el resumen está en **exactamente 200
-> palabras** —el tope— y el abstract en 189, de modo que la corrección **no puede añadir texto en español**;
-> y el cuerpo va por **23,0 de 25 páginas**.
+> palabras** —el tope— y el abstract en 189, de modo que la corrección **no podía añadir texto en español**;
+> y el cuerpo iba por **23,0 de 25 páginas**.
 >
-> Y hay que **esperar a `§F85`**: el punto que más pesa en el análisis arrastra diecisiete ceros de un
-> `TypeError` y sus cifras van a moverse.
+> Y había que **esperar a `§F85`**: el punto que más pesaba en el análisis arrastraba diecisiete ceros de un
+> `TypeError` y sus cifras iban a moverse.
 - **Origen:** correo del profesor guía con cuatro reparos: bloques en blanco y saltos de página, ficha del
   estudiante en portada, poco desarrollo general y marco conceptual pobre sin comparación de alternativas.
 - **Hecho en el `.md` canónico:** cabecera conforme a plantilla (ficha fuera) · 12 separadores eliminados ·
@@ -2128,3 +2138,4 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.280: **el mojibake también estaba corregido en la re-corrida, y §5.3.1 lo describía como vigente (§F157).** `tools/analisis_mojibake.py` contra el corpus de hoy da **0 de 120 afectados**; el propio script avisa de que su tabla «no se reproduce». Confirmado por el historial: el commit `eb97af0`, anterior a la re-corrida, ya declaraba «afectados 0/120» — el mismo paso de preparación que corrigió Locations (`§F53`/`§F154`). Corregido el párrafo de §5.3.1 a pasado, con el Anexo H conservado como registro histórico. **Pendiente, sin tocar a propósito:** la conclusión 7 de §7.1 y el punto 7 de trabajo futuro también describen el mojibake como vigente, pero Claude Desktop está reconstruyendo los tres `.docx` ahora mismo y seguir editando el `.md` a mitad de su render arriesga una foto a medio tomar. Se deja para la siguiente pasada |
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.281: **«en el dominio» no se entendía sin contexto en el resumen y el abstract (§F158).** El autor lo señaló dos veces. Corregido en los dos, en sincronía, nombrando el corpus del dominio AML/KYC en lugar de la etiqueta interna. Ajustado dos veces para no exceder las 200 palabras del resumen sin perder la aclaración (quedó en exactamente 200), y reescrito una vez más para conservar «120 artículos, 105 en español» como frase contigua, que es lo que exige la comprobación del idioma del corpus. **Concurrencia real detectada y manejada con cuidado:** Claude Desktop está reconstruyendo los tres `.docx` con un renderizador propio (`doc/versions/informe_final/_tools/render.py`) desde hace un rato; retiradas 24 declaraciones de `FALLOS_DECLARADOS` que su trabajo ya resolvió (§1.279), esta vez leyendo el fichero en vivo en lugar de restaurar un respaldo, y declaradas dos discrepancias que siguen abiertas en su propio trabajo (resaltes 13 vs 6 declarado, guiones 91 vs 89) sin aceptarlas como resueltas. Verificador: 56 comprobaciones, 0 fallos nuevos. **Workflow lanzado a petición del autor** (`wt2cxfrny`/`wf_800c741d-847`) para un barrido exhaustivo de todo el cuerpo, figuras y conclusiones, buscando más pasajes que describan los defectos de Locations/mojibake —ya corregidos antes de la re-corrida adoptada— como si siguieran vigentes; en curso |
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.282: **seis pasajes más describían los defectos ya corregidos como vigentes, y faltaba el «Corpus 3» (§F159).** El autor encontró la nota de la Figura 1 diciendo que la re-corrida «hará» algo que ya había pasado. Workflow (`wf_800c741d-847`, 9 agentes, 3 buscadores + 6 verificadores con sesgo a refutar) confirmó **6 de 6** pasajes, ninguno descartado: dos en §3.3 (la cifra del 66,0 % atada a «la Tabla 7» en presente, y la frase de cierre en futuro), la leyenda de la Figura 1, la conclusión 7 de §7.1 sin la salvedad de corregido que sí lleva la 6 vecina, y los puntos 7 y 8 de §7.2 proponiendo como «trabajo futuro» y «Prioridad Alta» exactamente lo que ya se ejecutó. **Los seis corregidos de forma aditiva**: todas las cifras se conservan, cambia el tiempo verbal a pasado y se añade la referencia a §5.3.1 como resultado vigente; los puntos 7/8 de §7.2 pasan a declarar «ya realizada(o)» en lugar de pendiente. **Un hallazgo del workflow era falso** —«el directorio de COMPOSICION_FP_20260908 no existe»— y lo comprobé: sí existe, y su propio `consolidado` declara el publicado, confirmando la lectura correcta por otra vía; error de directorio de trabajo del subagente, no del repositorio. Y aparte, el autor señaló que §4.1 promete «tres corpus complementarios» y solo etiqueta dos: añadido un «Corpus 3 —» breve tras el Corpus 2, remitiendo a §4.1.2 para el detalle. Verificado: 56 comprobaciones, 0 fallos nuevos, 15/15 afirmaciones, cuerpo dentro de 25 páginas |
+| 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.283: **el «Corpus 3» quedaba etiquetado pero sin decir qué es `Locations` ni por qué importa, y el encabezado de la §1.4 seguía anunciando trabajo ya terminado.** (a) El autor pidió, sobre la corrección del §1.282, que se explique con claridad la categoría `Locations` donde se describe el corpus, no solo en §3.3 (que documenta el defecto histórico). Añadido un párrafo nuevo al cierre de `#### 4.1.2`, con la definición (lugares geográficos relevantes para la jurisdicción de un caso de cumplimiento) y remisión a §3.3 para el defecto y su corrección, sin duplicar esa narrativa. Verificado (0 fallos nuevos, dentro de 25 páginas) y añadida la sección **0.quater** (Pieza 25) al encargo de Claude Desktop; commit `22c5754`, empujado a `origin/main`. (b) Monitoreo del equipo remoto: sin commits nuevos (`git rev-list --count HEAD..origin/main` = 0). Revisando pendientes propios encontré la §1.4 con encabezado «▶️ EN CURSO» describiendo, en una nota del propio 2026-09-09, que faltaba reescribir §5.3.1/§6/resumen/abstract «a la espera de `§F85`» — trabajo que la decisión 1 (`§1.276`-`§1.282`) ya completó y que el `.md` de hoy confirma (81,47 %/90,16 %/82,13 % y «menos de un punto» presentes en resumen, §6 y conclusiones 1/3/6). Mismo defecto que `§1.139`/`§1.278`. Encabezado corregido a «✅ COMPLETADA», nota original conservada íntegra debajo con su propia marca de fecha |
