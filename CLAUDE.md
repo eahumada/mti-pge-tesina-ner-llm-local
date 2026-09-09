@@ -141,6 +141,13 @@ eso es cuestión de suerte y no de método.
 falla —por ejemplo, porque la rama no tiene *upstream*— deja trabajando sobre una copia vieja sin
 avisar. Comprobación barata: `git rev-list --count HEAD..origin/main` tiene que dar cero.
 
+**Todo esto lo comprueba `tools/estado_ramas.py`**, y conviene ejecutarlo en lugar de recordarlo:
+verifica que `main` está al día, que toda rama que no sea `backup/*` está declarada en el
+inventario, que ninguna de trabajo pasa de dos días, cuáles son retirables —**por contenido y no
+por SHA**— y que el respaldo que atestigua no se ha movido. Devuelve 0 si la política se cumple. Se
+escribió el mismo día que la política, porque una regla que solo vive en un documento se incumple
+sin que nada avise, y esta ya se había incumplido antes de escribirse.
+
 **Comprobar que una rama no se lleva nada** antes de retirarla, y comprobarlo por **contenido** y no
 por SHA: `git cherry main <rama>` marca con `-` los commits cuyo contenido ya está aplicado en
 `main` aunque su identificador sea otro. Un `git rev-list --count main..<rama>` distinto de cero no

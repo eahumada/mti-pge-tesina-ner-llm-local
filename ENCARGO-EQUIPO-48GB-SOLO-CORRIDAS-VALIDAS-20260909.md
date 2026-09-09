@@ -184,7 +184,10 @@ su contenido ya estaba aplicado.
 
 Las ramas `backup/*` son la excepción: atestiguan un estado entregado y no se tocan.
 
-Está escrito en `CLAUDE.md`, sección «Ramas: se trabaja en `main`».
+Está escrito en `CLAUDE.md`, sección «Ramas: se trabaja en `main`», y **lo comprueba**
+`python3 tools/estado_ramas.py`: `main` al día, ramas declaradas, ninguna de trabajo por encima
+de dos días, cuáles son retirables y que el respaldo que atestigua no se haya movido. Devuelve 0
+si se cumple. Ejecutadlo antes de dar por cerrada una tanda, que os ahorra la conversación.
 
 ---
 
