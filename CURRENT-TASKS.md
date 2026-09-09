@@ -1749,3 +1749,27 @@ qué había antes. Y comprobar después que el control del consolidado sigue en 
 | 2026-09-10 03:1x | Claude Code (equipo principal) | ✅ §1.238: **§F108 — `failed = 0` no acredita una corrida limpia, demostrado en la corrida que el estudio publica**. Aplicadas las cinco verificaciones a **las 17 corridas con datos**, no solo a los tres puntos habituales: **cero violaciones aritméticas en todas** y diez grupos con señales que pedían el cruce. **La demostración:** `nemotron_rerun_n120_REMOTO` —**la que el consolidado usa**— declara `failed=0` y tiene **7 registros con latencia 0 y 0 tokens/s**, tres de ellos con pérdida total. Una comprobación que solo mirara el criterio 1 la daría por limpia. Y la firma del fallo **cambió entre corridas** —`failed=8`, luego 7, luego 0— de modo que **el mismo defecto se volvió invisible al indicador barato**: `failed = 0` es la ausencia de una etiqueta, no la de un fallo. **Y verificado que el consolidado no bebe de las corridas malas:** el barrido encontró `gemma4:31b-cloud_baseline` con **99 de 120 fallidos** en `benchmark_balanced_…_173036` y `gpt-oss:20b_kb_rag` con 49 *fallback* de los que solo 4 rescatan en `excluidos_n120_REMOTO`. Ninguna alimenta las cifras publicadas, y **no se dio por supuesto**: tres grupos están en dos fuentes y se comprobó cuál gana **comparando medias**, no leyendo etiquetas (§F81) — gana la buena en los tres, con 22,59 vs 21,30, 55,67 vs 34,19 y 56,18 vs 27,31 |
 | 2026-09-10 03:5x | Claude Code (equipo principal) | ⚠️ §1.239: **§F108.bis — mi diagnóstico de los siete registros era falso, y el informe ya traía la explicación correcta**. Diagnostiqué las siete filas con latencia 0 de `nemotron-mini:4b_baseline` como **«rechazo de infraestructura»** aplicando el criterio 5. **Era falso**: tienen `parse_method = direct_json` y **6 de 7 traen `recall > 0`** — hay contenido, la ejecución no se rechazó. Y el informe **ya lo explicaba** en la salvedad de §5.3.1: «se re-extrajeron fuera del arnés de lotes; sus valores son reales, pero su telemetría no existe». **Dos errores más del mismo diagnóstico:** dije que las 7 de latencia 0 «son las mismas 7» que las de `fallback` —son **disjuntas**, 14 registros distintos— y atribuí «3 de pérdida total» al grupo equivocado (esas 3 son del `fallback`; en latencia 0 hay **una**). **Lo escribí en cuatro sitios** —la comprobación, §F108, la alerta al equipo y el informe de avance— y los cuatro quedan corregidos, con la alerta **tachada y no retirada**, porque borrarla escondería el error. **La lección, la más incómoda de la sesión:** apliqué una regla heredada **sin comprobar su premisa**, y sobre un documento que traía la explicación correcta — bastaba mirar la columna `recall` de la misma fila o leer §5.3.1. **Una regla heredada es una hipótesis con buena reputación**, y el sitio donde comprobar su premisa suele ser el propio documento que se audita |
 | 2026-09-10 03:5x | Claude Code (equipo principal) | ✅ §1.240: **la comprobación rehecha, y ahora sí encuentra algo real**. En lugar de etiquetar rechazos falsos, cuenta las filas con latencia 0 y 0 tokens **en el consolidado** —no en las fuentes, porque varias aportan grupos que **pierden la fusión** y contarlas daba 15 donde el informe declara 7—, las separa en **con contenido** (telemetría ausente, declarada) y **sin contenido** (pérdida real), y exige que el total **coincida con el numeral que el informe declara**. Resultado: **7 en el consolidado y 7 declaradas**, cuadra. Y queda un residuo real: de las siete, **una** (`real_mixed_70`) tiene `recall` **y** `precision` a cero, de modo que la salvedad «sus valores son reales» es imprecisa para ella — sus valores son cero y no consta si son cero legítimos o cero por pérdida. **Declarado con su dueño** |
+
+#### §3.bis.19 — Cierre del equipo remoto de 48 GB: rama e instrucciones
+
+**2026-09-10.** Respondidas las dos preguntas del autor y entregadas en
+[`ENCARGO-CIERRE-EQUIPO-48GB-20260910.md`](./ENCARGO-CIERRE-EQUIPO-48GB-20260910.md).
+
+**La rama `fix/recorrida-correcciones-20260908` se puede borrar.** Verificado de tres formas: **0** commits
+existen solo en ella, su punta `0ca0901` es **antecesora de `origin/main`** según `merge-base --is-ancestor`,
+y `main` tiene 114 commits que ella no tiene. No hay copias locales. **La rama a la que volver es `main`**;
+`sesion/revision-final-20260908` y `backup/revision-final-20260908` apuntan al mismo commit y son la sesión
+de revisión y su respaldo, no ramas de trabajo.
+
+**Queda una sola re-ejecución:** la línea base de `nemotron-mini:4b` sobre N=120, tras arreglar el
+`TypeError`. Su `_kb_rag` no tiene ni una fila fallida y no hay que repetirla.
+
+**Y al preparar el encargo apareció un error que habría mandado al equipo a un fichero inexistente:**
+`FINDINGS §F85` atribuía el `TypeError` a **`providers/ollama.py`**, y ese fichero **no existe** —
+`src/providers/` contiene `__init__.py`, `anthropic_provider.py`, `base.py` y `factory.py`—. El sitio real es
+**`src/llm_runner.py:167`**, `for k, v in parsed.items()`, dentro de `_normalize_keys(parsed: dict)`, cuya
+firma **declara** `dict` y no comprueba nada. §F85 corregido.
+
+**Nota de proceso:** la corrección de §F85 **falló en el primer intento** por saltos de línea en la cadena
+buscada, y el encargo ya afirmaba que estaba hecha. Se aplicó y verificó **antes** de comprometer, que es lo
+que §L70 exige. Segunda vez que este fallo aparece hoy.

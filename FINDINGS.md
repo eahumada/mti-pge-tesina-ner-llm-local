@@ -3190,8 +3190,14 @@ Attempt 2/3 failed ...                                                          
 Attempt 3/3 failed ...                                                                    (x18)
 ```
 
-Es un `TypeError` en `providers/ollama.py`: el modelo devuelve una lista donde el código espera un
-diccionario y llama a `.items()`. Veintidós registros lo encontraron, cuatro se recuperaron al reintentar y
+Es un `TypeError` en **`src/llm_runner.py:167`**, dentro de `_normalize_keys(parsed: dict)`: el modelo
+devuelve una lista donde el código espera un diccionario y llama a `.items()`.
+
+> **Corrección del 2026-09-10.** Este párrafo atribuía el fallo a `providers/ollama.py`, y **ese fichero no
+> existe**: `src/providers/` contiene `__init__.py`, `anthropic_provider.py`, `base.py` y `factory.py`. El
+> sitio real es `src/llm_runner.py:167` —`for k, v in parsed.items()`—, dentro de una función cuya firma
+> **declara** `parsed: dict` y no comprueba nada. Se detectó al preparar el encargo de cierre del equipo
+> remoto: la instrucción habría mandado a buscar en un fichero inexistente. Veintidós registros lo encontraron, cuatro se recuperaron al reintentar y
 dieciocho agotaron los tres intentos. **La quinta verificación del protocolo lo habría clasificado mal**: la
 firma —latencia 0 y cero tokens— es la del rechazo de infraestructura, y no lo es; hay que abrir el registro
 para verlo.
