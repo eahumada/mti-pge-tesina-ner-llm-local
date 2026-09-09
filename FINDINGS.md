@@ -7841,3 +7841,70 @@ la primera pasada de la reescritura introdujo, sin querer, saltos de línea manu
 frases (`"...de Levene\nsí detecta..."`), que el regex no salva porque exige un espacio literal y no
 `\s+`. Ambos se corrigieron desplazando el salto de línea fuera de la frase exacta que cada comprobación
 matchea. 56 comprobaciones, 0 fallos nuevos tras la corrección final.
+
+## §F162 — El cuerpo del informe no menciona fechas de calendario del proceso; los anexos sí, porque son bitácora
+
+**Fecha:** 2026-09-09 · **Origen:** el autor pidió, sobre el pasaje de §3.3 que ya se había verificado
+correcto, que el cuerpo del informe no mencione fechas de calendario del proceso de trabajo
+
+El autor había preguntado si el pasaje de §3.3 sobre el defecto de `Locations` era un residuo de la
+generación `.md → .docx → PDF`. La investigación confirmó que no lo era: las tres capas coincidían,
+correctamente, en texto ya corregido. Pero el autor añadió una regla nueva, más amplia: **el cuerpo
+del informe (capítulos 1 a 7) no debe mencionar en qué fecha de calendario ocurrió cada corrección**,
+aunque la corrección misma se declare. Es una extensión natural de `§F160`/`§F161`: si el estudio
+presenta una sola cifra vigente por benchmark, tampoco tiene sentido anclar esa cifra a un día concreto
+del proceso interno — el lector de una tesis no necesita saber que algo se corrigió «el 8 de
+septiembre», solo que está corregido.
+
+Consultado explícitamente si la regla alcanzaba también a los Anexos H e I (que `CLAUDE.md` establece
+como registro histórico deliberado, con fechas que distinguen corridas), el autor confirmó que **no**:
+la regla es solo para el cuerpo. Los anexos siguen siendo bitácora fechada, que es su propósito
+declarado.
+
+**Barrido del cuerpo (capítulos 1 a 7, antes de `## Anexos`)**: ocho menciones de fecha de calendario,
+en §3.3 (dos), §4.1.2 (dos), §5.3 (una, «julio de 2026» sin día), §5.3.1 (una) y §7.1 (dos, puntos 7 y
+8). Todas reescritas para conservar el significado sin la fecha —«el defecto está corregido en el
+corpus» en vez de «corregido... desde el 8 de septiembre de 2026»; «(commit `5ff38f5`...)» en vez de
+«(1 de septiembre de 2026, commit `5ff38f5`...)»—, sin perder ninguna cifra ni la secuencia lógica
+(qué corrida sustituye a cuál y por qué). **Una fecha se conservó a propósito**: la cita bibliográfica
+[19] («instantánea del 27 de julio de 2026» de la lista SDN de OFAC) no es una fecha de proceso, es la
+fecha de una instantánea de una fuente externa que cambia con el tiempo — información necesaria para
+que un lector pueda verificar qué versión del dato se citó, exigida por la propia norma de citación
+que el informe sigue (IEEE). Retirarla habría dañado la trazabilidad de la cita, no la habría limpiado.
+
+Verificado: 56 comprobaciones, 0 fallos nuevos, dentro de 25 páginas. Ninguna de las ocho reescrituras
+tocó una frase que algún regex del verificador matcheara literalmente, así que no hubo que ajustar
+`tools/verificar_informe.py`.
+
+## §F163 — Retirada total de una anécdota con datos no verificables, a instancia expresa del autor
+
+**Fecha:** 2026-09-09 · **Origen:** el autor, sobre la nota de «particularidad de procedencia» de §5.3
+
+Al revisar el pasaje de §3.3 (`§F162`) apareció, en §5.3, una nota distinta con el mismo patrón de
+fondo: «Una primera ejecución de este experimento reportó para `gemma4:31b` un F1 de 79,03 %... sus
+datos por registro se perdieron por sobrescritura, de modo que no podía recalcularse». La nota
+comparaba esa cifra con la corrida vigente (73,34 %) para argumentar que un defecto de puntuación
+corregido en §4.4 apenas afectaba a este experimento — un uso metodológicamente razonable, pero
+apoyado en un número que **no tiene datos crudos que lo respalden**.
+
+El autor pidió, con calificación explícita de gravedad, retirar **totalmente** cualquier mención a
+datos que no pudieran recalcularse o confirmarse: «solo debe mencionarse datos reales para los cuales
+existe evidencia real». Es una regla distinta de `§F160`/`§F161` (que trata de no imprimir cifras
+superadas cuando sí hay evidencia de ambas) y distinta también de la excepción que ya existe en
+`TODO-INFORME-FINAL.md §10` para las dos filas «aritméticamente imposibles» de `BENCHMARKS.md» (que
+se marcaron NO VERIFICABLES y se conservaron fuera del cuerpo del informe, no se citaron dentro de
+él). Aquí el defecto era más directo: la cifra sin evidencia **sí estaba dentro del cuerpo**.
+
+**Retirado el párrafo completo** (dos frases, con sus dos guiones largos), sin dejar ninguna mención
+de la cifra ni de la corrida perdida. Comprobado antes de retirar que ningún otro pasaje del informe
+cita 79,03 % ni 73,34 % — no había cross-reference que reparar. La conclusión del análisis de
+sensibilidad que sí queda («El resultado no depende, por tanto, de unos pocos textos extremos») no
+dependía de esta nota: es un argumento aparte, sobre longitud de artículo, no sobre convención de
+puntuación.
+
+**Efecto colateral, declarado y no oculto**: el párrafo retirado tenía dos guiones largos, así que el
+recuento del cuerpo bajó de 90 a 88 mientras los tres `.docx` — renderizados por Claude Desktop antes
+de esta corrección — se quedan en 90 hasta la siguiente pasada. Declarado en `FALLOS_DECLARADOS`
+(«guiones largos frente a») y en `RETIRADAS` (para que la comprobación confirme, cuando Claude Desktop
+propague, que la anécdota no sobrevive en ningún entregable). Verificado: 56 comprobaciones, 0 fallos
+nuevos tras declarar, dentro de 25 páginas.

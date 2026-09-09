@@ -44,6 +44,13 @@ no como aceptadas. Detalle en `FINDINGS §F160`/`§F161`, `LEARNING §L78`/`§L7
 **La pieza 9 de más abajo queda superada por la 27: no la apliques tal como está escrita.**
 Describía un párrafo de `gpt-oss:20b` que ya no existe en esa forma; la 27 trae el texto correcto.
 
+**Ampliado una sexta vez, más tarde ese mismo día: sin fechas de calendario en el cuerpo, y una
+anécdota retirada por completo.** Piezas 29 y 30 en la nueva sección **0.sexies**: el autor pidió
+que el cuerpo (capítulos 1-7, no los Anexos) no mencione fechas de calendario del proceso interno
+—ocho frases con «el 8 de septiembre de 2026» y similares, reescritas sin la fecha—, y que se
+retire por completo, no se recorte, la nota de §5.3 sobre un F1 de 79,03 % cuyos datos ya no
+existen para recalcularlo. Ninguna cifra de resultado cambia. Detalle en `FINDINGS §F162`/`§F163`.
+
 ---
 
 ## 0. Lo primero, y ahorra la mitad del trabajo
@@ -285,11 +292,41 @@ del original (F, p, Tukey, Levene, Friedman, Spearman, Pearson, el control de re
 `nemotron-mini:4b`). **Sustituye el párrafo entero por el del Markdown**, no apliques solo el
 cambio de cifras sobre tu versión: cambió también la estructura de frases.
 
-> **Cómo saber si ya te afecta.** `tools/verificar_informe.py` compara los tres `.docx` contra las
-> frases retiradas de esta ronda; hoy (2026-09-09) confirma que los tres **todavía** tienen «Nueve
-> de los trece modelos mejoran», «−0,54 y −0,18 puntos en los dos de 31B», y dos de los tres
-> conservan además la leyenda vieja de la Tabla 20. Están declaradas en `FALLOS_DECLARADOS` como
-> pendientes tuyas, no como aceptadas — corresponde a esta ronda de propagación cerrarlas.
+> **Actualización: ya se propagó.** La nota de arriba avisaba que los tres `.docx` todavía tenían
+> el texto viejo; en tu segunda pasada (§2.25) ya no lo tienen — comprobado con
+> `tools/verificar_informe.py`, que confirmó que las siete frases retiradas de esta ronda (las tres
+> de aquí más las de sobriedad tipográfica) dejaron de aparecer en los tres entregables. Retiradas
+> de `FALLOS_DECLARADOS`. Si aún no habías llegado a esta pieza al leer esto, ya no hace falta:
+> compruébalo con el verificador antes de repetir trabajo.
+
+---
+
+## 0.sexies Sin fechas de calendario en el cuerpo, y una anécdota retirada por completo
+
+Dos pedidos del autor, seguidos, sobre pasajes que ya habías rendereado en tu segunda pasada.
+**Ninguno cambia una cifra de resultado**; los dos son prosa.
+
+### Pieza 29 — Ocho fechas de calendario retiradas del cuerpo (capítulos 1-7)
+
+El autor pidió que el cuerpo del informe no mencione en qué fecha del proceso interno ocurrió cada
+corrección, aunque la corrección misma se siga declarando. Afectó a §3.3 (dos frases), §4.1.2 (dos),
+§5.3 (una, ahora también retirada entera por la pieza 30), §5.3.1 (una) y §7.1 (dos, puntos 7 y 8).
+Ningún cambio de cifra, solo se quitó «el 8 de septiembre de 2026» / «(1 de septiembre de 2026,
+commit...)» y variantes, dejando el resto de cada frase intacto. **Los Anexos H e I no cambian**: el
+autor confirmó que la regla es solo para el cuerpo, esos anexos siguen siendo bitácora fechada. Copia
+las frases del Markdown, son ediciones puntuales dentro de párrafos existentes, no párrafos nuevos.
+Detalle en `FINDINGS §F162`.
+
+### Pieza 30 — Retirada por completo la nota de «particularidad de procedencia» en §5.3
+
+El párrafo que empezaba «Vale la pena señalar una particularidad de procedencia» (F1 de 79,03 % para
+`gemma4:31b`, de una corrida cuyos datos se perdieron por sobrescritura) se **eliminó entero**, no se
+reescribió: el autor pidió, con calificación explícita de gravedad, no mencionar en el cuerpo ningún
+dato que no tenga evidencia recalculable, ni siquiera como anécdota de robustez metodológica. **Borra
+el párrafo completo** de tu `.docx` (las dos frases, entre «El resultado no depende, por tanto, de
+unos pocos textos extremos.» y el encabezado `#### 5.3.1`); no queda ningún resto suyo en el Markdown
+que copiar. Esto baja el recuento de guiones largos del cuerpo de 90 a 88 — normal, no lo compenses
+añadiendo nada. Detalle en `FINDINGS §F163`.
 
 ---
 

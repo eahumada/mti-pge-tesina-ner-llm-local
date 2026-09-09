@@ -70,6 +70,17 @@ EXCLUIDOS = ['nuextract', 'minimax-m3', 'gemini-3.1-flash-lite', 'q8-64k', 'sonc
 # vivo). Comprobado antes de retirar cada una: el .docx de turno ya no contenia esa frase ni ese
 # recuento. Ver CURRENT-TASKS §1.287/§1.288.
 FALLOS_DECLARADOS = {
+    'guiones largos frente a': ('2026-09-09',
+        'PENDIENTE de propagar a los tres .docx (§F163): el autor pidio retirar totalmente la '
+        'nota de "particularidad de procedencia" en §5.3 (F1 de 79,03% no recalculable, datos '
+        'perdidos por sobrescritura). El parrafo tenia dos guiones largos; al retirarlo el '
+        'Markdown baja de 90 a 88 y los .docx, renderizados antes, se quedan en 90. No aceptado, '
+        'solo declarado para no bloquear ediciones ajenas al render.'),
+    'Vale la pena señalar una particularidad de procedencia': ('2026-09-09',
+        'PENDIENTE de propagar a los tres .docx (§F163): la anecdota completa se retiro del '
+        'Markdown a peticion expresa del autor (dato sin evidencia recalculable); los tres '
+        '.docx, renderizados antes de esta corrección, todavia la conservan. No aceptado, solo '
+        'declarado para no bloquear.'),
     '.rebuild_venv.log': ('2026-09-09',
                           'fichero vacio del commit 880f4f9; decision del autor '
                           '(CURRENT-TASKS §1.103)'),
@@ -1229,6 +1240,11 @@ def c_vacios():
 # el entregable. Es lo unico que protege de que el documento que lee el tribunal afirme algo que el
 # autor ya corrigio. Cada entrada lleva por que se retiro y por que la sustituye.
 RETIRADAS = (
+    ('Vale la pena señalar una particularidad de procedencia',
+     'nota de §5.3 sobre un F1 de 79,03% de una corrida cuyos datos por registro se perdieron '
+     'por sobrescritura y no podian recalcularse. Retirada por completo el 2026-09-09 (§F163): '
+     'el autor pidio no mencionar datos sin evidencia real verificable, aunque sea en una '
+     'anecdota de robustez metodologica'),
     ('re-corrida completa pendiente',
      'la re-corrida se ejecuto el 2026-09-08 y esta completa: 13 corridas __N120, todas con '
      'max_tokens=4096. Declararla pendiente es falso hoy. Retirada el 2026-09-09 (§F160): el '
