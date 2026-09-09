@@ -273,6 +273,111 @@ PDF_ENVIADO = ('doc/versions/enviados/'
 CATEGORIA_SIN_REFERENCIA_SABIDA = 'Locations'
 
 
+CORPUS = 'data/benchmark_balanced_120.json'
+# Palabras funcion exclusivas de cada lengua. No hay biblioteca de deteccion de idioma en el
+# interprete del sistema y no se anade una dependencia por esto: con articulos, preposiciones y
+# auxiliares basta para separar noticias en espanol de noticias en ingles, y el margen que sale
+# —105 frente a 15— no es de los que dependan del umbral.
+PAL_ES = {'que', 'de', 'la', 'el', 'los', 'las', 'del', 'se', 'por', 'para', 'con', 'una', 'como',
+          'pero', 'este', 'esta', 'sus', 'ha', 'han', 'fue', 'anos', 'segun', 'mas', 'tambien',
+          'sobre', 'entre', 'desde'}
+PAL_EN = {'the', 'of', 'and', 'to', 'in', 'that', 'for', 'with', 'was', 'were', 'has', 'have',
+          'been', 'from', 'said', 'which', 'their', 'this', 'these', 'on', 'at', 'by', 'as', 'an',
+          'it', 'be'}
+
+
+def c_corpus_idioma(s):
+    """El idioma del corpus se comprueba, no se supone. Y sus localizaciones, tambien.
+
+    `CLAUDE.md` cierra su seccion de integridad con esto: «El idioma del corpus se comprueba, no se
+    supone. Los dos corpus del dominio de este trabajo resultaron estar integramente en ingles
+    mientras el informe declaraba validacion en espanol (§F54)». Era la ultima regla de esa seccion
+    sin mecanizar.
+
+    El informe lo declara en cinco sitios con cuatro redacciones —«105 de los 120», «Espanol
+    (105/120)», «de los que 105 estan en espanol»—, de modo que un patron unico no vale. Se anclan
+    las dos del encabezado, que son las que un tribunal lee primero, y **en los dos idiomas**: el
+    resumen dice «120 articulos, 105 en espanol» y el abstract «120 articles, 105 in Spanish». Como
+    `CLAUDE.md` exige que digan lo mismo, comprobar los dos vigila tambien esa sincronia.
+
+    Contado el 2026-09-09 sobre el corpus: **105 espanol, 15 ingles, 0 indeterminados**. Coincide.
+
+    De paso se comprueba la correccion del corpus del 2026-09-08: **545 localizaciones en 119 de
+    los 120 registros**, exactamente lo declarado. Es la contraparte de la segunda mitad de
+    `c_firma_categorias`: el corpus **ya** las tiene y las metricas publicadas **son anteriores**,
+    de modo que las dos cifras juntas dicen por que la re-corrida sigue pendiente.
+
+    Guarda de §L66: si las listas de palabras no clasifican casi nada, la comprobacion **dice que
+    su detector esta roto** en lugar de reportar ciento veinte registros indeterminados.
+    """
+    import json as _json
+    ruta = os.path.join(BENCH_DIR, CORPUS)
+    if not os.path.exists(ruta):
+        check('el idioma del corpus se comprueba, no se supone', 0,
+              ['no existe el corpus %s' % CORPUS])
+        return
+    try:
+        with open(ruta, encoding='utf-8') as fh:
+            datos = _json.load(fh)
+    except (ValueError, OSError) as e:
+        check('el idioma del corpus se comprueba, no se supone', 0,
+              ['el corpus no se puede leer: %s' % e])
+        return
+    regs = datos.get('dataset') if isinstance(datos, dict) else datos
+    if not isinstance(regs, list) or not regs:
+        check('el idioma del corpus se comprueba, no se supone', 0,
+              ['el corpus no trae una lista de registros'])
+        return
+    es = en = indet = locs = con_loc = 0
+    for r in regs:
+        txt = ((r.get('title') or '') + ' ' + (r.get('text') or '')).lower()
+        pal = re.findall(r'[a-z\u00e1\u00e9\u00ed\u00f3\u00fa\u00f1\u00fc]+', txt)
+        n_es = sum(1 for x in pal if x in PAL_ES)
+        n_en = sum(1 for x in pal if x in PAL_EN)
+        if n_es == n_en == 0:
+            indet += 1
+        elif n_es > n_en:
+            es += 1
+        else:
+            en += 1
+        L = r.get('locations') or []
+        locs += len(L)
+        con_loc += 1 if L else 0
+    fallos, mirados = [], 0
+    # guarda del detector antes de cualquier veredicto (§L66)
+    mirados += 1
+    if indet > len(regs) // 10:
+        fallos.append('%d de %d registros quedan sin clasificar: las listas de palabras no sirven '
+                      'para este corpus y esta comprobacion daria un veredicto falso'
+                      % (indet, len(regs)))
+        check('el idioma del corpus se comprueba, no se supone', mirados, fallos)
+        return
+    for etiq, patron in (('el resumen', r'(\d+) art\u00edculos, (\d+) en espa\u00f1ol'),
+                         ('el abstract', r'(\d+) articles, (\d+) in Spanish')):
+        mirados += 1
+        m = re.search(patron, s)
+        if m is None:
+            fallos.append('no se encuentra en %s la declaracion «M articulos, N en espanol»: '
+                          'revisar si se reformulo. El corpus da %d en espanol de %d'
+                          % (etiq, es, len(regs)))
+            continue
+        d_tot, d_es = int(m.group(1)), int(m.group(2))
+        if d_tot != len(regs):
+            fallos.append('%s habla de %d articulos y el corpus trae %d'
+                          % (etiq, d_tot, len(regs)))
+        if d_es != es:
+            fallos.append('%s declara %d articulos en espanol y el corpus da %d '
+                          '(%d en ingles, %d sin clasificar). Ver FINDINGS §F54'
+                          % (etiq, d_es, es, en, indet))
+    mirados += 1
+    if locs == 0:
+        fallos.append('el corpus no trae ninguna localizacion: la correccion del 2026-09-08, que '
+                      'anadio 545 en 119 de 120 registros, no esta en este fichero')
+    check('el idioma del corpus se comprueba, no se supone', mirados, fallos,
+          '%d en espanol, %d en ingles, %d sin clasificar · %d localizaciones en %d registros'
+          % (es, en, indet, locs, con_loc))
+
+
 def c_firma_categorias(s):
     """Ninguna categoria NUEVA puede puntuar contra el vacio: `tp + fn = 0` mientras `fp` crece.
 
@@ -2566,6 +2671,7 @@ def main():
     ejecutar(c_higiene, s)
     ejecutar(c_excluidos, s)
     ejecutar(c_sobriedad_docx, s)
+    ejecutar(c_corpus_idioma, s)
     ejecutar(c_firma_categorias, s)
     ejecutar(c_referencias_findings, s)
     ejecutar(c_docx_sano, s)
