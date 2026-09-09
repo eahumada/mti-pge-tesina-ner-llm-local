@@ -160,3 +160,83 @@ nuevo, y esa decisión no es vuestra.
 
 Trabajad sobre **`main`**, que es donde está todo fusionado. `fix/recorrida-correcciones-20260908`
 está **totalmente fusionada** —cero commits que no estén en `main`, y 132 detrás— y podéis borrarla.
+
+---
+
+## 8. Añadido el 2026-09-09 tras verificar vuestra entrega del `RUNS_INDEX`
+
+**Vuestras cinco afirmaciones están confirmadas, una por una.** Los 8 `failed` de
+`benchmark_n120_REMOTO` son **todos** `nemotron-mini:4b_baseline` —y los ocho tienen latencia 0, 0
+tokens y recall 0, o sea rechazo de infraestructura con pérdida total, el defecto de `§F85`
+exacto—; las **39** corridas dan **cero** `failed` en 4 290 filas, cero sin `detailed_results.json`
+y cero filas con F1 > (P + R) / 2; `ANALISIS_CONJUNTO_20260909` está retirado; y el
+`TP+FN = 1098/1500/1034` sale **sobre los dos modos con los 7 contaminados excluidos** —lo comprobé
+mal la primera vez, dividiendo por dos, y la cifra que falla era la mía—.
+
+**Y una cosa que conviene que sepáis, porque afecta a cómo se lee vuestra campaña.** Las 39 corridas
+usan `rag_mode=kb_combined`, incluidas las de N=15 y N=30. Las corridas **publicadas** de esos dos
+corpus usan `entities`. De modo que **las pequeñas de vuestra campaña no son una versión corregida
+de las publicadas: miden otro modo** —diccionario de entidades frente a base de conocimientos
+contextual, que es la comparación de §5.6—.
+
+No hay que cambiar nada: la campaña es coherente consigo misma y la extensión es legítima. Lo que
+hay que **no** hacer es presentarlas como sustitutas de las cifras de §5.1, §5.2, la ablación del
+idioma o las tablas 4, 5, 6 y 8. Si alguien lee «13 modelos × 3 corpus, todas VÁLIDAS» y concluye
+que ya hay versión correcta de todo, mezclaría dos experimentos bajo el mismo encabezado.
+
+**Sugerencia concreta para el `RUNS_INDEX`:** añadid una línea diciendo que las corridas de N=15 y
+N=30 de la campaña son en modo `kb_combined` y **no reemplazan** a las publicadas en modo
+`entities`. Es una frase y ahorra el malentendido. Ver `FINDINGS §F125`.
+
+---
+
+## 9. Dos arreglos concretos del consolidado nuevo (añadido el 2026-09-09)
+
+Hice un **ensayo en seco de la adopción**: apunté el verificador al consolidado nuevo en una copia
+de trabajo, sin comprometer nada, para ver qué pasaría el día que el autor lo adopte. Aparecieron dos
+cosas que son vuestras y que **conviene arreglar antes de que se decida**, porque sin ellas parte del
+informe no se puede verificar contra el consolidado nuevo aunque se adopte. Ver `FINDINGS §F131`.
+
+### 9.1 El manifiesto no es portable
+
+Las trece fuentes de `ANALISIS_CONJUNTO_20260909_FIX/merge_manifest.json` están escritas con **rutas
+absolutas a vuestra máquina**:
+
+```
+/Users/eahumada1/Projects/MTI/mti-pge-tesina-ner-llm-local/repos/ner-llm-entity-benchmark/results/...
+```
+
+| Consolidado | Fuentes | Con ruta absoluta | Resolubles en otra máquina |
+|:---|---:|---:|---:|
+| Publicado (`20260907`) | 8 | **0** | **8 de 8** |
+| Nuevo (`20260909_FIX`) | 13 | **13** | **0 de 13** |
+
+Los ficheros están; lo que no se puede es encontrarlos desde otra copia. Todo lo que resuelve
+fuentes desde el manifiesto —la comprobación del protocolo homogéneo y las cifras de la medición
+restringida— falla con «no existe /Users/eahumada1/…».
+
+**Lo que hace falta:** regenerar el manifiesto con rutas **relativas a `repos/ner-llm-entity-benchmark/`**,
+como las del publicado (`results/recorrida_20260908/<modelo>__N120/benchmark_results.csv`). Es el
+manifiesto, no los datos: no hay que volver a fusionar nada si vuestra herramienta permite reescribir
+solo esa parte, y si no, la fusión es determinista y sale igual.
+
+### 9.2 Falta `levene.json`
+
+El consolidado publicado lo tiene y el nuevo no, lo que concuerda con que vuestro
+`statistical_report.md` no mencione Levene. La comprobación del supuesto de homocedasticidad se queda
+sin artefacto contra el que contrastar.
+
+**Lo que hace falta:** el `levene.json` del consolidado nuevo, con Brown-Forsythe centrado en
+mediana, en el mismo formato que el del publicado —W, p, grupos, observaciones, df1, df2—. Cuidado
+con el resultado, porque no es el que cabría esperar: sobre el consolidado nuevo **el supuesto no se
+cumple**, W = 4,2124 y **p = 1,394e-11**, frente al W = 1,2475 y p = 0,1842 del publicado. No es un
+error vuestro y no cambia la conclusión —Alexander-Govern y Kruskal-Wallis siguen dando p abrumadora—,
+pero el artefacto tiene que decirlo en lugar de omitirlo.
+
+### 9.3 Y un aviso, porque os va a pasar a vosotros también
+
+Con el consolidado nuevo la **p del ANOVA subdesborda a 0,0** en doble precisión: F = 119,7502 sobre
+df = (25, 2912) queda por debajo de lo representable. Si vuestro informe estadístico la imprime con
+`%.4e` saldrá `0.0000e+00`, que **no es la p**: es el límite del tipo de dato. Escribid una cota
+—«p < 1e-300»— y decid que el valor exacto no es representable. Nuestro verificador reventaba
+justamente ahí y ya está arreglado, con el remedio dentro del mensaje de error.

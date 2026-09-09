@@ -79,6 +79,20 @@ capítulo de resultados.
 > Brown-Forsythe da **p = 1,39e-11**, y hay que acompañarlo de una prueba robusta —Alexander-Govern
 > o Kruskal-Wallis, las dos con p abrumadora—.
 >
+> **Ensayo en seco del 2026-09-09 (`FINDINGS §F131`), y añade el precio y dos condiciones
+> previas.** Apuntado el verificador al consolidado nuevo en una copia de trabajo: **10
+> comprobaciones fallan con 56 fallos nuevos**, y la lista de cifras a rehacer es F = 38,2222 →
+> **119,7502**, la p que **subdesborda** y hay que escribir como cota, χ² = 1 169,23 →
+> **1 802,3671**, Tukey 158 → **217 de 325**, los dos deltas significativos (+14,52 → **+12,26** y
+> +10,82 → **+6,73**), las 26 medias de la Tabla 7 y la frase de Levene. La salvedad de §5.3.1 sobre
+> las siete filas sin telemetría **deja de describir nada**, que es una buena noticia disfrazada de
+> fallo.
+>
+> **Y dos arreglos que hay que pedir al equipo ANTES de decidir**, porque sin ellos parte del
+> informe no se puede verificar contra el consolidado nuevo aunque se adopte: su manifiesto tiene
+> **las trece fuentes con rutas absolutas a su propia máquina** —cero resolubles aquí, frente a ocho
+> de ocho en el publicado— y **no tiene `levene.json`**.
+>
 > **Rectificación del mismo día:** escribí que esa segunda condición había que aplicarla «incluso si
 > decides no adoptar nada», y **no es cierto**. Contradecía a `FINDINGS §F115`, donde ya se había
 > comprobado que la frase está bien: es cierta para la métrica sobre la que se computa —la de tres
@@ -760,7 +774,23 @@ una tercera no rompe ningún molde. Ver `FINDINGS §F109`.
 
 ---
 
-## 19. Los diez párrafos del Markdown que no están en el entregable — **NUEVA, 2026-09-09, y es la más urgente de las que quedan**
+## 19. Al entregable le falta la subsección de las corridas múltiples — **NUEVA, 2026-09-09, y es la más urgente de las que quedan**
+
+> **Replanteada el 2026-09-09 tras cerrar el inventario (`FINDINGS §F127`).** Se enunció como «diez
+> párrafos ausentes», y eso sonaba a diez decisiones. Es **una**: al entregable le falta **una
+> subsección de §5, completa** —su encabezado `#### Corridas múltiples del mismo modelo, y cuál se
+> toma como referencia`, sus cinco párrafos y su **Tabla 20**—. Tiene un sitio evidente donde va,
+> justo después de la tabla a cuya columna «Corrida» se refiere.
+>
+> **Y las dos figuras** (`§F128`): tampoco están en ningún entregable, y sus PNG están en
+> `doc/figuras/` verificados como reproducibles byte a byte. Hoy el entregable **no las cita**, así
+> que es incompleto pero coherente; **si se inserta la prosa que las menciona sin insertar las
+> imágenes, pasa a ser defectuoso** —el párrafo del 66,0 % dice «según recoge la Figura 1»—. Las dos
+> cosas van juntas o no van.
+>
+> Aparte de esa subsección y de las figuras quedan piezas menores, y ese es el orden de prioridad si
+> el espacio aprieta: cinco párrafos de declaraciones de límites, la referencia [38] con sus cuatro
+> citas, tres filas de la Tabla 9, una celda de la Tabla 3 y la frase de Friedman de `§F120`.
 
 **Qué pasa.** Comparada la prosa de los tres `.docx` contra el Markdown canónico párrafo a párrafo,
 **diez párrafos de la fuente no están en el entregable**. Evidencia: `FINDINGS §F121`, comprobación
@@ -792,6 +822,17 @@ espacio no da para los diez, el orden de prioridad es claro: primero el que acre
 fue la validez y no el resultado, después los que explican qué corridas hay y por qué unas no
 cuentan, y al final las declaraciones de límites, que ya tienen eco en otras partes del documento.
 Los espacios se recortan por estilo antes de tocar contenido, como fija `CLAUDE.md`.
+
+**Inventario cerrado el 2026-09-09** (`§F126`), porque «diez párrafos» no era todo: al entregable
+le falta además la **Tabla 20 completa** —nueve filas, «Grupos con más de una corrida sobre N=120,
+con el motivo de la sustitución y la evidencia»—, que es **la tabla de esa misma declaración de
+corridas múltiples**. Y la **referencia [38] con sus cuatro citas**, más tres filas de la Tabla 9 y
+una celda de la Tabla 3. Las entradas [1] a [37] sí están y son contiguas, así que **no hay
+corrimiento de numeración**.
+
+Con eso, lo que falta en el entregable de la declaración de corridas múltiples es **prosa y tabla,
+completo**. Refuerza la recomendación: si el espacio no da para todo, esos cinco párrafos y la
+Tabla 20 van primero.
 
 **Y tres divergencias más de la misma pasada** (`§F120`): la ausencia de la prueba de Friedman —con
 un `.docx` que además afirma que «la homocedasticidad se verifica», que es lo que el Markdown dice

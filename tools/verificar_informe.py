@@ -96,10 +96,30 @@ FALLOS_DECLARADOS = {
         'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
     'Tres advertencias de lectura antes': ('2026-09-09',
         'PENDIENTE de la pasada de maquetacion, decision del autor: parrafo del Markdown canonico que no llego a los tres .docx. Insertarlos afecta al limite duro de 25 paginas, de modo que no se aplican sin autorizacion expresa. Cinco de los diez son UN bloque —la declaracion de corridas multiples que exige la regla de integridad de CLAUDE.md— y el entregable no la contiene. Ver FINDINGS §F121'),
+    'Tabla 3, fila 1 difiere': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision 19 del autor: el entregable refleja un estado anterior del Markdown. Insertar lo que falta afecta al limite duro de 25 paginas y no se aplica sin autorizacion expresa. Ver FINDINGS §F126'),
+    'Tabla 9 tiene 42 filas': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision 19 del autor: el entregable refleja un estado anterior del Markdown. Insertar lo que falta afecta al limite duro de 25 paginas y no se aplica sin autorizacion expresa. Ver FINDINGS §F126'),
+    'Tabla 20 no esta en el entregable': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision 19 del autor: el entregable refleja un estado anterior del Markdown. Insertar lo que falta afecta al limite duro de 25 paginas y no se aplica sin autorizacion expresa. Ver FINDINGS §F126'),
+    'le faltan las entradas de bibliografia [38]': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision 19 del autor: el entregable refleja un estado anterior del Markdown. Insertar lo que falta afecta al limite duro de 25 paginas y no se aplica sin autorizacion expresa. Ver FINDINGS §F126'),
+    'falta la seccion «corridas múltiples': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision 19 del autor: al entregable le falta la subseccion ENTERA de las corridas multiples —encabezado, cinco parrafos y la Tabla 20—, que es la declaracion que exige la regla de integridad de CLAUDE.md. Insertarla afecta al limite duro de 25 paginas. Ver FINDINGS §F127'),
+    'del Markdown no esta (cero <w:drawing>': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision 19 del autor: las dos figuras del informe no estan en los entregables. Los PNG existen en doc/figuras/ y son reproducibles byte a byte; insertarlas es maquetacion y afecta al limite de 25 paginas. El entregable tampoco las cita, de modo que hoy es incompleto pero COHERENTE. Ver FINDINGS §F128'),
     'github.com/eahumada/mti-pge-tesina': ('2026-09-09',
                                            'referencia [37]: el repositorio es privado hasta la '
                                            'purga (SEGURIDAD-CLAVE-GOOGLE-20260908.md)'),
 }
+
+
+# Declaraciones cuya comprobacion **solo corre con `--red`**, de modo que sin red no tapan nada
+# y eso es legitimo. Se enumeran aqui y NO se declaran como fallo, porque una declaracion cuya
+# clave describiera el aviso de huerfana silenciaria **todos** los avisos de huerfana, presentes y
+# futuros. Es lo que paso: la clave «no tapa ningun fallo. Sin --red» casaba con la plantilla del
+# mensaje de la comprobacion 55 y anulaba su deteccion entera. Ver FINDINGS §F133.
+SOLO_CON_RED = frozenset({'github.com/eahumada/mti-pge-tesina'})
 
 
 def _edad_declarado(clave):
@@ -845,6 +865,349 @@ def c_prosa_docx(s):
     check('la prosa de los tres .docx sigue al Markdown', mirados, fallos,
           'lo que dejo pasar §F120; los diez parrafos ausentes estan declarados a nombre de la '
           'pasada de maquetacion, y una divergencia nueva si corta')
+
+
+# --- 52. Las TABLAS y la BIBLIOGRAFIA del entregable siguen a las del Markdown -----------------
+def _norm_celda(t):
+    """Normaliza texto de celda. Decodifica las entidades XML ANTES de nada.
+
+    Sin eso la Tabla 7 aparece como divergente y es identica: el `.docx` guarda «p&lt;0.001» donde
+    el Markdown escribe «p<0.001». Fue el primer resultado de la comparacion y era un defecto de la
+    comparacion, no del documento (§F126).
+    """
+    import html as _h
+    import unicodedata as _u
+    t = _u.normalize('NFC', _h.unescape(t))
+    for a in (' ', ' ', ' '):
+        t = t.replace(a, ' ')
+    return ' '.join(re.sub(r'[`*_]', '', t).split())
+
+
+def _tablas_md(s):
+    """(numero de leyenda, filas) de cada tabla del Markdown, en orden."""
+    lineas, out, i = s.split('\n'), [], 0
+    while i < len(lineas):
+        sep = (i + 1 < len(lineas)
+               and set(lineas[i + 1].replace('|', '').replace(' ', '')) <= set('-:')
+               and lineas[i + 1].strip().startswith('|'))
+        if lineas[i].startswith('|') and sep:
+            filas, j = [], i
+            while j < len(lineas) and lineas[j].startswith('|'):
+                c = [_norm_celda(x) for x in lineas[j].strip('|').split('|')]
+                if not (set(''.join(c).replace(' ', '')) <= set('-:') and c):
+                    filas.append(c)
+                j += 1
+            num = None
+            for k in range(max(0, i - 4), i):
+                m = re.match(r'_Tabla (\d+)\.', lineas[k].strip())
+                if m:
+                    num = int(m.group(1))
+            out.append((num, filas))
+            i = j
+        else:
+            i += 1
+    return out
+
+
+def _tablas_docx(rel):
+    import zipfile as _z
+    ruta = os.path.join(RAIZ, rel)
+    if not os.path.exists(ruta):
+        return None
+    with _z.ZipFile(ruta) as z:
+        x = z.read('word/document.xml').decode('utf-8')
+    def T(q):
+        return _norm_celda(' '.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', q, re.S)))
+    out = []
+    for b in re.findall(r'<w:tbl>.*?</w:tbl>', x, re.S):
+        filas = [[T(c) for c in re.findall(r'<w:tc>.*?</w:tc>', f, re.S)]
+                 for f in re.findall(r'<w:tr[ >].*?</w:tr>', b, re.S)]
+        if filas:
+            out.append(filas)
+    return out
+
+
+def _biblio_docx(rel):
+    """Numeros de entrada de la bibliografia del .docx, uno por parrafo."""
+    import html as _h
+    import zipfile as _z
+    ruta = os.path.join(RAIZ, rel)
+    if not os.path.exists(ruta):
+        return None
+    with _z.ZipFile(ruta) as z:
+        x = z.read('word/document.xml').decode('utf-8')
+    out = []
+    for p in re.findall(r'<w:p[ >].*?</w:p>', x, re.S):
+        t = _h.unescape(' '.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', p, re.S))).strip()
+        m = re.match(r'^\[(\d+)\]', t)
+        if m:
+            out.append(int(m.group(1)))
+    return out
+
+
+def c_tablas_y_biblio_docx(s):
+    """Solo DOS de las veinte tablas se comparaban entre fuente y entregable.
+
+    `c_prosa_docx` cerro el hueco de la prosa que dejo pasar `§F120`. Las tablas seguian igual:
+    `auditar_afirmaciones.py` compara la 18 y la 19 celda a celda, y las otras dieciocho —incluida
+    la **Tabla 7, la central del estudio**— no las comparaba nadie. Y la bibliografia tampoco.
+
+    Lo que encontro al escribirse (`§F126`): dieciseis tablas identicas, y tres divergencias reales
+    —la **Tabla 20 falta por completo** del entregable, la Tabla 9 tiene tres filas menos y la
+    Tabla 3 una celda mas corta—, mas la **referencia [38] y sus cuatro citas**, ausentes. Las
+    entradas [1] a [37] del entregable si estan y son contiguas, de modo que **no hay corrimiento
+    de numeracion**: falta la ultima y nada mas.
+
+    Todo eso queda **declarado** a nombre de la pasada de maquetacion, con el resto de `§F121`.
+    """
+    md_t = [(n, f) for n, f in _tablas_md(s) if f]
+    fallos, mirados = [], 0
+    citas_md = {int(x) for x in re.findall(r'\[(\d+)\]', s)}
+    i = s.find('## Referencias')
+    ent_md = {int(x) for x in re.findall(r'^\[(\d+)\]', s[i:], re.M)} if i >= 0 else set()
+    for rel in DOCX_ENTREGABLES:
+        base = os.path.basename(rel)
+        dx = _tablas_docx(rel)
+        if dx is None:
+            fallos.append('%s no existe' % base)
+            continue
+        usados = set()
+        for num, filas in md_t:
+            mirados += 1
+            et = 'Tabla %s' % num if num else 'tabla sin leyenda'
+            cab = ' | '.join(filas[0])[:70]
+            pareja = next((j for j, fb in enumerate(dx)
+                           if j not in usados and fb and ' | '.join(fb[0])[:70] == cab), None)
+            if pareja is None:
+                fallos.append('%s: %s no esta en el entregable (%d filas, cab: %s)'
+                              % (base, et, len(filas), cab[:40]))
+                continue
+            usados.add(pareja)
+            fb = dx[pareja]
+            if len(fb) != len(filas):
+                fallos.append('%s: %s tiene %d filas y el Markdown %d'
+                              % (base, et, len(fb), len(filas)))
+                continue
+            k = next((z for z in range(len(filas)) if filas[z] != fb[z]), None)
+            if k is not None:
+                fallos.append('%s: %s, fila %d difiere — .md %s / .docx %s'
+                              % (base, et, k, filas[k][:2], fb[k][:2]))
+        # bibliografia
+        mirados += 1
+        ent = _biblio_docx(rel)
+        faltan = sorted(ent_md - set(ent or []))
+        if faltan:
+            fallos.append('%s: le faltan las entradas de bibliografia %s' % (base, faltan))
+        if ent and sorted(ent) != list(range(min(ent), max(ent) + 1)):
+            fallos.append('%s: las entradas de bibliografia no son contiguas' % base)
+    check('las tablas y la bibliografia de los .docx siguen al Markdown', mirados, fallos,
+          'las entidades XML se decodifican antes de comparar; sin eso la Tabla 7 sale '
+          'divergente siendo identica')
+
+
+# --- 53. Los ENCABEZADOS del entregable siguen a los del Markdown -----------------------------
+def c_encabezados_docx(s):
+    """La ultima pieza de estructura sin comparar, y encontro que falta una subseccion entera.
+
+    Las comprobaciones 51 y 52 cerraron la prosa, las tablas y la bibliografia. Los encabezados
+    quedaban fuera: la 51 solo mira parrafos de mas de 160 caracteres. Y con diez parrafos, una
+    tabla y una referencia ausentes, cabia que faltara una seccion — y falta (`§F127`).
+
+    Tres normalizaciones, las tres necesarias, y las tres se descubrieron dando falsos positivos:
+
+    1. **Los `#` dentro de un bloque de codigo no son encabezados.** Sin esto, tres comentarios de
+       un bloque de ejemplo (`# Modo baseline (sin RAG)`) salian como titulos ausentes.
+    2. **El numero de seccion no esta en el texto del encabezado del `.docx`.** Lo pone la
+       numeracion multinivel de Word, que `CLAUDE.md` advierte que no hay que regenerar. Sin
+       quitarlo del lado del Markdown, los siete capitulos salian como ausentes.
+    3. **La caja no coincide.** El `.docx` titula en otra capitalizacion, de modo que la
+       comparacion va en `casefold`.
+
+    Con las tres, de 69 encabezados quedan **seis** que no aparecen con estilo de encabezado, y
+    **cinco de los seis estan en el cuerpo** con otro estilo —el titulo, «Referencias» y los tres
+    del bloque de codigo—. El sexto falta por completo.
+    """
+    import html as _h
+    import unicodedata as _u
+    import zipfile as _z
+
+    def norm(t):
+        t = _u.normalize('NFC', _h.unescape(t))
+        for a in (' ', ' ', ' '):
+            t = t.replace(a, ' ')
+        return ' '.join(re.sub(r'[`*_#]', '', t).split()).casefold()
+
+    def sin_num(t):
+        return re.sub(r'^\d+(\.\d+)*\.?\s*', '', t).strip()
+
+    # los `#` de dentro de un bloque de codigo no son encabezados
+    md, en_codigo = [], False
+    for l in s.split('\n'):
+        if l.startswith('```'):
+            en_codigo = not en_codigo
+            continue
+        if en_codigo:
+            continue
+        m = re.match(r'^(#{1,4})\s+(.+)$', l)
+        if m:
+            md.append((len(m.group(1)), norm(m.group(2))))
+    if not md:
+        check('los encabezados de los .docx siguen al Markdown', 0,
+              ['no se extrajo ningun encabezado del Markdown'])
+        return
+    fallos, mirados = [], 0
+    for rel in DOCX_ENTREGABLES:
+        base = os.path.basename(rel)
+        ruta = os.path.join(RAIZ, rel)
+        if not os.path.exists(ruta):
+            fallos.append('%s no existe' % base)
+            continue
+        with _z.ZipFile(ruta) as z:
+            x = z.read('word/document.xml').decode('utf-8')
+        dx = []
+        for p in re.findall(r'<w:p[ >].*?</w:p>', x, re.S):
+            e = re.search(r'<w:pStyle w:val="([^"]+)"', p)
+            if not e or 'eading' not in e.group(1):
+                continue
+            t = norm(' '.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', p, re.S)))
+            if t:
+                dx.append(t)
+        conj = set(dx) | {sin_num(t) for t in dx}
+        todo = norm(' '.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', x, re.S)))
+        for niv, t in md:
+            mirados += 1
+            if t in conj or sin_num(t) in conj:
+                continue
+            if sin_num(t) in todo:
+                continue          # esta en el cuerpo con otro estilo: no es una ausencia
+            fallos.append('%s: falta la seccion «%s» (H%d), y su texto no esta en ninguna parte'
+                          % (base, t[:62], niv))
+    check('los encabezados de los .docx siguen al Markdown', mirados, fallos,
+          'los # de un bloque de codigo no cuentan, el numero lo pone la numeracion de Word y la '
+          'comparacion va en casefold: sin las tres, 10 falsos positivos')
+
+
+# --- 54. Las FIGURAS del entregable, y que ninguna cita quede colgando ------------------------
+def c_figuras_docx(s):
+    """El ultimo tipo de contenido sin comparar entre fuente y entregable.
+
+    Las comprobaciones 51, 52 y 53 cerraron la prosa, las tablas, la bibliografia y los
+    encabezados. Faltaban las **imagenes**, y las dos figuras del informe **no estan en ninguno de
+    los tres entregables**: cero elementos `<w:drawing>` y cero leyendas «Figura N.» (`§F128`).
+
+    Se comprueban dos cosas, y la segunda es la que evita un defecto peor que la ausencia:
+
+    1. Que cada figura que el Markdown declara —por su leyenda `_Figura N._`— tenga una imagen
+       dibujada en el entregable.
+    2. Que **ninguna cita a «Figura N» quede colgando**. Hoy el entregable **no** las cita, de modo
+       que es incompleto pero coherente; si alguien inserta la prosa que las menciona sin insertar
+       las imagenes, el documento pasaria a prometer una figura que no muestra, y eso si es un
+       defecto y no una carencia.
+
+    Los ficheros de media del `.docx` con plantilla **no** son las figuras: son las siete
+    referencias del encabezado y el pie institucionales, y por eso se cuentan los `<w:drawing>` del
+    cuerpo y no los ficheros del paquete.
+    """
+    import zipfile as _z
+    leyendas = sorted({int(x) for x in re.findall(r'_Figura (\d+)\.', s)})
+    if not leyendas:
+        check('las figuras del Markdown estan en los tres .docx', 0,
+              ['el Markdown no declara ninguna figura con leyenda «_Figura N._»'])
+        return
+    fallos, mirados = [], 0
+    for rel in DOCX_ENTREGABLES:
+        base = os.path.basename(rel)
+        ruta = os.path.join(RAIZ, rel)
+        if not os.path.exists(ruta):
+            fallos.append('%s no existe' % base)
+            continue
+        with _z.ZipFile(ruta) as z:
+            x = z.read('word/document.xml').decode('utf-8')
+        dibujos = len(re.findall(r'<w:drawing>', x))
+        txt = ' '.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', x, re.S))
+        citadas = sorted({int(y) for y in re.findall(r'[Ff]igura (\d+)', txt)})
+        for n in leyendas:
+            mirados += 1
+            if dibujos == 0:
+                fallos.append('%s: la Figura %d del Markdown no esta (cero <w:drawing> en el '
+                              'cuerpo)' % (base, n))
+        # citas colgantes: prometidas en el texto y sin imagen que mostrar
+        mirados += 1
+        if citadas and dibujos == 0:
+            fallos.append('%s: cita las figuras %s y no tiene ninguna imagen en el cuerpo — una '
+                          'cita colgante es peor que la ausencia' % (base, citadas))
+    check('las figuras del Markdown estan en los tres .docx', mirados, fallos,
+          'se cuentan los <w:drawing> del cuerpo, no los ficheros de word/media: los del .docx '
+          'con plantilla son el encabezado y el pie institucionales')
+
+
+# --- 55. Las propias DECLARACIONES no silencian mas de lo que les toca ------------------------
+def c_declaraciones():
+    """La comprobacion de la comprobacion, sobre el mecanismo que ya carga 25 declaraciones.
+
+    Cada clave de `FALLOS_DECLARADOS` es un fragmento que se busca en el mensaje del fallo. **Una
+    clave demasiado generica taparia fallos que no cubre**, y eso no lo detectaba nada: el resumen
+    los contaria como declarados y el codigo de salida seguiria siendo 0. Con cinco declaraciones
+    era improbable; con veinticinco conviene comprobarlo (`§F129`).
+
+    Tres cosas, y las tres pasan hoy:
+
+    1. **Ninguna clave toca mas de una comprobacion.** Si una lo hiciera, estaria silenciando algo
+       que su motivo no describe.
+    2. **Ninguna clave contiene a otra.** Dos claves anidadas hacen que la mas corta se coma los
+       fallos de la mas larga, y el motivo que se lee entonces es el equivocado.
+    3. **Ninguna clave deja de tapar algo sin explicacion.** Una declaracion que no casa con ningun
+       fallo esta caducada —el defecto se arreglo y nadie retiro la declaracion— o pertenece a una
+       comprobacion que no ha corrido. El unico caso legitimo hoy es `c_urls`, que solo corre con
+       `--red`; **con `--red` esa excusa desaparece** y la comprobacion lo exige.
+
+    Se ejecuta al final, porque necesita los resultados de todas las demas.
+    """
+    mensajes = [(n, f) for n, _e, fs, _nt in resultados for f in fs]
+    claves = list(FALLOS_DECLARADOS)
+    fallos, mirados, sin_red = [], 0, 0
+    con_red = '--red' in sys.argv
+
+    def _ref(i_, k_):
+        """Nombra una declaracion SIN escribirla entera, o se silenciaria a si misma.
+
+        Primera version del defecto que esta comprobacion existe para cazar, cometido por ella:
+        el mensaje incluia la clave literal, de modo que la propia declaracion lo tapaba y salia
+        como DECLARADO en lugar de como nuevo. Se imprime un **prefijo estricto** —siempre mas
+        corto que la clave—, que por construccion no puede contenerla, mas su numero de orden
+        para poder localizarla.
+        """
+        corte = max(6, min(len(k_) - 1, 24))
+        return 'n.%d «%s…»' % (i_ + 1, k_[:corte])
+    for k in claves:
+        mirados += 1
+        tocados = {n for n, f in mensajes if k in f}
+        if len(tocados) > 1:
+            fallos.append('la declaracion %s silencia fallos de %d comprobaciones distintas '
+                          '(%s): es demasiado generica y su motivo no las describe todas'
+                          % (_ref(claves.index(k), k), len(tocados),
+                             '; '.join(sorted(tocados))[:110]))
+        if not tocados:
+            if k in SOLO_CON_RED and not con_red:
+                sin_red += 1          # legitimo y enumerado: no es un fallo
+            elif con_red:
+                fallos.append('la declaracion %s no tapa ningun fallo ni con --red: esta '
+                              'caducada y hay que retirarla' % _ref(claves.index(k), k))
+            else:
+                fallos.append('la declaracion %s no tapa ningun fallo y no esta en '
+                              'SOLO_CON_RED: o esta caducada, o su comprobacion no corrio'
+                              % _ref(claves.index(k), k))
+    for i, a in enumerate(claves):
+        for b in claves[i + 1:]:
+            mirados += 1
+            if a in b or b in a:
+                fallos.append('las declaraciones %s y %s estan anidadas: la mas corta se come '
+                              'los fallos de la otra y se lee el motivo equivocado'
+                              % (_ref(claves.index(a), a), _ref(claves.index(b), b)))
+    nota = ('se ejecuta al final porque lee los resultados de las demas')
+    if sin_red:
+        nota += '; %d declaracion(es) de SOLO_CON_RED no tapan nada sin red, y es legitimo' % sin_red
+    check('las declaraciones no silencian mas de lo que les toca', mirados, fallos, nota)
 
 
 def check(nombre, examinados, fallos, nota=''):
@@ -3275,7 +3638,23 @@ def c_anova(s):
             pub = mant * (10.0 ** ex)
             # se compara la mantisa a los decimales con que se publica, y el exponente exacto
             import math
-            ex_calc = math.floor(math.log10(pv))
+            # La p puede SUBDESBORDAR a 0,0 en doble precision, y entonces `log10` lanza
+            # ValueError. No es hipotetico: pasa con el consolidado nuevo —F = 119,7502 sobre
+            # df = (25, 2912)— y por tanto pasaria el dia que se adopte, en la comprobacion que
+            # vigila el estadistico titular. Encontrado por un ensayo en seco de la adopcion
+            # (§F131), no en produccion.
+            if pv <= 0.0:
+                fallos.append('la p del ANOVA subdesborda a 0,0 en doble precision, de modo que '
+                              'no tiene exponente que comparar, y el informe publica '
+                              '«%s,%s x 10^%d». Con una p asi el informe no puede dar una cifra: '
+                              'tiene que escribir una cota, del tipo «p < 10^-300», y decir que el '
+                              'valor exacto no es representable. Ver §F131'
+                              % (m.group(1), m.group(2), ex))
+                del pub
+                ex_calc = None
+            else:
+                ex_calc = math.floor(math.log10(pv))
+        if ex is not None and ex_calc is not None:
             mant_calc = pv / (10.0 ** ex_calc)
             dec = len(m.group(2))
             if ex_calc != ex:
@@ -3814,6 +4193,9 @@ def main():
     ejecutar(c_redondeos, s)
     ejecutar(c_tabla17, s)
     ejecutar(c_prosa_docx, s)
+    ejecutar(c_tablas_y_biblio_docx, s)
+    ejecutar(c_encabezados_docx, s)
+    ejecutar(c_figuras_docx, s)
     ejecutar(c_tabla4_vs_datos, s)
     ejecutar(c_figura1_vs_artefacto, s)
     ejecutar(c_tablas_menores, s)
@@ -3833,6 +4215,8 @@ def main():
     ejecutar(c_extension, s)
     if '--red' in sys.argv:
         c_urls(s)
+    # AL FINAL: lee los resultados de todas las anteriores.
+    ejecutar(c_declaraciones)
 
     breve = '--breve' in sys.argv
     fallos_totales = vacias = declarados = 0
@@ -3892,9 +4276,18 @@ def main():
     # anterior, para quien quiera que cualquier fallo, incluido el declarado, corte.
     if '--estricto' in sys.argv:
         return 1 if (fallos_totales or vacias) else 0
-    if fallos_totales and not nuevos:
+    # El mensaje se imprimia sin mirar `vacias`, de modo que en un clon superficial anunciaba
+    # «codigo de salida 0» mientras la funcion devolvia 1: la comprobacion 50 sale VACIA porque el
+    # clon no trae el commit `df9b4c4`. Quien lea eso cree que paso y su CI acaba de fallar. Ver
+    # FINDINGS §F130.
+    if fallos_totales and not nuevos and not vacias:
         print('  (codigo de salida 0: no hay fallos nuevos. Usar --estricto para que los declarados '
               'tambien corten)')
+    if vacias:
+        print('  (codigo de salida 1 POR LAS %d VACIAS, no por los fallos: una comprobacion que '
+              'examina cero elementos no ha pasado, no se ha ejecutado.' % vacias)
+        print('   Si es un clon superficial, le falta historia y la comprobacion 50 no puede '
+              'leer el corpus anterior a la correccion: `git fetch --unshallow`.)')
     return 1 if (nuevos or vacias) else 0
 
 

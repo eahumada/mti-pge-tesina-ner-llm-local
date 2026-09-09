@@ -142,6 +142,47 @@ def _resalte_33():
     return (not malos), ' · '.join(malos)
 
 
+def _rutas_afirmadas():
+    """Ninguna afirmacion de que algo «se conserva en <ruta>» puede apuntar a una ruta inexistente.
+
+    El 2026-09-09 la nota del consolidado nuevo decia «la corrida buggy **se conserva** en
+    `results/recorrida_20260908/nemotron-mini_4b__N120_F85_BUGGY/` [...] **No se borra**», y el
+    directorio se habia retirado ese mismo dia por instruccion del autor. La afirmacion sobrevivio
+    al hecho que describia, que es la forma exacta de fallo que esta herramienta existe para cazar,
+    aplicada esta vez a una ruta y no a una cifra.
+
+    Se revisan las frases que **afirman conservacion** —«se conserva», «se conservan», «no se
+    borra», «conservado en», «esta en»— y se comprueba que la ruta entre acentos graves exista. Se
+    ignoran las que van dentro de una cita en bloque o tachadas, porque ahi el texto esta
+    explicitamente marcado como historico.
+    """
+    DOCS = ['CURRENT-TASKS.md', 'FINDINGS.md', 'LEARNING.md',
+            'repos/ner-llm-entity-benchmark/results/ANALISIS_CONJUNTO_20260909_FIX/NOTA-FIX-F85.md']
+    AFIRMA = ('se conserva', 'se conservan', 'no se borra', 'conservado en', 'conservada en')
+    malos, mirados = [], 0
+    for rel in DOCS:
+        t = texto(rel)
+        if t is None:
+            continue
+        for linea in t.split('\n'):
+            l = linea.strip()
+            if l.startswith('>') or l.startswith('~~') or '~~' in l:
+                continue          # citado como historico o tachado
+            if not any(a in l.lower() for a in AFIRMA):
+                continue
+            for m in re.finditer(r'`([A-Za-z0-9_./-]*(?:results|repos|doc|tools)/[A-Za-z0-9_./-]+)`', l):
+                ruta = m.group(1).rstrip('/')
+                if ruta.startswith('results/'):
+                    ruta = 'repos/ner-llm-entity-benchmark/' + ruta
+                mirados += 1
+                if not os.path.exists(os.path.join(RAIZ, ruta)):
+                    malos.append('%s afirma conservar `%s`, que no existe'
+                                 % (os.path.basename(rel), m.group(1)))
+    if mirados == 0:
+        return False, 'VACIA: no se examino ninguna ruta afirmada como conservada'
+    return (not malos), ' · '.join(malos) or '%d rutas afirmadas, todas existen' % mirados
+
+
 def afirmaciones():
     """(descripcion, quien la afirma, predicado). Cada una devuelve (ok, detalle)."""
     def _todos(rel_list, fn):
@@ -202,6 +243,8 @@ def afirmaciones():
                               'Δ F1 por texto de entrada |', 3)),
         ('en §3.3 el resalte cubre solo el porcentaje', '§F96',
          lambda: _resalte_33()),
+        ('ninguna ruta afirmada como conservada ha desaparecido', '§F124',
+         lambda: _rutas_afirmadas()),
         ('DEFENSA usa el ejemplo verificado del duplicado', '§F107',
          lambda: ((lambda t: ('Jose Bono' in t.replace('é', 'e') and '88,89' in t,
                               'no trae el par verificado'))(texto(

@@ -5693,3 +5693,517 @@ hallazgo posterior porque no releí el anterior. Y es la segunda vez en la sesi�
 misma frase.
 
 **Estado del verificador:** 51 comprobaciones, 40 fallos (40 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F124 — Una afirmación sobre una ruta sobrevivió a la desaparición de la ruta
+
+**Fecha:** 2026-09-09 · **Origen:** comprobar qué dejó colgando la retirada de los artefactos
+defectuosos
+
+Retirado `nemotron-mini_4b__N120_F85_BUGGY` por instrucción del autor —«en el estudio deben existir
+solo corridas y *benchmarks* exitosos, no conservar nada defectuoso»—, revisé qué quedaba apuntando
+a esa ruta. **Ninguna herramienta la lee**, así que nada se rompió. Pero la nota del consolidado
+nuevo, que el propio equipo escribió, decía:
+
+> «La corrida *buggy* **se conserva** en `results/recorrida_20260908/nemotron-mini_4b__N120_F85_BUGGY/`
+> con su `benchmark.log` (58 mensajes del TypeError), porque es la prueba del defecto. **No se
+> borra.**»
+
+Y el directorio se había retirado **ese mismo día**, en el mismo commit que entregó `§3.bis.16`.
+
+Es [§L70](#l70) otra vez, aplicado a una ruta en lugar de a una cifra: **la afirmación sobrevivió al
+hecho que describía**. Y es de la clase más silenciosa, porque un `git status` limpio no lo detecta
+—la nota se escribió correctamente— y ninguna comprobación fallaba, porque nada la leía.
+
+**Corregido de forma aditiva**, que es la política: el texto original queda **tachado** y no
+borrado, con una nota que explica qué cambió, cuándo y por qué, y que precisa lo que sigue siendo
+verdad —la evidencia del defecto está escrita con sus cifras en `§F85`, `§F108` y `§F113`, de modo
+que **la prueba sobrevive como registro aunque el fichero ya no esté**—. El `WORKLOG` no se toca:
+registra un suceso que fue cierto cuando se escribió, y a un registro se le añade, no se le edita.
+
+**Predicado 13 de la auditoría de afirmaciones**, y generaliza la clase en lugar de parchear el
+caso: revisa las frases que **afirman conservación** —«se conserva», «no se borra», «conservado
+en»— y comprueba que la ruta entre acentos graves exista. Ignora las que van en cita en bloque o
+tachadas, porque ahí el texto está marcado como histórico a propósito, que es justamente lo que
+permite corregir de forma aditiva sin que la comprobación se queje del texto viejo.
+
+**Probado por mutación en dos frentes**: devuelta la nota a su afirmación original, el predicado la
+señala con la ruta; y añadida a `FINDINGS` una frase que dice conservar `results/inventada_que_no_existe/`,
+también la señala. Los dos con el nombre del fichero y la ruta concreta.
+
+**Auditoría de afirmaciones:** 13 predicados, 0 que no se cumplen.
+
+---
+
+## §F125 — Las corridas pequeñas de la campaña nueva miden otro modo, y eso acota la decisión 1
+
+**Fecha:** 2026-09-09 · **Origen:** verificar el protocolo de las 39 corridas nuevas
+
+Aplicada la verificación de protocolo a las 39 corridas de `recorrida_20260908`, **26 difieren de la
+referencia en `data_file`**. No es un defecto: son las 13 de N=15 (`kleptotrace.json`) y las 13 de
+N=30 (`kleptotrace_augmented_30.json`), que legítimamente usan otro corpus. Pero al mirarlo apareció
+algo que sí importa.
+
+| Corridas | `rag_mode` |
+|:---|:---|
+| Publicadas de N=15 y N=30 (`ablacion_n15_REMOTO`, `cloud_n15_limpio_20260905`, `gemma4_31b_n15_REMOTO`, `n30_rerun_REMOTO`) | **`entities`** |
+| Campaña nueva, las 39 sin excepción | **`kb_combined`** |
+
+**Las corridas pequeñas de la campaña nueva no son una versión corregida de las publicadas: miden
+otra cosa.** `entities` es la línea base de recuperación por diccionario de entidades y
+`kb_combined` es la base de conocimientos contextual, que es precisamente la comparación que §5.6
+del informe desarrolla. Aplicar `kb_combined` a los corpus pequeños es una extensión legítima y
+coherente —la campaña usa el mismo modo en los tres corpus—, pero **no sustituye** a las cifras
+publicadas de §5.1, §5.2, la ablación del idioma ni las tablas 4, 5, 6 y 8.
+
+**Y eso acota la decisión 1, que es la consecuencia útil.** Adoptar el consolidado nuevo afecta
+**solo al capítulo de N=120**: mismo corpus, mismo `kb_combined`, mismos 26 grupos. Las secciones
+que se apoyan en N=15 y N=30 se quedan sobre las corridas publicadas en modo `entities`, y no hay
+que revisarlas. La decisión es más pequeña de lo que parecía, y su alcance está ahora medido en
+lugar de supuesto.
+
+**La trampa que esto evita.** Un cierre apresurado podría tomar las 39 corridas nuevas como «la
+versión correcta de todo» —es lo que sugiere leer «13 modelos × 3 corpus, todas VÁLIDAS»— y
+sustituir con ellas las cifras de la ablación del idioma. Serían **cifras de otro experimento** bajo
+el mismo encabezado, que es exactamente lo que la regla de integridad de `CLAUDE.md` prohíbe: «ninguna
+columna agrupa métricas de tareas distintas bajo un mismo encabezado».
+
+**Verificado además, sobre las 39:** cero filas con `parse_method='failed'` en 4 290, cero sin
+`detailed_results.json`, cero filas con F1 > (P + R) / 2, y los nueve parámetros de referencia
+coinciden salvo el `data_file` de los dos corpus pequeños, que es lo esperado.
+
+**Estado del verificador:** 51 comprobaciones, 40 fallos (40 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F126 — Faltaba una tabla entera en el entregable, y una referencia con sus cuatro citas
+
+**Fecha:** 2026-09-09 · **Origen:** cerrar en las tablas el hueco que [§F121](#f121) cerró en la prosa
+
+`c_prosa_docx` cerró la comparación de la **prosa** entre fuente y entregable. Las tablas seguían
+igual que antes: `auditar_afirmaciones.py` compara la 18 y la 19 celda a celda, y **las otras
+dieciocho no las comparaba nadie**, incluida la **Tabla 7, que es la tabla central del estudio**. La
+bibliografía tampoco.
+
+**Dieciséis de las veinte tablas son idénticas**, la Tabla 7 entre ellas. Tres divergen, y una de
+las tres es grave:
+
+| Divergencia | Alcance |
+|:---|:---|
+| **Tabla 20 no está en el entregable** | 9 filas, ausente por completo; cero menciones de «Tabla 20» y cero de «Corrida sustituida» |
+| Tabla 9, estructura del repositorio | 42 filas en el entregable frente a 45 en la fuente |
+| Tabla 3, capa de datos | el entregable dice «validación de esquema» donde la fuente dice «validación contra el esquema FollowTheMoney [38]» |
+| **Referencia [38] y sus cuatro citas** | ausentes del entregable; sus entradas [1] a [37] **sí** están y son **contiguas**, de modo que **no hay corrimiento de numeración** |
+
+### La Tabla 20 es la que importa, y agranda la decisión 19
+
+Su leyenda es «Grupos con más de una corrida sobre N=120, con el motivo de la sustitución y la
+evidencia». Es **la tabla de la declaración de corridas múltiples**: la que acompaña a los cinco
+párrafos que `§F121` encontró ausentes. De modo que al entregable le falta esa declaración
+**completa**, prosa y tabla, y es la que `CLAUDE.md` exige con las palabras «es lo que un tribunal
+juzga».
+
+Dicho de otro modo: `§F121` reportó diez párrafos; el inventario cerrado es **diez párrafos más una
+tabla de nueve filas más una referencia con sus cuatro citas**, y todo ello es un bloque coherente de
+adiciones tardías al Markdown que nunca se propagaron.
+
+### El primer resultado de la comparación era un defecto de la comparación
+
+La Tabla 7 salió como divergente en su fila de `nemotron-mini:4b`, y las celdas impresas eran
+idénticas. La diferencia estaba en la quinta columna: el `.docx` guarda `sí (p&lt;0.001)` y el
+Markdown escribe `sí (p<0.001)`. **Son la misma cadena**; lo que faltaba era decodificar las
+entidades XML antes de comparar. Si no lo hubiera mirado, habría reportado una divergencia en la
+tabla central del estudio que no existe — y con `§F121` recién corregido por sobrestimar, era el
+segundo aviso del mismo día de que **una divergencia detectada hay que confirmarla antes de
+contarla**.
+
+**Comprobación 52**, 63 elementos: las veinte tablas por los tres entregables y la bibliografía de
+cada uno. Los doce fallos —cuatro por fichero— quedan **declarados** a nombre de la decisión 19, con
+el resto de `§F121`; cualquier divergencia nueva corta.
+
+**Estado del verificador:** 52 comprobaciones, 52 fallos (52 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F127 — No eran piezas dispersas: al entregable le falta una subsección entera de §5
+
+**Fecha:** 2026-09-09 · **Origen:** comparar la última pieza de estructura que quedaba sin comparar
+
+Las comprobaciones 51 y 52 cerraron la prosa, las tablas y la bibliografía del entregable. Los
+**encabezados** quedaban fuera, porque la 51 solo mira párrafos de más de 160 caracteres. Con diez
+párrafos, una tabla y una referencia ausentes, cabía que faltara una sección. **Falta una.**
+
+De los **69 encabezados** del Markdown, seis no aparecen con estilo de encabezado en el `.docx` y
+**cinco de los seis están en el cuerpo** con otro estilo. El sexto no está en ninguna parte:
+
+> `#### Corridas múltiples del mismo modelo, y cuál se toma como referencia`
+
+Y su cuerpo es, literalmente, el bloque que [§F121](#f121) y [§F126](#f126) fueron encontrando por
+partes: «Cuatro de los trece modelos se midieron **más de una vez** sobre el corpus N=120 […] **La
+Tabla 20 las recoge todas.** Conviene separar dos situaciones que no son la misma…».
+
+### El inventario, cerrado y mejor planteado
+
+Lo que le falta al entregable no son diez párrafos sueltos, una tabla huérfana y una referencia
+perdida. Es **una subsección de §5, completa**:
+
+| Pieza | Estado en el entregable |
+|:---|:---|
+| El encabezado `#### Corridas múltiples del mismo modelo…` | ausente |
+| Sus cinco párrafos | ausentes |
+| La Tabla 20, «Grupos con más de una corrida sobre N=120…» | ausente |
+
+Y aparte, cinco párrafos de declaraciones de límites del planteamiento, la referencia [38] con sus
+cuatro citas, tres filas de la Tabla 9, una celda de la Tabla 3 y la frase de Friedman de
+[§F120](#f120).
+
+**Decirlo así cambia la decisión 19**, y a mejor: «insertar la subsección que falta» es una
+operación acotada, con un sitio evidente donde va —justo después de la tabla a cuya columna
+«Corrida» se refiere— y con un criterio claro de prioridad si el espacio aprieta. «Diez párrafos, una
+tabla y una referencia» sonaba a diez decisiones y era una.
+
+### Tres normalizaciones, y las tres salieron de falsos positivos propios
+
+La primera versión de la comparación reportó **doce** encabezados ausentes, entre ellos los siete
+capítulos del informe. Un `.docx` de tesina sin capítulos es imposible, así que el defecto era mío,
+y hubo tres:
+
+1. **Los `#` de dentro de un bloque de código no son encabezados.** Tres comentarios de un bloque de
+   ejemplo —`# Modo baseline (sin RAG)` y sus dos hermanos— salían como títulos ausentes.
+2. **El número de sección no está en el texto del encabezado del `.docx`.** Lo pone la numeración
+   multinivel de Word, la que `CLAUDE.md` advierte que no hay que regenerar. Sin quitarlo del lado
+   del Markdown, los siete capítulos salían ausentes.
+3. **La caja no coincide**, de modo que la comparación va en `casefold`.
+
+Con las tres, de doce falsos positivos quedan cero y una ausencia real. Es el tercer aviso del día
+—después de sobrestimar en `§F121` y de la entidad `&lt;` de `§F126`— de que **una divergencia
+detectada hay que confirmarla antes de contarla**, y las tres veces el error estuvo en la
+comparación y no en el documento.
+
+**Comprobación 53**, 198 elementos: los 69 encabezados por los tres entregables. Los tres fallos
+—uno por fichero— quedan declarados con el resto de la decisión 19.
+
+**Estado del verificador:** 53 comprobaciones, 55 fallos (55 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F128 — Las dos figuras del informe no están en ningún entregable, y la cobertura queda cerrada
+
+**Fecha:** 2026-09-09 · **Origen:** el último tipo de contenido sin comparar
+
+Las comprobaciones 51, 52 y 53 cerraron la prosa, las tablas, la bibliografía y los encabezados del
+entregable. Quedaban las **imágenes**, y las dos figuras del informe **no están en ninguno de los
+tres `.docx`**: cero elementos `<w:drawing>` en el cuerpo y cero leyendas «Figura N.».
+
+**Los ficheros de media no son las figuras.** El `.docx` con plantilla trae tres ficheros en
+`word/media/` y siete referencias en sus `.rels`, y son el encabezado y el pie institucionales.
+Contar ficheros del paquete habría dado la respuesta contraria a la verdadera, así que la
+comprobación cuenta los `<w:drawing>` **del cuerpo**.
+
+**Los originales están y son reproducibles.** `doc/figuras/falsos-positivos.png` y
+`doc/figuras/efecto-kb-rag.png`, generados el 8 de septiembre, y ya verificados como **idénticos
+byte a byte** al regenerarlos. No hay nada que rehacer: hay que insertarlos.
+
+### Hoy el entregable es incompleto pero coherente, y eso importa
+
+**No cita las figuras.** Cero apariciones de «Figura N» en los tres `.docx`. De modo que las
+imágenes y sus citas faltan **juntas**, y el documento no promete nada que no muestre.
+
+Eso convierte esto en una **carencia y no un defecto**, con una consecuencia práctica para la pasada
+de maquetación: si se inserta la prosa que menciona las figuras —el párrafo del 66,0 % dice «según
+recoge la Figura 1»— **sin** insertar las imágenes, el entregable pasa de incompleto a **defectuoso**.
+Por eso la comprobación 54 vigila las dos cosas: que cada figura declarada esté, y que **ninguna cita
+quede colgando**.
+
+**Probada por mutación sin tocar el entregable**: sobre una copia en el área de trabajo con una cita
+a «Figura 1» inyectada, la segunda rama dispara con su mensaje propio. Los entregables no se
+modificaron para probarlo, que es lo correcto cuando lo que se prueba es una rama y no el documento.
+
+### La cobertura del entregable, cerrada
+
+| Contenido | Comprobación |
+|:---|:---|
+| Prosa, párrafo a párrafo | 51 (234 elementos) |
+| Tablas, celda a celda, y bibliografía | 52 (63 elementos) |
+| Encabezados | 53 (198 elementos) |
+| Figuras y citas colgantes | **54** (9 elementos) |
+| Modelos excluidos, sobriedad, sanidad OOXML, dos tablas más | 39, 41, 44 y la auditoría de afirmaciones |
+
+**Ninguna divergencia nueva entre la fuente y el entregable puede pasar en silencio.** Las que hay
+están declaradas, todas a nombre de la decisión 19, y su inventario está cerrado: **una subsección de
+§5 completa** —encabezado, cinco párrafos y Tabla 20—, **las dos figuras**, la referencia [38] con
+sus cuatro citas, cinco párrafos de declaraciones de límites, tres filas de la Tabla 9, una celda de
+la Tabla 3 y la frase de Friedman.
+
+**Estado del verificador:** 54 comprobaciones, 61 fallos (61 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F129 — La comprobación que audita las declaraciones se silenciaba a sí misma
+
+**Fecha:** 2026-09-09 · **Origen:** las declaraciones llegaron a veinticinco y nadie las auditaba
+
+`FALLOS_DECLARADOS` funciona buscando un fragmento de texto en el mensaje del fallo. **Una clave
+demasiado genérica taparía fallos que su motivo no describe**, y eso no lo detectaba nada: el resumen
+los contaría entre los declarados y el código de salida seguiría siendo 0. Con cinco declaraciones
+era improbable; con **veinticinco** convenía comprobarlo.
+
+**El mecanismo está limpio.** Auditadas las 25 claves contra los 61 mensajes de fallo reales:
+
+| Comprobación | Resultado |
+|:---|---:|
+| Claves que silencian fallos de más de una comprobación | **0** |
+| Pares de claves anidadas, donde la corta se come los fallos de la larga | **0** |
+| Claves que no tapan nada | **1**, y con explicación |
+
+La única que no tapa nada es la de la referencia [37], que pertenece a `c_urls` y **solo corre con
+`--red`**. Ejecutada con red: `c_urls` da **38 elementos y exactamente un fallo**, `[37] HTTP 404`,
+que es el repositorio privado hasta la purga. La declaración está viva, no caducada. De paso queda
+comprobado que **las otras 37 URL de la bibliografía responden**.
+
+### Y la comprobación nueva cometió, en su primera versión, el defecto que existe para cazar
+
+El mensaje del aviso incluía la clave literal —«la declaración `github.com/eahumada/mti-pge-tesina`
+no tapa ningún fallo»—, de modo que **esa misma declaración lo silenciaba** y salía como `DECLARADO`
+en lugar de como fallo nuevo. Una comprobación cuya salida contiene la cadena que la silencia es
+invisible por construcción.
+
+**Arreglado imprimiendo un prefijo estricto** de la clave, siempre más corto que ella, que por
+construcción no puede contenerla, más su número de orden para poder localizarla. La truncatura fija
+no bastaba: `cita 62.67` tiene diez caracteres y cualquier corte a catorce la habría escrito entera.
+
+**Comprobación 55**, 325 elementos —las 25 claves más los 300 pares—, y se ejecuta **al final**
+porque necesita los resultados de todas las demás.
+
+**Estado del verificador:** 55 comprobaciones, 62 fallos (62 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F130 — En un clon limpio la puerta anunciaba «código de salida 0» mientras devolvía 1
+
+**Fecha:** 2026-09-09 · **Origen:** comprobar que el aparato funciona donde no se ha construido
+
+Cincuenta y cinco comprobaciones, la autoprueba y la auditoría de afirmaciones corren en **esta**
+copia de trabajo. Nunca las había ejecutado en un clon, que es donde las ejecutaría otra persona.
+Clonado de verdad desde el remoto con `--depth 1`, aparecen **tres cosas que un clon no tiene**, y
+un defecto en cómo la puerta lo cuenta.
+
+### Lo que un clon no trae
+
+| | Consecuencia |
+|:---|:---|
+| `core.hooksPath` es configuración **local** | el clon **no tiene la puerta de commit**, aunque el gancho esté versionado (ya escrito en `§F93`) |
+| Un clon superficial no trae el commit **`df9b4c4`** | la comprobación **50 sale VACÍA**: no puede leer el corpus anterior a la corrección del *mojibake*, y el actual ya no tiene el defecto que la Tabla 17 mide |
+| `.setenv.sh` está en `.gitignore` | sin credenciales |
+
+### El defecto: la puerta decía lo contrario de lo que hacía
+
+El código de salida es correcto —`return 1 if (nuevos or vacias)`, y en el clon devolvía **1**—,
+pero la línea explicativa se imprimía comprobando solo los fallos:
+
+```
+if fallos_totales and not nuevos:
+    print('  (codigo de salida 0: no hay fallos nuevos...')
+```
+
+De modo que en el clon la salida terminaba con **«código de salida 0»** mientras el proceso
+devolvía **1**. Quien lo lea concluye que pasó, y su integración continua acaba de fallar. Es un
+defecto pequeño colocado en el peor sitio: la última línea que alguien lee para saber si puede
+seguir.
+
+**Arreglado**: la línea de «código de salida 0» solo se imprime cuando de verdad va a ser 0, y
+cuando hay vacías se imprime otra que dice **por qué** corta —«una comprobación que examina cero
+elementos no ha pasado, no se ha ejecutado»— y **cómo arreglarlo**: `git fetch --unshallow`.
+
+**El remedio está comprobado, no supuesto.** Aplicado sobre el clon: 510 commits, `df9b4c4`
+presente, **0 vacías**. Una instrucción de arreglo que nadie ha ejecutado no es un arreglo.
+
+### Y un preparador, porque tres pasos que no están escritos son tres pasos que se olvidan
+
+`tools/preparar_clon.sh` comprueba las tres, arregla las dos que se pueden arreglar —el
+`hooksPath` y la historia— y dice en voz alta la que no, porque `.setenv.sh` no puede salir de
+git. Después ejecuta el verificador y la auditoría para acreditar que el clon quedó operativo. No
+instala nada ni adivina nada.
+
+**Lo que esto dice del método.** El aparato de verificación estaba comprobado contra el documento,
+contra los datos, contra sí mismo y contra sus propias declaraciones, y no contra **el entorno**.
+Una comprobación que solo corre donde se escribió es la misma clase de defecto que una que solo
+corre con el venv, y este proyecto ya rehízo Levene, el ANOVA, Friedman y `fuzz.ratio` en biblioteca
+estándar por esa razón exacta.
+
+**Estado del verificador:** 55 comprobaciones, 63 fallos (63 declarados, **0 nuevos**), 0 vacías en
+esta copia; en un clon superficial, 1 vacía y salida 1 con su explicación.
+
+---
+
+## §F131 — Ensayo en seco de la adopción: dos bloqueos, una comprobación que reventaba y la lista de trabajo
+
+**Fecha:** 2026-09-09 · **Origen:** preparar lo que va a pasar después, en lugar de esperarlo
+
+La decisión 1 está respondida —adoptar el consolidado nuevo es seguro para la conclusión ([§F123](#f123))— pero
+nadie había comprobado **qué haría el verificador el día de la adopción**. Apuntado en una copia de
+trabajo al consolidado nuevo, sin comprometer nada: **10 comprobaciones fallan con 56 fallos
+nuevos**, y una **reventaba**.
+
+### La comprobación que reventaba, y era la del estadístico titular
+
+`c_anova` calcula `math.log10(p)` para comparar el exponente publicado. Con el consolidado nuevo la
+**p subdesborda a 0,0** en doble precisión —F = 119,7502 sobre df = (25, 2912)— y `log10(0.0)` lanza
+`ValueError`. El envoltorio lo reportaba como VACÍA con su causa, que es su comportamiento diseñado,
+pero **la comprobación que vigila el resultado principal del trabajo dejaba de comprobar nada**
+exactamente el día en que más falta hace.
+
+**Arreglado**, y con el remedio en el mensaje: cuando la p subdesborda, la comprobación lo dice y
+añade que **el informe no puede publicar una cifra**, sino una cota del tipo «p < 10⁻³⁰⁰» declarando
+que el valor exacto no es representable. Verificado que con el consolidado publicado nada cambia:
+sigue en 5 elementos y «ok».
+
+### Dos bloqueos del consolidado nuevo, ninguno visible hasta hoy
+
+**1. Su manifiesto no es portable.** Las trece fuentes están escritas con **rutas absolutas a la
+máquina del equipo de 48 GB**:
+
+| Consolidado | Fuentes | Con ruta absoluta | Resolubles aquí |
+|:---|---:|---:|---:|
+| Publicado | 8 | **0** | **8** |
+| Nuevo | 13 | **13** | **0** |
+
+Todo lo que resuelve fuentes desde el manifiesto —el protocolo homogéneo, las cifras de la medición
+restringida— falla con «no existe /Users/eahumada1/…». No es un problema de datos: los ficheros
+están, con otro prefijo. Es un problema de que el manifiesto no se puede leer en ninguna máquina que
+no sea la que lo escribió.
+
+**2. No tiene `levene.json`.** El publicado sí. La comprobación del supuesto de homocedasticidad se
+queda sin artefacto contra el que contrastar, lo que concuerda con que su `statistical_report.md` no
+mencione Levene ([§F113](#f113)).
+
+### La lista de trabajo, para que la decisión se tome con el precio delante
+
+| Cifra publicada | Con el consolidado nuevo |
+|:---|:---|
+| F = 38,2222 | **119,7502** |
+| p = 3,4453 × 10⁻¹⁶⁰ | **subdesborda**: hay que escribir una cota |
+| χ² de Friedman = 1 169,23 | **1 802,3671** (y `friedman.json` hay que regenerarlo) |
+| Tukey, 158 de 325 significativas | **217 de 325** |
+| Dos modelos significativos | **uno** en tres categorías; **dos** en la restringida ([§F123](#f123)) |
+| `nemotron-mini:4b` +14,52 pp | **+12,26 pp** |
+| `llama3.2:latest` +10,82 pp | **+6,73 pp** |
+| Levene p = 0,18 | 0,0000, y sin artefacto |
+| Tabla 7, 26 medias de grupo | todas |
+| La salvedad de §5.3.1 sobre 7 filas con latencia 0 | **deja de describir nada**: la campaña nueva no tiene ninguna |
+
+Esa última fila es una buena noticia disfrazada de fallo: el defecto que §5.3.1 declaraba
+desaparece, y con él la salvedad.
+
+**Lo que esto añade a la decisión 1.** La respuesta sigue siendo que adoptar es seguro, pero ahora
+está el precio: **diez comprobaciones y una decena de cifras titulares**, más dos arreglos que
+corresponden al equipo de 48 GB —el manifiesto portable y el `levene.json`— y que **conviene pedir
+antes** de decidir, porque sin ellos parte del informe no se puede verificar contra el consolidado
+nuevo aunque se adopte.
+
+### Mecanizado, porque habrá que repetirlo
+
+El ensayo lo hice copiando el verificador a `tools/`, sustituyendo un nombre y borrando la copia:
+frágil, irrepetible y sucio. Y **hay que volver a ejecutarlo** cuando el equipo arregle el manifiesto
+y entregue el `levene.json`, porque la lista de trabajo cambiará. Ahora es
+`tools/ensayo_adopcion.py`, que carga el verificador en memoria con las rutas del consolidado que se
+le indique, lo ejecuta, y **compara sus resultados con los del actual**: la salida no es «pasa o
+falla» sino la lista de trabajo. No escribe nada ni toca el verificador del repositorio.
+
+Declara su limitación: la sustitución es **textual**, de modo que una comprobación que construyera
+esa ruta de otra forma seguiría leyendo el consolidado viejo y **aparecería como que no cambia**. Por
+eso imprime el recuento de sustituciones —hoy **8**—: el día que baje sin motivo, alguien ha cambiado
+cómo se nombra el consolidado.
+
+**Y emerge algo que no había visto al hacerlo a mano.** La comprobación 55, la que audita las
+declaraciones, señala que la adopción dejaría **tres declaraciones caducadas**: la de `cita 62.67` y
+la de «el Anexo I dice» —las dos de la decisión 13— y la de la telemetría ausente. Es decir, adoptar
+**resuelve por sí solo tres de las pendencias declaradas**, y la herramienta lo dice sin que nadie
+tenga que acordarse de comprobarlo.
+
+**Estado del verificador:** 55 comprobaciones, 63 fallos (63 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F132 — Prueba de humo de las veintiuna herramientas: una sola falla, y por el motivo correcto
+
+**Fecha:** 2026-09-09 · **Origen:** haber añadido seis herramientas en una sesión sin ejecutarlas todas
+
+Una herramienta que revienta es peor que no tenerla, y `ast.parse` no lo detecta: un `NameError` o un
+`import` que falta pasan la comprobación de sintaxis sin problema. Ejecutadas las **21** de `tools/`
+más la de `.sh`:
+
+| Comprobación | Resultado |
+|:---|---:|
+| Sintaxis (`ast.parse` y `sh -n`) | **22 de 22** correctas |
+| Cargan y responden a `--help` | **20 de 21** |
+| Ficheros rastreados a cero bytes | 2, los dos declarados |
+| Residuo sin rastrear en el repositorio | **0** |
+
+La que no carga es `generar_figuras_informe.py`, que necesita `matplotlib`. Y **es el motivo
+correcto**, no un defecto: `matplotlib` está en el venv del proyecto —3.11.1— y no en el Python del
+sistema, a propósito. Las otras veinte corren con el del sistema porque **una comprobación que solo
+corre en un entorno no corre**, y este proyecto ya rehízo Levene, el ANOVA, Friedman y `fuzz.ratio`
+en biblioteca estándar por esa razón. Esta **genera**, no comprueba, y por eso se le permite la
+dependencia.
+
+**Y no deja ninguna comprobación sin correr**, que era lo que había que verificar: el verificador
+**lee su fuente como texto** para contrastar los rótulos de las figuras, y no la ejecuta.
+
+**Lo que sí era un defecto es el mensaje.** Un `ModuleNotFoundError: No module named 'matplotlib'`
+no le dice a nadie qué hacer. Sustituido por una guarda que da la orden exacta con el venv y explica
+por qué esta herramienta es la excepción.
+
+### Y una comprobación que importa para la decisión 19
+
+Las figuras **regeneran idénticas byte a byte** hoy, comprobado con el venv sobre un directorio
+aparte para no arriesgar las del entregable. No es un dato de archivo: la decisión 19 incluye
+insertarlas, y ahora consta que se pueden regenerar y que lo que hay en `doc/figuras/` es
+exactamente lo que produce la herramienta desde la Tabla 7 del Markdown.
+
+**Estado del verificador:** 55 comprobaciones, 63 fallos (63 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F133 — La declaración que puse para el aviso de la comprobación 55 anuló su detección entera
+
+**Fecha:** 2026-09-09 · **Origen:** la propia comprobación 55, un turno después de escribirla
+
+[§F129](#f129) arregló que la comprobación 55 se silenciara a sí misma: su mensaje contenía la clave
+literal, y se imprimió en adelante solo un **prefijo estricto**. Luego declaré el aviso legítimo
+—la declaración de la referencia [37], que pertenece a `c_urls` y sin `--red` no tapa nada— con esta
+clave:
+
+> `'no tapa ningun fallo. Sin --red'`
+
+Y esa cadena es un trozo de **la plantilla del mensaje**: «…no tapa ningún fallo. Sin `--red` puede
+ser de `c_urls`…». De modo que la declaración casaba con **cualquier** aviso de huérfana, no solo con
+el suyo, y **anulaba la detección completa de declaraciones caducadas**, presentes y futuras. Es
+exactamente la «clave demasiado genérica» que la comprobación 55 existe para encontrar, y mi
+declaración la dejó ciega para su propia categoría de fallo.
+
+El síntoma que lo delató: la 55 reportaba «la declaración n.25 no tapa ningún fallo» **sobre la
+declaración n.25**, que era la que acababa de añadir. Una declaración que se acusa a sí misma es la
+señal de que su clave describe el mensaje y no el defecto.
+
+**Arreglado sin declaración.** Una lista explícita, `SOLO_CON_RED`, enumera las claves cuya
+comprobación solo corre con `--red`; la 55 las cuenta aparte y lo dice en su nota —«1 declaración de
+`SOLO_CON_RED` no tapa nada sin red, y es legítimo»— en lugar de silenciarlas. **Cualquier otra
+huérfana vuelve a ser un fallo.** Las declaraciones bajan de 26 a 25.
+
+**Probado por mutación en los dos frentes**, los dos detectados y con el mensaje correcto:
+
+| Mutación | Resultado |
+|:---|:---|
+| Una declaración caducada, con clave que no tapa nada | señalada: «no tapa ningún fallo y no está en `SOLO_CON_RED`» |
+| Una clave genérica, `'no esta'` | señalada **por las dos ramas**: silencia tres comprobaciones **y** está anidada con la de la Tabla 20 |
+
+**La lección, que es la que importa y ya va por la tercera vuelta.** El mecanismo de declaraciones
+empareja **por texto del mensaje**, de modo que declarar un fallo cuyo mensaje describe *el mecanismo
+mismo* es intrínsecamente peligroso: la clave deja de nombrar un defecto y pasa a nombrar una forma
+de decirlo. Cuando lo que hay que declarar es un estado del **entorno** y no un defecto del
+documento, la herramienta correcta es una lista enumerada en el código, no una declaración.
+
+**Estado del verificador:** 55 comprobaciones, 61 fallos (61 declarados, **0 nuevos**), 0 vacías, 25
+declaraciones.
