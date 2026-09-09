@@ -6312,3 +6312,42 @@ fuente y los tres entregables, de modo que **el inventario lo produce la herrami
 divergencia nueva corta el commit.
 
 **Auditoría de afirmaciones:** 15 predicados, 0 que no se cumplen.
+
+---
+
+## §F136 — La biblioteca de prompts mandaba hacer a mano lo que ya hace una herramienta
+
+**Fecha:** 2026-09-09 · **Origen:** la petición de revisar el trabajo «según los prompts documentados
+en `doc/prompts`»
+
+Los nueve documentos de `doc/prompts` llevan entre **133 y 178 commits** de retraso respecto del
+código y los datos que describen. El retraso por sí solo no prueba nada —un procedimiento puede
+seguir siendo válido—, así que lo que hay que buscar es otra cosa: **si algún prompt manda hacer a
+mano lo que ahora hace una herramienta**. Dos lo hacían.
+
+**`05-entregables.md`** pedía «enumerar en el encargo **qué ha cambiado** desde la última
+propagación, porque quien maqueta no puede adivinarlo», y narraba la detección del peor fallo de la
+revisión como una hazaña: «dos auditores lo detectaron extrayendo el XML por separado». Hoy las
+comprobaciones **51 a 54** comparan prosa, tablas, bibliografía, encabezados y figuras entre la
+fuente y los tres `.docx` en menos de dos segundos, y cortan el commit ante cualquier divergencia
+nueva. El encargo de maquetación se escribe **pegando la salida del verificador**, no reconstruyendo
+la lista — y una enumeración a mano se queda incompleta sin que nadie se entere, que es precisamente
+lo que pasó con `PROPAGACION-PENDIENTE-DOCX-20260908.md` y su adenda.
+
+**`00-revision-completa.md`** decía «**cubre diez comprobaciones**» y las enumeraba. Hay 55. Es
+[§F134](#f134) en un documento de procedimiento, y ahí duele más que en uno de norma: **un
+procedimiento que declara de menos manda hacer menos**. Quien lo pegue en una sesión nueva creerá
+que el aparato cubre diez cosas y verificará a mano las otras cuarenta y cinco, o no las verificará.
+
+**Corregido de forma aditiva**, sin retirar nada: el recuento y su lista se sustituyen por las
+**familias** que cubre —que no envejecen— y por la instrucción de que la cifra la dice el script al
+ejecutarse. Añadidas las cuatro herramientas que estos prompts daban por inexistentes
+(`auditar_afirmaciones`, `cobertura_cifras`, `estado_ramas`, `ensayo_adopcion`), la puerta de commit
+y `preparar_clon.sh`. Y en el `README` una tabla de herramientas, porque un prompt que describe una
+comprobación en prosa y no dice que existe implementada hace trabajar dos veces.
+
+**Predicado 14 extendido a `doc/prompts`.** Estaba limitado a los documentos de norma —`CLAUDE.md` y
+el encargo— y los de procedimiento quedaban fuera. Probado por mutación: devuelto «cubre 10
+comprobaciones» a un prompt, la auditoría pasa de código 0 a 1.
+
+**Auditoría de afirmaciones:** 15 predicados, 0 que no se cumplen.

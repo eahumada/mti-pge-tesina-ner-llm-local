@@ -81,11 +81,28 @@ python3 tools/verificar_informe.py          # detalle
 python3 tools/verificar_informe.py --breve  # solo lo que falla o está vacío
 ```
 
-Cubre diez comprobaciones: ficheros rastreados a cero bytes, referencias `§x.y` con destino existente,
-tablas numeradas con leyenda encima y citadas, figuras numeradas con leyenda debajo y con imagen real y no
-vacía, bibliografía contigua con URL y correspondencia en ambos sentidos, resumen y abstract por debajo de
-200 palabras, ausencia de pictogramas y de arte ASCII, ausencia de modelos excluidos, coherencia de la
-Figura 2 con la Tabla 7 junto con la aritmética de sus deltas, e identificadores `§F`/`§L` sin colisión.
+**Cuántas comprobaciones cubre y cuáles son no se anota aquí: lo dice el propio script al ejecutarse.**
+Este párrafo enumeraba diez y se quedó corto en cuanto se añadieron más, sin que nada avisara. Un recuento
+copiado a un documento de procedimiento envejece con cada commit al código que describe. La regla está en
+`FINDINGS §F134`.
+
+Lo que sí conviene saber es **qué familias cubre**: ficheros vacíos, referencias cruzadas, tablas y figuras
+con su leyenda, bibliografía con sus URL, límites del resumen, higiene tipográfica, modelos excluidos,
+reproducción de las tablas y figuras desde los datos, los estadísticos titulares recalculados desde el CSV
+—ANOVA, Levene, Friedman, el recuento de Tukey—, la sincronía de los tres `.docx` con la fuente, y una
+auditoría del propio mecanismo de fallos declarados.
+
+**Además del verificador hay tres herramientas más, y conviene ejecutarlas en la misma tanda:**
+
+```sh
+python3 tools/auditar_afirmaciones.py   # que el registro no afirme correcciones sin aplicar
+python3 tools/estado_ramas.py           # que main este al dia y las ramas declaradas
+python3 tools/cobertura_cifras.py       # que cifra del informe no tiene quien la recalcule
+```
+
+Y hay una **puerta de commit** en `.githooks/pre-commit` que ejecuta el verificador y la auditoría cuando el
+commit toca el informe, las herramientas o los datos. Es configuración local: un clon nuevo no la tiene, y
+`tools/preparar_clon.sh` la instala junto con lo demás que un clon no trae.
 
 **Cada comprobación declara cuántos elementos examinó**, y una que examina cero se marca como VACÍA en lugar
 de superada. Es deliberado: el propio informe documenta en §5.3 una prueba de sensibilidad que no podía

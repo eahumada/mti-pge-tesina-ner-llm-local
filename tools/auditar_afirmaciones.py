@@ -197,7 +197,14 @@ def _sin_recuentos_copiados():
     `CURRENT-TASKS.md`, los `WORKLOG`, `FINDINGS`— donde una cifra consigna lo que era cierto
     entonces y por eso no se actualiza: a un registro se le anade, no se le edita.
     """
-    DOCS = ['CLAUDE.md', 'ENCARGO-EQUIPO-48GB-SOLO-CORRIDAS-VALIDAS-20260909.md']
+    # `doc/prompts` entra desde el 2026-09-09: son documentos de PROCEDIMIENTO, que alguien pega
+    # en una sesion nueva para ejecutar una revision, y llevaban recuentos copiados —«cubre diez
+    # comprobaciones» con su lista, cuando habia cincuenta y cinco—. Un procedimiento que declara
+    # de menos manda hacer menos.
+    import glob as _g
+    DOCS = (['CLAUDE.md', 'ENCARGO-EQUIPO-48GB-SOLO-CORRIDAS-VALIDAS-20260909.md']
+            + sorted(os.path.relpath(x, RAIZ)
+                     for x in _g.glob(os.path.join(RAIZ, 'doc/prompts/*.md'))))
     PATRONES = [
         (r'\b(\d+)\s+comprobaciones\b', 'un recuento de comprobaciones'),
         (r'\b(\d+)\s+fallos?\s*\((\d+)\s+declarad', 'el resumen de fallos del verificador'),

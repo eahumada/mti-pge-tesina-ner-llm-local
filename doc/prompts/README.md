@@ -14,6 +14,25 @@ para poder **pegarse tal cual** en una sesión nueva de Claude Code, y agrupados
 | [`06-equipo-remoto.md`](./06-equipo-remoto.md) | Monitorea entregas de un equipo remoto y las verifica antes de aceptar sus cifras | Mientras haya ejecuciones delegadas |
 | [`07-defensa-simulada.md`](./07-defensa-simulada.md) | **Solo lectura.** Revisión como profesor guía y comisión evaluadora, con cuatro preguntas de defensa | Al cerrar un capítulo, antes de darlo por bueno |
 
+## Herramientas que estos prompts dan por supuestas (2026-09-09)
+
+Varios de estos prompts describen en prosa comprobaciones que **hoy están implementadas**. Conviene
+ejecutarlas antes de pedirle a nadie que las haga a mano:
+
+| Herramienta | Qué comprueba |
+|:---|:---|
+| `tools/verificar_informe.py` | el informe contra los datos, el código y los tres `.docx`; devuelve 0 si no hay fallos **nuevos** |
+| `tools/auditar_afirmaciones.py` | que el registro no afirme correcciones que no se aplicaron |
+| `tools/cobertura_cifras.py` | qué cifra del informe **no tiene quien la recalcule** |
+| `tools/estado_ramas.py` | que `main` esté al día y las ramas declaradas |
+| `tools/ensayo_adopcion.py` | qué costaría adoptar otro consolidado, sin adoptarlo |
+| `tools/preparar_clon.sh` | pone un clon recién hecho en estado de trabajo |
+| `.githooks/pre-commit` | puerta que detiene el commit ante fallos **nuevos** |
+
+**Ningún recuento de comprobaciones se anota en estos documentos**, por la razón que explica
+`FINDINGS §F134`: una cifra copiada envejece con cada commit al código que describe y nadie se entera. Lo
+dice el script al ejecutarse.
+
 ## Cómo se usan
 
 Los prompts de `00` y `02` **lanzan workflows** y consumen bastante presupuesto; conviene ejecutarlos cuando
