@@ -63,9 +63,10 @@ tras `--red`; sin esa bandera se informa de cero fallos sin haber abierto una so
 que se complete la purga.
 
 `tools/autoprueba_verificador.py` comprueba lo contrario: que el verificador **no apruebe a ciegas**. Esconde
-cada artefacto por turno y exige que se entere. Si alguno pudiera faltar sin que ninguna comprobación lo
-notase, esa comprobación estaría devolviendo el valor del éxito por haber mirado el sitio equivocado
-(`LEARNING.md §L57`).
+cada artefacto por turno y exige que **la comprobación que lo usa** se entere —no basta con que falle alguna,
+porque varios ficheros los leen dos o tres y bastaba con que una se enterara para dar el visto bueno mientras
+las otras seguían ciegas (`LEARNING.md §L60`)—. Descuenta los fallos previos, de modo que sigue funcionando
+aunque algo ajeno esté fallando: exigir un verde completo la dejó inerte durante horas.
 
 Los demás scripts de `tools/` regeneran artefactos concretos, y todos leen de las fuentes primarias para que
 el documento y los datos no puedan divergir en silencio:
@@ -74,9 +75,9 @@ el documento y los datos no puedan divergir en silencio:
 |:---|:---|
 | `generar_figuras_informe.py` | Las dos figuras del informe |
 | `generar_tabla7.py` | La Tabla 7; con `--validar` comprueba que reproduce la publicada |
-| `composicion_fp.py` | La composición de los falsos positivos por categoría, con control contra el consolidado |
+| `composicion_fp.py` | La composición de los falsos positivos por categoría, con control contra el consolidado. **Falla si la cobertura es cero**: sin `detailed_results.json` no hay nada que medir, y un cero no es una medición |
 | `estado_recorrida.py` | `ESTADO-RECORRIDA-20260908.md`, con la firma del corpus calculada y no escrita a mano |
-| `robustez_estadistica.py` | Friedman y post-hoc pareado; con `--validar` reproduce los artefactos publicados |
+| `robustez_estadistica.py` | Friedman, post-hoc pareado **y la correlación capacidad-beneficio con su análisis de influencia**, que es la que sostiene la tesis central. Con `--validar` reproduce los artefactos publicados |
 | `efecto_emparejamiento_duplicado.py` | El efecto del doble conteo del emparejamiento sobre las cifras antiguas |
 | `desfase_documentos.py` | Qué documentos de estado han envejecido respecto de lo que describen |
 | `docx_replace_terms.py` | Ediciones de texto en los `.docx` preservando el formato |
