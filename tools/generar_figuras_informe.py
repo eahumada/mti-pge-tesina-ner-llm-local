@@ -95,18 +95,19 @@ def figura_1():
 def figura_2():
     """Composicion de los falsos positivos del estudio (§4.4)."""
     fig, ax = plt.subplots(figsize=(7.1, 1.5))
-    loc, total = 19178, 28404
+    # Cifras de results/COMPOSICION_FP_20260908/, sobre los 26 grupos que sostienen la Tabla 7.
+    loc, total = 12852, 19464
     otros = total - loc
     ax.barh([0], [loc], color='#333333', edgecolor='none', height=0.55)
     ax.barh([0], [otros], left=[loc], color='#cccccc', edgecolor='none', height=0.55)
-    ax.text(loc / 2, 0, f'localizaciones: {loc:,}'.replace(',', ' ') + '  (67,5 %)',
+    ax.text(loc / 2, 0, f'localizaciones: {loc:,}'.replace(',', ' ') + '  (66,0 %)',
             ha='center', va='center', color='white', fontsize=8)
     ax.text(loc + otros / 2, 0, f'personas y organizaciones: {otros:,}'.replace(',', ' '),
             ha='center', va='center', color='#222222', fontsize=8)
     ax.set_xlim(0, total)
     ax.set_ylim(-0.5, 0.5)
     ax.set_yticks([])
-    ax.set_xlabel(f'falsos positivos acumulados en las 42 configuraciones sobre N=120 '
+    ax.set_xlabel(f'falsos positivos en los 26 grupos que sostienen la Tabla 7 (N=120) '
                   f'(total {total:,})'.replace(',', ' '), fontsize=8)
     for s in ('top', 'right', 'left'):
         ax.spines[s].set_visible(False)

@@ -88,6 +88,28 @@ de *thinking*.
    vacío = el arnés perdió la respuesta. Cruzar `parse_method` con `recall` para ver si el *fallback* rescata
    contenido o encubre un fallo.
 6. **Fuente válida:** `benchmark_results.csv`. Ver `results/AVISO-SUMMARIES-OBSOLETOS.md`.
+7. **Población de la métrica:** leer `total_records` del `benchmark_summary.json` y comprobar que coincide con
+   las filas que se están promediando. En N=15 y N=30 coinciden; en N=120 **no**, porque se descuentan los
+   siete artículos contaminados y la métrica publicada va sobre **113**. Promediar el CSV entero da un número
+   que no es el del estudio (`FINDINGS §F65`).
+8. **La latencia no caracteriza al modelo.** Incluye la espera en cola bajo concurrencia, de modo que no
+   compara entre corridas ni dentro de una misma. Se comprueba multiplicándola por `tokens_per_sec`: si el
+   producto supera el tope de salida configurado, la latencia no mide generación. En las corridas publicadas
+   lo supera en **20 de 26 grupos** (`FINDINGS §F71.ter`). Lo que sí compara es `tokens_per_sec`, estable
+   entre corridas.
+
+## 3.bis Qué registrar la próxima vez, y que hoy falta
+
+- **El recuento de tokens generados por registro.** Es el dato que determina cuánto tarda una corrida, y no
+  está en ninguna parte: el CSV guarda `tokens_per_sec` pero no los tokens. Sin él **la duración de un
+  barrido no es estimable**, y este proyecto lo intentó dos veces por caminos distintos, fallando las dos
+  (`FINDINGS §F79`). Añadir una columna cuesta nada y evita tener que juzgar por el silencio si una ejecución
+  sigue viva.
+- **Un tiempo de inferencia separado de la espera.** Si además del reloj de pared se registrara el tiempo que
+  el modelo pasa generando, la tabla de eficiencia podría publicar segundos por artículo comparables, cosa
+  que hoy no puede.
+- **El manifiesto de artículos excluidos junto a cada corrida.** Hoy vive en `data/knowledge_base/` y una
+  corrida aislada no lleva constancia de sobre qué población se calculó su métrica.
 
 ## 4. Para el equipo remoto — qué hacer la próxima vez
 

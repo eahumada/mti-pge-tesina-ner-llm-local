@@ -1,0 +1,2680 @@
+[
+  {
+    "batch_idx": 1,
+    "record_id": "real_mixed_95",
+    "model": "gpt-oss:20b_baseline",
+    "latency_sec": 91.73337817192078,
+    "tokens_per_sec": 51.58,
+    "retries": 0,
+    "parse_method": "fallback",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 11.3,
+    "cpu_peak_pct": 100.0,
+    "proc_cpu_avg_pct": 3.3,
+    "mem_avg_mb": 90.7,
+    "mem_peak_mb": 263.5,
+    "sys_mem_avg_mb": 25088.7,
+    "sys_mem_avg_pct": 83.4,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 2,
+        "oov_recall": 0.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "EFE",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:18:00.598123+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "real_mixed_36",
+    "model": "gpt-oss:20b_baseline",
+    "latency_sec": 159.70456790924072,
+    "tokens_per_sec": 51.61,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.5909090909090909,
+    "recall": 0.5909090909090909,
+    "f1": 0.5909090909090909,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 12.1,
+    "cpu_peak_pct": 100.0,
+    "proc_cpu_avg_pct": 1.2,
+    "mem_avg_mb": 93.6,
+    "mem_peak_mb": 263.5,
+    "sys_mem_avg_mb": 25349.7,
+    "sys_mem_avg_pct": 83.3,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 13,
+          "fp": 0,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 8
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 9,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5909090909090909,
+        "recall": 0.5909090909090909,
+        "f1": 0.5909090909090909,
+        "tp": 13,
+        "fp": 9,
+        "fn": 9,
+        "oov_recall": 0.75
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Gari Kasparov",
+          "ground_truth_target": "Alexei Shirov",
+          "ratio": 53.84615384615385
+        },
+        {
+          "entity": "Ivan Sokolov",
+          "ground_truth_target": "Veselin Topalov",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Alexei Shirov",
+          "ground_truth_target": "Gari Kasparov",
+          "ratio": 53.84615384615385
+        },
+        {
+          "entity": "Alexander Morozevich",
+          "ground_truth_target": "Michail Gurevich",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Veselin Topalov",
+          "ground_truth_target": "Ivan Sokolov",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Michail Gurevich",
+          "ground_truth_target": "Kiril Georgiev",
+          "ratio": 53.333333333333336
+        },
+        {
+          "entity": "Evgeny Bareev",
+          "ground_truth_target": "Etienne Bacrot",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Etienne Bacrot",
+          "ground_truth_target": "Evgeny Bareev",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Kiril Georgiev",
+          "ground_truth_target": "Michail Gurevich",
+          "ratio": 53.333333333333336
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "BEL",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "BEL"
+        },
+        {
+          "entity": "ESP",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "ESP"
+        },
+        {
+          "entity": "RCH",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "RCH"
+        },
+        {
+          "entity": "BIH",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "BIH"
+        },
+        {
+          "entity": "ING",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "ING"
+        },
+        {
+          "entity": "BUL",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "BUL"
+        },
+        {
+          "entity": "RUS",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "RUS"
+        },
+        {
+          "entity": "FRA",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "FRA"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:19:08.587795+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "real_mixed_32",
+    "model": "gpt-oss:20b_baseline",
+    "latency_sec": 51.37606692314148,
+    "tokens_per_sec": 51.93,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.14285714285714285,
+    "recall": 0.2857142857142857,
+    "f1": 0.19047619047619047,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 10.7,
+    "cpu_peak_pct": 100.0,
+    "proc_cpu_avg_pct": 1.6,
+    "mem_avg_mb": 95.7,
+    "mem_peak_mb": 263.5,
+    "sys_mem_avg_mb": 24626.4,
+    "sys_mem_avg_pct": 83.6,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 0,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 0.25,
+          "recall": 0.2,
+          "f1": 0.22222222222222224,
+          "tp": 1,
+          "fp": 3,
+          "fn": 4
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 9,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.14285714285714285,
+        "recall": 0.2857142857142857,
+        "f1": 0.19047619047619047,
+        "tp": 2,
+        "fp": 12,
+        "fn": 5,
+        "oov_recall": 0.2857142857142857
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Meta",
+          "extracted_type": "Organizations",
+          "correct_type": "Persons",
+          "matched_ground_truth": "Meta"
+        },
+        {
+          "entity": "Albania",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Albania"
+        },
+        {
+          "entity": "Montenegro",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Montenegro"
+        }
+      ],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "Junta",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "Lonja",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:17:20.245717+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 3,
+    "record_id": "real_mixed_87",
+    "model": "gpt-oss:20b_baseline",
+    "latency_sec": 277.02945494651794,
+    "tokens_per_sec": 51.21,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.45454545454545453,
+    "recall": 0.7142857142857143,
+    "f1": 0.5555555555555556,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 14.8,
+    "cpu_peak_pct": 93.1,
+    "proc_cpu_avg_pct": 0.7,
+    "mem_avg_mb": 95.3,
+    "mem_peak_mb": 263.5,
+    "sys_mem_avg_mb": 25451.2,
+    "sys_mem_avg_pct": 83.4,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 0.6,
+          "recall": 0.75,
+          "f1": 0.6666666666666665,
+          "tp": 3,
+          "fp": 2,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 4,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.45454545454545453,
+        "recall": 0.7142857142857143,
+        "f1": 0.5555555555555556,
+        "tp": 5,
+        "fp": 6,
+        "fn": 2,
+        "oov_recall": 0.7142857142857143
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Atl\u00e9tico de Madrid",
+          "ground_truth_target": "Atl\u00c3\u00a9tico",
+          "ratio": 51.85185185185186
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "REYES",
+          "category": "Persons"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:21:05.903753+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 3,
+    "record_id": "real_mixed_115",
+    "model": "gpt-oss:20b_baseline",
+    "latency_sec": 21.15918803215027,
+    "tokens_per_sec": 52.45,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.42857142857142855,
+    "recall": 1.0,
+    "f1": 0.6,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 23.1,
+    "cpu_peak_pct": 100.0,
+    "proc_cpu_avg_pct": 18.4,
+    "mem_avg_mb": 97.4,
+    "mem_peak_mb": 263.5,
+    "sys_mem_avg_mb": 23789.0,
+    "sys_mem_avg_pct": 82.7,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.42857142857142855,
+        "recall": 1.0,
+        "f1": 0.6,
+        "tp": 3,
+        "fp": 4,
+        "fn": 0,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Bill Teah TWEHWAY",
+          "ground_truth_target": "Bill Twehway",
+          "ratio": 82.75862068965517
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:16:50.024359+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 3,
+    "record_id": "real_mixed_70",
+    "model": "gpt-oss:20b_baseline",
+    "latency_sec": 200.9845998287201,
+    "tokens_per_sec": 51.08,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.6818181818181818,
+    "recall": 0.7142857142857143,
+    "f1": 0.6976744186046512,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 13.1,
+    "cpu_peak_pct": 100.0,
+    "proc_cpu_avg_pct": 1.0,
+    "mem_avg_mb": 94.7,
+    "mem_peak_mb": 263.5,
+    "sys_mem_avg_mb": 25461.4,
+    "sys_mem_avg_pct": 83.2,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 0.75,
+          "f1": 0.8571428571428571,
+          "tp": 9,
+          "fp": 0,
+          "fn": 3
+        },
+        "Organizations": {
+          "precision": 0.75,
+          "recall": 0.6666666666666666,
+          "f1": 0.7058823529411765,
+          "tp": 6,
+          "fp": 2,
+          "fn": 3
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 5,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.6818181818181818,
+        "recall": 0.7142857142857143,
+        "f1": 0.6976744186046512,
+        "tp": 15,
+        "fp": 7,
+        "fn": 6,
+        "oov_recall": 0.7368421052631579
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Jorge Fern\u00e1ndez",
+          "ground_truth_target": "Alberto Fern\u00c3\u00a1ndez",
+          "ratio": 60.60606060606061
+        },
+        {
+          "entity": "Alberto Fern\u00e1ndez",
+          "ground_truth_target": "Jorge Fern\u00c3\u00a1ndez",
+          "ratio": 60.60606060606061
+        },
+        {
+          "entity": "Miguel Sanz",
+          "ground_truth_target": "SANZ",
+          "ratio": 53.333333333333336
+        },
+        {
+          "entity": "Mario Monti",
+          "ground_truth_target": "Mariano Rajoy",
+          "ratio": 58.33333333333333
+        },
+        {
+          "entity": "Mariano Rajoy",
+          "ground_truth_target": "Mario Monti",
+          "ratio": 58.33333333333333
+        },
+        {
+          "entity": "Gobierno de Navarra",
+          "ground_truth_target": "Gobierno",
+          "ratio": 59.25925925925925
+        },
+        {
+          "entity": "Generalitat valenciana",
+          "ground_truth_target": "Generalitat",
+          "ratio": 66.66666666666667
+        },
+        {
+          "entity": "Ejecutivo comunitario",
+          "ground_truth_target": "Ejecutivo",
+          "ratio": 60.0
+        },
+        {
+          "entity": "Gobierno",
+          "ground_truth_target": "Gobierno de Navarra",
+          "ratio": 59.25925925925925
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "SANZ",
+          "category": "Persons"
+        },
+        {
+          "ground_truth_entity": "MONTI",
+          "category": "Persons"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:19:49.874125+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "real_mixed_29",
+    "model": "gpt-oss:20b_baseline",
+    "latency_sec": 239.76536512374878,
+    "tokens_per_sec": 51.43,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.35714285714285715,
+    "recall": 0.8333333333333334,
+    "f1": 0.5,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 15.8,
+    "cpu_peak_pct": 100.0,
+    "proc_cpu_avg_pct": 0.6,
+    "mem_avg_mb": 94.5,
+    "mem_peak_mb": 263.5,
+    "sys_mem_avg_mb": 25518.2,
+    "sys_mem_avg_pct": 83.2,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 0.75,
+          "f1": 0.8571428571428571,
+          "tp": 3,
+          "fp": 0,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 0.7,
+          "recall": 0.875,
+          "f1": 0.7777777777777777,
+          "tp": 7,
+          "fp": 3,
+          "fn": 1
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 15,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.35714285714285715,
+        "recall": 0.8333333333333334,
+        "f1": 0.5,
+        "tp": 10,
+        "fp": 18,
+        "fn": 2,
+        "oov_recall": 0.8333333333333334
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Consejer\u00eda de Obras P\u00fablicas",
+          "ground_truth_target": "Obras P\u00c3\u00bablicas",
+          "ratio": 60.46511627906976
+        },
+        {
+          "entity": "Ayuntamiento de Escalante",
+          "ground_truth_target": "Ayuntamiento de Villanueva de la Serena",
+          "ratio": 65.625
+        },
+        {
+          "entity": "Ayuntamiento de Villanueva de la Serena",
+          "ground_truth_target": "Ayuntamiento de Escalante",
+          "ratio": 65.625
+        },
+        {
+          "entity": "Junta de Extremadura",
+          "ground_truth_target": "Consejer\u00c3\u00ada de Cultura de la Junta de Extremadura",
+          "ratio": 57.971014492753625
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:20:28.643199+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "real_mixed_18",
+    "model": "gpt-oss:20b_baseline",
+    "latency_sec": 392.8423228263855,
+    "tokens_per_sec": 51.58,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.5625,
+    "recall": 0.75,
+    "f1": 0.6428571428571429,
+    "hallucination_rate": 0.0625,
+    "hallucinated_count": 1,
+    "cpu_avg_pct": 14.5,
+    "cpu_peak_pct": 100.0,
+    "proc_cpu_avg_pct": 0.5,
+    "mem_avg_mb": 94.5,
+    "mem_peak_mb": 263.5,
+    "sys_mem_avg_mb": 25543.6,
+    "sys_mem_avg_pct": 83.3,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 0.6363636363636364,
+          "recall": 0.7777777777777778,
+          "f1": 0.7000000000000001,
+          "tp": 7,
+          "fp": 4,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 3,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5625,
+        "recall": 0.75,
+        "f1": 0.6428571428571429,
+        "tp": 9,
+        "fp": 7,
+        "fn": 3,
+        "oov_recall": 0.7272727272727273
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Joan Boada",
+          "ground_truth_target": "Boada",
+          "ratio": 66.66666666666667
+        },
+        {
+          "entity": "Parlamento catal\u00e1n",
+          "ground_truth_target": "Parlamento",
+          "ratio": 71.42857142857143
+        },
+        {
+          "entity": "Gobierno de la Generalitat",
+          "ground_truth_target": "Generalitat",
+          "ratio": 59.45945945945945
+        },
+        {
+          "entity": "Ej\u00e9rcito espa\u00f1ol",
+          "ground_truth_target": "Ej\u00c3\u00a9rcito",
+          "ratio": 56.00000000000001
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "Boada",
+          "category": "Persons"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:23:01.719015+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "real_mixed_14",
+    "model": "gpt-oss:20b_baseline",
+    "latency_sec": 359.58769702911377,
+    "tokens_per_sec": 51.09,
+    "retries": 0,
+    "parse_method": "fallback",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 13.8,
+    "cpu_peak_pct": 100.0,
+    "proc_cpu_avg_pct": 0.5,
+    "mem_avg_mb": 94.7,
+    "mem_peak_mb": 263.5,
+    "sys_mem_avg_mb": 25522.1,
+    "sys_mem_avg_pct": 83.3,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 11
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 12,
+        "oov_recall": 0.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:22:28.468338+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "real_mixed_82",
+    "model": "gpt-oss:20b_baseline",
+    "latency_sec": 433.61158514022827,
+    "tokens_per_sec": 51.58,
+    "retries": 0,
+    "parse_method": "fallback",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 13.6,
+    "cpu_peak_pct": 100.0,
+    "proc_cpu_avg_pct": 1.6,
+    "mem_avg_mb": 94.4,
+    "mem_peak_mb": 263.5,
+    "sys_mem_avg_mb": 25558.8,
+    "sys_mem_avg_pct": 83.3,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 7
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 9,
+        "oov_recall": 0.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "EFE",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:23:42.487022+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "real_mixed_15",
+    "model": "gpt-oss:20b_baseline",
+    "latency_sec": 317.858412027359,
+    "tokens_per_sec": 51.47,
+    "retries": 0,
+    "parse_method": "fallback",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 12.7,
+    "cpu_peak_pct": 100.0,
+    "proc_cpu_avg_pct": 1.3,
+    "mem_avg_mb": 95.3,
+    "mem_peak_mb": 263.5,
+    "sys_mem_avg_mb": 25489.8,
+    "sys_mem_avg_pct": 83.3,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 4
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 5
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 9,
+        "oov_recall": 0.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "Viva",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "EFE",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "FMI",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:21:46.728562+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "real_mixed_4",
+    "model": "gpt-oss:20b_baseline",
+    "latency_sec": 132.51092410087585,
+    "tokens_per_sec": 51.36,
+    "retries": 0,
+    "parse_method": "fallback",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 12.1,
+    "cpu_peak_pct": 100.0,
+    "proc_cpu_avg_pct": 0.7,
+    "mem_avg_mb": 93.7,
+    "mem_peak_mb": 263.5,
+    "sys_mem_avg_mb": 25281.3,
+    "sys_mem_avg_pct": 83.3,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 5
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 9
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 14,
+        "oov_recall": 0.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "EFE",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "PP",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:18:41.395761+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 4,
+    "record_id": "real_mixed_12",
+    "model": "gpt-oss:20b_baseline",
+    "latency_sec": 330.347856760025,
+    "tokens_per_sec": 51.65,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.5833333333333334,
+    "recall": 1.0,
+    "f1": 0.7368421052631579,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 12.3,
+    "cpu_peak_pct": 66.7,
+    "proc_cpu_avg_pct": 0.6,
+    "mem_avg_mb": 94.5,
+    "mem_peak_mb": 106.5,
+    "sys_mem_avg_mb": 25675.2,
+    "sys_mem_avg_pct": 83.3,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 7,
+          "fp": 0,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 5,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5833333333333334,
+        "recall": 1.0,
+        "f1": 0.7368421052631579,
+        "tp": 7,
+        "fp": 5,
+        "fn": 0,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "AENA",
+          "ground_truth_target": "Valencia",
+          "ratio": 66.66666666666667
+        },
+        {
+          "entity": "Valencia",
+          "ground_truth_target": "AENA",
+          "ratio": 66.66666666666667
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:24:38.955085+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 4,
+    "record_id": "real_mixed_76",
+    "model": "gpt-oss:20b_baseline",
+    "latency_sec": 291.549751996994,
+    "tokens_per_sec": 52.35,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 12.3,
+    "cpu_peak_pct": 62.2,
+    "proc_cpu_avg_pct": 0.5,
+    "mem_avg_mb": 94.8,
+    "mem_peak_mb": 106.5,
+    "sys_mem_avg_mb": 25679.4,
+    "sys_mem_avg_pct": 83.3,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 3,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 4,
+        "fn": 0,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:24:00.146757+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 4,
+    "record_id": "real_mixed_55",
+    "model": "gpt-oss:20b_baseline",
+    "latency_sec": 371.2166180610657,
+    "tokens_per_sec": 51.47,
+    "retries": 0,
+    "parse_method": "fallback",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 12.9,
+    "cpu_peak_pct": 100.0,
+    "proc_cpu_avg_pct": 0.4,
+    "mem_avg_mb": 93.5,
+    "mem_peak_mb": 106.5,
+    "sys_mem_avg_mb": 25670.6,
+    "sys_mem_avg_pct": 83.3,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 2
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 7
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 9,
+        "oov_recall": 0.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "Mesa",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "COI",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "EFE",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:25:19.830548+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "real_mixed_82",
+    "model": "gpt-oss:20b_kb_rag",
+    "latency_sec": 42.303648948669434,
+    "tokens_per_sec": 51.08,
+    "retries": 0,
+    "parse_method": "fallback",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 8.0,
+    "cpu_peak_pct": 58.0,
+    "proc_cpu_avg_pct": 9.9,
+    "mem_avg_mb": 366.4,
+    "mem_peak_mb": 752.8,
+    "sys_mem_avg_mb": 25329.8,
+    "sys_mem_avg_pct": 84.0,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 7
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 9,
+        "oov_recall": 0.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "EFE",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:26:03.539128+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "real_mixed_15",
+    "model": "gpt-oss:20b_kb_rag",
+    "latency_sec": 208.69943618774414,
+    "tokens_per_sec": 51.17,
+    "retries": 0,
+    "parse_method": "fallback",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 12.4,
+    "cpu_peak_pct": 100.0,
+    "proc_cpu_avg_pct": 0.7,
+    "mem_avg_mb": 170.4,
+    "mem_peak_mb": 752.8,
+    "sys_mem_avg_mb": 25348.5,
+    "sys_mem_avg_pct": 83.8,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 4
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 5
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 9,
+        "oov_recall": 0.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "Viva",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "EFE",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "FMI",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:28:49.942930+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 0,
+    "record_id": "real_mixed_4",
+    "model": "gpt-oss:20b_kb_rag",
+    "latency_sec": 167.25688910484314,
+    "tokens_per_sec": 51.06,
+    "retries": 0,
+    "parse_method": "fallback",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 14.5,
+    "cpu_peak_pct": 67.2,
+    "proc_cpu_avg_pct": 4.5,
+    "mem_avg_mb": 186.8,
+    "mem_peak_mb": 922.2,
+    "sys_mem_avg_mb": 25323.9,
+    "sys_mem_avg_pct": 83.9,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 5
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 9
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 14,
+        "oov_recall": 0.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "EFE",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "PP",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:28:08.238620+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "real_mixed_29",
+    "model": "gpt-oss:20b_kb_rag",
+    "latency_sec": 402.1450209617615,
+    "tokens_per_sec": 51.16,
+    "retries": 0,
+    "parse_method": "fallback",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 13.3,
+    "cpu_peak_pct": 66.7,
+    "proc_cpu_avg_pct": 0.9,
+    "mem_avg_mb": 151.6,
+    "mem_peak_mb": 752.8,
+    "sys_mem_avg_mb": 25299.9,
+    "sys_mem_avg_pct": 83.9,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 4
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 8
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 12,
+        "oov_recall": 0.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "EFE",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "PP",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:32:03.395246+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "real_mixed_18",
+    "model": "gpt-oss:20b_kb_rag",
+    "latency_sec": 318.0736918449402,
+    "tokens_per_sec": 51.14,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.5625,
+    "recall": 0.75,
+    "f1": 0.6428571428571429,
+    "hallucination_rate": 0.0625,
+    "hallucinated_count": 1,
+    "cpu_avg_pct": 11.0,
+    "cpu_peak_pct": 67.6,
+    "proc_cpu_avg_pct": 1.0,
+    "mem_avg_mb": 163.7,
+    "mem_peak_mb": 752.8,
+    "sys_mem_avg_mb": 25338.4,
+    "sys_mem_avg_pct": 83.8,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 0,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 0.6363636363636364,
+          "recall": 0.7777777777777778,
+          "f1": 0.7000000000000001,
+          "tp": 7,
+          "fp": 4,
+          "fn": 2
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 3,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5625,
+        "recall": 0.75,
+        "f1": 0.6428571428571429,
+        "tp": 9,
+        "fp": 7,
+        "fn": 3,
+        "oov_recall": 0.7272727272727273
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Joan Boada",
+          "ground_truth_target": "Boada",
+          "ratio": 66.66666666666667
+        },
+        {
+          "entity": "Parlamento catal\u00e1n",
+          "ground_truth_target": "Parlamento",
+          "ratio": 71.42857142857143
+        },
+        {
+          "entity": "Gobierno de la Generalitat",
+          "ground_truth_target": "Generalitat",
+          "ratio": 59.45945945945945
+        },
+        {
+          "entity": "Ej\u00e9rcito espa\u00f1ol",
+          "ground_truth_target": "Ej\u00c3\u00a9rcito",
+          "ratio": 56.00000000000001
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "Boada",
+          "category": "Persons"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:30:39.313756+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 2,
+    "record_id": "real_mixed_14",
+    "model": "gpt-oss:20b_kb_rag",
+    "latency_sec": 361.1571521759033,
+    "tokens_per_sec": 50.61,
+    "retries": 0,
+    "parse_method": "fallback",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 12.0,
+    "cpu_peak_pct": 67.6,
+    "proc_cpu_avg_pct": 1.4,
+    "mem_avg_mb": 156.5,
+    "mem_peak_mb": 752.8,
+    "sys_mem_avg_mb": 25320.4,
+    "sys_mem_avg_pct": 83.8,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 11
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 12,
+        "oov_recall": 0.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:31:22.400867+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "real_mixed_95",
+    "model": "gpt-oss:20b_kb_rag",
+    "latency_sec": 277.60728192329407,
+    "tokens_per_sec": 51.03,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.18181818181818182,
+    "recall": 1.0,
+    "f1": 0.3076923076923077,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 11.4,
+    "cpu_peak_pct": 68.4,
+    "proc_cpu_avg_pct": 1.3,
+    "mem_avg_mb": 174.1,
+    "mem_peak_mb": 752.8,
+    "sys_mem_avg_mb": 25355.8,
+    "sys_mem_avg_pct": 83.7,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.4,
+          "recall": 1.0,
+          "f1": 0.5714285714285715,
+          "tp": 2,
+          "fp": 3,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 6,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.18181818181818182,
+        "recall": 1.0,
+        "f1": 0.3076923076923077,
+        "tp": 2,
+        "fp": 9,
+        "fn": 0,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "EFE",
+          "ground_truth_target": "EFECOM",
+          "ratio": 66.66666666666667
+        },
+        {
+          "entity": "EFECOM",
+          "ground_truth_target": "EFE",
+          "ratio": 66.66666666666667
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:29:58.828784+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "real_mixed_36",
+    "model": "gpt-oss:20b_kb_rag",
+    "latency_sec": 242.15624594688416,
+    "tokens_per_sec": 51.35,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.5909090909090909,
+    "recall": 0.5909090909090909,
+    "f1": 0.5909090909090909,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 10.3,
+    "cpu_peak_pct": 68.4,
+    "proc_cpu_avg_pct": 2.3,
+    "mem_avg_mb": 181.3,
+    "mem_peak_mb": 752.8,
+    "sys_mem_avg_mb": 25345.2,
+    "sys_mem_avg_pct": 83.8,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 13,
+          "fp": 0,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 8
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 9,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.5909090909090909,
+        "recall": 0.5909090909090909,
+        "f1": 0.5909090909090909,
+        "tp": 13,
+        "fp": 9,
+        "fn": 9,
+        "oov_recall": 0.75
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Gari Kasparov",
+          "ground_truth_target": "Alexei Shirov",
+          "ratio": 53.84615384615385
+        },
+        {
+          "entity": "Ivan Sokolov",
+          "ground_truth_target": "Veselin Topalov",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Alexei Shirov",
+          "ground_truth_target": "Gari Kasparov",
+          "ratio": 53.84615384615385
+        },
+        {
+          "entity": "Alexander Morozevich",
+          "ground_truth_target": "Michail Gurevich",
+          "ratio": 50.0
+        },
+        {
+          "entity": "Veselin Topalov",
+          "ground_truth_target": "Ivan Sokolov",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Michail Gurevich",
+          "ground_truth_target": "Kiril Georgiev",
+          "ratio": 53.333333333333336
+        },
+        {
+          "entity": "Evgeny Bareev",
+          "ground_truth_target": "Etienne Bacrot",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Etienne Bacrot",
+          "ground_truth_target": "Evgeny Bareev",
+          "ratio": 51.85185185185186
+        },
+        {
+          "entity": "Kiril Georgiev",
+          "ground_truth_target": "Michail Gurevich",
+          "ratio": 53.333333333333336
+        }
+      ],
+      "type_confusion": [
+        {
+          "entity": "BEL",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "BEL"
+        },
+        {
+          "entity": "ESP",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "ESP"
+        },
+        {
+          "entity": "RCH",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "RCH"
+        },
+        {
+          "entity": "BIH",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "BIH"
+        },
+        {
+          "entity": "ING",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "ING"
+        },
+        {
+          "entity": "BUL",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "BUL"
+        },
+        {
+          "entity": "RUS",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "RUS"
+        },
+        {
+          "entity": "FRA",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "FRA"
+        }
+      ],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:29:23.406323+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 1,
+    "record_id": "real_mixed_32",
+    "model": "gpt-oss:20b_kb_rag",
+    "latency_sec": 434.63949370384216,
+    "tokens_per_sec": 51.37,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.13333333333333333,
+    "recall": 0.2857142857142857,
+    "f1": 0.18181818181818182,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 10.7,
+    "cpu_peak_pct": 66.7,
+    "proc_cpu_avg_pct": 0.9,
+    "mem_avg_mb": 148.6,
+    "mem_peak_mb": 752.8,
+    "sys_mem_avg_mb": 25283.0,
+    "sys_mem_avg_pct": 83.9,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 0,
+          "fn": 1
+        },
+        "Organizations": {
+          "precision": 0.25,
+          "recall": 0.2,
+          "f1": 0.22222222222222224,
+          "tp": 1,
+          "fp": 3,
+          "fn": 4
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 10,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.13333333333333333,
+        "recall": 0.2857142857142857,
+        "f1": 0.18181818181818182,
+        "tp": 2,
+        "fp": 13,
+        "fn": 5,
+        "oov_recall": 0.2857142857142857
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [
+        {
+          "entity": "Meta",
+          "extracted_type": "Organizations",
+          "correct_type": "Persons",
+          "matched_ground_truth": "Meta"
+        },
+        {
+          "entity": "Albania",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Albania"
+        },
+        {
+          "entity": "Montenegro",
+          "extracted_type": "Locations",
+          "correct_type": "Organizations",
+          "matched_ground_truth": "Montenegro"
+        }
+      ],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "Junta",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "Lonja",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:32:35.875557+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 3,
+    "record_id": "real_mixed_87",
+    "model": "gpt-oss:20b_kb_rag",
+    "latency_sec": 124.91364932060242,
+    "tokens_per_sec": 51.11,
+    "retries": 0,
+    "parse_method": "fallback",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 11.7,
+    "cpu_peak_pct": 58.0,
+    "proc_cpu_avg_pct": 7.2,
+    "mem_avg_mb": 213.3,
+    "mem_peak_mb": 1089.5,
+    "sys_mem_avg_mb": 25280.7,
+    "sys_mem_avg_pct": 84.0,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 3
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 4
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 7,
+        "oov_recall": 0.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "REYES",
+          "category": "Persons"
+        },
+        {
+          "ground_truth_entity": "EFE",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:27:26.117219+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 3,
+    "record_id": "real_mixed_115",
+    "model": "gpt-oss:20b_kb_rag",
+    "latency_sec": 450.8587510585785,
+    "tokens_per_sec": 52.09,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.42857142857142855,
+    "recall": 1.0,
+    "f1": 0.6,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 10.7,
+    "cpu_peak_pct": 100.0,
+    "proc_cpu_avg_pct": 1.4,
+    "mem_avg_mb": 147.4,
+    "mem_peak_mb": 752.8,
+    "sys_mem_avg_mb": 25273.0,
+    "sys_mem_avg_pct": 83.9,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8,
+          "tp": 2,
+          "fp": 1,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.42857142857142855,
+        "recall": 1.0,
+        "f1": 0.6,
+        "tp": 3,
+        "fp": 4,
+        "fn": 0,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [
+        {
+          "entity": "Bill Teah TWEHWAY",
+          "ground_truth_target": "Bill Twehway",
+          "ratio": 82.75862068965517
+        }
+      ],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:32:52.085794+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 3,
+    "record_id": "real_mixed_70",
+    "model": "gpt-oss:20b_kb_rag",
+    "latency_sec": 83.6666567325592,
+    "tokens_per_sec": 51.14,
+    "retries": 0,
+    "parse_method": "fallback",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 9.6,
+    "cpu_peak_pct": 100.0,
+    "proc_cpu_avg_pct": 1.4,
+    "mem_avg_mb": 261.8,
+    "mem_peak_mb": 752.8,
+    "sys_mem_avg_mb": 25325.3,
+    "sys_mem_avg_pct": 84.0,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 12
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 9
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 21,
+        "oov_recall": 0.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "SANZ",
+          "category": "Persons"
+        },
+        {
+          "ground_truth_entity": "MONTI",
+          "category": "Persons"
+        },
+        {
+          "ground_truth_entity": "EFE",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "PP",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:26:44.925560+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 4,
+    "record_id": "real_mixed_12",
+    "model": "gpt-oss:20b_kb_rag",
+    "latency_sec": 296.87430715560913,
+    "tokens_per_sec": 51.19,
+    "retries": 0,
+    "parse_method": "fallback",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 11.6,
+    "cpu_peak_pct": 100.0,
+    "proc_cpu_avg_pct": 0.5,
+    "mem_avg_mb": 122.2,
+    "mem_peak_mb": 566.6,
+    "sys_mem_avg_mb": 25173.0,
+    "sys_mem_avg_pct": 84.2,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 7
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 7,
+        "oov_recall": 0.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "AENA",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "EFE",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:33:47.189188+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 4,
+    "record_id": "real_mixed_76",
+    "model": "gpt-oss:20b_kb_rag",
+    "latency_sec": 255.85482478141785,
+    "tokens_per_sec": 52.21,
+    "retries": 0,
+    "parse_method": "direct_json",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 11.5,
+    "cpu_peak_pct": 61.3,
+    "proc_cpu_avg_pct": 0.8,
+    "mem_avg_mb": 126.4,
+    "mem_peak_mb": 566.6,
+    "sys_mem_avg_mb": 25199.8,
+    "sys_mem_avg_pct": 84.1,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 7,
+          "fn": 0
+        },
+        "Locations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 8,
+        "fn": 0,
+        "oov_recall": 1.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:33:06.155752+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  },
+  {
+    "batch_idx": 4,
+    "record_id": "real_mixed_55",
+    "model": "gpt-oss:20b_kb_rag",
+    "latency_sec": 338.1100468635559,
+    "tokens_per_sec": 50.94,
+    "retries": 0,
+    "parse_method": "fallback",
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "hallucination_rate": 0.0,
+    "hallucinated_count": 0,
+    "cpu_avg_pct": 12.3,
+    "cpu_peak_pct": 61.3,
+    "proc_cpu_avg_pct": 0.5,
+    "mem_avg_mb": 120.3,
+    "mem_peak_mb": 566.6,
+    "sys_mem_avg_mb": 25148.7,
+    "sys_mem_avg_pct": 84.2,
+    "vram_mb": 12165.9,
+    "model_disk_mb": 13154.5,
+    "metrics": {
+      "per_type": {
+        "Persons": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 2
+        },
+        "Organizations": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 7
+        },
+        "Locations": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "overall": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 9,
+        "oov_recall": 0.0
+      }
+    },
+    "error_taxonomy": {
+      "boundary_errors": [],
+      "type_confusion": [],
+      "abbreviation_misses": [
+        {
+          "ground_truth_entity": "Mesa",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "COI",
+          "category": "Organizations"
+        },
+        {
+          "ground_truth_entity": "EFE",
+          "category": "Organizations"
+        }
+      ],
+      "extrinsic_hallucinations": []
+    },
+    "data_provenance": {
+      "timestamp": "2026-09-07T15:34:28.427535+00:00",
+      "model_version": "gpt-oss:20b",
+      "prompt_hash": "a6af280e"
+    }
+  }
+]

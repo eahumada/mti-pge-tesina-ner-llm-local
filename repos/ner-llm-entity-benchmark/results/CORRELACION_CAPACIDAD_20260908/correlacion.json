@@ -1,0 +1,94 @@
+{
+ "nota": "Correlacion entre el F1 baseline de cada modelo y la mejora que le aporta el KB RAG, sobre los trece modelos de la Tabla 7 (N=120). Sostiene la afirmacion de §5.3.1 sobre que el beneficio del RAG decrece con la capacidad, y la cifra que muestra el panel (b) de la Figura 2.",
+ "fecha": "2026-09-08",
+ "n_modelos": 13,
+ "modelos": [
+  "gemma4:31b-cloud",
+  "gemma4:31b-mlx",
+  "gemma4:12b-mlx",
+  "gemma4:latest",
+  "gpt-oss:20b",
+  "qwen2.5:14b",
+  "llama3.1:8b",
+  "qwen3:8b",
+  "gemma:latest",
+  "mistral-nemo:latest",
+  "llama3.2:latest",
+  "deepseek-r1:1.5b",
+  "nemotron-mini:4b"
+ ],
+ "f1_baseline": [
+  62.38,
+  59.25,
+  56.18,
+  55.91,
+  52.39,
+  50.22,
+  48.76,
+  48.21,
+  44.0,
+  43.38,
+  36.11,
+  24.83,
+  22.59
+ ],
+ "f1_kb_rag": [
+  61.85,
+  59.07,
+  58.46,
+  54.74,
+  55.67,
+  54.84,
+  50.75,
+  51.46,
+  51.36,
+  45.76,
+  46.93,
+  23.94,
+  37.12
+ ],
+ "delta": [
+  -0.53,
+  -0.18,
+  2.28,
+  -1.17,
+  3.28,
+  4.62,
+  1.99,
+  3.25,
+  7.36,
+  2.38,
+  10.82,
+  -0.89,
+  14.53
+ ],
+ "spearman": {
+  "rho": -0.5165,
+  "p": 0.0707,
+  "significativo_005": false
+ },
+ "pearson": {
+  "r": -0.6004,
+  "p": 0.03,
+  "significativo_005": true
+ },
+ "n_necesaria_para_p005": {
+  "spearman": 15,
+  "pearson": 12
+ },
+ "advertencia": "Los dos coeficientes discrepan en el veredicto: Pearson alcanza p<0,05 y Spearman no. Reportar solo uno seria seleccionar el resultado. Ademas, con n=13 el contraste esta al limite de su potencia.",
+ "robustez": {
+  "objecion": "Delta se define como F1_kb_rag menos F1_baseline, de modo que contiene la variable con la que se correlaciona. Cabe preguntar si la correlacion negativa es un artefacto de construccion.",
+  "nula_simulada": "F1_kb_rag = F1_baseline + ruido gaussiano con la media y dispersion observadas del delta, es decir, efecto del RAG independiente de la capacidad. 5.000 repeticiones.",
+  "rho_bajo_la_nula": {
+   "mediana": -0.005,
+   "p5": -0.484,
+   "p95": 0.462
+  },
+  "proporcion_tan_negativas_como_la_observada": 0.0372,
+  "permutacion_unilateral": 0.0374,
+  "p_parametrica_unilateral": 0.0354,
+  "veredicto": "NO es un artefacto: bajo la nula correcta el valor observado cae fuera del intervalo central. Las tres pruebas coinciden en torno a 0,035-0,037 unilateral, de modo que la simulacion no aporta mas significancia sino que descarta la objecion.",
+  "nota": "El informe cita la p bilateral, 0,0707, que es lo prudente porque una prueba unilateral solo seria defendible si la direccion se hubiera predicho antes de mirar los datos."
+ }
+}

@@ -644,3 +644,210 @@ ese número sea el que corresponde.** `total_records` está en el resumen precis
 
 Emparenta con `§L47` y `§L49`: las tres son la misma debilidad, que una comprobación mire menos de lo que su
 nombre promete. Aquí lo que se mira de menos es *sobre qué población* se calculó el número.
+
+### L51. Lo que no se versiona no existe, y el detalle por registro es lo primero que se echa de menos
+
+Los `detailed_results.json` estaban ignorados en git. Nadie lo decidió por una razón vigente: quedó así, y
+el coste apareció tres veces en forma de «esa cifra no se puede recalcular, hay que volver a inferir»
+(`§F67`).
+
+El patrón se repite con los `benchmark.log`, que también estuvieron ignorados hasta que se perdieron líneas
+de dos de ellos y solo se pudieron reconstruir las de uno. **Dos veces el mismo defecto, sobre dos ficheros
+distintos, y la regla que se escribió la primera vez no alcanzó al segundo.**
+
+Lo que distingue a estos ficheros no es su tamaño ni su formato, sino **qué se pierde si desaparecen**. Un
+agregado se puede volver a calcular a partir del detalle; el detalle solo se puede volver a obtener
+re-ejecutando el experimento, que en este proyecto son decenas de horas de máquina. La pregunta correcta
+antes de ignorar algo no es «¿ocupa mucho?» sino **«¿podría reconstruirlo si mañana no estuviera?»**.
+
+Corolario operativo: cuando se escriba una regla de conservación para una clase de artefacto, revisar en el
+mismo turno qué **otras** clases cumplen el mismo criterio. La regla de los logs se escribió sin mirar si
+había algo más en la misma situación, y lo había.
+
+### L52. Editar JSON por sustitución de texto lo rompe, y nadie se entera
+
+El barrido que retiró los nombres de los modelos excluidos borró la cadena del nombre allí donde aparecía,
+en lugar de cargar el fichero, modificar la estructura y volcarla. El resultado son dos ficheros con
+`"model":` colgando sin valor en 240 registros y un objeto al que le falta una clave (`§F70`).
+
+Lo que hace que este error sea caro no es la edición en sí, sino que **el daño es invisible**. Un JSON roto
+pesa lo mismo, se abre igual, aparece en un `ls` y pasa cualquier comprobación de existencia. Solo se
+manifiesta cuando alguien intenta cargarlo, y en este caso nadie lo intentó durante un día entero porque los
+ficheros estaban además ignorados en git.
+
+Dos reglas, y la segunda importa más:
+
+- **Un fichero estructurado se edita cargándolo y volcándolo**, nunca por sustitución de texto. Si hay que
+  hacerlo por texto, se valida después.
+- **Después de cualquier edición masiva de datos, parsear todo lo tocado.** No es una comprobación de la
+  edición, es una comprobación del fichero: cuesta un segundo por fichero y cubre la clase entera.
+
+Es hermana de `§L47` —un fichero vacío no da síntoma— y de `§L51` —lo que no se versiona no existe—. Las
+tres describen lo mismo desde ángulos distintos: **los defectos que sobreviven son los que no producen
+ningún síntoma**, y por eso hay que ir a buscarlos en vez de esperar a que aparezcan.
+
+### L53. Las horas de un documento de coordinación se leen del reloj, no se estiman
+
+Las veinte entradas que escribí hoy en `CURRENT-TASKS.md` llevaban horas inventadas. No al azar: fui
+incrementando una hora plausible en cada anotación, de modo que la deriva **creció de forma monótona** desde
+11 minutos hasta **5 horas y 38**, y la última entrada aparecía fechada al día siguiente. Corregidas las
+veinte contra la marca de tiempo del commit que introdujo cada una.
+
+Lo grave no es la imprecisión, es **dónde** estaba. `CURRENT-TASKS.md` existe para que varios agentes que
+trabajan a la vez sepan quién hizo qué y cuándo, y este proyecto ya ha tenido incidentes por edición
+concurrente. Una entrada fechada con dos horas de adelanto sitúa un trabajo después de otro que en realidad
+lo precedió, y hace irreconstruible la secuencia justo cuando hace falta reconstruirla.
+
+El error tiene además una forma reconocible: **una serie plausible es más creíble que un valor absurdo, y por
+eso sobrevive**. Nadie mira dos veces un «21:35» entre un «21:10» y un «22:00». Lo mismo pasó con los tres
+recuentos de guiones y negritas que dieron 19, 28 y 31 sobre el mismo texto: cada uno era plausible por
+separado.
+
+La regla es trivial y la omití veinte veces seguidas: **si hay que escribir una hora, se pregunta al
+sistema.** Y su corolario, que vale para cualquier dato que se anota de pasada: si un valor se puede
+obtener, no se estima.
+
+### L54. Una explicación plausible escrita antes de comprobarla es una hipótesis disfrazada de hallazgo
+
+Al ver que cinco modelos rehechos mostraban efectos muy parecidos, escribí en `§F68.bis` que la dispersión
+anterior venía de cuántas localizaciones emitía cada modelo. Sonaba bien, encajaba con el mecanismo conocido
+y explicaba el dato. Seis minutos después la comprobé con datos que ya estaban en el repositorio y resultó
+falsa: excluir las localizaciones del cómputo **aumenta** la dispersión en lugar de reducirla (`§F68.ter`).
+
+Peor todavía: la «convergencia» que pretendía explicar se medía sobre cinco modelos que **excluyen los dos
+efectos más grandes del estudio**, ambos pendientes de rehacer. Estaba explicando un artefacto de muestreo.
+
+Lo que falló no fue el razonamiento sino el **orden**. La prueba costó dos minutos y los datos llevaban horas
+en el disco. Escribir primero y comprobar después convierte una hipótesis en un hallazgo aparente que otros
+—o yo mismo mañana— citarán como establecido.
+
+La regla, para cuando aparezca un patrón atractivo: **antes de escribir por qué ocurre algo, comprobar si
+ocurre.** Y con muestras parciales, mirar explícitamente **qué queda fuera** antes de describir lo que se ve;
+aquí lo que quedaba fuera eran justamente los dos casos que definían el fenómeno.
+
+Emparenta con `§L53` —una serie plausible sobrevive porque nadie la mira dos veces— y con la nota de método
+de `§F44`: un hallazgo de auditoría es una hipótesis, no un hecho.
+
+### L55. El recuento en prosa se desvía del dato, y siempre en cifras pequeñas
+
+El repaso que abrió `§L54` ha encontrado hoy **cinco** afirmaciones numéricas propias que no reproducían: una
+explicación mecanicista falsa, un «solo en modo KB RAG» que ignoraba un contraejemplo, dos decimales citados
+de un fichero sin comprobarlos, un «23 ficheros» que eran 22, un «nueve de los doce» que eran ocho y un
+«cuatro de cuatro» que era tres de cuatro.
+
+Ninguna cambió una conclusión. Todas eran **cifras pequeñas escritas de memoria** mientras la atención estaba
+en el argumento: cuántos ficheros, cuántos de cuántos, en qué modo. Es donde el cuidado se relaja, porque el
+número parece un detalle de la frase y no un dato.
+
+Lo que las hace peligrosas es que **son verificables y por tanto verificables en la defensa**. Un tribunal
+que abra el repositorio y cuente doce ficheros donde el texto dice trece no concluye que hubo un desliz:
+concluye que las cifras del trabajo no se comprueban.
+
+La regla operativa que se deriva: **cuando una frase contiene un recuento, obtenerlo en el mismo turno en que
+se escribe**, aunque parezca obvio. Y al terminar una tanda de documentación, repasar los recuentos contra
+los datos, que es lo que hizo aparecer estos cinco.
+
+### L56. Un criterio de medida que cambia entre dos llamadas produce una cifra falsa y plausible
+
+Al calcular cuánto había crecido el cuerpo del informe usé dos veces la misma idea —«contar palabras hasta
+donde empiezan los anexos»— con dos detectores ligeramente distintos. Uno reconocía `### Anexo A` y el otro
+solo `## Anexos`. En la versión antigua, que usaba el primer formato, el segundo detector no encontró
+frontera y contó el documento entero como cuerpo.
+
+El resultado fue que el cuerpo había **encogido 2 673 palabras** cuando en realidad había **crecido 2 084**.
+La cifra tenía el signo contrario y era perfectamente creíble: encajaba con la idea de que las correcciones
+del día habían sido de precisión y no de adición.
+
+Lo que falla aquí no es el conteo sino **la frontera**. Cualquier medida que dependa de dónde se corta un
+documento —cuerpo frente a anexos, capítulo frente a capítulo, corrida frente a corrida— hereda la fragilidad
+de ese corte, y dos implementaciones «equivalentes» del mismo corte no lo son.
+
+La regla: **cuando una medida dependa de una frontera, escribir la frontera una vez y reutilizarla**, en
+lugar de reimplementarla en cada cálculo. Y si el resultado sorprende, sospechar de la frontera antes que del
+dato.
+
+Es hermana de `§L47` y `§L52`: las tres describen medidas que fallan sin dar ningún síntoma, porque devuelven
+un número en lugar de un error.
+
+---
+
+## §L57 — Una comprobación cuyo valor «bueno» puede producirse por avería necesita su control en la misma orden
+
+**2026-09-08, 23:0x.** La rutina de seguimiento incluye una comprobación de la purga de GitHub: si el commit
+que contiene la clave de API deja de responder, la purga se ha completado. Llevaba todo el día devolviendo
+HTTP 200, es decir, sin purgar. Esta vez devolvió **404**, y durante unos segundos eso se leyó como que el
+objeto había desaparecido.
+
+No había desaparecido. La orden usaba `eahumadaFID/…` como propietario del repositorio, cuando el propietario
+es `eahumada/…`. Un repositorio inexistente devuelve 404 para todo. El comprobante correcto, ejecutado después
+con el token y la URL que registra `SEGURIDAD-CLAVE-GOOGLE-20260908.md`, devolvió **HTTP 200 y la clave en
+claro**: la situación no había cambiado en absoluto.
+
+**Lo que lo destapó** fue pedir el control en la misma orden: además del commit purgado, la raíz del
+repositorio y un commit vigente de `HEAD`. Los tres dieron 404. Un commit vigente que no responde no es una
+purga, es una URL rota, y ahí se acabó la interpretación optimista.
+
+**La lección.** El 404 era simultáneamente el resultado esperado del éxito y el síntoma de la avería más
+común de esa orden: escribir mal la URL. Cuando el valor que indica éxito coincide con el que produce un
+fallo de la propia comprobación, la comprobación no distingue nada por sí sola, y leerla como buena noticia
+es lo que el sesgo hace por defecto.
+
+- **Toda comprobación cuyo valor bueno sea «algo ya no está» lleva su control adjunto**: pedir en la misma
+  orden algo que *sí debe seguir estando*. Si el control también falla, el resultado no es un hallazgo, es
+  una avería.
+- **Un resultado que mejora sin causa conocida se verifica antes de celebrarse.** Nadie ejecutó nada entre
+  las dos mediciones. Un cambio de estado sin causa es primero sospechoso y solo después bueno.
+- Esto es lo mismo que `[[L47]]` sobre las comprobaciones vacías, aplicado un paso más allá: allí una
+  comprobación que no examinaba nada se marcaba como superada; aquí una que examina el objeto equivocado
+  devuelve el valor del éxito. En ambos casos el defecto no está en el dato, sino en que la orden no puede
+  distinguir entre haber acertado y no haber mirado.
+
+**Aplicado.** La comprobación documentada en `SEGURIDAD-CLAVE-GOOGLE-20260908.md` se amplía con su control, y
+declara explícitamente que un 404 anónimo no significa nada: el repositorio es privado y responde 404 a
+cualquiera sin credenciales, incluida su propia raíz.
+
+---
+
+## §L58 — `git branch -f` no puede mover la rama activa, y no dice nada al no hacerlo
+
+**2026-09-08, tarde y noche.** Tras cada commit se ejecutaba esta secuencia para mantener las tres ramas
+alineadas:
+
+```sh
+for b in sesion/revision-final-20260908 backup/revision-final-20260908; do
+  git branch -f "$b" main >/dev/null 2>&1
+done
+git push -q origin main sesion/... backup/... --force-with-lease
+```
+
+Y después se informaba «ramas en `<sha>`, todo empujado». **No era exacto.** La rama activa era
+`sesion/revision-final-20260908`, de modo que los commits avanzaban *esa* rama y `main` se quedaba donde
+estaba. La orden `git branch -f sesion/... main` habría retrocedido la rama de sesión hasta `main`
+—destruyendo el trabajo— pero git **se niega a mover la rama que está activa**, y ese rechazo iba directo a
+`/dev/null` por el `>/dev/null 2>&1`. El `push` entonces empujaba `main` y `backup` en su estado viejo, sin
+error, porque no había nada que empujar.
+
+**Resultado:** trece commits vivían solo en la rama de sesión. No se perdió nada —estaban comprometidos y
+empujados ahí— pero `main` llevaba cinco horas de retraso mientras el informe de estado decía lo contrario.
+
+**Lo que falló, en orden de importancia:**
+
+1. **Silenciar la salida de una orden que puede negarse a actuar.** El `2>&1` de conveniencia convirtió un
+   rechazo explícito de git en nada. Si una orden puede fallar de forma legítima, su error se lee.
+2. **Informar del estado sin comprobarlo.** «Todo empujado» se decía a partir del código de salida del
+   `push`, que era cero porque no tenía nada que hacer. La comprobación correcta es
+   `git rev-list --count origin/<rama>..<rama>` **por cada rama**, y compararla con cero.
+3. **Usar `git branch -f` teniendo una rama activa.** Para adelantar otra rama a la actual, la dirección es
+   la contraria: `git branch -f main <rama-activa>`, que sí funciona porque `main` no está activa.
+
+**La comprobación que lo destapa** cabe en una línea y ahora cierra cada tanda:
+
+```sh
+for r in main sesion/... backup/...; do
+  echo "$r: $(git rev-list --count origin/$r..$r) por empujar"
+done
+```
+
+Es el mismo patrón de `[[L57]]`: una orden cuyo «no hizo nada» es indistinguible de «lo hizo bien» si nadie
+mira el resultado. Allí un 404 podía significar éxito o URL rota; aquí un `push` sin error puede significar
+sincronizado o nada que empujar.

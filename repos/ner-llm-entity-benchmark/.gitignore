@@ -15,6 +15,11 @@ env/
 # ---------------------------------------------------------------------------
 # Respaldos de trabajo de agentes
 # ---------------------------------------------------------------------------
+# Los respaldos genericos siguen ignorados, PERO doce ficheros «.bak_prescore» se anadieron a
+# mano con `git add -f` el 2026-09-08: son la unica copia del estado por registro ANTERIOR a la
+# correccion de puntuacion del 2026-09-06, y no se pueden reconstruir. Los otros quince que hay
+# se recuperan del historial y no aportan nada; los nueve restantes contienen modelos excluidos y
+# quedan pendientes de decision del autor. Ver FINDINGS §F67.bis.
 *.bak_*
 
 # ---------------------------------------------------------------------------
@@ -45,8 +50,14 @@ data/chroma_db/
 # ---------------------------------------------------------------------------
 results/**/.checkpoint.json
 results/.checkpoint.json
-results/**/detailed_results.json
-results/detailed_results.json
+# 2026-09-08: los `detailed_results.json` SE VERSIONAN. Estaban ignorados y eso deja sin
+# respaldo el detalle por registro de cada corrida, que es lo unico que permite recalcular
+# una metrica sin volver a inferir. El informe ya declara TRES veces que unos datos por
+# registro se perdieron y no se pudieron recalcular. Son 22 ficheros y ~16 MB: barato.
+# Ademas tools/verificar_corrida.py los NECESITA, de modo que sin ellos una corrida
+# commiteada no puede re-verificarla nadie mas. Ver FINDINGS §F67 y LEARNING §L51.
+# results/**/detailed_results.json   <- regla retirada
+# results/detailed_results.json      <- regla retirada
 
 # Los logs de la RAÍZ del repo SÍ se conservan: para varias corridas antiguas
 # son la única evidencia superviviente de sus métricas agregadas.

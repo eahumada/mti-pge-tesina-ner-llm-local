@@ -1742,6 +1742,33 @@ sistemáticamente el beneficio atribuido al RAG**, que es justo la conclusión c
 `benchmark_summary.json` y comprobar que coincide con el número de filas que se están promediando. En N=15 y
 N=30 coinciden (15 y 30); en N=120 no, y son 113.
 
+### §F65.bis — Las cifras `+10,01` y `+2,19` no reproducen; el resultado sí
+
+**2026-09-08, 20:22.** Tercer hallazgo del repaso de `§L54`, y el más matizado de los tres.
+
+`§F65` cita del manifiesto de artículos contaminados que el KB RAG aporta **+10,01 pp** sobre esos siete
+artículos frente a **+2,19 pp** sobre los ciento trece restantes. Esa cifra **se citó sin comprobarla**, y al
+calcularla sobre el consolidado publicado —promediando el Δ por modelo y luego entre los trece— sale distinta:
+
+| Población | Manifiesto | Calculado aquí |
+|:---|---:|---:|
+| Los 7 contaminados | +10,01 pp | **+11,89 pp** |
+| Los 113 restantes | +2,19 pp | **+3,16 pp** |
+| Razón entre ambas | ×4,57 | **×3,76** |
+
+**El resultado que sostiene la decisión no cambia:** el efecto de la recuperación es entre **tres y cuatro
+veces mayor** sobre los artículos que son a la vez ejemplares del RAG, y por tanto excluirlos de la métrica
+sigue siendo lo correcto. Lo que no se sostiene es citar dos decimales que no se han reproducido.
+
+**Por qué difieren, probablemente.** El manifiesto no documenta su método, y hay al menos tres formas
+razonables de promediar esto que dan resultados distintos: por modelo y luego entre modelos —lo que se ha
+hecho aquí—, agrupando todos los registros a la vez, o restringiendo a las configuraciones `kb_combined`
+frente a todas. No se puede decidir cuál usó sin su código.
+
+**Qué hacer.** Cuando el informe cite esta comparación, debe hacerlo con la cifra que este repositorio pueda
+reproducir y declarando el método, no con la del manifiesto. Y conviene pedir al equipo de 48 GB el cálculo
+que produjo el `_comment` de ese fichero, porque una cifra sin método es una cifra que no se puede defender.
+
 **Nota de método.** Este defecto se destapó porque el desglose por categoría no cuadraba con el corpus: la
 matriz de confusión daba 1 098 personas de referencia donde el corpus tiene 594, una razón de 1,85 en las
 tres categorías. Cuadrar dos fuentes que deberían decir lo mismo es más barato que revisar cualquiera de las
@@ -1817,3 +1844,1271 @@ ahora coincidan **es la comprobación de que la cadena entera aplica la misma co
 faltaba: la exclusión estaba en un extremo y se perdía en el otro.
 
 Se hizo en un directorio de trabajo aparte; el consolidado publicado no se ha tocado.
+
+---
+
+## §F67 — El detalle por registro estaba ignorado en git, y es lo único que permite recalcular sin re-inferir
+
+**Fecha:** 2026-09-08. Encontrado al revisar por qué las seis corridas de la re-corrida no traían
+`detailed_results.json`.
+
+El `.gitignore` del repositorio del benchmark ignoraba `results/**/detailed_results.json`. Ese fichero es el
+**detalle por registro** de cada corrida: lo que el modelo extrajo, lo que decía la referencia y el veredicto
+por entidad. No es un agregado, es lo que permite **recalcular una métrica sin volver a inferir**.
+
+**El coste ya se pagó tres veces.** El propio informe declara en tres lugares distintos que unos datos por
+registro se perdieron y por eso una cifra no se pudo recalcular: la ejecución de julio de `gemma4:31b`
+(«sus datos por registro se perdieron por sobrescritura»), la corrección del *mojibake* («las extracciones
+por registro no se conservaron», que obliga a re-inferir para corregirlo) y la métrica restringida del
+Anexo I, que solo pudo recalcularse porque el desglose por tipo sí estaba almacenado.
+
+**Y bloquea la verificación independiente.** `tools/verificar_corrida.py`, la herramienta con la que el
+equipo de 48 GB declara VÁLIDA cada corrida, **lee `detailed_results.json`**: sus comprobaciones §5.1
+(categoría que puntúa contra el vacío) y §5.2 (`recall > 1`) son por registro. Sin ese fichero commiteado,
+una corrida entregada **no puede re-verificarla nadie más**: solo queda el agregado. Es lo que me obligó
+a comprobar el criterio de `§F53` por otra vía, sumando la matriz de confusión.
+
+**Es el mismo defecto que el de los registros de ejecución**, y por la misma causa: un fichero ignorado no
+tiene respaldo. `CLAUDE.md` ya lo dejó escrito el 2026-09-08 para los `benchmark.log`, y la regla no se
+extendió al detalle por registro.
+
+**Corrección aplicada.** Retiradas las dos reglas del `.gitignore` y versionados los **22 ficheros
+existentes**, unos 16 MB. Comprobado antes que **ninguno contiene modelos excluidos**, que era la razón
+legítima para no versionarlos. Las otras diez reglas del fichero no se tocaron.
+
+**Pendiente del equipo de 48 GB:** commitear los `detailed_results.json` de las seis corridas de
+`recorrida_20260908/`, que ahora ya no están bloqueados por `.gitignore`.
+
+### §F67.bis — Los respaldos previos a la corrección de puntuación, aplicando la misma lección
+
+`§L51` termina pidiendo que, al escribir una regla de conservación, se revise **en el mismo turno** qué otras
+clases de artefacto cumplen el mismo criterio. Aplicado de inmediato a lo que sigue ignorado bajo `results/`:
+
+| Clase | Ignorada | ¿Reconstruible? | Decisión |
+|:---|:---|:---|:---|
+| `.checkpoint.json` (26) | sí | sí, desde el CSV | se deja ignorada |
+| `.bak_prescore` (36) | sí | **según el fichero** | ver abajo |
+| Duplicados « 2» de macOS | sí | sí, son copias | se deja ignorada |
+
+Los `.bak_prescore` son la instantánea de cada corrida **antes de la corrección de la convención de
+puntuación** del 2026-09-06. Comprobados uno a uno contra el historial de git:
+
+- **15 ficheros (1,3 MB)** ya se recuperan del historial: no aportan nada y siguen ignorados.
+- **12 ficheros (6,8 MB)** son la **única copia** y **no contienen modelos excluidos**. Se versionan con
+  `git add -f`. Ocho de los doce son `detailed_results.json.bak_prescore`, es decir, el detalle por registro
+  anterior a la corrección: exactamente lo que el informe lamenta haber perdido para la ejecución de julio,
+  donde «sus datos por registro se perdieron por sobrescritura, de modo que no podía recalcularse».
+- **9 ficheros (14,5 MB)** contienen nombres de modelos excluidos. **No se versionan**: la política los
+  prohíbe en ficheros de datos, y decidir si un respaldo histórico cuenta como dato o como testimonio es
+  criterio del autor. Quedan en disco, sin respaldo, a la espera de esa decisión.
+
+La regla genérica `*.bak_*` **no se toca**, para no arrastrar respaldos de editor; los doce entran de forma
+explícita y el `.gitignore` deja constancia de por qué.
+
+---
+
+## §F68 — Con el corpus corregido, el RAG deja de perjudicar a los modelos grandes
+
+**Fecha:** 2026-09-08. **Observación provisional: 3 de 13 modelos.** No debe llevarse al informe hasta tener
+la re-corrida completa, pero sí debe conocerse ya, porque afecta a una afirmación del capítulo de resultados.
+
+Con tres modelos rehechos sobre el corpus con localizaciones anotadas, el efecto del KB RAG **cambia de
+signo en los dos de mayor capacidad**:
+
+| Modelo | Δ publicado | Δ re-corrida | Cambia de signo |
+|:---|---:|---:|:---:|
+| `gemma4:31b-cloud` | −0,53 pp | **+0,81 pp** | sí |
+| `gemma4:31b-mlx` | −0,18 pp | **+0,97 pp** | sí |
+| `gemma4:latest` | −1,17 pp | **+2,53 pp** | sí |
+| `gemma4:12b-mlx` | +2,28 pp | +2,29 pp | no |
+
+> **Actualización con el cuarto modelo (2026-09-08 19:13).** `gemma4:latest` se suma a los que cambian de
+> signo, y con el salto mayor de los tres: de −1,17 a +2,53 pp. **De los cuatro modelos rehechos, tres
+> invierten el signo del efecto y el cuarto ya era positivo.** Ninguno empeora. El único que no cambia,
+> `gemma4:12b-mlx`, se mueve una centésima: +2,28 a +2,29.
+>
+> El patrón se refuerza en lugar de diluirse, que es lo que importa: no son tres casos sueltos sino los
+> cuatro primeros de la serie, y los cuatro apuntan igual. Con nueve modelos por delante, sigue siendo
+> provisional, pero cada uno que llega hace más probable que §5.3.1 haya de reformularse.
+
+El informe afirma hoy, en §5.3.1, que el beneficio del RAG «**se anula o revierte en los de mayor
+capacidad** (−0,54 y −0,18 puntos en los dos de 31B)». Con estos datos esa frase no se sostendría: en los dos
+de 31B el efecto es positivo, aunque pequeño.
+
+**El mecanismo explica el cambio y conviene decirlo.** Mientras el corpus no anotaba localizaciones, cada
+localización que el RAG ayudaba a extraer se contabilizaba como falso positivo. La recuperación estaba siendo
+**penalizada precisamente por hacer su trabajo** en una de las tres categorías que el *prompt* pide. Corregida
+la anotación, esa penalización desaparece. No es que el resultado anterior estuviera mal medido dentro de su
+convención: es que la convención castigaba al RAG.
+
+**Dos cosas que no cambian**, y que conviene registrar porque son señales de robustez:
+
+- **El orden se conserva.** Publicado: `cloud` 62,38 > `31b-mlx` 59,25 > `12b-mlx` 56,18. Re-corrida:
+  `cloud` 82,13 > `31b-mlx` 81,47 > `12b-mlx` 77,67. La corrección sube a todos, no reordena.
+- **La magnitud sigue siendo pequeña en los grandes.** +0,81 y +0,97 puntos no son una mejora demostrable;
+  habrá que ver qué dice el post-hoc de Tukey sobre el consolidado nuevo. Lo que cae es la palabra
+  «revierte», no necesariamente la tesis de que el beneficio decrece con la capacidad.
+
+**Subida general por la corrección**, para dimensionar el efecto: +19,75 pp en `cloud`, +21,49 en `12b-mlx` y
++22,22 en `31b-mlx` sobre N=120; en N=30, +5,03 pp en `31b-mlx`, mucho menor porque ese corpus tiene 40
+localizaciones de referencia frente a las 1 034 de N=120.
+
+**Qué hacer.** Nada en el informe todavía. Cuando estén los trece modelos: rehacer el consolidado, mirar el
+post-hoc y **reformular §5.3.1 con lo que digan los datos**, sea cual sea. Si la tesis de la proporcionalidad
+inversa sobrevive con otra redacción, se conserva; si no, se dice.
+
+---
+
+## §F69 — El informe daba dos cifras distintas para la composición de los falsos positivos, y ninguna era la del estudio
+
+**Fecha:** 2026-09-08. Encontrado al inventariar qué afirmaciones dependen de los datos que la re-corrida va
+a sustituir.
+
+El informe decía en dos sitios cosas distintas sobre la misma magnitud:
+
+| Dónde | Cifra | Origen |
+|:---|:---|:---|
+| §3.3, §7.2 y la leyenda de la Figura 1 | 19 178 de 28 404 = **67,5 %** | **ninguno**: no aparece en ningún artefacto de datos del repositorio |
+| Anexo I | 20 946 de 32 201 = **65,0 %** | `results/CORRECCION_LOCATIONS_20260908`, sobre **42 configuraciones** |
+
+**Ninguna de las dos describe el estudio publicado.** La segunda es correcta para lo que dice medir, pero
+cubre 42 configuraciones e incluye corridas después declaradas inválidas, entre ellas
+`gemma4:12b-mlx_kb_rag` con F1 14,60, la que el modo de razonamiento arruinó (`§F62`). La primera no se ha
+podido reproducir desde ningún dato.
+
+**Recalculado sobre los 26 grupos que sostienen la Tabla 7**, tomando para cada uno la corrida que el
+consolidado usa realmente, y con los 26 cubiertos sin omitir ninguno:
+
+| Categoría | Falsos positivos | tp + fn |
+|:---|---:|---:|
+| Locations | **12 852** | **0** |
+| Organizations | 5 132 | 21 301 |
+| Persons | 1 480 | 15 664 |
+| **Total** | **19 464** | |
+
+La cifra del estudio es **12 852 de 19 464, el 66,0 %**. Queda trazable en
+`results/COMPOSICION_FP_20260908/`, con el desglose por grupo.
+
+**Corregido en el informe:** §3.3 y §7.2 pasan a 66,0 %, la Figura 1 se regeneró con las cifras nuevas, y el
+Anexo I **conserva su 65,0 %** con una glosa que explica que cubre una población distinta. Las dos cifras son
+ciertas sobre lo que cada una mide; lo que faltaba era decirlo.
+
+**Dos tropiezos propios durante el cálculo**, que ilustran lo fácil que es equivocarse aquí:
+
+1. La primera versión del recuento no filtraba bien por grupo y **sumaba cero** de las corridas cuya
+   estructura no reconocía, sin avisar. Dio 66,0 % por casualidad, no por acierto.
+2. Al diagnosticarlo, imprimí las claves de un registro con `list(r)[:12]` y concluí que no traía
+   `metrics`, cuando era la **decimotercera**. Estuve a punto de dar por bueno que aquella corrida no tenía
+   desglose por tipo.
+
+De ahí que el cálculo definitivo **declare cuántos grupos cubre**, igual que las comprobaciones del
+verificador: «26 de 26, ninguno sin cubrir» es lo que permite fiarse del total.
+
+---
+
+## §F70 — El barrido que retiró los modelos excluidos dejó dos ficheros de datos ilegibles
+
+**Fecha:** 2026-09-08. Encontrado al verificar la integridad de los ficheros que yo mismo había versionado
+horas antes.
+
+De los **192 ficheros JSON rastreados**, cinco no parsean. Tres son falsa alarma:
+`data/sample_an1.json`, `sample_an2.json` y `sample_sanctions.json` están en formato **JSONL** —un objeto por
+línea, veinte líneas y las veinte válidas—, que es legítimo y no debe «arreglarse».
+
+**Los otros dos están genuinamente corruptos**, y la causa es identificable:
+
+| Fichero | Daño |
+|:---|:---|
+| `results/excluidos_n120_REMOTO/detailed_results.json.bak_prescore` | **240 de 480** claves `"model"` sin valor |
+| `results/excluidos_n120_REMOTO/benchmark_summary.json.bak_prescore` | falta una clave de primer nivel; el objeto queda mal formado |
+
+El patrón es inequívoco. El barrido que retiró los nombres de los modelos excluidos **borró la cadena del
+nombre allí donde aparecía**, dejando `"model":` colgando sin valor y, en el resumen, una llave sin su clave.
+Editar JSON por sustitución de texto en lugar de cargarlo, modificarlo y volcarlo produce exactamente esto.
+
+**Las 240 filas afectadas son las del modelo excluido; las otras 240 son de `gpt-oss:20b`** y conservan sus
+valores. Es decir, el contenido que sí debe conservarse está atrapado dentro de un fichero que ya no se puede
+leer.
+
+**Por qué no se detectó antes.** Nada parseaba esos ficheros. Estaban ignorados en `.gitignore` —eran
+`.bak_*`— y solo entraron en git hoy; el defecto llevaba desde el barrido de exclusión sin que ninguna
+comprobación lo mirara. Es la misma familia que `§F59`, los cuatro documentos vacíos: **un fichero roto que
+nadie abre se comporta igual que uno sano.**
+
+**No se repara por iniciativa propia.** La reparación obvia —extraer solo las 240 filas de `gpt-oss:20b` a un
+fichero válido— implica decidir qué hacer con las 240 del modelo excluido, y eso es criterio del autor. Se
+deja constancia y la receta:
+
+1. Leer el `.bak` como texto, quedarse con los registros cuyo `"model"` tenga valor.
+2. Volcarlos como JSON válido en el mismo fichero o en uno nuevo.
+3. Anotar en el propio fichero cuántos registros se retiraron y por qué.
+
+**Comprobación que se incorpora al verificador:** todo JSON rastreado debe parsear, con los `.jsonl`
+declarados como excepción explícita. Cuesta un segundo y cubre una clase entera de defecto.
+
+### §F67.ter — Auditoría de los hallazgos de esta sesión
+
+Comprobados contra los datos los seis valores numéricos que sostienen `§F59`, `§F65`, `§F67`, `§F67.bis`,
+`§F69` y `§F70`, con el mismo criterio que se aplica al informe. **Cinco reproducen exactamente**: los
+71 476 bytes restaurados, los 12 respaldos de 6,8 MB, el 12 852 de 19 464 al 66,0 %, el 240 de 480 de las
+claves sin valor y los 16,1 MB de detalle por registro.
+
+**Uno estaba mal.** `§F67` decía «23 ficheros» de `detailed_results.json` versionados y son **22**: el
+barrido inicial listaba `results/detailed_results.json` dos veces, porque lo recogía el patrón recursivo y
+además se añadía explícitamente. Corregido en `FINDINGS`, en `CURRENT-TASKS §1.18` y en el comentario del
+`.gitignore`, que era donde más importaba: ese comentario existe para que nadie retire la regla, y una cifra
+que no cuadra al comprobarla resta credibilidad a la explicación entera.
+
+La cita de `§F65` a `+10,01` y `+2,19` pp procede del manifiesto de artículos contaminados, que **aún vive
+solo en la rama del equipo de 48 GB** y llegará a `main` con su fusión. No es un error, pero conviene saber
+que hoy esa referencia no se puede seguir desde `main`.
+
+---
+
+## §F71 — Las latencias de la re-corrida no son comparables con las publicadas, y la causa no está clara
+
+**Fecha:** 2026-09-08. **Observación, no diagnóstico.** Cuatro modelos rehechos.
+
+Comparada la latencia media por artículo entre la corrida publicada y la re-corrida, sobre los mismos
+modelos y el mismo corpus N=120:
+
+| Modelo | Modo | Publicada | Re-corrida | Factor |
+|:---|:---|---:|---:|---:|
+| `gemma4:31b-mlx` | baseline | 1 066,2 s | **20,5 s** | ×0,02 |
+| `gemma4:12b-mlx` | baseline | 99,1 s | **4,7 s** | ×0,05 |
+| `gemma4:31b-mlx` | KB RAG | 1 408,5 s | 308,8 s | ×0,22 |
+| `gemma4:12b-mlx` | KB RAG | 157,8 s | 11,3 s | ×0,07 |
+| `gemma4:latest` | baseline | 98,0 s | 46,3 s | ×0,47 |
+| `gemma4:31b-cloud` | KB RAG | 2,9 s | 2,3 s | ×0,79 |
+| `gemma4:latest` | KB RAG | 489,6 s | **790,9 s** | **×1,61** |
+| `gemma4:31b-cloud` | baseline | 1,2 s | 3,1 s | ×2,58 |
+
+**No hay dirección consistente.** Los factores van de **×0,02 a ×2,58**, y dentro del mismo modelo cambian
+de sentido según el modo. Un cambio uniforme —más presupuesto de salida, otra concurrencia, otra máquina—
+produciría un sesgo en una sola dirección, y aquí no lo hay.
+
+**Lo que sí se puede afirmar, y basta para lo que importa:** las latencias de la re-corrida **no son
+comparables** con las publicadas. La **Tabla 8** del informe, la de eficiencia, no puede rehacerse mezclando
+ambas, y si se rehace enteramente sobre la re-corrida dará cifras muy distintas de las actuales
+—`gemma4:31b-mlx` pasaría de 22,80 tok/s a otra cosa—. El F1 no está afectado: la comparación de calidad
+sigue siendo válida.
+
+**Lo que no se puede afirmar es por qué.** Se descartan dos explicaciones fáciles: no es el modo de
+razonamiento, porque los dos modelos con mayor caída lo tienen desactivado en ambas corridas; y no es solo la
+concurrencia, porque más consumidores concurrentes suben la latencia por petición y aquí la mayoría baja. La
+hipótesis restante —que las corridas publicadas se ejecutaron en la máquina de 16 GB con paginación a disco y
+la re-corrida en la de 48 GB sin ella— explicaría las caídas grandes pero no que `gemma4:latest` con RAG
+suba un 61 %.
+
+**Acción: preguntar al equipo de 48 GB**, que es quien conoce las condiciones de ejecución de ambas. No se
+propone ninguna corrección al informe hasta entender el mecanismo: cambiar la Tabla 8 sin saber por qué
+cambiaron los números sería sustituir unas cifras inexplicadas por otras.
+
+### §F71.bis — La hipótesis de la máquina queda refutada por la propia telemetría
+
+Antes de esperar respuesta se comprobó con los datos, y **no era la máquina**. Los CSV guardan memoria del
+sistema y VRAM por registro:
+
+| Corrida | Modelo | Memoria del sistema | VRAM | Latencia |
+|:---|:---|---:|---:|---:|
+| publicada | `gemma4:31b-mlx` baseline | 30 539 MB | 26 606 MB | 1 066,2 s |
+| re-corrida | `gemma4:31b-mlx` baseline | **30 331 MB** | **26 720 MB** | **20,5 s** |
+
+**La misma máquina y la misma huella de memoria, con la latencia 52 veces menor.** La explicación de los
+16 GB con paginación queda descartada: ambas corridas usaron ~30 GB de sistema y ~26,7 GB de VRAM.
+
+Eso desplaza la causa al **arnés o a la propia medición**, no al hardware.
+
+> **Corrección del 2026-09-08, 20:15.** La primera versión de este apartado afirmaba que «los aumentos
+> ocurren solo en modo KB RAG». **Es falso**, y se comprobó al repasar las afirmaciones propias tras
+> `§L54`. Con cinco modelos rehechos hay **diez pares** comparables: **ocho bajan y dos suben**, y de los dos
+> que suben **uno es de modo *baseline***:
+>
+> | Grupo | Modo | Antes | Ahora | Factor |
+> |:---|:---|---:|---:|---:|
+> | `gemma4:31b-cloud` | **baseline** | 1,2 s | 3,1 s | ×2,61 |
+> | `gemma4:latest` | KB RAG | 489,6 s | 790,9 s | ×1,62 |
+>
+> Los dos casos no son comparables entre sí, y ahí estaba el error de agruparlos: la latencia del modelo
+> alojado es de **uno a tres segundos** y la domina el viaje de red, no la generación, de modo que su ×2,61
+> se mueve sobre una base minúscula y no dice nada del arnés. El de `gemma4:latest` sí ocurre sobre una base
+> grande y sigue siendo compatible con el presupuesto de salida duplicado, de 2 048 a 4 096 tokens: una
+> respuesta que antes se truncaba ahora se completa. Pero eso es **una explicación para un caso**, no un
+> patrón.
+
+Lo que queda sin explicar es lo principal: **por qué bajan ocho de diez**, algunas hasta ×0,02. La pregunta al
+equipo de 48 GB se mantiene y sigue **acotada** a eso: no es la máquina.
+
+### §F68.bis — Con cinco modelos, lo que se ve no es un cambio de signo sino una convergencia
+
+**2026-09-08, 20:05.** `qwen2.5:14b` completa el quinto modelo y obliga a reformular cómo se venía
+describiendo el efecto.
+
+Hasta ahora se decía «cambia de signo», porque los tres primeros pasaban de negativo a positivo.
+`qwen2.5:14b` no cambia de signo —era +4,62 y sigue positivo— pero **cae a +0,69**. Con los cinco a la
+vista, el patrón es otro:
+
+| | Δ publicado | Δ re-corrida |
+|:---|---:|---:|
+| Mínimo | −1,17 | **+0,69** |
+| Máximo | +4,62 | **+2,53** |
+| Media | +1,00 | +1,46 |
+| **Dispersión (máx − mín)** | **5,79** | **1,84** |
+
+**Los cinco efectos son ahora positivos y la dispersión se reduce a un tercio.** No es que la corrección
+favorezca al RAG: es que **comprime** el efecto hacia un valor pequeño y consistentemente positivo. Los
+modelos que salían perjudicados dejan de estarlo, y el que más se beneficiaba deja de hacerlo tanto.
+
+**La lectura que sugiere, y que habrá que confirmar con los trece:** buena parte de la dispersión anterior no
+medía cuánto ayudaba la recuperación a cada modelo, sino **cuántas localizaciones emitía cada modelo** en una
+categoría donde toda extracción contaba como error. Un modelo locuaz en localizaciones era penalizado en
+ambos modos, pero no por igual, y esa diferencia entraba en el Δ como si fuera efecto del RAG.
+
+Si se confirma, el capítulo de resultados gana una afirmación **más fuerte** que la actual: el efecto del KB
+RAG sobre este corpus es **pequeño, positivo y homogéneo entre modelos**, en lugar de «inversamente
+proporcional a la capacidad». Pero no puede escribirse hasta tener los trece, y menos aún desde cinco.
+
+### §F68.ter — La hipótesis de §F68.bis es falsa, y la «convergencia» descansa en una muestra sesgada
+
+**2026-09-08, 20:12.** Corrección de lo escrito hace seis minutos. Se probó la hipótesis con los datos que ya
+había, y no se sostiene.
+
+**Lo que decía `§F68.bis`:** que la dispersión de los efectos publicados no medía cuánto ayudaba la
+recuperación a cada modelo sino cuántas localizaciones emitía cada uno, en una categoría donde toda
+extracción contaba como error.
+
+**La prueba.** Si fuera cierto, la métrica restringida del Anexo I —que excluye *Locations* del cómputo—
+debería mostrar los efectos ya comprimidos. Calculado sobre los trece modelos publicados:
+
+| | Mínimo | Máximo | Dispersión | Desviación |
+|:---|---:|---:|---:|---:|
+| Δ publicado | −1,17 | +14,53 | 15,70 | 4,53 |
+| Δ **restringido** | −2,43 | +15,49 | **17,92** | **4,97** |
+
+**Excluir las localizaciones no reduce la dispersión: la aumenta ligeramente.** La hipótesis queda refutada.
+
+**Y hay un problema mayor, de método.** La «convergencia» de `§F68.bis` se midió sobre los cinco modelos
+rehechos, y esos cinco **no son una muestra representativa**: son cinco de los seis con mejor F1, y los dos
+efectos más grandes de todo el estudio —`nemotron-mini:4b` con +14,53 y `llama3.2:latest` con +10,82— **están
+entre los ocho que faltan**. Entre los cinco rehechos la dispersión publicada ya era 5,79; entre los ocho
+pendientes es 15,42.
+
+Que cinco modelos con efectos pequeños sigan teniendo efectos pequeños tras la corrección **no es una
+convergencia**: es lo que cabía esperar. La afirmación de `§F68.bis` se retira hasta que estén los trece, y en
+particular los dos extremos.
+
+**Lo que sí se sostiene de `§F68`**, porque no depende de la muestra: tres de los cuatro modelos que tenían
+efecto negativo pasan a tenerlo positivo, y ninguno de los cinco empeora. La frase de §5.3.1 sobre que el
+beneficio «se anula o revierte en los de mayor capacidad» sigue en entredicho, porque los tres que la
+sostenían son precisamente los que cambiaron de signo.
+
+**Lección.** Escribí una explicación mecanicista plausible seis minutos después de ver el patrón, y la puse
+por escrito antes de comprobarla teniendo los datos a mano para hacerlo. La explicación era falsa y la
+muestra estaba sesgada. Ver `LEARNING §L54`.
+
+---
+
+## §F72 — `gpt-oss:20b` no está en el barrido, y eso dejaría el estudio con dos corpus mezclados
+
+**Fecha:** 2026-09-08, 20:42. Detectado al analizar el orden del barrido. **Requiere decisión del autor, y
+conviene tomarla antes de que termine la re-corrida.**
+
+`gpt-oss:20b` **no aparece en `_sweep_progress.log`**: ni START, ni END, ni SKIP. No es que esté pendiente,
+es que nunca se programó. El barrido va por el orden de la Tabla 7 y salta directamente del cuarto modelo al
+sexto.
+
+**La causa probable es una lectura razonable de `§F44`,** que recoge una decisión firme del autor:
+«`gpt-oss:20b` se deja con think ON, congelado; su corrida oficial no se re-ejecuta ni se toca». El equipo de
+48 GB parece haberla aplicado literalmente y haberlo excluido del barrido.
+
+**Pero esa decisión era sobre el *thinking*, no sobre el corpus.** Se tomó porque apagar el razonamiento le
+hace *dejar de responder* —`recall = 0` en 7 de 15 y 10 de 15—, de modo que congelarlo protegía el régimen de
+razonamiento. Nada en ella dice que el modelo deba medirse sobre un corpus sin localizaciones anotadas.
+
+**La consecuencia, si no se corrige.** El consolidado final tendría **doce modelos sobre el corpus corregido
+y uno sobre el antiguo**. El F1 de `gpt-oss:20b` quedaría unos veinte puntos por debajo del resto por un
+defecto del corpus y no por su desempeño —los otros modelos suben entre +19,75 y +22,22 puntos al corregirlo—,
+y aparecería en la tabla como el peor de su franja sin serlo. Sería un defecto **peor** que el que la
+re-corrida viene a arreglar, porque el actual afecta a todos por igual y este afectaría a uno solo.
+
+**Dos apuntes de precisión.** El primero: `§F44` dice que la corrida oficial de `gpt-oss:20b` es
+`results/excluidos_n120_REMOTO`, y **no es así**: el consolidado publicado toma sus filas de
+`gptoss_rerun_REMOTO`. Esa frase de `§F44` está desactualizada. El segundo: `§F61.bis` afirmaba que «la
+re-corrida completa resuelve la asimetría» del presupuesto de salida de `gpt-oss`. **Si no se re-ejecuta, no
+la resuelve**, y esa afirmación queda condicionada a esta decisión.
+
+**Lo que se propone.** Re-ejecutarlo **con `think` ON**, que es lo que la decisión de `§F44` protege, sobre el
+corpus corregido y con `max_tokens=4096` como el resto. Eso respeta la decisión del autor en lo que decía y
+resuelve las dos cosas: la mezcla de corpus y la asimetría de presupuesto.
+
+**La guarda ya existe.** `merge_and_analyze.py` exige 26 grupos y se pararía con 24, de modo que el problema
+no puede colarse en silencio hasta el ANOVA. Pero pararse al final es mucho peor que decidirlo ahora.
+
+**El problema está acotado a un solo modelo.** Comprobado sobre `FINDINGS.md` y `CURRENT-TASKS.md`: de los
+trece, **solo `gpt-oss:20b` tiene una decisión de congelación**. Los cinco que quedan por correr tras
+`qwen3:8b` —`gemma:latest`, `mistral-nemo:latest`, `llama3.2:latest`, `deepseek-r1:1.5b` y
+`nemotron-mini:4b`— no tienen ninguna, de modo que el barrido los cubrirá sin intervención. Y
+`gemma4:31b-cloud`, que tampoco aparece en el registro del barrido, **sí está rehecho**: se ejecutó aparte y
+está verificado.
+
+Es decir: resuelto `gpt-oss:20b`, el estudio queda completo. No hay más huecos escondidos.
+
+### §F68.quater — El séptimo modelo rompe el patrón: `qwen3:8b` cambia de signo al revés
+
+**2026-09-08, 20:52.** `qwen3:8b` completa el séptimo modelo y aporta el primer contraejemplo.
+
+Los seis anteriores tenían efecto positivo tras la corrección. **`qwen3:8b` no**: pasa de **+3,25 pp** a
+**−0,05 pp**. Es la primera inversión en sentido contrario —de positivo a negativo— y deja sin sostén la
+observación de que «los efectos son ahora todos positivos», que se venía repitiendo desde el quinto modelo.
+
+| | Con 6 modelos | Con 7 |
+|:---|:---|:---|
+| Todos positivos | sí | **no** |
+| Mínimo | +0,69 | **−0,05** |
+| Dispersión | 1,84 | 2,58 |
+
+**Lo que se mantiene y lo que no.** Se mantiene que la corrección **reordena** los efectos de forma
+sustancial: de los siete rehechos, tres pasan de negativo a positivo, uno de positivo a negativo y tres
+conservan el signo. Lo que ya no puede decirse es que la corrección favorezca sistemáticamente a la
+recuperación, ni que los efectos converjan a un valor pequeño y positivo.
+
+**Y refuerza la advertencia de `§F68.ter`.** El contraejemplo llegó con el séptimo modelo, cuando los seis
+primeros apuntaban todos en la misma dirección. Si se hubiera escrito una conclusión con seis —y estuve a
+punto, con cinco—, este dato la habría desmentido. Los dos modelos que de verdad deciden, `llama3.2:latest` y
+`nemotron-mini:4b`, siguen pendientes y ocupan las posiciones once y trece del barrido.
+
+**Nota de método sobre el propio `qwen3:8b`.** Su corrida lleva `thinking DISABLED` en el registro, coherente
+con la decisión de `ef5edfa`, de modo que el cambio no procede de un régimen de razonamiento distinto.
+
+---
+
+## §F73 — Qué explica que el efecto del RAG cambie al corregir el corpus: probado, y el estudio no puede zanjarlo
+
+**Fecha:** 2026-09-08, 20:55. **Con siete modelos rehechos. Probado antes de escribirlo**, según `§L54`.
+
+`§F68.quater` deja una pregunta abierta: la corrección del corpus **reordena** los efectos del RAG —tres
+suben de signo, uno baja, tres se mantienen— y no se sabe qué lo gobierna.
+
+**Hipótesis con signo predicho.** Mientras las localizaciones no estaban anotadas, cada una extraída era un
+falso positivo. Si un modelo emitía **más** localizaciones en modo *baseline* que en KB RAG, el *baseline*
+quedaba más penalizado y eso **inflaba** artificialmente el Δ a favor del RAG. Al corregir el corpus esa
+inflación desaparece y el Δ debería **bajar**. Predice por tanto una correlación **negativa** entre
+`fp_Locations(baseline) − fp_Locations(kb_rag)` y el cambio del efecto.
+
+**Medido sobre los siete rehechos:**
+
+| Estadístico | Valor | p |
+|:---|---:|---:|
+| Pearson | **−0,531** | 0,220 |
+| Spearman | **−0,750** | **0,052** |
+
+**El signo es el predicho en ambos**, y el de Spearman roza el umbral convencional. Pero **ninguno lo
+alcanza**, de modo que con siete modelos el resultado es compatible con la hipótesis y también con el azar.
+
+**Y aquí está lo que de verdad importa, que es una limitación del diseño.** Con un efecto de esa magnitud
+—`r ≈ −0,53`— harían falta **quince observaciones** para alcanzar `p < 0,05`. **El estudio tiene trece
+modelos.** Es decir: aunque la re-corrida termine y el patrón se mantenga exactamente igual, **esta pregunta
+no podrá zanjarse con este diseño**. No es que falten datos por llegar: es que el número de modelos del
+estudio no basta para este contraste concreto.
+
+**Qué hacer con esto.** Repetir la medición cuando estén los trece —el efecto podría ser mayor de lo que
+sugieren siete— y, sea cual sea el resultado, **declarar la limitación**: la correlación se reporta con su
+signo, su magnitud y su potencia, sin presentarla como explicación establecida. Es preferible una hipótesis
+declarada como tal a una explicación que el propio diseño no puede sostener.
+
+---
+
+## §F74 — La `ρ` que sostiene el hallazgo central vivía solo dentro de una imagen
+
+**Fecha:** 2026-09-08, 21:05. Defecto **introducido por mí hoy** al dibujar la Figura 2.
+
+El panel (b) de la Figura 2 rotula «ρ de Spearman = −0,5165 (p = 0,0707)». Comprobado hoy:
+
+- **El texto del informe no mencionaba «Spearman» ni una vez.**
+- **Ningún artefacto de `results/` contenía esa cifra.**
+
+Es decir: la única evidencia numérica del que §5.3.1 llama «el hallazgo central del estudio» existía
+exclusivamente **dentro de un PNG**, sin fuente y sin que el cuerpo la discutiera. Un lector la ve y no puede
+situarla; un tribunal la ve y no puede comprobarla.
+
+**La cifra es correcta**, y eso se ha verificado: es la correlación de Spearman entre el F1 base de cada
+modelo y la mejora que le aporta el KB RAG, sobre los trece de la Tabla 7, y reproduce exactamente
+—−0,5165 con p = 0,0707—. El defecto no era el número sino su ausencia de rastro.
+
+**Y al calcularla aparece algo que el informe debía declarar.** Los dos coeficientes **discrepan en el
+veredicto** al umbral del 5 %:
+
+| Coeficiente | Valor | p | ¿Significativo? |
+|:---|---:|---:|:---:|
+| Spearman | −0,5165 | 0,0707 | **no** |
+| Pearson | −0,6004 | **0,0300** | **sí** |
+
+Reportar solo el de Pearson respaldaría el hallazgo; reportar solo el de Spearman lo debilitaría. **Presentar
+uno cualquiera de los dos en silencio es seleccionar el resultado**, aunque no haya intención. La causa de la
+discrepancia es el tamaño de la muestra: con trece modelos el contraste está al límite, y harían falta quince
+para que el de Spearman alcanzase significancia (`§F73` documenta el mismo problema en otro contraste).
+
+**Corregido.** Se crea el artefacto `results/CORRELACION_CAPACIDAD_20260908/`, se añaden a §5.3.1 los dos
+coeficientes con su discrepancia declarada y con la advertencia de que la afirmación siguiente es «una
+tendencia bien orientada y no un efecto demostrado», y se añade la comprobación 22 al verificador, que ata
+las cifras del texto y de la figura al artefacto y **falla si el informe deja de declarar la discrepancia**.
+
+**Coste en extensión.** El cuerpo pasa de 14 842 a 16 636 palabras desde la versión entregada, unas **22,6
+páginas** estimadas sobre el límite de 25. Quedan unas 1 600 palabras de margen.
+
+### §F73.bis — Con ocho modelos: la hipótesis gana apoyo, y una correlación espectacular resulta ser un artefacto
+
+**2026-09-08, 21:18.** `gemma:latest` completa el octavo modelo y permite repetir las pruebas de `§F73`.
+
+**Lo que mejora.** La correlación entre el desequilibrio de falsos positivos de localización y el cambio del
+efecto pasa de `ρ = −0,531 (p = 0,220)` con siete modelos a **`ρ = −0,738 (p = 0,0366)`** con ocho: **cruza el
+umbral convencional**. Pearson sigue sin alcanzarlo (`r = −0,620`, `p = 0,101`), de modo que persiste la
+discrepancia entre coeficientes que ya se documentó en `§F74`. Con ocho observaciones ninguna de las dos
+lecturas es concluyente, pero la dirección se sostiene y el apoyo aumenta.
+
+**Lo que hay que descartar, y es lo más importante de esta entrada.** Al medir también la relación entre el
+Δ publicado de cada modelo y cuánto cambia, sale `ρ = −1,000` con `p ≈ 0` y `r = −0,970`. Es un resultado
+espectacular y **no significa nada**: es un artefacto de construcción.
+
+El motivo es aritmético. El cambio se define como `Δ_nuevo − Δ_viejo`, de modo que correlacionar `Δ_viejo`
+con el cambio es casi correlacionar `Δ_viejo` con `−Δ_viejo`. Solo deja de serlo si `Δ_nuevo` varía tanto
+como `Δ_viejo`, y aquí no: el rango del publicado es **8,53** puntos y el de la re-corrida **2,58**.
+
+**Comprobado por simulación**, que es lo que convierte la sospecha en certeza. Sustituyendo `Δ_nuevo` por
+ruido uniforme con la misma dispersión y repitiendo dos mil veces, la `ρ` mediana sale **−0,952**, con el
+intervalo del 5 al 95 % entre **−1,000 y −0,881**. Es decir: **un valor muy negativo es exactamente lo que
+cabe esperar aunque los datos no tengan ninguna estructura**. El −1,000 observado no distingue una hipótesis
+de otra.
+
+**Queda escrito para que nadie lo publique**, empezando por quien esto redacta dentro de un mes. Una
+correlación de −1,000 con p ≈ 0 sobre trece modelos sería una cifra muy citable en el capítulo de resultados,
+y sería falsa. La regla general: **antes de celebrar una correlación, comprobar si una de las dos variables
+contiene a la otra**.
+
+### §F74.bis — La `ρ` del hallazgo central resiste la objeción del artefacto
+
+**2026-09-08, 21:24.** Comprobación motivada por `§F73.bis`, donde una correlación de −1,000 resultó ser un
+artefacto de definir una variable restando la otra.
+
+**La objeción, que un tribunal puede plantear.** El informe correlaciona el F1 base de cada modelo con
+`Δ = F1_kb_rag − F1_baseline`. Esa Δ **contiene** la variable con la que se la correlaciona, y con signo
+negativo. ¿No será la `ρ = −0,5165` un artefacto de construcción, como el −1,000 de `§F73.bis`?
+
+**Respuesta: no lo es, y está comprobado.** Simulada la nula correcta —efecto del RAG independiente de la
+capacidad, es decir `F1_kb_rag = F1_baseline + ruido` con la media y dispersión observadas de Δ, cinco mil
+repeticiones—, la `ρ` bajo esa nula tiene **mediana −0,005** e intervalo central **[−0,484, +0,462]**. El
+valor observado cae **fuera** de ese intervalo: solo el **3,72 %** de las simulaciones llega a ser tan
+negativo.
+
+**Por qué aquí no hay artefacto y en `§F73.bis` sí.** El artefacto aparece cuando la variable restada domina
+la varianza del resultado. En `§F73.bis`, el rango del Δ publicado era 8,53 y el de la re-corrida 2,58, de
+modo que la resta quedaba gobernada por el primero. Aquí, en cambio, `F1_kb_rag` varía tanto como
+`F1_baseline` —correlacionan a 0,956— y Δ resulta genuinamente pequeño e informativo.
+
+**Tres pruebas coinciden, y conviene no vender la simulación como algo que no es.** Paramétrica unilateral
+**0,0354**, simulación **0,0372**, permutación **0,0374**. La simulación **no** aporta más significancia que
+la prueba clásica: aporta el descarte del artefacto, que es otra cosa. El informe seguirá citando la `p`
+bilateral de **0,0707**, que es lo prudente, porque una prueba unilateral solo sería defendible si la
+dirección se hubiera predicho antes de ver los datos.
+
+**Para qué sirve esto.** No cambia ninguna cifra del informe. Es **material de defensa**: si en la mesa se
+plantea la objeción del artefacto —y es una objeción buena—, la respuesta está calculada, versionada en
+`results/CORRELACION_CAPACIDAD_20260908/` y es reproducible.
+
+---
+
+## §F75 — El diseño de medidas repetidas confirma el ANOVA, y ahora está comprobado y no solo argumentado
+
+**Fecha:** 2026-09-08, 21:26. Material de defensa, en la línea de `§F74.bis`. No cambia ninguna cifra.
+
+§5.3.1 declara una limitación con honradez: las 3 120 observaciones **no son independientes**, porque los
+veintiséis grupos evalúan los mismos ciento veinte artículos, de modo que el diseño es de medidas repetidas y
+un modelo apropiado sería el procedimiento estrictamente correcto. Y añade un argumento: «al ser el diseño
+pareado más potente que el independiente, la significancia obtenida por esta vía es conservadora».
+
+**Ese argumento era razonable pero no estaba comprobado.** Ahora lo está:
+
+| Prueba | Estadístico | p |
+|:---|---:|---:|
+| ANOVA de una vía (publicado) | F = 38,2222 | 3,4453 × 10⁻¹⁶⁰ |
+| **Friedman, medidas repetidas** | χ² = 1 169,23 | **6,2481 × 10⁻²³¹** |
+
+El diseño está **completamente cruzado y equilibrado**: los ciento veinte registros tienen los veintiséis
+grupos, sin huecos, que es la condición que Friedman necesita.
+
+**Cómo hay que leerlo, con cuidado.** Los dos estadísticos **no son directamente comparables** —uno es
+paramétrico sobre medias y el otro no paramétrico sobre rangos—, de modo que **no procede decir que un `p`
+menor signifique más potencia**. Lo que sí puede afirmarse, y es lo que la objeción pone en duda, es que
+**el rechazo de la hipótesis nula se sostiene con el método apropiado al diseño**. La elección del ANOVA no
+sostiene la conclusión: la conclusión aguanta con ambos.
+
+**Para la defensa.** Si se pregunta por qué se usó un ANOVA de una vía sobre datos apareados, la respuesta
+tiene dos partes: el informe lo declara como limitación —no lo esconde— y se ha verificado que la conclusión
+no depende de esa elección. Queda en `results/ROBUSTEZ_ESTADISTICA_20260908/`.
+
+---
+
+## §F76 — Con el contraste apropiado al diseño, ocho de trece modelos mejoran, no dos
+
+**Fecha:** 2026-09-08, 21:33. **Afecta a una afirmación central del informe. Requiere decisión del autor.**
+
+§5.3.1 concluye que la mejora por recuperación «solo supera la corrección por comparaciones múltiples en
+`nemotron-mini:4b` y en `llama3.2:latest`», y de ahí deriva que el beneficio del RAG es demostrable en los
+dos modelos más débiles y «positivo pero no concluyente en la franja intermedia».
+
+**Esa conclusión depende del contraste elegido, y el elegido no es el que corresponde al diseño.** El Tukey
+HSD publicado trata las 3 120 observaciones como independientes cuando son apareadas —los veintiséis grupos
+evalúan los mismos artículos, como el propio informe declara— y corrige por las **325** comparaciones
+posibles entre los veintiséis grupos, cuando las que interesan son **trece**: cada modelo consigo mismo.
+
+**Repetido con el contraste apropiado** —Wilcoxon de rangos con signo sobre los mismos registros, con
+corrección de Holm sobre las trece comparaciones de interés:
+
+| Modelo | Δ pp | p ajustada | ¿Significativo? |
+|:---|---:|---:|:---:|
+| `nemotron-mini:4b` | +14,52 | <0,0001 | **sí** |
+| `llama3.2:latest` | +10,82 | <0,0001 | **sí** |
+| `qwen2.5:14b` | +4,62 | 0,0001 | **sí** |
+| `gemma:latest` | +7,36 | 0,0005 | **sí** |
+| `qwen3:8b` | +3,25 | 0,0007 | **sí** |
+| `gpt-oss:20b` | +3,28 | 0,0044 | **sí** |
+| `gemma4:12b-mlx` | +2,28 | 0,0184 | **sí** |
+| `llama3.1:8b` | +1,99 | 0,0432 | **sí** |
+| `gemma4:31b-mlx` | −0,18 | 0,3004 | no |
+| `mistral-nemo:latest` | +2,37 | 0,4444 | no |
+| `deepseek-r1:1.5b` | −0,90 | 1,0000 | no |
+| `gemma4:latest` | −1,17 | 1,0000 | no |
+| `gemma4:31b-cloud` | −0,54 | 1,0000 | no |
+
+**Ocho de trece, no dos.** Y los cinco que no alcanzan significancia son precisamente aquellos cuyo efecto es
+nulo o negativo, lo que da al resultado una coherencia que el publicado no tiene: hoy el informe agrupa como
+«no concluyentes» a modelos con +7,36 pp y a otros con −0,54.
+
+**El Tukey no es incorrecto: responde a otra pregunta.** Contrasta todos los pares entre los veintiséis
+grupos, lo que incluye comparar `nemotron-mini` con `gemma4:31b`, y para esa pregunta su corrección es la
+adecuada. Pero la pregunta del informe es «¿ayuda la recuperación a **este** modelo?», y para esa el
+contraste pareado con trece comparaciones es el que corresponde.
+
+**Qué cambiaría en el informe.** La afirmación se vuelve **más fuerte y más matizada a la vez**: el beneficio
+es demostrable en ocho de trece modelos, se concentra en los de menor capacidad —los dos mayores efectos son
+los dos modelos más pequeños— y se anula en los de mayor capacidad. La tesis de la proporcionalidad inversa
+sale reforzada, no debilitada.
+
+**Por qué no se aplica ya.** Primero, porque cambia una conclusión central y eso es decisión del autor.
+Segundo, porque la re-corrida va a sustituir estos datos y habrá que repetir el contraste. Lo que **sí**
+permanece es el argumento metodológico, que valdrá igual para los datos nuevos.
+
+Artefacto en `results/ROBUSTEZ_ESTADISTICA_20260908/posthoc_pareado.json`.
+
+---
+
+## §F77 — El informe afirmaba la hipótesis nula sobre un contraste con el 8 % de potencia
+
+**Fecha:** 2026-09-08, 21:43. Detectado al revisar los contrastes estadísticos del informe. **Corregido.**
+
+§5.3 comparaba las dos compilaciones de 31B sobre el corpus N=30 y concluía, tras un ANOVA no significativo,
+que «la diferencia entre ambos **debe atribuirse a la variabilidad entre artículos y no a una superioridad
+real** de una compilación sobre la otra».
+
+**Las cifras son correctas** —F = 0,2235 y p = 0,6382 reproducen exactamente desde
+`results/n30_rerun_REMOTO/`—. **La inferencia no.** Un resultado no significativo no acredita la ausencia de
+diferencia; solo dice que los datos no la detectan. Y aquí no la detectarían aunque existiera:
+
+| Tamaño de efecto | Potencia con 30 artículos por grupo |
+|:---|---:|
+| El observado (*d* = 0,12) | **8 %** |
+| Mediano (*d* = 0,50) | 49 % |
+| Grande (*d* = 0,80) | 87 % |
+
+Con esa potencia, no rechazar la nula era **el resultado más probable de antemano**, hubiera o no diferencia
+real. Presentarlo como prueba de equivalencia invierte el sentido del contraste.
+
+**Corregido en §5.3**, que ahora declara la potencia y afirma lo que corresponde: los datos **no permiten
+distinguir** ambas compilaciones, no que sean iguales. La corrección **no cambia ninguna cifra** ni la
+conclusión práctica —sigue sin haber base para preferir una compilación—, pero sí lo que el texto puede
+sostener si alguien pregunta.
+
+**Por qué importa más de lo que parece.** Es la tercera vez hoy que un contraste del informe resulta estar
+al límite de su potencia: `§F73` con la correlación de trece modelos, `§F74` con la discrepancia entre
+Spearman y Pearson, y ahora este. El patrón sugiere revisar, antes de la defensa, **todo contraste del
+informe cuya conclusión sea un «no significativo»**, porque en un estudio con trece modelos y corpus de entre
+quince y ciento veinte artículos la potencia es sistemáticamente escasa.
+
+### §F77.bis — Repasados los demás «no significativo» del informe
+
+**2026-09-08, 21:46.** Ejecutada la recomendación de `§F77`. Dos casos, con distinto resultado.
+
+**§5.2, la ablación de prompts: correcto y no se toca.** Dice que el ANOVA no alcanza significancia
+(F = 1,1379; p = 0,3417) «consecuencia de N=15» y que los deltas «deben leerse como una **tendencia
+consistente y no como una diferencia demostrada**». Es exactamente la formulación que corresponde: declara la
+causa —la muestra— y no convierte el no rechazo en prueba de igualdad.
+
+**§5.3.1, la prueba de Levene: mismo error que `§F77`, aunque de menor gravedad.** Decía «la homocedasticidad
+**se verifica** (Levene, p = 0,18)». Un contraste no significativo no verifica la hipótesis nula. La
+diferencia con el caso de `§F77` es que aquí la potencia sí acompaña: con 3 120 observaciones, Levene detecta
+incluso efectos pequeños con más del 99 % de potencia, de modo que el no rechazo **sí es informativo**. El
+defecto era de redacción, no de fondo.
+
+Corregido a «**no detecta heterocedasticidad**, lo que con 3 120 observaciones sí es informativo, aunque no
+equivalga a demostrar que las varianzas son iguales». Y se aprovecha para sustituir el argumento de que el
+diseño pareado es más potente —que era una conjetura— por el resultado que `§F75` calculó: repetido con
+Friedman, el rechazo se sostiene con χ² = 1 169,23, de modo que la conclusión no depende de la elección del
+contraste. **La frase pasa de argumentar a citar un dato.**
+
+**Balance del repaso:** de los tres «no significativo» del informe, uno estaba bien redactado, uno era un
+error de fondo —corregido en `§F77`— y uno de redacción, corregido aquí.
+
+### §F77.ter — La conclusión sobre soberanía está bien construida, y queda cuantificada
+
+**2026-09-08, 21:52.** Última pieza del repaso de potencia. **Resultado negativo: no hay nada que corregir.**
+
+La conclusión 3 de §7.1 compara ejecución local y alojada, y la sospecha era que afirmara una superioridad
+sobre quince artículos. **No lo hace.** Dice que sobre N=15 la local supera a la alojada, «**pero ese
+experimento es el de menor potencia estadística y el estudio principal lo contradice**», y extrae la
+conclusión del corpus grande: la soberanía cuesta del orden de cuatro puntos de F1.
+
+Es el tratamiento correcto, y los números lo respaldan: la diferencia de **2,13 pp** no alcanza significancia
+por ninguna vía —Wilcoxon pareado `p = 0,4543`, *t* independiente `p = 0,5940`— y la potencia frente a ese
+efecto es del **8 %**.
+
+**Lo que aporta esta comprobación** es poner cifra a lo que el texto dice en palabras. Cuando el informe
+escribe «el experimento de menor potencia estadística», ahora hay un artefacto que responde qué significa eso
+si alguien lo pregunta: `results/ROBUSTEZ_ESTADISTICA_20260908/potencia_contrastes.json` recoge los cuatro
+contrastes revisados hoy con su potencia y su lectura.
+
+**Balance del repaso completo.** De los cuatro contrastes del informe con conclusión negativa o sobre muestra
+pequeña: **dos estaban bien redactados** —§5.2 y esta conclusión 3—, **uno era un error de fondo** que se
+corrigió (`§F77`) y **uno de redacción** (`§F77.bis`). El informe sale del repaso mejor de lo que entró, y
+con la potencia de sus contrastes documentada.
+
+---
+
+## §F71.ter — Resuelto: `latency_sec` no mide generación, incluye la espera bajo concurrencia
+
+**Fecha:** 2026-09-08, 22:06. Cierra la pregunta que `§F71` dejó abierta, **sin necesidad de la respuesta del
+equipo de 48 GB**, con una comprobación aritmética.
+
+**El diagnóstico que faltaba.** Comparando *tokens por segundo* entre la corrida publicada y la re-corrida
+sobre los mismos modelos, el rendimiento **apenas cambia** —factores de 0,96 a 1,10— mientras la latencia
+varía hasta **×0,02**. Si el modelo genera al mismo ritmo y tarda cincuenta veces menos, es que genera
+cincuenta veces menos texto… o que la latencia no mide lo que parece.
+
+**La prueba que lo decide.** Si `latency_sec` fuera el tiempo de generación de un registro, entonces
+`latencia × tokens/s` daría los tokens generados, y ese número no puede superar el tope de salida. En las
+corridas publicadas, con `max_tokens = 2048`:
+
+| Grupo | Latencia | Tokens/s | Tokens implícitos |
+|:---|---:|---:|---:|
+| `gpt-oss:20b` KB RAG | 862,7 s | 50,3 | **43 430** |
+| `gemma4:31b-mlx` KB RAG | 1 408,5 s | 21,9 | **30 910** |
+| `gemma4:latest` KB RAG | 489,6 s | 51,1 | **24 998** |
+| `deepseek-r1:1.5b` baseline | 113,8 s | 143,3 | **16 307** |
+
+**Veinte de los veintiséis grupos superan el tope**, alguno por veintiún veces. Es aritméticamente imposible.
+
+**Conclusión: `latency_sec` en las corridas publicadas no mide el tiempo de generación de un registro.**
+Incluye la espera bajo concurrencia —el reloj de pared desde que el registro entra en la cola hasta que sale,
+con otros compitiendo por la GPU—. La re-corrida, con otra configuración de consumidores y lotes, arroja
+valores mucho menores por esa razón y no porque el hardware sea más rápido.
+
+**Lo que esto implica, y es más fuerte que la salvedad actual.** El informe ya advierte que las latencias
+«proceden de corridas con distinta concurrencia y hardware, por lo que no son comparables entre filas», y
+acierta. Pero la razón real es peor que la declarada: **la latencia no es una propiedad del modelo en
+absoluto**, sino del régimen de ejecución, de modo que no lo sería ni aunque todas las filas vinieran de la
+misma corrida, porque el controlador AIMD varía los consumidores durante el barrido.
+
+**Lo que sí se salva.** Los **tokens por segundo** son estables entre corridas —de 0,96 a 1,10— y por tanto
+sí caracterizan al modelo. La Tabla 8 se apoya en esa columna y en el índice Tok/s/B que deriva de ella, de
+modo que **su contenido sigue siendo válido**; lo que no puede reconstruirse desde la latencia es un tiempo
+por artículo comparable.
+
+**Pregunta al equipo de 48 GB: se mantiene, pero ya no como diagnóstico.** Basta con que confirmen si
+`latency_sec` incluye la espera en cola, para dejarlo escrito con su palabra además de con la aritmética.
+
+---
+
+## §F78 — Las veinticuatro comprobaciones, sometidas a prueba de mutación
+
+**Fecha:** 2026-09-08, 22:23. Aplicada al propio verificador la regla que él impone: **una comprobación que
+nunca se ha visto fallar no está comprobada** (`§L48`).
+
+Hasta hoy solo cinco de las veinticuatro se habían probado en negativo. Se han introducido **catorce
+mutaciones** deliberadas en el informe, una por familia de defecto, comprobando en cada caso que alguna
+comprobación la detecta, y restaurando después:
+
+| Mutación introducida | ¿Detectada? |
+|:---|:---|
+| Referencia `§9.99` a una sección inexistente | sí |
+| Leyenda de tabla sin tabla debajo | sí |
+| Cita a una «Figura 9» que no existe | sí |
+| Entrada de bibliografía sin URL | sí |
+| Numeración de bibliografía no contigua | sí |
+| Cita `[99]` sin entrada | sí |
+| Resumen por encima de 200 palabras | sí |
+| Pictograma en prosa | sí (2 comprobaciones) |
+| Nombre de modelo excluido | sí (2) |
+| Arte ASCII | sí |
+| Δ incoherente en la Tabla 7 | sí |
+| Fila con F1 imposible | sí (2) |
+| Desajuste entre el Anexo I y la Tabla 7 | sí (3) |
+| Cifra alterada en el índice de defensa | sí |
+
+**Catorce de catorce.** Y las mutaciones se solapan: varias disparan más de una comprobación, lo que da
+redundancia allí donde más importa —las cifras de las tablas—.
+
+**Un falso negativo, y era mío.** La primera versión de la prueba de bibliografía insertaba texto sin quitar
+la URL, de modo que la línea seguía conteniendo `http` y la comprobación hacía bien en no protestar. Corregida
+la mutación, se detecta. **Es el mismo error que la prueba pretende cazar**: dar por buena una comprobación
+sin verificar que la mutación era realmente un defecto.
+
+**Verificado que el informe queda intacto** tras las catorce mutaciones: `diff` sin diferencias frente al
+original.
+
+---
+
+## §F79 — La duración de una corrida no es estimable con la telemetría que el estudio guarda
+
+**Fecha:** 2026-09-08, 22:26. Segundo intento fallido, por causa distinta del primero. **Se documenta para
+no intentarlo una tercera vez.**
+
+**Primer intento** (esta tarde): estimar el tiempo de cada modelo a partir de las latencias de la corrida
+publicada. Descartado porque los dos anclajes medidos daban factores que diferían casi cuatro veces, y porque
+`§F71.ter` demostró después que esas latencias incluyen espera en cola y no miden generación.
+
+**Segundo intento** (ahora): usar los **tokens por segundo**, que `§F71.ter` acreditó como estables entre
+corridas y por tanto característicos del modelo. La hipótesis era que si cada artículo requiere un trabajo
+parecido, el producto `minutos × (tokens/s)` sería aproximadamente constante entre modelos.
+
+**No lo es.** Sobre los siete modelos ya rehechos:
+
+| Modelo | Minutos (N=120) | Tokens/s | Producto |
+|:---|---:|---:|---:|
+| `gemma4:latest` | 74,5 | 50,8 | **3 784** |
+| `gemma4:31b-mlx` | 45,4 | 24,3 | 1 104 |
+| `gemma4:12b-mlx` | 18,2 | 53,8 | 980 |
+| `qwen3:8b` | 18,4 | 39,8 | 730 |
+| `llama3.1:8b` | 17,0 | 42,4 | 722 |
+| `gemma:latest` | 17,4 | 40,5 | 703 |
+| `qwen2.5:14b` | 27,5 | 23,3 | **643** |
+
+De 643 a 3 784: un factor de **5,9**. `gemma4:latest` se dispara porque su modo KB RAG genera muchísimo más
+texto que los demás, y esa variable —**cuántos tokens produce cada modelo por artículo**— no está registrada
+en ninguna parte: el CSV guarda `tokens_per_sec` pero **no el recuento de tokens**.
+
+**Conclusión: con la telemetría disponible no se puede estimar cuánto tardará una corrida.** Falta
+precisamente el dato que la determina. Registrarlo sería barato y útil para el futuro, pero no cambia el
+presente.
+
+**Consecuencia práctica para la monitorización:** el único criterio válido para juzgar si un barrido sigue
+vivo es su propio registro de progreso, y por eso se pidió el script al equipo de 48 GB. Un silencio largo
+**no es evidencia de nada**, y hoy ya llevó una vez a estar a punto de declarar caído un barrido que
+funcionaba.
+
+---
+
+## §F80 — La comprobación de las URL estaba tras una bandera, y al ejecutarla aparecieron tres cosas
+
+**2026-09-08, 23:3x.** La rutina de seguimiento venía informando «24 comprobaciones, 0 fallos» después de cada
+cambio. La comprobación de que **las URL de la bibliografía responden** no está entre esas 24: vive detrás de
+`--red`, porque sale a la red y tarda. De modo que la línea de estado decía cero fallos **sin haber abierto
+una sola URL**, cuando `CLAUDE.md` es explícito en que «una URL no abierta no cuenta como verificada».
+
+Ejecutada, la comprobación pasa a ser la **25** y aparecen tres cosas.
+
+**Zenodo bloquea lectores automáticos.** La entrada [18], el corpus Kleptotrace, daba tiempo de espera
+agotado, y luego HTTP 504. Aplicando el control de `§L57` —pedir algo que sí debería responder— resultó que
+**zenodo.org devuelve 403 hasta en su propia raíz**. No es un enlace roto: es un portero, igual que ACM. Se
+acredita, como manda la norma del proyecto, por **resolución del DOI**: `10.5281/zenodo.14027005` responde 302
+con destino, luego el registro existe.
+
+**Un identificador de ACM que no es un DOI.** Al exigir resolución del DOI a las entradas de un portero, falló
+la [17], el artículo de Lafferty, McCallum y Pereira sobre *conditional random fields*. Su URL es
+`dl.acm.org/doi/10.5555/645530.655813`, y **`10.5555` no es un DOI registrado**: doi.org devuelve 404 y
+Crossref responde «Resource not found». OpenAlex confirma que el trabajo existe —12 994 citas— y que su campo
+`doi` es **nulo**: es un artículo de ICML de 2001 sin DOI, y `10.5555` es el identificador interno de ACM para
+material heredado. La cita **no está mal** para un lector humano, que abre esa página sin problema; lo que no
+puede es acreditarse por DOI, porque no lo hay. Se declara la excepción con su evidencia y con una copia
+abierta verificada: `repository.upenn.edu/handle/20.500.14332/6188`, HTTP 200.
+
+**Y lo más importante: el 403 de ACM no distingue nada.** Comprobado con un identificador inventado,
+`10.5555/000000.000000`, que devuelve **el mismo 403** que el real. Es decir, la regla anterior —«si es un
+portero y da 403, se acepta»— habría dado por buena **cualquier cita inventada sobre ese dominio**. Ese es el
+defecto de `§L57` con otra cara: un valor que significa éxito y que también produce la avería.
+
+### El primer arreglo tenía dos defectos, y los encontró su propia prueba de mutación
+
+Aplicada la disciplina de `§F78`, dos mutaciones sobre el arreglo recién escrito:
+
+1. **Sustituir la URL de [17] por el identificador inventado pasaba sin que nada lo notase.** La excepción
+   estaba indexada **solo por el número de entrada**, de modo que acreditaba la entrada 17 llevara la URL que
+   llevase. Corregido: la clave es ahora el par (número, URL exacta).
+2. **Un dominio inexistente se clasificaba como «no concluyente».** La distinción entre fallo y caída del
+   servidor es correcta —un 504 no acredita que el enlace esté roto—, pero se aplicaba a toda excepción de
+   red. Un dominio que no resuelve en el DNS **sí es un enlace roto**. Corregido: `gaierror`,
+   `ConnectionRefusedError` y `ConnectionResetError` fallan; el resto queda como no concluyente.
+
+Con los dos arreglos, ambas mutaciones se detectan. Informe restaurado y comprobado con `diff`.
+
+### Lo que queda fallando, y debe seguir así
+
+La entrada **[37]**, el repositorio del proyecto, devuelve **404 porque es privado**. Es un defecto real y
+declarado: el informe afirma que el material está publicado y hoy no lo está, por la purga pendiente. **No se
+declara como excepción**: tiene que seguir fallando hasta que se resuelva, que es justo para lo que sirve una
+comprobación. Ver `SEGURIDAD-CLAVE-GOOGLE-20260908.md`.
+
+### Consecuencia para la rutina
+
+Antes de dar por buena la bibliografía hay que ejecutar `python3 tools/verificar_informe.py --red`, y no
+solamente la forma corta. Una comprobación que existe pero no se ejecuta es indistinguible de una que no
+existe. `LEARNING §L47` lo dice para las comprobaciones vacías; esto es lo mismo para las apagadas.
+
+---
+
+## §F81 — El emparejamiento cuenta dos veces una misma referencia, y la exhaustividad llega a pasar de 1,0
+
+**2026-09-08, 23:4x.** Ejecutando `tools/composicion_fp.py --resumen`, un modo de validación que existía y no
+formaba parte de la rutina, apareció un dato que no encaja: `tp + fn` agregado en personas vale 15 664 sobre
+26 grupos, y 15 664 entre 26 no da entero. Si los veintiséis grupos puntúan **los mismos 120 artículos contra
+la misma anotación de referencia**, ese recuento tendría que ser idéntico en todos.
+
+No lo es. Va de **594 a 675** en personas y de **812 a 869** en organizaciones. Descartada primero la
+explicación benigna —que hubiera registros sin métricas—: hay **cero** en los veintiséis grupos.
+
+### El mecanismo, en el código
+
+`src/evaluator.py::evaluate_extraction_by_type` incrementa `tp` **por cada entidad extraída que casa** con
+alguna de referencia, y a continuación calcula `fn = len(gt_list) - len(matched_gts)`, es decir, sobre el
+conjunto de referencias **distintas** casadas. Si dos entidades extraídas casan con la misma referencia
+—«John Smith» y «Smith, John», que el emparejamiento difuso da por iguales al umbral del 85 %— `tp` sube dos
+veces y la referencia se cuenta una sola.
+
+De ahí se siguen tres cosas, y las tres se comprueban en los datos:
+
+1. **`tp + fn` no vale `len(gt)`**, sino `len(gt)` más el número de emparejamientos duplicados. Por eso el
+   recuento de referencia varía entre grupos que puntúan el mismo corpus.
+2. **La exhaustividad por categoría puede pasar de 1,0**, porque es `tp / len(gt_list)`. Hay **197 registros**
+   con exhaustividad mayor que uno, y el máximo observado es **2,444**. Una exhaustividad por encima de uno es
+   imposible en una métrica correcta.
+3. **La precisión no está afectada.** Cada entidad extraída contribuye como mucho una vez —el bucle hace
+   `break` al primer casamiento—, que es justo lo que su denominador cuenta.
+
+### Cuánto afecta a lo publicado, con la cifra
+
+El recálculo no necesita reejecutar inferencia: de `recall = tp / len(gt)` se despeja `len(gt)`, y las
+referencias casadas son `len(gt) - fn`. Con eso se rehace cada registro contando cada referencia una sola vez.
+Artefacto en `results/EMPAREJAMIENTO_DUPLICADO_20260908/efecto.json`, reproducible con
+`tools/efecto_emparejamiento_duplicado.py`.
+
+> **Las cuatro cifras de este bloque están corregidas en `§F81.bis`.** Se calcularon leyendo ocho de los
+> veintiséis grupos de la corrida equivocada. El mecanismo, la dirección y la conclusión no cambian; las
+> cifras y una de las afirmaciones, sí.
+
+- **410 emparejamientos duplicados** en los 26 grupos.
+- El F1 publicado está inflado **+0,145 pp de media**, con un máximo de **+0,936 pp** en
+  `gemma4:latest_baseline`. Siempre al alza, como predice el mecanismo.
+- **Ninguna mejora cambia de signo**: cero de trece.
+- **El orden de los veintiséis grupos es idéntico** antes y después.
+
+El efecto queda muy por debajo del umbral de 0,02 en F1 que `CLAUDE.md` declara tolerable, y **no cambia
+ninguna conclusión del trabajo**. La mayor variación es la de `gemma4:latest`, cuya mejora pasa de −1,17 a
+−0,25 puntos, y sigue siendo negativa.
+
+### Por qué importa igualmente
+
+Por dos razones que no dependen de la magnitud.
+
+**La primera es de defensa.** Una exhaustividad de 2,444 en los datos crudos es exactamente lo que un tribunal
+puede encontrar si mira, y encontrarla sin que el trabajo la haya declarado es peor que declararla con su
+efecto acotado. La declaración es barata: el defecto está cuantificado, es reproducible y no altera nada.
+
+**La segunda es operativa y urgente.** La re-corrida en marcha en el equipo de 48 GB **usa este mismo
+evaluador**. Corregirlo a mitad del barrido produciría datos no comparables entre los modelos ya terminados y
+los que faltan, de modo que **no se toca `evaluator.py`** sin decisión expresa. Queda como decisión 8 en
+`DECISIONES-PENDIENTES-20260908.md`.
+
+### Lo que enseña sobre el método
+
+El indicador que lo destapó es el mismo de `§F53`: mirar `tp + fn` agregado por categoría. Allí la señal era
+que valiera cero; aquí, que **no fuera constante entre grupos que puntúan el mismo corpus**. Ambas se ven en
+una línea de aritmética y ninguna necesita reejecutar nada.
+
+Y apareció al ejecutar un modo de validación que existía desde hacía días y que nadie había corrido, igual que
+`§F80` apareció al ejecutar `--red`. Dos hallazgos seguidos por la misma causa: **una capacidad que existe y
+no se ejecuta no está comprobando nada**.
+
+---
+
+## §F81.bis — Las cifras de §F81 estaban mal: ocho de veintiséis grupos leídos de la corrida equivocada
+
+**2026-09-09, 00:2x.** Comprobando otra cosa —si las cifras «Publicado» de `tools/estado_recorrida.py`
+coincidían con la Tabla 7— apareció que la media del detalle por registro **no reproducía la tabla en cuatro
+grupos**: `gemma4:12b-mlx_baseline` daba 27,31 frente a 56,18, `gpt-oss:20b_baseline` 43,84 frente a 52,39,
+`qwen3:8b_baseline` 44,83 frente a 48,21 y `nemotron-mini:4b_baseline` 21,30 frente a 22,59. Tres de esas
+cuatro cifras son justamente las que se retiraron del informe por inválidas.
+
+### La causa, y es mía
+
+El consolidado resuelve los grupos repetidos con `--on-duplicate=first`: gana la **primera** fuente que los
+trae, y el manifiesto lo documenta en `duplicate_notes`. **Ocho de los veintiséis grupos aparecen en dos
+fuentes.** El script que escribí para `§F81` construía el mapa de origen con una comprensión de diccionario,
+donde **gana la última**, que es la política contraria. Así se leyó `gpt-oss:20b` desde `05_excluidos` en
+lugar de `00_gptoss_rerun`, y `gemma4:12b-mlx`, `qwen3:8b` y `nemotron-mini:4b` desde `06_P3` en lugar de sus
+corridas de sustitución.
+
+**`tools/composicion_fp.py` no tiene este defecto**: usa `setdefault`, que sí reproduce la política del
+consolidado. De modo que **la composición de falsos positivos publicada —el 66,0 %, 12 852 de 19 464— no está
+afectada**. Lo comprobé antes de escribir nada, porque esa cifra sí está en el informe.
+
+### Las cifras corregidas
+
+Corregido `tools/efecto_emparejamiento_duplicado.py` para usar `setdefault`, y añadido un **control** que
+compara la media de cada grupo con la del CSV consolidado y declara los que no cuadren. Con la corrección, los
+veintiséis reproducen el consolidado y **el control no señala ninguno**. Los Δ coinciden ahora con la Tabla 7
+del informe, que es la prueba externa de que la fuente es la correcta.
+
+| Magnitud | En `§F81` | Correcta |
+|:---|---:|---:|
+| Emparejamientos duplicados | 410 | **409** |
+| Inflación media del F1 | +0,145 pp | **+0,160 pp** |
+| Inflación máxima | +0,936 pp | **+1,287 pp** |
+| Grupo más afectado | `gemma4:latest_baseline` | **`nemotron-mini:4b_baseline`** |
+| Mejoras que cambian de signo | 0 de 13 | **0 de 13** |
+| Orden de los 26 grupos | idéntico | **cambia en un puesto** |
+
+### La afirmación que hay que retirar
+
+**«El orden de los veintiséis grupos es idéntico» era falsa.** Con la fuente correcta hay **un intercambio**:
+`gpt-oss:20b_kb_rag` y `gemma4:latest_baseline` permutan los puestos 7 y 8, porque el segundo pasa de 55,91 a
+54,98 y el primero apenas se mueve, de 55,67 a 55,65. Son dos grupos separados por 0,24 puntos y el informe no
+publica una ordenación de grupos, de modo que **no cambia ninguna conclusión**; pero la afirmación, tal como
+estaba escrita, no era cierta.
+
+**Lo que sí se sostiene**, y es lo que importaba: el mecanismo, que la inflación es siempre al alza, que
+**ninguna de las trece mejoras cambia de signo** y que el efecto queda muy por debajo del umbral de 0,02 en F1
+que `CLAUDE.md` declara tolerable.
+
+### Lo que enseña
+
+Un mapa de `grupo → corrida` construido con una comprensión de diccionario **elige en silencio** cuando una
+clave aparece dos veces, y elige lo contrario que `setdefault`. No hay error, ni aviso, ni nada que mirar: el
+script corre igual y produce cifras plausibles. Lo destapó **un control externo** —comparar contra la Tabla 7,
+que se produjo por otra vía— y no una revisión del código, que se había leído entero sin ver nada.
+
+De ahí la regla que se incorpora al recálculo: **toda herramienta que reagrupe por corrida declara si sus
+medias reproducen el consolidado**, y nombra las que no. Es una comprobación de cuatro líneas y habría
+ahorrado este hallazgo.
+
+---
+
+## §F82 — Una fila ilegible salía en silencio de la verificación, y la Tabla 7 era una de ellas
+
+**2026-09-09, 01:0x.** Siguiendo la pista de `§L58` —órdenes cuyo «no hizo nada» no se distingue de «lo hizo
+bien»— se barrieron las excepciones que los verificadores se tragan. La de la tasa de alucinación resultó
+**bien protegida**: si un CSV no se pudiera leer, el recuento de grupos bajaría de 61 y la comprobación falla
+por su propia aserción de población. Pero dos comprobaciones de tablas no tenían esa guarda.
+
+**Comprobado por mutación**, que es la única forma de saberlo. Cambiando `74.44%` por `74,44 %` en una fila de
+la Tabla 4, el recuento bajaba de **52 a 48 elementos** y la comprobación seguía diciendo **ok**. Lo mismo en
+la **Tabla 7**, que es la tabla central del trabajo: poniendo `n/d` en el F1 base de `gemma4:31b-cloud`, el
+recuento bajaba de **26 a 24** y pasaba igual.
+
+Es decir: **una fila cuyo formato dejara de casar con el patrón simplemente dejaba de verificarse**. No hacía
+falta un error para perderla; bastaba una coma decimal, un `%` desplazado o una celda con «n/d». Y el recuento
+menor quedaba impreso, pero nadie conoce de memoria cuántos elementos debe examinar cada comprobación, que era
+justo el supuesto sobre el que se apoyaba `§L47` al exigir que se declararan.
+
+### El arreglo
+
+Las dos comprobaciones cuentan ahora aparte las filas que **parecen de datos y no se pueden leer** —cinco
+columnas en la Tabla 7, siete en la Tabla 4, con nombre y sin ser encabezado— y las declaran como fallo, con
+el nombre de la fila y las celdas que no pudo interpretar. El recuento total se mantiene, de modo que una fila
+ilegible **no reduce el número de elementos examinados**: aparece como fallo, no como ausencia.
+
+Verificado por mutación en ambas: fallan con el nombre del modelo y conservan sus 26 y 52 elementos.
+
+### Lo que enseña
+
+`§L47` exige que cada comprobación declare cuántos elementos examinó, y esa regla ha funcionado: destapó
+comprobaciones vacías. Pero **declarar el recuento solo sirve si alguien sabe cuál debería ser**, y aquí
+bajaba de 26 a 24 sin que nada chirriara. La forma robusta no es publicar el número, sino **exigir que todo
+candidato se procese**: contar lo que se intentó y no solo lo que salió bien.
+
+Es la tercera cara del mismo defecto en dos días. En `§L57` un 404 podía significar éxito o URL rota; en
+`§L58` un `push` sin error podía significar sincronizado o nada que empujar; aquí un «ok» podía significar
+verificado o no mirado. Las tres se resuelven igual: **comparar contra lo que debería haber, no contra lo que
+hubo**.
+
+---
+
+## §F82.bis — Completado el barrido: dos formas más de dejar de verificar sin decirlo
+
+**2026-09-09, 01:2x.** Aplicada la mutación al resto de comprobaciones que leen tablas. `el Anexo I cuadra con
+la Tabla 7` y `la Tabla 18 reproduce desde el analisis de mojibake` **detectan**. La de las tablas 5, 6 y 8
+tenía **dos agujeros distintos del de `§F82`**, y peores, porque en aquél el recuento al menos bajaba.
+
+**Primero: `mirados += 1` antes del `float()`.** El recuento subía y a continuación el `except ValueError:
+continue` saltaba la comparación. El valor quedaba sin verificar **y el recuento no lo delataba**: seguía
+marcando 32 elementos, exactamente igual que cuando todo se comprueba. No había señal de ninguna clase.
+
+**Segundo: una fila cuyo nombre no case se descarta antes de contar.** Las guardas
+`if len(c) < 4 or c[0] not in d: continue` y su equivalente de la Tabla 8 sacaban de la comprobación
+cualquier fila cuyo rótulo dejara de corresponder con un grupo de la corrida. **Renombrar un modelo en la
+tabla la habría sacado de la verificación sin dejar rastro** —ni fallo, ni recuento menor, nada—, que es
+justo lo que ocurre cuando se corrige el nombre de un modelo, que en este proyecto ha pasado varias veces.
+
+Las dos se descubrieron por accidente afortunado: la mutación buscaba la primera cifra de la fila y la
+encontró **dentro del nombre del modelo** —`gemma4:12b-mlx` contiene un «12»—, de modo que rompió el rótulo en
+lugar del dato y destapó el segundo agujero, que no se estaba buscando.
+
+**Corregido en los tres casos**: un valor ilegible y una fila sin correspondencia son ahora fallos con el
+nombre de la fila y el valor que no se pudo leer. Verificado por mutación en las tres tablas, y comprobado
+que sobre el informe limpio no aparece ningún falso positivo: sigue en 32 elementos y sin fallos.
+
+**Balance del barrido.** De las siete comprobaciones que leen tablas o datos tabulares, **tres estaban
+protegidas** —alucinaciones por su aserción de población, Anexo I y Tabla 18— y **cuatro no**: Tabla 4,
+Tabla 7 y las tres tablas menores, que compartían el mismo defecto con tres variantes. Todas corregidas y
+sometidas a mutación.
+
+---
+
+## §F81.ter — `§F81` era un redescubrimiento de `§F49`, y `§F49` afirma una inmunidad que no existe
+
+**2026-09-09, 02:1x.** Verificando las nueve corridas entregadas de la re-corrida apareció que la firma
+`tp + fn` es **idéntica en las veintisiete** —(1098, 1500, 1034) en N=120— cuando `§F81` predice que debería
+variar entre modelos. La explicación estaba en el propio código de la rama: `src/evaluator.py` lleva desde el
+**2026-09-08** una corrección con este comentario, «cada entidad de referencia se empareja UNA sola vez.
+Antes dos extracciones que casaban con un mismo gold sumaban dos aciertos», y cita `encargo §2.3, FINDINGS
+§F49/§F50`.
+
+**Es decir: el defecto ya estaba encontrado y ya estaba corregido, y `§F81` lo redescubrió sin verlo.** El
+mecanismo que describí es el mismo que `§F49` documentó el 2026-09-07, con la misma referencia de línea. Debí
+haberlo buscado antes de escribir un hallazgo nuevo; que la firma constante de la re-corrida me llevara hasta
+él es una casualidad afortunada, no un método.
+
+### Pero `§F49` afirma algo que no se sostiene, y eso sí es nuevo
+
+`§F49` concluye que el defecto **«no contamina los resultados»** porque «las cifras del estudio proceden del
+bloque `overall`, que sí calcula `tp / (tp + fn)` y es **inmune** al problema». El razonamiento es que al
+aparecer `tp` en numerador y denominador el sesgo se cancela.
+
+**No se cancela: se atenúa.** Con referencia {A, B, C} y extracciones A, A′, B —las dos primeras casando con
+A— resulta `tp = 3`, referencias casadas {A, B} y `fn = 1`. El `overall` da `3/4 = 0,750` cuando lo correcto
+es `2/3 = 0,667`. `tp` infla el numerador y **`fn` no compensa**, porque se calcula sobre referencias
+distintas.
+
+La prueba empírica es la propia corrección: **si `overall` fuera inmune, recalcular no cambiaría nada**, y
+cambia. Sobre los 26 grupos publicados, el F1 sube **+0,160 pp de media** y **+1,287 pp** como máximo, siempre
+al alza, con **409** emparejamientos duplicados (`§F81`, `§F81.bis`).
+
+### Lo que queda en pie de cada hallazgo
+
+| Afirmación | Estado |
+|:---|:---|
+| El mecanismo del doble conteo (`§F49`, `§F81`) | **Correcto**, y descrito igual en ambos |
+| La exhaustividad por tipo pasa de 1,0 (`§F49`) | **Correcto**: 197 registros, máximo 2,444 |
+| «El bloque `overall` es inmune» (`§F49`) | **Falso.** Atenúa el sesgo, no lo elimina |
+| «Ninguno afecta a las cifras publicadas» (`§F49`) | **Falso**, aunque el efecto es pequeño: +0,160 pp de media |
+| La cuantificación del efecto residual (`§F81`) | **Correcta y nueva**; es lo único que `§F81` aporta |
+| El defecto persiste y hay que decidir cuándo corregirlo (`§F81`) | **Falso.** Ya está corregido en la rama de la re-corrida desde el 2026-09-08 |
+
+### Consecuencias prácticas
+
+- **La decisión 8 se reformula.** Preguntaba si corregir el evaluador y cuándo; ya está corregido y la
+  re-corrida usa la versión corregida. Lo que queda por decidir es **si el informe declara el defecto de los
+  datos antiguos** mientras conviven con los nuevos.
+- **La re-corrida no arrastra el defecto**, y ahora está probado contra la fuente: su `tp + fn` de N=120 vale
+  exactamente **2 × (549, 750, 517)**, la anotación de los **113** artículos no contaminados, sin un solo
+  acierto de más.
+- **Pero no puede comprobarse registro a registro**, porque la re-corrida **no entrega
+  `detailed_results.json`** y las métricas por tipo viven ahí. Es una razón más para insistir en el pedido de
+  `PEDIDO-COMMITEAR-BARRIDO-Y-DETALLE-20260908.md`.
+
+### La lección
+
+Antes de escribir un hallazgo hay que **buscar si ya está escrito**, con un `grep` por el mecanismo y no solo
+por el número de sección. Y al leer un hallazgo antiguo, su conclusión tranquilizadora —«no afecta a las
+cifras publicadas»— merece la misma comprobación que una alarmante: aquí bastaba un ejemplo de tres entidades
+en una servilleta para ver que la inmunidad no se sostenía, y sobrevivió dos días sin que nadie lo hiciera.
+
+---
+
+## §F83 — Los contrastes de robustez no tenían herramienta, y al escribirla apareció un adelanto que conviene mirar
+
+**2026-09-09, 03:3x.** Los tres artefactos de `results/ROBUSTEZ_ESTADISTICA_20260908/` —Friedman, post-hoc
+pareado y potencia— sostienen `§F75`, `§F76` y `§F77`, y con ellos la **decisión 7**, que pregunta si el
+informe adopta el post-hoc apropiado al diseño. Se calcularon a mano en una sesión y **ningún script los
+reproducía**: `verificar_informe.py` los lee, pero nadie los genera.
+
+Eso los convertía en un callejón sin salida. Cuando la re-corrida sustituya los datos, esos tres hallazgos
+habría que rehacerlos desde cero, y la decisión 7 no podría actualizarse.
+
+**Escrita `tools/robustez_estadistica.py`**, que calcula ambos contrastes desde un CSV consolidado. Validada
+con `--validar`, que exige reproducir lo publicado: **χ² = 1169,2327 con 25 grados de libertad y 8 de 13
+significativos tras Holm**, sin una sola discrepancia. La herramienta calcula lo mismo que se calculó a mano.
+
+### El adelanto, y hay que leerlo con cuidado
+
+Ejecutada sobre los **once** modelos que la re-corrida lleva entregados —el consolidado provisional del
+ensayo de fusión— el resultado cambia mucho:
+
+| | Datos publicados (13 modelos) | Re-corrida provisional (11 modelos) |
+|:---|---:|---:|
+| Friedman χ² | 1 169,23 | 1 131,62 |
+| Significativos tras Holm | **8 de 13** | **2 de 11** |
+| Mayor Δ | +14,52 pp (`nemotron-mini:4b`) | +6,73 pp (`llama3.2:latest`) |
+
+Los dos que sobreviven son `llama3.2:latest` (+6,73) y `gemma4:12b-mlx` (+2,29). Dos más quedan **al borde**:
+`gemma4:latest` con Holm = 0,0529 y `mistral-nemo:latest` con 0,0520, este último con efecto **negativo** de
+−4,29 pp.
+
+**Tres advertencias, y son importantes.**
+
+1. **Faltan dos modelos, y uno de ellos es el de mayor efecto.** `nemotron-mini:4b` daba +14,52 pp y era el
+   más significativo de todos; `deepseek-r1:1.5b` sigue en curso. Con los trece la fotografía puede cambiar,
+   y precisamente en la dirección que más importa, porque ambos son de los pequeños.
+2. **Esta cifra no debe citarse todavía en ninguna parte.** Es un adelanto de un consolidado provisional
+   construido en un directorio temporal para ensayar la fusión, no un resultado del estudio.
+3. **Lo que sí se puede afirmar ya** es que el efecto del RAG sobre el corpus corregido es **bastante menor**
+   que sobre el defectuoso, y que la tesis de la proporcionalidad inversa se apoyará en menos modelos. El
+   sentido no se invierte —el que más gana sigue siendo de los pequeños— pero la magnitud se reduce.
+
+Cuando lleguen los trece, `CIERRE-RECORRIDA-PROCEDIMIENTO.md` debe incluir la ejecución de esta herramienta
+junto al `merge_and_analyze.py`, y §5.3.1 habrá de reescribirse con las cifras que salgan.
+
+---
+
+## §F84 — El respaldo del analizador rescata casi siempre, y donde no lo hace está concentrado
+
+**2026-09-09, 04:1x.** La quinta verificación del protocolo pide cruzar `parse_method` con el resultado para
+saber si el respaldo **rescata contenido o encubre un fallo**. Al hacerlo en dos modelos salió lo contrario en
+cada uno: en `mistral-nemo:latest` los 44 respaldos puntuaban casi como las filas directas, y en
+`deepseek-r1:1.5b` los 4 puntuaban **cero los cuatro**. Conviene entonces mirarlo entero.
+
+Sobre las **36 corridas** entregadas de la re-corrida:
+
+| Ruta de análisis | Filas | F1 medio | Con `recall = 0` |
+|:---|---:|---:|---:|
+| `direct_json` | 1 002 | 67,95 | 11 |
+| `codeblock` | 231 | 30,96 | 11 |
+| `fallback` | **57** | **49,90** | **6** |
+
+**Lo que dice.** El respaldo se usa poco —57 filas— y cuando se usa **rescata**: 49,90 de F1 medio está lejos
+del cero que tendría si solo encubriera fallos, aunque por debajo de las filas analizadas directamente.
+Solo **6 de los 57** quedan en cero, y **5 están concentrados**: los 4 de `deepseek-r1:1.5b` y 1 de
+`gpt-oss:20b`. En el resto de modelos el respaldo funciona.
+
+**El caso de `mistral-nemo` merece leerse aparte**, porque concentra 44 de los 57. Sus respaldos dan 55,27
+frente a 59,56 de sus filas directas, y **42 de los 44 son del modo KB RAG**: el prompt de recuperación le
+hace emitir un JSON que el analizador directo no lee en el 35 % de los casos, contra el 1,7 % de su línea
+base. Pero **su caída de F1 no la causa eso**: entre las filas directas, KB RAG da 57,47 y la línea base
+60,95.
+
+**El `codeblock` no es un fallo.** Sus 231 filas son casi todas de `deepseek-r1:1.5b`, que envuelve su salida
+en bloques de código; su F1 medio bajo refleja que es el peor modelo del estudio, no que la ruta falle.
+
+### Por qué importa la distinción
+
+Porque «hay respaldos» no significa nada por sí solo, y el número puede leerse de tres maneras opuestas: como
+un fallo del modelo, como un rescate del arnés o como un rasgo del formato de salida. Aquí se dan las tres a
+la vez en modelos distintos. **La única lectura válida es cruzarlo con el resultado**, que es exactamente lo
+que el protocolo de seguimiento pide y lo que ninguna cifra agregada de `parse_method` puede sustituir.

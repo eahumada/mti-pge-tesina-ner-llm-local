@@ -1,0 +1,114 @@
+{
+ "nota": "Post-hoc pareado por modelo: Wilcoxon de rangos con signo entre baseline y KB RAG sobre los mismos registros, con correccion de Holm sobre las trece comparaciones de interes. Contrasta con el Tukey HSD que publica §5.3.1, que trata las observaciones como independientes y corrige por las 325 comparaciones posibles entre los veintiseis grupos.",
+ "fecha": "2026-09-08",
+ "n_comparaciones": 13,
+ "significativos_pareado": 8,
+ "significativos_tukey_publicado": 2,
+ "por_que_difieren": "Dos factores, ambos en la misma direccion. El emparejamiento elimina la varianza entre articulos, que es grande. Y corregir por 325 comparaciones cuando solo interesan 13 es muy conservador. Ninguno de los dos hace incorrecto el Tukey: responde a otra pregunta.",
+ "filas": [
+  {
+   "modelo": "nemotron-mini:4b",
+   "delta_pp": 14.52,
+   "p_crudo": 4.0686196536001743e-10,
+   "n": 120,
+   "p_holm": 0.0,
+   "significativo": true
+  },
+  {
+   "modelo": "llama3.2:latest",
+   "delta_pp": 10.82,
+   "p_crudo": 1.1539982509799027e-08,
+   "n": 120,
+   "p_holm": 0.0,
+   "significativo": true
+  },
+  {
+   "modelo": "qwen2.5:14b",
+   "delta_pp": 4.62,
+   "p_crudo": 1.3594910961113508e-05,
+   "n": 120,
+   "p_holm": 0.00015,
+   "significativo": true
+  },
+  {
+   "modelo": "gemma:latest",
+   "delta_pp": 7.36,
+   "p_crudo": 4.898493549238728e-05,
+   "n": 120,
+   "p_holm": 0.00049,
+   "significativo": true
+  },
+  {
+   "modelo": "qwen3:8b",
+   "delta_pp": 3.25,
+   "p_crudo": 8.12881700467849e-05,
+   "n": 120,
+   "p_holm": 0.000732,
+   "significativo": true
+  },
+  {
+   "modelo": "gpt-oss:20b",
+   "delta_pp": 3.28,
+   "p_crudo": 0.0005554002355230008,
+   "n": 120,
+   "p_holm": 0.004443,
+   "significativo": true
+  },
+  {
+   "modelo": "gemma4:12b-mlx",
+   "delta_pp": 2.28,
+   "p_crudo": 0.0026295814213292616,
+   "n": 120,
+   "p_holm": 0.018407,
+   "significativo": true
+  },
+  {
+   "modelo": "llama3.1:8b",
+   "delta_pp": 1.99,
+   "p_crudo": 0.007191969531733957,
+   "n": 120,
+   "p_holm": 0.043152,
+   "significativo": true
+  },
+  {
+   "modelo": "gemma4:31b-mlx",
+   "delta_pp": -0.18,
+   "p_crudo": 0.06008734366917157,
+   "n": 120,
+   "p_holm": 0.300437,
+   "significativo": false
+  },
+  {
+   "modelo": "mistral-nemo:latest",
+   "delta_pp": 2.37,
+   "p_crudo": 0.11108794323585648,
+   "n": 120,
+   "p_holm": 0.444352,
+   "significativo": false
+  },
+  {
+   "modelo": "deepseek-r1:1.5b",
+   "delta_pp": -0.9,
+   "p_crudo": 0.40770181014153706,
+   "n": 120,
+   "p_holm": 1.0,
+   "significativo": false
+  },
+  {
+   "modelo": "gemma4:latest",
+   "delta_pp": -1.17,
+   "p_crudo": 0.6661677834211679,
+   "n": 120,
+   "p_holm": 1.0,
+   "significativo": false
+  },
+  {
+   "modelo": "gemma4:31b-cloud",
+   "delta_pp": -0.54,
+   "p_crudo": 0.6901444273970176,
+   "n": 120,
+   "p_holm": 1.0,
+   "significativo": false
+  }
+ ]
+}

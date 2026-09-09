@@ -1,0 +1,274 @@
+# Decisiones que esperan al autor
+
+**Actualizado: 2026-09-08, 21:36.** Reunidas aquí porque estaban repartidas entre `FINDINGS.md`,
+`CURRENT-TASKS.md` y varios documentos sueltos, mezcladas con decisiones ya tomadas. Son **siete**, todas con
+recomendación y ninguna bloquea a otra.
+
+Las dos últimas —la **6**, sobre `gpt-oss:20b`, y la **7**, sobre el post-hoc— son las que más conviene
+resolver pronto: la primera porque afecta a horas de máquina y la segunda porque toca una conclusión del
+capítulo de resultados.
+
+---
+
+## 1. ¿El informe adopta ya F = 35,5557, o espera al consolidado nuevo?
+
+**Qué pasa.** El ANOVA publicado (F = 38,2222, p = 3,4453e-160) se calculó **incluyendo los siete artículos
+contaminados** que la propia decisión del 2026-09-08 manda excluir. Sin ellos: **F = 35,5557,
+p = 3,6729e-148**, sobre 2 938 observaciones en lugar de 3 120.
+
+**Lo que no cambia:** ninguno de los trece modelos cambia de veredicto. Siguen siendo `nemotron-mini:4b` y
+`llama3.2:latest` los dos únicos con mejora significativa. **Lo que sí:** el efecto del RAG se encoge en doce
+de los trece.
+
+**Recomendación: esperar.** La re-corrida completa va a sustituir el consolidado entero, así que adoptar la
+cifra ahora es trabajo que se hace dos veces. El riesgo de esperar es nulo mientras no se entregue.
+**Salvo que haya que entregar antes de que termine la re-corrida**, en cuyo caso hay que adoptarla, porque el
+informe no puede publicar una cifra calculada sobre una población que él mismo declara excluida.
+
+Evidencia: `FINDINGS §F66`.
+
+---
+
+## 2. Los nueve respaldos con nombres de modelos excluidos
+
+**Qué pasa.** De los 36 `.bak_prescore` —instantáneas anteriores a la corrección de puntuación—, doce se
+versionaron hoy por ser única copia y estar limpios. **Nueve contienen nombres de modelos excluidos** y
+siguen sin versionar, es decir, **sin respaldo**: si alguien los borra, no hay vuelta.
+
+**La tensión es real.** La política prohíbe esos nombres en ficheros de datos versionados; pero también
+manda conservar los artefactos que atestiguan, y un respaldo histórico es de esa clase.
+
+**Recomendación: decidir explícitamente, en cualquier sentido.** Lo que no conviene es el estado actual, que
+es «ni una cosa ni otra»: fuera de la política y sin respaldo. Si se versionan, conviene una nota que
+explique por qué esos nombres siguen ahí.
+
+Evidencia: `FINDINGS §F67.bis`.
+
+---
+
+## 3. Los dos ficheros JSON que el barrido de exclusión dejó ilegibles
+
+**Qué pasa.** `results/excluidos_n120_REMOTO/detailed_results.json.bak_prescore` tiene **240 de 480** claves
+`"model"` sin valor, y su `benchmark_summary.json.bak_prescore` perdió una clave de primer nivel. Los rompió
+la retirada de nombres, hecha por sustitución de texto. **Las otras 240 filas son de `gpt-oss:20b` y están
+intactas**, atrapadas dentro de un fichero que ya no se puede cargar.
+
+**Recomendación: reparar quedándose con las filas cuyo `model` tenga valor**, y anotar dentro del fichero
+cuántas se retiraron y por qué. Eso deja un JSON válido, respeta la exclusión y salva lo salvable. No lo hice
+por iniciativa propia porque implica decidir qué pasa con las 240 del modelo excluido.
+
+Evidencia: `FINDINGS §F70`.
+
+---
+
+## 4. Las cuatro filas sin corrida de origen de `BENCHMARKS.md`
+
+**Qué pasa.** Único bloqueante del `TODO §10` que sigue abierto, de los ocho —los otros siete están cerrados.
+Son cuatro filas de configuraciones de prompt cuyas cifras no son trazables a ningún artefacto. Ya están
+marcadas con su advertencia, y **el informe no las usa**: su Tabla 5 publica la corrida catalogada.
+
+**Recomendación: dejarlas donde están, con su advertencia.** No bloquean la defensa. Retirarlas también sería
+defendible; lo que no lo sería es publicarlas sin la advertencia, y eso ya está resuelto.
+
+---
+
+## 5. Quién propaga los 22 commits a los tres `.docx`, y cuándo
+
+**Qué pasa.** Los tres `.docx` están congelados en el commit de las 04:25 y el Markdown ha recibido 22
+commits desde entonces. **El entregable no es el informe.** Y lo más delicado no es lo que falta sino lo que
+dice: su §3.3 afirma «el 65 %, 20 946 de 32 201», que es la cifra del Anexo I sobre 42 configuraciones
+aplicada a una sección que habla del estudio.
+
+**Recomendación: propagar antes de cualquier entrega, y no con pandoc.** La lista exacta, con ubicaciones,
+está en `PROPAGACION-PENDIENTE-DOCX-20260908.md`. Conviene esperar a que termine la re-corrida para no
+propagar dos veces, **salvo** que haya entrega antes.
+
+---
+
+## 6. ¿Se re-ejecuta `gpt-oss:20b` sobre el corpus corregido?
+
+**Qué pasa.** No está en el barrido: ni `START`, ni `END`, ni `SKIP`. La causa probable es una lectura literal
+de `§F44`, donde usted lo congeló «con think ON, sin re-ejecutar».
+
+**Por qué importa.** Esa decisión era sobre el *thinking*, no sobre el corpus. Si no se re-ejecuta, el
+consolidado final tendría **doce modelos sobre el corpus corregido y uno sobre el antiguo**, y su F1 quedaría
+unos veinte puntos por debajo del resto por un defecto del corpus y no por su desempeño.
+
+**Recomendación: re-ejecutarlo con `think` ON**, que es lo que la decisión protege, sobre el corpus corregido
+y con 4 096 tokens. Respeta `§F44` en lo que decía y resuelve de paso la asimetría de presupuesto que hoy lo
+hace incomparable con los otros doce.
+
+Evidencia: `FINDINGS §F72`. La guarda de 26 grupos impediría que se colara en silencio, pero descubrirlo al
+fusionar cuesta otra tanda de horas de máquina.
+
+---
+
+## 7. ¿Cambia el informe su post-hoc al contraste apropiado al diseño?
+
+**Qué pasa.** §5.3.1 concluye que solo dos modelos mejoran de forma significativa. Con el contraste que
+corresponde al diseño —Wilcoxon pareado sobre los mismos registros, con corrección de Holm sobre las **trece**
+comparaciones de interés en lugar de Tukey sobre las **325** posibles— resultan **ocho de trece**.
+
+**Por qué importa.** No es un tecnicismo: hoy el informe agrupa como «no concluyentes» a modelos con **+7,36
+pp** y a otros con **−0,54**, lo que es difícil de defender. Con el contraste pareado los cinco que no
+alcanzan significancia son exactamente los de efecto nulo o negativo.
+
+**Recomendación: adoptarlo, y declarar ambos.** La afirmación resultante es **más fuerte y más matizada**, y
+la tesis de la proporcionalidad inversa **sale reforzada**: los dos mayores efectos son los dos modelos más
+pequeños. El Tukey no se retira —responde a otra pregunta, la de todos los pares— sino que se acompaña.
+
+**Cuándo.** Después de la re-corrida, porque los datos cambian; pero el argumento metodológico vale igual
+para los datos nuevos, así que conviene decidirlo ya.
+
+Evidencia: `FINDINGS §F76`.
+
+---
+
+## 8. El emparejamiento duplicado: qué declara el informe — *reformulada el 2026-09-09*
+
+> **Esta decisión estaba mal planteada y se reformula.** Preguntaba si corregir `evaluator.py` y cuándo.
+> **Ya está corregido**, en la rama de la re-corrida y desde el 2026-09-08, con la referencia
+> `encargo §2.3, FINDINGS §F49/§F50`; la re-corrida entera usa la versión corregida y se ha comprobado
+> contra la fuente que su `tp + fn` vale exactamente la anotación de los 113 artículos, sin un acierto de
+> más. Lo que sigue abierto es otra cosa: **qué dice el informe de los datos antiguos**, que sí lo
+> arrastran y que conviven con los nuevos hasta que la re-corrida termine. Ver `FINDINGS §F81.ter`.
+
+`src/evaluator.py` cuenta `tp` por cada entidad extraída que casa, pero `fn` sobre las referencias
+**distintas** casadas. Cuando dos extracciones casan con la misma referencia —«John Smith» y «Smith, John»,
+iguales para el emparejamiento difuso al 85 %— `tp` sube dos veces y la referencia se cuenta una. Consecuencia
+medible: la exhaustividad por categoría **pasa de 1,0 en 197 registros**, con un máximo de 2,444. Evidencia
+completa en `FINDINGS §F81`; artefacto en `results/EMPAREJAMIENTO_DUPLICADO_20260908/efecto.json`.
+
+**El efecto está acotado y no cambia ninguna conclusión.** Recalculado contando cada referencia una vez: el F1
+publicado está inflado **+0,160 pp de media**, máximo **+1,287 pp** en `nemotron-mini:4b_baseline`; **ninguna**
+de las trece mejoras cambia de signo. Queda muy por debajo del umbral de 0,02 en F1 que `CLAUDE.md` declara
+tolerable. El orden de los veintiséis grupos cambia en **un solo puesto**, entre dos separados por 0,24 pp, y
+el informe no publica una ordenación de grupos.
+
+*(Cifras corregidas el 2026-09-09: las primeras se calcularon leyendo ocho de los veintiséis grupos de la
+corrida equivocada. Ver `FINDINGS §F81.bis`.)*
+
+**Ya no es urgente, y la razón por la que lo parecía era equivocada:** se dio por hecho que la re-corrida
+usaba el evaluador defectuoso, y usa el corregido desde el primer modelo.
+
+| Opción | Qué implica |
+|:---|:---|
+| **a) Declarar el defecto de los datos antiguos** | Una línea en las limitaciones: las cifras anteriores a la re-corrida están infladas +0,160 pp de media por un doble conteo ya corregido, y ninguna conclusión cambia. Cuesta poco y desactiva la objeción |
+| **b) No declararlo** | Defendible si la re-corrida sustituye **todas** las cifras del informe antes de la entrega. Riesgo: si alguna tabla se queda con datos antiguos, queda sin declarar |
+| **c) Recalcular las cifras antiguas** | `tools/efecto_emparejamiento_duplicado.py` lo hace sin reejecutar inferencia, y la tabla ya está en `tabla7_recalculada.md`. Obligaría a rehacer Anexo I, Figura 2, ANOVA y post-hoc |
+
+**Recomendación: (a) si queda alguna cifra antigua en el informe, y (b) solo si no queda ninguna.** La (c)
+tiene poco sentido cuando la re-corrida va a sustituir esos datos de todos modos.
+
+**La tabla ya está calculada, para que la decisión se tome mirando cifras.**
+`results/EMPAREJAMIENTO_DUPLICADO_20260908/tabla7_recalculada.md` trae la Tabla 7 completa con las dos
+columnas enfrentadas, modelo por modelo, y el recuento de emparejamientos duplicados de cada uno. Los
+extremos: `gemma4:latest` acumula **143** duplicados y su línea base baja de 55,91 a 54,98, mientras
+`nemotron-mini:4b` con solo **11** baja de 22,59 a 21,31 —más, porque su exhaustividad es pequeña y unos
+pocos aciertos repetidos pesan proporcionalmente más—. Los dos únicos Δ significativos del estudio,
+`llama3.2:latest` y `nemotron-mini:4b`, **crecen** al corregir: +10,82 → +10,91 y +14,52 → +15,75.
+
+**Y hay que decidir si el informe lo declara.** Declararlo es barato y protege: una exhaustividad de 2,444 en
+los datos crudos es justo lo que un tribunal encuentra si mira, y hallarla sin que el trabajo la mencione es
+peor que la propia cifra.
+
+---
+
+## 9. El 60–80 % de reducción de coste total: ¿se matiza en la conclusión 4?
+
+La conclusión 4 dice, entre paréntesis, «60–80 % del costo operativo total, que incluye la supervisión
+humana». **El informe no deriva esa cifra en ninguna parte.** Es el rango que fijaron los objetivos al
+principio del trabajo, no un resultado calculado a partir de los datos.
+
+El resto del párrafo está bien construido: declara que las cifras son estimaciones y no mediciones, y §5.5
+advierte de que el ahorro real «depende de cuánto reduzca el volumen que llega a revisión humana», que es
+justo lo que el estudio no midió. **La única cifra sin respaldo es el 60–80 %**, y va sin matiz, presentada
+como dato junto al 99,4 %, que sí tiene sus parámetros a la vista.
+
+| Opción | Qué implica |
+|:---|:---|
+| **a) Dejarlo** | La conclusión ya declara que son estimaciones. Riesgo: quien pregunte por el 60–80 % encontrará que no hay de dónde sacarlo, y la respuesta tendrá que darse en la sala |
+| **b) Matizarlo** | Añadir que ese rango es **el objetivo planteado** y no un resultado medido, porque el ahorro total depende de la reducción de volumen que el trabajo no midió. Cuesta una línea y convierte un flanco en una limitación declarada |
+| **c) Retirarlo** | Dejar solo el 99,4 % unitario. **Se desaconseja**: el objetivo 5 lo menciona y desaparecería la conexión entre objetivo y conclusión |
+
+**Recomendación: (b).** Es neutra en extensión y es lo que ya hace el resto del informe con sus otras
+limitaciones. La respuesta preparada, por si se decide (a), está en
+`DEFENSA-PREGUNTAS-Y-RESPUESTAS.md §Sobre las cifras económicas`.
+
+*Antecedente:* la auditoría del 2026-09-03 ya trató la contradicción entre 60–80 % y 99,4 % (hallazgo M9) y
+la resolvió distinguiendo coste unitario de coste total, y retirando la afirmación del resumen. Lo que quedó
+sin resolver es el respaldo del rango, no su coherencia.
+
+---
+
+## 10. ¿Qué se hace con la Tabla 4, que la re-corrida no puede sustituir?
+
+La Tabla 4 publica el benchmark exploratorio de N=15 y su glosa declara expresamente que las cifras se
+midieron «sobre `results/benchmark_results.csv` (N=15, modo `entities`)». **La re-corrida mide sus N=15 en
+modo `kb_combined`**, en las veintisiete corridas, porque así lo encargó
+`remote_48g/LANZAMIENTO-RECORRIDA-20260908.md`.
+
+No es un error de nadie: el encargo unificó el modo a propósito para que el barrido fuera homogéneo. Pero
+tiene una consecuencia que conviene ver ahora y no el último día: **los N=15 de la re-corrida no sustituyen a
+la Tabla 4**, porque miden otra cosa. Ni siquiera son comparables fila a fila.
+
+Además hay un segundo desajuste, anterior: la Tabla 4 cubre **doce modelos en trece configuraciones**
+—`gemma4:latest` aparece en dos variantes de prompt— mientras la re-corrida hace **trece modelos en una sola
+configuración**. Las dos poblaciones no coinciden.
+
+| Opción | Qué implica |
+|:---|:---|
+| **a) Dejar la Tabla 4 como está** | Publica lo medido en modo `entities` sobre el corpus antiguo, con su glosa declarándolo. Es coherente consigo misma. Riesgo: el informe acabaría con una tabla sobre el corpus viejo y otras sobre el corregido, y hay que decirlo en algún sitio |
+| **b) Retirar la Tabla 4** | **Se desaconseja.** Es el único material del capítulo exploratorio y su retirada dejaría §5.1 sin datos |
+| **c) Encargar un N=15 en modo `entities`** | Trece corridas más de quince artículos, baratas en máquina. Daría una Tabla 4 sobre el corpus corregido y comparable con la publicada |
+
+**Recomendación: (a), y añadir una línea que declare la asimetría** —que la Tabla 4 procede del corpus y del
+modo anteriores mientras el resto del capítulo usa el corregido—, que es lo que el informe ya hace con sus
+otras corridas múltiples en el Anexo I. La opción (c) solo merece la pena si al cerrar la re-corrida sobra
+tiempo de máquina.
+
+**Lo que no debe hacerse** es sustituir las cifras de la Tabla 4 por las de la re-corrida sin más: parecen la
+misma medición y no lo son.
+
+### La Tabla 8 está en el mismo caso, y por partida doble
+
+Comprobado el 2026-09-09. La glosa de la Tabla 8 declara que sus valores se miden «sobre
+`benchmark_results.csv` (subconjunto `_baseline`, **N=15**)», de modo que hereda el problema anterior: la
+re-corrida mide sus N=15 en otro modo. Y hay un segundo obstáculo, este insalvable: **su primera fila,
+`gemma4:31b`, no existe en la re-corrida**, que solo trae `gemma4:31b-cloud` y `gemma4:31b-mlx`. Esa fila
+procede de `results/gemma4_31b_n15_REMOTO/`, una corrida anterior, y la propia glosa lo declara.
+
+**Lo tranquilizador es que apenas importa.** Contrastadas las otras dos filas con los datos de N=120 de la
+re-corrida, las magnitudes se mueven poco y en la dirección esperable:
+
+| Fila de la Tabla 8 | Tok/s publicado | Tok/s en la re-corrida | VRAM publicada | VRAM en la re-corrida |
+|:---|---:|---:|---:|---:|
+| `gemma4:31b-mlx` | 22,80 | 25,04 | 24 607 | 26 720 |
+| `llama3.2 (3B)` | 79,35 | 85,16 | 4 018 | **4 018** |
+| `gemma4:31b` | 10,23 | *no medido* | 18 795 | *no medido* |
+
+La VRAM de `llama3.2` reproduce **exactamente**. El índice Tok/s/B pasaría de 0,74 a 0,81 en el 31B y de 26,5
+a 28,4 en el 3B, de modo que **la afirmación que la tabla sostiene —dos órdenes de magnitud de diferencia en
+eficiencia por unidad de capacidad— se mantiene con holgura**. No hay urgencia en tocarla.
+
+**Recomendación para la Tabla 8: dejarla**, con la glosa que ya declara su procedencia. Actualizar dos de sus
+tres filas y dejar la tercera con datos de otra corrida sería peor que no tocar ninguna.
+
+---
+
+## Y un aviso que todavía no es decisión
+
+Con tres de los trece modelos rehechos, el efecto del KB RAG **cambia de signo en los dos de 31B**: de −0,53
+y −0,18 a +0,81 y +0,97. Si eso se confirma con los trece, la frase de §5.3.1 que dice que el beneficio «se
+anula o revierte en los de mayor capacidad» **habrá que reformularla**. No hay nada que decidir todavía, pero
+conviene no encontrárselo el último día. Evidencia: `FINDINGS §F68`.
+
+
+**Actualización del 2026-09-09, y ya no es solo un cambio de signo.** Con **once** de los trece rehechos, el
+post-hoc pareado sobre el corpus corregido da **2 significativos de 11**, frente a los **8 de 13** de los
+datos publicados (`FINDINGS §F83`). Sobreviven `llama3.2:latest` con +6,73 pp y `gemma4:12b-mlx` con +2,29;
+`gemma4:latest` y `mistral-nemo:latest` quedan al borde, con Holm de 0,0529 y 0,0520, y el segundo con efecto
+**negativo** de −4,29 pp. Sigue sin haber nada que decidir hasta que lleguen los trece —falta
+`nemotron-mini:4b`, que era el de mayor efecto—, pero conviene ir asumiendo que **§5.3.1 no se arregla
+cambiando cifras**: el efecto del RAG sobre el corpus corregido es sustancialmente menor y se apoyará en
+menos modelos. El sentido de la tesis no se invierte; su fuerza sí disminuye.

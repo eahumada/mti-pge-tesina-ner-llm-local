@@ -808,3 +808,55 @@ informe no descansa en esas cifras.
   o excluir los siete artículos contaminados. Ninguno de los trece modelos cambia de veredicto.
 - **La publicación del repositorio**, que arrastra el 404 de la referencia [37] y espera a la purga.
 - **Resincronizar los tres `.docx`** con el Markdown canónico.
+
+---
+
+## Adenda 2026-09-08, 23:2x — revisión del estado de los pendientes
+
+Este documento se actualizó por última vez a las 17:18 y desde entonces el repositorio ha recibido **setenta
+commits**. Varios de los apartados marcados `[ ]` más arriba están resueltos desde hace semanas, y un
+documento de seguimiento que declara pendiente lo que ya está hecho desorienta tanto como uno incompleto.
+
+**No se modifica ninguna línea de la lista original**, conforme a la política aditiva. Lo que sigue es el
+resultado de comprobar cada apartado contra el Markdown canónico y los `.docx` de hoy, con la comprobación
+concreta que lo acredita.
+
+### Resueltos, verificado el 2026-09-08
+
+| Apartado | Estado comprobado |
+|:---|:---|
+| §3.1 «conteo de modelos contradictorio: §1.4 y §4.2 dicen 15; §2.5, §5.1 y §5.3.5 dicen 16» | **Resuelto.** El informe dice hoy «trece modelos» en trece lugares y «13 modelos» en tres. No queda ninguna mención a quince ni a dieciséis. Las tres apariciones de «doce» son **legítimas y explícitas**: el objetivo 2 distingue «**12 modelos** en el benchmark exploratorio N=15 (§5.1) y **13 modelos** en el estudio principal N=120», y la Tabla 4 y su leyenda dicen «doce modelos en trece configuraciones», porque `gemma4:latest` aparece en dos variantes de prompt |
+| §3.1 «abstract en inglés corrupto: Kleptotrace/CoNLL-2002/CoNLL-2002» | **Resuelto.** La cadena repetida no aparece en el documento |
+| §3.1 «§4.1.2 autocontradictorio: datos reales balanceados generados por LLM» | **Resuelto.** Esa formulación ya no está en el texto |
+| §3.1 «Tabla 2 partida: una línea vacía deja `nemotron-mini` y `deepseek-r1` fuera del renderizado» | **Resuelto.** La Tabla 2 tiene sus filas contiguas, sin línea vacía intercalada, y ambos modelos se mencionan en el informe (18 y 15 veces respectivamente) |
+| §3.1 «`Informe_Final_Tesina_NER.docx` incompleto: le faltan §4.1.3 y §5.3.5» | **Resuelto.** Ambas secciones están presentes en los dos `.docx`, comprobado sobre el `word/document.xml` |
+| §3.2 «⚠️ el estudio queda con 12 modelos» | **Superado.** El estudio cerró con **13** sobre N=120, tras incorporar `gemma4:12b-mlx` y `gpt-oss:20b`. Ver `CIERRE-BENCHMARKS-20260907.md` y la nota de `CLAUDE.md` |
+| §3.2 «corrida en curso: 7 modelos locales × 2 modos» y «fusionar con la corrida del 2026-09-01» | **Completado.** El análisis conjunto definitivo está en `results/ANALISIS_CONJUNTO_20260907/`, con F = 38,2222 y p = 3,4453 × 10⁻¹⁶⁰ |
+| §3.3 «descarga de `gemma4:31b` y `gemma4:31b-mlx` en curso» | **Completada.** Ambas compilaciones figuran en los resultados de N=30 |
+| §3.4 «colocar copia del `.docx` canónico en la raíz» | **Hecho.** `Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.docx` está en la raíz |
+
+### Siguen pendientes, y son los mismos de siempre
+
+- **§3.4, propagar las correcciones del `.md` a los tres `.docx`.** Es el pendiente vivo más importante. La
+  lista completa de qué falta está en `PROPAGACION-PENDIENTE-DOCX-20260908.md`, **incluida su adenda**, que
+  añade cinco cambios posteriores que la lista original no recogía.
+- **§3.4, verificar que el cuerpo sigue dentro de las 25 páginas.** El verificador lo estima en **23,0**,
+  pero el recuento fiable exige generar el PDF y contar: el metadato de páginas del `.docx` no sirve, por la
+  razón que explica el documento de propagación.
+- **§7, las tareas de maquetación asignadas a Claude Desktop**, que dependen de lo anterior.
+- Las **siete decisiones del autor** de `DECISIONES-PENDIENTES-20260908.md`, que ningún agente puede tomar.
+
+### Lo que enseña este desfase
+
+Un documento de seguimiento fechado envejece con cada commit a lo que describe, y nada avisa: sigue
+abriéndose, sigue leyéndose y sus casillas siguen vacías. La orden que lo detecta es la misma que destapó el
+desfase de la lista de propagación:
+
+```sh
+git log $(git log -1 --format=%H -- <documento>)..HEAD -- <ruta-que-describe>
+```
+
+Conviene pasarla por los documentos de estado antes de fiarse de ellos. Aplicada hoy a los cinco:
+`CURRENT-TASKS.md` iba cuatro commits por detrás, este setenta, `INVENTARIO-DATOS-INCORRECTOS` setenta y
+seis, `DECISIONES-PENDIENTES` dieciséis y `ESTADO-RECORRIDA` veinte, aunque estos tres últimos describen
+estados que no han cambiado.

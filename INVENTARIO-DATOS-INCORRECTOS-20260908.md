@@ -126,3 +126,34 @@ intención. Contienen versiones antiguas del informe con modelos excluidos.
 | 4 | `_to_delete/` rastreado | **Retirar** tras comprobar respaldo |
 
 Nada de esto se ejecuta sin confirmación del autor.
+
+---
+
+## Registro de ejecución — comprobado el 2026-09-08, 23:2x
+
+El documento cierra diciendo que «nada de esto se ejecuta sin confirmación del autor». **La confirmación
+llegó y parte se ejecutó**, en el commit `fa23e4b`, de modo que esa frase ha dejado de describir el estado
+real. Se deja intacta —es lo que la propuesta decía cuando se escribió— y se registra aquí lo comprobado.
+
+| Grupo | Recomendación | Estado real, verificado hoy |
+|:---|:---|:---|
+| 1 — duplicados de macOS | Retirar | **Ejecutado.** Ninguno de los nombres de la tabla está rastreado ni existe en disco. Cero ficheros con sufijo « 2», « 3» o « 4» en `git ls-files` |
+| 2.a — 12 filas de cuota en el CSV raíz | Retirar | **Ejecutado, y con el efecto previsto exactamente.** El fichero tiene **318 filas**, las que anunciaba el apartado al pasar de 330. Quedan 18 filas de `gemma4:31b-cloud`, nueve por modo, que son las válidas |
+| 2.b — 480 filas del `n120_REMOTO` | **No tocar** | **Respetado, y la reproducibilidad está intacta.** El manifiesto declara `06_P3` con **1 440 filas** y el fichero tiene 1 440. La copia de `remote_48g/` conserva 1 680 y no es la fuente del consolidado |
+| 3 — agregado histórico de junio | Conservar | **Conservado.** 45 filas, rastreado, en su sitio |
+| 4 — `_to_delete/` rastreado | Retirar tras comprobar respaldo | **Sin ejecutar.** Siguen rastreados **ocho** ficheros bajo `_to_delete/_tmp_pdfcheck/`, todos capturas de páginas del PDF |
+
+### Lo único que queda de esta lista
+
+El Grupo 4, y es el de menor peso: ocho imágenes de comprobación de páginas del PDF, sin valor probatorio
+—no atestiguan una ejecución, son capturas de una revisión visual— y sin impacto en ninguna cifra. Su
+retirada sigue **condicionada a comprobar que existe respaldo**, como decía la recomendación original. No
+hay prisa ni riesgo en dejarlo como está.
+
+### Por qué se añade esto
+
+Un inventario que propone retiradas y no registra cuáles se hicieron obliga a rehacer la comprobación entera
+cada vez que alguien lo abre, y en el peor caso invita a ejecutar dos veces algo ya ejecutado. Es el mismo
+defecto que el desfase de `PROPAGACION-PENDIENTE-DOCX-20260908.md` y el de `TODO-INFORME-FINAL.md`: un
+documento de estado que no se actualiza sigue leyéndose como si fuera actual, porque nada en él avisa de lo
+contrario.
