@@ -846,6 +846,49 @@ def c_json_parsea(s):
             print('             %s' % JSON_ROTOS_DECLARADOS[rel])
 
 
+# --- 22. La correlacion de capacidad, atada a su artefacto -------------------------------------
+ARTEFACTO_CORR = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark/results/'
+                                    'CORRELACION_CAPACIDAD_20260908/correlacion.json')
+
+
+def c_correlacion(s):
+    """La rho que dibuja la Figura 2 y que cita §5.3.1, contra el fichero que la calcula.
+
+    Estuvo un dia entero solo dentro de la imagen: el texto no la mencionaba y ningun artefacto de
+    results/ la contenia. Una cifra que solo existe dentro de un PNG no se puede comprobar.
+    """
+    import json as _json
+    if not os.path.exists(ARTEFACTO_CORR):
+        check('la correlacion de capacidad reproduce desde su artefacto', 0,
+              ['no existe %s' % os.path.relpath(ARTEFACTO_CORR, RAIZ)])
+        return
+    with open(ARTEFACTO_CORR, encoding='utf-8') as fh:
+        a = _json.load(fh)
+    rho, p = a['spearman']['rho'], a['spearman']['p']
+    pe, pp = a['pearson']['r'], a['pearson']['p']
+    fallos, mirados = [], 0
+    for etiq, valor in (('Spearman', '%.4f' % rho), ('p de Spearman', '%.4f' % p),
+                        ('Pearson', '%.4f' % pe), ('p de Pearson', '%.4f' % pp)):
+        mirados += 1
+        esp = valor.replace('.', ',').replace('-', '−')
+        if esp.lstrip('−').rstrip('0').rstrip(',') not in s.replace('.', ',') and esp not in s:
+            fallos.append('§5.3.1 no cita %s = %s' % (etiq, esp))
+    mirados += 1
+    try:
+        sc = open(SCRIPT_FIGURAS, encoding='utf-8').read()
+        if ('%.4f' % rho).replace('.', ',').lstrip('-') not in sc:
+            fallos.append('generar_figuras_informe.py no usa rho = %.4f' % rho)
+    except Exception as e:
+        fallos.append('no se puede leer el script de figuras: %s' % e)
+    # los dos coeficientes discrepan: el informe debe declararlo, no elegir uno
+    mirados += 1
+    if a['spearman']['significativo_005'] != a['pearson']['significativo_005']:
+        if 'discrepan' not in s:
+            fallos.append('los dos coeficientes discrepan en el veredicto y §5.3.1 no lo declara')
+    check('la correlacion de capacidad reproduce desde su artefacto', mirados, fallos,
+          'una cifra que solo vive dentro de un PNG no se puede comprobar')
+
+
 def main():
     s = texto()
     c_vacios()
@@ -868,6 +911,7 @@ def main():
     c_tablas_menores(s)
     c_tabla18_vs_artefacto(s)
     c_json_parsea(s)
+    c_correlacion(s)
     if '--red' in sys.argv:
         c_urls(s)
 

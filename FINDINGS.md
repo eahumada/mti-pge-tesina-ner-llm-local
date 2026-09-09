@@ -2315,3 +2315,43 @@ estudio no basta para este contraste concreto.
 sugieren siete— y, sea cual sea el resultado, **declarar la limitación**: la correlación se reporta con su
 signo, su magnitud y su potencia, sin presentarla como explicación establecida. Es preferible una hipótesis
 declarada como tal a una explicación que el propio diseño no puede sostener.
+
+---
+
+## §F74 — La `ρ` que sostiene el hallazgo central vivía solo dentro de una imagen
+
+**Fecha:** 2026-09-08, 21:05. Defecto **introducido por mí hoy** al dibujar la Figura 2.
+
+El panel (b) de la Figura 2 rotula «ρ de Spearman = −0,5165 (p = 0,0707)». Comprobado hoy:
+
+- **El texto del informe no mencionaba «Spearman» ni una vez.**
+- **Ningún artefacto de `results/` contenía esa cifra.**
+
+Es decir: la única evidencia numérica del que §5.3.1 llama «el hallazgo central del estudio» existía
+exclusivamente **dentro de un PNG**, sin fuente y sin que el cuerpo la discutiera. Un lector la ve y no puede
+situarla; un tribunal la ve y no puede comprobarla.
+
+**La cifra es correcta**, y eso se ha verificado: es la correlación de Spearman entre el F1 base de cada
+modelo y la mejora que le aporta el KB RAG, sobre los trece de la Tabla 7, y reproduce exactamente
+—−0,5165 con p = 0,0707—. El defecto no era el número sino su ausencia de rastro.
+
+**Y al calcularla aparece algo que el informe debía declarar.** Los dos coeficientes **discrepan en el
+veredicto** al umbral del 5 %:
+
+| Coeficiente | Valor | p | ¿Significativo? |
+|:---|---:|---:|:---:|
+| Spearman | −0,5165 | 0,0707 | **no** |
+| Pearson | −0,6004 | **0,0300** | **sí** |
+
+Reportar solo el de Pearson respaldaría el hallazgo; reportar solo el de Spearman lo debilitaría. **Presentar
+uno cualquiera de los dos en silencio es seleccionar el resultado**, aunque no haya intención. La causa de la
+discrepancia es el tamaño de la muestra: con trece modelos el contraste está al límite, y harían falta quince
+para que el de Spearman alcanzase significancia (`§F73` documenta el mismo problema en otro contraste).
+
+**Corregido.** Se crea el artefacto `results/CORRELACION_CAPACIDAD_20260908/`, se añaden a §5.3.1 los dos
+coeficientes con su discrepancia declarada y con la advertencia de que la afirmación siguiente es «una
+tendencia bien orientada y no un efecto demostrado», y se añade la comprobación 22 al verificador, que ata
+las cifras del texto y de la figura al artefacto y **falla si el informe deja de declarar la discrepancia**.
+
+**Coste en extensión.** El cuerpo pasa de 14 842 a 16 636 palabras desde la versión entregada, unas **22,6
+páginas** estimadas sobre el límite de 25. Quedan unas 1 600 palabras de margen.
