@@ -50,8 +50,25 @@ mayor efecto del estudio. **La conclusión no cambia; la magnitud sí**, y en un
 1. **Re-ejecutar `nemotron-mini:4b` en modo baseline sobre N=120**, o al menos sobre los dieciocho artículos
    afectados, después de arreglar el `TypeError`.
 2. **Arreglar el fallo antes de repetir**, porque volverá a darse: no es aleatorio, lo dispara la forma de la
-   respuesta del modelo. Un `isinstance(..., dict)` antes del `.items()`, o normalizar la respuesta cuando
-   llega como lista, debería bastar.
+   respuesta del modelo. **Localizado**: `src/llm_runner.py`, línea **167**, dentro de la función que
+   normaliza las claves a `Persons` / `Organizations` / `Locations`:
+
+   ```python
+   for k, v in parsed.items():      # <-- revienta si `parsed` es una lista
+   ```
+
+   La función da por hecho que el modelo devuelve un **objeto** JSON. Si devuelve un **array** en el nivel
+   superior —`[{...}]`, o una lista de entidades sueltas— `parsed` es una `list` y `.items()` lanza
+   exactamente el `TypeError` del registro.
+
+   **Y explica por qué solo falla la línea base.** En modo `kb_combined` el prompt lleva un ejemplar anotado
+   que guía al modelo a devolver un objeto; sin él, `nemotron-mini:4b` se va al array en unos ciento
+   ochenta artículos de cada mil. Por eso `_kb_rag` tiene cero fallos y `_baseline` dieciocho.
+
+   Un arreglo mínimo sería envolver el caso: si `parsed` es una lista y todos sus elementos son
+   diccionarios, fusionarlos antes de normalizar; si es una lista de otra cosa, registrarlo como respuesta
+   con formato inesperado en lugar de perder el registro entero. **No lo hemos tocado**: es vuestro código y
+   cambiarlo altera cómo se mide, de modo que la decisión es vuestra.
 3. **Rehacer el consolidado después**, no antes.
 4. **Comprobar antes de declarar una corrida válida que `parse_method='failed'` vale cero.** El commit de
    cierre dice «39/39 válidas» y esta corrida tenía un 15 % de fallos en un brazo. Es la primera verificación
