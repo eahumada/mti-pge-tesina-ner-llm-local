@@ -85,6 +85,37 @@ alguien los abrió y guardó a mano, hace vaya usted a saber cuánto.
 ahí**. Hay que abrir el documento en Word o generar el PDF y contar. La única cifra fiable disponible hoy es
 la del PDF entregado: 31 páginas totales, Anexo A en la 21, cuerpo 20.
 
+## Adenda 2026-09-08, 23:1x — cinco cambios posteriores a esta lista
+
+Esta lista se escribió a las 18:44. Después el Markdown recibió **cinco correcciones más**, ninguna de ellas
+recogida arriba. Se añaden aquí para que la propagación no se las deje: son todas de párrafo completo y
+todas afectan a la solidez estadística del informe, que es lo que un tribunal mira primero.
+
+Los textos nuevos se transcriben en la lista de abajo de forma abreviada; **la versión literal que hay que
+llevar al `.docx` es siempre la del Markdown**, no la de este documento, que solo sirve para localizar el
+párrafo y saber por qué cambió.
+
+| Commit | Sección | Qué cambió |
+|:---|:---|:---|
+| `2f7eda0` | §5.3.1 | Párrafo **nuevo**: la correlación entre capacidad base y mejora por RAG se declara con **ambos** coeficientes, Spearman −0,5165 (p = 0,0707) y Pearson −0,6004 (p = 0,0300), y se advierte de que **discrepan en el veredicto** al 5 %. La conclusión pasa a leerse como tendencia, no como efecto demostrado |
+| `d944fca` | §5.3 | Párrafo **sustituido**: donde se afirmaba que la diferencia entre las dos compilaciones de 31B «debe atribuirse a la variabilidad», ahora se precisa que el contraste **no acredita equivalencia**: con treinta artículos por grupo su potencia frente a una *d* de 0,12 es del **8 %**. Se concluye que los datos **no permiten distinguir** ambas compilaciones |
+| `bbe61cb` | §5.3 | Párrafo **sustituido**: la frase sobre Levene deja de decir «se verifica la homocedasticidad» y pasa a «no detecta heterocedasticidad, lo que con 3 120 observaciones sí es informativo, aunque no equivalga a demostrar que las varianzas son iguales». Se añade que el rechazo se sostiene con **Friedman, χ² = 1 169,23** |
+| `a464570` | Nota bajo la Tabla 8 | La glosa deja de decir solo que las latencias «no son comparables entre filas» y explica **por qué**: el valor es reloj de pared bajo concurrencia, **incluye la espera en cola** y no es propiedad del modelo |
+| `f6765db` | §4.4 | Párrafo **sustituido**: la definición de latencia pasa a declarar que **no es tiempo de inferencia**, con la comprobación aritmética que lo demuestra —latencia × tokens/s supera el tope de salida en **veinte de los veintiséis grupos**, en un caso por veintiuna veces— y que caracteriza al régimen de ejecución, no al modelo |
+
+**Cómo aplicarlas.** Los cinco son reemplazos de párrafo, no de término, de modo que `tools/docx_replace_terms.py`
+sirve si se le pasa el párrafo entero como cadena a buscar. Ninguno toca numeración, estilos de fila ni saltos
+de página, así que no hay riesgo para las correcciones manuales que el `.docx` conserva.
+
+**Efecto en la extensión.** Los cinco suman texto: §4.4 y §5.3 crecen un párrafo largo cada una y §5.3.1 gana
+uno entero. Es la razón por la que la estimación de páginas del apartado siguiente se dejó en ~24 y no en 23,
+y por la que conviene contar en cuanto el `.docx` esté regenerado.
+
+**Por qué se dejaron fuera al escribir la lista.** No se dejaron fuera: son posteriores. La lección es que un
+documento de propagación fechado envejece con cada commit al Markdown, y que hay que comprobar los commits
+que tocaron la fuente **después** de su última actualización antes de darlo por completo. La orden es
+`git log <sha-de-este-documento>..HEAD -- <ruta-del-md>`.
+
 ## Después de propagar
 
 1. `python3 tools/verificar_informe.py` sobre el Markdown, que debe seguir en cero fallos.
