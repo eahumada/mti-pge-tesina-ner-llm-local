@@ -6497,3 +6497,93 @@ términos de exhaustividad. El camino corto y defendible sigue siendo el de §F1
 por modelo, que es lo que el diseño pide— **más publicar el η² que ya está calculado**, que sí es
 barato. El modelo logístico con Wald es el candidato natural a **trabajo futuro**, y ahora consta que
 el dato lo permite: 47 216 eventos, balanceados, ya en el repositorio.
+
+---
+
+## §F139 — Sí hay una variante de F1 que sostiene mejor los resultados: micro con bootstrap pareado
+
+**Fecha:** 2026-09-09 · **Origen:** la pregunta del autor de si alguna variación de F1 sostendría
+mejor los resultados
+
+**Sí, y es la mejor noticia estadística de la revisión.** Dos cambios, los dos baratos, y ninguno
+exige reenunciar el capítulo ni volver a inferir.
+
+### Cambio 1 — micro-F1 en lugar de macro por artículo
+
+El informe promedia el **F1 de cada artículo**, de modo que un artículo con dos entidades de
+referencia pesa lo mismo que uno con cuarenta. **Micro-F1** agrupa los `tp`/`fp`/`fn` de los 113
+artículos y calcula el F1 una vez: pondera por **entidad**, que es lo que se está midiendo.
+
+No es una elección de conveniencia sino de unidad de medida, y cambia el cuadro donde el promedio
+por artículo estaba escondiendo efectos. El caso más claro:
+
+| Modelo | Δ macro por artículo | **Δ micro** |
+|:---|---:|---:|
+| `gemma:latest`, tres categorías | **+0,0003** | **+0,0278** |
+| `nemotron-mini:4b` | +0,1226 | +0,1526 |
+| `mistral-nemo:latest` | −0,0429 | −0,0301 |
+
+`gemma:latest` pasaba por «efecto nulo» con un +0,0003 que es ruido, y con micro tiene +2,8 pp. El
+promedio por artículo lo diluía porque los artículos cortos, con una o dos entidades, dominaban la
+media.
+
+### Cambio 2 — bootstrap pareado en lugar de un test paramétrico
+
+Remuestrear los 113 artículos con reemplazo, recalcular el F1 de los dos modos **sobre la misma
+remuestra** y mirar la distribución de la diferencia. Es el procedimiento estándar en PLN —Dror et
+al., *The Hitchhiker's Guide to Testing Statistical Significance in NLP*, ACL 2018— y resuelve de una
+vez las cuatro objeciones que este trabajo arrastra:
+
+1. **Prueba la métrica que el informe publica**, el F1, no un sustituto como la exhaustividad. A
+   diferencia del modelo logístico con Wald de [§F138](#f138), no obliga a reenunciar nada.
+2. **Respeta el emparejamiento**: remuestrea artículos, que es la unidad pareada, y evalúa los dos
+   modos sobre los mismos.
+3. **No supone nada sobre la distribución.** La cuestión de la homocedasticidad **desaparece**, no se
+   argumenta: no hay supuesto que comprobar.
+4. **Da intervalo de confianza sobre el Δ F1**, que es el tamaño de efecto con incertidumbre que las
+   guías de reporte piden y que el informe hoy no da.
+
+### Los resultados, con Holm sobre los 13 contrastes
+
+| Métrica | Significativos | Cuáles |
+|:---|---:|:---|
+| Tres categorías | **5 de 13** | `nemotron-mini:4b`, `llama3.2:latest`, `gemma4:12b-mlx`, `gpt-oss:20b`, `gemma4:latest` |
+| Restringida | **6 de 13** | los cinco anteriores menos `gpt-oss:20b`, más `llama3.1:8b` y `gemma:latest` |
+
+Con sus intervalos, que es lo que se publica. Los dos más fuertes, en la restringida:
+`nemotron-mini:4b` **+0,1842 [+0,1351, +0,2316]** y `llama3.2:latest` **+0,1209 [+0,0701, +0,1769]**.
+
+Para comparar, y hay que declarar las cuatro:
+
+| Procedimiento | Tres categorías | Restringida |
+|:---|---:|---:|
+| Tukey sobre 325 celdas, lo que publica el informe | 2 | — |
+| Wilcoxon pareado + Holm | 3 | 4 |
+| **micro-F1 + bootstrap pareado + Holm** | **5** | **6** |
+
+### La objeción que esto se come, y la que abre
+
+**Se come la principal:** ya no hay que discutir supuestos. Un bootstrap no los tiene.
+
+**Abre una, y hay que anticiparla:** el recuento **sube** de 2 a 5 o 6, y un tribunal puede leer eso
+como haber buscado el procedimiento que da más. La única defensa que funciona es la que el equipo de
+48 GB ya propuso y este equipo suscribió: **fijar la regla de decisión a priori por principio** —el
+diseño es pareado, luego el contraste es pareado; la unidad medida es la entidad, luego la
+agregación es micro— **antes de mirar los valores p**, y **declarar los cuatro recuentos** con su
+procedimiento. Publicar solo el 6 sería indistinguible de seleccionar el resultado.
+
+Conviene además decir lo que **no** cambia: `mistral-nemo:latest` sigue con signo adverso en las dos
+métricas —−0,0301 y −0,0245— y **no** alcanza significación en ninguna; y `qwen3:8b`,
+`gemma4:31b-cloud` y `deepseek-r1:1.5b` siguen sin efecto. **La conclusión del trabajo no solo se
+sostiene: se sostiene con más soporte y con intervalos.**
+
+### Recomendación
+
+**Adoptar los dos cambios es la mejor relación entre coste y solidez de todo lo revisado.** No exige
+volver a inferir, no cambia la magnitud publicada, elimina la discusión de supuestos, añade
+intervalos y **aumenta** el soporte de la conclusión. Es reproducible desde los `per_type` que ya
+están en el repositorio.
+
+Lo que cuesta: recalcular las cifras del capítulo de resultados en micro, y una redacción honesta de
+la regla de decisión y de los cuatro recuentos. Es trabajo de una tarde, no de una semana, y hay que
+decidirlo junto con la **decisión 1** —qué consolidado— porque las cifras dependen de ella.
