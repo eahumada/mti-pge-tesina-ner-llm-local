@@ -2580,3 +2580,47 @@ contrastes revisados hoy con su potencia y su lectura.
 pequeña: **dos estaban bien redactados** —§5.2 y esta conclusión 3—, **uno era un error de fondo** que se
 corrigió (`§F77`) y **uno de redacción** (`§F77.bis`). El informe sale del repaso mejor de lo que entró, y
 con la potencia de sus contrastes documentada.
+
+---
+
+## §F71.ter — Resuelto: `latency_sec` no mide generación, incluye la espera bajo concurrencia
+
+**Fecha:** 2026-09-08, 22:06. Cierra la pregunta que `§F71` dejó abierta, **sin necesidad de la respuesta del
+equipo de 48 GB**, con una comprobación aritmética.
+
+**El diagnóstico que faltaba.** Comparando *tokens por segundo* entre la corrida publicada y la re-corrida
+sobre los mismos modelos, el rendimiento **apenas cambia** —factores de 0,96 a 1,10— mientras la latencia
+varía hasta **×0,02**. Si el modelo genera al mismo ritmo y tarda cincuenta veces menos, es que genera
+cincuenta veces menos texto… o que la latencia no mide lo que parece.
+
+**La prueba que lo decide.** Si `latency_sec` fuera el tiempo de generación de un registro, entonces
+`latencia × tokens/s` daría los tokens generados, y ese número no puede superar el tope de salida. En las
+corridas publicadas, con `max_tokens = 2048`:
+
+| Grupo | Latencia | Tokens/s | Tokens implícitos |
+|:---|---:|---:|---:|
+| `gpt-oss:20b` KB RAG | 862,7 s | 50,3 | **43 430** |
+| `gemma4:31b-mlx` KB RAG | 1 408,5 s | 21,9 | **30 910** |
+| `gemma4:latest` KB RAG | 489,6 s | 51,1 | **24 998** |
+| `deepseek-r1:1.5b` baseline | 113,8 s | 143,3 | **16 307** |
+
+**Veinte de los veintiséis grupos superan el tope**, alguno por veintiún veces. Es aritméticamente imposible.
+
+**Conclusión: `latency_sec` en las corridas publicadas no mide el tiempo de generación de un registro.**
+Incluye la espera bajo concurrencia —el reloj de pared desde que el registro entra en la cola hasta que sale,
+con otros compitiendo por la GPU—. La re-corrida, con otra configuración de consumidores y lotes, arroja
+valores mucho menores por esa razón y no porque el hardware sea más rápido.
+
+**Lo que esto implica, y es más fuerte que la salvedad actual.** El informe ya advierte que las latencias
+«proceden de corridas con distinta concurrencia y hardware, por lo que no son comparables entre filas», y
+acierta. Pero la razón real es peor que la declarada: **la latencia no es una propiedad del modelo en
+absoluto**, sino del régimen de ejecución, de modo que no lo sería ni aunque todas las filas vinieran de la
+misma corrida, porque el controlador AIMD varía los consumidores durante el barrido.
+
+**Lo que sí se salva.** Los **tokens por segundo** son estables entre corridas —de 0,96 a 1,10— y por tanto
+sí caracterizan al modelo. La Tabla 8 se apoya en esa columna y en el índice Tok/s/B que deriva de ella, de
+modo que **su contenido sigue siendo válido**; lo que no puede reconstruirse desde la latencia es un tiempo
+por artículo comparable.
+
+**Pregunta al equipo de 48 GB: se mantiene, pero ya no como diagnóstico.** Basta con que confirmen si
+`latency_sec` incluye la espera en cola, para dejarlo escrito con su palabra además de con la aritmética.
