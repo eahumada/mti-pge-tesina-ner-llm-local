@@ -4598,3 +4598,53 @@ Un ejemplo ilustrativo es una **afirmación verificable**, no un adorno. Si ilus
 umbral, hay que ejecutarlo con ese umbral. Y cuando el ejemplo vive en un documento pensado para decirse
 delante de alguien que puede comprobarlo, el coste de no haberlo ejecutado no lo paga el ejemplo: lo paga la
 credibilidad del hallazgo que pretendía apoyar.
+
+## §F108 — `failed = 0` no acredita una corrida limpia, y se demuestra en la corrida que el estudio publica
+
+**2026-09-10.** Aplicadas las cinco verificaciones del protocolo de monitorización a **las 17 corridas con
+datos**, y no solo a los tres puntos de atención habituales. Resultado global: **cero violaciones aritméticas**
+en todas —ninguna fila con F1 > (P+R)/2, en ninguna corrida—, y diez grupos con alguna señal que merecía el
+cruce completo.
+
+### La demostración
+
+`nemotron_rerun_n120_REMOTO`, que es **la corrida que el consolidado usa** para
+`nemotron-mini:4b_baseline`, declara:
+
+| Señal | Valor |
+|:---|---:|
+| `parse_method = 'failed'` | **0** |
+| Registros con latencia 0 **y** 0 tokens/s | **7** |
+| Esos mismos, en `fallback` | 7 |
+| De ellos, con `recall > 0` | 4 |
+| De ellos, con `recall = 0` | 3 |
+
+**Una comprobación que solo mirara el criterio 1 daría esta corrida por limpia.** Y no lo está: tiene siete
+rechazos de infraestructura, tres de ellos con pérdida total de contenido. La firma del fallo cambió entre
+corridas —`benchmark_n120_REMOTO` los marcaba como `failed=8`, `benchmark_balanced_…_173036` como `failed=7`,
+y la re-corrida ya no los marca— de modo que **el mismo defecto se volvió invisible al indicador barato**.
+
+Es exactamente para esto que el protocolo tiene cinco criterios y no uno, y conviene tenerlo escrito con el
+caso a la vista: **`failed = 0` es la ausencia de una etiqueta, no la ausencia de un fallo.**
+
+### Y la comprobación de que el consolidado no bebe de las corridas malas
+
+El barrido encontró dos corridas con patrones graves:
+
+- `benchmark_balanced_120_20260824_173036`: `gemma4:31b-cloud_baseline` con **99 de 120 fallidos** y 97 con
+  `recall = 0`; su `_rag_enhanced`, 91 de 120. Un 82 % de rechazo.
+- `excluidos_n120_REMOTO`: `gpt-oss:20b_kb_rag` con 49 en `fallback` de los que **solo 4 rescatan** contenido.
+
+**Ninguna de las dos alimenta las cifras publicadas**, y no se ha dado por supuesto: tres grupos aparecen en
+**dos fuentes** cada uno, y se ha verificado cuál gana comparando la media del consolidado contra la de cada
+fuente, no leyendo etiquetas —que es la lección de §F81, donde ocho de veintiséis grupos se habían leído de
+corridas superadas—:
+
+| Grupo | Gana | F1 | La otra fuente daba |
+|:---|:---|---:|---:|
+| `nemotron-mini:4b_baseline` | `03_nemotron_rerun` | 22,5921 | 21,3025 |
+| `gpt-oss:20b_kb_rag` | `00_gptoss_rerun` | 55,6716 | 34,1874 |
+| `gemma4:12b-mlx_baseline` | `02_gemma4_12b_mlx` | 56,1825 | 27,3102 |
+
+En los tres gana la corrida buena, conforme al orden del manifiesto y a `--on-duplicate=first`. **El
+consolidado es sólido**, y ahora está comprobado por comparación de medias y no por inferencia.
