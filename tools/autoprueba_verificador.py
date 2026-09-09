@@ -55,7 +55,10 @@ def malas(r):
     fuera = set()
     for l in (r.stdout or '').split('\n'):
         s = l.strip()
-        if s.startswith('FALLA') or s.startswith('VACIA'):
+        # CONOC es el estado de una comprobacion cuyos fallos estan todos declarados. Se cuenta
+        # igual que FALLA: para esta autoprueba lo que importa es que la comprobacion **no esta en
+        # verde**, de modo que un fallo nuevo suyo tiene que distinguirse del que ya traia.
+        if s.startswith('FALLA') or s.startswith('VACIA') or s.startswith('CONOC'):
             fuera.add(' '.join(s.split()[1:]).split('(')[0].strip())
     return fuera
 
@@ -64,7 +67,8 @@ def main():
     partida = verificador()
     previas = malas(partida)
     if previas:
-        print('aviso: %d comprobacion(es) ya fallan sin esconder nada, y se descuentan:' % len(previas))
+        print('aviso: %d comprobacion(es) ya fallan sin esconder nada '
+              '(declaradas o no), y se descuentan:' % len(previas))
         for x in sorted(previas):
             print('    - %s' % x)
         print()
