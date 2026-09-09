@@ -6034,3 +6034,72 @@ estándar por esa razón exacta.
 
 **Estado del verificador:** 55 comprobaciones, 63 fallos (63 declarados, **0 nuevos**), 0 vacías en
 esta copia; en un clon superficial, 1 vacía y salida 1 con su explicación.
+
+---
+
+## §F131 — Ensayo en seco de la adopción: dos bloqueos, una comprobación que reventaba y la lista de trabajo
+
+**Fecha:** 2026-09-09 · **Origen:** preparar lo que va a pasar después, en lugar de esperarlo
+
+La decisión 1 está respondida —adoptar el consolidado nuevo es seguro para la conclusión ([§F123](#f123))— pero
+nadie había comprobado **qué haría el verificador el día de la adopción**. Apuntado en una copia de
+trabajo al consolidado nuevo, sin comprometer nada: **10 comprobaciones fallan con 56 fallos
+nuevos**, y una **reventaba**.
+
+### La comprobación que reventaba, y era la del estadístico titular
+
+`c_anova` calcula `math.log10(p)` para comparar el exponente publicado. Con el consolidado nuevo la
+**p subdesborda a 0,0** en doble precisión —F = 119,7502 sobre df = (25, 2912)— y `log10(0.0)` lanza
+`ValueError`. El envoltorio lo reportaba como VACÍA con su causa, que es su comportamiento diseñado,
+pero **la comprobación que vigila el resultado principal del trabajo dejaba de comprobar nada**
+exactamente el día en que más falta hace.
+
+**Arreglado**, y con el remedio en el mensaje: cuando la p subdesborda, la comprobación lo dice y
+añade que **el informe no puede publicar una cifra**, sino una cota del tipo «p < 10⁻³⁰⁰» declarando
+que el valor exacto no es representable. Verificado que con el consolidado publicado nada cambia:
+sigue en 5 elementos y «ok».
+
+### Dos bloqueos del consolidado nuevo, ninguno visible hasta hoy
+
+**1. Su manifiesto no es portable.** Las trece fuentes están escritas con **rutas absolutas a la
+máquina del equipo de 48 GB**:
+
+| Consolidado | Fuentes | Con ruta absoluta | Resolubles aquí |
+|:---|---:|---:|---:|
+| Publicado | 8 | **0** | **8** |
+| Nuevo | 13 | **13** | **0** |
+
+Todo lo que resuelve fuentes desde el manifiesto —el protocolo homogéneo, las cifras de la medición
+restringida— falla con «no existe /Users/eahumada1/…». No es un problema de datos: los ficheros
+están, con otro prefijo. Es un problema de que el manifiesto no se puede leer en ninguna máquina que
+no sea la que lo escribió.
+
+**2. No tiene `levene.json`.** El publicado sí. La comprobación del supuesto de homocedasticidad se
+queda sin artefacto contra el que contrastar, lo que concuerda con que su `statistical_report.md` no
+mencione Levene ([§F113](#f113)).
+
+### La lista de trabajo, para que la decisión se tome con el precio delante
+
+| Cifra publicada | Con el consolidado nuevo |
+|:---|:---|
+| F = 38,2222 | **119,7502** |
+| p = 3,4453 × 10⁻¹⁶⁰ | **subdesborda**: hay que escribir una cota |
+| χ² de Friedman = 1 169,23 | **1 802,3671** (y `friedman.json` hay que regenerarlo) |
+| Tukey, 158 de 325 significativas | **217 de 325** |
+| Dos modelos significativos | **uno** en tres categorías; **dos** en la restringida ([§F123](#f123)) |
+| `nemotron-mini:4b` +14,52 pp | **+12,26 pp** |
+| `llama3.2:latest` +10,82 pp | **+6,73 pp** |
+| Levene p = 0,18 | 0,0000, y sin artefacto |
+| Tabla 7, 26 medias de grupo | todas |
+| La salvedad de §5.3.1 sobre 7 filas con latencia 0 | **deja de describir nada**: la campaña nueva no tiene ninguna |
+
+Esa última fila es una buena noticia disfrazada de fallo: el defecto que §5.3.1 declaraba
+desaparece, y con él la salvedad.
+
+**Lo que esto añade a la decisión 1.** La respuesta sigue siendo que adoptar es seguro, pero ahora
+está el precio: **diez comprobaciones y una decena de cifras titulares**, más dos arreglos que
+corresponden al equipo de 48 GB —el manifiesto portable y el `levene.json`— y que **conviene pedir
+antes** de decidir, porque sin ellos parte del informe no se puede verificar contra el consolidado
+nuevo aunque se adopte.
+
+**Estado del verificador:** 55 comprobaciones, 63 fallos (63 declarados, **0 nuevos**), 0 vacías.

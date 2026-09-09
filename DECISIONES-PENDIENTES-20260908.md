@@ -79,6 +79,20 @@ capítulo de resultados.
 > Brown-Forsythe da **p = 1,39e-11**, y hay que acompañarlo de una prueba robusta —Alexander-Govern
 > o Kruskal-Wallis, las dos con p abrumadora—.
 >
+> **Ensayo en seco del 2026-09-09 (`FINDINGS §F131`), y añade el precio y dos condiciones
+> previas.** Apuntado el verificador al consolidado nuevo en una copia de trabajo: **10
+> comprobaciones fallan con 56 fallos nuevos**, y la lista de cifras a rehacer es F = 38,2222 →
+> **119,7502**, la p que **subdesborda** y hay que escribir como cota, χ² = 1 169,23 →
+> **1 802,3671**, Tukey 158 → **217 de 325**, los dos deltas significativos (+14,52 → **+12,26** y
+> +10,82 → **+6,73**), las 26 medias de la Tabla 7 y la frase de Levene. La salvedad de §5.3.1 sobre
+> las siete filas sin telemetría **deja de describir nada**, que es una buena noticia disfrazada de
+> fallo.
+>
+> **Y dos arreglos que hay que pedir al equipo ANTES de decidir**, porque sin ellos parte del
+> informe no se puede verificar contra el consolidado nuevo aunque se adopte: su manifiesto tiene
+> **las trece fuentes con rutas absolutas a su propia máquina** —cero resolubles aquí, frente a ocho
+> de ocho en el publicado— y **no tiene `levene.json`**.
+>
 > **Rectificación del mismo día:** escribí que esa segunda condición había que aplicarla «incluso si
 > decides no adoptar nada», y **no es cierto**. Contradecía a `FINDINGS §F115`, donde ya se había
 > comprobado que la frase está bien: es cierta para la métrica sobre la que se computa —la de tres

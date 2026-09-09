@@ -3629,7 +3629,23 @@ def c_anova(s):
             pub = mant * (10.0 ** ex)
             # se compara la mantisa a los decimales con que se publica, y el exponente exacto
             import math
-            ex_calc = math.floor(math.log10(pv))
+            # La p puede SUBDESBORDAR a 0,0 en doble precision, y entonces `log10` lanza
+            # ValueError. No es hipotetico: pasa con el consolidado nuevo —F = 119,7502 sobre
+            # df = (25, 2912)— y por tanto pasaria el dia que se adopte, en la comprobacion que
+            # vigila el estadistico titular. Encontrado por un ensayo en seco de la adopcion
+            # (§F131), no en produccion.
+            if pv <= 0.0:
+                fallos.append('la p del ANOVA subdesborda a 0,0 en doble precision, de modo que '
+                              'no tiene exponente que comparar, y el informe publica '
+                              '«%s,%s x 10^%d». Con una p asi el informe no puede dar una cifra: '
+                              'tiene que escribir una cota, del tipo «p < 10^-300», y decir que el '
+                              'valor exacto no es representable. Ver §F131'
+                              % (m.group(1), m.group(2), ex))
+                del pub
+                ex_calc = None
+            else:
+                ex_calc = math.floor(math.log10(pv))
+        if ex is not None and ex_calc is not None:
             mant_calc = pv / (10.0 ** ex_calc)
             dec = len(m.group(2))
             if ex_calc != ex:
