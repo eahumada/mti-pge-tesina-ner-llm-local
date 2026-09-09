@@ -870,6 +870,27 @@ sobre la frase que interesa. La comprobación no verificaba una afirmación: ver
 **Corregido** exigiendo que el número aparezca **en la misma oración** que la palabra `significativ`, con una
 expresión regular que admite las dos direcciones. Repetida la mutación, ahora falla y nombra el problema.
 
+### Un matiz, y un tropiezo propio al comprobarlo
+
+Al revisar si el verificador tenía más recuentos comprobados por presencia apareció el del post-hoc antiguo,
+que usa la forma compuesta «ocho de trece». Mutado, **la comprobación pasó**, y por un momento pareció el
+mismo defecto.
+
+No lo era: **la frase aparece dos veces en el documento y la mutación solo cambió una**. Con las dos mutadas,
+la comprobación falla y nombra la cifra que falta. La forma compuesta sí ancla, porque «ocho de trece» no
+aparece por casualidad. **El fallo era de mi mutación**, no del verificador — y es la segunda vez en esta
+revisión que una mutación mal construida produce un falso negativo, después del caso de la bibliografía
+en `[[L47]]`.
+
+De ahí una regla para las propias pruebas: **una mutación debe alcanzar todas las apariciones de lo que
+altera**, o lo que se está midiendo es cuántas veces se repite el dato, no si la comprobación funciona.
+
+Queda además un límite real, menor pero conviene saberlo: una comprobación por presencia se satisface con que
+la cifra sobreviva **en algún sitio** del documento. Si una cifra obsoleta aparece dos veces y solo se corrige
+una, no salta. En la práctica es tolerable —un dato que envejece suele estar en un sitio— y el remedio, si
+alguna vez importa, es comprobar que **todas** las apariciones del patrón coinciden con el artefacto, no que
+exista una.
+
 ### Lo que generaliza
 
 - **Una cifra decimal distintiva —«0,0879»— sí puede comprobarse por presencia**, porque no aparece por
