@@ -2937,3 +2937,34 @@ Es la tercera cara del mismo defecto en dos días. En `§L57` un 404 podía sign
 `§L58` un `push` sin error podía significar sincronizado o nada que empujar; aquí un «ok» podía significar
 verificado o no mirado. Las tres se resuelven igual: **comparar contra lo que debería haber, no contra lo que
 hubo**.
+
+---
+
+## §F82.bis — Completado el barrido: dos formas más de dejar de verificar sin decirlo
+
+**2026-09-09, 01:2x.** Aplicada la mutación al resto de comprobaciones que leen tablas. `el Anexo I cuadra con
+la Tabla 7` y `la Tabla 18 reproduce desde el analisis de mojibake` **detectan**. La de las tablas 5, 6 y 8
+tenía **dos agujeros distintos del de `§F82`**, y peores, porque en aquél el recuento al menos bajaba.
+
+**Primero: `mirados += 1` antes del `float()`.** El recuento subía y a continuación el `except ValueError:
+continue` saltaba la comparación. El valor quedaba sin verificar **y el recuento no lo delataba**: seguía
+marcando 32 elementos, exactamente igual que cuando todo se comprueba. No había señal de ninguna clase.
+
+**Segundo: una fila cuyo nombre no case se descarta antes de contar.** Las guardas
+`if len(c) < 4 or c[0] not in d: continue` y su equivalente de la Tabla 8 sacaban de la comprobación
+cualquier fila cuyo rótulo dejara de corresponder con un grupo de la corrida. **Renombrar un modelo en la
+tabla la habría sacado de la verificación sin dejar rastro** —ni fallo, ni recuento menor, nada—, que es
+justo lo que ocurre cuando se corrige el nombre de un modelo, que en este proyecto ha pasado varias veces.
+
+Las dos se descubrieron por accidente afortunado: la mutación buscaba la primera cifra de la fila y la
+encontró **dentro del nombre del modelo** —`gemma4:12b-mlx` contiene un «12»—, de modo que rompió el rótulo en
+lugar del dato y destapó el segundo agujero, que no se estaba buscando.
+
+**Corregido en los tres casos**: un valor ilegible y una fila sin correspondencia son ahora fallos con el
+nombre de la fila y el valor que no se pudo leer. Verificado por mutación en las tres tablas, y comprobado
+que sobre el informe limpio no aparece ningún falso positivo: sigue en 32 elementos y sin fallos.
+
+**Balance del barrido.** De las siete comprobaciones que leen tablas o datos tabulares, **tres estaban
+protegidas** —alucinaciones por su aserción de población, Anexo I y Tabla 18— y **cuatro no**: Tabla 4,
+Tabla 7 y las tres tablas menores, que compartían el mismo defecto con tres variantes. Todas corregidas y
+sometidas a mutación.

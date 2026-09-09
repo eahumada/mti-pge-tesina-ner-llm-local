@@ -776,6 +776,10 @@ def c_tablas_menores(s):
                 try:
                     a = float(str(val).rstrip('%'))
                 except ValueError:
+                    # No basta con saltar: `mirados` ya ha subido, de modo que el valor quedaria
+                    # sin comparar y el recuento no lo delataria. Ver `FINDINGS §F82`.
+                    fallos.append('Tabla 5 %s %s: el valor «%s» no se puede leer'
+                                  % (c[0], etiq, val))
                     continue
                 b = d[g].get(clave)
                 if b is None or abs(a - b) > tol:
@@ -791,13 +795,22 @@ def c_tablas_menores(s):
             if not l.startswith('|') or '---' in l or 'Modelo' in l:
                 continue
             c = [x.strip().replace('**', '').replace('%', '').strip() for x in l.strip().strip('|').split('|')]
-            if len(c) < 4 or c[0] not in d:
+            if len(c) < 4:
+                continue
+            if c[0] not in d:
+                # Antes se saltaba en silencio: renombrar una fila la sacaba de la comprobacion
+                # sin dejar rastro, porque `mirados` ni siquiera llegaba a subir. `FINDINGS §F82`.
+                mirados += 1
+                fallos.append('Tabla 6: la fila «%s» no corresponde a ningun grupo de la corrida'
+                              % c[0])
                 continue
             for etiq, val, clave in (('F1', c[1], 'f1'), ('P', c[2], 'precision'), ('R', c[3], 'recall')):
                 mirados += 1
                 try:
                     a = float(val)
                 except ValueError:
+                    fallos.append('Tabla 6 %s %s: el valor «%s» no se puede leer'
+                                  % (c[0], etiq, val))
                     continue
                 b = d[c[0]].get(clave)
                 if b is None or abs(a - b) > 0.02:
@@ -817,7 +830,11 @@ def c_tablas_menores(s):
         if not l.startswith('|') or '---' in l or 'Modelo' in l:
             continue
         c = [x.strip() for x in l.strip().strip('|').split('|')]
-        if len(c) < 3 or c[0] not in MAPA8:
+        if len(c) < 3 or not c[0]:
+            continue
+        if c[0] not in MAPA8:
+            mirados += 1
+            fallos.append('Tabla 8: la fila «%s» no esta en el mapa de correspondencias' % c[0])
             continue
         src, g = MAPA8[c[0]]
         if g not in src:
@@ -829,6 +846,7 @@ def c_tablas_menores(s):
             try:
                 a = float(val)
             except ValueError:
+                fallos.append('Tabla 8 %s %s: el valor «%s» no se puede leer' % (c[0], etiq, val))
                 continue
             b = src[g].get(clave)
             if b is None or abs(a - b) > tol:
