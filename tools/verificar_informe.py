@@ -1098,6 +1098,32 @@ def frontera_anexos(L):
     return len(L)
 
 
+def c_fuentes_de_los_grupos(_s):
+    """Cada grupo de la composicion de falsos positivos se lee de la corrida que el consolidado usa.
+
+    Ocho de los veintiseis grupos aparecen en dos fuentes del manifiesto, y el consolidado se queda
+    con la primera (`--on-duplicate=first`). Leer la ultima produce cifras plausibles calculadas
+    sobre corridas superadas, sin error ni aviso: paso el 2026-09-08 y se leyo `gpt-oss:20b` desde
+    un directorio llamado `excluidos`. El control es externo —comparar la media de cada grupo con la
+    del CSV consolidado, que se produjo por otra via— porque leer el codigo no lo destapo.
+    Ver `FINDINGS §F81.bis`.
+    """
+    import json as _json
+    if not os.path.exists(ARTEFACTO_FP):
+        check('cada grupo se lee de la corrida que el consolidado usa', 0,
+              ['no existe %s' % os.path.relpath(ARTEFACTO_FP, RAIZ)])
+        return
+    with open(ARTEFACTO_FP, encoding='utf-8') as fh:
+        a = _json.load(fh)
+    descuadres = a.get('grupos_que_no_reproducen_el_consolidado')
+    if descuadres is None:
+        check('cada grupo se lee de la corrida que el consolidado usa', 0,
+              ['el artefacto no declara el control; regenerar con tools/composicion_fp.py'])
+        return
+    mirados = len(a.get('detalle') or {})
+    check('cada grupo se lee de la corrida que el consolidado usa', mirados, list(descuadres))
+
+
 def c_extension(s):
     """El cuerpo no puede exceder 25 paginas. La estimacion se declara como tal."""
     L = s.split('\n')
@@ -1139,6 +1165,7 @@ def main():
     c_correlacion(s)
     c_alucinaciones(s)
     c_defensa(s)
+    c_fuentes_de_los_grupos(s)
     c_extension(s)
     if '--red' in sys.argv:
         c_urls(s)

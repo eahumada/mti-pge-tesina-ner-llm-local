@@ -42,6 +42,21 @@ def calcular(dir_cons):
             cache[d] = j if isinstance(j, list) else j.get('results', j.get('records', []))
         return cache[d]
 
+    # Control externo: la media de F1 de cada grupo, leida de la corrida que este script elige,
+    # tiene que reproducir la del CSV consolidado. Si no lo hace, el grupo se esta leyendo de otra
+    # corrida y sus falsos positivos no son los de la cifra publicada. Ocho de los 26 grupos
+    # aparecen en dos fuentes y el consolidado se queda con la primera (`--on-duplicate=first`),
+    # que es lo que reproduce el `setdefault` de arriba; una comprension de diccionario elegiria
+    # la ultima, en silencio y sin error. Ver `FINDINGS §F81.bis`.
+    referencia = collections.defaultdict(list)
+    with open(os.path.join(dir_cons, 'merged_results.csv'), encoding='utf-8') as fh:
+        for r in csv.DictReader(fh):
+            try:
+                referencia[r['model']].append(float(r['f1']))
+            except (TypeError, ValueError, KeyError):
+                pass
+    descuadres = []
+
     fp = collections.Counter()
     tp = collections.Counter()
     fn = collections.Counter()
@@ -62,7 +77,16 @@ def calcular(dir_cons):
                 tp[c] += v.get('tp', 0)
                 fn[c] += v.get('fn', 0)
                 gg[c] += v.get('fp', 0)
-        detalle[g] = {'corrida': d.split('/')[-1], 'registros': len(R), 'fp_por_categoria': dict(gg)}
+        ref = referencia.get(g)
+        propia = [r['f1'] for r in R if r.get('f1') is not None]
+        media = 100 * sum(propia) / len(propia) if propia else None
+        if ref and media is not None:
+            esperada = 100 * sum(ref) / len(ref)
+            if abs(media - esperada) > 0.05:
+                descuadres.append('%s: la corrida %s da %.2f y el consolidado %.2f'
+                                  % (g, d.split('/')[-1], media, esperada))
+        detalle[g] = {'corrida': d.split('/')[-1], 'registros': len(R), 'fp_por_categoria': dict(gg),
+                      'f1_medio': round(media, 4) if media is not None else None}
 
     total = sum(fp.values())
     return {
@@ -70,6 +94,7 @@ def calcular(dir_cons):
                  'desde la corrida que el consolidado usa. Calculado desde los detailed_results.json, '
                  'sin reejecutar inferencia.'),
         'consolidado': os.path.relpath(dir_cons, RAIZ),
+        'grupos_que_no_reproducen_el_consolidado': descuadres,
         'grupos': len(grupos), 'grupos_cubiertos': len(detalle), 'grupos_sin_cubrir': sin_cubrir,
         'fp_por_categoria': dict(fp), 'tp_por_categoria': dict(tp), 'fn_por_categoria': dict(fn),
         'fp_total': total, 'fp_locations': fp.get('Locations', 0),
@@ -97,6 +122,13 @@ def main():
                      r['tp_por_categoria'].get(c, 0) + r['fn_por_categoria'].get(c, 0)))
         print('  TOTAL fp=%d · Locations=%d (%s %%)'
               % (r['fp_total'], r['fp_locations'], r['pct_fp_locations']))
+        d = r.get('grupos_que_no_reproducen_el_consolidado') or []
+        if d:
+            print('  FALLO: %d grupo(s) no reproducen el consolidado — se leen de otra corrida:' % len(d))
+            for x in d:
+                print('    - %s' % x)
+        else:
+            print('  control: los %d grupos reproducen la media del CSV consolidado' % r['grupos_cubiertos'])
         if r['locations_tp_mas_fn'] == 0:
             print('  AVISO: Locations tiene tp+fn=0 — puntua contra el vacio (FINDINGS §F53)')
         else:
