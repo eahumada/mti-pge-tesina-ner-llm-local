@@ -1,0 +1,53 @@
+#!/bin/sh
+# Puerta de verificación del informe. Instalada el 2026-09-09.
+#
+# Por qué existe
+# --------------
+# `tools/verificar_informe.py` tiene 33 comprobaciones y hasta hoy solo corría cuando alguien se
+# acordaba. La regla de CLAUDE.md —«ejecutarlo antes de cada commit sobre el informe»— era una
+# disciplina, no una puerta, y el código de salida se arregló el 2026-09-09 precisamente para que
+# pudiera serlo: devuelve 0 si no hay fallos NUEVOS, de modo que los cinco declarados no cortan.
+#
+# Alcance
+# -------
+# Solo se ejecuta si el commit toca el Markdown del informe, las herramientas o los datos de
+# resultados. Un commit que solo cambia documentación de coordinación no paga el coste.
+#
+# Va SIN --red: sin red tarda menos de un segundo, y con red treinta y seis, que es demasiado para
+# una puerta de commit. Las URL se comprueban aparte.
+#
+# Salida de escape
+# ----------------
+# `git commit --no-verify` la salta. Está para el caso legítimo de comprometer un trabajo a medias,
+# no para silenciar un fallo: si un fallo es aceptable, se declara en FALLOS_DECLARADOS con su
+# motivo y su responsable, que es lo que hace que la puerta siga sirviendo.
+
+set -e
+
+TOCADOS=$(git diff --cached --name-only)
+RELEVANTE=$(printf '%s\n' "$TOCADOS" | grep -E \
+  '^(doc/organized/Hito_5_Tarea4_Informe_Final/.*\.md|tools/.*\.py|repos/ner-llm-entity-benchmark/results/.*)$' \
+  || true)
+
+if [ -z "$RELEVANTE" ]; then
+  exit 0
+fi
+
+echo "  verificando el informe (33 comprobaciones, sin red)..."
+if python3 tools/verificar_informe.py > /tmp/verificar_informe.salida 2>&1; then
+  tail -3 /tmp/verificar_informe.salida | sed 's/^/  /'
+  exit 0
+fi
+
+echo
+echo "  ══ el commit se detiene: hay fallos NUEVOS en el informe ══"
+echo
+grep -E '^  (FALLA|AVISO)' /tmp/verificar_informe.salida | sed 's/^/  /' || true
+echo
+tail -3 /tmp/verificar_informe.salida | sed 's/^/  /'
+echo
+echo "  Salida completa: /tmp/verificar_informe.salida"
+echo "  Si el fallo es aceptable, declararlo en FALLOS_DECLARADOS con su motivo y su"
+echo "  responsable, no saltarse la puerta. Para comprometer trabajo a medias:"
+echo "      git commit --no-verify"
+exit 1

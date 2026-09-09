@@ -3819,3 +3819,39 @@ se solapan.
 Sustituido por la **diferencia real**, derivada de la fuente y clasificada: cuántas dependencias hay,
 cuántas sin vigilar, y de qué clase es cada una. El denominador ya no se escribe a mano, que es §L63: una
 cobertura con el denominador literal deja de ser cierta en cuanto se añade una dependencia, y calla.
+
+## §F93 — Las treinta y tres comprobaciones no tenían puerta: corrían si alguien se acordaba
+
+**2026-09-09.** `CLAUDE.md` manda ejecutar `tools/verificar_informe.py` antes de cada commit sobre el
+informe. Comprobado hoy: **no había hook de pre-commit** y `core.hooksPath` estaba sin configurar. La regla
+era una disciplina, no una puerta — y el código de salida se arregló el 2026-09-09 precisamente para que
+pudiera serlo, con el razonamiento de que «una puerta que nunca abre no es una puerta». Faltaba el otro
+lado: una puerta que nadie cuelga no es una puerta tampoco.
+
+**Instalada** en `.githooks/pre-commit`, versionada, con tres propiedades deliberadas:
+
+- **Acotada.** Solo se ejecuta si el commit toca el Markdown del informe, `tools/` o los datos de
+  resultados. Un commit de documentación de coordinación no paga el coste.
+- **Sin `--red`.** Sin red tarda menos de un segundo; con red, **36**, que es demasiado para una puerta de
+  commit. Las URL se comprueban aparte.
+- **Con salida de escape declarada.** `git commit --no-verify` la salta, y el mensaje dice para qué está:
+  comprometer trabajo a medias, no silenciar un fallo. Si un fallo es aceptable se declara en
+  `FALLOS_DECLARADOS` con su motivo y su responsable, que es lo que mantiene la puerta útil.
+
+**Activación:** `core.hooksPath` es configuración **local**, de modo que un clon nuevo no tiene la puerta
+aunque el hook esté versionado. Hay que ejecutar `git config core.hooksPath .githooks` en cada copia de
+trabajo. Es una carga de la que conviene ser consciente: el fichero en git da la sensación de que el gate
+existe, y no existe hasta que alguien lo apunta.
+
+### Probada en los tres sentidos, y el primer intento falló por algo instructivo
+
+| Caso | Resultado |
+|:---|:---|
+| Commit que toca `tools/` y está limpio | la puerta corre, pasa, el commit entra |
+| Commit que altera el `F = 38,2222` del informe | **corta**, y nombra la comprobación del ANOVA |
+| Commit que solo toca `CURRENT-TASKS.md` | la puerta no se ejecuta |
+
+El primer intento del caso limpio **cortó**, y con razón: el fichero que había creado para la prueba estaba
+**vacío**, y la comprobación de ficheros rastreados a cero bytes lo cazó entre 1 170 elementos. Es §F59
+funcionando sobre un fichero de dos minutos de vida, y la demostración más convincente de que la puerta
+sirve — no la que yo había preparado.
