@@ -78,7 +78,17 @@ defendible; lo que no lo sería es publicarlas sin la advertencia, y eso ya est�
 
 ---
 
-## 5. Quién propaga los 22 commits a los tres `.docx`, y cuándo
+## 5. Quién propaga los commits pendientes a los tres `.docx`, y cuándo
+
+> **Recuento actualizado el 2026-09-09: son 27, no 22.** Los `.docx` siguen congelados en `6299d13`
+> (2026-09-08, 04:25) y el Markdown ha recibido veintisiete commits desde entonces. La cifra del título se
+> deja sin número porque envejece con cada corrección; el recuento vigente se obtiene con
+> `git rev-list --count 6299d13..HEAD -- <ruta-del-md>`. **La lista de propagación sí está al día**: cero
+> commits al Markdown desde su última actualización.
+>
+> **Y ha aparecido un motivo nuevo para esperar**, más fuerte que el de no propagar dos veces: la re-corrida
+> desmiente la tesis central tal como está escrita (`FINDINGS §F86`), de modo que §5.3.1, §6, el resumen y el
+> abstract van a reescribirse. Propagar ahora sería maquetar un texto que va a cambiar. Ver la **decisión 11**.
 
 **Qué pasa.** Los tres `.docx` están congelados en el commit de las 04:25 y el Markdown ha recibido 22
 commits desde entonces. **El entregable no es el informe.** Y lo más delicado no es lo que falta sino lo que
