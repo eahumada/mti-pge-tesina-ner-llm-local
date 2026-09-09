@@ -286,6 +286,58 @@ PAL_EN = {'the', 'of', 'and', 'to', 'in', 'that', 'for', 'with', 'was', 'were', 
           'it', 'be'}
 
 
+def c_ninguna_comprobacion_huerfana(s):
+    """Ninguna comprobacion definida puede quedarse sin ejecutarse.
+
+    Anadir una funcion `c_*` y olvidar registrarla en el orquestador la deja **silenciosamente
+    ausente**: el fichero la contiene, se lee como si vigilara algo, y no corre nunca. Es el mismo
+    defecto que §L62 describe para una herramienta que aborta —una comprobacion que no se ejecuta
+    es indistinguible de una que no existe— pero mas dificil de notar, porque aqui no hay ni un
+    traceback.
+
+    El 2026-09-09 se audito a mano: **40** funciones definidas y **39** registradas, y la que
+    faltaba resulto ser `c_urls`, que se invoca aparte porque depende de `--red`. Ninguna
+    huerfana. Habiendo hecho la auditoria a mano, corresponde mecanizarla (§L61): la proxima vez
+    que alguien anada una comprobacion y no la registre, esto lo dira.
+
+    Se comprueba sobre la **fuente** del propio fichero, que es la unica forma de ver una funcion
+    que nunca se llama. Y se declara el recuento, para que la comprobacion no pueda pasar mirando
+    cero funciones.
+    """
+    ruta = os.path.abspath(__file__)
+    try:
+        with open(ruta, encoding='utf-8') as fh:
+            src = fh.read()
+    except OSError as e:
+        check('ninguna comprobacion queda sin ejecutarse', 0,
+              ['no se puede leer la propia fuente: %s' % e])
+        return
+    definidas = set(re.findall(r'^def (c_\w+)', src, re.M))
+    registradas = set(re.findall(r'ejecutar\((c_\w+)', src))
+    directas = set(re.findall(r'^\s+(c_\w+)\(', src, re.M)) - registradas
+    fallos = []
+    if len(definidas) < 20:
+        fallos.append('solo se detectan %d funciones c_*: el patron esta roto y esta comprobacion '
+                      'no acredita nada' % len(definidas))
+        check('ninguna comprobacion queda sin ejecutarse', len(definidas), fallos)
+        return
+    huerfanas = sorted(definidas - registradas - directas)
+    if huerfanas:
+        fallos.append('%d comprobacion(es) definida(s) y nunca ejecutada(s): %s. Registrarlas en '
+                      'el orquestador o retirarlas; una comprobacion que no corre es '
+                      'indistinguible de una que no existe'
+                      % (len(huerfanas), ', '.join(huerfanas)))
+    # y al reves: registrada pero no definida seria un NameError en ejecucion, no aqui
+    fantasmas = sorted(registradas - definidas)
+    if fantasmas:
+        fallos.append('%d comprobacion(es) registrada(s) y no definida(s): %s'
+                      % (len(fantasmas), ', '.join(fantasmas)))
+    check('ninguna comprobacion queda sin ejecutarse', len(definidas), fallos,
+          '%d definidas · %d por el orquestador · %d invocadas aparte (%s)'
+          % (len(definidas), len(registradas), len(directas),
+             ', '.join(sorted(directas)) or 'ninguna'))
+
+
 def c_corpus_idioma(s):
     """El idioma del corpus se comprueba, no se supone. Y sus localizaciones, tambien.
 
@@ -2671,6 +2723,7 @@ def main():
     ejecutar(c_higiene, s)
     ejecutar(c_excluidos, s)
     ejecutar(c_sobriedad_docx, s)
+    ejecutar(c_ninguna_comprobacion_huerfana, s)
     ejecutar(c_corpus_idioma, s)
     ejecutar(c_firma_categorias, s)
     ejecutar(c_referencias_findings, s)
