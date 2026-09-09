@@ -146,8 +146,32 @@ def parse_llm_response(raw_response: str) -> dict:
     logger.warning(f"Failed to parse JSON from raw response: {cleaned[:200]}...")
     return {"Persons": [], "Organizations": [], "Locations": []}
 
-def _normalize_keys(parsed: dict) -> dict:
-    """Normalizes keys to 'Persons', 'Organizations', 'Locations'."""
+def _normalize_keys(parsed) -> dict:
+    """Normalizes keys to 'Persons', 'Organizations', 'Locations'.
+
+    Fix 2026-09-09 (FINDINGS §F85): algunos modelos —p. ej. `nemotron-mini:4b` en baseline, en torno al
+    15 % de los artículos— devuelven un ARRAY en el nivel superior en vez de un objeto. Antes `.items()`
+    lanzaba `TypeError: 'list' object has no attribute 'items'`, los tres reintentos se agotaban y el
+    registro se perdía con F1=0, hundiendo la línea base. Ahora: si `parsed` es una lista de objetos, se
+    fusionan (recupera el contenido de `[{...}]`); si es una lista de otra cosa, o no es ni objeto ni
+    array de objetos, se registra como formato inesperado y se devuelve vacío, sin reventar."""
+    if isinstance(parsed, list):
+        if parsed and all(isinstance(el, dict) for el in parsed):
+            merged: dict = {}
+            for el in parsed:
+                for k, v in el.items():
+                    if k in merged and isinstance(merged[k], list) and isinstance(v, list):
+                        merged[k].extend(v)
+                    else:
+                        merged[k] = v
+            parsed = merged
+        else:
+            logger.warning("Respuesta con formato inesperado (array de no-objetos): %.200r", parsed)
+            return {"Persons": [], "Organizations": [], "Locations": []}
+    if not isinstance(parsed, dict):
+        logger.warning("Respuesta con formato inesperado (ni objeto ni array de objetos): %.200r", parsed)
+        return {"Persons": [], "Organizations": [], "Locations": []}
+
     normalized = {"Persons": [], "Organizations": [], "Locations": []}
     
     # Map different possible casing/plural names
