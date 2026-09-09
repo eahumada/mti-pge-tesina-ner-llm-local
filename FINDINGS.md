@@ -6733,3 +6733,90 @@ Retiradas las dos; las declaraciones bajan de 25 a 23 y los fallos de 61 a **55*
 **La regla que sale:** cuando un agente o un workflow tiene permiso de escritura sobre el
 repositorio, **no se comparte el índice de git con él**. Se añade por ruta, y se comprueba el estado
 **después** de que termine, no mientras corre.
+
+---
+
+## §F143 — El dictamen del comité, verificado: «ocho de trece» sobre los datos publicados, y la correlación que no replica
+
+**Fecha:** 2026-09-09 · **Origen:** el workflow del comité revisor cerró y sus dos afirmaciones más
+graves se comprobaron por cuenta propia antes de aceptarlas
+
+El comité —lente estadística, metodólogo de aprendizaje automático y presidente de tribunal, con
+investigación web previa— devolvió tres veredictos: «entregable con cambios, pero uno no es menor»,
+«no entregable como está» y un doble veredicto que distingue el Markdown del entregable. Sus dos
+afirmaciones de fondo **se verifican**, y hay que decir cuál es cuál porque **empujan en direcciones
+opuestas**.
+
+### Primera, y refuerza el trabajo: ocho de trece, no dos
+
+Sobre el consolidado **publicado** —el que el informe usa—, el contraste que corresponde al diseño
+pareado da **ocho de trece** modelos significativos tras Holm, no dos:
+
+| Modelo | Δ | p cruda | p Holm |
+|:---|---:|---:|---:|
+| `nemotron-mini:4b` | +14,52 pp | 4,07e-10 | 0,0000 |
+| `llama3.2:latest` | +10,82 pp | 1,15e-08 | 0,0000 |
+| `qwen2.5:14b` | +4,62 pp | 1,36e-05 | 0,0001 |
+| `gemma:latest` | +7,36 pp | 4,90e-05 | 0,0005 |
+| `qwen3:8b` | +3,25 pp | 8,13e-05 | 0,0007 |
+| `gpt-oss:20b` | +3,28 pp | 5,55e-04 | 0,0044 |
+| `gemma4:12b-mlx` | +2,28 pp | 2,63e-03 | 0,0184 |
+| `llama3.1:8b` | +1,99 pp | 7,19e-03 | 0,0432 |
+
+Recalculado por mi cuenta con `scipy` y `statsmodels`: reproduce **exacto**
+`results/ROBUSTEZ_ESTADISTICA_20260908/posthoc_pareado.json`, que lo tiene calculado desde el
+**8 de septiembre** y declara `significativos_pareado: 8` frente a `significativos_tukey_publicado:
+2`. Y [§F76](#f76) lo documenta desde esa fecha con el título «Con el contraste apropiado al diseño,
+ocho de trece modelos mejoran, no dos». **El informe no lo declara.**
+
+**Y aclara una contradicción aparente con mis propios cálculos de hoy.** Yo obtuve **3 de 13**, y no
+había error en ninguno de los dos: mi cálculo era sobre el consolidado **nuevo** (N=113) y este es
+sobre el **publicado** (N=120). Son datos distintos, y el del comité es **el más relevante para el
+informe de hoy**, porque es el que el informe publica. El cuadro completo:
+
+| Datos y procedimiento | Significativos |
+|:---|---:|
+| Publicado, Tukey sobre 325 celdas — **lo que el informe dice** | 2 |
+| **Publicado, Wilcoxon pareado + Holm** | **8** |
+| Nuevo, Wilcoxon pareado + Holm | 3 |
+| Nuevo, restringida, Wilcoxon + Holm | 4 |
+| Nuevo, micro-F1 + bootstrap pareado + Holm | 5 |
+| Nuevo, restringida, micro + bootstrap + Holm | 6 |
+
+**Y el agravante que aporta el comité es de lógica, no de estadística, y es el mejor argumento de
+todo su informe.** §5.3.1 declara que tratar como independientes unas observaciones apareadas «hace
+el contraste conservador» —es decir, **declara la dirección del sesgo**— y a continuación publica
+como resultado «solo dos de los trece», que es **precisamente lo que ese sesgo produce**. No se
+puede sostener a la vez que la elección es inocua y que su efecto es el hallazgo.
+
+### Segunda, y debilita el trabajo: la correlación no replica
+
+El informe publica que «correlacionando el F1 base de cada modelo con la mejora que le aporta la
+recuperación se obtiene un coeficiente de **Spearman de −0,5165** (p = 0,0707) y uno de **Pearson de
+−0,6004** (p = 0,0300)». Recalculado con el mismo criterio sobre los dos consolidados:
+
+| Consolidado | Spearman | Pearson |
+|:---|---:|---:|
+| Publicado | ρ = **−0,5165** · p = 0,0707 | r = **−0,6002** · p = 0,0301 |
+| **Nuevo** | ρ = **−0,0879** · p = **0,7752** | r = −0,4816 · p = 0,0956 |
+
+**La relación se desvanece.** ρ pasa de −0,52 a −0,09, y el Pearson deja de alcanzar significación.
+Reproduce la cifra del comité al cuarto decimal.
+
+Eso afecta a la **conclusión sustantiva** del trabajo —el beneficio del RAG decrece con la capacidad
+del modelo—, que sobre el corpus corregido **no se sostiene con la misma fuerza**. Y conviene decir
+tres cosas para no exagerar: el informe **ya declara** que el coeficiente no alcanza significación
+por Spearman; el artefacto `correlacion.json` **ya declara** que los dos coeficientes discrepan de
+veredicto y que reportar solo uno sería selección; y ese mismo artefacto **ya declara la objeción de
+fondo**, que el Δ contiene la variable con la que se correlaciona. Es la parte más débil del trabajo,
+y el proyecto lo sabía.
+
+### Lo que esto deja sobre la mesa
+
+**Las dos afirmaciones se compensan y no se cancelan.** El «ocho de trece» **refuerza** que el RAG
+funciona; la correlación que no replica **debilita** que funcione *inversamente a la capacidad*. La
+lectura honesta es que el trabajo tiene **un efecto más sólido de lo que publica** y **un patrón más
+débil de lo que afirma**, y que las dos cosas se declaran juntas.
+
+**Nada de esto está en el informe**, y las dos son decisión del autor. La primera lleva pendiente
+desde el 8 de septiembre en `§F76`.

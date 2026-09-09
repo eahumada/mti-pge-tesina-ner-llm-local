@@ -134,6 +134,59 @@ calendario.
 13» que elegir. El informe sigue con sus **dos** modelos significativos por Tukey, que es lo que
 publica hoy y lo que las dos métricas del contraste pareado confirman como núcleo.
 
+## 4.bis Lo que el comité revisor añadió, verificado el 2026-09-09
+
+El workflow del comité cerró. Sus dos afirmaciones de fondo **se verificaron por cuenta propia** con
+`scipy` y `statsmodels` antes de aceptarlas, y las dos **se confirman**. Empujan en direcciones
+opuestas, y por eso van juntas.
+
+### Refuerza: sobre los datos que el informe publica, son ocho de trece
+
+Con Wilcoxon pareado y Holm sobre el consolidado **publicado** —el que el informe usa— salen **ocho**
+modelos significativos, no dos. Reproduce exacto `posthoc_pareado.json`, que lo tiene calculado desde
+el **8 de septiembre**, y `FINDINGS §F76`, que lo documenta desde entonces. **El informe no lo
+declara.**
+
+Aclara además una contradicción aparente con las cifras de arriba: mi 3 de 13 era sobre el
+consolidado **nuevo**; el 8 es sobre el **publicado**. Los dos correctos, y el segundo es el
+relevante para el informe de hoy.
+
+**Y el argumento de lógica que aporta el comité es el más fuerte de su informe:** §5.3.1 declara que
+el desapareo «hace el contraste conservador» —declara la dirección del sesgo— y publica como
+resultado «solo dos de los trece», que es exactamente lo que ese sesgo produce. **No se puede
+declarar el sesgo y presentar su producto como el hallazgo.**
+
+### Debilita: la correlación capacidad–beneficio no replica
+
+| Consolidado | Spearman | Pearson |
+|:---|---:|---:|
+| Publicado | ρ = −0,5165 · p = 0,0707 | r = −0,6002 · p = 0,0301 |
+| **Nuevo** | ρ = **−0,0879** · p = **0,7752** | r = −0,4816 · p = 0,0956 |
+
+**ρ pasa de −0,52 a −0,09** y el Pearson deja de alcanzar significación. Afecta a la conclusión
+sustantiva del trabajo. Con tres atenuantes que el propio proyecto ya había declarado: el informe
+dice que Spearman no alcanza significación, `correlacion.json` advierte de que los dos coeficientes
+discrepan de veredicto, y ese mismo artefacto declara que el Δ **contiene la variable con la que se
+correlaciona**.
+
+### La lectura honesta
+
+El trabajo tiene **un efecto más sólido de lo que publica** —ocho modelos, no dos— y **un patrón más
+débil de lo que afirma** —la relación con la capacidad se desvanece en el corpus corregido—. Las dos
+cosas se declaran juntas, y declaradas así el trabajo queda **más fuerte**, no más débil: pasa de
+afirmar un patrón frágil con poco soporte a afirmar un efecto robusto con un patrón declarado como
+tendencia no confirmada.
+
+### Decisión F, nueva y es la más importante de este documento
+
+**¿Se declara el «ocho de trece» y se reencuadra la conclusión?** No exige reejecutar nada: el
+artefacto existe desde el 8 de septiembre. Es aditivo — no obliga a retirar el ANOVA ni el Tukey,
+solo a añadir el contraste que corresponde al diseño y a decir cuál responde a la pregunta del
+trabajo. **Y hay que hacerlo antes de la defensa**, porque un tribunal que llegue solo a la
+contradicción lógica de §5.3.1 no necesita abrir un CSV.
+
+---
+
 ## 5. Trazabilidad
 
 - Diagnóstico y dictamen del equipo: `remote_48g/DICTAMEN-PRUEBA-ESTADISTICA-20260909.md`
@@ -142,5 +195,5 @@ publica hoy y lo que las dos métricas del contraste pareado confirman como núc
 - Wald, η² y el dato a nivel de entidad: `FINDINGS §F138`
 - Precio de adoptar el consolidado nuevo: `FINDINGS §F131` y `tools/ensayo_adopcion.py`
 - Herramienta que recalcula el contraste: `tools/contraste_pareado.py`
-- Un comité revisor con investigación web está en marcha (`wf_6f71302e-12d`); su dictamen se añadirá
-  aquí cuando cierre, y **puede contradecir algo de lo anterior**, que es para lo que se lanzó.
+- Dictamen del comité revisor (`wf_6f71302e-12d`, cerrado el 2026-09-09): §4.bis de este documento y
+  `FINDINGS §F143`. Contradijo algo de lo anterior, que es para lo que se lanzó.
