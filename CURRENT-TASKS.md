@@ -1291,6 +1291,30 @@ antiguos sin gastar una hora de máquina.
 ---
 
 
+### 3.bis.17 🟡 PENDIENTE (menor) — Con qué método salieron el `+10,01` y el `+2,19`
+
+**Lo único que os queda por contestar**, y no bloquea nada: es para poder citar una cifra sabiendo de dónde
+sale.
+
+Vuestro manifiesto declara que el KB RAG aporta **+10,01 pp** sobre los siete artículos contaminados y
+**+2,19 pp** sobre los ciento trece restantes. Recalculado aquí sobre los `detailed_results.json`
+—promediando el Δ de cada modelo y luego entre los trece— sale **+11,89** y **+3,16**.
+
+**La conclusión no cambia**: el efecto sobre los contaminados es varias veces el del resto en las dos
+versiones, ×4,57 con vuestras cifras y ×3,76 con las nuestras. Y **las nuestras son peores para el trabajo**,
+de modo que no hay incentivo en preferirlas.
+
+**Lo que pedimos es solo el método:** ¿promediasteis los registros de los siete y de los ciento trece por
+separado y restasteis, o promediasteis por modelo y luego entre modelos? ¿Sobre qué corridas? Con eso se
+elige una y se declara, en lugar de publicar dos cifras sin saber cuál mide qué.
+
+Está en `FINDINGS §F65` y `§F65.bis`, con la tabla de ambas.
+
+**Estado:** preguntado el 2026-09-08, sin respuesta.
+
+---
+
+
 ## 4. Workflows
 
 > Todo workflow debe declarar aquí su subsección: objetivo, fases, agentes, archivos tocados y resultado.
@@ -1607,3 +1631,4 @@ antiguos sin gastar una hora de máquina.
 | 2026-09-09 13:2x | Claude Code (equipo principal) | ✅ §1.169: **barridas las cifras mantenidas a mano en los documentos vivos, y `TODO-INFORME-FINAL` tenía tres muy atrás:** decía «**25 hallazgos**» y «**22 lecciones**» cuando son **103 y 60**, «12 modelos» cuando son 13, y un margen de «5 páginas» con un cuerpo de 20 pp. cuando va por 23,0 con 1 336 palabras. **No he reescrito el cuerpo** —es histórico y la política es aditiva—: añadí **un aviso arriba, una sola vez**, con una tabla de «dice / es hoy» y las órdenes que dan cada recuento sin copiarlo. Las de `CLAUDE.md` ya llevaban su nota de actualización, y el «24 comprobaciones» de `§F80` es una cita y se queda |
 | 2026-09-09 13:3x | Claude Code (equipo principal) | 🔎 §1.170: **el informe declara la contaminación de los ejemplares como procedencia, no como limitación.** Su anexo de uso de IA dice que «los ejemplares *few-shot* fueron extraídos de artículos reales anotados del **propio corpus de evaluación**» —lo cual es cierto y está bien que conste— pero **no dice que son siete de ciento veinte**, ni que en los modos con recuperación eso es contaminación del conjunto de prueba, ni que el efecto está medido: **+10,01 pp sobre esos siete frente a +2,19 sobre los demás** (`§F65`). Añadida la pregunta al índice de defensa con la respuesta precisa, y anotado en el inventario que **la reescritura de §5.3.1 es el momento de recogerlo**: cuesta una frase, la magnitud es pequeña y declararla convierte un flanco en una limitación asumida |
 | 2026-09-09 13:4x | Claude Code (equipo principal) | 🔴 §1.171: **puse en el material de defensa dos cifras sin recalcularlas, y mi propio cálculo las contradice.** Cité el **+10,01 / +2,19 pp** de `§F65` sobre el sesgo de los artículos contaminados; recalculado de forma independiente sobre el detalle por registro sale **+11,89 y +3,16**. La discrepancia de método **ya estaba detectada y sigue sin resolver** —se preguntó al equipo y no ha contestado—, y yo la había olvidado al escribir la entrada. Corregida para **dar las dos cifras** y señalar que **las mías son peores para el trabajo**: un sesgo de +11,89 pp es mayor que uno de +10,01, y citar solo la menor sería indistinguible de elegir el resultado. La conclusión no cambia: el efecto en esos siete es entre tres y cuatro veces el del resto |
+| 2026-09-09 13:5x | Claude Code (equipo principal) | ✅ §1.172: **`§F65` declaraba sus dos cifras sin remitir a `§F65.bis`, que da las alternativas.** Quien lo leyera se llevaría el +10,01 / +2,19 sin saber que están en disputa y que el recálculo independiente da **+11,89 / +3,16**, menos favorables al trabajo. Añadido el aviso al principio del hallazgo. Y llevada la pregunta al equipo a **§3.bis.17**, que no estaba en su sección: no piden una cifra sino **el método** —si promediaron los registros por separado o por modelo, y sobre qué corridas—, porque con eso se elige una y se declara en lugar de publicar dos sin saber cuál mide qué. Es lo único que les queda por contestar y no bloquea nada |

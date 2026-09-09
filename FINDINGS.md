@@ -1726,6 +1726,12 @@ puede declararla como cota inferior, que es una afirmación más fuerte y más d
 
 ## §F65 — El CSV crudo de una corrida no es la métrica publicada: los 7 artículos contaminados
 
+> **Aviso, 2026-09-09: las dos cifras de este hallazgo están en disputa y `§F65.bis` da las alternativas.**
+> El `+10,01` y el `+2,19` proceden del manifiesto del equipo; recalculados de forma independiente sobre el
+> detalle por registro salen **+11,89** y **+3,16**. La diferencia de método sigue sin resolver. **Las
+> recalculadas son menos favorables al trabajo**, de modo que citar solo las de abajo sería elegir el
+> resultado. Quien tome una de las dos debe decir cuál y por qué.
+
 **Fecha:** 2026-09-08. Encontrado al cuadrar el desglose por categoría de la re-corrida contra el corpus.
 
 Los siete ejemplares *few-shot* de la base de conocimientos **son artículos del propio corpus de
