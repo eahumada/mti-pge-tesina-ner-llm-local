@@ -4409,3 +4409,43 @@ con coste casi nulo.
 
 Queda como **decisión 15**. No lo redacto por iniciativa propia: una entradilla de capítulo fija el tono de
 lo que sigue y es del autor.
+
+## §F104 — Barrido de la prosa que dependía de las cifras propagadas: un solo defecto, ya corregido
+
+**2026-09-09.** Encontrado por lectura el defecto de §L69 —una cifra propagada y su numeral en palabras sin
+propagar—, la pregunta obligada era si había más. Barrido sistemático de la prosa que rodea **las diez
+cifras que cambié hoy** en los tres `.docx`, buscando numerales en palabras, comparativos y aproximadores
+(«doble», «casi», «del orden de», «unos», «más de»).
+
+**Resultado: ninguno más.** Los siete casos que el barrido levantó son inocuos, y conviene decir por qué,
+porque cada uno pudo parecer un defecto:
+
+| Coincidencia | Por qué no lo es |
+|:---|:---|
+| «76,55 … ciento **veinte** artículos» | el numeral es el tamaño del corpus, no la magnitud de la cifra |
+| «90,16 … **treinta** artículos» | ídem |
+| «80,42 … ciento **veinte**» | ídem |
+| «66,0 % … las **tres** categorías» | el numeral cuenta categorías de entidad |
+| «66,0 % … en **un** falso positivo» | artículo indeterminado, no numeral |
+| «66,0 % … cuarenta y **dos** configuraciones» | **cuadra hoy** precisamente porque esta mañana retiré las 7 filas de modelos excluidos: la Tabla 19 tiene 42 |
+| «del orden de» junto a 76,55 | es el que corregí, ya arreglado |
+
+El único defecto de esta clase era el de §L69, y quedó corregido en la misma pasada en que se encontró.
+
+### Y de paso quedaron verificadas dos afirmaciones de prosa que nadie había comprobado
+
+**Las particiones del *mojibake*.** El texto anterior a la Tabla 18 dice «por entidad de referencia corrupta:
+**89** artículos afectados y **31** no; por texto de entrada corrupto: **104** y **16**». Suman 120 en los
+dos casos, y los cuatro valores están en `efecto_mojibake.json` con esos mismos nombres. La comprobación 22
+ya los cubría.
+
+**La exhaustividad idéntica del Anexo I.** La prosa que introduce la Tabla 19 afirma que «la exhaustividad es
+**idéntica en ambas columnas** porque el corpus no anota localizaciones y, por tanto, tampoco puede
+omitirlas: la corrección afecta solo a la precisión». Es una afirmación fuerte, y **justifica que la tabla no
+traiga columna de exhaustividad restringida**. Comprobada sobre cinco grupos, recalculando la exhaustividad
+sobre tres categorías y sobre dos: **idéntica al cuarto decimal en los cinco**.
+
+Y tiene una consecuencia que merece anotarse: **la comprobación 38 protege esa afirmación**. Su premisa es
+que `Locations` no tiene ni una entidad de referencia, y la 38 vigila exactamente eso — si el corpus
+corregido llega y `Locations` gana referencias, la 38 falla y con ella cae la justificación de la estructura
+del Anexo I. La comprobación no se escribió para eso, pero lo cubre.
