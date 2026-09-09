@@ -885,6 +885,15 @@ en `[[L47]]`.
 De ahí una regla para las propias pruebas: **una mutación debe alcanzar todas las apariciones de lo que
 altera**, o lo que se está midiendo es cuántas veces se repite el dato, no si la comprobación funciona.
 
+**Y «todas las apariciones» incluye las variantes de formato.** El 2026-09-09, probando la comprobación de
+las dos cifras titulares del resumen, se mutó `76,55` en sus siete apariciones y la comprobación **siguió
+pasando**: el informe escribe además `76.55` **con punto** dos veces, en las tablas, y el patrón de la
+comprobación —`76[.,]55`— admite las dos formas, correctamente. Mutando ambas, falla y nombra las dos cifras.
+
+De modo que en este informe **una cifra se muta en sus dos separadores decimales**: coma en la prosa, punto en
+las tablas. Van cinco mutaciones incompletas en esta revisión y las cinco produjeron por un momento la misma
+conclusión falsa: «la comprobación no funciona». Ninguna era eso.
+
 Queda además un límite real, menor pero conviene saberlo: una comprobación por presencia se satisface con que
 la cifra sobreviva **en algún sitio** del documento. Si una cifra obsoleta aparece dos veces y solo se corrige
 una, no salta. En la práctica es tolerable —un dato que envejece suele estar en un sitio— y el remedio, si
