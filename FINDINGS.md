@@ -5733,3 +5733,44 @@ señala con la ruta; y añadida a `FINDINGS` una frase que dice conservar `resul
 también la señala. Los dos con el nombre del fichero y la ruta concreta.
 
 **Auditoría de afirmaciones:** 13 predicados, 0 que no se cumplen.
+
+---
+
+## §F125 — Las corridas pequeñas de la campaña nueva miden otro modo, y eso acota la decisión 1
+
+**Fecha:** 2026-09-09 · **Origen:** verificar el protocolo de las 39 corridas nuevas
+
+Aplicada la verificación de protocolo a las 39 corridas de `recorrida_20260908`, **26 difieren de la
+referencia en `data_file`**. No es un defecto: son las 13 de N=15 (`kleptotrace.json`) y las 13 de
+N=30 (`kleptotrace_augmented_30.json`), que legítimamente usan otro corpus. Pero al mirarlo apareció
+algo que sí importa.
+
+| Corridas | `rag_mode` |
+|:---|:---|
+| Publicadas de N=15 y N=30 (`ablacion_n15_REMOTO`, `cloud_n15_limpio_20260905`, `gemma4_31b_n15_REMOTO`, `n30_rerun_REMOTO`) | **`entities`** |
+| Campaña nueva, las 39 sin excepción | **`kb_combined`** |
+
+**Las corridas pequeñas de la campaña nueva no son una versión corregida de las publicadas: miden
+otra cosa.** `entities` es la línea base de recuperación por diccionario de entidades y
+`kb_combined` es la base de conocimientos contextual, que es precisamente la comparación que §5.6
+del informe desarrolla. Aplicar `kb_combined` a los corpus pequeños es una extensión legítima y
+coherente —la campaña usa el mismo modo en los tres corpus—, pero **no sustituye** a las cifras
+publicadas de §5.1, §5.2, la ablación del idioma ni las tablas 4, 5, 6 y 8.
+
+**Y eso acota la decisión 1, que es la consecuencia útil.** Adoptar el consolidado nuevo afecta
+**solo al capítulo de N=120**: mismo corpus, mismo `kb_combined`, mismos 26 grupos. Las secciones
+que se apoyan en N=15 y N=30 se quedan sobre las corridas publicadas en modo `entities`, y no hay
+que revisarlas. La decisión es más pequeña de lo que parecía, y su alcance está ahora medido en
+lugar de supuesto.
+
+**La trampa que esto evita.** Un cierre apresurado podría tomar las 39 corridas nuevas como «la
+versión correcta de todo» —es lo que sugiere leer «13 modelos × 3 corpus, todas VÁLIDAS»— y
+sustituir con ellas las cifras de la ablación del idioma. Serían **cifras de otro experimento** bajo
+el mismo encabezado, que es exactamente lo que la regla de integridad de `CLAUDE.md` prohíbe: «ninguna
+columna agrupa métricas de tareas distintas bajo un mismo encabezado».
+
+**Verificado además, sobre las 39:** cero filas con `parse_method='failed'` en 4 290, cero sin
+`detailed_results.json`, cero filas con F1 > (P + R) / 2, y los nueve parámetros de referencia
+coinciden salvo el `data_file` de los dos corpus pequeños, que es lo esperado.
+
+**Estado del verificador:** 51 comprobaciones, 40 fallos (40 declarados, **0 nuevos**), 0 vacías.

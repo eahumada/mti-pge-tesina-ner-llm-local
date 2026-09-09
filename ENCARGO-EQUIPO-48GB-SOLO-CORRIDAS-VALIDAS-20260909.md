@@ -160,3 +160,30 @@ nuevo, y esa decisión no es vuestra.
 
 Trabajad sobre **`main`**, que es donde está todo fusionado. `fix/recorrida-correcciones-20260908`
 está **totalmente fusionada** —cero commits que no estén en `main`, y 132 detrás— y podéis borrarla.
+
+---
+
+## 8. Añadido el 2026-09-09 tras verificar vuestra entrega del `RUNS_INDEX`
+
+**Vuestras cinco afirmaciones están confirmadas, una por una.** Los 8 `failed` de
+`benchmark_n120_REMOTO` son **todos** `nemotron-mini:4b_baseline` —y los ocho tienen latencia 0, 0
+tokens y recall 0, o sea rechazo de infraestructura con pérdida total, el defecto de `§F85`
+exacto—; las **39** corridas dan **cero** `failed` en 4 290 filas, cero sin `detailed_results.json`
+y cero filas con F1 > (P + R) / 2; `ANALISIS_CONJUNTO_20260909` está retirado; y el
+`TP+FN = 1098/1500/1034` sale **sobre los dos modos con los 7 contaminados excluidos** —lo comprobé
+mal la primera vez, dividiendo por dos, y la cifra que falla era la mía—.
+
+**Y una cosa que conviene que sepáis, porque afecta a cómo se lee vuestra campaña.** Las 39 corridas
+usan `rag_mode=kb_combined`, incluidas las de N=15 y N=30. Las corridas **publicadas** de esos dos
+corpus usan `entities`. De modo que **las pequeñas de vuestra campaña no son una versión corregida
+de las publicadas: miden otro modo** —diccionario de entidades frente a base de conocimientos
+contextual, que es la comparación de §5.6—.
+
+No hay que cambiar nada: la campaña es coherente consigo misma y la extensión es legítima. Lo que
+hay que **no** hacer es presentarlas como sustitutas de las cifras de §5.1, §5.2, la ablación del
+idioma o las tablas 4, 5, 6 y 8. Si alguien lee «13 modelos × 3 corpus, todas VÁLIDAS» y concluye
+que ya hay versión correcta de todo, mezclaría dos experimentos bajo el mismo encabezado.
+
+**Sugerencia concreta para el `RUNS_INDEX`:** añadid una línea diciendo que las corridas de N=15 y
+N=30 de la campaña son en modo `kb_combined` y **no reemplazan** a las publicadas en modo
+`entities`. Es una frase y ahorra el malentendido. Ver `FINDINGS §F125`.
