@@ -12,11 +12,15 @@ para poder **pegarse tal cual** en una sesión nueva de Claude Code, y agrupados
 | [`04-caracterizacion-corpus.md`](./04-caracterizacion-corpus.md) | Mide qué contiene realmente un corpus: idioma del texto **y de las entidades** | Al incorporar o describir un corpus |
 | [`05-entregables.md`](./05-entregables.md) | Propaga el Markdown a los `.docx` y al PDF y verifica el resultado sobre el documento generado | Tras cada tanda de correcciones |
 | [`06-equipo-remoto.md`](./06-equipo-remoto.md) | Monitorea entregas de un equipo remoto y las verifica antes de aceptar sus cifras | Mientras haya ejecuciones delegadas |
+| [`07-defensa-simulada.md`](./07-defensa-simulada.md) | **Solo lectura.** Revisión como profesor guía y comisión evaluadora, con cuatro preguntas de defensa | Al cerrar un capítulo, antes de darlo por bueno |
 
 ## Cómo se usan
 
 Los prompts de `00` y `02` **lanzan workflows** y consumen bastante presupuesto; conviene ejecutarlos cuando
 haya algo sustancial que revisar y no de forma rutinaria. Los demás son prompts de sesión normal.
+
+El `07` es de **solo lectura por diseño**: devuelve un informe y no toca ningún fichero. Se usa **por
+capítulos**, no con la tesina entera, porque un texto largo diluye la crítica que se le pide.
 
 Tres reglas valen para todos, y están en `CLAUDE.md`:
 
