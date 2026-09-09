@@ -146,8 +146,19 @@ por SHA: `git cherry main <rama>` marca con `-` los commits cuyo contenido ya es
 `main` aunque su identificador sea otro. Un `git rev-list --count main..<rama>` distinto de cero no
 prueba que haya trabajo pendiente; prueba que hay identificadores distintos.
 
-**Las ramas `backup/*` son la excepción y se quedan.** Existen para atestiguar un estado entregado,
-no para trabajar. No se rebasan, no se fusionan y no se retiran.
+**Las ramas `backup/*` son la excepción, y hay que distinguir dos clases** que el prefijo confunde:
+
+* **Un respaldo que atestigua** un estado entregado, como `backup/entrega-final-dataset-real-120`.
+  Está **congelado** en la punta de aquel día: no se rebasa, no se fusiona, no se avanza y no se
+  retira. Su valor es exactamente que no se mueve.
+* **Un espejo rodante de `main`**, como `backup/revision-final-20260908`, que se avanzaba a cada
+  empujón como red de seguridad. **Con la política de trabajar en `main` deja de tener sentido**:
+  `main` ya está en el remoto, de modo que el espejo no protege de nada y sí confunde a quien lea el
+  listado de ramas. **No se avanza más**, y se retira cuando el autor lo confirme.
+
+La distinción se escribió el 2026-09-09 porque la primera versión de esta política decía que las
+`backup/*` «no se avanzan» y en el mismo commit se avanzó una de ellas. Un prefijo compartido no
+convierte dos cosas en la misma.
 
 ---
 

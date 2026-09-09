@@ -1441,8 +1441,8 @@ el `git pull` fallaba en silencio.
 | `main` | **la rama de trabajo**, al día con el remoto | trabajar aquí |
 | `sesion/revision-final-20260908` | espejo de `main`, **cero commits propios** | retirar cuando ninguna sesión esté en ella; no abrir trabajo nuevo |
 | `sesion/revision-final-20260905` | 1 commit propio (`chromadb` en `requirements.txt`), **contenido ya aplicado en `main`**, 360 detrás | retirable: comprobado con `git cherry` que no se lleva nada |
-| `backup/revision-final-20260908` | respaldo, cero commits propios | **se queda**: atestigua, no se toca |
-| `backup/entrega-final-dataset-real-120` | respaldo del 2026-09-01 | **se queda** |
+| `backup/revision-final-20260908` | **espejo rodante** de `main`, no un respaldo de un estado entregado | **no se avanza más**: `main` ya está en el remoto y el espejo no protege de nada; retirar cuando el autor lo confirme |
+| `backup/entrega-final-dataset-real-120` | **respaldo que atestigua** el estado entregado del 2026-09-01, congelado | **se queda y no se mueve**: su valor es que no cambia |
 | `fix/recorrida-correcciones-20260908` | **borrada por el equipo de 48 GB** tras fusionarse | hecho, y es lo que la política pide |
 
 **Comprobado el 2026-09-09: `main` contiene el contenido de todas ellas.** Ninguna rama guarda
