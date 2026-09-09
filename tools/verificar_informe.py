@@ -67,6 +67,31 @@ EXCLUIDOS = ['nuextract', 'minimax-m3', 'gemini-3.1-flash-lite', 'q8-64k', 'sonc
 # y 'Vale la pena señalar una particularidad de procedencia' ya no tapan ningun fallo: la nota de
 # §F163 se propago a los tres .docx (v14). Comprobado antes de retirar. Ver CURRENT-TASKS §1.291.
 FALLOS_DECLARADOS = {
+    'Además de si dos medias difieren, interesa a veces si dos': ('2026-09-09',
+        'PENDIENTE de propagar (§F164): párrafo nuevo de §2.5 (Pearson/Spearman). Enriquecimiento '
+        'del marco teórico a petición del autor, pendiente de la pasada de maquetación.'),
+    'El ANOVA supone además que las observaciones son independi': ('2026-09-09',
+        'PENDIENTE de propagar (§F164): párrafo nuevo de §2.5 (homocedasticidad/Friedman). Idem.'),
+    'El criterio de coincidencia entre lo extraído y la referen': ('2026-09-09',
+        'PENDIENTE de propagar (§F164): párrafo nuevo de §2.1 (algoritmos de comparación de '
+        'cadenas). Idem.'),
+    'La ejecución masiva de modelos locales plantea un problema': ('2026-09-09',
+        'PENDIENTE de propagar (§F164): párrafo nuevo de §2.4, la sección entera (pub/sub, AIMD, '
+        'Factory/Facade). Idem.'),
+    'La primera es de desacoplamiento entre productor y consumi': ('2026-09-09',
+        'PENDIENTE de propagar (§F164): párrafo nuevo de §2.4 (pub/sub). Idem.'),
+    'La segunda es cuántos consumidores mantener activos. Un nú': ('2026-09-09',
+        'PENDIENTE de propagar (§F164): párrafo nuevo de §2.4 (AIMD). Idem.'),
+    'La tercera es cómo aislar el sistema de las diferencias en': ('2026-09-09',
+        'PENDIENTE de propagar (§F164): párrafo nuevo de §2.4 (Factory/Facade). Idem.'),
+    'falta la seccion «2.4 arquitectura de ejecución concurrente': ('2026-09-09',
+        'PENDIENTE de propagar (§F164): la sección 2.4 es nueva y el resto de §2 se renumeró '
+        '(2.4→2.5, 2.5→2.6). Pendiente de la pasada de maquetación.'),
+    'resaltes en el cuerpo, menos que los 9 declarados': ('2026-09-09',
+        'No es mío de resolver: BOLD_CUERPO_BASE lo mantiene Claude Desktop (§2.25). El '
+        'enriquecimiento de §2 introdujo negritas nuevas que casan por casualidad con falsos '
+        'positivos ya documentados en su comentario; declarado para que ellos decidan si bajarlo '
+        'a 8 en su próxima pasada, no lo hago yo sobre su constante.'),
     '.rebuild_venv.log': ('2026-09-09',
                           'fichero vacio del commit 880f4f9; decision del autor '
                           '(CURRENT-TASKS §1.103)'),

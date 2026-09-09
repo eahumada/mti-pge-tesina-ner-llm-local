@@ -90,6 +90,8 @@ El Reconocimiento de Entidades Nombradas (NER) es una subtarea del Procesamiento
 
 Formalmente se plantea como un problema de etiquetado de secuencias: dado un texto segmentado en tokens, se asigna a cada uno una etiqueta según el esquema IOB2, que distingue el inicio de una entidad (*Beginning*), su continuación (*Inside*) y el texto ajeno a toda entidad (*Outside*). Esta formulación, heredada de la tarea compartida CoNLL-2002 [12], es la que fija el criterio de evaluación: una entidad se considera correctamente extraída solo si coinciden a la vez sus límites y su categoría.
 
+El criterio de coincidencia entre lo extraído y la referencia también admite alternativas. La más estricta exige coincidencia **exacta** de la cadena, lo que penaliza como error cualquier diferencia de acentuación o de un carácter. Una alternativa **basada en tokens** (como la superposición de conjuntos de palabras, usada en tareas de resumen automático) tolera el orden pero no distingue variantes de un mismo token. Este trabajo adopta en su lugar el emparejamiento **difuso a nivel de caracteres**, mediante la **distancia de Indel** —el número mínimo de inserciones y supresiones para transformar una cadena en otra, variante de la distancia de Levenshtein que excluye las sustituciones—, normalizada a una escala de similitud; tolera variaciones menores de forma (tildes, mayúsculas, un carácter de más) sin premiar coincidencias espurias, a costa de ser sensible al orden de las palabras. El compromiso concreto se detalla en §3.3.
+
 La dificultad del dominio no proviene de la definición de la tarea sino de tres rasgos del material periodístico financiero. Primero, la **ambigüedad referencial**: un mismo token puede designar una persona o una organización según el contexto («Santander» es tanto un apellido como un banco y una ciudad). Segundo, la **variación morfológica del español**, con nombres compuestos, partículas («de», «del», «y») y tildes que fragmentan la coincidencia exacta. Tercero, la **escasez de datos etiquetados**: no existe un corpus público en español anotado para el dominio AML/KYC, lo que descarta de entrada cualquier técnica que dependa de un volumen sustancial de ejemplos supervisados.
 
 Las aproximaciones al problema pueden ordenarse por el tipo de conocimiento que requieren y por el coste de adaptarlas a un dominio nuevo.
@@ -140,7 +142,17 @@ Decidida la estrategia de recuperación, queda el problema de dónde ejecutar el
 
 Entre los entornos de ejecución disponibles, **llama.cpp** [30] ofrece el motor de inferencia cuantizada de referencia pero exige gestión manual de modelos; **vLLM** [28] maximiza el rendimiento por lotes en servidores con GPU dedicada, escenario ajeno a este trabajo; **LM Studio** prioriza la interacción gráfica sobre la automatización; el entorno **MLX** de Apple [31] aprovecha específicamente la memoria unificada de Apple Silicon; y **Ollama** [29] encapsula llama.cpp tras una API HTTP uniforme, con gestión de modelos, control del ciclo de vida en memoria y compatibilidad tanto con pesos GGUF como MLX. Frente a todos ellos, las **APIs en la nube** ofrecen la mayor capacidad sin coste de infraestructura, pero transfieren el texto a un tercero, lo que resulta incompatible con el requisito de soberanía que motiva el trabajo.
 
-### 2.4 Validación estadística de comparaciones múltiples
+### 2.4 Arquitectura de ejecución concurrente y aislamiento de proveedores
+
+La ejecución masiva de modelos locales plantea un problema de ingeniería distinto del NER en sí: cómo paralelizar la inferencia sin saturar el servicio ni desperdiciar capacidad, y cómo hacerlo sin atar el sistema a un proveedor concreto. Tres decisiones de diseño lo resuelven, cada una comparada aquí contra su alternativa más directa.
+
+La primera es de desacoplamiento entre productor y consumidor. Un pipeline síncrono —procesar un artículo, esperar su respuesta, tomar el siguiente— ata el rendimiento a la latencia del modelo más lento y no permite variar el paralelismo sin reescribir el flujo de control. La arquitectura **publicador/suscriptor** (pub/sub) resuelve esto separando la ingesta de artículos, que los deposita en una cola, de su consumo, a cargo de un número variable de trabajadores suscritos a ella; ni el productor necesita saber cuántos consumidores hay, ni éstos necesitan conocerse entre sí, lo que permite ajustar su número en tiempo de ejecución sin tocar el productor.
+
+La segunda es cuántos consumidores mantener activos. Un número **fijo**, decidido de antemano, es simple pero arriesga dos fallos simétricos: por debajo del óptimo desperdicia capacidad, y por encima satura el servicio con reintentos y respuestas truncadas. Un ajuste **multiplicativo en ambos sentidos** (duplicar al crecer, reducir a la mitad al fallar) reacciona rápido pero tiende a oscilar sin asentarse. Este trabajo adopta en su lugar **AIMD** (*Additive Increase, Multiplicative Decrease*), la política que sostiene el control de congestión en TCP [26]: crecer de a uno mientras el sistema permanece estable y recortar a la mitad ante la primera señal de saturación. Chiu y Jain demuestran que, de las cuatro combinaciones posibles entre incremento y decremento aditivo o multiplicativo, solo esta converge de forma estable y equitativa hacia el punto de operación máximo sostenible sin necesitar conocerlo de antemano [26]: el crecimiento lento explora el margen disponible mientras el recorte agresivo responde con margen de sobra ante el primer signo de exceso.
+
+La tercera es cómo aislar el sistema de las diferencias entre proveedores de inferencia (Ollama local, OpenAI, Anthropic), que exponen APIs, formatos de error y modelos de autenticación distintos entre sí. Ramificar el código llamador según el proveedor acopla toda decisión futura de añadir o sustituir uno a cada punto de llamada. Los patrones de diseño **Factory** y **Facade** evitan ese acoplamiento: el primero centraliza la construcción del proveedor correcto a partir de su nombre, y el segundo expone una interfaz uniforme que oculta tras ella las diferencias de implementación. El efecto conjunto es que sustituir un proveedor, o añadir uno nuevo, no exige tocar ningún código que ya consuma la interfaz — la condición que hace posible el criterio C2 de soberanía intercambiable.
+
+### 2.5 Validación estadística de comparaciones múltiples
 
 Comparar el desempeño de varios modelos exige distinguir las diferencias reales de las que produce el azar, porque cada artículo del corpus tiene su propia dificultad y un modelo puede aventajar a otro por haberle tocado un reparto favorable. El instrumento habitual es el análisis de varianza (ANOVA) de una vía, que contrasta la hipótesis nula de que todos los grupos comparados proceden de la misma población. Su estadístico F compara la variabilidad *entre* grupos con la variabilidad *dentro* de cada uno: cuanto mayor es F, más difícil resulta atribuir las diferencias observadas a la variación interna. Un valor p pequeño permite rechazar esa hipótesis nula, pero el ANOVA solo indica que **alguna** diferencia existe, no cuál.
 
@@ -148,9 +160,13 @@ Responder a esa segunda pregunta corresponde a las **pruebas post-hoc**, y aquí
 
 Dos instrumentos complementan la lectura. Los intervalos de confianza al 95 % expresan el margen dentro del cual cabe esperar el valor real de cada media, de modo que dos intervalos muy solapados advierten de una diferencia poco sólida aunque las medias difieran. Y el **análisis de sensibilidad** recalcula las métricas excluyendo las observaciones atípicas (en este trabajo, los artículos de longitud inusual), para comprobar que ninguna conclusión depende de unos pocos casos extremos.
 
+El ANOVA supone además que las observaciones son independientes entre sí y que la varianza es homogénea entre grupos (**homocedasticidad**). Cuando el mismo conjunto de artículos se evalúa bajo distintas condiciones, como ocurre en este trabajo, esa independencia no se cumple: las observaciones están apareadas, y el diseño estrictamente correcto es de **medidas repetidas**. La prueba no paramétrica de **Friedman** es su análogo cuando no puede asumirse normalidad, y sirve como control de robustez frente al ANOVA cuando el apareamiento se ignora. La homocedasticidad, por su parte, se contrasta con la prueba de **Levene**, en su variante centrada en la mediana (Brown-Forsythe), más robusta que la centrada en la media ante distribuciones asimétricas; su incumplimiento no invalida el ANOVA por sí solo en diseños balanceados, pero refuerza la conveniencia de una prueba de medidas repetidas.
+
+Además de si dos medias difieren, interesa a veces si dos variables covarían: si el beneficio de una técnica crece o decrece, por ejemplo, con la capacidad del modelo. El coeficiente de **Pearson** mide la asociación lineal y es sensible a valores atípicos; el de **Spearman**, calculado sobre los rangos y no sobre los valores, es más robusto a esas anomalías pero solo capta relaciones monótonas, no necesariamente lineales. Reportar ambos permite distinguir si una asociación aparente depende de la forma de la relación o de unos pocos casos extremos que un solo coeficiente no dejaría ver.
+
 Conviene retener una asimetría de interpretación: que una diferencia **no** alcance significancia no demuestra que no exista, solo que los datos disponibles no bastan para descartar el azar.
 
-### 2.5 Estado del arte y criterios de selección
+### 2.6 Estado del arte y criterios de selección
 
 La Tabla 2 posiciona este trabajo respecto de investigaciones recientes en NER para dominios financieros y regulatorios.
 
@@ -218,7 +234,7 @@ La gestión de memoria merece atención propia porque condicionó el alcance del
 
 ### 3.3 Módulo de evaluación
 
-La comparación entre lo extraído y la anotación de referencia no puede ser literal, porque una diferencia de puntuación o un artículo antepuesto invalidarían una extracción correcta. El evaluador emplea por ello emparejamiento difuso a nivel de caracteres, implementado con la función `ratio` de la biblioteca *rapidfuzz* [33], que normaliza la **distancia de Indel** —el número mínimo de inserciones y supresiones necesarias para transformar una cadena en la otra, variante de la distancia de Levenshtein que excluye las sustituciones— a una escala de 0 a 100 mediante la expresión `100 × (1 − d / (|a| + |b|))`. Ambas cadenas se pasan a minúsculas antes de compararlas, así que la coincidencia es insensible a mayúsculas. Se acepta como acierto toda similitud igual o superior a un umbral configurable, fijado en **85**.
+La comparación entre lo extraído y la anotación de referencia no puede ser literal, porque una diferencia de puntuación o un artículo antepuesto invalidarían una extracción correcta. El evaluador emplea por ello el emparejamiento difuso introducido en §2.1, implementado con la función `ratio` de la biblioteca *rapidfuzz* [33], que normaliza la distancia de Indel a una escala de 0 a 100 mediante la expresión `100 × (1 − d / (|a| + |b|))`. Ambas cadenas se pasan a minúsculas antes de compararlas, así que la coincidencia es insensible a mayúsculas. Se acepta como acierto toda similitud igual o superior a un umbral configurable, fijado en **85**.
 
 La elección del umbral es un compromiso: por debajo se admiten emparejamientos entre nombres distintos que comparten apellido; por encima se rechazan variantes legítimas. Conviene explicitar dos límites de esta métrica, porque condicionan la lectura de los resultados. Al operar sobre caracteres y no sobre palabras, **es sensible al orden**: «Juan Pérez» y «Pérez Juan» obtienen 50 sobre 100 y no casan, mientras que una métrica basada en tokens les daría 100. Y al normalizar por la longitud conjunta, **penaliza las omisiones proporcionalmente**: «Banco Santander» frente a «Santander» obtiene 75 y queda por debajo del umbral, de modo que una extracción parcialmente correcta cuenta como error. Ambos efectos empujan las cifras a la baja. En sentido contrario opera el conteo de aciertos, que se realiza por entidad extraída: varias menciones que casan con una misma entidad de referencia suman cada una un acierto, lo que puede elevar la exhaustividad en un pequeño número de registros (entre el 2 % y el 6 % de ellos según la corrida). El efecto neto observado es conservador.
 
@@ -430,14 +446,13 @@ de sí mismos al añadir RAG. Solo uno, `nemotron-mini:4b`, con +12,26 puntos. `
 significativo sobre el corpus publicado (+10,82 puntos), queda en +6,73 puntos (p=0,2334) y ya no se
 distingue del azar tras la corrección por comparaciones múltiples.
 
-Una salvedad de diseño: los veintiséis grupos evalúan los mismos 113 artículos, de modo que las
-observaciones están apareadas, y el procedimiento estrictamente correcto sería un modelo de medidas
-repetidas, no este ANOVA. Tratarlas como independientes hace además el contraste conservador.
-La prueba de Levene sí detecta heterocedasticidad (p = 1,39 × 10⁻¹¹) —a diferencia de sobre el corpus publicado, ahora que
-el defecto de anotación de Locations está corregido—, lo que refuerza esa salvedad sin invalidar el ANOVA
-(el diseño está balanceado: 2 938 observaciones, 113 por grupo). Repetido con la prueba de Friedman, la que
-corresponde a un diseño de medidas repetidas, el rechazo se sostiene con holgura (χ² = 1 802,3671): la
-conclusión no depende de qué prueba se elija.
+Una salvedad de diseño, introducida en §2.5: los veintiséis grupos evalúan los mismos 113 artículos, de
+modo que las observaciones están apareadas y el ANOVA resulta conservador.
+La prueba de Levene sí detecta heterocedasticidad (p = 1,39 × 10⁻¹¹) —a diferencia de sobre el corpus
+publicado, ahora que el defecto de anotación de Locations está corregido—, sin invalidar el ANOVA (el
+diseño está balanceado: 2 938
+observaciones, 113 por grupo). Repetido con Friedman, el rechazo se sostiene con holgura (χ² = 1 802,3671):
+la conclusión no depende de qué prueba se elija.
 
 El hallazgo central del estudio es que el beneficio del KB RAG decrece con la capacidad del modelo, aunque
 no de forma perfectamente monótona. Once de los trece modelos mejoran con RAG, aunque solo uno lo haga de

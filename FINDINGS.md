@@ -7908,3 +7908,71 @@ de esta corrección — se quedan en 90 hasta la siguiente pasada. Declarado en 
 («guiones largos frente a») y en `RETIRADAS` (para que la comprobación confirme, cuando Claude Desktop
 propague, que la anécdota no sobrevive en ningún entregable). Verificado: 56 comprobaciones, 0 fallos
 nuevos tras declarar, dentro de 25 páginas.
+
+## §F164 — Enriquecimiento del marco teórico (reparo 4 del profesor guía): arquitectura y estadística adicional
+
+**Fecha:** 2026-09-09 · **Origen:** el autor, retomando el reparo 4 del profesor guía («marco
+conceptual pobre, sin comparación de alternativas»), pidió enriquecer el capítulo 2 con conceptos
+usados después en el trabajo pero nunca introducidos teóricamente
+
+### Qué faltaba
+
+El capítulo 2 comparaba familias de técnicas de NER, aprendizaje en contexto, RAG y entornos de
+ejecución, y cerraba con la validación estadística (ANOVA, Tukey HSD, intervalos de confianza,
+análisis de sensibilidad). Pero el resumen y §3 anuncian, como aportes de arquitectura, una
+**arquitectura pub/sub multihilo, concurrencia adaptativa (AIMD) y capa Factory/Facade** — ninguno
+de los tres tenía fundamento teórico en el capítulo 2, solo la descripción de su implementación en
+§3. Y §5.3.1 usa, sin haberlas introducido antes, las pruebas de **Levene** (homocedasticidad),
+**Friedman** (medidas repetidas) y los coeficientes de **Pearson**/**Spearman** (correlación).
+Ambos vacíos son exactamente el tipo de detección que el reparo 4 señalaba: conceptos que el cuerpo
+usa sin que el marco teórico los sostenga, y sin comparar cada uno contra su alternativa directa —
+el criterio que el propio capítulo 2 se propone aplicar desde su primer párrafo.
+
+### Qué se añadió, y el principio de no duplicar
+
+**Nueva sección `### 2.4 Arquitectura de ejecución concurrente y aislamiento de proveedores`**
+(441 palabras), con tres decisiones de diseño comparadas cada una contra su alternativa más directa:
+pub/sub frente a un pipeline síncrono; AIMD frente a un número fijo de consumidores y frente a un
+ajuste multiplicativo en ambos sentidos, citando a Chiu y Jain [26] (ya en la bibliografía, usada
+antes solo para la cifra sin el fundamento); y Factory/Facade frente a ramificar el código llamador
+por proveedor. Esto desplaza `### 2.4 Validación estadística...` a `### 2.5` y `### 2.5 Estado del
+arte...` a `### 2.6`; comprobado que ningún cross-reference citaba `§2.4` o `§2.5` por número antes
+del cambio (solo `§2.1` y `§2.3`, intactas).
+
+**Extensión de `§2.5` (232 palabras)**: dos párrafos nuevos sobre el supuesto de independencia y
+homocedasticidad del ANOVA (con Friedman y Levene/Brown-Forsythe como respuesta a cada uno) y sobre
+Pearson frente a Spearman como coeficientes de correlación, con su compromiso respectivo.
+
+**Extensión de `§2.1` (143 palabras)**: el criterio de coincidencia entre entidad extraída y de
+referencia, comparando coincidencia exacta, coincidencia por tokens y el emparejamiento difuso por
+distancia de Indel que el trabajo adopta — el «algoritmo de comparación» que §3.3 aplica sin que el
+marco teórico lo sostuviera antes.
+
+**Y, para no duplicar la misma teoría dos veces, se recortó donde ya estaba solo aplicada**: el
+párrafo de §5.3.1 sobre Levene/Friedman perdió la explicación de qué son y por qué hacen falta (eso
+vive ahora en §2.5), conservando únicamente las cifras del estudio y una remisión («introducida en
+§2.5»); ahorro de 31 palabras. El párrafo de §3.3 sobre la distancia de Indel perdió su definición
+(ahora en §2.1), conservando la aplicación (biblioteca, fórmula, umbral); ahorro de 25 palabras.
+Ningún dato ni cifra se perdió en ninguno de los dos recortes — se verificó que ambos siguen
+respaldando exactamente las mismas conclusiones que antes.
+
+### Presupuesto de páginas, y lo que queda pendiente
+
+El límite institucional de 25 páginas se estima por palabras del cuerpo (`tools/verificar_informe.py`,
+`c_extension`); antes de este cambio el margen era de 891 palabras, y tras sumar las adiciones (816
+palabras) y restar los recortes (56 palabras) queda en aproximadamente 121 palabras — **231 de
+margen si se resta lo que aún falta declarar**. El autor pidió además enriquecer con más conceptos
+de NLP/NER/LLM, algoritmos y computación distribuida, y sugirió sacrificar contenido de los anexos
+para hacer sitio; dado que los anexos están explícitamente excluidos del límite de 25 páginas
+(`CLAUDE.md`), recortarlos no libera presupuesto del cuerpo, así que antes de seguir ampliando se
+preguntó al autor cómo prefiere resolver esa tensión. Ver la pregunta en el mismo turno.
+
+### Verificación
+
+Dos regresiones propias, corregidas antes de declarar nada: el trimado de §5.3.1 reintrodujo, dos
+veces, un salto de línea manual **dentro** de la frase exacta que `c_levene` matchea por regex
+(mismo defecto que `§F161`) — corregido desplazando el salto fuera de la frase ambas veces. Los
+paréntesis restantes son propagación pendiente a los tres `.docx`: siete párrafos nuevos, una
+sección nueva en el índice, y una negrita que bajó de 9 a 8 por casualidad (declarada a nombre de
+Claude Desktop, que es quien mantiene `BOLD_CUERPO_BASE`, no se toca aquí). Verificado: 56
+comprobaciones, 0 fallos nuevos (32 declarados, todos asignados), dentro de 25 páginas.

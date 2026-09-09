@@ -51,6 +51,16 @@ que el cuerpo (capítulos 1-7, no los Anexos) no mencione fechas de calendario d
 retire por completo, no se recorte, la nota de §5.3 sobre un F1 de 79,03 % cuyos datos ya no
 existen para recalcularlo. Ninguna cifra de resultado cambia. Detalle en `FINDINGS §F162`/`§F163`.
 
+**Ampliado una séptima vez, más tarde ese mismo día: el capítulo 2 (marco teórico) creció y se
+renumeró, atendiendo al reparo 4 del profesor guía.** Piezas 31 a 33 en la nueva sección
+**0.septies**: una sección `2.4` completamente nueva sobre arquitectura (pub/sub, AIMD,
+Factory/Facade), la vieja `2.4` y `2.5` renumeradas a `2.5` y `2.6`, dos párrafos nuevos dentro de
+la `2.5` (homocedasticidad/Friedman, Pearson/Spearman) y uno en `2.1` (criterios de coincidencia de
+cadenas), con dos recortes correspondientes en §3.3 y §5.3.1 para no duplicar la misma teoría dos
+veces. **Aviso de presupuesto**: el margen de páginas quedó en ~121 palabras: si el cuerpo se acerca
+al límite al maquetar, consulta al autor antes de recortar nada por tu cuenta. Detalle en
+`FINDINGS §F164`.
+
 ---
 
 ## 0. Lo primero, y ahorra la mitad del trabajo
@@ -327,6 +337,53 @@ el párrafo completo** de tu `.docx` (las dos frases, entre «El resultado no de
 unos pocos textos extremos.» y el encabezado `#### 5.3.1`); no queda ningún resto suyo en el Markdown
 que copiar. Esto baja el recuento de guiones largos del cuerpo de 90 a 88 — normal, no lo compenses
 añadiendo nada. Detalle en `FINDINGS §F163`.
+
+---
+
+## 0.septies El profesor pidió enriquecer el marco teórico (reparo 4), y el capítulo 2 cambió de tamaño y de numeración
+
+**El capítulo 2 entero creció y sus subsecciones se renumeraron.** Antes de esta ronda tenías
+`### 2.4 Validación estadística de comparaciones múltiples` y `### 2.5 Estado del arte y criterios
+de selección`. Ahora hay una `### 2.4` nueva antes de esas dos, que pasan a ser `### 2.5` y `### 2.6`
+respectivamente. **No es una renumeración cosmética**: la `2.4` nueva tiene texto propio que copiar,
+no solo un cambio de etiqueta.
+
+### Pieza 31 — Sección nueva completa: `2.4 Arquitectura de ejecución concurrente y aislamiento de proveedores`
+
+Cuatro párrafos nuevos (441 palabras) entre el final de `2.3` (que termina en «...lo que resulta
+incompatible con el requisito de soberanía que motiva el trabajo.») y el inicio de la antigua `2.4`
+(que ahora es `2.5`, ver pieza 32). Copia el encabezado y los cuatro párrafos tal cual del Markdown:
+son contenido nuevo, no una edición de texto existente.
+
+### Pieza 32 — Renumerar `2.4` → `2.5` y `2.5` → `2.6`, y dos párrafos nuevos dentro de la `2.5`
+
+Cambia el número de los dos encabezados (el título de cada uno no cambia, solo el número). Dentro de
+la que pasa a ser `### 2.5 Validación estadística de comparaciones múltiples`, entre el párrafo que
+termina en «...ninguna conclusión depende de unos pocos casos extremos.» y el que empieza «Conviene
+retener una asimetría de interpretación...», se insertan dos párrafos nuevos (232 palabras, sobre
+homocedasticidad/Friedman y sobre Pearson/Spearman). Cópialos del Markdown.
+
+### Pieza 33 — Un párrafo nuevo en `2.1`, y dos recortes en `§3.3` y `§5.3.1` que van con ella
+
+En `### 2.1`, después de la frase que termina en «...coincidan a la vez sus límites y su categoría.»,
+se añade un párrafo nuevo (143 palabras) sobre los criterios de coincidencia entre entidad extraída y
+de referencia (exacta, por tokens, difusa por distancia de Indel). **Esto viene acompañado de dos
+recortes en otras secciones, para no duplicar la misma explicación dos veces**:
+
+- En `§3.3`, el párrafo que empieza «La comparación entre lo extraído y la anotación de referencia...»
+  perdió la definición de la distancia de Indel (ahora vive en `2.1`) y quedó más corto. Sustituye el
+  párrafo entero por el del Markdown; no es solo un recorte de frase, la redacción cambió alrededor.
+- En `§5.3.1` (ahora bajo la sección `2.5` renumerada, no confundir), el párrafo que empieza «Una
+  salvedad de diseño...» perdió la explicación de qué son Levene y Friedman (ahora en `2.5`) y quedó
+  más corto. Sustituye el párrafo entero por el del Markdown.
+
+> **Aviso de presupuesto de páginas.** Estas tres piezas juntas añaden bastante más de lo que quitan:
+> el margen antes de este encargo era de unas 891 palabras respecto del límite de 25 páginas, y queda
+> en aproximadamente 121. Si al maquetar el cuerpo se acerca demasiado al límite, avisa al autor antes
+> de recortar cualquier cosa por tu cuenta — la política del proyecto exige su autorización expresa
+> para suprimir contenido, y él está al tanto de que el margen quedó ajustado.
+
+Detalle completo en `FINDINGS §F164`.
 
 ---
 
