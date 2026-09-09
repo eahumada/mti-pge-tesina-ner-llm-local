@@ -230,6 +230,30 @@ tiempo de máquina.
 **Lo que no debe hacerse** es sustituir las cifras de la Tabla 4 por las de la re-corrida sin más: parecen la
 misma medición y no lo son.
 
+### La Tabla 8 está en el mismo caso, y por partida doble
+
+Comprobado el 2026-09-09. La glosa de la Tabla 8 declara que sus valores se miden «sobre
+`benchmark_results.csv` (subconjunto `_baseline`, **N=15**)», de modo que hereda el problema anterior: la
+re-corrida mide sus N=15 en otro modo. Y hay un segundo obstáculo, este insalvable: **su primera fila,
+`gemma4:31b`, no existe en la re-corrida**, que solo trae `gemma4:31b-cloud` y `gemma4:31b-mlx`. Esa fila
+procede de `results/gemma4_31b_n15_REMOTO/`, una corrida anterior, y la propia glosa lo declara.
+
+**Lo tranquilizador es que apenas importa.** Contrastadas las otras dos filas con los datos de N=120 de la
+re-corrida, las magnitudes se mueven poco y en la dirección esperable:
+
+| Fila de la Tabla 8 | Tok/s publicado | Tok/s en la re-corrida | VRAM publicada | VRAM en la re-corrida |
+|:---|---:|---:|---:|---:|
+| `gemma4:31b-mlx` | 22,80 | 25,04 | 24 607 | 26 720 |
+| `llama3.2 (3B)` | 79,35 | 85,16 | 4 018 | **4 018** |
+| `gemma4:31b` | 10,23 | *no medido* | 18 795 | *no medido* |
+
+La VRAM de `llama3.2` reproduce **exactamente**. El índice Tok/s/B pasaría de 0,74 a 0,81 en el 31B y de 26,5
+a 28,4 en el 3B, de modo que **la afirmación que la tabla sostiene —dos órdenes de magnitud de diferencia en
+eficiencia por unidad de capacidad— se mantiene con holgura**. No hay urgencia en tocarla.
+
+**Recomendación para la Tabla 8: dejarla**, con la glosa que ya declara su procedencia. Actualizar dos de sus
+tres filas y dejar la tercera con datos de otra corrida sería peor que no tocar ninguna.
+
 ---
 
 ## Y un aviso que todavía no es decisión
