@@ -2499,3 +2499,37 @@ Segundo, porque la re-corrida va a sustituir estos datos y habrá que repetir el
 permanece es el argumento metodológico, que valdrá igual para los datos nuevos.
 
 Artefacto en `results/ROBUSTEZ_ESTADISTICA_20260908/posthoc_pareado.json`.
+
+---
+
+## §F77 — El informe afirmaba la hipótesis nula sobre un contraste con el 8 % de potencia
+
+**Fecha:** 2026-09-08, 21:43. Detectado al revisar los contrastes estadísticos del informe. **Corregido.**
+
+§5.3 comparaba las dos compilaciones de 31B sobre el corpus N=30 y concluía, tras un ANOVA no significativo,
+que «la diferencia entre ambos **debe atribuirse a la variabilidad entre artículos y no a una superioridad
+real** de una compilación sobre la otra».
+
+**Las cifras son correctas** —F = 0,2235 y p = 0,6382 reproducen exactamente desde
+`results/n30_rerun_REMOTO/`—. **La inferencia no.** Un resultado no significativo no acredita la ausencia de
+diferencia; solo dice que los datos no la detectan. Y aquí no la detectarían aunque existiera:
+
+| Tamaño de efecto | Potencia con 30 artículos por grupo |
+|:---|---:|
+| El observado (*d* = 0,12) | **8 %** |
+| Mediano (*d* = 0,50) | 49 % |
+| Grande (*d* = 0,80) | 87 % |
+
+Con esa potencia, no rechazar la nula era **el resultado más probable de antemano**, hubiera o no diferencia
+real. Presentarlo como prueba de equivalencia invierte el sentido del contraste.
+
+**Corregido en §5.3**, que ahora declara la potencia y afirma lo que corresponde: los datos **no permiten
+distinguir** ambas compilaciones, no que sean iguales. La corrección **no cambia ninguna cifra** ni la
+conclusión práctica —sigue sin haber base para preferir una compilación—, pero sí lo que el texto puede
+sostener si alguien pregunta.
+
+**Por qué importa más de lo que parece.** Es la tercera vez hoy que un contraste del informe resulta estar
+al límite de su potencia: `§F73` con la correlación de trece modelos, `§F74` con la discrepancia entre
+Spearman y Pearson, y ahora este. El patrón sugiere revisar, antes de la defensa, **todo contraste del
+informe cuya conclusión sea un «no significativo»**, porque en un estudio con trece modelos y corpus de entre
+quince y ciento veinte artículos la potencia es sistemáticamente escasa.
