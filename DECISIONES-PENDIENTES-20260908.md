@@ -518,3 +518,29 @@ datos publicados (`FINDINGS §F83`). Sobreviven `llama3.2:latest` con +6,73 pp y
 `nemotron-mini:4b`, que era el de mayor efecto—, pero conviene ir asumiendo que **§5.3.1 no se arregla
 cambiando cifras**: el efecto del RAG sobre el corpus corregido es sustancialmente menor y se apoyará en
 menos modelos. El sentido de la tesis no se invierte; su fuerza sí disminuye.
+
+## 14. El informe no dice si el objetivo 5 se cumplió
+
+**Qué pasa.** El objetivo 5 fija dos umbrales cuantitativos: una reducción de costes del 60–80 % y una tasa
+de alucinaciones **inferior al 5 %**. Buscada esa cifra en todo el informe, **aparece una sola vez, en el
+propio objetivo, y no vuelve a aparecer**. El informe mide la alucinación con detalle —§5.4 da el rango de
+cero a 21,59 % con 28 de 61 grupos por debajo del 1 %— pero **no devuelve veredicto**.
+
+`DEFENSA-PREGUNTAS-Y-RESPUESTAS.md` lo anticipa y lo dice con precisión: «Parcialmente, y el informe da los
+datos para verlo **aunque no lo formule como un sí o un no**». La respuesta preparada es buena: el umbral se
+cumple en las configuraciones que el capítulo 6 propone desplegar y se incumple en los dos modelos más
+pequeños, que el trabajo ya descarta por su F1.
+
+**El problema es de sitio, no de contenido:** eso vive en la preparación de la defensa y no en el informe, y
+un lector del documento solo no puede saber si el objetivo se alcanzó.
+
+| Opción | Qué implica |
+|:---|:---|
+| **a) Añadir una frase de veredicto en §6** | Dos líneas: el umbral se cumple en las configuraciones propuestas y no en los dos modelos más pequeños, ya descartados. Prácticamente neutra en extensión. Es la que recomiendo |
+| b) Dejarlo como está | La respuesta existe y está preparada, pero hay que darla en la sala en lugar de tenerla escrita |
+| c) Reformular el objetivo 5 | Cambiar «demostrar» por «estimar» en la parte de costes y acotar el umbral de alucinación a las configuraciones desplegables. Más honesto de origen, pero toca la introducción, que es lo que un tribunal lee primero |
+
+**Nota sobre el verbo.** Aparte del umbral, el objetivo 5 dice «**demostrar** una reducción de costos del
+60–80 %», y lo que el trabajo aporta es una **estimación** con sus parámetros declarados — algo que el propio
+documento de defensa reconoce al advertir que «presentarlas como medición sería lo indefendible». Si se toca
+el objetivo, conviene tocar el verbo. Ver `FINDINGS §F102`.

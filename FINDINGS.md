@@ -4318,3 +4318,55 @@ en **§L67**, y su parte operativa es corta: **comprometer antes de mutar**, y n
 con un «deshacer». La cuarta mutación, además, estaba mal hecha las dos primeras veces: cambiaba **la primera
 palabra** de cada lista y dejaba las otras veintiséis, de modo que el detector seguía funcionando y la prueba
 daba «ok» — §L59 otra vez, las mutaciones han de ser completas.
+
+## §F102 — Revisión de fondo: los puntos débiles de la argumentación ya están cubiertos, salvo uno
+
+**2026-09-09.** Cerrada la verificación de cifras, quedaba sin mirar lo único del informe que no había
+revisado en toda la sesión: su **argumentación**. Leídos la hipótesis, los cinco objetivos y las
+conclusiones, y contrastados con los resultados, los tres puntos más expuestos son estos —y **dos ya están
+resueltos**, lo que en sí es el resultado de la revisión.
+
+### 1. La hipótesis fija F1 ≥ 70 % y el F1 publicado es 59,25 % — cubierto
+
+La hipótesis promete «desempeño competitivo en español (F1-Score ≥ 70 %)». El **76,55 %** que el informe
+anuncia es la **métrica restringida**, a Personas y Organizaciones; la publicada para el mejor modelo local
+sobre N=120 es **59,25 %** en macro. El informe **lo dice donde lo afirma**: el resumen escribe «restringida
+la medición a las categorías que el corpus anota…» y el Anexo I declara «pasa de … a 76,55 % de F1 y supera
+el umbral de 70 % que fija la hipótesis». Está cualificado, no escondido. Es, con todo, la pregunta más
+probable de la defensa y conviene llegar con la distinción en la punta de la lengua.
+
+### 2. El 60–80 % de reducción de costes — cubierto, y con la limitación declarada
+
+El objetivo 5 dice «**Demostrar** una reducción de costos operativos del 60–80 %», y la conclusión 5 lo
+restituye entre paréntesis tras el 99,4 % del coste unitario. `DEFENSA-PREGUNTAS-Y-RESPUESTAS.md` separa las
+dos magnitudes —99,4 % es coste unitario directo, 60–80 % es coste operativo total— y dice lo que hay que
+decir: que el ahorro total **depende de cuánto reduzca el sistema el volumen que llega a revisión humana**,
+y que eso **este trabajo no lo midió**. La respuesta honesta está preparada.
+
+Queda una aspereza de redacción, no de fondo: el verbo del objetivo es «**demostrar**», y lo que hay es una
+estimación con sus parámetros a la vista. El propio documento de defensa admite que «presentarlas como
+medición sería lo indefendible».
+
+### 3. El umbral del 5 % de alucinación no recibe veredicto en el informe — el residuo real
+
+El objetivo 5 exige además «mantener una tasa de alucinaciones inferior al 5 %». Buscado en todo el informe:
+**esa cifra aparece una sola vez, en el propio objetivo, y no vuelve a aparecer**. El informe mide la
+alucinación con detalle —§5.4 da el rango completo, de cero a 21,59 %, con 28 de 61 grupos por debajo del
+1 %— pero **nunca dice si el objetivo se cumplió**.
+
+`DEFENSA-PREGUNTAS-Y-RESPUESTAS.md` lo anticipa y lo nombra con exactitud: «Parcialmente, y el informe da
+los datos para verlo **aunque no lo formule como un sí o un no**». Y responde bien: el umbral se cumple en
+las configuraciones que el capítulo 6 propone desplegar y se incumple en los dos modelos más pequeños, que
+el trabajo ya descarta por su F1.
+
+**El residuo es que eso vive en la preparación de la defensa y no en el informe.** Un lector del documento
+solo no puede saber si el objetivo 5 se alcanzó. Es una decisión del autor y de extensión casi nula — queda
+como **decisión 14**.
+
+### De paso, una comprobación que salió bien
+
+El documento de defensa cita el máximo de alucinación en **15,61 %** con «21 de 24 grupos por debajo del
+5 %», mientras el informe dice **21,59 %** y «28 de 61 grupos». Parecía una contradicción y no lo es: el
+documento etiqueta esas segundas cifras como **«de la re-corrida sobre el corpus corregido, con doce de los
+trece modelos y por tanto provisionales»**. Las dos poblaciones están declaradas, que es exactamente lo que
+la regla de `CLAUDE.md` sobre corridas múltiples exige.
