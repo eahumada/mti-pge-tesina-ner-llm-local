@@ -104,6 +104,8 @@ FALLOS_DECLARADOS = {
         'PENDIENTE de la pasada de maquetacion, decision 19 del autor: el entregable refleja un estado anterior del Markdown. Insertar lo que falta afecta al limite duro de 25 paginas y no se aplica sin autorizacion expresa. Ver FINDINGS §F126'),
     'le faltan las entradas de bibliografia [38]': ('2026-09-09',
         'PENDIENTE de la pasada de maquetacion, decision 19 del autor: el entregable refleja un estado anterior del Markdown. Insertar lo que falta afecta al limite duro de 25 paginas y no se aplica sin autorizacion expresa. Ver FINDINGS §F126'),
+    'falta la seccion «corridas múltiples': ('2026-09-09',
+        'PENDIENTE de la pasada de maquetacion, decision 19 del autor: al entregable le falta la subseccion ENTERA de las corridas multiples —encabezado, cinco parrafos y la Tabla 20—, que es la declaracion que exige la regla de integridad de CLAUDE.md. Insertarla afecta al limite duro de 25 paginas. Ver FINDINGS §F127'),
     'github.com/eahumada/mti-pge-tesina': ('2026-09-09',
                                            'referencia [37]: el repositorio es privado hasta la '
                                            'purga (SEGURIDAD-CLAVE-GOOGLE-20260908.md)'),
@@ -991,6 +993,88 @@ def c_tablas_y_biblio_docx(s):
     check('las tablas y la bibliografia de los .docx siguen al Markdown', mirados, fallos,
           'las entidades XML se decodifican antes de comparar; sin eso la Tabla 7 sale '
           'divergente siendo identica')
+
+
+# --- 53. Los ENCABEZADOS del entregable siguen a los del Markdown -----------------------------
+def c_encabezados_docx(s):
+    """La ultima pieza de estructura sin comparar, y encontro que falta una subseccion entera.
+
+    Las comprobaciones 51 y 52 cerraron la prosa, las tablas y la bibliografia. Los encabezados
+    quedaban fuera: la 51 solo mira parrafos de mas de 160 caracteres. Y con diez parrafos, una
+    tabla y una referencia ausentes, cabia que faltara una seccion — y falta (`§F127`).
+
+    Tres normalizaciones, las tres necesarias, y las tres se descubrieron dando falsos positivos:
+
+    1. **Los `#` dentro de un bloque de codigo no son encabezados.** Sin esto, tres comentarios de
+       un bloque de ejemplo (`# Modo baseline (sin RAG)`) salian como titulos ausentes.
+    2. **El numero de seccion no esta en el texto del encabezado del `.docx`.** Lo pone la
+       numeracion multinivel de Word, que `CLAUDE.md` advierte que no hay que regenerar. Sin
+       quitarlo del lado del Markdown, los siete capitulos salian como ausentes.
+    3. **La caja no coincide.** El `.docx` titula en otra capitalizacion, de modo que la
+       comparacion va en `casefold`.
+
+    Con las tres, de 69 encabezados quedan **seis** que no aparecen con estilo de encabezado, y
+    **cinco de los seis estan en el cuerpo** con otro estilo —el titulo, «Referencias» y los tres
+    del bloque de codigo—. El sexto falta por completo.
+    """
+    import html as _h
+    import unicodedata as _u
+    import zipfile as _z
+
+    def norm(t):
+        t = _u.normalize('NFC', _h.unescape(t))
+        for a in (' ', ' ', ' '):
+            t = t.replace(a, ' ')
+        return ' '.join(re.sub(r'[`*_#]', '', t).split()).casefold()
+
+    def sin_num(t):
+        return re.sub(r'^\d+(\.\d+)*\.?\s*', '', t).strip()
+
+    # los `#` de dentro de un bloque de codigo no son encabezados
+    md, en_codigo = [], False
+    for l in s.split('\n'):
+        if l.startswith('```'):
+            en_codigo = not en_codigo
+            continue
+        if en_codigo:
+            continue
+        m = re.match(r'^(#{1,4})\s+(.+)$', l)
+        if m:
+            md.append((len(m.group(1)), norm(m.group(2))))
+    if not md:
+        check('los encabezados de los .docx siguen al Markdown', 0,
+              ['no se extrajo ningun encabezado del Markdown'])
+        return
+    fallos, mirados = [], 0
+    for rel in DOCX_ENTREGABLES:
+        base = os.path.basename(rel)
+        ruta = os.path.join(RAIZ, rel)
+        if not os.path.exists(ruta):
+            fallos.append('%s no existe' % base)
+            continue
+        with _z.ZipFile(ruta) as z:
+            x = z.read('word/document.xml').decode('utf-8')
+        dx = []
+        for p in re.findall(r'<w:p[ >].*?</w:p>', x, re.S):
+            e = re.search(r'<w:pStyle w:val="([^"]+)"', p)
+            if not e or 'eading' not in e.group(1):
+                continue
+            t = norm(' '.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', p, re.S)))
+            if t:
+                dx.append(t)
+        conj = set(dx) | {sin_num(t) for t in dx}
+        todo = norm(' '.join(re.findall(r'<w:t(?:\s[^>]*)?>(.*?)</w:t>', x, re.S)))
+        for niv, t in md:
+            mirados += 1
+            if t in conj or sin_num(t) in conj:
+                continue
+            if sin_num(t) in todo:
+                continue          # esta en el cuerpo con otro estilo: no es una ausencia
+            fallos.append('%s: falta la seccion «%s» (H%d), y su texto no esta en ninguna parte'
+                          % (base, t[:62], niv))
+    check('los encabezados de los .docx siguen al Markdown', mirados, fallos,
+          'los # de un bloque de codigo no cuentan, el numero lo pone la numeracion de Word y la '
+          'comparacion va en casefold: sin las tres, 10 falsos positivos')
 
 
 def check(nombre, examinados, fallos, nota=''):
@@ -3961,6 +4045,7 @@ def main():
     ejecutar(c_tabla17, s)
     ejecutar(c_prosa_docx, s)
     ejecutar(c_tablas_y_biblio_docx, s)
+    ejecutar(c_encabezados_docx, s)
     ejecutar(c_tabla4_vs_datos, s)
     ejecutar(c_figura1_vs_artefacto, s)
     ejecutar(c_tablas_menores, s)

@@ -5823,3 +5823,65 @@ cada uno. Los doce fallos —cuatro por fichero— quedan **declarados** a nombr
 el resto de `§F121`; cualquier divergencia nueva corta.
 
 **Estado del verificador:** 52 comprobaciones, 52 fallos (52 declarados, **0 nuevos**), 0 vacías.
+
+---
+
+## §F127 — No eran piezas dispersas: al entregable le falta una subsección entera de §5
+
+**Fecha:** 2026-09-09 · **Origen:** comparar la última pieza de estructura que quedaba sin comparar
+
+Las comprobaciones 51 y 52 cerraron la prosa, las tablas y la bibliografía del entregable. Los
+**encabezados** quedaban fuera, porque la 51 solo mira párrafos de más de 160 caracteres. Con diez
+párrafos, una tabla y una referencia ausentes, cabía que faltara una sección. **Falta una.**
+
+De los **69 encabezados** del Markdown, seis no aparecen con estilo de encabezado en el `.docx` y
+**cinco de los seis están en el cuerpo** con otro estilo. El sexto no está en ninguna parte:
+
+> `#### Corridas múltiples del mismo modelo, y cuál se toma como referencia`
+
+Y su cuerpo es, literalmente, el bloque que [§F121](#f121) y [§F126](#f126) fueron encontrando por
+partes: «Cuatro de los trece modelos se midieron **más de una vez** sobre el corpus N=120 […] **La
+Tabla 20 las recoge todas.** Conviene separar dos situaciones que no son la misma…».
+
+### El inventario, cerrado y mejor planteado
+
+Lo que le falta al entregable no son diez párrafos sueltos, una tabla huérfana y una referencia
+perdida. Es **una subsección de §5, completa**:
+
+| Pieza | Estado en el entregable |
+|:---|:---|
+| El encabezado `#### Corridas múltiples del mismo modelo…` | ausente |
+| Sus cinco párrafos | ausentes |
+| La Tabla 20, «Grupos con más de una corrida sobre N=120…» | ausente |
+
+Y aparte, cinco párrafos de declaraciones de límites del planteamiento, la referencia [38] con sus
+cuatro citas, tres filas de la Tabla 9, una celda de la Tabla 3 y la frase de Friedman de
+[§F120](#f120).
+
+**Decirlo así cambia la decisión 19**, y a mejor: «insertar la subsección que falta» es una
+operación acotada, con un sitio evidente donde va —justo después de la tabla a cuya columna
+«Corrida» se refiere— y con un criterio claro de prioridad si el espacio aprieta. «Diez párrafos, una
+tabla y una referencia» sonaba a diez decisiones y era una.
+
+### Tres normalizaciones, y las tres salieron de falsos positivos propios
+
+La primera versión de la comparación reportó **doce** encabezados ausentes, entre ellos los siete
+capítulos del informe. Un `.docx` de tesina sin capítulos es imposible, así que el defecto era mío,
+y hubo tres:
+
+1. **Los `#` de dentro de un bloque de código no son encabezados.** Tres comentarios de un bloque de
+   ejemplo —`# Modo baseline (sin RAG)` y sus dos hermanos— salían como títulos ausentes.
+2. **El número de sección no está en el texto del encabezado del `.docx`.** Lo pone la numeración
+   multinivel de Word, la que `CLAUDE.md` advierte que no hay que regenerar. Sin quitarlo del lado
+   del Markdown, los siete capítulos salían ausentes.
+3. **La caja no coincide**, de modo que la comparación va en `casefold`.
+
+Con las tres, de doce falsos positivos quedan cero y una ausencia real. Es el tercer aviso del día
+—después de sobrestimar en `§F121` y de la entidad `&lt;` de `§F126`— de que **una divergencia
+detectada hay que confirmarla antes de contarla**, y las tres veces el error estuvo en la
+comparación y no en el documento.
+
+**Comprobación 53**, 198 elementos: los 69 encabezados por los tres entregables. Los tres fallos
+—uno por fichero— quedan declarados con el resto de la decisión 19.
+
+**Estado del verificador:** 53 comprobaciones, 55 fallos (55 declarados, **0 nuevos**), 0 vacías.
