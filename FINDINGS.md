@@ -7229,3 +7229,66 @@ el registro de hallazgos, y no en un artefacto del estudio.
 copió a seis sitios y el artefacto se regeneró dos veces el mismo día. La defensa no es acordarse de
 actualizarlos, sino **que el documento remita al artefacto en lugar de repetirlo**, que es lo que
 ahora dicen las tres notas.
+
+---
+
+## §F150 — Auditados los 218 commits del día: no se perdió nada, y ahora la comprobación es mecánica
+
+**Fecha:** 2026-09-09 · **Origen:** la instrucción permanente del autor de «revisar que no se pierda
+información», que hasta hoy se cumplía a ojo
+
+La política del proyecto es **estrictamente aditiva** para la documentación. Pero «aditiva» no
+significa que ninguna línea cambie nunca: un título se corrige, un recuento mantenido a mano se
+retira, un estado de tarea avanza. Lo que no puede pasar es que una afirmación, una fila de datos o
+una entrada del registro **desaparezca sin dejar rastro**. Hasta hoy nadie comprobaba cuál de las dos
+cosas ocurría.
+
+### El resultado sobre los 218 commits de la jornada
+
+| | |
+|:---|---:|
+| Commits examinados | **218** |
+| Documentos aditivos vigilados | 7 |
+| Líneas borradas con contenido | **82** |
+| Clasificadas como legítimas de forma automática | **66** |
+| Que requerían juicio humano | **16** |
+| **Pérdidas reales** | **0** |
+
+Los 16 se reparten en **ocho commits, y los ocho son correcciones de una afirmación que resultó
+falsa**: el recuento de tablas descriptivas que eran diez y no nueve, el rango de BloombergGPT que
+pasó de «no verificado» a verificado, mi propia frase sobre `mistral-nemo` que decía «pierde el signo
+negativo» cuando eso solo vale para la mediana, la distinción entre el respaldo que atestigua y el
+espejo rodante, y la rectificación de la decisión 17. **Ninguno retira información: sustituye un
+enunciado erróneo por el correcto.**
+
+### Las tres comprobaciones puntuales que más importaban
+
+- **`§F106`** conserva su título original **tachado**, con la rectificación al lado. La afirmación
+  falsa sigue legible, que es como este proyecto rectifica.
+- **La fila `§1.188`** del registro de `CURRENT-TASKS`, que el `diff` mostraba borrada, está
+  **reescrita en el sitio** en el mismo commit.
+- **`F28`, `F32` y `F33`** siguen presentes; lo que cambió fueron sus títulos.
+
+Y los dos únicos ficheros rastreados de cero bytes son los **declarados** por decisión del autor.
+
+### La herramienta, y las dos veces que estuvo mal antes de estar bien
+
+`tools/auditar_borrados.py` clasifica cada línea borrada en tres categorías legítimas —reescritura en
+el sitio, texto que sigue vivo, rectificación conservada con tachado— y saca el resto para que lo
+mire una persona.
+
+Y hubo que corregirla dos veces, las dos por ser **demasiado estrecha**:
+
+1. **Buscaba el texto solo en su propio fichero.** Un párrafo que se muda no se ha perdido: las tres
+   opciones de la decisión 8 salieron de `DECISIONES-PENDIENTES` y entraron en `FINDINGS` cuando la
+   decisión se reformuló, porque el evaluador ya estaba corregido. Ampliada al **corpus completo** de
+   documentos aditivos.
+2. **Comparaba línea contra línea.** Estos documentos van con salto de línea duro a cien columnas, de
+   modo que reescribir un párrafo reflowea todas sus líneas y **ninguna casa una a una**. Añadida una
+   comparación por **cobertura de palabras distintivas contra lo que el mismo commit añadió**, que es
+   la granularidad correcta. Bajó de 23 a 16.
+
+**Lo que la herramienta no puede hacer, y lo dice al ejecutarse:** distinguir «corrigió una
+afirmación falsa» de «perdió información» exige leer, y eso es juicio humano. Lo que sí hace es
+reducir 82 líneas a 16 y dar el commit de cada una. Una herramienta que prometiera el juicio estaría
+mintiendo; ésta promete el cribado.

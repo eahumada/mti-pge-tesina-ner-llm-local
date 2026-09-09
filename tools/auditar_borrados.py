@@ -12,8 +12,11 @@ de commits, comprueba si se da alguna de estas tres circunstancias, que son borr
 
   1. **Reescritura en el sitio.** El mismo commit anade una linea muy parecida. Es el caso de una
      correccion de redaccion o de un estado de tarea que avanza.
-  2. **Sigue viva.** El texto borrado esta hoy en el fichero, en otro sitio. Es el caso de un
-     parrafo que se movio de seccion.
+  2. **Sigue vivo.** El texto borrado esta hoy en **alguno** de los documentos aditivos, no
+     necesariamente en el suyo. Es el caso, real y frecuente en este proyecto, de un parrafo que se
+     movio de sitio: la decision 8 se reformulo el 2026-09-09 porque el evaluador ya estaba
+     corregido, y sus tres opciones salieron de `DECISIONES-PENDIENTES` y entraron en `FINDINGS`.
+     Buscarlo solo en su propio fichero da veintitres falsos positivos.
   3. **Conservada tachada.** El texto esta hoy en el fichero dentro de un tachado `~~...~~`, que es
      como este proyecto rectifica sin borrar: `§F106` conserva asi su titulo original.
 
@@ -43,6 +46,7 @@ ADITIVOS = (
 
 MIN_LONG = 25          # una linea mas corta que esto no afirma nada por si sola
 UMBRAL_PARECIDO = 0.55  # por encima de esto, se considera reescritura en el sitio
+COBERTURA = 0.70        # fraccion de palabras distintivas que basta para ser un reflow
 
 
 def _parecido(a, b):
@@ -75,12 +79,17 @@ def main():
     examinadas = 0
     ficheros = 0
 
+    # El corpus vivo son TODOS los documentos aditivos juntos: un parrafo que se movio de fichero
+    # no se ha perdido. Buscarlo solo en el suyo confunde una mudanza con un borrado.
+    corpus = _norm(' '.join(open(x, encoding='utf-8').read()
+                            for x in ADITIVOS if os.path.exists(x)))
+
     for f in ADITIVOS:
         if not os.path.exists(f):
             continue
         ficheros += 1
         vivo = open(f, encoding='utf-8').read()
-        vivo_n = _norm(vivo)
+        vivo_n = corpus
         salida = subprocess.run(
             ['git', 'log', '--since', desde, '-p', '--format=COMMIT %h %s', '--', f],
             capture_output=True, text=True).stdout
@@ -94,8 +103,16 @@ def main():
                 if len(nb) < MIN_LONG:
                     continue
                 globals()['_EX'] = globals().get('_EX', 0) + 1
-                # 1. reescritura en el sitio
+                # 1. reescritura en el sitio, linea contra linea
                 if any(_parecido(nb, _norm(a)) >= UMBRAL_PARECIDO for a in anadidas):
+                    continue
+                # 1.bis. reescritura del PARRAFO. Estos documentos van con salto de linea duro a 100
+                # columnas, de modo que reescribir un parrafo reflowea todas sus lineas y ninguna
+                # casa una a una. La comprobacion correcta es si las palabras distintivas de la
+                # linea borrada estan en lo que ese mismo commit anadio.
+                blob = _norm(' '.join(anadidas))
+                pal = [w for w in nb.split() if len(w) > 4]
+                if pal and sum(1 for w in pal if w in blob) / len(pal) >= COBERTURA:
                     continue
                 # 2. sigue viva hoy
                 if nb in vivo_n:
@@ -134,7 +151,10 @@ def main():
         return 0
 
     print()
-    print('  %d posible(s) perdida(s), que hay que mirar una a una:' % len(sospechas))
+    print('  %d borrado(s) que NO son reescritura ni siguen vivos. No son necesariamente'
+        ' una perdida:' % len(sospechas))
+    print('  una afirmacion que resulto falsa se corrige reescribiendola, y eso aparece aqui.')
+    print('  Lo que la herramienta puede decir es cuales hay que mirar; el juicio es humano.')
     for f, c, b in sospechas[:40]:
         print('    %s  [%s]' % (f, c[:70]))
         print('      - %s' % b.strip()[:150])
