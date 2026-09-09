@@ -29,6 +29,30 @@ RELEVANTE=$(printf '%s\n' "$TOCADOS" | grep -E \
   '^(doc/organized/Hito_5_Tarea4_Informe_Final/.*\.md|tools/.*\.py|repos/ner-llm-entity-benchmark/results/.*)$' \
   || true)
 
+# La auditoria de afirmaciones se ejecuta ademas cuando el commit toca el REGISTRO o los
+# ENTREGABLES, aunque no toque el informe. Es el frente que el fallo del 2026-09-10 destapo: una
+# edicion que falla y su registro que si se compromete, dejando un documento que afirma una
+# correccion que nadie aplico. El momento en que eso se colaba es exactamente este.
+REGISTRO=$(printf '%s\n' "$TOCADOS" | grep -E \
+  '^(FINDINGS\.md|LEARNING\.md|CURRENT-TASKS\.md|DEFENSA-PREGUNTAS-Y-RESPUESTAS\.md|DECISIONES-PENDIENTES-.*\.md|.*\.docx)$' \
+  || true)
+
+if [ -n "$REGISTRO" ] || [ -n "$RELEVANTE" ]; then
+  echo "  auditando que el registro no afirme correcciones sin aplicar..."
+  if python3 tools/auditar_afirmaciones.py > /tmp/auditar_afirmaciones.salida 2>&1; then
+    tail -1 /tmp/auditar_afirmaciones.salida | sed 's/^/  /'
+  else
+    echo
+    echo "  ══ el commit se detiene: el registro afirma algo que el fichero no dice ══"
+    echo
+    grep -E '\*\* NO \*\*|^      ' /tmp/auditar_afirmaciones.salida | sed 's/^/  /' || true
+    echo
+    echo "  O el entregable no esta como el registro dice, o el registro esta mal."
+    echo "  Salida completa: /tmp/auditar_afirmaciones.salida · ver LEARNING §L70"
+    exit 1
+  fi
+fi
+
 if [ -z "$RELEVANTE" ]; then
   exit 0
 fi
