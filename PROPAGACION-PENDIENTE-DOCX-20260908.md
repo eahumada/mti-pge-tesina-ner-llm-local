@@ -116,6 +116,36 @@ documento de propagación fechado envejece con cada commit al Markdown, y que ha
 que tocaron la fuente **después** de su última actualización antes de darlo por completo. La orden es
 `git log <sha-de-este-documento>..HEAD -- <ruta-del-md>`.
 
+## Cómo comprobar que la propagación se hizo de verdad
+
+Medido el 2026-09-09 comparando el Markdown con el `.docx` canónico. **El recuento de palabras no sirve** para
+esto —el Markdown incluye sintaxis de tablas y bloques de código, de modo que sus 22 995 palabras no son
+comparables con las 16 776 del `.docx`—. Lo que sí sirve es buscar **términos que solo existen en las
+correcciones pendientes**:
+
+| Término | En el `.md` | En el `.docx` hoy | Qué corrección acredita |
+|:---|---:|---:|:---|
+| `Spearman` | 2 | **0** | Los dos coeficientes de correlación de §5.3.1 (`§F74`) |
+| `Friedman` | 1 | **0** | El contraste de medidas repetidas de §5.3.1 (`§F75`, `§F77.bis`) |
+| `reloj de pared` | 2 | **0** | La definición corregida de la latencia en §4.4 (`§F71.ter`) |
+| `Corridas múltiples` | 1 | **0** | La sección nueva del Anexo I con la Tabla 20 |
+| `emparejamiento` | 6 | 3 | Las precisiones sobre el umbral y el cotejo difuso |
+| `potencia` | 9 | 7 | La potencia declarada de los contrastes (`§F77`) |
+
+**Cuatro de los seis están a cero**, lo que confirma que ninguna de esas correcciones ha llegado. Y da la
+comprobación posterior: **tras propagar, los seis recuentos deben coincidir**. Es una orden de una línea y no
+depende de contar commits, que es lo que envejece.
+
+```sh
+python3 - <<'EOF'
+import zipfile, re, pathlib
+md = pathlib.Path('doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.md').read_text(encoding='utf-8')
+dx = re.sub(r'<[^>]+>', '', zipfile.ZipFile('Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.docx').read('word/document.xml').decode('utf8','replace'))
+for k in ('Spearman','Friedman','reloj de pared','Corridas múltiples','emparejamiento','potencia'):
+    print(f'{k:20} md={md.count(k):2} docx={dx.count(k):2} {"ok" if md.count(k)==dx.count(k) else "FALTA"}')
+EOF
+```
+
 ## Después de propagar
 
 1. `python3 tools/verificar_informe.py` sobre el Markdown, que debe seguir en cero fallos.
