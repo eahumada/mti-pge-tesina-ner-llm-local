@@ -29,7 +29,12 @@ ones**». **Falso** sobre el corpus corregido: los cinco mayores mejoran. Y las 
 artefacto de `§F85`.
 
 Recordatorio de norma: resumen y abstract se corrigen **en el mismo commit** y deben decir exactamente lo
-mismo. Cada uno tiene un tope de 200 palabras, de modo que la sustitución ha de ser neutra en extensión.
+mismo. Cada uno tiene un tope de 200 palabras.
+
+**Y el margen es cero, medido el 2026-09-09.** El resumen en español tiene **exactamente 200 palabras** y el
+abstract **189**. No hay sitio para añadir una salvedad: la frase que sustituya a «es nulo o adverso en los
+mayores» tiene que ocupar **lo mismo o menos**, y la del abstract dispone de once palabras de holgura, que
+tampoco permiten decir más en inglés que en español sin romper la sincronía que la norma exige.
 
 ### 2. §5.3.1 — el hallazgo central
 

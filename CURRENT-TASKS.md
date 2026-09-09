@@ -75,6 +75,19 @@ Para **cada tarea** que ejecutes:
 - **ANOVA:** no requiere recálculo; los valores no se movieron.
 
 ### 1.4 ▶️ EN CURSO — Revisión del informe pedida por el profesor guía (2026-09-07)
+
+> **Lo que queda cambió por completo el 2026-09-09, y esta entrada era del día 7.** Lo de abajo describe la
+> respuesta a los cuatro reparos del profesor, que sigue siendo correcta. Pero la re-corrida completa
+> **desmiente la tesis central tal como está escrita** (`FINDINGS §F86`), de modo que a esta tarea se le
+> añade reescribir **§5.3.1, §6, el resumen y el abstract**, con el detalle en
+> `INVENTARIO-AFECTADO-POR-F86-20260909.md` y la decisión de fondo en la **11**.
+>
+> Dos restricciones medidas hoy, para que nadie las descubra a mitad: el resumen está en **exactamente 200
+> palabras** —el tope— y el abstract en 189, de modo que la corrección **no puede añadir texto en español**;
+> y el cuerpo va por **23,0 de 25 páginas**.
+>
+> Y hay que **esperar a `§F85`**: el punto que más pesa en el análisis arrastra diecisiete ceros de un
+> `TypeError` y sus cifras van a moverse.
 - **Origen:** correo del profesor guía con cuatro reparos: bloques en blanco y saltos de página, ficha del
   estudiante en portada, poco desarrollo general y marco conceptual pobre sin comparación de alternativas.
 - **Hecho en el `.md` canónico:** cabecera conforme a plantilla (ficha fuera) · 12 separadores eliminados ·
@@ -1517,3 +1530,4 @@ corpus.**
 | 2026-09-09 09:0x | Claude Code (equipo principal) | ✅ §1.137: **investigada una cifra que bajó sin causa aparente, y era buena noticia.** La verificación con `--red` daba «acreditadas por resolución del DOI: **3**» cuando la víspera eran 4. Causa: **Zenodo ha vuelto a responder** —la entrada [18] da HTTP 200 y aterriza en `zenodo.org/records/14027005`—, de modo que se verifica por la vía normal y ya no necesita acreditación. El 403 que documenta `§F80` era real cuando se midió, a las 23:0x del día 8. Actualizado el hallazgo, conservando `zenodo.org` entre los porteros porque solo actúa ante 401 o 403 y el episodio puede repetirse. **Sigue fallando solo [37]**, el repositorio privado, que debe seguir así |
 | 2026-09-09 09:1x | Claude Code (equipo principal) | ✅ §1.138: **la alerta de `nemotron` no estaba donde el equipo la lee.** Se menciona nueve veces en este documento pero **cero dentro de §3.bis**, que es su sección y la que su protocolo les manda consultar. Añadida como **§3.bis.15** con el encargo resumido: la causa en `llm_runner.py:167`, por qué solo falla la línea base, el efecto sobre su Δ, los cuatro pasos por orden —arreglar, re-ejecutar solo ese brazo, rehacer el consolidado **después**, y comprobar `failed=0` antes de declarar válida una corrida— y **el alcance comprobado**, para que no rehagan de más: es un brazo, de un modelo, de un corpus |
 | 2026-09-09 09:2x | Claude Code (equipo principal) | ✅ §1.139: **tres tareas del equipo remoto seguían anunciándose como abiertas en su encabezado y cerradas en su cuerpo.** La `3.bis.0` decía **🔴 URGENTE** y la `3.bis.8` y la `3.bis.10` **▶️ EN CURSO**, mientras sus propios textos llevaban desde el 2026-09-07 una nota «✅ Cerrada». Quien recorre una lista de tareas lee encabezados, de modo que el equipo veía tres urgencias falsas justo cuando la única real es la `3.bis.15`. Alineados los tres encabezados con lo que su cuerpo ya declaraba, **conservando entre paréntesis el estado anterior** para no borrar el rastro. Queda `3.bis.2` como parcial, y es sobre modelos que el estudio ya excluyó |
+| 2026-09-09 09:3x | Claude Code (equipo principal) | ✅ §1.140: **actualizada la tarea `1.4`, que describía lo hecho el día 7 y no lo que la re-corrida ha añadido.** Sigue abierta con razón, pero ahora declara que se le suma reescribir **§5.3.1, §6, el resumen y el abstract**. Y **dos restricciones medidas hoy**, para que no se descubran a mitad: el resumen está en **exactamente 200 palabras** —el tope— y el abstract en 189, de modo que **la corrección no puede añadir texto en español**; y el cuerpo va por 23,0 de 25 páginas. El «201 palabras» que la entrada mencionaba era histórico: el verificador confirma que ambos están dentro |
