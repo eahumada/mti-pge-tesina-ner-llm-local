@@ -1262,7 +1262,7 @@ def c_fuentes_de_los_grupos(_s):
 
 
 def c_titulares(s):
-    """Las dos cifras que el resumen y el abstract ponen en primera linea, atadas a su corrida.
+    """Las cifras titulares, atadas a su corrida: las dos del resumen y la de la soberania.
 
     «El mejor modelo local alcanza **76,55 %** de F1 en espanol y **90,16 %** en el dominio.» Son
     las cifras con las que se abre el trabajo y **no las cubria ninguna comprobacion**: la primera
@@ -1286,10 +1286,21 @@ def c_titulares(s):
                 if 'gemma4:31b-mlx_baseline' in src.get('models', []):
                     dir_n120 = os.path.dirname(src['csv_path'])
                     break
+    dir_cloud = None
+    if os.path.exists(MANIFIESTO):
+        with open(MANIFIESTO, encoding='utf-8') as fh:
+            for src in _json.load(fh)['sources']:
+                if 'gemma4:31b-cloud_baseline' in src.get('models', []):
+                    dir_cloud = os.path.dirname(src['csv_path'])
+                    break
     CASOS = (('76,55', r'76[.,]55', dir_n120, 'gemma4:31b-mlx_baseline',
               None, 'F1 en espanol sobre N=120'),
              ('90,16', r'90[.,]16', 'results/n30_rerun_REMOTO', 'gemma4:31b-mlx',
-              None, 'F1 sobre el corpus del dominio'))
+              None, 'F1 sobre el corpus del dominio'),
+             # La cifra que sostiene la conclusion de soberania: la variante alojada frente al mejor
+             # local, ambas con la medicion restringida. §6 y §7.1 la citan tres veces.
+             ('80,42', r'80[.,]42', dir_cloud, 'gemma4:31b-cloud_baseline',
+              None, 'F1 de la variante alojada sobre N=120'))
     fallos, mirados = [], 0
     for etiq, patron, rel, grupo, _x, desc in CASOS:
         mirados += 1
@@ -1325,7 +1336,7 @@ def c_titulares(s):
         mirados += 1
         if not re.search(patron, s):
             fallos.append('el informe ya no cita el %s %% (%s)' % (etiq, desc))
-    check('las dos cifras titulares del resumen reproducen desde su corrida', mirados, fallos,
+    check('las cifras titulares del resumen y de la soberania reproducen', mirados, fallos,
           'metrica restringida a Personas y Organizaciones; el 76,55 va sobre 120 registros, no 113')
 
 
