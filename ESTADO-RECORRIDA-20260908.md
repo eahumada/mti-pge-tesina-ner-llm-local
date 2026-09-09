@@ -1,6 +1,6 @@
 # Estado de la re-corrida completa
 
-**Actualizado: 2026-09-08 20:52.** Regenerar con `python3 tools/estado_recorrida.py`; no editar a mano.
+**Actualizado: 2026-09-08 21:15.** Regenerar con `python3 tools/estado_recorrida.py`; no editar a mano.
 
 Todas las corridas listadas han pasado las cinco verificaciones del protocolo —cero
 `parse_method='failed'`, cero violaciones de `F1 ≤ (P+R)/2`, cero rechazos de infraestructura— y
@@ -20,13 +20,13 @@ descuentan (`FINDINGS §F65`).
 | `qwen2.5:14b` | 50.22 / 54.84 | **69.61 / 70.31** | +4.62 | +0.69 | igual |
 | `llama3.1:8b` | 48.76 / 50.75 | **69.17 / 71.48** | +1.99 | +2.31 | igual |
 | `qwen3:8b` | 48.21 / 51.46 | **69.03 / 68.98** | +3.25 | -0.05 | **cambia** |
-| `gemma:latest` | 44.00 / 51.36 | *pendiente* | +7.36 | — | — |
+| `gemma:latest` | 44.00 / 51.36 | **59.55 / 59.58** | +7.36 | +0.03 | igual |
 | `mistral-nemo:latest` | 43.38 / 45.76 | *pendiente* | +2.38 | — | — |
 | `llama3.2:latest` | 36.11 / 46.93 | *pendiente* | +10.82 | — | — |
 | `deepseek-r1:1.5b` | 24.83 / 23.94 | *pendiente* | -0.89 | — | — |
 | `nemotron-mini:4b` | 22.59 / 37.12 | *pendiente* | +14.53 | — | — |
 
-**7 de 13 modelos** rehechos en N=120. **4 cambian el signo** del efecto del RAG.
+**8 de 13 modelos** rehechos en N=120. **4 cambian el signo** del efecto del RAG.
 
 ## N=30 y N=15
 
@@ -39,6 +39,7 @@ descuentan (`FINDINGS §F65`).
 | `qwen2.5:14b` | 84.46 / 86.62 | 68.41 / 70.00 |
 | `llama3.1:8b` | 80.96 / 82.67 | 68.60 / 73.34 |
 | `qwen3:8b` | 76.85 / 79.97 | 67.68 / 73.04 |
+| `gemma:latest` | 80.08 / 77.15 | 65.72 / 68.88 |
 
 ## Avance del barrido
 
@@ -82,6 +83,12 @@ de 48 GB:
 [20:46:22] START qwen3:8b N15
 [20:49:57] END   qwen3:8b N15 rc=0
 [20:49:57] START gemma:latest N120
+[21:07:18] END   gemma:latest N120 rc=0
+[21:07:18] START gemma:latest N30
+[21:09:33] END   gemma:latest N30 rc=0
+[21:09:33] START gemma:latest N15
+[21:13:16] END   gemma:latest N15 rc=0
+[21:13:16] START gpt-oss:20b N120
 ```
 
 ## Salvedades vigentes

@@ -2355,3 +2355,32 @@ las cifras del texto y de la figura al artefacto y **falla si el informe deja de
 
 **Coste en extensión.** El cuerpo pasa de 14 842 a 16 636 palabras desde la versión entregada, unas **22,6
 páginas** estimadas sobre el límite de 25. Quedan unas 1 600 palabras de margen.
+
+### §F73.bis — Con ocho modelos: la hipótesis gana apoyo, y una correlación espectacular resulta ser un artefacto
+
+**2026-09-08, 21:18.** `gemma:latest` completa el octavo modelo y permite repetir las pruebas de `§F73`.
+
+**Lo que mejora.** La correlación entre el desequilibrio de falsos positivos de localización y el cambio del
+efecto pasa de `ρ = −0,531 (p = 0,220)` con siete modelos a **`ρ = −0,738 (p = 0,0366)`** con ocho: **cruza el
+umbral convencional**. Pearson sigue sin alcanzarlo (`r = −0,620`, `p = 0,101`), de modo que persiste la
+discrepancia entre coeficientes que ya se documentó en `§F74`. Con ocho observaciones ninguna de las dos
+lecturas es concluyente, pero la dirección se sostiene y el apoyo aumenta.
+
+**Lo que hay que descartar, y es lo más importante de esta entrada.** Al medir también la relación entre el
+Δ publicado de cada modelo y cuánto cambia, sale `ρ = −1,000` con `p ≈ 0` y `r = −0,970`. Es un resultado
+espectacular y **no significa nada**: es un artefacto de construcción.
+
+El motivo es aritmético. El cambio se define como `Δ_nuevo − Δ_viejo`, de modo que correlacionar `Δ_viejo`
+con el cambio es casi correlacionar `Δ_viejo` con `−Δ_viejo`. Solo deja de serlo si `Δ_nuevo` varía tanto
+como `Δ_viejo`, y aquí no: el rango del publicado es **8,53** puntos y el de la re-corrida **2,58**.
+
+**Comprobado por simulación**, que es lo que convierte la sospecha en certeza. Sustituyendo `Δ_nuevo` por
+ruido uniforme con la misma dispersión y repitiendo dos mil veces, la `ρ` mediana sale **−0,952**, con el
+intervalo del 5 al 95 % entre **−1,000 y −0,881**. Es decir: **un valor muy negativo es exactamente lo que
+cabe esperar aunque los datos no tengan ninguna estructura**. El −1,000 observado no distingue una hipótesis
+de otra.
+
+**Queda escrito para que nadie lo publique**, empezando por quien esto redacta dentro de un mes. Una
+correlación de −1,000 con p ≈ 0 sobre trece modelos sería una cifra muy citable en el capítulo de resultados,
+y sería falsa. La regla general: **antes de celebrar una correlación, comprobar si una de las dos variables
+contiene a la otra**.
