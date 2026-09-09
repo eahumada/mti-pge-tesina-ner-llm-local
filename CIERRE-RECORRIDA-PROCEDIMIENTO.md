@@ -209,11 +209,28 @@ mal no da ningún síntoma hasta que hace falta.
 python3 tools/verificar_informe.py --red
 ```
 
-Las veinte comprobaciones deben quedar en cero fallos. Las que atan tablas y figuras a los datos **fallarán
-mientras el informe esté desactualizado**, y eso es lo que se busca: sirven de lista de tareas.
+**Lo que hay que leer es la última línea**, que separa lo conocido de lo nuevo:
 
-Los dos avisos vigentes se retiran de `verificar_informe.py` cuando dejen de aplicar: la asimetría de
-`max_tokens`, que la re-corrida resuelve, y los dos JSON rotos, si se reparan.
+```
+30 comprobaciones · 5 fallos (5 declarados, **0 nuevos**) · 0 vacías
+```
+
+**Cero fallos nuevos y cero vacías** es la condición de cierre. Las comprobaciones que atan tablas y figuras
+a los datos **fallarán mientras el informe esté desactualizado**, y eso es lo que se busca: sirven de lista de
+tareas. Aparecerán como **nuevas** hasta que se corrija el informe.
+
+Los **fallos declarados** están en la tabla `FALLOS_DECLARADOS` de `verificar_informe.py`, cada uno con su
+motivo y con quién lo tiene. **Al cerrar hay que podarla**, y varias entradas dejarán de aplicar:
+
+- los dos ficheros de registro vacíos, si el autor decide retirarlos;
+- el par de cifras de la conclusión 1, cuando se resuelva la **decisión 13**;
+- la referencia [37], cuando se complete la purga y el repositorio pueda hacerse público.
+
+Lo mismo con los dos **avisos** de `DIVERGENCIAS_DECLARADAS`: la asimetría de `max_tokens`, que la re-corrida
+resuelve fijando 4096 en las trece corridas, y los dos JSON rotos, si se reparan.
+
+**Una lista de excepciones que nadie poda acaba silenciando defectos de verdad**, y el código de salida
+depende de ella: con `--estricto` cualquier fallo corta, y sin la bandera solo cortan los nuevos.
 
 ---
 
