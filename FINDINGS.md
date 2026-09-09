@@ -6587,3 +6587,53 @@ están en el repositorio.
 Lo que cuesta: recalcular las cifras del capítulo de resultados en micro, y una redacción honesta de
 la regla de decisión y de los cuatro recuentos. Es trabajo de una tarde, no de una semana, y hay que
 decidirlo junto con la **decisión 1** —qué consolidado— porque las cifras dependen de ella.
+
+---
+
+## §F140 — Las «23,0 páginas» eran del Markdown, no del entregable, y eso afloja la decisión 19
+
+**Fecha:** 2026-09-09 · **Origen:** la puerta de factibilidad del workflow de propagación
+
+Toda la sesión he tratado el «23,0 de 25» como el recuento de páginas del **entregable**, y con esa
+cifra advertí repetidamente de que insertar 1 500 palabras podía no caber. La puerta de factibilidad
+del workflow lo puso en duda y **tenía razón**.
+
+**La comprobación del límite estima sobre el Markdown, no sobre el `.docx`.** Verificado leyendo
+`c_extension`: llama a `texto()`, que devuelve el Markdown canónico, y estima con
+`PAGINAS_ENTREGADO + (cuerpo − CUERPO_ENTREGADO) / DENSIDAD`, anclada a **14 842 palabras igual a 20
+páginas contadas sobre el PDF entregado al profesor guía**. Es una estimación honesta y bien
+anclada — de lo que ocuparía **el Markdown**.
+
+**Y el `.docx` es más corto que el Markdown precisamente porque le falta este contenido.** Es obvio
+en cuanto se dice: al entregable le faltan diez párrafos, una tabla, una referencia y dos figuras
+([§F127](#f127)), de modo que **no puede tener las mismas páginas que la fuente**.
+
+| | Palabras de cuerpo | Páginas |
+|:---|---:|---:|
+| PDF entregado, el ancla medida | 14 842 | **20** |
+| Markdown de hoy | 16 753 | **≈22,8** |
+| `.docx` de hoy, al que le falta el contenido | por debajo | por debajo |
+
+**Insertar lo que falta lleva el entregable hacia esas ≈23 páginas, no por encima de 25.** El
+límite de 25 páginas **deja de ser el motivo** para no hacer la decisión 19.
+
+La puerta refinó más —≈21,2 páginas con las seis piezas, porque de las 1 547 palabras solo unas 485
+caen en el cuerpo y el resto en los **anexos**, que el límite excluye—, y **esa segunda cifra no la
+he verificado por mi cuenta**: lo digo porque la diferencia entre lo comprobado y lo aceptado
+importa. La conclusión operativa no depende de ella.
+
+**Qué se corrige.** El encargo a Claude Desktop decía «el verificador lo estima hoy en 23,0» junto a
+la instrucción de parar si no cabía, y la decisión 19 decía «con 23,0 usadas» como argumento para no
+hacerla. Los dos corregidos, con la aritmética y con lo que no verifiqué marcado como tal.
+
+**Y una comprobación fallida propia, que dejo escrita.** Intenté verificar el recuento del `.docx`
+contando palabras hasta la palabra «Anexos» en su texto extraído, y me dio **497**. No es que el
+`.docx` tenga 497 palabras de cuerpo: es que «Anexos» aparece antes **en el índice de contenidos**,
+de modo que mi ancla cortaba en el sitio equivocado. Mi comprobación quedó **inconcluyente, no
+contradictoria**, y decirlo así es distinto de decir que verifiqué la cifra. Es la misma lección de
+las cuatro mutaciones fallidas: **un ensayo mal armado no refuta ni confirma**.
+
+**La lección general, que es la que vale.** Una cifra correcta sobre el artefacto equivocado hace más
+daño que una cifra mal calculada, porque no hay nada que detecte el error: los 23,05 son exactos para
+lo que miden. La pregunta que faltaba no era «¿está bien calculado?» sino **«¿de qué artefacto habla?»**.
+Y la respuesta cambió una decisión: de «probablemente no cabe» a «cabe con margen».

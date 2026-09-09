@@ -823,8 +823,17 @@ que descubra las corridas múltiples por su cuenta no encuentra en el documento 
 como constatación y no como supuesto, la dificultad de medición, los dos rasgos del problema, las
 tres advertencias de lectura— y la versión canónica de la frase del efecto diferencial.
 
-**Por qué no está hecho.** Son unas **1 500 palabras** y el cuerpo tiene un límite duro de **25
-páginas** con 23,0 usadas. `CLAUDE.md` reserva a la autorización expresa del autor cualquier
+**Por qué no está hecho, y la restricción afloja.** Son unas **1 500 palabras**, y aquí decía «con
+23,0 usadas». **Eso no era el entregable.** La comprobación del límite estima sobre el **Markdown**,
+anclada a 14 842 palabras igual a 20 páginas contadas en el PDF entregado; el `.docx` es **más corto
+que el Markdown precisamente porque le falta este contenido**. Verificado: el cuerpo del Markdown son
+16 753 palabras, ≈22,8 páginas, y el `.docx` de hoy está por debajo. **Insertar lo que falta lleva el
+entregable hacia esas ≈23 páginas, no por encima de 25.** La puerta de factibilidad del workflow lo
+estimó en ≈21,2, con la precisión de que la mayor parte de esas palabras cae en los **anexos**, que
+el límite excluye.
+
+De modo que el límite de 25 páginas **ya no es el motivo** para no hacerlo. Lo que queda es la
+autorización y la vía técnica: el cuerpo tiene un límite duro de **25 páginas** `CLAUDE.md` reserva a la autorización expresa del autor cualquier
 movimiento de párrafos por motivos de espacio, y esto es la operación inversa: añadir. No lo hago
 sin que lo autorices.
 

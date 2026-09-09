@@ -101,8 +101,22 @@ rehacerlos, hay que insertarlos, con su leyenda **debajo** y a 300 puntos por pu
 
 ## 2. La restricción dura, y qué hacer si no cabe
 
-**El cuerpo no puede exceder 25 páginas**, sin contar anexos. El verificador lo estima hoy en
-**23,0**, y las piezas 1 y 2 suman del orden de **1 500 palabras**.
+**El cuerpo no puede exceder 25 páginas**, sin contar anexos.
+
+> **Corrección del 2026-09-09, y afloja la restricción.** Aquí decía «el verificador lo estima hoy
+> en 23,0», y eso **no es el entregable**: la comprobación del límite estima sobre el **Markdown**,
+> anclada a 14 842 palabras igual a 20 páginas contadas en el PDF entregado. El `.docx` es **más
+> corto que el Markdown precisamente porque le falta este contenido**. Verificado: el cuerpo del
+> Markdown son 16 753 palabras, que dan **≈22,8 páginas** con esa densidad; el `.docx` de hoy está
+> por debajo.
+>
+> **Insertar lo que falta lleva el entregable hacia esas ≈23 páginas, no por encima de 25.** La
+> puerta de factibilidad del workflow lo estimó en **≈21,2 páginas** con las seis piezas, con la
+> precisión de que **de las 1 547 palabras solo unas 485 caen en el cuerpo** y el resto en los
+> anexos, que el límite excluye. Esa segunda cifra no la he verificado por mi cuenta; la primera sí.
+>
+> **Conclusión operativa: cabe, y con margen.** Sigue contando sobre el PDF y sigue aplicando el
+> orden de abajo si aprieta, pero no des por hecho que hay que sacrificar piezas: probablemente no.
 
 **Cuenta las páginas sobre el PDF y no sobre el Word**: su paginación no siempre coincide, y el
 metadato de páginas del `.docx` no sirve.
@@ -115,7 +129,8 @@ Si no cabe, la regla de `CLAUDE.md` es explícita y no admite atajo:
 > texto. **Suprimir párrafos para ganar espacio requiere autorización expresa del autor.**
 
 Esa autorización **no se ha dado**. Si tras agotar los ajustes de estilo sigue sin caber, **para y
-dilo**, con el número de páginas y qué ajustes ya probaste. Y si hay que priorizar, el orden es:
+dilo**, con el número de páginas y qué ajustes ya probaste. Y si hay que priorizar —que según la
+estimación de arriba probablemente **no haga falta**—, el orden es:
 **pieza 1 primero** —la subsección de corridas múltiples, que es la que un tribunal juzga—, después
 las figuras con su prosa, después la referencia [38] con la celda de la Tabla 3, y al final los cinco
 párrafos de límites y las filas de la Tabla 9, que tienen eco en otras partes del documento.
