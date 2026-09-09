@@ -309,3 +309,28 @@ no hay que suprimir filas a mano: se reemplaza la tabla y quedan 42.
 Verificable con `python3 tools/verificar_informe.py`, cuya comprobación «sin modelos excluidos del estudio,
 en el .md y en los tres .docx» examina 35 elementos y las enumera una a una. Está **declarada como pendiente
 de corrección, no aceptada**, y se retira de la lista al corregirla. Detalle en `FINDINGS §F94`.
+
+---
+
+## Lo aplicado el 2026-09-09, y lo que queda
+
+**Cero cifras obsoletas en los tres `.docx`**, donde por la mañana había 273. Ver `FINDINGS §F95`.
+
+| Aplicado | Cómo |
+|:---|:---|
+| Cifra de falsos positivos de §3.3 y conclusiones | `tools/terms_fp_poblacion.json` |
+| Tok/s/B de la Tabla 4 | `tools/terms_tabla4_throughput.json`, con `celda_exacta` |
+| Modelos excluidos: 15 menciones → 0 | `tools/filas_excluidos.json` + `tools/terms_excluidos_glosa.json` |
+| **Tabla 19 entera**: 254 celdas, y las 294 coinciden ya con el Markdown | `tools/celdas_tablas_docx.json` |
+| **Tabla 18**: sus 22 filas coinciden con el Markdown | ídem |
+| Las 12 cifras de prosa del F1 restringido | `tools/terms_restringido.json` |
+
+**Pendiente**, y conviene no darlo por cerrado:
+
+1. **Insertar en la Tabla 18 las 4 filas que le faltan** —`nemotron-mini:4b` y `qwen3:8b`, en sus dos
+   modos—. Reescribir celdas no añade filas y esa capacidad no existe todavía.
+2. Las **dos figuras** de `doc/figuras/` y la **Tabla 20**, del inventario original.
+3. La propagación de **texto**: diez cifras siguen solo en el Markdown porque están en pasajes reescritos
+   que el `.docx` aún no tiene, entre ellos el párrafo de la nota de la Tabla 4.
+4. En §3.3, partir el run en **negrita** para que resalte solo el porcentaje, y añadir entonces la frase de
+   alcance y la llamada a la Figura 1.

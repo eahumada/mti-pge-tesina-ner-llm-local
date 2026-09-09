@@ -3946,3 +3946,55 @@ está probado: dos ejecuciones en el mismo segundo dan `.bak_…` y `.bak_…-2`
 **Consecuencia en la autoprueba, que confirma §L64.** Retirado el fallo de la lista de declarados, los tres
 `.docx` **vuelven a ser vigilables**: la autoprueba pasa de «16 de 19, 3 bloqueados» a **19 de 19**. Era
 exactamente lo que §L64 predecía, y sirve de comprobación de que el diagnóstico era correcto.
+
+## §F95 — Propagadas las dos tablas y las doce cifras de prosa: cero cifras obsoletas en los entregables
+
+**2026-09-09.** Al empezar el día, la comparación completa de cifras daba **273 candidatas a obsoletas** en el
+`.docx` canónico (§F88). Hoy da **cero**.
+
+| | Al empezar | Ahora |
+|:---|---:|---:|
+| Cifras del `.docx` ausentes del Markdown | **273** | **0** |
+| Tabla 19: celdas que no coinciden con el Markdown | 254 de 294 | **0** |
+| Tabla 18: filas que no coinciden | 2 de 22 | **0** |
+| `76,85` · `90,91` · `81,45` (prosa) | 8 · 3 · 3 | 0 · 0 · 0 |
+| `76,55` · `90,16` · `80,42` | 0 · 0 · 0 | 6 · 2 · 2 |
+| Menciones de modelos excluidos | 15 | **0** |
+
+Los tres paquetes abren, conservan sus 29 y 15 partes y siguen sin emojis.
+
+### Lo que hizo posible reescribir una tabla entera con seguridad
+
+Hace días decliné parchear la Tabla 19 con el argumento correcto: cambiar un `F1 restr.` sin cambiar el
+`P restr.` de su lado deja una fila incoherente, peor que la que había. Ese argumento vale para un parcheo
+**parcial**. Reescribir **todas** las celdas de la fila desde la fuente canónica no lo tiene, y las
+condiciones que lo hicieron verificable fueron cuatro, comprobadas antes de escribir nada:
+
+1. **Los conjuntos de filas coinciden exactamente**: 42 en el `.docx` y 42 en el Markdown, mismos nombres,
+   ninguna sobra ni falta. Sin esa correspondencia no se habría intentado.
+2. **Las filas se emparejan por su primera celda, no por su posición**, de modo que un cambio de orden no
+   descoloca nada.
+3. **Cada celda de destino tiene exactamente un `<w:t>`**: 294 en la Tabla 19 y 44 en la 18, comprobado.
+4. **Todo o nada**: si una fila de la tabla no está en las reglas, o una regla no tiene fila, no se toca
+   nada. Un reemplazo parcial es justo lo que había que evitar.
+
+Y la verificación posterior es la que cierra el argumento: **las 294 celdas coinciden con el Markdown, una
+por una**, en los tres documentos.
+
+### Los valores no los escribí yo
+
+`tools/generar_reglas_tablas_docx.py` deriva las reglas del Markdown canónico. Es §L63 aplicado a la
+propagación: un valor copiado a mano en un fichero de reglas es una segunda fuente de verdad que deja de
+coincidir sin avisar. El generador, además, **se niega a generar** si los conjuntos de filas no cuadran.
+
+### Lo que sigue pendiente, para no darlo por cerrado
+
+- **A la Tabla 18 le faltan 4 filas legítimas** —`nemotron-mini:4b` y `qwen3:8b`, en sus dos modos—. Su
+  contenido no se puede propagar reescribiendo celdas, porque hay que **insertar filas**, y esa capacidad no
+  existe. El generador lo declara en su salida y en el fichero de reglas.
+- Las **dos figuras** y la **Tabla 20**, del inventario original.
+- Diez cifras siguen «en el Markdown y no en el `.docx`»: están en pasajes reescritos que el `.docx` aún no
+  tiene. Es propagación de texto, no cifras obsoletas.
+- En §3.3 sigue pendiente partir el run en negrita para que resalte solo el porcentaje.
+
+**Herramientas nuevas:** `tools/docx_reescribir_celdas.py` y `tools/generar_reglas_tablas_docx.py`.

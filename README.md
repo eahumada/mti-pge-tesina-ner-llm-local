@@ -96,6 +96,9 @@ el documento y los datos no puedan divergir en silencio:
 | `desfase_documentos.py` | Qué documentos de estado han envejecido respecto de lo que describen |
 | `docx_replace_terms.py` | Ediciones de texto en los `.docx` preservando el formato. `celda_exacta` ancla en la celda de tabla, no en el texto |
 | `.githooks/pre-commit` | Puerta de commit: ejecuta el verificador si el commit toca el informe, `tools/` o los datos. Requiere `git config core.hooksPath .githooks` **en cada clon** |
+| `docx_borrar_filas.py` | Suprime filas de una tabla del `.docx`, identificando la tabla por su texto y la fila por su primera celda |
+| `docx_reescribir_celdas.py` | Reescribe las celdas de una tabla del `.docx` desde la fuente canónica, todo o nada |
+| `generar_reglas_tablas_docx.py` | Deriva del Markdown las reglas de la anterior, para no teclear ningún valor |
 | `desfase_cifras_docx.py` | Compara **todas** las cifras decimales de un `.docx` contra el Markdown y señala las candidatas a obsoletas |
 | `derivados_desfasados.py` | Artefactos derivados que la corrección de puntuación dejó atrás: `acceptance_status.json` e informes por corrida, con el consolidado como control |
 
