@@ -620,5 +620,7 @@ resumen es que con recuperación «respondió incorrectamente o rehusó responde
 **No elijo yo:** cambiar esa cifra cambia lo que la tabla afirma sobre el estado del arte. Ver
 `FINDINGS §F106`.
 
-**Aparte, sin verificar:** el «53,6–75,5 % F1» que la misma tabla atribuye a BloombergGPT [3]. Su resumen no
-publica métricas por tarea y no se ha podido comprobar; queda declarado como no verificado, no como correcto.
+**Aparte, ya verificado el mismo día:** el «53,6–75,5 % F1» que la misma tabla atribuye a BloombergGPT [3]
+**es correcto**. Su tabla de NER da un mínimo de 53,61 (Headlines) y un máximo de 75,50 (Transcripts). Con
+esto, de las cinco cifras que el informe atribuye a una fuente, **cuatro están verificadas y solo ésta es
+falsa**.

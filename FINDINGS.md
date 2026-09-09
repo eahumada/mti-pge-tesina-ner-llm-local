@@ -4524,6 +4524,30 @@ declare incomparable.
 la tabla afirma sobre el estado del arte, y eso es del autor. Queda como **decisión 17**, con la recomendación
 de «19 %» por ser la cifra que el propio resumen del artículo destaca.
 
-**Lo que queda sin verificar:** el «53,6–75,5 % F1» que la Tabla 1 atribuye a BloombergGPT [3]. El resumen
-del artículo no publica métricas por tarea y las tablas están en el cuerpo del PDF; no se ha podido
-comprobar por esta vía y **se declara como no verificado** en lugar de darlo por bueno.
+### El «53,6–75,5 %» de BloombergGPT — verificado el mismo día
+
+Quedaba una cifra sin comprobar. El resumen del artículo no publica métricas por tarea, así que hubo que
+leer las tablas del cuerpo del PDF. La de NER da, para BloombergGPT:
+
+| Conjunto | F1 |
+|:---|---:|
+| BFW | 72,04 |
+| BN | 57,31 |
+| Filings | 58,84 |
+| **Headlines** | **53,61** |
+| Premium | 60,49 |
+| **Transcripts** | **75,50** |
+| Social Media | 60,60 |
+| Media de todas | 62,63 |
+
+El mínimo y el máximo son **53,61 y 75,50**, que es exactamente el «53,6–75,5 %» que la Tabla 1 le
+atribuye. **Correcto.**
+
+Un matiz que no afecta a la exactitud pero conviene tener a mano en la defensa: en ese mismo cuadro
+**BLOOM176B supera a BloombergGPT** en cinco de los siete conjuntos y en la media (64,83 frente a 62,63).
+La columna del informe se titula «desempeño publicado» y cita el rango del modelo que nombra, que es lo
+correcto; pero si alguien pregunta «¿y no había algo mejor en ese mismo artículo?», la respuesta es que sí.
+
+**Balance del frente de citas:** de las cinco cifras que el informe atribuye a una fuente, **cuatro están
+verificadas** —88,43 % de [7], 82,1 % de [15], las dos del [21] por su propio título, y este rango de [3]—
+y **una es falsa**, el 50 % de [9], que queda como decisión 17. Ninguna queda sin comprobar.
