@@ -5127,3 +5127,37 @@ la que importa no se puede calcular todavía**, porque doce de las trece corrida
 `detailed_results.json`. Eso convierte `§3.bis.16` —clasificada como menor— en **la tarea que
 desbloquea la decisión más grande del cierre**, y no requiere inferencia: los ficheros existen en la
 máquina del equipo, solo hay que volcarlos.
+
+---
+
+## §F115 — La tercera cifra del párrafo estadístico que nadie recalculaba
+
+**Fecha:** 2026-09-09 · **Origen:** revisar si la frase de Levene necesitaba corrección
+
+Buscando si el informe hacía alguna afirmación inferencial sobre la métrica restringida —que
+[§F114](#f114) dejó sin cubrir— apareció que **no la hace**: la medición restringida del Anexo I es
+descriptiva, sin ANOVA ni Tukey. Y la frase de Levene está bien: es cierta para la métrica sobre la
+que se calcula, y ya viene matizada con «no equivalga a demostrar que las varianzas son iguales».
+**No había nada que corregir**, y la recomendación de §F114 de «precisarla» era más fuerte que lo
+que el texto merece.
+
+Lo que sí apareció es que **el mismo párrafo publica una tercera cifra que ninguna comprobación
+tocaba**: «el post-hoc de Tukey identifica 158 comparaciones significativas de las 325 posibles». Es
+el patrón de [§F91](#f91) por tercera vez en el mismo párrafo — el ANOVA y Levene ya habían obligado
+a añadir las comprobaciones 30 y 31.
+
+**La cifra es correcta.** Recalculada con `statsmodels`: 325 filas de par, que son C(26,2), y
+**exactamente 158** significativas al 0,05.
+
+**Comprobación 46**, y con una limitación declarada en su propia nota: la distribución del rango
+estudentizado no está en la biblioteca estándar, de modo que **no recalcula Tukey**. Verifica dos
+cosas que sí caben: el recuento contra el artefacto y contra C(26,2), y **cada veredicto del
+artefacto contra su propia p ajustada**. La segunda es la que aporta: un recuento de totales no
+puede ver dos errores de signo contrario, porque se compensan.
+
+**Probada por mutación en los dos frentes.** Alterado el 158 del informe a 157, falla con el
+contraste. Alterado en el artefacto un veredicto de «no» a «sí» sobre una fila con p = 1,0, falla
+**por las dos vías a la vez** —el recuento sube a 159 y la coherencia señala la fila—, que es lo que
+acredita que la segunda vía no es decorativa.
+
+**Estado del verificador:** 46 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
