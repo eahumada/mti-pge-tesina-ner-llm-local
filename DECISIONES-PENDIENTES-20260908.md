@@ -597,3 +597,28 @@ asunto es solo la prosa.
 **Ya corregido, aparte:** el mismo Hallazgo 3 escribía «Recall de **sólo** 25.77 %», con tilde, frente a
 **31 «solo»** sin tilde en el resto del documento. Eso no era criterio sino inconsistencia con su propia
 convención, y se corrigió en el Markdown y en los tres `.docx`. Ver `FINDINGS §F105`.
+
+
+## 17. El 50 % que la Tabla 1 atribuye a FinanceBench no existe en el artículo
+
+**Qué pasa.** La Tabla 1 del estado del arte dice «FinanceBench [9] | 361 informes SEC | GPT-4-Turbo + RAG |
+**50 % exactitud**». Leído el artículo: el «361 informes SEC» es correcto, y **el 50 % no aparece en ninguna
+configuración**. Para GPT-4-Turbo el artículo reporta **9 %** a libro cerrado, **19 %** con almacén vectorial
+compartido, **41 %** con almacén único y **79 %** con contexto largo —que no es RAG—. El titular de su propio
+resumen es que con recuperación «respondió incorrectamente o rehusó responder al **81 %**».
+
+**El error va contra tu interés**, y conviene saberlo: con la referencia correcta el 76,55 % del trabajo queda
+**mejor** situado. Corregirlo fortalece el informe.
+
+| Opción | Qué implica |
+|:---|:---|
+| **a) «19 % exactitud»** | Es la cifra que el resumen del artículo destaca y la que corresponde a la etiqueta «+ RAG». La que recomiendo |
+| b) «19–41 % según el almacén» | Más completo y más honesto con la variabilidad, a costa de una celda más larga |
+| c) «41 % exactitud» | La mejor de las dos configuraciones RAG; defendible, pero es la menos citada del artículo |
+| d) Retirar la fila | Innecesario: el trabajo existe, es pertinente y el resto de la fila es correcto |
+
+**No elijo yo:** cambiar esa cifra cambia lo que la tabla afirma sobre el estado del arte. Ver
+`FINDINGS §F106`.
+
+**Aparte, sin verificar:** el «53,6–75,5 % F1» que la misma tabla atribuye a BloombergGPT [3]. Su resumen no
+publica métricas por tarea y no se ha podido comprobar; queda declarado como no verificado, no como correcto.

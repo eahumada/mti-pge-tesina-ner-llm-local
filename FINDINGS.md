@@ -4480,3 +4480,50 @@ Un barrido mecánico no lee. No detecta una concordancia rota que resulte gramat
 principal, ni un párrafo que dice lo contrario de lo que pretende. De esto último ya se encargó la revisión
 de fondo de §F102 y §F103; de lo primero, nada de lo que hay aquí da garantías, y conviene decirlo en lugar
 de dejar que «pasada de corrección: limpio» suene a más de lo que es.
+
+## §F106 — El 50 % que la Tabla 1 atribuye a FinanceBench no existe en FinanceBench
+
+**2026-09-09.** El verificador comprueba que las URL de la bibliografía respondan y que cada cita tenga
+entrada y cada entrada esté citada, pero **no** que la fuente sostenga lo que el texto le atribuye. Acotado
+el subconjunto de riesgo —cifras atribuidas a una cita—, salen cinco, dos ya verificadas el 2026-09-09
+(el 88,43 % de [7] y el 82,1 % de [15]) y tres sin verificar.
+
+**Una se verifica sola.** El [21] es un comunicado cuyo **título** dice «RegTech Market Size Worth $87.17
+Billion, Globally, by 2028 at 23.92% CAGR», que es exactamente lo que el informe le atribuye.
+
+**Y una es falsa.** La Tabla 1 dice:
+
+> «FinanceBench [9] | 361 informes SEC | GPT-4-Turbo + RAG | **50 % exactitud** | Cloud | Inglés»
+
+Leído el artículo, el «361 informes SEC» **es correcto** —dice «361 public filings»—, pero **el 50 % no
+aparece en ninguna configuración**:
+
+| Configuración de GPT-4-Turbo | Aciertos |
+|:---|---:|
+| Closed Book | **9 %** (14 de 150) |
+| Shared Vector Store, que es RAG | **19 %** |
+| Single Store, también RAG | **41 %** |
+| Long Context, que **no** es RAG | 79 % |
+
+El titular del propio resumen del artículo es que «GPT-4-Turbo usado con un sistema de recuperación
+**respondió incorrectamente o rehusó responder al 81 %** de las preguntas» — es decir, el 19 %. La etiqueta
+del informe, «GPT-4-Turbo + RAG», corresponde a las de almacén vectorial: **19 % o 41 %**, no 50 %.
+
+### Dos cosas que conviene decir a la vez
+
+**El error va contra el interés del autor.** Con una referencia correcta de 19 a 41 % en lugar de 50 %, el
+resultado del trabajo —76,55 % restringido— queda **mejor** situado, no peor. Eso descarta cualquier lectura
+malintencionada y hace que corregirlo fortalezca el informe en lugar de debilitarlo.
+
+**Y la fila lleva su propia advertencia.** La glosa bajo la Tabla 1 ya dice que «las cifras de la última
+columna **no son directamente comparables entre sí**, porque cada trabajo mide otra cosa». Eso protege la
+interpretación pero no la exactitud: una cifra que la fuente no contiene sigue siendo falsa aunque se
+declare incomparable.
+
+**No elijo el reemplazo.** Sustituir 50 % por 19 %, por 41 % o por «19–41 % según el almacén» cambia lo que
+la tabla afirma sobre el estado del arte, y eso es del autor. Queda como **decisión 17**, con la recomendación
+de «19 %» por ser la cifra que el propio resumen del artículo destaca.
+
+**Lo que queda sin verificar:** el «53,6–75,5 % F1» que la Tabla 1 atribuye a BloombergGPT [3]. El resumen
+del artículo no publica métricas por tarea y las tablas están en el cuerpo del PDF; no se ha podido
+comprobar por esta vía y **se declara como no verificado** en lugar de darlo por bueno.
