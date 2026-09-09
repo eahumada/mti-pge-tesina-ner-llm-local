@@ -14,8 +14,17 @@ herramienta lo cambia por un barrido.
 Que hace
 --------
 Enumera las afirmaciones numericas del **cuerpo** del informe —fuera de tablas y de bloques de
-codigo, que se verifican por otra via— y dice, para cada una, si alguna comprobacion del verificador
-se ancla en su vecindad. La cobertura se decide asi: se extraen de la fuente del verificador los
+codigo— y dice, para cada una, si alguna comprobacion del verificador se ancla en su vecindad.
+
+**Por que las tablas quedan fuera, comprobado y no supuesto.** Aqui decia «que se verifican por otra
+via», y eso era un supuesto mio. Verificado el 2026-09-09: de las **20 tablas** con leyenda, **11**
+no se mencionaban en ninguna de las dos herramientas que comprueban el informe. **Diez son
+descriptivas** —tablas 1, 2, 3, 9, 10, 11, 12, 13, 14 y 16: tecnicas, estado del arte,
+arquitectura, estructura del repositorio, entorno, configuracion, contenido de la base de
+conocimientos y formas corruptas— y no hay nada que recalcular. La undecima era la **Tabla 17**,
+seis medidas, y ahora la cubre la comprobacion 50 (`§F119`). De modo que la exclusion es correcta
+**hoy**, y quien anada una tabla de datos tiene que anadir su comprobacion: esta herramienta no se
+lo va a decir. La cobertura se decide asi: se extraen de la fuente del verificador los
 literales largos que sirven de ancla al texto del informe, y una cifra se considera **cubierta** si
 alguno de ellos aparece en la ventana de texto que la rodea.
 
