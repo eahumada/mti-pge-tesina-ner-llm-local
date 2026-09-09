@@ -81,6 +81,19 @@ FALLOS_DECLARADOS = {
         'EN CURSO por Claude Desktop, misma causa que el resalte: el renderizador propio no ha '
         'terminado de igualar el recuento de guiones largos del cuerpo. No aceptado, solo '
         'declarado para no bloquear.'),
+    'Nueve de los trece modelos mejoran': ('2026-09-09',
+        'PENDIENTE de propagar a los tres .docx (§F161): el equipo principal corrigio el recuento '
+        '(nueve -> once) en el Markdown el 2026-09-09, en curso de sincronizacion con el '
+        'renderizador propio de Claude Desktop. No aceptado, solo declarado para no bloquear.'),
+    '−0,54 y −0,18 puntos en los dos de 31B': ('2026-09-09',
+        'PENDIENTE de propagar a los tres .docx (§F161): mismo commit que el recuento de '
+        'modelos, corrige el signo de los dos deltas de 31B (negativos -> +0,81/+0,97). No '
+        'aceptado, solo declarado para no bloquear.'),
+    'Grupos con más de una corrida sobre N=120, con el motivo de la sustitución y la evidencia': (
+        '2026-09-09',
+        'PENDIENTE de propagar a los tres .docx (§F160): la Tabla 20 se retiro del Markdown el '
+        '2026-09-09 y sustituyo por una nota breve; los .docx aun conservan la tabla vieja. No '
+        'aceptado, solo declarado para no bloquear.'),
     '.rebuild_venv.log': ('2026-09-09',
                           'fichero vacio del commit 880f4f9; decision del autor '
                           '(CURRENT-TASKS §1.103)'),
@@ -1242,8 +1255,23 @@ def c_vacios():
 RETIRADAS = (
     ('re-corrida completa pendiente',
      'la re-corrida se ejecuto el 2026-09-08 y esta completa: 13 corridas __N120, todas con '
-     'max_tokens=4096. Declararla pendiente es falso hoy. La fuente declara ahora las DOS '
-     'mediciones y cual es la de referencia, como exige la regla de integridad'),
+     'max_tokens=4096. Declararla pendiente es falso hoy. Retirada el 2026-09-09 (§F160): el '
+     'parrafo de gpt-oss:20b ya no declara dos mediciones ni una reserva de comparabilidad — la '
+     'unica corrida vigente es la re-corrida adoptada, y sus cifras son las de la Tabla 7'),
+    ('la de referencia es la primera',
+     'afirmaba que la corrida de 2048 tokens (previa a la re-corrida) era la referencia de la '
+     'Tabla 7; falso desde que la re-corrida adoptada, a 4096 tokens para los trece modelos, es '
+     'la unica fuente de la Tabla 7. Retirada el 2026-09-09 (§F160)'),
+    ('Nueve de los trece modelos mejoran',
+     'recuento equivocado: son once de los trece los que mejoran con RAG segun el signo de la '
+     'columna Δ RAG de la Tabla 7, no nueve. Retirada el 2026-09-09 (§F161)'),
+    ('−0,54 y −0,18 puntos en los dos de 31B',
+     'cifras equivocadas: los dos modelos de 31B mejoran con RAG (+0,81 y +0,97 puntos), no '
+     'empeoran; recalculado del CSV consolidado adoptado. Retirada el 2026-09-09 (§F161)'),
+    ('Grupos con más de una corrida sobre N=120, con el motivo de la sustitución y la evidencia',
+     'era la leyenda de la Tabla 20 (Anexo I), retirada el 2026-09-09 junto con la tabla misma: '
+     'ocho filas de F1 de corridas descartadas que duplicaban, con apariencia de resultado '
+     'vigente, el mismo patron que origino la pregunta sobre gemma4:12b-mlx (§F160)'),
     ('tomados de OpenSanctions',
      'el proveedor esta mal atribuido: PROCEDENCIA.md declara treasury.gov/ofac/downloads/sdn.csv '
      'y no menciona OpenSanctions. La fuente dice ya «la lista SDN del Departamento del Tesoro»'),

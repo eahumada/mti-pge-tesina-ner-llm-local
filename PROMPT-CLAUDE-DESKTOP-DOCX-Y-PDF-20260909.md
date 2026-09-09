@@ -30,6 +30,20 @@ nueva sección **0.quater**: el autor pidió que el informe explique qué signif
 donde se describe el corpus. Es un párrafo nuevo, no una edición de uno existente; no toca ninguna
 cifra de las rondas anteriores.
 
+**Ampliado una quinta vez, más tarde ese mismo día: se retiró la Tabla 20 y se corrigieron tres
+cifras equivocadas en el párrafo estadístico de §5.3.1.** Piezas 26 a 28 en la nueva sección
+**0.quinquies**: el autor pidió, primero, dejar una sola cifra vigente por benchmark y N en todo
+el documento (retirar del Anexo I las cifras históricas que duplicaban la Tabla 7), y después,
+por separado, simplificar el párrafo del ANOVA/Tukey/Levene/Friedman/correlación de §5.3.1 — al
+verificar sus cifras antes de simplificar aparecieron **tres errores reales**, no solo prosa
+densa. **Estas piezas SÍ importan de verdad si ya renderizaste antes de hoy**: el verificador
+(`tools/verificar_informe.py`) confirma que los tres `.docx` actuales todavía tienen el texto
+viejo y las cifras equivocadas — están declaradas en `FALLOS_DECLARADOS` como pendientes tuyas,
+no como aceptadas. Detalle en `FINDINGS §F160`/`§F161`, `LEARNING §L78`/`§L79`.
+
+**La pieza 9 de más abajo queda superada por la 27: no la apliques tal como está escrita.**
+Describía un párrafo de `gpt-oss:20b` que ya no existe en esa forma; la 27 trae el texto correcto.
+
 ---
 
 ## 0. Lo primero, y ahorra la mitad del trabajo
@@ -224,6 +238,58 @@ párrafo que cierra esa subsección («Los resultados sobre N=120 se presentan c
 antes de `### 4.2 Modelos evaluados`. Da la definición y remite a §3.3 para el defecto y su
 corrección; no repite esa narrativa. Cópialo tal cual, es nuevo, no una edición de un párrafo
 existente, y no toca ninguna cifra de las piezas anteriores.
+
+---
+
+## 0.quinquies Se retiró la Tabla 20, y el párrafo de §5.3.1 traía tres cifras equivocadas
+
+El autor preguntó, sobre `gemma4:12b-mlx`, por qué el informe daba dos cifras para el mismo
+benchmark y N; la investigación mostró que el informe estaba bien (el error era una cita mía sin
+fecha), pero el autor pidió ir más allá: **para cada benchmark y N, el cuerpo del estudio presenta
+una sola cifra vigente, la última**, y la historia queda como anécdota de prosa, no como tabla de
+resultados alternativos. Es una excepción explícita a la política aditiva por defecto de
+`CLAUDE.md`, confirmada por el autor tras preguntarle directamente si quería tocar el Anexo I.
+
+### Pieza 26 — Se retiró la Tabla 20 del Anexo I
+
+La Tabla 20 («Grupos con más de una corrida sobre N=120, con el motivo de la sustitución y la
+evidencia», ocho filas) y el párrafo que la introducía se sustituyeron por dos párrafos de prosa
+más cortos, sin tabla, que declaran los cuatro modelos que tuvieron una re-ejecución parcial y por
+qué, sin imprimir las cifras de las corridas descartadas. Si ya insertaste el Anexo I completo
+(piezas 1 y 9) en algún `.docx`, **retira la Tabla 20 y su leyenda** y sustitúyelos por el texto
+nuevo del Markdown, copiado tal cual. Si no lo habías insertado, no hay nada que retirar, solo que
+no insertar la tabla vieja de ahora en adelante.
+
+### Pieza 27 — El párrafo de `gpt-oss:20b` decía algo que ya no es cierto — **sustituye a la pieza 9**
+
+La pieza 9, más abajo, describía un párrafo que afirmaba «la de referencia es la primera [corrida
+a 2048 tokens]... las cifras de `gpt-oss:20b` de la Tabla 7 deben leerse con la reserva anterior».
+Eso era correcto antes de que la re-corrida completa se adoptara para la Tabla 7, y dejó de serlo:
+comprobado contra `run_config.json` de la fuente vigente, los trece modelos —incluido
+`gpt-oss:20b`— comparten `max_tokens=4096` en la re-corrida adoptada, así que **no queda ninguna
+reserva de comparabilidad que declarar**. El texto nuevo, dentro de la misma subsección «Corridas
+múltiples del mismo modelo», ya no habla de «dos mediciones» ni de cuál es «la referencia»: dice
+que la re-corrida completa resolvió los tres defectos operativos de una vez y que las cifras
+vigentes son las de la Tabla 7, sin reserva. Cópialo tal cual si insertas esa subsección.
+
+### Pieza 28 — Tres cifras equivocadas en el párrafo de §5.3.1, y de paso más corto de leer
+
+A petición del autor de simplificar el párrafo del ANOVA/Tukey/Levene/Friedman/correlación,
+verifiqué cada cifra contra la Tabla 7 antes de tocar la prosa y aparecieron tres errores reales:
+«nueve de los trece modelos mejoran» (son **once**), «−0,54 y −0,18 puntos en los dos de 31B»
+(son **+0,81 y +0,97**, ambos positivos) y una contradicción interna entre «solo... en
+`nemotron-mini:4b`» (un modelo) y «solo dos [modelos] lo hagan de manera estadísticamente sólida»
+en el mismo párrafo (es **uno**, según la Tabla 7). El párrafo completo se reescribió más corto,
+en cinco unidades que abren con la pregunta que responden, sin perder ninguna prueba estadística
+del original (F, p, Tukey, Levene, Friedman, Spearman, Pearson, el control de retirar
+`nemotron-mini:4b`). **Sustituye el párrafo entero por el del Markdown**, no apliques solo el
+cambio de cifras sobre tu versión: cambió también la estructura de frases.
+
+> **Cómo saber si ya te afecta.** `tools/verificar_informe.py` compara los tres `.docx` contra las
+> frases retiradas de esta ronda; hoy (2026-09-09) confirma que los tres **todavía** tienen «Nueve
+> de los trece modelos mejoran», «−0,54 y −0,18 puntos en los dos de 31B», y dos de los tres
+> conservan además la leyenda vieja de la Tabla 20. Están declaradas en `FALLOS_DECLARADOS` como
+> pendientes tuyas, no como aceptadas — corresponde a esta ronda de propagación cerrarlas.
 
 ---
 
