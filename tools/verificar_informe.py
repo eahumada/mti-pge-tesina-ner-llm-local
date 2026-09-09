@@ -42,6 +42,11 @@ FALLOS_DECLARADOS = {
     'cita 80.51': 'decision 13, pendiente del autor (FINDINGS §F87)',
     'el Anexo I dice': 'decision 13, ampliada a la tercera instancia del defecto '
                        '(FINDINGS §F87.bis)',
+    'hay que regenerarlo desde el .docx': 'PENDIENTE, no aceptado: el PDF de la raiz es del '
+                                        '2026-09-08 y los .docx se corrigieron el 09. Exige '
+                                        'Word y no hay conversor aqui; es de la pasada de '
+                                        'maquetacion (FINDINGS §F98). El PDF de enviados/ se '
+                                        'conserva y no se toca',
     'github.com/eahumada/mti-pge-tesina': 'referencia [37]: el repositorio es privado hasta la purga '
                                           '(SEGURIDAD-CLAVE-GOOGLE-20260908.md)',
 }
@@ -218,6 +223,74 @@ def _texto_docx(ruta):
 # 17 el 2026-09-09 al medirlo por primera vez; 16 tras partir el run de §3.3, que era el
 # unico de los 17 introducido por una edicion propia. Baja segun se propague la limpieza.
 BOLD_CUERPO_BASE = 16
+
+
+PDF_RAIZ = 'Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.pdf'
+PDF_ENVIADO = ('doc/versions/enviados/'
+               '2026-09-08_Informe_Final_Tesina_NER_ENVIADO-AL-PROFESOR-GUIA.pdf')
+
+
+def c_pdf_al_dia(s):
+    """El PDF de la raiz no puede ser mas viejo que el `.docx` del que sale.
+
+    El 2026-09-09 se encontro que el PDF arrastraba **todos** los defectos corregidos ese dia en
+    los `.docx`: once menciones de modelos excluidos, `76,85` seis veces, `90,91` dos, `81,45` dos
+    y `65 %` dos, con cero de las cifras correctas. Ver `FINDINGS §F98`.
+
+    **Una distincion que hay que respetar.** El PDF de la raiz y el de `doc/versions/enviados/` son
+    **byte a byte el mismo fichero**, y ese segundo es el **entregado al profesor guia**, que
+    `CLAUDE.md` declara verdad de referencia sobre que modelos forman el estudio. Ese **atestigua**
+    y no se toca: reescribir un documento que ya se entrego no es limpiar, es falsificar el
+    registro de lo que se entrego. Lo que hay que regenerar es la **copia de la raiz**, y desde el
+    `.docx` corregido, con Word — no hay conversor en este entorno y regenerarlo con otro motor
+    perderia la maquetacion, que es lo que `CLAUDE.md` advierte para pandoc.
+
+    La comprobacion **no lee el PDF**: pypdf solo esta en el venv del proyecto y una comprobacion
+    que solo corre dentro de un entorno concreto no corre (§L62). Compara **procedencias**: si el
+    `.docx` tiene commits posteriores al del PDF, el PDF esta obsoleto, y eso se sabe sin abrirlo.
+
+    Va **aparte** de la comprobacion de modelos excluidos a proposito. Si el PDF entrara en
+    aquella, su fallo la pondria en rojo y **cegaria como centinela** a los tres `.docx`, que es
+    §L64. Cada defecto abierto en su propia comprobacion.
+    """
+    import subprocess as _sp
+
+    def _fecha_commit(rel):
+        try:
+            r = _sp.run(['git', 'log', '-1', '--format=%ct', '--', rel],
+                        cwd=RAIZ, capture_output=True, text=True, timeout=20)
+            return int(r.stdout.strip()) if r.stdout.strip() else None
+        except (OSError, ValueError):
+            return None
+
+    fallos, mirados = [], 0
+    mirados += 1
+    if not os.path.exists(os.path.join(RAIZ, PDF_RAIZ)):
+        fallos.append('no existe el PDF de la raiz: %s' % PDF_RAIZ)
+        check('el PDF de la raiz no es mas viejo que el .docx', mirados, fallos)
+        return
+    t_pdf = _fecha_commit(PDF_RAIZ)
+    mirados += 1
+    if t_pdf is None:
+        fallos.append('el PDF de la raiz no esta rastreado o no se puede fechar')
+    for rel in DOCX_ENTREGABLES:
+        mirados += 1
+        t_doc = _fecha_commit(rel)
+        if t_doc is None:
+            fallos.append('%s no se puede fechar' % os.path.basename(rel))
+        elif t_pdf is not None and t_doc > t_pdf:
+            import datetime as _dt
+            f = lambda x: _dt.datetime.fromtimestamp(x).strftime('%Y-%m-%d %H:%M')
+            fallos.append('%s cambio el %s y el PDF es del %s: hay que regenerarlo desde el .docx '
+                          'con Word. NO tocar el PDF de doc/versions/enviados/, que atestigua'
+                          % (os.path.basename(rel), f(t_doc), f(t_pdf)))
+    # y que el enviado siga intacto: es la verdad de referencia
+    mirados += 1
+    if not os.path.exists(os.path.join(RAIZ, PDF_ENVIADO)):
+        fallos.append('falta el PDF entregado al profesor guia, que es la verdad de referencia: %s'
+                      % PDF_ENVIADO)
+    check('el PDF de la raiz no es mas viejo que el .docx', mirados, fallos,
+          'el PDF de doc/versions/enviados/ se conserva; el de la raiz se regenera con Word')
 
 
 def c_sobriedad_docx(s):
@@ -2212,6 +2285,7 @@ def main():
     ejecutar(c_higiene, s)
     ejecutar(c_excluidos, s)
     ejecutar(c_sobriedad_docx, s)
+    ejecutar(c_pdf_al_dia, s)
     ejecutar(c_figura_vs_tabla, s)
     ejecutar(c_identificadores)
     ejecutar(c_aritmetica, s)

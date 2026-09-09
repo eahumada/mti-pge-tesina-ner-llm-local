@@ -4161,3 +4161,51 @@ exige que el literal **no vuelva**.
 
 Probada por mutación en tres frentes, los tres detectados con su mensaje: reescribir la tabla a mano, alterar
 lo que el lector devuelve, y renombrar la función lectora.
+
+## §F98 — El PDF es hoy el entregable más desfasado, y arrastra todo lo corregido en los `.docx`
+
+**2026-09-09.** Corregidos los tres `.docx`, quedaba un entregable que `CLAUDE.md` cuenta y que no había
+mirado nadie: **el PDF**. Extraído su texto con `pypdf`, arrastra **todos** los defectos de hoy:
+
+| | En el PDF | En los `.docx`, ya corregido |
+|:---|---:|---:|
+| Menciones de modelos excluidos | **11** | 0 |
+| `76,85` · `90,91` · `81,45` | 6 · 2 · 2 | 0 · 0 · 0 |
+| `76,55` · `90,16` · `80,42` | **0 · 0 · 0** | 6 · 2 · 2 |
+| «65 %» de los falsos positivos | 2 | 0 |
+| «66,0 %» | **0** | 3 |
+
+Son 31 páginas y 129 387 caracteres extraídos, con las palabras de control presentes —`Kleptotrace` 11,
+`Tabla` 25—, de modo que la extracción es buena y el diagnóstico no es un artefacto del lector.
+
+### La distinción que hay que respetar antes de tocar nada
+
+El PDF de la raíz y el de `doc/versions/enviados/` son **byte a byte el mismo fichero** —el mismo
+SHA-256—, y ese segundo es el **entregado al profesor guía**, que `CLAUDE.md` declara verdad de referencia
+sobre qué modelos forman el estudio. Ese **atestigua** y no se toca: reescribir un documento que ya se
+entregó no es limpiar, es falsificar el registro de lo que se entregó. Que mencione los modelos excluidos es
+**correcto** en él, porque su Anexo E los declaraba fuera.
+
+Lo que hay que regenerar es la **copia de la raíz**, desde el `.docx` corregido y **con Word**. En este
+entorno no hay conversor —solo `textutil`— y regenerarlo con otro motor perdería la maquetación, que es
+justo lo que `CLAUDE.md` advierte sobre pandoc. Es de la pasada de maquetación.
+
+### La comprobación, y por qué va en su propia casilla
+
+Añadida como comprobación **35**, con 6 elementos. **No lee el PDF**: `pypdf` solo está en el venv del
+proyecto y una comprobación que solo corre dentro de un entorno concreto no corre (§L62). Compara
+**procedencias** —si el `.docx` tiene commits posteriores al del PDF, el PDF está obsoleto—, lo que se sabe
+sin abrirlo, y comprueba además que el PDF entregado **sigue estando**.
+
+Va **aparte** de la comprobación de modelos excluidos a propósito, y esto es §L64 aplicado por adelantado en
+lugar de por escarmiento: si el PDF entrara en aquella, su fallo la pondría en rojo y **cegaría como
+centinela** a los tres `.docx`, que acaban de quedar limpios. Comprobado tras declararlo: los centinelas de
+los `.docx` siguen en verde y la autoprueba en 19 de 19. **Cada defecto abierto en su propia comprobación.**
+
+### Y de paso: los metadatos de páginas de los `.docx` son falsos
+
+`docProps/app.xml` declara **6 páginas y 1 646 palabras** en el `.docx` canónico, que tiene ~18 275, y
+**1 página y 83 palabras** en los otros dos. Son restos de la herramienta que produjo los paquetes; Word los
+recalcula al abrir, de modo que no engañan al lector, pero sí a quien inspeccione las propiedades del
+fichero — y la restricción institucional se mide en páginas. Conviene saberlo antes de fiarse de ese dato:
+**el recuento de páginas del `.docx` no se puede leer de sus metadatos**.
