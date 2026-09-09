@@ -1269,6 +1269,19 @@ corpus.**
 `results/recorrida_20260908/`. Son ficheros grandes pero comprimibles y el repositorio ya versiona los de las
 corridas anteriores, de modo que no hay novedad de criterio.
 
+**Y hay una alternativa más ligera, si os viene mejor.** El arnés ya sabe volcar ese desglose **dentro del
+propio CSV**: la corrida `benchmark_balanced_120_kbrag_9models/benchmark_results_PARCIAL.csv` tiene **24
+columnas** en lugar de 22, y las dos de más son **`metrics`** y **`error_taxonomy`**. La primera trae el
+`per_type` completo —precisión, exhaustividad, F1, `tp`, `fp` y `fn` por categoría— que es exactamente lo que
+necesitamos.
+
+Cualquiera de las dos vías sirve: el `detailed_results.json` o el CSV con esas dos columnas. La segunda es un
+fichero por corrida en lugar de dos.
+
+**Un detalle si elegís el CSV:** en esa corrida la columna va serializada como *repr* de Python, con comillas
+simples, no como JSON. Se lee con `ast.literal_eval`, pero **si podéis volcarla como JSON válido, mejor**: nos
+ahorra una excepción y hace el fichero legible por cualquier herramienta.
+
 **Y una razón que va más allá de esta tarea:** sin el detalle por registro, **cualquier corrección de método
 futura obliga a repetir la inferencia entera**. Es exactamente lo que permitió corregir `§F81` sobre los datos
 antiguos sin gastar una hora de máquina.
@@ -1575,3 +1588,4 @@ antiguos sin gastar una hora de máquina.
 | 2026-09-09 11:1x | Claude Code (equipo principal) | ✅ §1.150: **actualizado el `README`, que describía tres herramientas por lo que hacían antes.** `composicion_fp.py` **falla ahora si la cobertura es cero**, porque un cero por ausencia de datos no es una medición; `robustez_estadistica.py` calcula además **la correlación capacidad-beneficio con su análisis de influencia**, que es la que sostiene la tesis central; y la autoprueba **atribuye** el fallo a la comprobación que usa cada artefacto y **descuenta los fallos previos**, de modo que ya no queda inerte cuando algo ajeno falla — que es lo que le pasó durante horas |
 | 2026-09-09 11:2x | Claude Code (equipo principal) | ✅ §1.151: **dada una forma de comprobar que la propagación a los `.docx` se hizo de verdad**, que hasta ahora no existía: se sabía qué falta pero no cómo verificar que llegó. **El recuento de palabras no sirve** —el Markdown incluye sintaxis de tablas, sus 22 995 palabras no son comparables con las 16 776 del `.docx`—, pero los **términos propios de cada corrección** sí: «Spearman» aparece 2 veces en el `.md` y **0** en el `.docx`, «Friedman» 1 y **0**, «reloj de pared» 2 y **0**, «Corridas múltiples» 1 y **0**. **Cuatro de seis a cero**, lo que confirma que ninguna de esas correcciones ha llegado. Añadida al documento de propagación la tabla y una orden de una línea que compara los seis recuentos, que **no envejece** como el conteo de commits |
 | 2026-09-09 11:3x | Claude Code (equipo principal) | ✅ §1.152: aplicada la comprobación de propagación a **los tres `.docx`**, no solo al canónico: los tres están en el **mismo estado, 6 de 6 sin propagar**. Simplifica el trabajo más de lo que parece —**no hay estados parciales que reconciliar**, ni un fichero más adelantado que otro—: es una sola tanda de correcciones aplicada tres veces, y los tres se comprueban con la misma orden cambiando el nombre |
+| 2026-09-09 11:4x | Claude Code (equipo principal) | ✅ §1.153: **encontrada una vía más ligera para el pedido de `§3.bis.16`, revisando la integridad de los 80 CSV rastreados** —todos bien formados, pero uno tiene **24 columnas** en vez de 22—. Es `benchmark_balanced_120_kbrag_9models/benchmark_results_PARCIAL.csv`, y las dos de más son **`metrics`** y **`error_taxonomy`**: la primera trae el **`per_type` completo**, que es exactamente lo que falta. De modo que el equipo puede entregar el desglose **dentro del propio CSV** en lugar de versionar 39 `detailed_results.json`. Añadida la alternativa a su tarea, con el aviso de que en esa corrida la columna va como *repr* de Python y no como JSON: se lee con `ast.literal_eval`, pero mejor si la vuelcan como JSON válido |
