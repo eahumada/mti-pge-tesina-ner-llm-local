@@ -554,11 +554,22 @@ def c_tabla7_vs_datos(s):
     if i < 0:
         check('la Tabla 7 reproduce desde el CSV consolidado', 0, ['no se encuentra la Tabla 7'])
         return
-    t7 = {}
+    # Una fila que deje de casar con el patron salia en silencio de la comprobacion, que seguia
+    # diciendo «ok» con menos elementos. Comprobado por mutacion el 2026-09-09 sobre la fila de
+    # `gemma4:31b-cloud`: el recuento bajaba de 26 a 24 y la comprobacion pasaba igual. Es la
+    # tabla central del trabajo, de modo que una fila suya sin verificar es lo peor que puede
+    # pasar aqui. Por eso se cuentan aparte las filas que parecen de datos y no se pueden leer.
+    t7, ilegibles = {}, []
     for l in s[i:i + 3000].split('\n'):
         m = re.match(r'^\|\s*([^|]+?)\s*\|\s*\*{0,2}([\d.]+)%\*{0,2}\s*\|\s*\*{0,2}([\d.]+)%\*{0,2}\s*\|', l)
         if m and not m.group(1).startswith('Modelo'):
             t7[m.group(1).strip()] = (float(m.group(2)), float(m.group(3)))
+            continue
+        celdas = [x.strip() for x in l.strip().strip('|').split('|')]
+        if (l.startswith('|') and '---' not in l and len(celdas) == 5
+                and celdas[0] and not celdas[0].startswith('Modelo')):
+            ilegibles.append('%s: no se pueden leer sus dos porcentajes (%s | %s)'
+                             % (celdas[0], celdas[1], celdas[2]))
     g = _c.defaultdict(list)
     with open(CSV_CONSOLIDADO, encoding='utf-8') as fh:
         for r in _csv.DictReader(fh):
@@ -574,7 +585,8 @@ def c_tabla7_vs_datos(s):
                 fallos.append('%s%s no esta en el CSV consolidado' % (mod, suf))
             elif abs(d - val) > 0.011:
                 fallos.append('%s%s: la tabla dice %.2f y el dato da %.2f' % (mod, suf, val, d))
-    check('la Tabla 7 reproduce desde el CSV consolidado', 2 * len(t7), fallos,
+    check('la Tabla 7 reproduce desde el CSV consolidado',
+          2 * (len(t7) + len(ilegibles)), ilegibles + fallos,
           'es la unica comprobacion que ata la tabla central al dato y no a otra copia suya')
 
 
@@ -606,16 +618,22 @@ def c_tabla4_vs_datos(s):
     if i < 0:
         check('la Tabla 4 reproduce desde sus corridas', 0, ['no se encuentra la Tabla 4'])
         return
-    filas = []
+    # Toda fila de datos tiene que parsearse. Sin esta cuenta, una fila que dejara de ser legible
+    # —un numero reformateado, un `%` perdido— salia en silencio de la comprobacion, que seguia
+    # diciendo «ok» con menos elementos. Comprobado por mutacion el 2026-09-09: cambiar «74.44%»
+    # por «74,44 %» bajaba el recuento de 52 a 48 y la comprobacion pasaba igual.
+    filas, ilegibles = [], []
     for l in s[i:i + 3000].split('\n'):
         if not l.startswith('|') or 'Modelo' in l or '---' in l:
             continue
         c = [x.strip().replace('**', '') for x in l.strip().strip('|').split('|')]
-        if len(c) >= 7 and c[3].endswith('%'):
-            try:
-                filas.append((c[0],) + tuple(float(x.rstrip('%')) for x in c[3:7]))
-            except ValueError:
-                pass
+        if len(c) < 7:
+            continue
+        try:
+            filas.append((c[0],) + tuple(float(x.rstrip('%').replace(',', '.')) for x in c[3:7]))
+        except ValueError:
+            ilegibles.append('%s: no se pueden leer sus cuatro metricas (%s)'
+                             % (c[0] or '(fila sin nombre)', ' | '.join(c[3:7])))
     cache = {}
 
     def med(p):
@@ -653,7 +671,8 @@ def c_tabla4_vs_datos(s):
             if d is None or abs(d - esperado) > 0.02:
                 fallos.append('%s %s: la tabla dice %.2f y el dato %s'
                               % (nom, etiq, esperado, '—' if d is None else '%.2f' % d))
-    check('la Tabla 4 reproduce desde sus corridas de origen', 4 * len(filas), fallos,
+    check('la Tabla 4 reproduce desde sus corridas de origen',
+          4 * (len(filas) + len(ilegibles)), ilegibles + fallos,
           'la correspondencia fila-corrida refleja la Tabla 15 del informe')
 
 

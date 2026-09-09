@@ -2897,3 +2897,43 @@ que se produjo por otra vía— y no una revisión del código, que se había le
 De ahí la regla que se incorpora al recálculo: **toda herramienta que reagrupe por corrida declara si sus
 medias reproducen el consolidado**, y nombra las que no. Es una comprobación de cuatro líneas y habría
 ahorrado este hallazgo.
+
+---
+
+## §F82 — Una fila ilegible salía en silencio de la verificación, y la Tabla 7 era una de ellas
+
+**2026-09-09, 01:0x.** Siguiendo la pista de `§L58` —órdenes cuyo «no hizo nada» no se distingue de «lo hizo
+bien»— se barrieron las excepciones que los verificadores se tragan. La de la tasa de alucinación resultó
+**bien protegida**: si un CSV no se pudiera leer, el recuento de grupos bajaría de 61 y la comprobación falla
+por su propia aserción de población. Pero dos comprobaciones de tablas no tenían esa guarda.
+
+**Comprobado por mutación**, que es la única forma de saberlo. Cambiando `74.44%` por `74,44 %` en una fila de
+la Tabla 4, el recuento bajaba de **52 a 48 elementos** y la comprobación seguía diciendo **ok**. Lo mismo en
+la **Tabla 7**, que es la tabla central del trabajo: poniendo `n/d` en el F1 base de `gemma4:31b-cloud`, el
+recuento bajaba de **26 a 24** y pasaba igual.
+
+Es decir: **una fila cuyo formato dejara de casar con el patrón simplemente dejaba de verificarse**. No hacía
+falta un error para perderla; bastaba una coma decimal, un `%` desplazado o una celda con «n/d». Y el recuento
+menor quedaba impreso, pero nadie conoce de memoria cuántos elementos debe examinar cada comprobación, que era
+justo el supuesto sobre el que se apoyaba `§L47` al exigir que se declararan.
+
+### El arreglo
+
+Las dos comprobaciones cuentan ahora aparte las filas que **parecen de datos y no se pueden leer** —cinco
+columnas en la Tabla 7, siete en la Tabla 4, con nombre y sin ser encabezado— y las declaran como fallo, con
+el nombre de la fila y las celdas que no pudo interpretar. El recuento total se mantiene, de modo que una fila
+ilegible **no reduce el número de elementos examinados**: aparece como fallo, no como ausencia.
+
+Verificado por mutación en ambas: fallan con el nombre del modelo y conservan sus 26 y 52 elementos.
+
+### Lo que enseña
+
+`§L47` exige que cada comprobación declare cuántos elementos examinó, y esa regla ha funcionado: destapó
+comprobaciones vacías. Pero **declarar el recuento solo sirve si alguien sabe cuál debería ser**, y aquí
+bajaba de 26 a 24 sin que nada chirriara. La forma robusta no es publicar el número, sino **exigir que todo
+candidato se procese**: contar lo que se intentó y no solo lo que salió bien.
+
+Es la tercera cara del mismo defecto en dos días. En `§L57` un 404 podía significar éxito o URL rota; en
+`§L58` un `push` sin error podía significar sincronizado o nada que empujar; aquí un «ok» podía significar
+verificado o no mirado. Las tres se resuelven igual: **comparar contra lo que debería haber, no contra lo que
+hubo**.
