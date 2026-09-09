@@ -18,9 +18,25 @@ python3 tools/estado_recorrida.py | head -20
 Debe decir **13 de 13 modelos** en N=120. Si dice menos, no se sigue: falta corrida. Comprobar también que el
 barrido terminó de verdad, mirando el final de `_sweep_progress.log` en su rama.
 
+> **Estado al 2026-09-09: dice 13 de 13, y aun así no se puede seguir.** El barrido terminó
+> (`MASTER SWEEP COMPLETE`, 01:06) pero **uno de los trece no es válido**: `nemotron-mini:4b` tiene diecisiete
+> registros que puntúan cero por un `TypeError` del arnés, todos en su línea base, y es el punto de mayor
+> influencia del análisis (`FINDINGS §F85`, `§F86`). **La puerta del paso 0 no basta con contar modelos:
+> añádase que `parse_method='failed'` valga cero en los trece.** Pedido en `CURRENT-TASKS §3.bis.15`.
+>
+> **Y falta un insumo que dos pasos necesitan.** Llegaron los **39 `benchmark_results.csv`** de la re-corrida
+> y **cero `detailed_results.json`**. Sin ellos el **paso 4 no puede ejecutarse** —comprobado: cubre 0 de 26
+> grupos— y la corrección de `§F81` tampoco, porque se despeja de las métricas por tipo, que viven ahí.
+> Reclamado en `remote_48g/PEDIDO-COMMITEAR-BARRIDO-Y-DETALLE-20260908.md`.
+
 ---
 
-## 1. Fusionar su rama
+## 1. Fusionar su rama — **ya hecho**
+
+> **Al 2026-09-09 el paso está completo:** el equipo empujó su rama entera a `main`, de modo que
+> `origin/fix/recorrida-correcciones-20260908` está contenida en `HEAD` y el manifiesto de contaminados —849
+> bytes— ya está en el árbol de trabajo. Lo que **no** llegó son los `detailed_results.json`; ver el aviso del
+> paso 0.
 
 ```sh
 git fetch origin
@@ -125,7 +141,13 @@ verificador comprueba que la Figura 2 concuerda con la Tabla 7, así que un olvi
 
 ---
 
-## 4. Rehacer la composición de los falsos positivos
+## 4. Rehacer la composición de los falsos positivos — **bloqueado**
+
+> **No se puede ejecutar hoy.** `tools/composicion_fp.py` lee las métricas por tipo de los
+> `detailed_results.json`, y la re-corrida no los entregó: sobre el consolidado nuevo cubre **0 de 26 grupos**.
+> El script **falla ahora de forma explícita** en ese caso, con código de salida 1, en lugar de imprimir ceros
+> que parecían una medición —y en lugar de disparar el aviso de `§F53` por ausencia de datos, que era peor,
+> porque invitaba a confundir «no hay datos» con «el corpus sigue sin anotar localizaciones».
 
 ```sh
 python3 tools/composicion_fp.py results/ANALISIS_CONJUNTO_<fecha> --resumen

@@ -129,6 +129,16 @@ def main():
                 print('    - %s' % x)
         else:
             print('  control: los %d grupos reproducen la media del CSV consolidado' % r['grupos_cubiertos'])
+        if r['grupos_cubiertos'] == 0:
+            # Cobertura nula NO es un resultado: es que faltan los detailed_results.json. Sin este
+            # corte el script imprimia «TOTAL fp=0 · Locations=0» y «los 0 grupos reproducen la
+            # media», que a ojos distraidos parece una medicion. Y el aviso de §F53 se disparaba por
+            # ausencia de datos, no por el defecto del corpus, que es peor: invita a confundirlos.
+            print('  FALLO: cobertura nula. No hay ningun detailed_results.json para los grupos del')
+            print('         consolidado, de modo que no hay nada que medir. Las cifras de arriba son')
+            print('         ceros por ausencia de datos, no un resultado. Pedir al equipo los')
+            print('         detailed_results.json de la re-corrida antes de volver a ejecutar esto.')
+            return 1
         if r['locations_tp_mas_fn'] == 0:
             print('  AVISO: Locations tiene tp+fn=0 — puntua contra el vacio (FINDINGS §F53)')
         else:
