@@ -4895,3 +4895,44 @@ hacer la combinación: dos efectos individualmente insuficientes cuyo efecto con
 **Lo que esto añade a la decisión 18:** ya no es un modelo sino **dos**, y uno de ellos solo aparece al
 combinar. Si se declara la sensibilidad, conviene declararla **como combinación** y no como dos notas
 sueltas, porque por separado ninguna de las dos habría mostrado el caso de `gemma4:latest`.
+
+---
+
+## §F112 — La misma tabla por dos rutas: 25 grupos de 26 coinciden, y el que no ya se sabía
+
+**Fecha:** 2026-09-09 · **Origen:** mecanizar el análisis de [§F111](#f111)
+
+La Tabla 7 se escribió desde la columna `f1` del CSV consolidado, y `c_tabla7_vs_datos` la ata a
+esa fuente. Eso comprueba la transcripción, no la cifra: si el CSV estuviera mal, la tabla y el CSV
+coincidirían igual.
+
+Al mecanizar la sensibilidad combinada quedó disponible la otra ruta —el F1 recalculado desde los
+`per_type`, que son los recuentos de los que ese CSV sale— y contrastar las dos cuesta 0,16 s. De
+los **26 grupos, 25 coinciden por las dos rutas** con tolerancia de 0,05 puntos. El único que no es
+`nemotron-mini:4b_baseline`: publicado 22,59, desde `per_type` 21,4985, **−1,0915**.
+
+No es un hallazgo nuevo, y eso es exactamente lo que lo hace útil: es [§F110](#f110) otra vez, seis
+registros re-extraídos fuera del arnés cuyas métricas solo llegaron al CSV. Que la comprobación
+independiente encuentre **ese** grupo y ninguno más acredita dos cosas a la vez: que las otras 25
+cifras publicadas son correctas por dos caminos, y que el defecto de §F110 está acotado a un grupo
+y no es la punta de algo mayor.
+
+**Lo que se ha hecho.** `tools/sensibilidad_combinada.py`, que reproduce los cuatro escenarios de
+§F111 —`per_type` tal cual, aislando el parseo alterno, corrigiendo el emparejamiento duplicado, y
+las dos cosas— y confirma el resultado: `gemma4:latest` pasa de −1,1698 a **+0,4739**, y solo al
+combinar; `gemma4:31b-mlx` también cambia de signo, pero le basta una de las dos. La herramienta
+reutiliza `recalcula` de `efecto_emparejamiento_duplicado.py` en lugar de reimplementarla, y
+**no usa `overall.f1`**, que es lo que invalidó la primera versión del análisis.
+
+Y comprobación **45** del verificador, que es donde esto deja de depender de que alguien se acuerde.
+Su fallo está declarado con su responsable —el equipo remoto, `§3.bis.15`—, de modo que **al
+cerrarse la re-corrida el fallo desaparece solo y hay que levantar la exclusión** de
+`nemotron-mini:4b_baseline` en la herramienta. La herramienta lo dice en cada ejecución: comprueba
+si el grupo ya es coherente con su CSV y, cuando lo sea, imprime que se puede quitar de `EXCLUIDOS`.
+
+**Probado por mutación**, en el documento y no en la herramienta: alterada la cifra publicada de
+`qwen2.5:14b` de 50,22 a 99,99, la comprobación pasa de `CONOC` a `FALLA` y añade la fila con la
+divergencia de −49,77. Y sobre la propia herramienta, invertida la detección de cambio de signo,
+los modelos señalados pasan de 2 a 12.
+
+**Estado del verificador:** 45 comprobaciones, 10 fallos (10 declarados, **0 nuevos**), 0 vacías.
