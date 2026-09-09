@@ -127,7 +127,7 @@ rehacerlos, hay que insertarlos, con su leyenda **debajo** y a 300 puntos por pu
 > figuras: cero apariciones de «Figura N». De modo que es **incompleto pero coherente**, y no
 > promete nada que no muestre. Si insertas la prosa que las menciona —el párrafo del 66,0 % dice
 > «según recoge la Figura 1»— **sin** insertar las imágenes, el entregable pasa de incompleto a
-> **defectuoso**. **Las dos cosas van juntas o no van.** La comprobación 54 vigila exactamente eso.
+> **defectuoso**. **Las dos cosas van juntas o no van.** La comprobación «las figuras del Markdown estan en los tres .docx» vigila exactamente eso.
 
 ---
 
@@ -203,7 +203,7 @@ decisiones bajo presión:
    autorizado por `CLAUDE.md`.
 2. **Después, los anexos.** Admiten 25 páginas más y **no cuentan** para el límite. Si una tabla
    larga del cuerpo puede vivir en un anexo con su llamada desde el cuerpo, eso libera espacio sin
-   perder nada. Comprueba que la referencia cruzada queda correcta: la comprobación 3 del
+   perder nada. Comprueba que la referencia cruzada queda correcta: la comprobación «referencias a Anexo X y a Tabla N con destino existente» del
    verificador la vigila.
 3. **Solo entonces, y con autorización expresa del autor que HOY NO ESTÁ DADA**, se considera tocar
    texto. **Suprimir párrafos para ganar espacio sin esa autorización no es una opción.**
@@ -243,7 +243,7 @@ El PDF que hay que regenerar es el de la **raíz**:
   destruiría. Esto sigue valiendo aunque trabajes con Word: abre el `.docx` existente y edítalo.
 - **Respaldo de los cuatro artefactos antes de tocarlos**, y di dónde quedaron.
 - **Los tres `.docx` tienen que quedar consistentes entre sí.** Tres entregables que no coinciden es
-  peor que tres incompletos, y las comprobaciones 51 a 54 los comparan uno por uno.
+  peor que tres incompletos, y las cuatro comprobaciones de sincronía —prosa, tablas y bibliografía, encabezados y figuras— los comparan uno por uno.
 - **Declara la tarea en `CURRENT-TASKS.md`** al empezar y actualízala al terminar. Es la única
   fuente de verdad sobre qué agente hace qué, y hay sesiones concurrentes.
 
@@ -282,7 +282,7 @@ python3 tools/auditar_afirmaciones.py
 3. **Cero fallos NUEVOS.** El verificador devuelve 0 si no hay nuevos; si aparece uno, es que la
    inserción rompió algo y **eso es más importante que lo que arregló**.
 4. La auditoría de afirmaciones sigue en **15 predicados y 0 incumplidos**.
-5. Los tres `.docx` siguen siendo OOXML estructuralmente sano, que lo comprueba la comprobación 44.
+5. Los tres `.docx` siguen siendo OOXML estructuralmente sano, que lo comprueba «los tres .docx siguen siendo OOXML estructuralmente sano».
 
 **Si algo va mal, restaura desde el respaldo y dilo.** Un entregable corrupto es peor que un
 entregable incompleto, y las 55 comprobaciones no sirven de nada si el fichero no abre.

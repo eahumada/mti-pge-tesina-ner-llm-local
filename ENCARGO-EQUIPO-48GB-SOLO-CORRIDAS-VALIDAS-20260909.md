@@ -105,7 +105,7 @@ Esto no es una excepción a la instrucción del autor: es su alcance.
   dos veces para diagnosticar.
 - **`results/RUNS_INDEX.md` y los `WORKLOG.md`.** Son el catálogo y el registro. Ahí las corridas
   retiradas **se anotan como retiradas**; no se borra su línea.
-- **El commit `df9b4c4`.** La comprobación 50 del verificador ata la Tabla 17 del informe a la
+- **El commit `df9b4c4`.** La comprobación «la Tabla 17 reproduce desde el corpus historico» ata la Tabla 17 del informe a la
   versión del corpus **anterior** a la corrección del *mojibake*, porque el corpus actual ya no
   tiene el defecto y esa tabla mide el estado anterior. Es historia de git y no un fichero de
   trabajo, así que nada de lo de arriba la afecta; solo que no reescribáis historia.

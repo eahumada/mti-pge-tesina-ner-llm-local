@@ -6984,3 +6984,58 @@ pasada de maquetación y va en el encargo de Claude Desktop.
 **No aplico la corrección del Markdown en este momento** porque hay un workflow de consistencia
 leyéndolo y sus citas se apoyan en él. Queda anotada con el texto exacto, junto con la de la glosa de
 la Tabla 1 de [§F144](#f144), para aplicarlas juntas cuando cierre.
+
+---
+
+## §F146 — Los números de las comprobaciones no identifican nada, y los he citado veintidós veces
+
+**Fecha:** 2026-09-09 · **Origen:** el verificador del workflow de propagación avisó de que sus
+agentes citaban «la comprobación 54» donde era la 52, y al mirarlo el problema era mayor
+
+Los comentarios `# --- N.` del verificador parecen numerar las comprobaciones. **No las numeran.**
+
+| | |
+|:---|---:|
+| Marcadores `# --- N.` declarados | **37** |
+| Comprobaciones que el verificador ejecuta | **56** |
+| Comprobaciones **sin marcador** | **19** |
+| Marcadores cuyo número **no coincide con su orden de ejecución** | **34** |
+| Hueco de numeración | **26 a 44** |
+
+**Por qué derivaron:** las funciones nuevas se insertan al **principio** del fichero —es el patrón que
+he usado toda la sesión— y sus llamadas `ejecutar(...)` van en el bloque de ejecución, en otro sitio.
+El número del comentario y la posición real se separaron sin que nada avisara. Los marcadores 45 a 55
+existen porque a las últimas sí les puse comentario; las 19 de en medio se añadieron sin él.
+
+### Y las he citado veintidós veces, dos de ellas mal
+
+Doce números citados en la documentación —26 a 31, 33, 34, 38, 39, 43, 44— **no existen como
+marcador**. Y de las cinco citas que quedaban en los dos encargos vivos, que son instrucciones que
+alguien va a seguir, **dos apuntaban a otra cosa**:
+
+| Cita | Decía | Es |
+|:---|:---|:---|
+| «la comprobación 3 del verificador vigila la referencia cruzada» | el marcador 3 es `c_tablas` | la de referencias es `c_refs_anexos_tablas` |
+| «lo comprueba la comprobación 44» | **no existe** | `c_docx_sano` |
+
+**No se renumera.** Las citas de `FINDINGS` son registro fechado y renumerar las invalidaría todas.
+
+**El arreglo es declarar que el número no identifica** y citar por **el texto que pasa a `check()`**,
+que sí es estable: es lo que aparece en la salida y lo que alguien busca con un `grep`. Escrito en la
+cabecera del verificador, y las cinco citas de los dos encargos pasadas a nombre — «la comprobación
+"los tres .docx siguen siendo OOXML estructuralmente sano"» en lugar de «la 44».
+
+### Y un falso positivo mío, que corregí a los dos minutos de crearlo
+
+Reporté también «un duplicado en el marcador 2». **No lo había.** Mi patrón era
+`^# --- (\d+)\.` y el segundo marcador es `# --- 2.bis.`, que empieza por `# --- 2.` y por tanto
+casaba como si fuera un segundo «2». Con el patrón correcto —`(\d+(?:\.bis)?)`— hay **37 marcadores y
+cero duplicados**.
+
+Peor: **al «arreglarlo» corrompí el comentario**, convirtiendo `# --- 2.bis.` en `# --- 2.bisbis.`.
+Detectado y deshecho en la comprobación inmediata. Es [§L71](#l71) por quinta vez en la sesión —el
+detector roto, no el documento— y esta vez con daño real, aunque de dos minutos.
+
+**Lo que sí es cierto de este hallazgo:** los 37 marcadores para 56 comprobaciones, las 19 sin
+marcador, los 34 desajustes de orden, el hueco 26–44 y las doce citas a números inexistentes. Nada de
+eso venía de mi regex; el duplicado sí.

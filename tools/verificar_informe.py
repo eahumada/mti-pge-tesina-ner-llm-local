@@ -45,6 +45,23 @@ EXCLUIDOS = ['nuextract', 'minimax-m3', 'gemini-3.1-flash-lite', 'q8-64k', 'sonc
 # El resumen imprime la edad de cada una. No hay caducidad automatica: caducar un fallo
 # declarado lo convertiria en un fallo nuevo y cortaria la puerta sin que nadie haya hecho nada
 # mal, que es la clase de alarma que se aprende a ignorar. Lo que se hace es **mostrar la edad**.
+# ─────────────────────────────────────────────────────────────────────────────────────────────────
+# SOBRE LOS NUMEROS «# --- N.» DE LAS COMPROBACIONES, y por que no hay que citarlos
+#
+# Esos numeros son ETIQUETAS HISTORICAS y NO identifican nada. Comprobado el 2026-09-09: hay 37
+# marcadores para 56 comprobaciones, con un hueco de 26 a 44, un duplicado en el 2, y **34 numeros
+# que no coinciden con el orden de ejecucion**. Derivaron porque las funciones nuevas se insertan al
+# principio del fichero y sus llamadas `ejecutar(...)` en otro sitio, de modo que el numero del
+# comentario y la posicion real se separaron sin que nada avisara.
+#
+# **El identificador estable de una comprobacion es el texto que pasa a `check()`**, que es lo que
+# aparece en la salida y lo que alguien busca con un `grep`. Se cita por ese nombre, no por numero.
+# Doce numeros citados en la documentacion del proyecto no existen como marcador, y dos citas
+# apuntaban a una comprobacion distinta de la que describian. Ver FINDINGS §F146.
+#
+# No se renumera: las citas de FINDINGS son registro fechado y renumerar las invalidaria todas.
+# ─────────────────────────────────────────────────────────────────────────────────────────────────
+
 FALLOS_DECLARADOS = {
     '.rebuild_venv.log': ('2026-09-09',
                           'fichero vacio del commit 880f4f9; decision del autor '
