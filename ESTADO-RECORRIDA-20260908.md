@@ -1,10 +1,11 @@
 # Estado de la re-corrida completa
 
-**Actualizado: 2026-09-08 21:15.** Regenerar con `python3 tools/estado_recorrida.py`; no editar a mano.
+**Actualizado: 2026-09-08 23:19.** Regenerar con `python3 tools/estado_recorrida.py`; no editar a mano.
 
 Todas las corridas listadas han pasado las cinco verificaciones del protocolo —cero
 `parse_method='failed'`, cero violaciones de `F1 ≤ (P+R)/2`, cero rechazos de infraestructura— y
-llevan la firma del corpus corregido **1098 / 1500 / 1034** en N=120. Las cifras se toman de
+llevan la firma del corpus corregido **1098 / 1500 / 1034** en N=120, calculada desde los
+`confusion_matrix.json` de las 8 corridas y no escrita a mano. Las cifras se toman de
 `benchmark_summary.json`, que publica sobre **113** registros: los siete artículos contaminados se
 descuentan (`FINDINGS §F65`).
 

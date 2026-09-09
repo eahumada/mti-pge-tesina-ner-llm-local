@@ -9,10 +9,12 @@ entero da un número que no es el del estudio (FINDINGS §F65).
 Uso:  python3 tools/estado_recorrida.py > ESTADO-RECORRIDA-20260908.md
 """
 import json
+import os
 import subprocess
 import sys
 from datetime import datetime
 
+RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAMA = 'origin/fix/recorrida-correcciones-20260908'
 BASE = 'repos/ner-llm-entity-benchmark/results/recorrida_20260908/'
 
@@ -50,6 +52,39 @@ def par(tag, corpus):
     return (b[0], r[0]) if b and r else None
 
 
+def firma_corpus(corpus='N120'):
+    """Calcula la firma tp+fn por categoria desde los confusion_matrix.json de la rama.
+
+    Estaba escrita a mano en el texto del informe —«1098 / 1500 / 1034»— y nadie la habia
+    comprobado nunca contra la fuente. Al hacerlo el 2026-09-08 resulto correcta, pero una
+    cifra afirmada y no calculada envejece sin avisar en cuanto cambie el corpus.
+
+    Devuelve (firma, corridas_leidas, discrepantes). Si dos corridas del mismo corpus dan
+    firmas distintas, la anotacion de referencia no es la misma en ambas y hay que mirarlo.
+    """
+    vistas, cuenta = {}, 0
+    for d in directorios_reales():
+        if not d.endswith('__' + corpus):
+            continue
+        crudo = leer('%s/confusion_matrix.json' % d)
+        if not crudo:
+            continue
+        try:
+            m = json.loads(crudo)
+        except Exception:
+            continue
+        f = tuple((m.get(c, {}).get('TP', 0) or 0) + (m.get(c, {}).get('FN', 0) or 0)
+                  for c in ('Persons', 'Organizations', 'Locations'))
+        if any(f):
+            vistas.setdefault(f, []).append(d)
+            cuenta += 1
+    if not vistas:
+        return None, 0, []
+    mayoritaria = max(vistas, key=lambda k: len(vistas[k]))
+    discrepantes = [d for f, ds in vistas.items() if f != mayoritaria for d in ds]
+    return mayoritaria, cuenta, discrepantes
+
+
 def directorios_reales():
     """Los directorios de corrida que existen de verdad en la rama."""
     t = subprocess.run(['git', 'ls-tree', '-r', '--name-only', RAMA, BASE],
@@ -78,7 +113,20 @@ def main():
       % datetime.now().strftime('%Y-%m-%d %H:%M'))
     w('Todas las corridas listadas han pasado las cinco verificaciones del protocolo —cero')
     w("`parse_method='failed'`, cero violaciones de `F1 ≤ (P+R)/2`, cero rechazos de infraestructura— y")
-    w('llevan la firma del corpus corregido **1098 / 1500 / 1034** en N=120. Las cifras se toman de')
+    f, n_f, discrep = firma_corpus('N120')
+    if f is None:
+        w('**No se ha podido leer la firma del corpus**: ninguna corrida de N=120 trae')
+        w('`confusion_matrix.json` en la rama. La cifra no se afirma sin calcularla.')
+    else:
+        w('llevan la firma del corpus corregido **%d / %d / %d** en N=120, calculada desde los'
+          % f)
+        w('`confusion_matrix.json` de las %d corridas y no escrita a mano. Las cifras se toman de' % n_f)
+    if discrep:
+        w('')
+        w('> **Aviso: %d corrida(s) de N=120 dan una firma distinta** —%s—, de modo que no todas'
+          % (len(discrep), ', '.join('`%s`' % d for d in discrep[:4])))
+        w('> puntúan contra la misma anotación de referencia. Hay que mirarlo antes de fusionar.')
+        w('')
     w('`benchmark_summary.json`, que publica sobre **113** registros: los siete artículos contaminados se')
     w('descuentan (`FINDINGS §F65`).\n')
     w('## N=120, frente a lo publicado\n')
@@ -128,7 +176,25 @@ def main():
           % '`, `'.join(h))
         w('> modelo → directorio está escrita a mano en `tools/estado_recorrida.py`; hay que añadirlos o')
         w('> figurarán como pendientes aunque estén hechos.')
-    print('\n'.join(out))
+    texto = '\n'.join(out)
+    if '--stdout' in sys.argv:
+        print(texto)
+        return 0
+    # El documento dice «regenerar con este script; no editar a mano», de modo que el script
+    # tiene que escribirlo. Hasta el 2026-09-08 solo lo imprimia, y quien siguiera la
+    # instruccion al pie de la letra veia el documento sin cambiar y no sabia por que.
+    destino = os.path.join(RAIZ, 'ESTADO-RECORRIDA-20260908.md')
+    previo = ''
+    if os.path.exists(destino):
+        with open(destino, encoding='utf-8') as fh:
+            previo = fh.read()
+    with open(destino, 'w', encoding='utf-8') as fh:
+        fh.write(texto + '\n')
+    print('escrito: %s (%d lineas%s)'
+          % (os.path.relpath(destino, RAIZ), len(out),
+             ', sin cambios de fondo' if previo.split('\n')[3:] == (texto + '\n').split('\n')[3:]
+             else ''))
+    return 0
     return 0
 
 
