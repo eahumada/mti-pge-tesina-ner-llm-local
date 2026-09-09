@@ -87,3 +87,33 @@ Y lo hemos acotado más, para que no haya dudas sobre el alcance:
   fallo aparece en torno al 15 % de los artículos y esas muestras son pequeñas.
 
 **El remedio es un brazo, de un modelo, de un corpus**: ciento veinte artículos de inferencia.
+
+---
+
+## Refinamiento del 2026-09-10: los 7 registros perdidos no son uniformes
+
+Aplicado el criterio 5 del protocolo de monitorización a `nemotron-mini:4b_baseline` en
+`nemotron_rerun_n120_REMOTO`, con el cruce completo de `latencia`, `tokens_per_sec`, `parse_method` y
+`recall`:
+
+| Señal | Valor | Lectura |
+|:---|---:|:---|
+| Registros con latencia 0 | **7** | coincide exactamente con los 7 de §F85 |
+| De esos, con 0 tokens/s | **7** | **rechazo de infraestructura**, no pérdida del arnés |
+| Registros con `parse_method='fallback'` | **7** | son los mismos 7 |
+| De esos, con `recall > 0` | **4** | el *fallback* **sí** rescató contenido |
+| De esos, con `recall = 0` | **3** | el *fallback* **encubre** un fallo |
+
+**Lo que esto cambia para el encargo.** La pérdida no son 7 registros en blanco: son **3 de pérdida
+total** y **4 de rescate parcial**. El F1 de 22,59 % está deprimido por las dos cosas, y por tanto la
+re-corrida no solo recuperará los 3 perdidos sino que **cambiará también los 4 rescatados**, cuyo contenido
+salió del camino de excepción y no del normal.
+
+Conviene tenerlo presente al comparar: la mejora que la re-corrida produzca **no** será atribuible solo a los
+registros que faltaban.
+
+**Y el contraste con `mistral-nemo`, que confirma el veredicto de §3.bis.7.** Su mitad `kb_rag` tiene **69 de
+120 en `fallback`**, más de la mitad, y a primera vista alarma. Pero **cero registros con latencia 0** —no hay
+rechazo de infraestructura— y **68 de los 69 rescatan contenido**, con `recall > 0`. El *fallback* ahí
+funciona como vía alternativa de parseo, no como tapadera. **Benigno, confirmado con la evidencia del
+criterio 5** y no solo por inspección de los logs.
