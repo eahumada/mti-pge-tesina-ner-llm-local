@@ -61,6 +61,17 @@ veces. **Aviso de presupuesto**: el margen de páginas quedó en ~121 palabras: 
 al límite al maquetar, consulta al autor antes de recortar nada por tu cuenta. Detalle en
 `FINDINGS §F164`.
 
+**Confirmado como límite real (no del autor, de la guía institucional)**: 25 páginas **sin anexos**
+más hasta 25 páginas **adicionales** de anexos, no un total de 25. No hay que recortar los Anexos
+por presupuesto — hoy miden ~8,7 páginas estimadas. Para hacer sitio al capítulo 2, el listado de
+código `LLMProvider` se movió de `§3.2` al nuevo `Anexo A.1` (pieza 34), recuperando el margen a
+~178 palabras.
+
+**Ampliado una octava vez, ese mismo día, tras una segunda vuelta del autor: un párrafo más en
+`2.3`.** Pieza 35 en la nueva sección **0.octies**: qué es un embedding y una base de datos
+vectorial (ChromaDB), mecanismo común a las dos variantes de RAG que `2.3` ya comparaba. El margen
+de páginas queda en ~74 palabras — el más ajustado de todo el encargo. Detalle en `FINDINGS §F165`.
+
 ---
 
 ## 0. Lo primero, y ahorra la mitad del trabajo
@@ -395,11 +406,31 @@ párrafo recortado de `§3.2` y la subsección nueva del Anexo A.
 
 Detalle completo en `FINDINGS §F164`.
 
-> **Cierre confirmado por el autor: el capítulo 2 no crece más.** Con las piezas 31 a 34 el
-> enriquecimiento del marco teórico queda dado por completo — el autor confirmó explícitamente que
-> el margen restante (~178 palabras respecto del límite de 25 páginas) es suficiente y que no pide
-> más rondas. Aplica estas cuatro piezas como el estado definitivo del capítulo 2 y del Anexo A.1;
-> no hay una octava ronda pendiente detrás de esta.
+> **La nota de cierre que iba aquí quedó superada: sí hubo una ronda más.** El autor había
+> confirmado que el margen de 178 palabras bastaba, y una revisión después cambió de opinión («un
+> cambio: sí enriquecer más el marco teórico»). Ver la **0.octies** justo debajo.
+
+---
+
+## 0.octies Segunda ronda: embeddings y bases de datos vectoriales en `2.3`
+
+### Pieza 35 — Un párrafo nuevo en `2.3`, sobre qué es un embedding y una base de datos vectorial
+
+Después del párrafo que cierra la comparación de las variantes de RAG (el que termina en «...El
+capítulo 5 contrasta empíricamente ambas.») se añade un párrafo nuevo (111 palabras) que explica el
+mecanismo común a las dos variantes: qué es un **embedding**, por qué reduce la recuperación a una
+búsqueda por vecino más próximo, y qué papel cumple una **base de datos vectorial** (ChromaDB [32]
+en este trabajo). Es contenido nuevo, no una edición de un párrafo existente. Cierra un vacío real:
+el cuerpo usaba «similitud vectorial» (§5.6) y citaba ChromaDB (Anexo D) sin definir ninguno de los
+dos conceptos antes.
+
+> **Aviso de presupuesto, más urgente que en la ronda anterior.** El margen bajó de 178 a **74
+> palabras** respecto del límite de 25 páginas (estimado en 24,89). A este nivel, **cualquier
+> párrafo adicional que el autor pida más adelante necesitará, primero, un recorte de tamaño
+> equivalente en otra parte del cuerpo** — ya no hay margen para sumar sin restar. Si al maquetar
+> te acercas al límite real, avisa al autor antes de recortar nada por tu cuenta.
+
+Detalle completo en `FINDINGS §F165`.
 
 ---
 

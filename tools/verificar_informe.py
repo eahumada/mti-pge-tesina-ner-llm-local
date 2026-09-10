@@ -67,6 +67,9 @@ EXCLUIDOS = ['nuextract', 'minimax-m3', 'gemini-3.1-flash-lite', 'q8-64k', 'sonc
 # y 'Vale la pena señalar una particularidad de procedencia' ya no tapan ningun fallo: la nota de
 # §F163 se propago a los tres .docx (v14). Comprobado antes de retirar. Ver CURRENT-TASKS §1.291.
 FALLOS_DECLARADOS = {
+    'La recuperación en ambas variantes depende de un mecanismo': ('2026-09-09',
+        'PENDIENTE de propagar (§F165): párrafo nuevo de §2.3 (embeddings y bases de datos '
+        'vectoriales, ChromaDB). Enriquecimiento del marco teórico, ronda 2, a peticion del autor.'),
     'Citada desde §3.2. Los patrones Factory y Facade, comparad': ('2026-09-09',
         'PENDIENTE de propagar (§F164): párrafo nuevo del Anexo A.1, con el listado de codigo de '
         'LLMProvider movido desde el cuerpo (§3.2) para liberar presupuesto de paginas.'),

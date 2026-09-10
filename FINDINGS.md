@@ -7999,3 +7999,24 @@ trasladó al nuevo `Anexo A.1`, y se recortó una frase del párrafo de AIMD ya 
 de la nueva `§2.4`. Margen recuperado: de 121 a 178 palabras. Se barrió además el documento entero
 en busca de otras menciones de «datos que no pueden corroborarse ni recalcularse», por si `§F163`
 no había sido la única — no apareció ninguna otra.
+
+## §F165 — Segunda ronda de enriquecimiento: embeddings y bases de datos vectoriales en §2.3
+
+**Fecha:** 2026-09-09 · **Origen:** el autor, tras confirmar que el margen de `§F164` (178 palabras)
+era suficiente, pidió una ronda más («un cambio: sí enriquecer más el marco teórico»)
+
+Ambas variantes de RAG que compara `§2.3` («por diccionario» y «contextual o de conocimiento»)
+dependen de un mecanismo que el capítulo nunca explicaba: cómo se decide qué recuperar. El cuerpo
+ya usa dos términos sin definirlos — «similitud vectorial» en §5.6 y `ChromaDB` (citado [32]) solo
+en el Anexo D, como nombre de biblioteca sin concepto detrás. Añadido un párrafo de 111 palabras en
+`§2.3`, después del párrafo que cierra la comparación de variantes RAG: qué es un **embedding**
+(representación vectorial que aproxima textos semánticamente próximos), por qué reduce la
+recuperación a una búsqueda por vecino más próximo, y qué papel cumple una **base de datos
+vectorial** (ChromaDB en este trabajo) para hacer esa búsqueda eficiente a la escala del estudio.
+
+**Presupuesto**: el margen bajó de 178 a 74 palabras — la estimación de páginas queda en 24,89 de
+25, el margen más ajustado de toda esta ronda de enriquecimiento. Se avisa expresamente: **cualquier
+adición más exige, antes, otro recorte de tamaño equivalente en el cuerpo**, porque a 74 palabras el
+margen ya no absorbe ni un párrafo corto. Verificado: 56 comprobaciones, 0 fallos nuevos (41
+declarados, 16 vigentes), dentro de 25 páginas — declarada la propagación pendiente a los tres
+`.docx`, como en las rondas anteriores.
