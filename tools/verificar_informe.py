@@ -72,39 +72,14 @@ EXCLUIDOS = ['nuextract', 'minimax-m3', 'gemini-3.1-flash-lite', 'q8-64k', 'sonc
 # autor) quito varias negritas del cuerpo, y el conteo del .md volvio a coincidir exactamente con
 # BOLD_CUERPO_BASE=9 por casualidad. Comprobado: 'el .docx no anade resaltes ni guiones' pasa ok.
 # No se toco BOLD_CUERPO_BASE, sigue siendo constante de Claude Desktop.
+#
+# Retiradas 2026-09-09 (§F167, tercera pasada de Claude Desktop, _v15): trece declaraciones de la
+# ronda de enriquecimiento del marco teorico (piezas 31-36, ver §F164/§F165/§F166) ya no tapan
+# ningun fallo — la prosa de §2.1, §2.3, §2.4, §2.5, el recorte de §3.3, el Anexo A.1 (codigo de
+# LLMProvider) y el recuento de resaltes llegaron a los tres .docx en la misma sesion de
+# monitoreo, mientras Claude Desktop seguia trabajando en vivo (las dos ultimas se resolvieron
+# entre dos ejecuciones seguidas del verificador). Comprobado antes de retirar cada una.
 FALLOS_DECLARADOS = {
-    'Conviene subrayar que se trata de una penalización exclusivamente de precisión': ('2026-09-09',
-        'PENDIENTE de propagar (§F166): la frase se retiró al comprimir el párrafo de §3.3 sobre '
-        'Locations, más claro y más corto a petición del autor. No aceptado, solo declarado.'),
-    'La recuperación en ambas variantes depende de un mecanismo': ('2026-09-09',
-        'PENDIENTE de propagar (§F165): párrafo nuevo de §2.3 (embeddings y bases de datos '
-        'vectoriales, ChromaDB). Enriquecimiento del marco teórico, ronda 2, a peticion del autor.'),
-    'Citada desde §3.2. Los patrones Factory y Facade, comparad': ('2026-09-09',
-        'PENDIENTE de propagar (§F164): párrafo nuevo del Anexo A.1, con el listado de codigo de '
-        'LLMProvider movido desde el cuerpo (§3.2) para liberar presupuesto de paginas.'),
-    'falta la seccion «a.1 interfaz común de proveedores': ('2026-09-09',
-        'PENDIENTE de propagar (§F164): subseccion nueva del Anexo A, con el listado de codigo '
-        'que antes vivia en el cuerpo (§3.2).'),
-    'Además de si dos medias difieren, interesa a veces si dos': ('2026-09-09',
-        'PENDIENTE de propagar (§F164): párrafo nuevo de §2.5 (Pearson/Spearman). Enriquecimiento '
-        'del marco teórico a petición del autor, pendiente de la pasada de maquetación.'),
-    'El ANOVA supone además que las observaciones son independi': ('2026-09-09',
-        'PENDIENTE de propagar (§F164): párrafo nuevo de §2.5 (homocedasticidad/Friedman). Idem.'),
-    'El criterio de coincidencia entre lo extraído y la referen': ('2026-09-09',
-        'PENDIENTE de propagar (§F164): párrafo nuevo de §2.1 (algoritmos de comparación de '
-        'cadenas). Idem.'),
-    'La ejecución masiva de modelos locales plantea un problema': ('2026-09-09',
-        'PENDIENTE de propagar (§F164): párrafo nuevo de §2.4, la sección entera (pub/sub, AIMD, '
-        'Factory/Facade). Idem.'),
-    'La primera es de desacoplamiento entre productor y consumi': ('2026-09-09',
-        'PENDIENTE de propagar (§F164): párrafo nuevo de §2.4 (pub/sub). Idem.'),
-    'La segunda es cuántos consumidores mantener activos. Un nú': ('2026-09-09',
-        'PENDIENTE de propagar (§F164): párrafo nuevo de §2.4 (AIMD). Idem.'),
-    'La tercera es cómo aislar el sistema de las diferencias en': ('2026-09-09',
-        'PENDIENTE de propagar (§F164): párrafo nuevo de §2.4 (Factory/Facade). Idem.'),
-    'falta la seccion «2.4 arquitectura de ejecución concurrente': ('2026-09-09',
-        'PENDIENTE de propagar (§F164): la sección 2.4 es nueva y el resto de §2 se renumeró '
-        '(2.4→2.5, 2.5→2.6). Pendiente de la pasada de maquetación.'),
     '.rebuild_venv.log': ('2026-09-09',
                           'fichero vacio del commit 880f4f9; decision del autor '
                           '(CURRENT-TASKS §1.103)'),
@@ -1476,22 +1451,13 @@ def _texto_docx(ruta):
 
 # 17 el 2026-09-09 al medirlo por primera vez; 16 tras partir el run de §3.3, que era el
 # unico de los 17 introducido por una edicion propia. Baja segun se propague la limpieza.
-BOLD_CUERPO_BASE = 9    # 6 -> 9 el 2026-09-09 (Claude Desktop, §2.25). El 6 fue un error mio:
-                        # lo puse desde una medicion propia con otro criterio de conteo. Con el
-                        # criterio de esta comprobacion el estado real es 9, y los NUEVE son
-                        # falsos positivos del constructor de `marcados`, no resaltes anadidos.
-                        # Verificado uno a uno: `**AIMD**` esta en el .md (linea 215) y
-                        # `**Ejemplo 1:**` tambien (linea 743), pero no entran en `marcados`
-                        # porque `\*\*([^*]+)\*\*` no representa dos casos: (a) una negrita que
-                        # contiene cursiva —`**Ejemplos *few-shot* de...**`—, que parte el
-                        # emparejamiento y descoloca los pares siguientes; y (b) una negrita que
-                        # cruza una linea de cita, donde el `>` queda dentro del texto marcado
-                        # —«internamente\n> coherente**»— mientras el renderizador lo retira.
-                        # NO se toco el regex: se probo sustituirlo por uno no codicioso con
-                        # re.S y el recuento subio de 9 a 142, emparejando marcas de tramos
-                        # distintos. Es el defecto del que avisa el autor. Queda anotado para
-                        # el equipo principal por si quiere abordarlo. La comprobacion conserva
-                        # su proposito, que es detectar CRECIMIENTO desde el estado conocido.
+BOLD_CUERPO_BASE = 8    # 9 -> 8 el 2026-09-10 (Claude Desktop, §2.27). Baja una unidad tras la
+                        # cuarta pasada; la comprobacion pidio bajar la base al detectar la mejora.
+                        # El diagnostico de los que quedan sigue en pie y esta en §2.25: NO son
+                        # resaltes anadidos por el renderizador, sino negritas del Markdown que su
+                        # constructor de `marcados` no representa —negrita con cursiva dentro, y
+                        # negrita que cruza una linea de cita—. No se toco el regex: probado el
+                        # arreglo no codicioso, el recuento subia de 9 a 142.
 
 
 PDF_RAIZ = 'Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.pdf'

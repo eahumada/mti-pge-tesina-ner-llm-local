@@ -8059,3 +8059,23 @@ un defecto resuelto, y removerla habría exigido renumerar la Figura 2. Verifica
 comprobaciones, 0 fallos nuevos (41 declarados, 16 vigentes), dentro de 25 páginas. El recorte
 liberó además 266 palabras de presupuesto (el margen pasó de 74 a 340), revirtiendo la crisis de
 `§F165`.
+
+## §F167 — Toda la ronda de enriquecimiento del marco teórico (piezas 31-36) llegó a los tres `.docx`
+
+**Fecha:** 2026-09-09 · **Origen:** monitoreo de rutina del equipo remoto; se detectó que
+Claude Desktop había renderizado una `_v15` (22:52, tras la `_v14` de las 20:16)
+
+Trece declaraciones de `FALLOS_DECLARADOS` dejaron de tapar ningún fallo, todas en la misma
+sesión de monitoreo: los siete párrafos nuevos del capítulo 2 (§2.1, §2.3, §2.4 completa, §2.5),
+el recorte de §3.3 sobre `Locations`, la sección nueva del Anexo A.1 con el código de
+`LLMProvider`, y el recuento de resaltes del cuerpo. Las dos últimas se resolvieron **entre dos
+ejecuciones consecutivas del verificador** en este mismo turno — señal de que Claude Desktop
+seguía trabajando en vivo mientras se comprobaba, el mismo patrón ya visto en `§1.287`/`§1.288`.
+Comprobado antes de retirar cada una: ninguna aparece ya como «párrafo ausente» ni como «frase
+retirada superviviente» en los tres entregables. No se tocó ningún `.docx`, el PDF ni
+`doc/versions/informe_final/`; solo se editó `tools/verificar_informe.py` (retirar
+declaraciones) y `CURRENT-TASKS.md` (registro, por *append*). `BOLD_CUERPO_BASE` sin tocar.
+
+Verificado: 56 comprobaciones, 0 fallos nuevos (5 declarados, 4 vigentes), dentro de 25 páginas.
+Con esto, todo el trabajo de enriquecimiento del capítulo 2 (`§F164`/`§F165`/`§F166`) queda
+completamente propagado a los tres entregables.

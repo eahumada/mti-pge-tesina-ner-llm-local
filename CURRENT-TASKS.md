@@ -281,6 +281,75 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.27 COMPLETADA — Cuarta pasada: piezas 31 a 36, el marco teórico enriquecido
+- **Abierta:** 2026-09-10 01:55 por Claude Desktop. Secciones **0.septies, 0.octies y 0.nonies** del encargo,
+  añadidas después de la `_v14`. Y traen la noticia que importa: **el reparo 4 del profesor guía deja de estar
+  fuera de mi alcance**, porque el marco teórico ya está escrito en el `.md`.
+- **Piezas 31 y 32:** sección nueva `2.4 Arquitectura de ejecución concurrente y aislamiento de proveedores`,
+  con texto propio, y renumeración de las antiguas `2.4` y `2.5` a `2.5` y `2.6`, con dos párrafos nuevos
+  dentro de la `2.5`.
+- **Pieza 33:** un párrafo nuevo en `2.1` y dos recortes que lo compensan, en `§3.3` y `§5.3.1`.
+- **Pieza 34:** el listado de código `LLMProvider` sale de `§3.2` y pasa al **Anexo A.1**, dejando en `§3.2`
+  solo la frase que remite a él. Es la maniobra que el encargo describe para recuperar margen: mover al anexo,
+  que no computa, en lugar de recortar.
+- **Pieza 35:** párrafo nuevo en `2.3` sobre qué es un embedding y una base de datos vectorial.
+- **Pieza 36:** reescrito el párrafo largo de `§3.3` sobre el defecto de `Locations`, más corto y con la
+  conclusión primero.
+- **Las seis son cambios del `.md`**, así que la reconstrucción las hereda.
+- ⚠️ **Vigilar la extensión.** El `.md` pasa de 154 988 a 159 142 bytes y el capítulo 2 crece. La `_v14` dejó
+  el cuerpo en **24 de 25**, así que el margen es de una página. Si se desborda: primero estilo, después mirar
+  qué más admite el anexo, y si aun así no cabe, **parar y avisar** en lugar de suprimir texto.
+- **Línea base:** `56 comprobaciones · 41 fallos (41 declarados, 0 nuevos)` y `15 afirmaciones · 0 que no se
+  cumplen`.
+- **Estado del `.md`:** 159 142 bytes, escrito a las 00:26, SHA-256 `4bc96b38855a`. Se comprueba al terminar.
+
+**Cerrada:** 2026-09-10 02:05. Hash del `.md` comprobado al terminar: el mismo, `4bc96b38855a`.
+
+| | Antes | Después |
+|:---|:---:|:---:|
+| `verificar_informe.py` | 41 fallos (41 declarados, 0 nuevos) | **7 fallos (5 declarados, 2 nuevos)** |
+| `auditar_afirmaciones.py` | 15 comprobadas, 0 incumplidas | 15 comprobadas, **0 incumplidas** |
+
+Los dos «nuevos» son, otra vez, declaraciones caducadas. Las tres comprobaciones que el encargo manda vigilar
+por nombre pasan, y con ellas «los encabezados de los `.docx` siguen al Markdown», que era la que acusaba la
+ausencia del Anexo A.1.
+
+**El reparo 4 del profesor guía deja de estar pendiente en el entregable.** El marco teórico enriquecido ya
+está dentro: la sección nueva **2.4 Arquitectura de ejecución concurrente y aislamiento de proveedores**, las
+antiguas 2.4 y 2.5 renumeradas a **2.5** y **2.6** con dos párrafos nuevos, el párrafo de `2.1`, el de `2.3`
+sobre embeddings y bases de datos vectoriales, y el párrafo de `§3.3` reescrito. Verificado en el PDF: las tres
+subsecciones aparecen con su numeración nueva.
+
+**Dos defectos del renderizador, encontrados por el verificador y corregidos:**
+1. **El nivel de encabezado.** El `.md` usa `####` y el renderizador lo emitía como `heading3`, de modo que el
+   Anexo A.1 se declaraba ausente aunque su texto estuviera. La plantilla **sí define `heading4`**, así que la
+   decisión editorial que el encargo pedía tomar y declarar es esta: **`####` va con `heading4`**, que es el
+   cuarto nivel de la propia plantilla. Son 17 encabezados y no cambian la paginación.
+2. **Los encabezados van en un solo run.** El verificador une los `<w:t>` de un párrafo **con un espacio**, así
+   que partir un encabezado en varios runs —por una cursiva o un `` `código` ``— le insertaba espacios espurios:
+   «(`LLMProvider`)» se leía «( LLMProvider )» y la sección seguía dando por ausente. Ahora el texto de un
+   encabezado se emite en un único run y sin marcadores.
+
+**Extensión, y conviene decirlo con claridad: el cuerpo queda en 25 páginas de 25.** Cumple, pero **sin
+margen**. La `_v14` tenía una página de holgura y el marco teórico nuevo se la comió. Probé una compactación
+por estilo más agresiva (interlineado 228 → 226, encabezados y leyendas más apretados) y **no recupera ninguna
+página del cuerpo**: solo quita una de los anexos, porque el corte lo manda ahora el contenido. Se conserva por
+tanto la tipografía de las versiones anteriores, que se lee mejor. **Si entra una línea más en el cuerpo, se
+desborda**, y la palanca disponible sin tocar texto es la del apartado 2.ter del encargo: mover al anexo, que
+no computa —la pieza 34 ya lo hizo con el listado de `LLMProvider`—.
+
+**Resto de la verificación sobre el PDF:** 38 páginas totales, anexos 13 · cero páginas en blanco · encabezado
+y pie en las 38 sin solaparse (mínimos 20,8 y 17,5 pt) · resumen y abstract en la página 1 con 198 y 183
+palabras · siete capítulos y nueve anexos A-I · 19 leyendas de tabla correlativas y dos de figura · 39 entradas
+de bibliografía correlativas · ninguna llamada `§` rota · ninguna fecha de calendario en el cuerpo · sin
+emojis, arte ASCII ni asteriscos sueltos. Los tres `.docx` coinciden entre sí.
+
+**`BOLD_CUERPO_BASE` de 9 a 8**, que la comprobación volvió a pedir al detectar la mejora. El diagnóstico de
+§2.25 sigue en pie y está anotado en el propio comentario: los que quedan no los añade el renderizador.
+
+**Respaldo** en `doc/versions/informe_final/_respaldos_20260910/`. **`_v15` congelada**: `.docx`
+`b30c85b7531f` · `.pdf` `c62e78bc91e7`. Sin tocar el PDF de `doc/versions/enviados/`.
+
 ### 2.26 COMPLETADA — Tercera pasada: piezas 29 y 30 (fechas de calendario y nota de procedencia)
 - **Abierta:** 2026-09-09 23:15 por Claude Desktop. Sección **0.sexies** del encargo, añadida a las 20:08
   (commit `7698531`), después de que la `_v13` ya estuviera rendereada.
@@ -1775,6 +1844,7 @@ miraba, y eso motiva la política.
 
 | Fecha/hora | Agente | Cambio |
 |:---|:---|:---|
+| 2026-09-10 02:05 | Claude Desktop | §2.27: piezas 31-36 propagadas, **el marco teórico enriquecido ya está en el entregable** y con ello el reparo 4 del profesor deja de estar pendiente ahí. Verificador **41 → 7 fallos**, auditoría 0 incumplidas. Corregidos dos defectos del renderizador que el verificador destapó: `####` pasa a `heading4` (la plantilla lo define) y los encabezados se emiten en un solo run, porque el verificador une los `<w:t>` con espacio y «(`LLMProvider`)» se leía «( LLMProvider )». ⚠️ **Cuerpo 25 de 25: cumple sin margen.** `_v15` congelada |
 | 2026-09-09 23:20 | Claude Desktop | §2.26: piezas 29 y 30 propagadas (ocho fechas de calendario fuera del cuerpo y eliminado el párrafo de «particularidad de procedencia» con el 79,03 % sin evidencia recalculable). Verificador **11 → 7 fallos**, auditoría 0 incumplidas, y los dos nuevos son declaraciones caducadas, una de ellas la del propio párrafo retirado. Cuerpo 24/25 sobre el PDF. `_v14` congelada |
 | 2026-09-09 23:00 | Claude Desktop | §2.25: piezas 19-28 propagadas reconstruyendo desde el `.md` (155 926 bytes, hash sin cambios). Verificador **26 → 6 fallos**, auditoría 0 incumplidas, y las tres frases retiradas del aviso §1.286 ya no están en ningún entregable. Cuerpo 24/25 sobre el PDF. Cerrado el pendiente de los resaltes: los 9 que acusaba el verificador **están marcados en el `.md`** y son falsos positivos de su regex (negrita con cursiva dentro, y negrita que cruza una línea de cita); probado el arreglo no codicioso, subía a 142, así que **no se tocó el regex**. `_v13` congelada |
 | 2026-09-09 20:05 | Claude Desktop | §2.24: los tres `.docx` y el PDF reconstruidos desde el `.md` (157 189 bytes, hash sin cambios al terminar). Cierra las piezas 1-5, 7-9 y 11-18 del encargo del 09-09 de una vez, por reconstrucción en lugar de cirugía OOXML; **las dos figuras insertadas** (renderizador enseñado a leer `![]()`, con interlineado automático para que la imagen no se recorte y `keepNext` para que la leyenda no se separe). Verificador: **86 fallos → 29**, y los 24 nuevos son declaraciones caducadas, no defectos. Medido sobre el PDF: 37 páginas, **cuerpo 24 de 25**, anexos 13. `_v12` congelada |
@@ -2258,3 +2328,4 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.294: **el autor confirmó que el enriquecimiento del marco teórico ya es suficiente (~178 palabras de margen) y pidió cerrar la actualización al encargo de Claude Desktop.** Añadida una nota de cierre explícita al final de la sección `0.septies`: las piezas 31 a 34 son el estado definitivo del capítulo 2 y del Anexo A.1, no hay una octava ronda pendiente. Sin cambios de contenido en el `.md` esta vez, solo la confirmación en el encargo. Monitoreo del equipo remoto: sin commits nuevos; `.docx` de Claude Desktop sin cambios desde la pasada anterior. Verificado: 56 comprobaciones, 0 fallos nuevos, dentro de 25 páginas |
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.295: **el autor cambió de opinión: sí enriquecer más el marco teórico (`FINDINGS §F165`).** Añadido un párrafo de 111 palabras en `§2.3`, después de la comparación de variantes RAG: qué es un embedding, por qué reduce la recuperación a una búsqueda por vecino más próximo, y qué es una base de datos vectorial (ChromaDB [32], hasta ahora solo citada como nombre de biblioteca en el Anexo D, sin concepto detrás). Cierra un vacío real: «similitud vectorial» aparecía sin definir en §5.6. **Presupuesto crítico**: el margen bajó de 178 a 74 palabras (24,89 de 25 páginas estimadas) — cualquier adición más exige, antes, otro recorte de tamaño equivalente. Declarada la propagación pendiente del párrafo a los tres `.docx`. Verificado: 56 comprobaciones, 0 fallos nuevos (41 declarados, 16 vigentes), dentro de 25 páginas. Actualizado el encargo de Claude Desktop con la pieza correspondiente |
 | 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.296: **el autor releyó el párrafo de §3.3 sobre `Locations` (ya verificado en `§1.289`/`§F162`) y pidió comprobar si era importante, y si no, eliminarlo o clarificar la conclusión final — temía que un comité lo leyera como una mala decisión sin resolver, y pidió aclarar qué son «localizaciones» (`FINDINGS §F166`).** El contenido era correcto pero el orden era el equivocado: abría con la limitación técnica y solo al final decía que ya estaba resuelta. Reescrito de 440 a 240 palabras: **abre** con «ya está corregido y no afecta a ningún resultado vigente»; **aclara** que son lugares geográficos, la tercera categoría de §2.1 (remite al `§F164` recién añadido); **recorta** el detalle histórico (545 localizaciones, mecánica de la medición restringida) a una remisión al Anexo I, que ya lo documenta íntegro. **Conservados** los dos hechos que la integridad de la medición exige: que el defecto era de la cadena de datos y no de la anotación de CoNLL-2002, y la fracción exacta 12 852/19 464 del 66,0 %, porque dos comprobaciones mecánicas (`c_figuras`, la de composición de FP) la exigen literalmente — verificado que ambas siguen en `ok` tras la reescritura. No se tocó la Figura 1 (sigue siendo evidencia real de un defecto resuelto). **Efecto colateral positivo**: el recorte liberó 266 palabras de presupuesto (74 → 340, luego 327 tras contar todo), revirtiendo la crisis de páginas de `§1.295`. Declarada la propagación pendiente de la frase retirada a los tres `.docx`, y retirada una declaración que quedó caducada por casualidad (el recuento de resaltes volvió a coincidir con `BOLD_CUERPO_BASE=9`, sin tocar la constante). Verificado: 56 comprobaciones, 0 fallos nuevos (41 declarados, 16 vigentes), dentro de 25 páginas |
+| 2026-09-09 (post) | Claude Code (equipo principal) | ✅ §1.297: **Claude Desktop propagó las piezas 31-36 (§2.27): el enriquecimiento del marco teórico ya está en los tres `.docx`, y con ello el reparo 4 del profesor deja de estar pendiente en el entregable (`FINDINGS §F167`).** Monitoreando noté que los `.docx` cambiaron de hora (20:16 → 22:52, `_v15`). El verificador confirmó, vía comprobación 55, que trece declaraciones ya no tapaban ningún fallo: los siete párrafos nuevos de §2.1/§2.3/§2.4/§2.5, el recorte de §3.3, el Anexo A.1 (código de `LLMProvider`) y el recuento de resaltes — las dos últimas se resolvieron **entre dos ejecuciones consecutivas del verificador en este mismo turno**, señal de que Claude Desktop seguía trabajando en vivo (mismo patrón que `§1.287`/`§1.288`). Retiradas las trece, comprobado antes de retirar cada una. **Dato importante de Claude Desktop, no mío**: su propia entrada `§2.27` reporta «Cuerpo 25 de 25: cumple sin margen» — la medición real sobre el PDF generado, no la estimación por palabras que este equipo usa. Confirma que el presupuesto de páginas está agotado: **cualquier adición futura al cuerpo exige, antes, un recorte de tamaño al menos equivalente**, ya no solo por la estimación de `c_extension` sino por la medición real. No se tocó ningún `.docx`, el PDF ni `doc/versions/informe_final/`; solo `tools/verificar_informe.py` y esta fila. Verificado: 56 comprobaciones, 0 fallos nuevos (5 declarados, 4 vigentes), dentro de 25 páginas. `BOLD_CUERPO_BASE` sin tocar. Sin commits nuevos del equipo remoto de 48 GB |
