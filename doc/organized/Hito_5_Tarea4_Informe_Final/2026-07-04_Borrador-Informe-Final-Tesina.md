@@ -212,23 +212,11 @@ _Tabla 3. Arquitectura del sistema por capas, con sus módulos y su detalle téc
 
 La **capa de datos** carga el corpus desde un fichero JSON y valida cada registro contra un esquema antes de admitirlo, garantizando que todo artículo procesado dispone de texto y de anotación de referencia. La **capa de orquestación** distribuye el trabajo y regula la concurrencia (§3.2). La **capa de proveedores** aísla la heterogeneidad de las APIs. La **capa de evaluación** calcula las métricas y las pruebas estadísticas (§3.3). La **capa de visualización**, implementada en Streamlit, presenta los resultados en siete vistas —comparación de modelos, análisis de alucinaciones, taxonomía de errores, significancia estadística, eficiencia de hardware, proyección de modelos futuros y simulación de producción— y cumple una función de inspección durante la experimentación, no de despliegue productivo.
 
-La capa de proveedores es la que materializa el criterio C2 sin encerrar el trabajo en un único motor. Aplica los patrones *Factory* y *Facade* tras una interfaz común:
-
-```python
-class LLMProvider(ABC):
-    @abstractmethod
-    def extract_entities(self, text: str, system_prompt: str, **kwargs) -> ExtractionResult:
-        ...
-    @abstractmethod
-    def is_available(self) -> bool:
-        ...
-```
-
-La selección del proveedor se resuelve por el prefijo del identificador del modelo, así que añadir un motor nuevo no requiere modificar el orquestador. Esta indirección tuvo una consecuencia práctica relevante durante la experimentación: un modelo abierto cuyo nombre comenzaba por `gpt-` era enrutado erróneamente hacia la API comercial, fallo que se detectó y corrigió discriminando por la presencia de etiqueta de versión propia de los identificadores locales. El episodio ilustra que la abstracción por convención de nombres exige verificación explícita del enrutamiento efectivo.
+La capa de proveedores es la que materializa el criterio C2 sin encerrar el trabajo en un único motor, aplicando los patrones *Factory* y *Facade* introducidos en §2.4 tras una interfaz común (`LLMProvider`, Anexo A.1). La selección del proveedor se resuelve por el prefijo del identificador del modelo, así que añadir un motor nuevo no requiere modificar el orquestador. Esta indirección tuvo una consecuencia práctica relevante durante la experimentación: un modelo abierto cuyo nombre comenzaba por `gpt-` era enrutado erróneamente hacia la API comercial, fallo que se detectó y corrigió discriminando por la presencia de etiqueta de versión propia de los identificadores locales. El episodio ilustra que la abstracción por convención de nombres exige verificación explícita del enrutamiento efectivo.
 
 El núcleo de ejecución es un canal de publicación y suscripción con múltiples hilos. El productor publica lotes de artículos por modelo en una cola en memoria (con interfaz compatible con Redis para un eventual despliegue distribuido) y los consumidores los procesan en paralelo.
 
-El número de consumidores no es fijo: lo regula un controlador **AIMD** (*Additive Increase, Multiplicative Decrease*), política tomada del control de congestión en redes [26]. Mientras el sistema permanece estable (sin errores de limitación de tasa ni excepciones) durante una ventana de 600 segundos, el controlador añade un consumidor cada 120 segundos hasta un techo del 75 % del máximo configurado; ante el primer error de saturación reduce los consumidores a la mitad. Un cortacircuitos complementa la política: cinco fallos consecutivos abren el circuito, que fija la concurrencia en un único consumidor y sondea la recuperación tras un enfriamiento de 300 segundos; un primer lote exitoso lo vuelve a cerrar. La asimetría entre el aumento prudente y el recorte agresivo es deliberada, pues el coste de saturar un servicio de inferencia (reintentos, respuestas truncadas, penalización por cuota) excede con mucho al de infrautilizarlo. El valor que el controlador recalcula se aplica al arrancar cada modelo o condición, mientras que el paralelismo interno de cada lote lo adopta de inmediato. Sobre el equipo de 48 GB (catorce núcleos, techo del controlador en nueve) el sistema escaló de forma estable hasta nueve consumidores concurrentes para el conjunto de modelos locales evaluados, de 1,5B a 31B; con lotes de tres registros, esos nueve consumidores equivalen a veintisiete extracciones simultáneas.
+El número de consumidores no es fijo: lo regula el controlador **AIMD** introducido en §2.4 [26]. Mientras el sistema permanece estable (sin errores de limitación de tasa ni excepciones) durante una ventana de 600 segundos, el controlador añade un consumidor cada 120 segundos hasta un techo del 75 % del máximo configurado; ante el primer error de saturación reduce los consumidores a la mitad. Un cortacircuitos complementa la política: cinco fallos consecutivos abren el circuito, que fija la concurrencia en un único consumidor y sondea la recuperación tras un enfriamiento de 300 segundos; un primer lote exitoso lo vuelve a cerrar. El valor que el controlador recalcula se aplica al arrancar cada modelo o condición, mientras que el paralelismo interno de cada lote lo adopta de inmediato. Sobre el equipo de 48 GB (catorce núcleos, techo del controlador en nueve) el sistema escaló de forma estable hasta nueve consumidores concurrentes para el conjunto de modelos locales evaluados, de 1,5B a 31B; con lotes de tres registros, esos nueve consumidores equivalen a veintisiete extracciones simultáneas.
 
 La gestión de memoria merece atención propia porque condicionó el alcance del estudio. Al terminar cada modelo se libera explícitamente su ocupación de GPU invocando la API de generación con `keep_alive=0`. Ahora bien, ese parámetro evita retener varios modelos a la vez, pero no reduce el footprint de uno solo, y esa distinción resultó decisiva. macOS expone en `recommendedMaxWorkingSetSize` [36] el techo de memoria que la GPU puede ocupar sin degradar el rendimiento; medido sobre los equipos de prueba equivale al 75 % de la memoria unificada, unos 12 GB en una máquina de 16 GB. Los modelos GGUF de 7B a 12B ocupan entre 7 y 9 GB (y los compactos de 1,5B a 3B, entre 1,7 y 4 GB), así que caben con holgura; la compilación MLX de 12B, en cambio, alcanza 15–16 GB y desborda ese techo. La compilación MLX de 31B llega a un footprint operativo de ~24,6 GB medidos sobre N=15 y hasta ~27 GB sobre N=120, mientras que la compilación GGUF se estabiliza en ~18,8 GB de pesos; ninguna de las dos puede cargarse en 16 GB ni siquiera de forma serial. La cuantización, además, no es homogénea: Q4_K_M en la mayoría de los pesos GGUF, Q4_0 en `mistral-nemo:latest`, MXFP4 en `gpt-oss:20b` y precisión mixta de cuatro bits en las compilaciones MLX, mientras que `gemma4:31b-cloud` corre en BF16 y por eso no compite en igualdad de condiciones de memoria. La ejecución se organizó en consecuencia en dos escalones de hardware, repartidos por footprint medido y no por número de parámetros: 16 GB para los modelos que se mantuvieron por debajo de ~12 GB (los GGUF de 1,5B a 12B) y un equipo de 48 GB, con techo asignable de ~36 GB, para el resto, esto es, los de 31B, las compilaciones MLX y `gpt-oss:20b`.
 
@@ -745,6 +733,21 @@ _Tabla 9. Estructura del repositorio de código_
 | `SYSTEM_PROMPT_ES.md` | Zero-shot en español |
 | `SYSTEM_PROMPT_EN_FEWSHOT.md` | Few-shot en inglés |
 | `SYSTEM_PROMPT_ES_FEWSHOT.md` | Few-shot en español; se reproduce íntegro en el Anexo B |
+
+#### A.1 Interfaz común de proveedores (`LLMProvider`)
+
+Citada desde §3.2. Los patrones *Factory* y *Facade*, comparados contra su alternativa en §2.4, se
+apoyan en esta interfaz abstracta común a `OllamaProvider`, `OpenAIProvider` y `AnthropicProvider`:
+
+```python
+class LLMProvider(ABC):
+    @abstractmethod
+    def extract_entities(self, text: str, system_prompt: str, **kwargs) -> ExtractionResult:
+        ...
+    @abstractmethod
+    def is_available(self) -> bool:
+        ...
+```
 
 ### Anexo B — Prompt del Sistema (Versión Few-Shot Español)
 

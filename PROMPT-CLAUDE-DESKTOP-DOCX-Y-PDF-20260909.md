@@ -378,10 +378,20 @@ recortes en otras secciones, para no duplicar la misma explicación dos veces**:
   más corto. Sustituye el párrafo entero por el del Markdown.
 
 > **Aviso de presupuesto de páginas.** Estas tres piezas juntas añaden bastante más de lo que quitan:
-> el margen antes de este encargo era de unas 891 palabras respecto del límite de 25 páginas, y queda
-> en aproximadamente 121. Si al maquetar el cuerpo se acerca demasiado al límite, avisa al autor antes
-> de recortar cualquier cosa por tu cuenta — la política del proyecto exige su autorización expresa
-> para suprimir contenido, y él está al tanto de que el margen quedó ajustado.
+> el margen antes de este encargo era de unas 891 palabras respecto del límite de 25 páginas, y bajó
+> a ~121. **Confirmado contra la guía institucional** (`Instrucciones Informe Final de
+> Tesina/tesinas-finales-2026.pdf`, diapositivas 16 y 25): el límite es 25 páginas **sin anexos**
+> más hasta 25 páginas **adicionales** de anexos — no un total de 25. No hay que recortar ningún
+> Anexo por presupuesto: hoy miden ~8,7 páginas estimadas, lejos de su propio límite.
+
+### Pieza 34 — El listado de código `LLMProvider` se movió de `§3.2` al nuevo `Anexo A.1`
+
+Para recuperar parte del margen (de 121 a ~178 palabras), el bloque de código Python de `§3.2`
+(la clase `LLMProvider(ABC)`) se trasladó a una subsección nueva, `#### A.1 Interfaz común de
+proveedores (LLMProvider)`, justo después de la Tabla 9 del Anexo A y antes del Anexo B. En `§3.2`
+solo queda una frase que remite a ella («...tras una interfaz común (`LLMProvider`, Anexo A.1)»,
+reemplazando el párrafo y el bloque de código que tenías). Copia ambos cambios del Markdown: el
+párrafo recortado de `§3.2` y la subsección nueva del Anexo A.
 
 Detalle completo en `FINDINGS §F164`.
 

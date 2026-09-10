@@ -7976,3 +7976,26 @@ paréntesis restantes son propagación pendiente a los tres `.docx`: siete párr
 sección nueva en el índice, y una negrita que bajó de 9 a 8 por casualidad (declarada a nombre de
 Claude Desktop, que es quien mantiene `BOLD_CUERPO_BASE`, no se toca aquí). Verificado: 56
 comprobaciones, 0 fallos nuevos (32 declarados, todos asignados), dentro de 25 páginas.
+
+### Adenda: el autor pidió reducir anexos «porque el total son 25 páginas», y la guía institucional dice otra cosa
+
+Pedido de continuar el enriquecimiento, el autor sugirió además reducir los Anexos, entendiendo que
+el límite de 25 páginas es del documento completo, y pidió confirmarlo contra
+`Instrucciones Informe Final de Tesina/tesinas-finales-2026.pdf` (guía del programa, Dr. Monge y
+Dr. Visconti). **Extraído el texto de las 14 páginas con `pypdf`** (no había `pdftotext` ni
+`poppler`, pero el venv del proyecto trae `pypdf`), la diapositiva 16 dice literalmente:
+«OBSERVACIÓN: Máximo 25 páginas **sin anexos**», y la diapositiva 25 (`d) Anexos`) añade que estos
+«no debiera[n] sobrepasar 25 páginas **adicionales** al cuerpo del documento (tb. 25 páginas)». Es
+decir: el límite es 25 + 25, exactamente lo que `CLAUDE.md` ya documentaba, no un total de 25 que
+obligara a recortar anexos para dar espacio al cuerpo. Medidos con la misma heurística de palabras
+que `c_extension`, los Anexos de hoy son ~5 928 palabras, ~8,7 páginas estimadas — lejos de su
+propio límite. **No se recortó ningún Anexo por presupuesto de páginas**, porque la premisa era
+incorrecta y verificarla contra la fuente antes de actuar es la misma disciplina de `§F154` y
+compañía, aplicada aquí a una instrucción del autor y no a un hallazgo de auditoría.
+
+Lo que sí se hizo, siguiendo la alternativa que el autor había elegido (recortar prosa del cuerpo
+que es más detalle de implementación que narrativa): el listado de código de `LLMProvider` (§3.2) se
+trasladó al nuevo `Anexo A.1`, y se recortó una frase del párrafo de AIMD ya cubierta por la teoría
+de la nueva `§2.4`. Margen recuperado: de 121 a 178 palabras. Se barrió además el documento entero
+en busca de otras menciones de «datos que no pueden corroborarse ni recalcularse», por si `§F163`
+no había sido la única — no apareció ninguna otra.
