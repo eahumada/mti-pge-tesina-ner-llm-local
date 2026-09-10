@@ -395,6 +395,12 @@ párrafo recortado de `§3.2` y la subsección nueva del Anexo A.
 
 Detalle completo en `FINDINGS §F164`.
 
+> **Cierre confirmado por el autor: el capítulo 2 no crece más.** Con las piezas 31 a 34 el
+> enriquecimiento del marco teórico queda dado por completo — el autor confirmó explícitamente que
+> el margen restante (~178 palabras respecto del límite de 25 páginas) es suficiente y que no pide
+> más rondas. Aplica estas cuatro piezas como el estado definitivo del capítulo 2 y del Anexo A.1;
+> no hay una octava ronda pendiente detrás de esta.
+
 ---
 
 ## 1. Qué le falta al entregable, y hay **una sola causa**
