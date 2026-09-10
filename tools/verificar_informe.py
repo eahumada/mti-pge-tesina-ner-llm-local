@@ -66,7 +66,16 @@ EXCLUIDOS = ['nuextract', 'minimax-m3', 'gemini-3.1-flash-lite', 'q8-64k', 'sonc
 # siete de la nota anterior, 'guiones largos frente a' (reabierta y vuelta a cerrar por la pieza 30)
 # y 'Vale la pena señalar una particularidad de procedencia' ya no tapan ningun fallo: la nota de
 # §F163 se propago a los tres .docx (v14). Comprobado antes de retirar. Ver CURRENT-TASKS §1.291.
+#
+# Retirada 2026-09-09 (§F166): 'resaltes en el cuerpo, menos que los 9 declarados' ya no tapa
+# nada. El recorte de la nota de §3.3 sobre Locations (mas clara y mas corta, a peticion del
+# autor) quito varias negritas del cuerpo, y el conteo del .md volvio a coincidir exactamente con
+# BOLD_CUERPO_BASE=9 por casualidad. Comprobado: 'el .docx no anade resaltes ni guiones' pasa ok.
+# No se toco BOLD_CUERPO_BASE, sigue siendo constante de Claude Desktop.
 FALLOS_DECLARADOS = {
+    'Conviene subrayar que se trata de una penalización exclusivamente de precisión': ('2026-09-09',
+        'PENDIENTE de propagar (§F166): la frase se retiró al comprimir el párrafo de §3.3 sobre '
+        'Locations, más claro y más corto a petición del autor. No aceptado, solo declarado.'),
     'La recuperación en ambas variantes depende de un mecanismo': ('2026-09-09',
         'PENDIENTE de propagar (§F165): párrafo nuevo de §2.3 (embeddings y bases de datos '
         'vectoriales, ChromaDB). Enriquecimiento del marco teórico, ronda 2, a peticion del autor.'),
@@ -96,11 +105,6 @@ FALLOS_DECLARADOS = {
     'falta la seccion «2.4 arquitectura de ejecución concurrente': ('2026-09-09',
         'PENDIENTE de propagar (§F164): la sección 2.4 es nueva y el resto de §2 se renumeró '
         '(2.4→2.5, 2.5→2.6). Pendiente de la pasada de maquetación.'),
-    'resaltes en el cuerpo, menos que los 9 declarados': ('2026-09-09',
-        'No es mío de resolver: BOLD_CUERPO_BASE lo mantiene Claude Desktop (§2.25). El '
-        'enriquecimiento de §2 introdujo negritas nuevas que casan por casualidad con falsos '
-        'positivos ya documentados en su comentario; declarado para que ellos decidan si bajarlo '
-        'a 8 en su próxima pasada, no lo hago yo sobre su constante.'),
     '.rebuild_venv.log': ('2026-09-09',
                           'fichero vacio del commit 880f4f9; decision del autor '
                           '(CURRENT-TASKS §1.103)'),
@@ -1260,6 +1264,11 @@ def c_vacios():
 # el entregable. Es lo unico que protege de que el documento que lee el tribunal afirme algo que el
 # autor ya corrigio. Cada entrada lleva por que se retiro y por que la sustituye.
 RETIRADAS = (
+    ('Conviene subrayar que se trata de una penalización exclusivamente de precisión',
+     'frase del párrafo largo de §3.3 sobre Locations, comprimido el 2026-09-09 (§F166) porque el '
+     'autor lo encontró confuso y temió que un comité lo leyera como una mala decisión histórica '
+     'no resuelta. El párrafo nuevo abre diciendo que el defecto ya está corregido y no afecta a '
+     'ningún resultado vigente, y remite el detalle histórico al Anexo I'),
     ('Vale la pena señalar una particularidad de procedencia',
      'nota de §5.3 sobre un F1 de 79,03% de una corrida cuyos datos por registro se perdieron '
      'por sobrescritura y no podian recalcularse. Retirada por completo el 2026-09-09 (§F163): '

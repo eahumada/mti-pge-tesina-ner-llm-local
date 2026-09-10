@@ -8020,3 +8020,42 @@ adición más exige, antes, otro recorte de tamaño equivalente en el cuerpo**, 
 margen ya no absorbe ni un párrafo corto. Verificado: 56 comprobaciones, 0 fallos nuevos (41
 declarados, 16 vigentes), dentro de 25 páginas — declarada la propagación pendiente a los tres
 `.docx`, como en las rondas anteriores.
+
+## §F166 — El párrafo de §3.3 sobre `Locations` era largo y llevaba fechas: el autor temió que un comité lo leyera como una mala decisión sin resolver
+
+**Fecha:** 2026-09-09 · **Origen:** el autor, releyendo el pasaje ya verificado en `§F162`, pidió
+comprobar si seguía siendo importante y, si no, retirarlo o al menos aclarar la conclusión final
+
+### El problema no era de contenido, era de énfasis y de orden
+
+El párrafo (440 palabras) explicaba correctamente el defecto de anotación de `Locations`, su causa,
+su efecto y su corrección — todo verificado y correcto en turnos anteriores (`§F53`, `§F154`,
+`§F162`). Pero lo hacía en el **orden equivocado para un lector que evalúa**: abría con «afecta a
+la comparabilidad de las cifras absolutas», seguía cuatro frases de mecanismo técnico, y solo al
+final —tras el 66,0 % de falsos positivos— decía que ya estaba corregido y no afectaba a la Tabla 7
+vigente. Un comité que lee rápido puede quedarse con la primera impresión (una limitación de
+medición) antes de llegar a la última frase (ya resuelta, sin efecto en los resultados). El autor
+señaló además que «localizaciones» no quedaba claro sin contexto: es la tercera categoría de
+entidad (lugares geográficos), y el párrafo la usaba sin remitir a donde se define.
+
+### La corrección: adelantar la conclusión, clarificar el término, mover el detalle al anexo
+
+Reescrito de 440 a 240 palabras. **Abre** con la conclusión («ya está corregido y no afecta a ningún
+resultado vigente de este informe: se documenta aquí por integridad de la medición»), en vez de
+dejarla para el final. **Aclara** que las localizaciones son «lugares geográficos, la tercera
+categoría de §2.1» — remite a la definición añadida en `§F164`, que en su momento no existía. **Se
+recorta** el detalle histórico que no cambia la conclusión: las 545 localizaciones recuperadas en
+119/120 registros, «sustituirlas exigía volver a inferir», la mecánica completa de la medición
+restringida — todo eso ya vive en el Anexo I, y el párrafo del cuerpo remite allí en una frase en
+vez de repetirlo. Se **conservan** los dos hechos que sí son necesarios para la integridad de la
+medición: que el defecto era de la cadena de preparación de datos y no de la anotación de origen
+(exculpa a CoNLL-2002), y la cifra exacta del 66,0 % con su fracción (12 852 de 19 464), porque dos
+comprobaciones mecánicas (`c_figuras`, la que ata la Figura 1 al artefacto de composición) exigen
+justamente esa fracción y una referencia con artículo («la Figura 1») — verificado que ambas siguen
+en `ok` tras la reescritura, no solo que el texto se leyera bien.
+
+**No se tocó la Figura 1** ni su leyenda (ya corregida en `§1.282`): sigue siendo evidencia real de
+un defecto resuelto, y removerla habría exigido renumerar la Figura 2. Verificado: 56
+comprobaciones, 0 fallos nuevos (41 declarados, 16 vigentes), dentro de 25 páginas. El recorte
+liberó además 266 palabras de presupuesto (el margen pasó de 74 a 340), revirtiendo la crisis de
+`§F165`.

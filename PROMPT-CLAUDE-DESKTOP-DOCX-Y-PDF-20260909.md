@@ -432,6 +432,29 @@ dos conceptos antes.
 
 Detalle completo en `FINDINGS §F165`.
 
+> **Actualización: la crisis de presupuesto de arriba ya se resolvió, con margen de sobra.** La
+> pieza 36, justo debajo, comprime un párrafo grande de `§3.3` y libera 266 palabras. El margen
+> pasó de 74 a ~327. Ya no hace falta vigilar el presupuesto con la urgencia que pedía esta nota.
+
+---
+
+## 0.nonies El párrafo de `§3.3` sobre `Locations` se reescribió: más corto, más claro, y con la conclusión primero
+
+### Pieza 36 — Reescrito el párrafo largo de `§3.3` sobre el defecto de `Locations`
+
+El autor lo encontró confuso al releerlo y temió que un comité lo interpretara como una mala
+decisión histórica sin resolver — el párrafo abría con la limitación técnica y solo mencionaba al
+final que ya estaba corregida. **Sustituye el párrafo entero** (el que empieza «Un tercer límite,
+de naturaleza distinta a los anteriores...» y termina en «...adoptada en §5.3.1 como fuente de la
+Tabla 7 vigente.») por el nuevo del Markdown: no es un recorte de frases sueltas, cambió el orden y
+se resumió el detalle histórico con una remisión al Anexo I. **Dos cifras no se pueden tocar**: la
+fracción «12 852 de 19 464» junto al 66,0 %, y la referencia «la Figura 1» con artículo — dos
+comprobaciones del verificador exigen exactamente esa forma. Si reformulas la frase, consérvalas
+literales.
+
+**Efecto en el presupuesto de páginas**: este recorte por sí solo libera ~266 palabras, más que
+suficiente para compensar la pieza 35. Detalle completo en `FINDINGS §F166`.
+
 ---
 
 ## 1. Qué le falta al entregable, y hay **una sola causa**
