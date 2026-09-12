@@ -8079,3 +8079,46 @@ declaraciones) y `CURRENT-TASKS.md` (registro, por *append*). `BOLD_CUERPO_BASE`
 Verificado: 56 comprobaciones, 0 fallos nuevos (5 declarados, 4 vigentes), dentro de 25 páginas.
 Con esto, todo el trabajo de enriquecimiento del capítulo 2 (`§F164`/`§F165`/`§F166`) queda
 completamente propagado a los tres entregables.
+
+---
+
+## §F168 — Citas de origen para Pearson y Spearman, y anexo de reproducción de la correlación
+
+**2026-09-12.** El autor pidió las referencias de base para las dos cifras de correlación de
+§5.3.1 (Spearman −0,0879, p=0,7752; Pearson −0,4816, p=0,0956), documentarlas en el `.md` y
+documentar su procedencia en los anexos.
+
+**Las citas.** El párrafo teórico de §2.5 explicaba Pearson y Spearman sin citar su origen, a
+diferencia de Tukey `[25]` y AIMD `[26]` en el mismo capítulo. Añadidas dos entradas a la
+bibliografía, verificadas por DOI (el sitio de destino bloquea el lector automático en ambos
+casos —Royal Society Publishing con 403, JSTOR con un reto de Cloudflare—, así que se acredita
+por resolución del DOI vía Crossref, el mismo criterio que el proyecto ya aplica a ACM):
+
+- `[40]` K. Pearson, *Note on Regression and Inheritance in the Case of Two Parents*, Proceedings
+  of the Royal Society of London, vol. 58, pp. 240-242, 1895. DOI `10.1098/rspl.1895.0041`.
+- `[41]` C. Spearman, *The Proof and Measurement of Association Between Two Things*, American
+  Journal of Psychology, vol. 15, no. 1, pp. 72-101, 1904. DOI `10.2307/1412159`. La página final
+  (101) no la da Crossref ni OpenAlex, que solo registran la primera; confirmada por una segunda
+  fuente (la propia bibliografía de Wikipedia sobre el coeficiente).
+
+Citadas donde ya se explicaban los dos coeficientes (§2.5), no de nuevo en el párrafo de
+resultados de §5.3.1, siguiendo el mismo patrón que Tukey: la teoría cita, el resultado remite a
+la teoría por número de sección.
+
+**El anexo.** Nuevo `Anexo J`, después del Anexo I, con la procedencia exacta de las dos cifras:
+el script `tools/robustez_estadistica.py`, que las calcula con `scipy.stats.pearsonr` y
+`scipy.stats.spearmanr` sobre el CSV consolidado, y las persiste en
+`results/ROBUSTEZ_ESTADISTICA_20260909_FIX/robustez.json`. Incluye la Tabla 20, con el análisis de
+sensibilidad ya citado en el cuerpo (§5.3.1: retirar `nemotron-mini:4b` cambia el signo del
+Pearson) pero nunca antes tabulado para los trece modelos: los otros doce, retirados uno a uno,
+dejan el coeficiente entre −0,47 y −0,62, siempre con el mismo signo. Los trece valores se copiaron
+literalmente del artefacto JSON, no se recalcularon a mano.
+
+**Verificado antes de comprometer**: `el cuerpo cabe en el limite de 25 paginas` sigue en `ok`
+(la estimación por palabras no se resiente; el Anexo J vive fuera del cuerpo), `referencias a
+Anexo X y a Tabla N con destino existente` y `bibliografía contigua` en `ok`, y `la correlacion de
+capacidad reproduce desde su artefacto` sigue en `ok` tras añadir la Tabla 20 —confirma que sus
+cifras son las del JSON y no una transcripción manual—. Las 21 divergencias nuevas entre el `.md`
+y los tres `.docx` (cuatro párrafos, una tabla y dos entradas de bibliografía, por tres
+entregables) son la propagación pendiente de siempre, declaradas en `FALLOS_DECLARADOS` a nombre
+de este hallazgo. Añadida la pieza correspondiente al encargo de Claude Desktop.

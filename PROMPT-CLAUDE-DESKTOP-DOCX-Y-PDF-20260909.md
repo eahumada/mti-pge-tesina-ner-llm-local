@@ -457,6 +457,82 @@ suficiente para compensar la pieza 35. Detalle completo en `FINDINGS §F166`.
 
 ---
 
+## 0.decies El autor pidió las referencias de Pearson y Spearman, y hay un anexo nuevo (`FINDINGS §F168`)
+
+### Pieza 37 — Dos citas nuevas en la bibliografía: `[40]` y `[41]`
+
+Añadidas al final de la lista de referencias, después de `[39]` (Dror et al.):
+
+- `[40] K. Pearson, "Note on Regression and Inheritance in the Case of Two Parents," Proceedings of
+  the Royal Society of London, vol. 58, pp. 240-242, 1895.`
+- `[41] C. Spearman, "The Proof and Measurement of Association Between Two Things," American
+  Journal of Psychology, vol. 15, no. 1, pp. 72-101, 1904.`
+
+En §2.5 (Validación estadística), el párrafo que explica los dos coeficientes ahora los cita:
+«El coeficiente de **Pearson** [40] mide la asociación lineal... el de **Spearman** [41], calculado
+sobre los rangos...». **No se citan de nuevo en §5.3.1**: ahí solo se dan las cifras, siguiendo el
+mismo patrón que ya usan Tukey y AIMD en este informe (la teoría cita, el resultado remite a ella).
+
+### Pieza 38 — Anexo J, nuevo, después del Anexo I
+
+**Anexo entero por añadir**, con su encabezado H3 («Anexo J — Correlación entre capacidad y
+beneficio del RAG: fuente y reproducción»), dos párrafos y la **Tabla 20**.
+
+**Sobre el número de la tabla**: hubo una Tabla 20 antes, la que la pieza de `0.quinquies` mandó
+retirar (ocho filas de F1 de corridas descartadas). Esa ya no existe en el Markdown ni en el
+entregable desde entonces. **Esta es una tabla distinta**, sobre un tema distinto, que reutiliza el
+mismo número porque vuelve a ser el siguiente disponible tras el retiro. No es la misma pieza ni
+hay que buscar una Tabla 20 vieja que sustituir: es contenido nuevo, íntegro.
+
+El texto completo del anexo, tal cual debe quedar en el Markdown (cópialo entero, incluida la
+tabla):
+
+> ### Anexo J — Correlación entre capacidad y beneficio del RAG: fuente y reproducción
+>
+> Las dos cifras de §5.3.1 sobre la relación entre el desempeño base de un modelo y la mejora que
+> le aporta el KB RAG —Spearman −0,0879 (p = 0,7752) y Pearson −0,4816 (p = 0,0956), sobre los N=13
+> pares (F1 base, ΔF1) de la Tabla 7— proceden de `tools/robustez_estadistica.py`, que las calcula
+> con `scipy.stats.pearsonr` y `scipy.stats.spearmanr` sobre el CSV consolidado de la re-corrida
+> adoptada y las persiste en `results/ROBUSTEZ_ESTADISTICA_20260909_FIX/robustez.json`. El
+> coeficiente de **Pearson** [40] mide la asociación lineal entre las dos variables y es sensible a
+> los valores atípicos; el de **Spearman** [41], calculado sobre sus rangos y no sobre los valores,
+> capta cualquier relación monótona sin asumir linealidad, a costa de ignorar la magnitud de la
+> asociación. Ninguno de los dos alcanza el 5 % de significancia sobre los trece modelos.
+>
+> La Tabla 20 recalcula ambos coeficientes retirando, uno a la vez, cada uno de los trece modelos
+> de la muestra, para identificar cuánto depende el resultado de un único caso. Solo la ausencia de
+> `nemotron-mini:4b` cambia el signo y la significancia del coeficiente de Pearson; las otras doce
+> retiradas lo dejan entre −0,47 y −0,62, con el mismo signo que sobre la muestra completa.
+>
+> _Tabla 20. Sensibilidad de la correlación capacidad-beneficio a la retirada de cada modelo (N=12
+> restantes por fila)_
+>
+> | Modelo retirado | Pearson r | Pearson p | Spearman ρ |
+> |:---|---:|---:|---:|
+> | deepseek-r1:1.5b | −0,6151 | 0,0333 | −0,0070 |
+> | gemma4:12b-mlx | −0,4964 | 0,1006 | −0,1259 |
+> | gemma4:31b-cloud | −0,4746 | 0,1190 | −0,0559 |
+> | gemma4:31b-mlx | −0,4773 | 0,1166 | −0,0559 |
+> | gemma4:latest | −0,4955 | 0,1014 | −0,1259 |
+> | gemma:latest | −0,5047 | 0,0942 | −0,2238 |
+> | gpt-oss:20b | −0,4832 | 0,1115 | −0,0699 |
+> | llama3.1:8b | −0,4840 | 0,1108 | −0,0839 |
+> | llama3.2:latest | −0,5063 | 0,0930 | −0,0070 |
+> | mistral-nemo:latest | −0,5971 | 0,0404 | −0,2378 |
+> | **nemotron-mini:4b** | **+0,0120** | **0,9706** | **+0,1608** |
+> | qwen2.5:14b | −0,4767 | 0,1171 | −0,1469 |
+> | qwen3:8b | −0,4771 | 0,1168 | −0,1678 |
+>
+> El detalle íntegro, con más decimales, está en el propio artefacto JSON citado al inicio de este
+> anexo.
+
+**Efecto en el presupuesto de páginas**: el anexo vive fuera del cuerpo (25 páginas), que no se
+toca. La bibliografía y la cita de §2.5 sí están en el cuerpo, pero son dos líneas y dos palabras
+sueltas — la estimación por palabras sigue en `ok` tras añadirlas. Detalle completo en
+`FINDINGS §F168`.
+
+---
+
 ## 1. Qué le falta al entregable, y hay **una sola causa**
 
 > El número exacto de fallos **no se anota aquí**, porque cambia cada vez que se corrige el

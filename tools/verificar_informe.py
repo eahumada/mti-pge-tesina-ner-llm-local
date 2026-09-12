@@ -93,6 +93,25 @@ FALLOS_DECLARADOS = {
     'github.com/eahumada/mti-pge-tesina': ('2026-09-09',
                                            'referencia [37]: el repositorio es privado hasta la '
                                            'purga (SEGURIDAD-CLAVE-GOOGLE-20260908.md)'),
+    '[40] K. Pearson': ('2026-09-12',
+                        'PENDIENTE de propagar (FINDINGS §F168): cita nueva de §2.5 y de la '
+                        'bibliografia, aun no en los tres .docx'),
+    '[41] C. Spearman': ('2026-09-12', 'idem, la otra cita del mismo par (§F168)'),
+    'Las dos cifras de §5.3.1 sobre la relación': ('2026-09-12',
+                                                   'PENDIENTE de propagar (§F168): primer parrafo '
+                                                   'del Anexo J, nuevo'),
+    'La Tabla 20 recalcula ambos coeficientes': ('2026-09-12',
+                                                 'PENDIENTE de propagar (§F168): segundo parrafo '
+                                                 'del Anexo J, nuevo'),
+    'Tabla 20 no esta en el entregable': ('2026-09-12',
+                                         'PENDIENTE de propagar (§F168): tabla de sensibilidad '
+                                         'del Anexo J, nueva'),
+    'le faltan las entradas de bibliografia': ('2026-09-12',
+                                               'PENDIENTE de propagar (§F168): entradas [40] y '
+                                               '[41], nuevas'),
+    'anexo j — correlación entre capacidad y beneficio del rag': ('2026-09-12',
+                                                                  'PENDIENTE de propagar (§F168): '
+                                                                  'encabezado del anexo nuevo'),
 }
 
 

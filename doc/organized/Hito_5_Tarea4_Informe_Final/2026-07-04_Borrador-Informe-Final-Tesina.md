@@ -164,7 +164,7 @@ Dos instrumentos complementan la lectura. Los intervalos de confianza al 95 % ex
 
 El ANOVA supone además que las observaciones son independientes entre sí y que la varianza es homogénea entre grupos (**homocedasticidad**). Cuando el mismo conjunto de artículos se evalúa bajo distintas condiciones, como ocurre en este trabajo, esa independencia no se cumple: las observaciones están apareadas, y el diseño estrictamente correcto es de **medidas repetidas**. La prueba no paramétrica de **Friedman** es su análogo cuando no puede asumirse normalidad, y sirve como control de robustez frente al ANOVA cuando el apareamiento se ignora. La homocedasticidad, por su parte, se contrasta con la prueba de **Levene**, en su variante centrada en la mediana (Brown-Forsythe), más robusta que la centrada en la media ante distribuciones asimétricas; su incumplimiento no invalida el ANOVA por sí solo en diseños balanceados, pero refuerza la conveniencia de una prueba de medidas repetidas.
 
-Además de si dos medias difieren, interesa a veces si dos variables covarían: si el beneficio de una técnica crece o decrece, por ejemplo, con la capacidad del modelo. El coeficiente de **Pearson** mide la asociación lineal y es sensible a valores atípicos; el de **Spearman**, calculado sobre los rangos y no sobre los valores, es más robusto a esas anomalías pero solo capta relaciones monótonas, no necesariamente lineales. Reportar ambos permite distinguir si una asociación aparente depende de la forma de la relación o de unos pocos casos extremos que un solo coeficiente no dejaría ver.
+Además de si dos medias difieren, interesa a veces si dos variables covarían: si el beneficio de una técnica crece o decrece, por ejemplo, con la capacidad del modelo. El coeficiente de **Pearson** [40] mide la asociación lineal y es sensible a valores atípicos; el de **Spearman** [41], calculado sobre los rangos y no sobre los valores, es más robusto a esas anomalías pero solo capta relaciones monótonas, no necesariamente lineales. Reportar ambos permite distinguir si una asociación aparente depende de la forma de la relación o de unos pocos casos extremos que un solo coeficiente no dejaría ver.
 
 Conviene retener una asimetría de interpretación: que una diferencia **no** alcance significancia no demuestra que no exista, solo que los datos disponibles no bastan para descartar el azar.
 
@@ -678,6 +678,10 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 [39] R. Dror, G. Baumer, S. Shlomov, and R. Reichart, "The Hitchhiker's Guide to Testing Statistical Significance in Natural Language Processing," in *Proc. 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)*, Melbourne, Australia, 2018, pp. 1383-1392, doi: 10.18653/v1/P18-1128. [En línea]. Disponible: https://aclanthology.org/P18-1128/
 
+[40] K. Pearson, "Note on Regression and Inheritance in the Case of Two Parents," *Proceedings of the Royal Society of London*, vol. 58, pp. 240-242, 1895. [En línea]. Disponible: https://doi.org/10.1098/rspl.1895.0041
+
+[41] C. Spearman, "The Proof and Measurement of Association Between Two Things," *American Journal of Psychology*, vol. 15, no. 1, pp. 72-101, 1904. [En línea]. Disponible: https://doi.org/10.2307/1412159
+
 ## Anexos
 
 ### Anexo A — Estructura del Repositorio de Código
@@ -1141,4 +1145,30 @@ pendiente.
 Tres advertencias de lectura antes de las cifras. Las columnas publicadas se toman del campo almacenado por registro, que es lo que publican las tablas del cuerpo, y las restringidas se recalculan desde el desglose por tipo. En `nemotron-mini:4b_baseline` los dos no cuadran en **siete de sus ciento veinte registros**, los que se reextrajeron fuera del arnés de lotes tras un fallo de contexto (§5.3.1), de modo que su columna restringida arrastra esa incoherencia y conviene leerla con esa reserva. Las dos primeras filas de `llama3.2:latest` reproducen **la misma medición** bajo dos etiquetas de corrida: coinciden en los siete valores y, comprobado registro a registro, en los aciertos y errores de los ciento veinte artículos, de modo que la tabla tiene cuarenta y dos filas pero cuarenta y una configuraciones distintas. Y las dos filas de `gemma4:12b-mlx` proceden de `afectados_thinking_n120_REMOTO` y no de `benchmark_n120_REMOTO`, porque esta última quedó averiada por el modo de razonamiento —sesenta y ocho y noventa y ocho de sus ciento veinte registros no recuperan ninguna entidad— y sus cifras no representan la capacidad del modelo.
 
 En conjunto, 20 946 de los 32 201 falsos positivos de estas **cuarenta y dos configuraciones** (65,0 %) proceden de la categoría no anotada. La cifra no coincide con el 66,0 % que da §3.3 porque cubre una población distinta: esta tabla incluye configuraciones que el estudio no publica, entre ellas corridas después sustituidas por inválidas. Ambas son ciertas sobre lo que dicen medir. El mejor modelo local sobre este corpus, `gemma4:31b-mlx`, pasa de 59,25 % a **76,55 %** de F1 y supera el umbral de 70 % que fija la hipótesis sobre material periodístico mayoritariamente en español. La variante en la nube del mismo modelo conserva su ventaja (80,42 % frente a 76,55 %), de modo que la corrección **no** altera la conclusión sobre la comparación entre ejecución local y alojada sobre el consolidado publicado. Sobre el consolidado de la re-corrida, adoptado en §5.3.1, la medición completa sin restringir —ya no necesaria, porque el corpus corregido anota Locations— da **81,47 %** y **82,13 %**, por encima incluso de esta estimación restringida: era conservadora, no optimista.
+
+### Anexo J — Correlación entre capacidad y beneficio del RAG: fuente y reproducción
+
+Las dos cifras de §5.3.1 sobre la relación entre el desempeño base de un modelo y la mejora que le aporta el KB RAG —Spearman −0,0879 (p = 0,7752) y Pearson −0,4816 (p = 0,0956), sobre los N=13 pares (F1 base, ΔF1) de la Tabla 7— proceden de `tools/robustez_estadistica.py`, que las calcula con `scipy.stats.pearsonr` y `scipy.stats.spearmanr` sobre el CSV consolidado de la re-corrida adoptada y las persiste en `results/ROBUSTEZ_ESTADISTICA_20260909_FIX/robustez.json`. El coeficiente de **Pearson** [40] mide la asociación lineal entre las dos variables y es sensible a los valores atípicos; el de **Spearman** [41], calculado sobre sus rangos y no sobre los valores, capta cualquier relación monótona sin asumir linealidad, a costa de ignorar la magnitud de la asociación. Ninguno de los dos alcanza el 5 % de significancia sobre los trece modelos.
+
+La Tabla 20 recalcula ambos coeficientes retirando, uno a la vez, cada uno de los trece modelos de la muestra, para identificar cuánto depende el resultado de un único caso. Solo la ausencia de `nemotron-mini:4b` cambia el signo y la significancia del coeficiente de Pearson; las otras doce retiradas lo dejan entre −0,47 y −0,62, con el mismo signo que sobre la muestra completa.
+
+_Tabla 20. Sensibilidad de la correlación capacidad-beneficio a la retirada de cada modelo (N=12 restantes por fila)_
+
+| Modelo retirado | Pearson r | Pearson p | Spearman ρ |
+|:---|---:|---:|---:|
+| deepseek-r1:1.5b | −0,6151 | 0,0333 | −0,0070 |
+| gemma4:12b-mlx | −0,4964 | 0,1006 | −0,1259 |
+| gemma4:31b-cloud | −0,4746 | 0,1190 | −0,0559 |
+| gemma4:31b-mlx | −0,4773 | 0,1166 | −0,0559 |
+| gemma4:latest | −0,4955 | 0,1014 | −0,1259 |
+| gemma:latest | −0,5047 | 0,0942 | −0,2238 |
+| gpt-oss:20b | −0,4832 | 0,1115 | −0,0699 |
+| llama3.1:8b | −0,4840 | 0,1108 | −0,0839 |
+| llama3.2:latest | −0,5063 | 0,0930 | −0,0070 |
+| mistral-nemo:latest | −0,5971 | 0,0404 | −0,2378 |
+| **nemotron-mini:4b** | **+0,0120** | **0,9706** | **+0,1608** |
+| qwen2.5:14b | −0,4767 | 0,1171 | −0,1469 |
+| qwen3:8b | −0,4771 | 0,1168 | −0,1678 |
+
+El detalle íntegro, con más decimales, está en el propio artefacto JSON citado al inicio de este anexo.
 
