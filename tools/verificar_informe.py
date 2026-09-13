@@ -140,6 +140,25 @@ FALLOS_DECLARADOS = {
                                                               'frase del parrafo viejo de §3.3, '
                                                               'aun en los tres .docx sin '
                                                               'regenerar'),
+    'resaltes en el cuerpo que el Markdown no marca': ('2026-09-12',
+                                                       'PENDIENTE de propagar (§F171/§F172): los '
+                                                       'tres .docx aun resaltan el texto viejo de '
+                                                       'los puntos 7/8 de §7.2 (retirado del .md), '
+                                                       'que ya no coincide con ningun **bold** '
+                                                       'actual. Baja solo al regenerar'),
+    'todavia afirma «La solución resultó más barata de lo previsto»': ('2026-09-12',
+                                                                      'PENDIENTE de propagar '
+                                                                      '(§F172): frase vieja del '
+                                                                      'punto 8 de §7.2, aun en '
+                                                                      'los .docx sin regenerar'),
+    'todavia afirma «Se documenta por tanto como limitación': ('2026-09-12',
+                                                               'PENDIENTE de propagar (§F172): '
+                                                               'referencia obsoleta del Anexo '
+                                                               'H.4, corregida en el .md'),
+    'todavia afirma «iba de −0,082 a +0,155 de F1»': ('2026-09-12',
+                                                      'PENDIENTE de propagar (§F172): detalle '
+                                                      'viejo del punto 7 de §7.2, aun en los '
+                                                      '.docx sin regenerar'),
 }
 
 
@@ -1336,6 +1355,24 @@ RETIRADAS = (
      'el 8 de septiembre): el autor considero que un defecto ya superado por la re-corrida no '
      'necesita desarrollar su mecanismo en el cuerpo. La fraccion 66,0 % / 12 852 de 19 464 y la '
      'remision al Anexo I se conservan'),
+    ('no persistido en `results/`',
+     'clausula de §7.1 conclusion 6 sobre el dict-RAG (v1.0), un sondeo N=5 sin datos guardados '
+     'que remitia ademas a una corrida ya superada. Retirada el 2026-09-12 (FINDINGS §F172): el '
+     'autor pidio ejecutar la candidata de LEARNING §L80 sobre cifras de corridas sin evidencia'),
+    ('iba de −0,082 a +0,155 de F1',
+     'detalle del parrafo viejo de §7.2 punto 7 (mojibake), comprimido el 2026-09-12 (§F172): las '
+     'cuatro cifras de rango de efecto se conservan integras en el Anexo H.3, solo se retiro la '
+     'repeticion en el cuerpo'),
+    ('La solución resultó más barata de lo previsto',
+     'frase del parrafo viejo de §7.2 punto 8 (Locations), comprimido el 2026-09-12 (§F172): el '
+     'mecanismo completo (105 de 120 articulos ya anotados en CoNLL-2002, conversor que '
+     'descartaba la lista) se conserva integro en el Anexo I, solo se retiro la repeticion en el '
+     'cuerpo'),
+    ('Se documenta por tanto como limitación (§5.3.1) y como línea de trabajo futuro',
+     'el Anexo H.4 declaraba la normalizacion de codificacion como trabajo futuro pendiente '
+     '(§7.2, punto 7) cuando ya estaba hecha desde la re-corrida del 8 de septiembre: quedo '
+     'obsoleta sin que nadie la actualizara. Corregida el 2026-09-12 (§F172) para declarar que '
+     'la re-corrida ya la ejecuto'),
 )
 
 

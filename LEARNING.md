@@ -1411,3 +1411,15 @@ La distinción es real y se respetó: lo definitivo se ejecutó (`§F170`); lo c
 para que la decisión de fondo —cuánto detalle histórico conservar en el cuerpo frente al anexo— la
 tome el autor con estas cuatro opciones concretas delante, no una sesión que interprete «candidata»
 como «pendiente de borrar sin más trámite».
+
+**Actualización 2026-09-12 (mismo día, unas horas después): las candidatas 1, 2 y 3 se ejecutaron
+(`FINDINGS §F172`), la 4 sigue sin tocar.** El autor, tras preguntar qué protegía la regla de
+integridad de la medición y decidir que rige desde el 8 de septiembre en adelante (`§F171`), pidió
+explícitamente aplicar el mismo criterio a estas tres y «documentar extensamente lo realizado». Las
+tres se comprimieron (no se retiraron del todo, salvo la cláusula sin evidencia de la candidata 1,
+que sí se retiró íntegra): el hecho y la remisión al anexo se conservan, el desarrollo del mecanismo
+se retira. De paso apareció un cuarto hallazgo que esta entrada no había anticipado: el Anexo H.4
+citaba «§7.2, punto 7» como trabajo futuro pendiente, y ya estaba hecho — una referencia cruzada que
+nadie actualizó cuando la re-corrida se completó, y que comprimir el punto 7 sin mirar quién lo citaba
+habría dejado rota. **La candidata 4 (terminología) sigue exactamente como estaba**: no se pidió
+resolverla, y sigue siendo la única de las cuatro sin decisión.

@@ -609,6 +609,52 @@ tiene; el recuento de guiones del `.md` bajó de 93 a 92. Cuando regeneres, tu p
 debería bajar en la misma proporción; si no baja, revisa que copiaste el párrafo nuevo completo y no
 una mezcla con el viejo.
 
+### Pieza 42 — Tres compresiones más en §7.1/§7.2, y una referencia obsoleta corregida en el Anexo H (`FINDINGS §F172`)
+
+Mismo criterio que la pieza 41, aplicado a tres lugares más:
+
+**a) §7.1, conclusión 6.** Dentro del párrafo largo sobre el KB RAG, **retira por completo** (no
+sustituyas, borra) la frase: «, versus el dict-RAG (v1.0), que en un sondeo exploratorio N=5 sobre
+el mismo modelo, no persistido en `results/`, degradó el F1 hasta 0.2367 (−57.8% respecto de su
+propio baseline), degradación confirmada después en la corrida histórica N=120 previa a la
+re-corrida, donde ese mismo modelo caía de 0.3611 a 0.3113.» — el párrafo debe quedar con «...sin el
+signo negativo que mostraba el corpus con el defecto de anotación sin corregir. Su efectividad
+parece modularse...» (nota el punto donde antes había una coma). **No toques nada más del párrafo**:
+la mención de ρ = −0,09 más adelante se queda igual.
+
+**b) §7.2, punto 7 (mojibake).** Sustituye el párrafo completo (el que empieza «Normalización de
+codificación del corpus y re-evaluación: ya realizada...» y termina en «...verificado con
+`tools/analisis_mojibake.py`.») por: «**Normalización de codificación del corpus: ya realizada.** El
+corpus N=120 publicado tenía nombres con *mojibake* (`JosÃ© Bono` en vez de **José Bono**), corregido
+antes de la re-corrida del 8 de septiembre que hoy sostiene la Tabla 7: el corpus vigente tiene 0
+artículos con este defecto, verificado con `tools/analisis_mojibake.py`. Detalle del efecto y su
+magnitud en el Anexo H.» **No toques el Anexo H** (ni H.3 ni la Tabla 18): esta pieza es solo del
+punto 7 de §7.2.
+
+**c) §7.2, punto 8 (`Locations`).** Sustituye el párrafo completo (el que empieza «Recuperación de
+las localizaciones que el conversor descartaba: ya realizada...» y termina en «...119 de los 120
+registros.») por: «**Anotación de la categoría `localizaciones`: ya realizada.** El consolidado
+publicado no anotaba esta categoría (§3.3), y de ahí procede el 66,0 % de los falsos positivos de
+ese consolidado. Corregido antes de la re-corrida del 8 de septiembre: el corpus vigente tiene 545
+localizaciones en 119 de los 120 registros. Detalle en el Anexo I.» **La frase «procede el 66,0 % de
+los falsos positivos» debe quedar literal**: una comprobación del verificador la exige así. **No
+toques el Anexo I.**
+
+**d) Anexo H.4, «Cómo debe repararse» — una referencia que quedó obsoleta.** El párrafo final de esa
+subsección decía «...y la corrección exigiría re-ejecutar el estudio completo. Se documenta por
+tanto como limitación (§5.3.1) y como línea de trabajo futuro (§7.2, punto 7).» — **esto es falso
+hoy**, esa corrección ya se ejecutó. Sustitúyelo por: «...y la corrección exigió re-ejecutar el
+estudio completo. Eso es lo que hizo la re-corrida del 8 de septiembre que hoy sostiene la Tabla 7
+(§5.3.1): el corpus vigente no arrastra este defecto.»
+
+**Efecto colateral en resaltes**: estas tres compresiones quitan negritas que el `.docx` todavía
+tiene («ya realizada» en dos títulos de punto, entre otras); tu propio recuento de resaltes del
+cuerpo puede subir temporalmente frente a `BOLD_CUERPO_BASE=8` hasta que regeneres — es exactamente
+lo que este mismo encargo ya advirtió en la pieza 30 con el mismo mecanismo.
+
+**Efecto en el presupuesto de páginas**: neto reductor, con margen — estas tres compresiones juntas
+quitan más de 200 palabras del cuerpo.
+
 ---
 
 ## 1. Qué le falta al entregable, y hay **una sola causa**

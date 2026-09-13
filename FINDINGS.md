@@ -8287,3 +8287,75 @@ comprobaciones, 0 fallos nuevos (53 declarados, 20 vigentes).
 candidatas que `LEARNING §L80` ya había documentado sin ejecutar (la cifra sin evidencia de §7.1
 conclusión 6, las anécdotas de §7.2 puntos 7 y 8) es una decisión aparte, no incluida en este
 cambio — el autor no la pidió ejecutar hoy, solo la de `Locations`.
+
+---
+
+## §F172 — Ejecutadas las tres candidatas de `LEARNING §L80`, y una referencia obsoleta encontrada de paso
+
+**2026-09-12, mismo día que `§F170`/`§F171`.** Tras la precisión de fecha en `CLAUDE.md` (la
+integridad de la medición rige desde el 8 de septiembre en adelante) y la pregunta del autor sobre
+si una nueva corrida resolvería el problema de fondo —respondida: no, porque la Tabla 7 ya procede
+de una sola corrida unificada del 8 de septiembre, y el asunto es narrativo, no de datos—, el autor
+confirmó: **«Sí por favor, documentar extensamente lo realizado»**, autorizando ejecutar las tres
+candidatas que `LEARNING §L80` había dejado sin tocar. Esta entrada documenta cada una.
+
+### 1. §7.1, conclusión 6 (línea ~539): retirada la cláusula sin evidencia
+
+Se retiró, dentro del párrafo de la conclusión sobre el KB RAG, la comparación con «el dict-RAG
+(v1.0), que en un sondeo exploratorio N=5 sobre el mismo modelo, **no persistido en `results/`**,
+degradó el F1 hasta 0.2367 (−57,8 % respecto de su propio baseline), degradación confirmada después
+en la corrida histórica N=120 previa a la re-corrida, donde ese mismo modelo caía de 0.3611 a
+0.3113». El propio texto admitía que el N=5 no tenía datos guardados que lo respaldaran, y la
+segunda cifra remitía a una corrida ya superada. **Se conservó** el resto del párrafo íntegro: el
+hallazgo principal (KB RAG estadísticamente significativo en un modelo, marginal en los de mayor
+capacidad) y la mención de la correlación ρ = −0,09, p = 0,775 (una cita redondeada, no la que
+exige `c_correlacion` — esa vive en §5.3.1 y el Anexo J con cuatro decimales, y no se tocó).
+
+### 2. §7.2, punto 7 (mojibake): comprimido de ~110 a ~35 palabras
+
+De «Normalización de codificación del corpus y re-evaluación: ya realizada. Sobre el consolidado
+publicado, el corpus N=120 almacenaba los nombres con *mojibake*... [detalle completo de las cuatro
+cifras de rango de efecto y la mecánica de la corrección]» a: se corrigió antes de la re-corrida del
+8 de septiembre, verificado con `tools/analisis_mojibake.py`, con remisión al Anexo H para el
+detalle. El Anexo H.3 (que tiene las cuatro cifras de rango y la Tabla 18) **no se tocó**.
+
+### 3. §7.2, punto 8 (`Locations`): comprimido de ~130 a ~40 palabras, con cuidado de una comprobación mecánica
+
+Mismo criterio que el punto 7. **Cuidado especial aquí**: la comprobación `la composicion de FP
+(§3.3/§7.2) reproduce desde el artefacto` (`§F168`/`§F170` la renombraron, antes «Figura 1»)
+exige literalmente la frase «procede el 66,0 % de los falsos positivos» en algún lugar de §7.2 —
+verifica la cifra en **dos** apariciones independientes (§3.3 y §7.2) contra el mismo artefacto. La
+compresión conservó esa frase exacta; verificado que la comprobación sigue en `ok` después del
+cambio, no se asumió.
+
+### Hallazgo de paso: una referencia cruzada quedó obsoleta, y no por esta sesión
+
+Revisando qué más citaba «§7.2, punto 7» por número antes de comprimirlo, apareció el **Anexo H.4**
+(«Cómo debe repararse»), que decía: «...la corrección exigiría re-ejecutar el estudio completo. Se
+documenta por tanto como limitación (§5.3.1) **y como línea de trabajo futuro** (§7.2, punto 7)».
+Eso es **falso hoy**: la re-corrida del 8 de septiembre ya ejecutó esa corrección; no es trabajo
+futuro, es trabajo hecho. La frase quedó así desde antes de esta sesión — nadie la actualizó cuando
+la re-corrida se completó. Corregida a: «...la corrección exigió re-ejecutar el estudio completo.
+Eso es lo que hizo la re-corrida del 8 de septiembre que hoy sostiene la Tabla 7 (§5.3.1): el
+corpus vigente no arrastra este defecto». Sin este hallazgo, comprimir o retirar el punto 7 de §7.2
+habría dejado una referencia rota (un anexo remitiendo a un «trabajo futuro» que ya no existe como
+tal).
+
+### Verificación y mecánica de propagación
+
+Antes de comprometer: `la composicion de FP (§3.3/§7.2) reproduce desde el artefacto` en `ok`
+(ambas apariciones sobreviven); `la correlacion de capacidad reproduce desde su artefacto` en `ok`
+(no se tocaron las cuatro cifras exactas); `referencias §x.y con destino existente` en `ok` (nada
+quedó apuntando a un lugar vacío). Declaradas en `FALLOS_DECLARADOS` las divergencias `.md`↔`.docx`
+que las tres compresiones producen (párrafos nuevos, y un efecto colateral: el recuento de
+resaltes del cuerpo subió de 8 a 10 en los tres `.docx` sin regenerar, porque el texto que
+resaltaban ya no coincide con ningún **bold** del `.md` — no se tocó `BOLD_CUERPO_BASE`, que sigue
+siendo constante de Claude Desktop). 56 comprobaciones, 0 fallos nuevos.
+
+**Efecto en el presupuesto de páginas**: neto reductor — las tres compresiones juntas quitan más de
+200 palabras del cuerpo, lo que da margen adicional sobre el ya ajustado por `§F169`/`§F170` el
+mismo día.
+
+**Con esto quedan ejecutadas las tres candidatas de `LEARNING §L80`.** No queda ninguna pendiente de
+esa lista; la duda de terminología (`localizaciones` vs. `ubicaciones`) sigue sin resolver, sin
+tocar, porque no se pidió resolverla hoy.
