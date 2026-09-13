@@ -269,6 +269,27 @@ sí. Ver `FINDINGS.md §F53` y `LEARNING.md §L44`.
 - **El idioma del corpus se comprueba, no se supone.** Los dos corpus del dominio de este trabajo resultaron
   estar íntegramente en inglés mientras el informe declaraba validación en español (`§F54`).
 
+> **Precisión del 2026-09-12 (decisión del autor): la integridad de la medición rige desde el 8 de
+> septiembre de 2026 en adelante.** Esa fecha es la de la re-corrida completa y limpia que hoy sostiene la
+> Tabla 7; todo lo anterior a ella —`Locations` no anotada, el *mojibake* del corpus (Anexo H), las corridas
+> parciales o descartadas— es historia ya cerrada, no medición vigente. Esta sección obliga a que **ese**
+> registro, el de la corrida vigente en adelante, exista y sea auditable; no obliga a que el cuerpo desarrolle
+> el mecanismo de un defecto anterior a esa fecha. Sobre esos defectos ya superados, el cuerpo no necesita más
+> que una frase breve que declare que existieron, que no afectan a ningún resultado vigente, y que remita al
+> anexo correspondiente. **Cuando el límite de 25 páginas aprieta, estos temas de problemas anteriores al 8
+> de septiembre son los primeros candidatos a comprimirse o retirarse del cuerpo** — antes que tocar
+> resultados vigentes o conclusiones. Aplicado el mismo día: la Figura 1 (composición de FP) se retiró del
+> cuerpo (`FINDINGS §F170`) y el párrafo de §3.3 sobre `Locations` se redujo de ~240 a dos frases.
+>
+> **Esto no toca el resto de la sección.** Declarar qué corrida es la vigente y por qué, comprobar que
+> ninguna categoría puntúa contra el vacío, y verificar el idioma del corpus siguen siendo obligatorios para
+> **cualquier** corrección futura — esta precisión es solo sobre cuánta prosa histórica merece el cuerpo una
+> vez que el registro ya existe.
+>
+> **Los anexos no se tocan por esta precisión.** Anexo H y Anexo I siguen documentando estos defectos con
+> extensión completa. Si conviene recortarlos también, es una decisión pendiente, a la espera de las
+> indicaciones del profesor guía — no se ejecuta por iniciativa propia.
+
 ## Verificación antes de comprometer un cambio en el informe
 
 Comprobaciones mecánicas que hay que pasar sobre el Markdown canónico antes de cada commit. Todas surgieron

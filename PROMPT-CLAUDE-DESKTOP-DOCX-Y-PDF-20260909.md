@@ -585,6 +585,30 @@ siguen existiendo, solo la imagen dejó de incrustarse en el Markdown.
 **Efecto en el presupuesto de páginas**: neto positivo, compensa parte de lo que añadió la pieza 39
 el mismo día — la figura y su leyenda pesaban más que las cinco entradas de bibliografía nuevas.
 
+### Pieza 41 — §3.3 comprimido de ~240 palabras a dos frases (`FINDINGS §F171`)
+
+El autor decidió, tras revisar qué protege `CLAUDE.md`, que la integridad de la medición rige
+**desde el 8 de septiembre en adelante**; un defecto anterior a esa fecha es historia cerrada y no
+necesita desarrollar su mecanismo en el cuerpo. **Sustituye el párrafo entero** de §3.3 sobre
+`Locations` (el que empieza «Un tercer límite, de naturaleza distinta...» y termina en «...se
+conservan en el Anexo I.») por el nuevo, más corto:
+
+> Un tercer límite, anterior a la re-corrida del 8 de septiembre de 2026 que hoy sostiene la Tabla
+> 7, ya está corregido y no afecta a ningún resultado vigente: un defecto de la cadena de
+> preparación de datos dejaba sin anotar la categoría **localizaciones** (§2.1) en el consolidado
+> publicado, de modo que cada acierto del modelo en ella se contabilizaba como falso positivo, y de
+> ahí procedía el **66,0 %** de los falsos positivos de aquel consolidado, 12 852 de 19 464. El
+> detalle histórico y la medición restringida equivalente se conservan en el Anexo I.
+
+**Cifras que no se pueden tocar**: «66,0 %» y «12 852 de 19 464», exactas, una comprobación del
+verificador las exige literales. **No toques el Anexo I**: sigue con el detalle completo, sin
+cambios — esta pieza es solo del cuerpo.
+
+**Efecto colateral en guiones largos**: el párrafo viejo tenía dos guiones largos que el nuevo no
+tiene; el recuento de guiones del `.md` bajó de 93 a 92. Cuando regeneres, tu propio recuento
+debería bajar en la misma proporción; si no baja, revisa que copiaste el párrafo nuevo completo y no
+una mezcla con el viejo.
+
 ---
 
 ## 1. Qué le falta al entregable, y hay **una sola causa**

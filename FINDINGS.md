@@ -8241,3 +8241,49 @@ fallos nuevos.
 **Efecto en el presupuesto de páginas**: neto **positivo** para una vez — la figura y su leyenda
 sumaban más palabras/espacio que lo que costaron los ajustes de referencia, así que esta retirada
 compensa parte de lo añadido por `§F169` en el mismo día.
+
+---
+
+## §F171 — La integridad de la medición se acota a partir del 8 de septiembre; §3.3 comprimido
+
+**2026-09-12, mismo día que `§F170`.** El autor, tras leer la justificación de por qué no se tocó
+la fracción de FP al retirar la Figura 1, preguntó directamente: **¿qué protege esa regla, y es
+correcto seguir protegiéndolo así?** Le preocupaba que el informe se vea confuso mencionando
+corridas anteriores erróneas y defectos ya resueltos (nombró `Locations` y el *mojibake*), cuando
+hay una re-corrida completa y limpia desde el 8 de septiembre.
+
+**Análisis, antes de tocar nada.** La regla de `CLAUDE.md` nació de un incidente real (`§F53`,
+`§L44`): un defecto sobrevivió dos meses sin detectarse porque las cifras eran internamente
+coherentes. Lo que protege, en el fondo, es que una corrección **no borre su propio rastro** — no
+que el cuerpo dedique un párrafo largo o una figura a cada defecto ya cerrado. Esas son dos cosas
+distintas que la redacción original de la regla no separaba con claridad, y el autor tenía razón en
+señalarlo.
+
+**Decisión del autor, con una precisión de fecha exacta**: la integridad de la medición rige
+**desde el 8 de septiembre de 2026 en adelante** — la fecha de la re-corrida vigente. Todo defecto
+anterior a esa fecha es historia cerrada, no medición vigente, y el cuerpo solo necesita declarar
+que existió y remitir al anexo, sin desarrollar su mecánica. Ejecutado:
+
+1. **`CLAUDE.md`** (sección «Integridad de la medición»): añadida una precisión fechada que fija
+   el corte del 8 de septiembre, autoriza comprimir o retirar del cuerpo los temas de defectos
+   anteriores a esa fecha cuando el límite de 25 páginas aprieta, y dice explícitamente que **no**
+   toca el resto de la sección (declarar la corrida vigente, comprobar categorías contra el vacío,
+   verificar el idioma siguen siendo obligatorios). Los anexos (H, I) **no se tocan** por esta
+   precisión — el autor pidió esperar indicaciones del profesor guía antes de recortarlos.
+2. **§3.3, párrafo de `Locations`**: comprimido de ~240 palabras a dos frases. Se conserva lo que
+   la integridad de la medición exige —que existió, que ya no afecta a ningún resultado vigente, la
+   fracción exacta **66,0 %** / 12 852 de 19 464, y la remisión al Anexo I—; se retira el desarrollo
+   del mecanismo (por qué CoNLL-2002 sí anota localizaciones, cómo puntuaba el evaluador, etc.), que
+   ya vive completo en el Anexo I.
+
+**Verificado**: `la composicion de FP (§3.3/§7.2) reproduce desde el artefacto` sigue en `ok` (la
+fracción exacta sobrevivió la compresión); `la conclusion 1 usa la agregacion declarada en §3.3` en
+`ok`. Añadida una frase del párrafo viejo a `RETIRADAS` («sin ninguna forma de acertar en ella») y
+declarada en `FALLOS_DECLARADOS` la divergencia de guiones largos que la compresión produjo (el
+`.md` bajó de 93 a 92; ya había ocurrido una vez antes con este mismo párrafo, `§F166`). 56
+comprobaciones, 0 fallos nuevos (53 declarados, 20 vigentes).
+
+**Lo que queda pendiente, y es del autor**: si conviene aplicar el mismo criterio a las otras
+candidatas que `LEARNING §L80` ya había documentado sin ejecutar (la cifra sin evidencia de §7.1
+conclusión 6, las anécdotas de §7.2 puntos 7 y 8) es una decisión aparte, no incluida en este
+cambio — el autor no la pidió ejecutar hoy, solo la de `Locations`.

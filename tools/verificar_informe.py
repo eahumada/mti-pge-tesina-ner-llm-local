@@ -125,6 +125,21 @@ FALLOS_DECLARADOS = {
     'todavia afirma «la Figura 1 lo ilustra»': ('2026-09-12',
                                                 'idem (§F170), la referencia colgante que se '
                                                 'quito junto con la figura'),
+    'guiones largos frente a': ('2026-09-12',
+                               'PENDIENTE de propagar (§F170): la compresion del parrafo de §3.3 '
+                               'quito un guion largo del .md; los tres .docx aun no se '
+                               'regeneraron. Ya se declaro y se retiro una vez antes (§F166), '
+                               'reabierta por el mismo tipo de motivo'),
+    'Un tercer límite, anterior a la re-corrida del 8 de septie': ('2026-09-12',
+                                                                  'PENDIENTE de propagar (§F170): '
+                                                                  'parrafo de §3.3 comprimido de '
+                                                                  '~240 a dos frases, aun no en '
+                                                                  'los tres .docx'),
+    'todavia afirma «sin ninguna forma de acertar en ella»': ('2026-09-12',
+                                                              'PENDIENTE de propagar (§F170): '
+                                                              'frase del parrafo viejo de §3.3, '
+                                                              'aun en los tres .docx sin '
+                                                              'regenerar'),
 }
 
 
@@ -1315,6 +1330,12 @@ RETIRADAS = (
     ('la Figura 1 lo ilustra',
      'referencia colgante a la Figura 1 retirada (§F170): la frase parentetica se quito de §3.3 '
      'junto con la figura, sin tocar la fraccion que la acompana'),
+    ('sin ninguna forma de acertar en ella',
+     'frase del parrafo largo de §3.3 sobre Locations (~240 palabras), comprimido a dos frases '
+     'el 2026-09-12 (FINDINGS §F170, precision de CLAUDE.md sobre integridad de la medicion desde '
+     'el 8 de septiembre): el autor considero que un defecto ya superado por la re-corrida no '
+     'necesita desarrollar su mecanismo en el cuerpo. La fraccion 66,0 % / 12 852 de 19 464 y la '
+     'remision al Anexo I se conservan'),
 )
 
 
