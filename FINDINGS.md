@@ -8359,3 +8359,62 @@ mismo día.
 **Con esto quedan ejecutadas las tres candidatas de `LEARNING §L80`.** No queda ninguna pendiente de
 esa lista; la duda de terminología (`localizaciones` vs. `ubicaciones`) sigue sin resolver, sin
 tocar, porque no se pidió resolverla hoy.
+
+---
+
+## §F173 — Segundo barrido sin más candidatas, `GLOSARIO.md` nuevo, y datos reales para la duda de terminología
+
+**2026-09-12, mismo día.** El autor pidió tres cosas más, tras confirmar `§F172`: (1) volver a
+revisar el cuerpo por más pasajes similares a los ya comprimidos; (2) para la duda de terminología
+de `LEARNING §L80` (punto 4), añadir «direcciones» y «topónimos» como opciones y dar ejemplos reales
+del corpus, documentando en extenso en los documentos relacionados; (3) crear `GLOSARIO.md` con las
+definiciones relevantes del estudio.
+
+**(1) Segundo barrido — sin más candidatas.** Un fork revisó el cuerpo completo buscando el mismo
+patrón (defectos ya corregidos narrados con detalle, cifras sin respaldo, «trabajo futuro» ya
+hecho). Encontró dos casos dudosos y los **descartó con justificación**, no forzó candidatos:
+
+- La discusión del *mojibake* en §6 (~250 palabras: 21/26 configuraciones puntúan mejor cuando la
+  corrupción está en la referencia, 23/26 puntúan peor cuando está en el texto de entrada) **no es
+  anécdota histórica**: es un hallazgo metodológico generalizable («la implicación metodológica
+  excede a este trabajo») que el propio texto reclama como aporte, cualitativamente distinto de los
+  puntos 7/8 de §7.2 que sí se comprimieron.
+- La cautela sobre el dict-RAG v1.0 en §5.6 (línea base averiada del 13,95 % citada junto al 62,38 %
+  de la corrida limpia) es una **advertencia interpretativa activa sobre un resultado que el cuerpo
+  sigue reportando ahora**, no un resto de historia pre-8-de-septiembre.
+
+Las demás menciones a corridas o directorios `results/...` en el cuerpo son citas de procedencia
+metodológicamente necesarias (qué corrida sostiene qué tabla), exactamente lo que `CLAUDE.md` sigue
+exigiendo declarar. **Conclusión: `§F172` ya cubrió todo lo que encaja limpiamente en el criterio.**
+No se tocó nada del `.md` por este punto.
+
+**(2) Datos reales para la duda de terminología.** Inspeccionado `data/benchmark_balanced_120.json`
+directamente (no de memoria ni por inferencia): la categoría `locations` anota **545 entidades, 339
+valores únicos**. La mayoría son topónimos —países, comunidades autónomas, ciudades— pero una parte
+real son lugares institucionales (`Universidad de Deusto`, `Hospital Virgen del Rocío`, `Palacio de
+la Moncloa`, `Forum Deusto`), y **no se encontró ninguna dirección postal**. Con esa evidencia:
+«direcciones» queda descartada (no encaja con ningún ejemplo real); entre «topónimos» (preciso para
+la mayoría, deja fuera los lugares institucionales) y «ubicaciones» (cubre ambos), la segunda
+describe mejor la composición real de la categoría. **Sigue sin resolverse** — es evidencia para
+informar la decisión del profesor guía, no una resolución tomada por esta sesión. Documentado en
+extenso en `LEARNING §L80` (actualización del punto 4) y en `GLOSARIO.md`.
+
+**(3) `GLOSARIO.md`, nuevo.** Documento de referencia en la raíz del proyecto (mismo estatus que
+`FINDINGS.md`/`LEARNING.md`: documento de trabajo, no entregable de los listados en `CLAUDE.md`,
+salvo que el autor decida incorporarlo como anexo). Reúne las definiciones ya presentes en el
+informe —no introduce conceptos nuevos— organizadas en seis bloques (entidades y evaluación;
+modelos y aprendizaje en contexto; RAG; arquitectura de ejecución; validación estadística; dominio
+de cumplimiento), cada entrada con su referencia de sección (`§`) y su cita bibliográfica cuando
+aplica. La entrada «Localizaciones / Ubicaciones (LOC)» lleva la evidencia del punto (2) completa,
+con los nueve ejemplos reales citados.
+
+**Una referencia de sección se verificó y corrigió antes de comprometer**: la entrada de «d de
+Cohen» se había escrito primero como `§4.1.2` de memoria; comprobado con `grep`, la cita real está
+en `§5.3` (el contraste MLX vs. compilación estándar sobre N=30). Corregida antes de guardar —el
+mismo hábito de «no citar una sección sin comprobarla» que ya rige para el resto del proyecto.
+
+**Verificado**: `GLOSARIO.md` no lo toca ninguna comprobación de `tools/verificar_informe.py` (no es
+el Markdown del informe ni su bibliografía), así que su creación no afecta el estado del verificador;
+confirmado que sigue en 0 fallos nuevos tras crearlo. La extensión de `LEARNING §L80` sí citaba
+`§F173` antes de que existiera esta sección — 1 fallo nuevo momentáneo (`toda referencia §F y §L
+tiene su seccion`), resuelto al escribir esta misma entrada.

@@ -1397,13 +1397,33 @@ aquí, con su ubicación exacta, para que una futura sesión —del autor o de o
    trabajo futuro que ya se completó, con el relato completo de cómo. El autor no lo nombró
    explícitamente, pero es el mismo tipo de contenido y cae bajo el mismo criterio.
 
-4. **Terminología: «localizaciones» vs. «ubicaciciones».** El autor sugirió que «ubicaciones»
+4. **Terminología: «localizaciones» vs. «ubicaciones».** El autor sugirió que «ubicaciones»
    podría ser una etiqueta mejor que «localizaciones» para la tercera categoría de entidad (lugares
    geográficos). El término aparece repetidamente en §2.1, §3.3, Anexo H y Anexo I, así que un
    cambio de nombre no es cosmético: toca contenido citado por varias comprobaciones mecánicas
    (`c_figura1_vs_artefacto`/su sucesora, el análisis de mojibake) y por el propio corpus CoNLL-2002,
    que usa «LOC». No se tocó: es una decisión de estilo que conviene tomar de una vez para todo el
    documento, no en un lugar aislado.
+
+   **Actualización 2026-09-12 (mismo día): revisados los datos reales del corpus antes de opinar,
+   y ampliadas las opciones a considerar con ejemplos genuinos.** El autor pidió, además de
+   «ubicaciones», valorar «direcciones» y «topónimos», con ejemplos reales del corpus. Inspeccionado
+   `data/benchmark_balanced_120.json`: la categoría anota **545 entidades (339 valores únicos)**.
+   La mayoría son topónimos a distintas escalas —países (`España`, `Francia`, `Marruecos`),
+   comunidades autónomas (`Andalucía`, `Cataluña`, `Asturias`) y ciudades (`Madrid`, `Bilbao`,
+   `Toledo`)— pero **una parte real no lo es**: `Universidad de Deusto`, `Hospital Virgen del
+   Rocío`, `Palacio de la Moncloa`, `Forum Deusto`, `Museo Extremeño e Iberoamericano de Arte
+   Contemporáneo` son lugares institucionales, no nombres propios de accidentes geográficos.
+   **No se encontró ninguna dirección postal** (calle y número) en el corpus.
+
+   Esto descarta con evidencia una de las tres opciones: **«direcciones» no encaja con ningún
+   ejemplo real** y sería la menos apropiada. Entre «topónimos» (preciso para la mayoría, pero deja
+   fuera los lugares institucionales) y «ubicaciones» (más genérico, cubre ambos casos), la segunda
+   describe mejor la composición real de la categoría tal como está anotada hoy. **Sigue siendo una
+   decisión pendiente del profesor guía**, no ejecutada — esto es evidencia para informarla, no una
+   resolución. El detalle completo, con la lista de ejemplos, quedó en `GLOSARIO.md`, entrada
+   «Localizaciones / Ubicaciones (LOC)», nuevo documento de referencia creado el mismo día a
+   petición del autor con las definiciones del estudio (`FINDINGS §F173`).
 
 **Por qué no se ejecutó nada de esto ahora:** el autor pidió expresamente «anotar... como algo que
 es posible eliminar», distinto de la orden «definitivamente eliminar» que sí dio para la Figura 1.
