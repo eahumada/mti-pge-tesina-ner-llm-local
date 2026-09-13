@@ -8137,3 +8137,50 @@ prefijo que ya usa `tools/verificar_informe.py` internamente. Corregida la ruta 
 encargo de Claude Desktop. El contenido citado del JSON —las cifras y las trece filas de la Tabla
 20— ya era correcto; solo la ruta estaba incompleta. Verificado de nuevo: 56 comprobaciones, 0
 fallos nuevos.
+
+---
+
+## §F169 — Cuatro citas más para métodos nombrados sin origen: ANOVA, Friedman, Levene/Brown-Forsythe, Cohen
+
+**2026-09-12.** A petición del autor, un segundo workflow (5 agentes + refutación escéptica) buscó
+citas de origen para otros métodos nombrados en el cuerpo sin cita, mismo patrón que motivó `§F168`.
+Resultado, con veredicto SOBREVIVE en cada refutación salvo uno:
+
+- **ANOVA**: recomendado R. A. Fisher, *Statistical Methods for Research Workers*, Oliver & Boyd,
+  1925 (no la nota de 1918 sobre varianza, que es la base matemática y no el procedimiento; el
+  patrón de cita ya establecido con Tukey es citar el procedimiento, no su antecedente teórico).
+  Sin DOI (libro pre-DOI); URL de Open Library verificada (`OL1153861W`, primer año de publicación
+  1925 confirmado).
+- **Friedman (1937)**: confirmada sin ajustes. DOI `10.1080/01621459.1937.10503522`, verificado por
+  Crossref y OpenAlex, con una fe de erratas de 1939 correctamente distinguida y no confundida con
+  la referencia primaria.
+- **Levene (1960)** y **Brown-Forsythe (1974)**: ambas confirmadas. Levene es un capítulo de libro
+  pre-DOI (*Contributions to Probability and Statistics*, ed. Olkin, Stanford University Press);
+  verificado por registro MARC de la Library of Congress y el índice del propio libro, con el rango
+  de páginas 278-292 corroborado por tres fuentes independientes en la reverificación. Brown-Forsythe
+  tiene DOI `10.1080/01621459.1974.10482955`, coincidencia exacta en Crossref, y se descartó
+  explícitamente la confusión clásica con su otro artículo homónimo de 1974 sobre igualdad de
+  medias (ese en *Technometrics*, no en JASA).
+- **Cohen (1988)**: confirmada. *Statistical Power Analysis for the Behavioral Sciences*, 2.ª ed.,
+  Lawrence Erlbaum Associates — verificado por registro LOC/MARC (LCCN 88012110) y por el uso real
+  de la tabla de convenciones (pequeño/mediano/grande) en la literatura, que remite a esta edición y
+  no a la de 1969 (Academic Press), cuyo contenido es distinto.
+- **Levenshtein**: **no se añade**. La refutación **corrigió** el año propuesto (1966 → 1965 para el
+  volumen 10, con evidencia de índices de revista escaneados en archive.org: año = 1955 + volumen,
+  sin excepciones en ocho puntos de control) y dejó sin resolver el número de fascículo (Wikipedia
+  dice 8, OpenAlex dice 4, sin un tercer árbitro). Con un dato corregido y otro en disputa, no se
+  cita hasta que el autor decida o aparezca una tercera fuente.
+
+**Decisión de presupuesto de páginas (el autor, vía pregunta explícita):** añadir las cuatro
+confirmadas y buscar compensación antes de comprometer. Revisado: el «recorte de tamaño equivalente»
+que `CLAUDE.md` describe para un desbordamiento de página es un **ajuste de estilo en el `.docx`**
+(espaciado de encabezados, interlineado, cuerpo de letra de bloques de código hasta 7 pt) — un lote
+de la competencia de Claude Desktop al maquetar, no un recorte de palabras en el Markdown. Cazar un
+recorte de contenido equivalente en el `.md` habría sido anticiparse a esa orden de prelación
+(estilo antes que texto) sin necesidad. Se añadieron las cuatro citas (5 entradas de bibliografía:
+`[42]`-`[46]`) sin recortar prosa, y se declara aquí el riesgo para que Claude Desktop lo tenga
+presente al maquetar: `+139` palabras sobre el cuerpo, margen de la estimación por palabras baja a
+128 (24,81 páginas estimadas), y la medición real anterior (`§1.298`/adenda) ya estaba en 25 de 25
+sin margen — es probable que esta adición exija el ajuste de estilo antes de dar el entregable por
+bueno. Verificado: 56 comprobaciones, 0 fallos nuevos (38 declarados, 15 vigentes), `ok` en el
+límite de 25 páginas por la estimación de palabras.

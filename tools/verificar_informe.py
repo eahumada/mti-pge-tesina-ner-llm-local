@@ -112,6 +112,12 @@ FALLOS_DECLARADOS = {
     'anexo j — correlación entre capacidad y beneficio del rag': ('2026-09-12',
                                                                   'PENDIENTE de propagar (§F168): '
                                                                   'encabezado del anexo nuevo'),
+    '[43] M. Friedman': ('2026-09-12',
+                         'PENDIENTE de propagar (§F169): cita nueva de §2.5, aun no en los tres '
+                         '.docx'),
+    '[44] H. Levene': ('2026-09-12', 'idem (§F169), la de Levene'),
+    '[45] M. B. Brown and A. B. Forsythe': ('2026-09-12', 'idem (§F169), la de Brown-Forsythe'),
+    '[46] J. Cohen': ('2026-09-12', 'idem (§F169), la de Cohen'),
 }
 
 

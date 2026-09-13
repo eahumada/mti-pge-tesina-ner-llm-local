@@ -531,6 +531,35 @@ toca. La bibliografía y la cita de §2.5 sí están en el cuerpo, pero son dos 
 sueltas — la estimación por palabras sigue en `ok` tras añadirlas. Detalle completo en
 `FINDINGS §F168`.
 
+### Pieza 39 — Cuatro citas más en §2.5 y §4.1.2, y cinco entradas de bibliografía nuevas (`FINDINGS §F169`)
+
+Mismo patrón que la pieza 37: el párrafo de §2.5 sobre ANOVA/Friedman/Levene y el de §4.1.2 sobre
+la `d` de Cohen ya explicaban esos métodos sin citar su origen. Añadidas cinco entradas más a la
+bibliografía, después de `[41]`:
+
+- `[42] R. A. Fisher, "Statistical Methods for Research Workers". Edimburgo: Oliver & Boyd, 1925.`
+- `[43] M. Friedman, "The Use of Ranks to Avoid the Assumption of Normality Implicit in the Analysis of Variance," Journal of the American Statistical Association, vol. 32, no. 200, pp. 675-701, 1937.`
+- `[44] H. Levene, "Robust Tests for Equality of Variances," in Contributions to Probability and Statistics: Essays in Honor of Harold Hotelling, I. Olkin, Ed. Stanford, CA: Stanford University Press, 1960, pp. 278-292.`
+- `[45] M. B. Brown and A. B. Forsythe, "Robust Tests for the Equality of Variances," Journal of the American Statistical Association, vol. 69, no. 346, pp. 364-367, 1974.`
+- `[46] J. Cohen, "Statistical Power Analysis for the Behavioral Sciences", 2.ª ed. Hillsdale, NJ: Lawrence Erlbaum Associates, 1988.`
+
+En el párrafo de §2.5 (Validación estadística), el texto pasa de «el análisis de varianza (ANOVA)
+de una vía, que contrasta...» a «...de una vía [42], que contrasta...»; de «La prueba no paramétrica
+de **Friedman** es su análogo...» a «...de **Friedman** [43] es su análogo...»; y de «se contrasta
+con la prueba de **Levene**, en su variante centrada en la mediana (Brown-Forsythe), más robusta...»
+a «...de **Levene** [44], en su variante centrada en la mediana (Brown-Forsythe) [45], más
+robusta...». En §4.1.2, «una *d* de Cohen de 0,12» pasa a «una *d* de Cohen [46] de 0,12».
+
+**Presupuesto de páginas — atención aquí, no es solo una nota de rutina.** Esta pieza añade ~139
+palabras al cuerpo (cinco entradas de bibliografía). La estimación por palabras de este equipo sigue
+en `ok` (margen de ~128 palabras), pero la medición **real** que tu propia entrada `§2.27` reportó
+—25 de 25 páginas, sin margen— es anterior a esta pieza. Es probable que, al maquetar esto, el
+cuerpo pase a 26 páginas. **Antes de considerar tocar el texto**, aplica el orden que fija
+`CLAUDE.md`: ajustar el espaciado de encabezados, el interlineado y el cuerpo de letra de los
+bloques de código (hasta 7 pt si hace falta) — eso es lo que probablemente baste. Solo si eso no
+alcanza, avisa antes de tocar contenido: no está autorizado suprimir texto para ganar espacio sin
+que el autor lo confirme expresamente.
+
 ---
 
 ## 1. Qué le falta al entregable, y hay **una sola causa**
