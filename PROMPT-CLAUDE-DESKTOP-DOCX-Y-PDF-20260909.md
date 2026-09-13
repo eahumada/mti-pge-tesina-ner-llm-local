@@ -493,7 +493,7 @@ tabla):
 > le aporta el KB RAG —Spearman −0,0879 (p = 0,7752) y Pearson −0,4816 (p = 0,0956), sobre los N=13
 > pares (F1 base, ΔF1) de la Tabla 7— proceden de `tools/robustez_estadistica.py`, que las calcula
 > con `scipy.stats.pearsonr` y `scipy.stats.spearmanr` sobre el CSV consolidado de la re-corrida
-> adoptada y las persiste en `results/ROBUSTEZ_ESTADISTICA_20260909_FIX/robustez.json`. El
+> adoptada y las persiste en `repos/ner-llm-entity-benchmark/results/ROBUSTEZ_ESTADISTICA_20260909_FIX/robustez.json`. El
 > coeficiente de **Pearson** [40] mide la asociación lineal entre las dos variables y es sensible a
 > los valores atípicos; el de **Spearman** [41], calculado sobre sus rangos y no sobre los valores,
 > capta cualquier relación monótona sin asumir linealidad, a costa de ignorar la magnitud de la

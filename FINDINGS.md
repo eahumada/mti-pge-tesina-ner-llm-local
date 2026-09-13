@@ -8122,3 +8122,18 @@ cifras son las del JSON y no una transcripción manual—. Las 21 divergencias n
 y los tres `.docx` (cuatro párrafos, una tabla y dos entradas de bibliografía, por tres
 entregables) son la propagación pendiente de siempre, declaradas en `FALLOS_DECLARADOS` a nombre
 de este hallazgo. Añadida la pieza correspondiente al encargo de Claude Desktop.
+
+**Adenda (mismo día, tras verificación con workflow independiente).** Un workflow de cuatro
+agentes con refutación escéptica reverificó las dos citas y el propio commit. Las citas de
+Pearson y Spearman se confirman correctas —DOI, autor, revista, volumen, páginas y año coinciden
+en Crossref y en una segunda fuente independiente cada una (OpenAlex y, para Spearman, la
+bibliografía de Wikipedia)—, con solo un matiz tipográfico de estilo en ambos títulos (mayúsculas
+y el numeral «VII.» del catálogo de la Royal Society), no un error de fondo. El diff del commit
+`77bfd19` se confirmó línea por línea contra `git show`, y su presencia en `origin/main` con un
+`git fetch` fresco. **Encontró un error real**, menor pero genuino: el Anexo J citaba la ruta del
+artefacto como `results/ROBUSTEZ_ESTADISTICA_20260909_FIX/robustez.json`, que no existe en la raíz
+de este repositorio — el fichero vive en `repos/ner-llm-entity-benchmark/results/...`, el mismo
+prefijo que ya usa `tools/verificar_informe.py` internamente. Corregida la ruta en el `.md` y en el
+encargo de Claude Desktop. El contenido citado del JSON —las cifras y las trece filas de la Tabla
+20— ya era correcto; solo la ruta estaba incompleta. Verificado de nuevo: 56 comprobaciones, 0
+fallos nuevos.
