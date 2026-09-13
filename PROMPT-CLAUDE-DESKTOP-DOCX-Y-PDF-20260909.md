@@ -560,6 +560,31 @@ bloques de código (hasta 7 pt si hace falta) — eso es lo que probablemente ba
 alcanza, avisa antes de tocar contenido: no está autorizado suprimir texto para ganar espacio sin
 que el autor lo confirme expresamente.
 
+### Pieza 40 — Retirada la Figura 1 vieja (composición de FP), y renumerada la que queda (`FINDINGS §F170`)
+
+A petición expresa del autor. **Se retira del cuerpo**, en §3.3:
+
+- La imagen `![Composición de los falsos positivos...](../../figuras/falsos-positivos.png)`.
+- Su leyenda: `_Figura 1. Composición de los falsos positivos sobre el consolidado publicado...`
+  (la que empieza así y termina en «...a partir de `results/COMPOSICION_FP_20260908/`»).
+- La frase parentética «(la Figura 1 lo ilustra)» dentro del párrafo de al lado. **No toques nada
+  más de ese párrafo**: la fracción «66,0 %» y «12 852 de 19 464» se conservan literales, palabra
+  por palabra — dos comprobaciones del verificador las exigen así.
+
+**La otra figura del cuerpo (el efecto del KB RAG) se renumera de Figura 2 a Figura 1**, porque
+ahora es la única y la numeración debe empezar en 1:
+
+- La imagen y su leyenda no cambian de contenido, solo el número: `_Figura 2. Efecto...` pasa a
+  `_Figura 1. Efecto...`.
+- La frase que la cita en el cuerpo del texto: «La Figura 2 recoge ambas lecturas» pasa a «La
+  Figura 1 recoge ambas lecturas».
+
+**No toques** el script `generar_figuras_informe.py` ni el artefacto `COMPOSICION_FP_20260908/`:
+siguen existiendo, solo la imagen dejó de incrustarse en el Markdown.
+
+**Efecto en el presupuesto de páginas**: neto positivo, compensa parte de lo que añadió la pieza 39
+el mismo día — la figura y su leyenda pesaban más que las cinco entradas de bibliografía nuevas.
+
 ---
 
 ## 1. Qué le falta al entregable, y hay **una sola causa**

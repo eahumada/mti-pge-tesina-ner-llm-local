@@ -1363,3 +1363,51 @@ texto se lee igual, pero el regex, que no usa `\s+` sino un espacio literal, dej
 silencio. Al reescribir cualquier párrafo que el verificador cite por regex, comprobar con
 `tools/verificar_informe.py` **después de ajustar el ancho de línea**, no solo después de redactar
 el contenido: son dos pasadas distintas y cada una puede romper algo que la otra no toca.
+
+---
+
+## §L80 — Candidatas a eliminar del cuerpo, señaladas por el autor y anotadas sin ejecutar
+
+**2026-09-12.** El autor, en el mismo encargo que pidió retirar la Figura 1 (`FINDINGS §F170`),
+señaló otras cosas como candidatas a simplificar en el **cuerpo** (no en los anexos, que sí se
+conservan íntegros por regla del proyecto) y pidió anotarlas sin ejecutarlas todavía. Se listan
+aquí, con su ubicación exacta, para que una futura sesión —del autor o de otro agente— decida:
+
+1. **§7.1, conclusión 6 (línea ~543): una cifra de una corrida sin evidencia guardada.** El párrafo
+   dice, dentro de la conclusión sobre el KB RAG: «...versus el dict-RAG (v1.0), que en un sondeo
+   exploratorio N=5 sobre el mismo modelo, **no persistido en `results/`**, degradó el F1 hasta
+   0.2367 (−57.8 % respecto de su propio baseline), degradación confirmada después en la corrida
+   histórica N=120 previa a la re-corrida, donde ese mismo modelo caía de 0.3611 a 0.3113». El propio
+   texto admite que el N=5 no tiene datos guardados que lo respalden, y la segunda cifra remite a la
+   «corrida histórica previa a la re-corrida», que ya no es la que sostiene el estudio. A diferencia
+   del defecto de `Locations` —que la integridad de la medición obliga a declarar—, esta es una
+   comparación anecdótica que no está atada a ningún artefacto verificable hoy. Candidata a
+   retirarse o a reformularse citando solo lo que sí tiene respaldo en `results/`.
+
+2. **§7.2, punto 8 (línea ~564): «Recuperación de las localizaciones... ya realizada».** Es el caso
+   que el autor nombró explícitamente. Un punto de la sección «Trabajo futuro» que en realidad
+   describe, con detalle técnico completo (el conversor, Kleptotrace, CoNLL-2002), un defecto **ya
+   resuelto** — no es trabajo futuro, es una anécdota de un arreglo pasado que ocupa espacio en una
+   sección que se supone mira hacia adelante. El hecho que el punto protege (que el corpus vigente
+   anota `Locations`) ya está garantizado por la integridad de la medición en otro lugar (§3.3,
+   Anexo H); lo que sobra aquí es el relato de cómo se llegó ahí.
+
+3. **§7.2, punto 7 (línea ~561): mismo patrón, sobre el *mojibake*.** «Normalización de codificación
+   del corpus y re-evaluación: ya realizada» tiene la misma estructura que el punto 8: un ítem de
+   trabajo futuro que ya se completó, con el relato completo de cómo. El autor no lo nombró
+   explícitamente, pero es el mismo tipo de contenido y cae bajo el mismo criterio.
+
+4. **Terminología: «localizaciones» vs. «ubicaciciones».** El autor sugirió que «ubicaciones»
+   podría ser una etiqueta mejor que «localizaciones» para la tercera categoría de entidad (lugares
+   geográficos). El término aparece repetidamente en §2.1, §3.3, Anexo H y Anexo I, así que un
+   cambio de nombre no es cosmético: toca contenido citado por varias comprobaciones mecánicas
+   (`c_figura1_vs_artefacto`/su sucesora, el análisis de mojibake) y por el propio corpus CoNLL-2002,
+   que usa «LOC». No se tocó: es una decisión de estilo que conviene tomar de una vez para todo el
+   documento, no en un lugar aislado.
+
+**Por qué no se ejecutó nada de esto ahora:** el autor pidió expresamente «anotar... como algo que
+es posible eliminar», distinto de la orden «definitivamente eliminar» que sí dio para la Figura 1.
+La distinción es real y se respetó: lo definitivo se ejecutó (`§F170`); lo candidato se documenta
+para que la decisión de fondo —cuánto detalle histórico conservar en el cuerpo frente al anexo— la
+tome el autor con estas cuatro opciones concretas delante, no una sesión que interprete «candidata»
+como «pendiente de borrar sin más trámite».

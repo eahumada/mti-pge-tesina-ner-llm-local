@@ -8184,3 +8184,60 @@ presente al maquetar: `+139` palabras sobre el cuerpo, margen de la estimación 
 sin margen — es probable que esta adición exija el ajuste de estilo antes de dar el entregable por
 bueno. Verificado: 56 comprobaciones, 0 fallos nuevos (38 declarados, 15 vigentes), `ok` en el
 límite de 25 páginas por la estimación de palabras.
+
+---
+
+## §F170 — Retirada la Figura 1 (composición de FP), a petición expresa del autor
+
+**2026-09-12.** El autor pidió, de forma explícita y sin condicionarlo a análisis previo
+(«definitivamente eliminar»), retirar del cuerpo el gráfico de la Figura 1 (composición de los
+falsos positivos del consolidado publicado, previa a la corrección de `Locations`) y su leyenda.
+En el mismo encargo pidió **analizar y anotar como candidatas**, sin ejecutar todavía, otras tres
+cosas: referencias a corridas anteriores sin evidencia verificable, anécdotas de defectos ya
+resueltos (nombró el caso de `Locations`), y una duda de terminología (¿«ubicaciones» en vez de
+«localizaciones»?). Esta entrada cubre lo primero, ejecutado; `§L80` cubre las candidatas, sin
+ejecutar.
+
+**Tensión con la política del proyecto, resuelta y no ignorada.** `CLAUDE.md` protege exactamente
+este tipo de contenido bajo «Integridad de la medición», una sección que existe **porque** ocultar
+un defecto de medición ya le costó caro al proyecto una vez (`§F53`). Antes de ejecutar, se
+distinguió qué de la Figura 1 **afirma** (una interpretación, prescindible del cuerpo) y qué
+**atestigua** (los datos y el defecto en sí, que el Corolario de `CLAUDE.md` exige conservar):
+
+- **Lo que se retira** es la figura y su leyenda **del cuerpo**: una representación visual de un
+  estado histórico ya corregido, que el autor considera que no aporta a la lectura del informe hoy.
+- **Lo que se conserva, íntegro y sin tocar:** el Anexo I (que documenta el defecto completo, con
+  sus cifras y la corrección), el script `generar_figuras_informe.py` que sigue generando la
+  imagen (por si se necesita en el futuro), el artefacto `COMPOSICION_FP_20260908/` que la alimenta,
+  y **la fracción exacta en prosa** («66,0 %», «12 852 de 19 464») en §3.3, que sigue siendo
+  necesaria porque documenta el propio defecto de medición — eso no es narrativa prescindible, es la
+  integridad de la medición que `CLAUDE.md` exige, y el autor no pidió retirarla, solo la figura.
+- Es decir: se retiró la ilustración, no la evidencia. Con eso, la tensión con `CLAUDE.md` no se
+  ignoró: se resolvió aplicando su propio Corolario (lo que afirma se ajusta a lo que el autor
+  decide; lo que atestigua sigue disponible para quien lo pida).
+
+**Mecánica de la retirada, con la renumeración que exige:**
+
+1. Retirados el `![...]` y la `_Figura 1. ..._` de §3.3 (imagen `falsos-positivos.png` y su
+   leyenda), y la referencia colgante «(la Figura 1 lo ilustra)» en la prosa de al lado —sin tocar
+   la fracción 66,0 % / 12 852 de 19 464 que la acompaña—.
+2. La única figura restante del cuerpo (el efecto del KB RAG, antes «Figura 2») se renumeró a
+   **Figura 1**: la imagen, su leyenda y la frase que la cita en §5.3.1 («La Figura 2 recoge...» →
+   «La Figura 1 recoge...»). Necesario porque `c_figuras` exige numeración contigua desde 1.
+3. En `tools/verificar_informe.py`: renombradas las etiquetas de las comprobaciones que hablaban de
+   «Figura 2» (ahora Figura 1) y de las que hablaban de «la Figura 1» vieja (ahora sin figura que
+   nombrar, renombradas a «la composición de FP (§3.3/§7.2) reproduce desde el artefacto»). **La
+   lógica de verificación no cambió**, solo las etiquetas: sigue comprobando que la fracción en
+   prosa, el script y el artefacto coincidan, aunque ya no haya una figura que dibujarlos.
+4. El script de figuras y el artefacto **no se tocaron**: siguen generando la imagen (por si se
+   necesita reincorporar o consultar), solo dejó de incrustarse en el Markdown.
+
+**Verificado tras el cambio**: `figuras numeradas... (2 elementos)` en `ok` (1 leyenda + 1 imagen,
+numeración contigua desde 1); `Figura 1 coherente con la Tabla 7` en `ok` (la que era Figura 2); `la
+composicion de FP (§3.3/§7.2) reproduce desde el artefacto` en `ok` (la cifra en prosa sigue
+correcta); `referencias a Anexo X y a Tabla N` en `ok` (nada quedó colgando). 56 comprobaciones, 0
+fallos nuevos.
+
+**Efecto en el presupuesto de páginas**: neto **positivo** para una vez — la figura y su leyenda
+sumaban más palabras/espacio que lo que costaron los ajustes de referencia, así que esta retirada
+compensa parte de lo añadido por `§F169` en el mismo día.

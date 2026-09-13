@@ -118,6 +118,13 @@ FALLOS_DECLARADOS = {
     '[44] H. Levene': ('2026-09-12', 'idem (§F169), la de Levene'),
     '[45] M. B. Brown and A. B. Forsythe': ('2026-09-12', 'idem (§F169), la de Brown-Forsythe'),
     '[46] J. Cohen': ('2026-09-12', 'idem (§F169), la de Cohen'),
+    'todavia afirma «Composición de los falsos positivos': ('2026-09-12',
+                                                            'PENDIENTE de propagar (§F170): la '
+                                                            'Figura 1 vieja se retiro del .md, '
+                                                            'aun no de los tres .docx'),
+    'todavia afirma «la Figura 1 lo ilustra»': ('2026-09-12',
+                                                'idem (§F170), la referencia colgante que se '
+                                                'quito junto con la figura'),
 }
 
 
@@ -1300,6 +1307,14 @@ RETIRADAS = (
      'idem: es la atribucion del corpus del Anexo F, y es una afirmacion falsa, no una ausencia'),
     ('cifras de la última columna',
      'la ultima columna de la Tabla 1 es Idioma; las cifras estan en la de desempeno publicado'),
+    ('Composición de los falsos positivos sobre el consolidado publicado (N=120, veintiséis grupos), previo a la',
+     'era la leyenda de la Figura 1 (composicion de FP), retirada el 2026-09-12 a peticion expresa '
+     'del autor (FINDINGS §F170): el grafico ilustraba un defecto de medicion ya corregido y el '
+     'autor considero que no aportaba al cuerpo. El script y el artefacto que la generaban no se '
+     'tocan; la fraccion en prosa de §3.3 (66,0 %, 12 852 de 19 464) se conserva integra'),
+    ('la Figura 1 lo ilustra',
+     'referencia colgante a la Figura 1 retirada (§F170): la frase parentetica se quito de §3.3 '
+     'junto con la figura, sin tocar la fraccion que la acompana'),
 )
 
 
@@ -2399,7 +2414,7 @@ def c_excluidos(s):
 def c_figura_vs_tabla(s):
     i = s.find('_Tabla 7.')
     if i < 0:
-        check('Figura 2 coherente con la Tabla 7', 0, ['no se encuentra la Tabla 7'])
+        check('Figura 1 coherente con la Tabla 7', 0, ['no se encuentra la Tabla 7'])
         return
     filas = []
     for l in s[i:i + 4000].split('\n'):
@@ -2456,7 +2471,7 @@ def c_figura_vs_tabla(s):
                             or a[4] != b[3]:
                         fallos.append('fila distinta: esta comprobacion %s vs el lector del '
                                       'script %s' % (a[:3], b[:3]))
-    check('Figura 2 coherente con la Tabla 7 y Δ aritméticamente correcto', len(filas), fallos)
+    check('Figura 1 coherente con la Tabla 7 y Δ aritméticamente correcto', len(filas), fallos)
 
 
 # --- 10. Identificadores sin colisión ------------------------------------------------------------
@@ -2847,7 +2862,7 @@ CSV_CONSOLIDADO = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark/results/'
 def c_tabla7_vs_datos(s):
     """La tabla central del informe, contrastada contra el CSV del que sale.
 
-    Hasta el 2026-09-08 la Tabla 7 solo se comprobaba contra la Figura 2 y contra el Anexo I, es
+    Hasta el 2026-09-08 la Tabla 7 solo se comprobaba contra la Figura 1 y contra el Anexo I, es
     decir, contra otras dos copias de si misma. Que tres sitios coincidan no dice nada si los tres
     se escribieron a mano desde la misma lectura. Esta comprobacion es la unica que la ata al dato.
     """
@@ -2983,7 +2998,12 @@ def c_tabla4_vs_datos(s):
           'la correspondencia fila-corrida refleja la Tabla 15 del informe')
 
 
-# --- 18. La Figura 1 y §3.3 reproducen desde el artefacto de composicion -------------------------
+# --- 18. §3.3/§7.2 y el script de figuras reproducen desde el artefacto de composicion -----------
+# Hasta el 2026-09-12 esta cifra tambien ilustraba una Figura 1 en el cuerpo, retirada por decision
+# del autor (FINDINGS §F170): el grafico y su leyenda mostraban un defecto de medicion ya corregido,
+# y el autor considero que una figura dedicada a un estado historico ya resuelto no aportaba al
+# cuerpo. El script que la genera y el artefacto que la alimenta NO se tocan (son lo que atestigua),
+# asi que esta comprobacion sigue vigilando que el script siga correcto aunque ya no se incruste.
 ARTEFACTO_FP = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark/results/'
                                   'COMPOSICION_FP_20260908/composicion_fp_26_grupos.json')
 
@@ -2992,18 +3012,18 @@ def c_figura1_vs_artefacto(s):
     """La composicion de los falsos positivos, atada al fichero que la calcula.
 
     El informe llego a dar dos cifras distintas para esta magnitud, una de ellas sin respaldo en
-    ningun dato (FINDINGS §F69). Esta comprobacion ata las tres apariciones —la prosa de §3.3, la
-    del §7.2 y el script que dibuja la Figura 1— al artefacto que las computa.
+    ningun dato (FINDINGS §F69). Esta comprobacion ata las dos apariciones en prosa —§3.3 y §7.2—
+    y el script de figuras (que ya no se incrusta en el cuerpo, §F170) al artefacto que las computa.
     """
     import json as _json
     if not os.path.exists(ARTEFACTO_FP):
-        check('la Figura 1 reproduce desde el artefacto de composicion', 0,
+        check('la composicion de FP (§3.3/§7.2) reproduce desde el artefacto', 0,
               ['no existe %s' % os.path.relpath(ARTEFACTO_FP, RAIZ)])
         return
     with open(ARTEFACTO_FP, encoding='utf-8') as fh:
         a = _json.load(fh)
     loc, tot, pct = a['fp_locations'], a['fp_total'], a['pct_fp_locations']
-    # el complemento tambien se dibuja en la Figura 1 y debe cuadrar con el artefacto
+    # el complemento tambien se dibujaba en la figura retirada y debe cuadrar con el artefacto
     comp = a.get('fp_no_locations')
     fallos, mirados = [], 0
     # el artefacto debe declarar su propia cobertura y haberla completado
@@ -3032,8 +3052,9 @@ def c_figura1_vs_artefacto(s):
     mirados += 1
     if comp is None or comp + loc != tot:
         fallos.append('el artefacto no declara fp_no_locations o no suma: %s + %s != %s' % (comp, loc, tot))
-    check('la Figura 1 y la prosa reproducen desde el artefacto de composicion', mirados, fallos,
-          'ata las tres apariciones de la cifra al fichero que la computa')
+    check('la composicion de FP (§3.3/§7.2) reproduce desde el artefacto', mirados, fallos,
+          'ata las dos apariciones en prosa y el script al fichero que las computa; ya no hay '
+          'figura que incrustar (§F170)')
 
 
 # --- 19. Las tablas 5, 6 y 8 reproducen desde sus corridas ---------------------------------------
@@ -3273,7 +3294,7 @@ ARTEFACTO_CORR = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark/results/'
 
 
 def c_correlacion(s):
-    """La rho que dibuja la Figura 2 y que cita §5.3.1, contra el fichero que la calcula.
+    """La rho que dibuja la Figura 1 y que cita §5.3.1, contra el fichero que la calcula.
 
     Estuvo un dia entero solo dentro de la imagen: el texto no la mencionaba y ningun artefacto de
     results/ la contenia. Una cifra que solo existe dentro de un PNG no se puede comprobar.
