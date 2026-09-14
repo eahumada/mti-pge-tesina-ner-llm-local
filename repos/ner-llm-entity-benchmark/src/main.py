@@ -142,6 +142,8 @@ def process_batch(batch: list[dict], model: str, system_prompt: str, config: Ben
             "latency_sec": llm_output["latency"],
             "tokens_per_sec": llm_output["tokens_per_sec"], # efficiency metric (REQ42)
             "retries": llm_output["retries"],
+            "retry_count": llm_output["retries"],          # R3: alias explícito (0 = primer intento exitoso)
+            "raw_response": llm_output.get("entities_raw", ""),  # R3: respuesta cruda íntegra para auditoría sin re-inferir
             "parse_method": llm_output["parse_method"],
             "precision": eval_output["metrics"]["overall"]["precision"],
             "recall": eval_output["metrics"]["overall"]["recall"],

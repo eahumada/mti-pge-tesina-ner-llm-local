@@ -2473,3 +2473,13 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 - **Arregla:** Tabla 7 (añade columna μ ± σ por modelo)
 - **Entregables:** `results/barras_error_n120_REMOTO/seed_{42,123,456,789,1024}/`
 - **Criterio de aceptación:** `failed == 0`; `detailed_results.json` presente en cada semilla
+
+---
+
+### §3.bis.18 ▶️ EN CURSO — Equipo 48 GB (Antigravity) — 2026-09-14 20:08
+- **Tarea:** R3 completada (código); R1 Fase 1 arrancando (N=15 × 5 semillas, ~1.7 h)
+- **Estado:** EN CURSO
+- **Archivos tocados:** `repos/ner-llm-entity-benchmark/src/main.py` (R3: +2 columnas)
+- **R3 aplicado:** columnas `raw_response` y `retry_count` añadidas al CSV de resultados
+- **R1 Fase 1:** `gemma4:latest` ablation N=15, semillas 42-46, `results/variantes_5semillas_n15_REMOTO/`
+- **Hora inicio:** 2026-09-14 20:08
