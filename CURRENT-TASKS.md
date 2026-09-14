@@ -1693,6 +1693,66 @@ Está en `FINDINGS §F65` y `§F65.bis`, con la tabla de ambas.
 ---
 
 
+### 3.bis.18 🟠 ENVIADA — Re-corridas para cerrar el informe (2026-09-14)
+
+**Documento:** `remote_48g/ENCARGO-RECORRIDAS-20260914.md`. Sustituye a toda petición anterior sobre los
+mismos experimentos. **Entrega de la tesina: 30 de septiembre**, dieciséis días.
+
+| | Petición | Coste estimado | Qué arregla |
+|:---|:---|:---|:---|
+| **R1** | Variantes de prompt 2×2 con **5 semillas** (42 a 46) sobre N=15 y **N=120**, modelo `gemma4:latest` | 45 min + 6 a 7 h | §5.2, Tabla 5, §6.1 primer factor, conclusión 2, §7.2 punto 10, resumen y abstract |
+| **R2** | Barra de error del titular: `baseline` y `kb_rag` sobre N=120, repetido, para `gemma4:31b-mlx`, `nemotron-mini:4b` y `gemma4:latest` | 8 a 10 h, nocturno | la Tabla 7, que hoy no tiene barra de error |
+| **R3** | Instrumentación: respuesta cruda íntegra, columnas `extraccion_vacia` y `rescate_regex`, reintento declarado | código, sin cómputo | la auditabilidad de R1 y R2 |
+| R4 | Corpus N=30 en inglés | 2 a 3 h | **recomendado NO correrlo** a dieciséis días |
+| R5 | Emitir la robustez de formato desde la corrida | incluido en R3 | una métrica que hoy no se reporta |
+
+**Por qué R2, que es nuevo.** Comprobado en los `run_config.json`: `ablacion_n15_REMOTO` y
+`kleptotrace_20260727_110454` comparten modelo, corpus, **semilla 42**, temperatura 0,1, `max_tokens=2048`,
+`SYSTEM_PROMPT.md` y umbral difuso 85, y dan **64,05 % y 66,76 %** de F1 en la misma celda. El estudio
+completo es de una sola pasada por modelo: **ninguna cifra publicada tiene barra de error conocida.**
+
+**Por qué R1 va también sobre N=120.** El N=15 está íntegramente en inglés. Medir ahí el efecto del idioma
+del prompt nunca fue el experimento correcto; el N=120 tiene 105 de sus 120 artículos en español, que es
+donde vive la hipótesis del trabajo.
+
+**Sigue abierta `§3.bis.17`** y se les recuerda en el mismo encargo: con qué método salieron el `+10,01` y
+el `+2,19` de su manifiesto, que aquí se recalculan como `+11,89` y `+3,16`. Preguntado el 2026-09-08, sin
+respuesta. No bloquea, pero es una cifra que hoy no se puede citar sabiendo qué mide.
+
+**Ampliación del mismo día — instrucción del autor: «no permitir fisuras en la tesis, correr lo que sea
+necesario; los costes son locales y la máquina de 48 GB está destinada solo a esto».**
+
+Con ella **todas las peticiones pasan a imprescindibles** y el encargo crece de cinco a seis, más cuatro
+ampliaciones:
+
+| | Petición | Llamadas | Reloj | Qué desbloquea |
+|---:|:---|---:|---:|:---|
+| 1 | **R3** instrumentación (código, sin cómputo) | — | — | que todo lo demás sea auditable |
+| 2 | **R1** variantes 2×2 × 5 semillas, N=15 | 300 | ~1,7 h | la Tabla 5 |
+| 3 | **R4** N=30 **traducido al español**, trece modelos | 780 | ~2 h | el hueco del Anexo F (`§F54`) |
+| 4 | **R6** método del `+10,01` / `+2,19` (`§3.bis.17`) | — | — | una cifra hoy incitable |
+| 5 | **R5** variantes sobre el **par emparejado** del dominio | 1 200 | ~6,6 h | el experimento de idioma bien planteado |
+| 6 | **R1** variantes 2×2 × 5 semillas, **N=120** | 2 260 | ~12,4 h | §5.2, §6.1, conclusión 2 |
+| 7 | **R2** barra de error de **los trece modelos** × 3 repeticiones | 8 814 | ~21 h | toda la Tabla 7 |
+| | **Total** | **13 354** | **~43 h** | |
+| A1-A4 | ampliaciones (R2 a cinco repeticiones, R1 y R5 con `gemma4:31b-mlx`, barra de error también en N=15 y N=30) | +11 436 | +24 h | |
+
+**Dos decisiones de diseño que conviene no perder:**
+
+1. **El N=30 se traduce, no se regenera.** Regenerar exigiría anotación experta nueva, que es el activo caro
+   de ese corpus; producirla con prisa abriría una fisura mayor que la que cierra. Traducir deja un **par
+   emparejado** —mismo contenido, mismas entidades, dos idiomas— que da el contraste de idioma más limpio del
+   trabajo, mejor que el del N=15, porque elimina la diferencia de contenido entre condiciones. La reserva de
+   que un corpus traducido no es nativo **se declara en el informe**, no se esconde.
+2. **El cómputo dejó de ser la restricción; el calendario no.** Se pide entrega **incremental**, petición a
+   petición, porque cada una desbloquea una parte distinta del informe y esas partes se reescriben en
+   paralelo a las corridas. Lo que llegue tarde no entra aunque esté bien medido.
+
+**Estado:** enviada el 2026-09-14 y ampliada el mismo día. Sin acuse todavía. **Ollama corre en la máquina
+local y en el equipo remoto de 48 GB**, que está dedicada en exclusiva a estas corridas.
+
+---
+
 ## 4. Workflows
 
 > Todo workflow debe declarar aquí su subsección: objetivo, fases, agentes, archivos tocados y resultado.
@@ -1713,6 +1773,46 @@ Está en `FINDINGS §F65` y `§F65.bis`, con la tabla de ambas.
   modelo retirado, autocontradicción entre §8.3 y §8.4, y consejo de `--resume` inoperante.
 - **Nota:** una primera ejecución fue **detenida antes de tocar archivo alguno** porque su prompt contenía
   una premisa errónea que habría eliminado una fila de datos experimentales. Ver `CLAUDE.md §Orquestación`.
+
+---
+
+### 4.3 `purga-informe-20260914` — 🔄 EN CURSO
+- **Cuándo:** 2026-09-14, lanzado ~19:20 · **Agentes:** 13 (9 auditores + 3 refutadores + 1 sintetizador)
+- **Objetivo:** inventariar en el informe todo lo débil, anecdótico, histórico o invalidado, y producir un
+  plan de retirada ordenado. Instrucción del autor: «eliminar lo que no tiene sustento; no mencionar la
+  historia; solo los últimos hallazgos».
+- **Fases:** Auditar (rangos disjuntos de líneas del `.md`) → Refutar (adversarial, **sesgado a conservar**)
+  → Sintetizar (plan por bloques, de abajo arriba).
+- **Archivos:** **solo lectura.** Ningún agente edita.
+- **Salvaguardas del prompt:** prohibido proponer la retirada de filas de datos medidos; prohibido tocar los
+  Anexos H, I y J (destino reservado al profesor guía); §5.2 excluida de la retirada por estar en la vía de
+  re-corrida, con instrucción de inventariar sus dependencias en su lugar.
+- **Resultado:** pendiente.
+
+### 4.4 `forense-cifras-20260914` — 🔄 EN CURSO
+- **Cuándo:** 2026-09-14, lanzado ~19:35 · **Agentes:** 11 (8 forenses + 2 refutadores + 1 dictamen)
+- **Objetivo:** auditar la **composición** de cada cifra publicada, no que reproduzca. Nace de `FINDINGS
+  §F174`: una cifra puede reproducir al decimal y estar escrita por un solo registro averiado.
+- **Protocolo idéntico por cifra:** contar ceros, `parse_method` y `tp+fp==0`; recalcular excluyéndolos;
+  micro contra macro; *leave-one-out*; media contra mediana; contraste pareado.
+- **Fases:** Forense (8 familias disjuntas de cifras) → Refutar → Sintetizar.
+- **Archivos:** **solo lectura.**
+- **Salvaguarda añadida tras `§F175`:** la fase de refutación debe clasificar cada avería como **defecto del
+  instrumento** (`tp+fp==0` y parseo `fallback`) o **desempeño del modelo** (`f1==0` con `fp>0`), abriendo el
+  `benchmark.log`. Excluir sin esa distinción es lo que produjo un defecto inexistente.
+- **Resultado:** pendiente. Su síntesis alimenta el encargo §3.bis.18.
+
+### 4.5 `revision-scripts-20260914` — 🔄 EN CURSO
+- **Cuándo:** 2026-09-14, lanzado ~19:55 · **Agentes:** 11 (1 inventario + 6 revisores + 3 reproductores +
+  1 dictamen)
+- **Objetivo:** revisar todos los scripts del proyecto buscando el defecto que no rompe nada y produce un
+  número plausible. Petición del autor: «revisar todos los scripts en un workflow en background».
+- **Familias disjuntas:** evaluador y métricas · pipeline y parseo · RAG · estadística y consolidación ·
+  preparación de corpus y filtros · verificadores.
+- **Fases:** Inventariar → Revisar → Reproducir (caso mínimo obligatorio) → Sintetizar.
+- **Archivos:** **solo lectura**; los casos mínimos se escriben en directorios temporales.
+- **Pregunta que debe contestar:** por qué dos corridas con semilla 42 idéntica dan 64,05 y 66,76 de F1.
+- **Resultado:** pendiente.
 
 ---
 
@@ -2336,3 +2436,7 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 | 2026-09-12 (post) | Claude Code (equipo principal) | ✅ §1.303: **respondida la pregunta sobre una nueva corrida (no resuelve nada: la Tabla 7 ya procede de una sola corrida unificada del 8 de septiembre; el asunto es narrativo) y ejecutadas las tres candidatas de `LEARNING §L80` a petición del autor («Sí por favor, documentar extensamente lo realizado») (`FINDINGS §F172`).** Comprimidas: §7.1 conclusión 6 (retirada íntegra la cláusula del dict-RAG N=5 «no persistido en `results/`», que remitía además a una corrida ya superada); §7.2 punto 7, *mojibake* (de ~110 a ~35 palabras, detalle completo conservado en Anexo H.3); §7.2 punto 8, `Locations` (de ~130 a ~40 palabras, cuidando que la comprobación `la composicion de FP (§3.3/§7.2) reproduce desde el artefacto` siguiera en `ok` — exige la frase «procede el 66,0 % de los falsos positivos» literal en §7.2, se conservó). **Hallazgo de paso, no buscado**: el Anexo H.4 citaba «§7.2, punto 7» como trabajo futuro pendiente cuando ya estaba hecho desde la re-corrida — una referencia obsoleta de antes de esta sesión, que comprimir el punto 7 sin revisar quién lo citaba habría dejado rota. Corregida. Declaradas 7 claves nuevas en `FALLOS_DECLARADOS` (3 párrafos comprimidos, 3 frases retiradas de `RETIRADAS`, el efecto colateral del recuento de resaltes que subió de 8 a 10 en los tres `.docx` sin regenerar). Actualizado `LEARNING §L80`: candidatas 1-3 ejecutadas, la 4 (terminología `localizaciones`/`ubicaciones`) sigue sin tocar, no se pidió. **Efecto en presupuesto de páginas: neto positivo, +241 palabras de margen** (283→524 palabras, ~24,23 de 25 páginas estimadas). Verificado: 56 comprobaciones, 0 fallos nuevos (65 declarados, 24 vigentes). Sin commits nuevos del equipo remoto |
 | 2026-09-12 (post) | Claude Code (equipo principal) | ✅ §1.301: **ejecutada la retirada de la Figura 1 vieja (`FINDINGS §F170`) y documentadas las candidatas restantes sin ejecutar (`LEARNING §L80`).** El autor pidió, en el mismo encargo, tres cosas de distinta urgencia: (a) «definitivamente eliminar» la Figura 1 (composición de FP) y su leyenda — ejecutado; (b) analizar como candidatas, sin ejecutar, las referencias a corridas sin evidencia y las anécdotas de asuntos ya resueltos (nombró `Locations`) — documentado, no ejecutado; (c) una duda de terminología (¿ubicaciones o localizaciones?) — anotada. Antes de ejecutar (a), distinguí lo que la Figura 1 **afirma** (prescindible) de lo que **atestigua** (protegido por «Integridad de la medición» de `CLAUDE.md`, motivada por un incidente real, `§F53`): se retiró solo la ilustración y la referencia colgante «(la Figura 1 lo ilustra)»; la fracción en prosa de §3.3 (66,0 %, 12 852/19 464), el Anexo I, el script `generar_figuras_informe.py` y su artefacto **no se tocaron**. Renumerada la Figura 2 (efecto del KB RAG) a Figura 1, la única que queda, con su cita en el cuerpo. Actualizadas en `tools/verificar_informe.py` las etiquetas de comprobación que nombraban «Figura 1»/«Figura 2» (la lógica de verificación no cambió, solo las etiquetas), y añadidas dos frases retiradas a `RETIRADAS` (la leyenda vieja y la referencia colgante) para que la comprobación de supervivencia las vigile en los tres `.docx`. Para (b): documentadas en `LEARNING §L80` cuatro candidatas concretas con su ubicación exacta — §7.1 conclusión 6 (una cifra de un sondeo N=5 «no persistido en `results/`»), §7.2 puntos 7 y 8 (dos anécdotas de defectos ya resueltos en la sección de trabajo futuro), y la duda de terminología — para que una decisión de fondo posterior decida, no para que se interpreten como pendientes de borrar sin más. Añadida la pieza 40 al encargo de Claude Desktop. Verificado: 56 comprobaciones, 0 fallos nuevos (44 declarados, 17 vigentes). Sin commits nuevos del equipo remoto |
 | 2026-09-12 (post) | Claude Code (equipo principal) | ✅ §1.304: **el autor pidió repasar de nuevo por más temas similares al de `§F172`, anotar en la explicación inicial de `localizaciones` términos alternativos (direcciones/ubicaciones/topónimos) con ejemplos reales del corpus como candidato pendiente del profesor guía, documentar en extenso y crear `GLOSARIO.md` (`FINDINGS §F173`).** Segundo barrido con un fork (sin editar, solo reportar, para no releer ~700 líneas del cuerpo en este contexto): **no encontró candidatas nuevas limpias**, y justificó explícitamente dos casos considerados y rechazados en vez de reportar «nada» sin más — disciplina adoptada tras el barrido anterior. Para la terminología, inspeccioné el corpus real (`data/benchmark_balanced_120.json`, no una suposición): la categoría `Locations` anota **545 entidades, 339 valores únicos**, mayoritariamente topónimos (países, comunidades autónomas, ciudades) pero con una decena de lugares institucionales que no lo son (`Universidad de Deusto`, `Hospital Virgen del Rocío`, `Palacio de la Moncloa`, `Forum Deusto`, `Museo Extremeño e Iberoamericano de Arte Contemporáneo`); **cero direcciones postales** en todo el corpus. Con esa evidencia, «direcciones» queda descartada por no encajar con ningún ejemplo real, y «ubicaciones» se prefiere sobre «topónimos» porque cubre también los lugares institucionales que un topónimo estricto dejaría fuera — **no se decidió el término final**, que sigue pendiente del profesor guía tal como pidió el autor; solo se documentó la evidencia. Creado `GLOSARIO.md` en la raíz: documento de trabajo (no un entregable listado en `CLAUDE.md`), seis secciones (entidades/evaluación, modelos y aprendizaje en contexto, RAG, arquitectura, validación estadística, dominio normativo), cada entrada remite a su `§` de origen y, si aplica, a su referencia bibliográfica; la entrada de `Localizaciones/Ubicaciones` documenta la inconsistencia terminológica §2.1 vs. §3.3 y la evidencia del corpus. **Error propio detectado antes de comprometer**: la entrada de `d` de Cohen se escribió primero con `§4.1.2` de memoria; verificado con `grep` contra el `.md`, la cita real está en `§5.3` (Validación Estadística sobre el Corpus del Dominio, N=30) — corregida antes de guardar. Verificado: 56 comprobaciones, 0 fallos nuevos (65 declarados, 24 vigentes; `GLOSARIO.md` no toca ninguna comprobación mecánica del informe). Sin commits nuevos del equipo remoto |
+| 2026-09-14 | Claude Code (equipo principal) | ✅ §1.305: **auditados en profundidad los +10,40 pp del prompt en español a petición del autor («¿existe evidencia sólida o es porque los nombres están en español o portugués en Kleptotrace?», «asegurarse de que no sea un error») (`FINDINGS §F174`, `LEARNING §L81`).** La cifra **no es un error de cálculo**: reproduce exactamente desde `results/ablacion_n15_REMOTO/benchmark_results.csv` (64,05 → 74,44). Lo que la compone sí es un problema: **el artículo 4 (`C047_1`, Isabel dos Santos/Angola) puntúa 0,00 en las dos configuraciones inglesas con `parse_method = fallback` y `tp=0, fp=0, fn=18`** — el modelo no devolvió salida parseable — y **aporta 6,21 de los 10,40 pp**. Sin ese artículo: macro +4,49, micro +3,52, y el **idioma puro cambia de signo** (micro +2,90 → **−2,63**; mediana macro ya era 0,00, con 6 mejoras / 6 empeoramientos / 3 empates). La segunda corrida (`kleptotrace_20260727_110454`) repite el patrón y su +3,11 se invierte a **−1,31** sin el cero. Agregado: **4 extracciones vacías en 60 ejecuciones inglesas, 0 en 60 españolas** (Fisher una cola p=0,059) → lo sostenible es un efecto de **robustez del formato de salida**, no de calidad de extracción. Ninguna prueba alcanza significancia (ANOVA de la propia corrida F=1,1379 p=0,3417; Tukey fs-es vs zs-en p=0,4246; t pareada t(14)=1,629 p≈0,126). **Y el mecanismo de `§F56`/§6.1 (nombres ibéricos mal delimitados) queda refutado por el registro de errores**: las configuraciones españolas cometen **6** errores de límite sobre nombres con partícula o acento frente a **2** de las inglesas, y no hay ni un caso de entidad partida por la partícula. **No se tocó el informe ni ningún `.docx`**: quedan tres correcciones de prosa propuestas y pendientes de decisión del autor (§5.2 Hallazgo 5, §6.1 y la glosa de la Tabla 5). Añadida además a `CLAUDE.md` la regla de terminología del autor: **se dice «variables»/«variantes», no «ablación»**, con las dos excepciones literales (identificadores y rutas ya existentes, documentos históricos) |
+| 2026-09-14 (post) | Claude Code (equipo principal) | 🔄 §1.306: **dos workflows en curso y un segundo defecto del mismo tipo encontrado en la corrida vigente (`FINDINGS §F175`).** El autor decidió: (a) §5.2 **se re-corre en el remoto** con cinco semillas en vez de borrarse — no existe cálculo definitivo del experimento de idioma, porque `recorrida_20260908` (39 corridas) mide **solo** `baseline` y `kb_rag`, con `SYSTEM_PROMPT.md` (zero-shot inglés) y `max_tokens=4096`; (b) el borrado de contenido débil alcanza **solo a los entregables**, no a `FINDINGS`/`LEARNING`/logs/`results`. Lanzados: **`purga-informe-20260914`** (9 auditores de solo lectura sobre rangos disjuntos del informe, refutación adversarial en 3 lotes, síntesis; instruido explícitamente a **no** proponer la retirada de §5.2 y a inventariar sus dependencias) y **`forense-cifras-20260914`** (8 familias de cifras, protocolo idéntico de composición: ceros, `parse_method`, `tp+fp==0`, micro/macro, leave-one-out, media contra mediana, contraste pareado; refutación adversarial que debe clasificar cada avería como **defecto del instrumento** o **desempeño del modelo**). **Hallazgo ya medido y registrado (`§F175`):** `nemotron-mini:4b` tiene **19 registros con F1=0 y 32 con parseo `fallback`** en su línea base frente a 6 y 3 con RAG, y su beneficio titular **+12,26 pp cae a +7,28** descontando los 47 artículos averiados — es la cifra que el resumen y el abstract citan como resultado principal del estudio de RAG. `mistral-nemo` (41 fallbacks con RAG) y `deepseek-r1:1.5b` también se mueven; **los otros ocho modelos no varían ni una décima y el patrón capacidad-beneficio se conserva**. Respaldo previo de los cuatro entregables en `doc/versions/informe_final/_respaldos_20260914_prepurga/`. **Nada del informe modificado todavía**; el encargo al equipo remoto de 48 GB se redactará con el dictamen del workflow forense, por instrucción del autor («revisar con un workflow antes de pedir al equipo remoto»). Añadida a `CLAUDE.md` la regla de terminología «variables/variantes, no ablación» |
+| 2026-09-14 (post 2) | Claude Code (equipo principal) | 🔄 §1.307: **corregido un error propio, encargo de re-corridas emitido y tres workflows en vuelo.** (a) **`FINDINGS §F175` estaba sobredimensionado y lo corregí el mismo día (`LEARNING §L82`)**: excluí registros con el criterio `f1==0` **o** parseo `fallback`, que mezcla la avería del instrumento con el fallo legítimo del modelo. De los 20 ceros de `nemotron-mini:4b` en línea base, **18 son del modelo** —extrajo entidades y erró todas— y solo 2 son extracciones vacías. Con el criterio estricto (`tp+fp==0` **y** `fallback`) el efecto del RAG apenas se mueve: +13,71 → +13,04, y nueve modelos no cambian nada. **La conclusión 1 del informe se sostiene.** Lo delató una incoherencia entre dos recuentos de lo mismo (20 ceros frente a 2 vacíos). `§F174` sí se sostiene íntegro. (b) **Emitido `remote_48g/ENCARGO-RECORRIDAS-20260914.md`** con cinco peticiones ordenadas por valor sobre coste: **R1** variantes de prompt 2×2 con **5 semillas** sobre N=15 (~45 min) y **N=120** (~6-7 h), que es el corpus que de verdad responde a la pregunta porque 105 de sus 120 artículos están en español mientras el N=15 está íntegramente en inglés; **R2** barra de error del titular, porque **dos corridas con modelo, corpus, semilla 42, temperatura, `max_tokens` y prompt idénticos dieron 64,05 y 66,76 de F1** —verificado en los `run_config.json`— y el estudio entero es de una sola pasada, de modo que ninguna cifra tiene barra de error conocida; **R3** instrumentación (persistir la respuesta cruda íntegra, hoy truncada a 200 caracteres en `llm_runner.py:146`; columnas `extraccion_vacia` y `rescate_regex`; reintento declarado), que son **adiciones, no cambios del cálculo**; **R4** el corpus N=30 en inglés, con recomendación de **no** re-correr a 16 días; **R5** emitir la robustez de formato desde la corrida. (c) **Workflows en vuelo**: `purga-informe-20260914`, `forense-cifras-20260914` y `revision-scripts-20260914` (inventario → 6 familias de scripts → reproducción adversarial → dictamen). (d) **`TODO-INFORME-FINAL.md §16` nuevo** con los pendientes ordenados por lo que bloquea cada uno: §16.1 a la espera de R1, §16.2 a la espera de R2, §16.3 lo ejecutable ya (retirar la historia del *mojibake* de §5.3.1, la conclusión 7, los puntos 7 y 8 de §7.2 —trabajo futuro marcado «ya realizada»— y la narración de la implementación anterior en §4.4; añadir la robustez de formato como resultado), §16.4 terminología y §16.5 lo que no se toca. **Comprobado con datos vigentes que el defecto de `Locations` está cerrado**: en `recorrida_20260908` las tres categorías tienen anotación de referencia real en los tres corpus (N=120: 14 170 · 21 112 · 15 444), ninguna puntúa contra el vacío. **Nada del informe modificado todavía**; la regla adoptada es que ningún párrafo se retira antes de tener el dato que lo sustituye |
+| 2026-09-14 (post 3) | Claude Code (equipo principal) | ✅ §1.308: **`CURRENT-TASKS.md` puesto al día según el protocolo, no solo con filas de registro, y encargo ampliado a «sin fisuras».** El autor preguntó si este documento estaba actualizado: **no lo estaba**. Tenía las filas del §6 pero le faltaban las dos cosas que el protocolo de `CLAUDE.md` exige: la subsección de cada workflow en §4 y la declaración de la tarea del equipo remoto en §3.bis. Añadidas **§4.3 `purga-informe-20260914`**, **§4.4 `forense-cifras-20260914`** y **§4.5 `revision-scripts-20260914`**, cada una con objetivo, fases, agentes, archivos tocados (**solo lectura en las tres**) y las salvaguardas que lleva su prompt; y **§3.bis.18** con el encargo de re-corridas. Tras la instrucción del autor («no permitir fisuras; los costes son locales y la máquina de 48 GB está destinada solo a esto»), el encargo pasa de cinco peticiones opcionales a **seis imprescindibles más cuatro ampliaciones**: R3 instrumentación, R1 variantes 2×2 × 5 semillas sobre N=15 y N=120, **R4 el corpus N=30 traducido al español conservando su anotación** (no regenerado: regenerar exigiría anotación experta nueva y abriría una fisura mayor que la que cierra), **R5 variantes sobre el par emparejado inglés/español del dominio** —que es el experimento de idioma bien planteado, porque elimina la diferencia de contenido entre condiciones—, R2 barra de error de **los trece modelos**, y R6 el método del `+10,01`/`+2,19` que sigue sin respuesta desde el 2026-09-08 (`§3.bis.17`). Total **13 354 llamadas, ~43 h**; con ampliaciones, ~67 h. Costes de reloj **medidos**, no estimados: el barrido del 8 de septiembre tardó 8 h 24 min y su parte de N=120 suma 416 min. Se pide **entrega incremental**, petición a petición, porque el cómputo dejó de ser la restricción y el calendario no. **Recuperado de paso un pendiente olvidado:** `§3.bis.17` llevaba seis días sin respuesta y es exactamente una cifra sin sustento del tipo que el autor pidió eliminar |

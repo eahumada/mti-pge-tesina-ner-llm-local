@@ -994,3 +994,173 @@ baseline (kb_rag lleva ejemplar que guía a objeto). Hundía la línea base y so
   `nemotron-mini_4b__N120_F85_BUGGY/`.
 - **§F108** `tools/verificar_corrida.py`: `parse_method='failed'==0` pasa a comprobación BLOQUEANTE. La
   corrida buggy que pasaba por VÁLIDA con 18 fallos ahora da NO VÁLIDA. Probado.
+
+### 2026-09-09 20:05 — Cierre de los `.docx` y del PDF con el encargo del 09-09 (_v12)
+
+Encargo `PROMPT-CLAUDE-DESKTOP-DOCX-Y-PDF-20260909.md`, leído entero, y §2.24. Antes de empezar se ejecutó
+`tools/verificar_informe.py`, como el propio encargo manda: 56 comprobaciones y **86 fallos**, todos declarados.
+Los que dependían de esta sesión eran los seis de sincronía —prosa, tablas y bibliografía, encabezados, figuras,
+resumen y abstract, resaltes— más «ninguna frase retirada sobrevive en los entregables».
+
+**Se eligió reconstruir desde el `.md` en lugar de operar por cirugía OOXML**, con el renderizador propio de
+`doc/versions/informe_final/_tools/`, la misma vía de las versiones `_v8` a `_v11`. No es pandoc: se conservan
+`styles.xml`, encabezados, pies, márgenes y `sectPr`. El encargo enumeraba dieciocho piezas, pero casi todas
+tienen una sola causa —«el `.docx` refleja un estado anterior del Markdown»—, de modo que partir del estado
+actual cierra de una vez las piezas 1 a 5, 7 a 9 y 11 a 16 y 18: la subsección de corridas múltiples con su
+Tabla 20, los cinco párrafos de límites, las referencias [38] y [39] con sus citas, la celda de la Tabla 3, la
+atribución de los datos a la **lista SDN del Tesoro de los Estados Unidos** en lugar de OpenSanctions
+—conservando las dos menciones que sí son correctas, la propuesta de §7.2 y la entrada [38] de FollowTheMoney—,
+la Tabla 7 entera, el párrafo estadístico de §5.3.1, el resumen y el abstract sincronizados, las conclusiones y
+el Anexo I.
+
+**La pieza 6, las dos figuras, sí exigió trabajo nuevo**, porque no viene del texto. El renderizador entiende
+ahora `![alt](ruta)` e inserta el PNG centrado al ancho de la caja, con su leyenda debajo en estilo `figure
+caption`. Dos detalles costaron una pasada de más: el estilo trae `lineRule="exact"`, que **recorta la imagen en
+línea a una franja** —el mismo defecto que en su día tuvieron los logotipos del encabezado, y la primera
+compilación salió con la leyenda impresa y la figura invisible—, así que el párrafo de la imagen lleva
+interlineado automático; y se le añadió `keepNext`, para que la leyenda no se separe de su figura, que es
+literalmente el reparo 1 del profesor guía.
+
+**Medición sobre el PDF, no sobre el Word: 37 páginas, cuerpo 24 y anexos 13.** El cuerpo cabe en las 25 con una
+página de margen, y los anexos van muy por debajo de sus 25 propias. La estimación del encargo, ≈23, se quedó
+corta en una página justamente por las figuras, que no computaba.
+
+**Verificador después: de 86 fallos a 29.** Cinco son declarados que no tocan a esta sesión y **veinticuatro son
+declaraciones caducadas**: la comprobación «las declaraciones no silencian más de lo que les toca» avisando de
+que el fallo que declaraban ya no existe. Las seis comprobaciones de sincronía y la de frases retiradas pasan
+todas. Se actualizó una sola línea de `tools/verificar_informe.py`, `BOLD_CUERPO_BASE` de 14 a 6, porque la
+propia comprobación lo pedía por escrito al detectar la mejora. **Retirar las declaraciones caducadas se deja a
+Claude Code**: es su registro y son decisiones, no limpieza.
+
+**Verificación completa:** cero páginas en blanco · encabezado y pie en las 37 páginas sin solaparse · resumen y
+abstract en la página 1, con 188 y 177 palabras · siete capítulos y **nueve anexos A-I**, con lo que queda
+atendido el aviso de §2.22 sobre el noveno anexo · 20 leyendas de tabla correlativas y encima de su tabla · dos
+leyendas de figura, debajo · **39 entradas de bibliografía** correlativas y sin hueco · ninguna llamada `§`
+rota · ningún emoji, arte ASCII ni asterisco suelto.
+
+**Queda abierto y conviene decirlo:** la Tabla 9 del Anexo A adopta ahora la convención del `.md` —rutas
+completas— en lugar del árbol indentado que tenía el entregable; si se prefiere el árbol, se cambia en la fuente
+y se vuelve a propagar. Y el **reparo 4 del profesor**, el marco conceptual, no es de esta sesión: exige escribir
+marco teórico nuevo y sigue pendiente.
+
+**Respaldo** de los cuatro artefactos en `doc/versions/informe_final/_respaldos_20260909/`. **`_v12` congelada**:
+`.docx` `ffb5b49e0a6e` y `.pdf` `f03d6efbbc7f`. No se tocó el PDF enviado al profesor guía.
+
+### 2026-09-09 23:00 — Segunda pasada del encargo: piezas 19 a 28 (_v13)
+
+El encargo `PROMPT-CLAUDE-DESKTOP-DOCX-Y-PDF-20260909.md` creció de 31 859 a 41 986 bytes después de la `_v12`,
+con las secciones 0.ter, 0.quater y 0.quinquies y las piezas 19 a 28, y la fuente cambió con él. El aviso de
+`§1.286` era exacto: los tres entregables conservaban las tres frases que el Markdown ya había retirado, porque
+la `_v12` se renderizó antes de esa corrección.
+
+Reconstruidos otra vez desde el `.md` (155 926 bytes, SHA-256 `c3aa71491d0e`, comprobado igual al terminar).
+Entran así la definición de `Locations` en §4.1.2, la **retirada de la Tabla 20** del Anexo I —que baja las
+leyendas de tabla de 20 a 19—, el párrafo de `gpt-oss:20b` reescrito y las tres cifras corregidas de §5.3.1.
+
+**Criterio de aceptación del encargo, medido antes y después como pide su §5:** el verificador pasa de **26
+fallos (26 declarados, 0 nuevos) a 6 (5 declarados, 1 nuevo)**, y ese único nuevo es la comprobación «las
+declaraciones no silencian más de lo que les toca» avisando de una declaración caducada. La auditoría de
+afirmaciones sigue en **0 incumplidas**. Las tres comprobaciones que el encargo manda vigilar por nombre pasan,
+incluida «ninguna frase retirada sobrevive en los entregables».
+
+**Medición sobre el PDF:** 37 páginas, **cuerpo 24 de 25** y anexos 13. Cero páginas en blanco, encabezado y pie
+en las 37 sin solaparse, resumen y abstract en la página 1 con 198 y 183 palabras, siete capítulos y nueve
+anexos A-I, 19 leyendas de tabla correlativas, dos de figura debajo de su imagen, 39 entradas de bibliografía
+correlativas, ninguna llamada `§` rota.
+
+**El pendiente de los resaltes, cerrado, y no era lo que parecía.** El equipo principal me lo había asignado:
+la comprobación acusaba 9 resaltes contra los 6 que yo mismo declaré en la `_v12`. Ese 6 fue **un error mío**,
+puesto desde una medición propia con otro criterio de conteo. Comprobados los nueve uno a uno, **ninguno lo
+añade el renderizador**: los nueve están marcados en el `.md` y el constructor de `marcados` del verificador no
+los ve, por dos motivos estructurales de `\*\*([^*]+)\*\*`. Una negrita que contiene cursiva
+—`**Ejemplos *few-shot* de…**`— no empareja y descoloca los pares siguientes, que es por lo que se caen
+`**AIMD**` (línea 215) y `**Ejemplo 1:**` (línea 743) pese a estar escritos tal cual; y una negrita que cruza
+una línea de cita deja el `>` dentro del texto marcado, mientras el renderizador lo retira al unir la cita.
+
+**Probé el arreglo evidente y lo descarté con la medición delante**, que es exactamente la lección que dejó
+escrita el autor sobre las ediciones masivas de marcado: sustituir el regex por uno no codicioso con `re.S`
+sube el recuento de 9 a **142**, emparejando marcas de tramos distintos. **No se tocó el regex.** Se subió
+`BOLD_CUERPO_BASE` a 9 con el diagnóstico completo en el comentario, de modo que la comprobación conserva su
+propósito, que es detectar crecimiento. Mejorar el constructor de `marcados` queda anotado para el equipo
+principal: es su herramienta y su criterio.
+
+**Respaldo** de los cuatro artefactos en `doc/versions/informe_final/_respaldos_20260909_b/`. **`_v13`
+congelada**: `.docx` `4904e6519a51` y `.pdf` `a33c9e4a5f6b`. Sigue sin tocarse el PDF enviado al profesor guía.
+
+### 2026-09-09 23:20 — Tercera pasada: piezas 29 y 30 (_v14)
+
+La sección **0.sexies** se añadió al encargo a las 20:08, después de que la `_v13` estuviera rendereada, con dos
+pedidos del autor sobre prosa que ya se había propagado. Reconstruidos otra vez desde el `.md` (154 988 bytes,
+SHA-256 `ad4a6b2d70d5`, comprobado igual al terminar).
+
+**Pieza 29.** Ocho fechas de calendario retiradas del cuerpo, en §3.3, §4.1.2, §5.3, §5.3.1 y §7.1. No cambia
+ninguna cifra: se quitó el «el 8 de septiembre de 2026» y sus variantes, dejando el resto de cada frase intacto.
+Los **Anexos H e I no se tocan**, porque el autor confirmó que la regla vale solo para el cuerpo y esos anexos
+son bitácora fechada.
+
+**Pieza 30.** Eliminado por completo el párrafo de «particularidad de procedencia» de §5.3, el del F1 de 79,03 %
+de `gemma4:31b` sobre una corrida cuyos datos se perdieron por sobrescritura. El autor calificó de grave
+mencionar en el cuerpo cualquier dato sin evidencia recalculable, aunque fuese como anécdota de robustez.
+
+**Comprobado sobre el cuerpo del PDF, que es donde importa:** cero coincidencias del patrón «N de <mes> de
+AAAA» en las 24 páginas del cuerpo, cero apariciones de «particularidad de procedencia» y cero del 79,03 %.
+
+**Criterio de aceptación:** el verificador pasa de **11 fallos (11 declarados, 0 nuevos) a 7 (5 declarados, 2
+nuevos)**, y los dos nuevos son declaraciones caducadas —la de los guiones largos y la del propio párrafo que
+acaba de retirarse—, es decir la señal de que el trabajo se hizo. La auditoría de afirmaciones sigue en **0
+incumplidas**. Y la comprobación «el `.docx` no añade resaltes ni guiones respecto del Markdown» **desapareció
+de los fallos**: con el diagnóstico de la `_v13` y la base en 9, el recuento vuelve a estar dentro.
+
+**Medición sobre el PDF:** 37 páginas, **cuerpo 24 de 25** y anexos 13. Cero páginas en blanco, encabezado y pie
+en las 37 sin solaparse, resumen y abstract en la página 1 con 198 y 183 palabras, siete capítulos y nueve
+anexos A-I, 19 leyendas de tabla correlativas, dos de figura, 39 entradas de bibliografía correlativas, ninguna
+llamada `§` rota. Los tres `.docx` coinciden entre sí.
+
+**Respaldo** en `doc/versions/informe_final/_respaldos_20260909_c/`. **`_v14` congelada**: `.docx`
+`b1c0d197809c` y `.pdf` `f34a8efb7985`.
+
+### 2026-09-10 02:05 — Cuarta pasada: el marco teórico enriquecido entra al entregable (_v15)
+
+Tres secciones nuevas del encargo —0.septies, 0.octies y 0.nonies— con las piezas 31 a 36, todas posteriores a
+la `_v15`... a la `_v14`. Reconstruidos los tres `.docx` desde el `.md` (159 142 bytes, SHA-256 `4bc96b38855a`,
+comprobado igual al terminar) y regenerado el PDF.
+
+**Lo que entra, y es la noticia:** la sección nueva **2.4 Arquitectura de ejecución concurrente y aislamiento de
+proveedores**, con texto propio; las antiguas 2.4 y 2.5 renumeradas a **2.5** y **2.6**, con dos párrafos
+nuevos; un párrafo nuevo en `2.1`; otro en `2.3` sobre qué es un embedding y una base de datos vectorial; el
+listado de `LLMProvider` trasladado de `§3.2` al **Anexo A.1**, que es la maniobra de mover al anexo para
+recuperar margen; y el párrafo de `§3.3` sobre `Locations` reescrito, más corto y con la conclusión primero.
+**Con esto, el reparo 4 del profesor guía deja de estar pendiente en el entregable**, que era lo único de los
+cuatro que no se podía cerrar desde aquí.
+
+**Dos defectos del renderizador, los dos destapados por el verificador y corregidos:**
+
+1. **El nivel de encabezado.** El `.md` usa `####` y el renderizador lo emitía como `heading3`, así que el
+   Anexo A.1 se declaraba ausente aunque su texto estuviera en el documento. La plantilla **sí define
+   `heading4`**, de modo que la decisión editorial que el encargo pedía tomar y declarar queda tomada: `####`
+   va con `heading4`, el cuarto nivel de la propia plantilla. Son 17 encabezados y no alteran la paginación.
+2. **Los encabezados van ahora en un solo run.** El verificador une los `<w:t>` de un párrafo **con un
+   espacio**, de modo que partir un encabezado en varios runs —por una cursiva o un `` `código` ``— le
+   insertaba espacios espurios: «(`LLMProvider`)» se leía «( LLMProvider )» y la sección seguía dando por
+   ausente. Es un detalle de dos líneas con una consecuencia desproporcionada, y vale la pena recordarlo: el
+   documento estaba bien y la comprobación tenía razón en fallar.
+
+**Criterio de aceptación:** el verificador pasa de **41 fallos (41 declarados, 0 nuevos) a 6** —el nuevo es una
+declaración caducada— y la auditoría de afirmaciones sigue en **0 incumplidas**. Se bajó `BOLD_CUERPO_BASE` de
+9 a 8, que la comprobación volvió a pedir al detectar la mejora; el diagnóstico de la `_v13` sigue anotado en
+su comentario.
+
+**Extensión, y hay que decirlo con claridad: el cuerpo queda en 25 páginas de 25.** Cumple, pero **sin margen**.
+La `_v14` tenía una página de holgura y el marco teórico nuevo se la comió. Se probó una compactación por
+estilo más agresiva y **no recupera ninguna página del cuerpo**, solo una de los anexos, porque el corte lo
+manda ya el contenido; se conserva por tanto la tipografía de las versiones anteriores. Si entra una línea más
+en el cuerpo, se desborda, y la palanca disponible sin tocar texto es la del apartado 2.ter del encargo: mover
+al anexo, que no computa, como acaba de hacerse con el listado de `LLMProvider`.
+
+**Resto de la verificación sobre el PDF:** 38 páginas totales y anexos 13 · cero páginas en blanco · encabezado
+y pie en las 38 sin solaparse · resumen y abstract en la página 1 con 198 y 183 palabras · siete capítulos y
+nueve anexos A-I · 19 leyendas de tabla correlativas y dos de figura · 39 entradas de bibliografía · ninguna
+llamada `§` rota · ninguna fecha de calendario en el cuerpo.
+
+**Respaldo** en `doc/versions/informe_final/_respaldos_20260910/`. **`_v15` congelada**: `.docx` `b30c85b7531f`
+y `.pdf` `c62e78bc91e7`. Renderizador actualizado en `doc/versions/informe_final/_tools/`.

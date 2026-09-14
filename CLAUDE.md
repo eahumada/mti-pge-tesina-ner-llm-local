@@ -344,6 +344,22 @@ de defectos reales encontrados en la revisión final.
    indefinidamente. Cuatro documentos del proyecto, dos de ellos de hitos ya entregados, llevaban dos meses
    así (`FINDINGS §F59`, `LEARNING §L47`). La comprobación es un `git ls-files` con una prueba de tamaño.
 
+## Terminología: se dice «variables», no «ablación»
+
+**Instrucción del autor del 2026-09-14.** El estudio del idioma de la instrucción y de los ejemplos
+*few-shot* se llama **análisis de variantes de prompt** o **estudio de variables**, nunca «ablación». La
+palabra no se usa en el informe, ni en sus anexos, ni en los documentos de trabajo nuevos, ni en los mensajes
+al autor. Donde hoy dice «ablación» en prosa, se sustituye por «variantes» o «variables».
+
+**Dos excepciones, y son literales.** No se renombran los **identificadores ya existentes** —el directorio
+`results/ablacion_n15_REMOTO/`, el script `tools/analisis_ablacion_idioma.py`— porque son rutas reales que el
+informe cita como fuente de sus cifras y que las comprobaciones de `tools/verificar_informe.py` resuelven en
+disco. Tampoco se reescriben los **documentos históricos** ya entregados ni los registros que atestiguan
+(`FINDINGS.md`, `WORKLOG.md`, encargos cerrados): la política aditiva vale también para el vocabulario.
+Todo identificador **nuevo** se nombra con «variantes».
+
+---
+
 ## Secretos y publicación del repositorio
 
 - **Reescribir el historial de git no borra un secreto de GitHub.** `git filter-repo` purgó una clave de API
