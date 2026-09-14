@@ -1443,3 +1443,80 @@ citaba «§7.2, punto 7» como trabajo futuro pendiente, y ya estaba hecho — u
 nadie actualizó cuando la re-corrida se completó, y que comprimir el punto 7 sin mirar quién lo citaba
 habría dejado rota. **La candidata 4 (terminología) sigue exactamente como estaba**: no se pidió
 resolverla, y sigue siendo la única de las cuatro sin decisión.
+
+---
+
+## §L81 — Una media sobre quince artículos la puede escribir un solo cero, y un cero no siempre significa lo que parece
+
+**Fecha:** 2026-09-14. **Origen:** `FINDINGS §F174`.
+
+El informe publicaba +10,40 puntos de F1 por redactar el prompt en español con ejemplos. La cifra reproduce
+desde los datos crudos, el verificador la comprobaba desde hacía días y ninguna auditoría anterior había
+encontrado nada. Con quince artículos, un registro que puntúa 0,00 mueve la media 4,27 puntos por sí solo: el
+artículo 4 aporta **6,21 de los 10,40**, y en la otra corrida del mismo experimento el cero aporta **más** que
+la diferencia total, que sin él cambia de signo.
+
+**Tres lecciones, en orden de utilidad.**
+
+**Un cero hay que clasificarlo antes de promediarlo.** Un F1 de 0,00 puede significar «el modelo se equivocó
+en todo» o «no hubo salida que evaluar». Son cosas distintas y solo la primera es desempeño. Aquí era la
+segunda: `tp=0, fp=0, fn=18` y `parse_method = fallback`, es decir cero entidades extraídas por un fallo de
+formato. Un `fp = 0` junto a un `fn` alto es la firma inconfundible, y es barata de comprobar. La regla
+operativa: **antes de publicar una media de una métrica por registro, listar los registros con valor cero y
+decir de cuál de los dos tipos es cada uno.**
+
+**Con N pequeño, la media y la mediana hay que mirarlas juntas.** El efecto del idioma puro daba +4,38 de
+media y **0,00 de mediana**, con seis artículos mejor, seis peor y tres iguales. Publicada sola, la media
+describía un artículo; publicadas juntas, se ve de inmediato que no hay efecto. Lo mismo vale para la
+desviación típica: 23,50 en la configuración inglesa frente a 13,37 en la española era el aviso, y estaba
+impreso en el informe estadístico de la propia corrida desde el primer día.
+
+**Un mecanismo plausible que encaja con el caso más visible es el error más difícil de ver.** El artículo que
+carga con todo el efecto era, por casualidad, uno de los del caso angoleño, lleno de nombres portugueses. De
+ahí salió la explicación de `§F56` —la instrucción en español delimita mejor `Isabel dos Santos`— y sonaba
+tan razonable que se escribió en el informe sin contrastarla contra el registro de errores. Cuando por fin se
+contrastó, **decía lo contrario**: las configuraciones españolas cometen seis errores de límite sobre nombres
+ibéricos y las inglesas dos, y no existe ni un caso de entidad partida por la partícula. El mecanismo era una
+historia que ajustaba al dato visible, no una medición. Este proyecto ya tenía la regla —«un hallazgo de
+auditoría es una hipótesis, no un hecho»—; le faltaba aplicarla a las hipótesis propias, que son las que no
+levantan sospecha.
+
+**Y una observación sobre por qué duró.** El defecto sobrevivió a `§F55` —que encontró las tres corridas— y a
+`§F56` —que investigó justamente ese efecto—, porque ambas trabajaron con las **medias agregadas** de cada
+corrida. Nadie abrió la tabla de quince filas hasta esta pregunta del autor. Es el mismo patrón de `§L44`: la
+coherencia interna de un agregado no acredita nada sobre lo que hay debajo.
+
+---
+
+## §L82 — El criterio de exclusión decide el resultado tanto como el dato
+
+**Fecha:** 2026-09-14. **Origen:** `FINDINGS §F175` y su corrección, el mismo día.
+
+Tras encontrar que los +10,40 puntos del prompt en español los escribía un artículo que no parseó
+(`§F174`), busqué el mismo patrón en la corrida vigente y lo di por encontrado: `nemotron-mini:4b` parecía
+deber cuatro de cada diez puntos de su beneficio del RAG a averías de parseo. **Era falso.** El criterio con
+el que excluí registros —`f1 == 0` **o** parseo `fallback`— mezclaba tres fenómenos que hay que separar:
+
+- el modelo no produjo salida legible y no se extrajo nada (`tp + fp == 0` y parseo `fallback`): **avería del
+  instrumento**;
+- el modelo extrajo entidades y erró todas (`f1 == 0` con `fp > 0`): **desempeño del modelo**;
+- el JSON venía mal formado pero se rescataron entidades (parseo `fallback` con `tp + fp > 0`): **desempeño,
+  con una reserva sobre lo que el rescate pueda haber perdido**.
+
+De los veinte ceros de aquel modelo, dieciocho eran del segundo tipo. Excluirlos no corregía la medición:
+**le borraba al modelo sus peores artículos**, que es justo lo contrario de lo que pretendía.
+
+**Lo que lo delató fue una incoherencia entre dos recuentos.** Al medir la robustez de formato salió que ese
+modelo tenía 20 registros con F1 = 0 pero solo 2 con extracción vacía. Dos números que describen el mismo
+fenómeno y no cuadran significan que no describen el mismo fenómeno. **Comprobar dos recuentos independientes
+de lo mismo es más barato que revisar el razonamiento, y encuentra lo que el razonamiento no ve.**
+
+**La regla.** Antes de excluir registros de una métrica, escribir el criterio como una condición sobre los
+datos, comprobar cuántos registros captura, y **enumerar a mano dos o tres de los capturados** para verificar
+que son lo que el criterio pretendía capturar. Un criterio unido por «o» captura casi siempre más de lo que
+su autor cree.
+
+**Y la incomodidad que conviene no esquivar:** este error se cometió aplicando `§L81`, escrita ese mismo día,
+y en la dirección que más halaga — encontrar un defecto grande justo donde se estaba buscando. Un hallazgo
+que confirma la hipótesis con la que uno llegó merece el escrutinio que se le dedicaría a uno que la
+contradice, y aquí no lo tuvo hasta que un segundo recuento no cuadró.

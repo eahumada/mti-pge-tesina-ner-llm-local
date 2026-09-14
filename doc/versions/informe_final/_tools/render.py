@@ -1,10 +1,13 @@
-import re, copy, pickle, docx
+import re, copy, pickle, os, glob, docx
+from docx.shared import Emu
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement, parse_xml
 from docx.text.paragraph import Paragraph
 from docx.table import Table
 
 USABLE = 8838
+FIGURAS = {os.path.basename(x): x for x in glob.glob('figuras/*.png')}
+figuras_puestas = []
 src = open('fuente.md', encoding='utf-8').read().split('\n')
 anexos = pickle.load(open('anexos.pkl','rb'))
 d = docx.Document('empty.docx')
@@ -25,6 +28,17 @@ def new_p(style_name):
 
 INLINE = re.compile(r'(\*\*\*.+?\*\*\*|\*\*.+?\*\*|\*[^*\n]+\*|`[^`]+`|\[[^\]]+\]\([^)]+\))')
 def write_runs(p, text):
+    # ENCABEZADO_UN_RUN: en un encabezado el texto va en un unico run y sin marcadores.
+    # El verificador une los <w:t> con un espacio, de modo que partirlo en varios runs
+    # —por una cursiva o un `codigo`— le inserta espacios espurios y deja de reconocer
+    # la seccion: «(`LLMProvider`)» pasaria a leerse «( LLMProvider )».
+    try:
+        _est = p.style.name
+    except Exception:
+        _est = ''
+    if _est.startswith('heading') or _est.startswith('Heading') or _est.startswith('T'):
+        import re as _re
+        p.add_run(_re.sub(r'\*\*|\*|`', '', text)); return
     text = re.sub(r'<br\s*/?>', ' ', text)
     for tok in INLINE.split(text):
         if not tok: continue
@@ -157,8 +171,8 @@ while i < n:
     m = re.match(r'^(#{2,4})\s+(.*)$', s)
     if m:
         lvl = len(m.group(1)); title = m.group(2).strip()
-        if re.match(r'^(RESUMEN|ABSTRACT|ÍNDICE DE CONTENIDOS)$', title):
-            emit('heading1' if title!='ÍNDICE DE CONTENIDOS' else 'heading1', title)
+        if re.match(r'^(RESUMEN|ABSTRACT|ÍNDICE DE CONTENIDOS)$', title, re.I):
+            emit('heading1', title.upper())
             i += 1; continue
         mm = re.match(r'^(\d+)\.\s+(.*)$', title)
         if lvl == 2 and mm:
@@ -176,9 +190,9 @@ while i < n:
             emit('heading2', title); i += 1; continue
         mm = re.match(r'^(\d+)\.(\d+)\.(\d+)\s+(.*)$', title)
         if lvl == 4 and mm:
-            emit('heading3', f'{mm.group(1)}.{mm.group(2)}.{mm.group(3)} {mm.group(4)}'); i += 1; continue
+            emit('heading4', f'{mm.group(1)}.{mm.group(2)}.{mm.group(3)} {mm.group(4)}'); i += 1; continue
         if lvl == 4:
-            emit('heading3', title); i += 1; continue
+            emit('heading4', title); i += 1; continue
     # bloque de código
     if s.startswith('```'):
         i += 1; buf=[]
@@ -191,6 +205,27 @@ while i < n:
             p.add_run(l)
         tras_titulo = False
         continue
+    # figura: ![alt](ruta)
+    mimg = re.match(r'^!\[(.*?)\]\(([^)]+)\)\s*$', s)
+    if mimg:
+        ruta = FIGURAS.get(os.path.basename(mimg.group(2)))
+        if ruta:
+            p = new_p('figure caption')
+            pf = p._p.find(qn('w:pPr'))
+            jc = OxmlElement('w:jc'); jc.set(qn('w:val'),'center'); pf.append(jc)
+            # interlineado automatico: con lineRule exact la imagen en linea se recorta a una franja
+            sp = OxmlElement('w:spacing'); sp.set(qn('w:lineRule'),'auto'); sp.set(qn('w:line'),'240')
+            sp.set(qn('w:before'),'120'); sp.set(qn('w:after'),'60'); pf.append(sp)
+            kn = OxmlElement('w:keepNext'); kn.set(qn('w:val'),'1'); pf.append(kn)
+            p.add_run().add_picture(ruta, width=Emu(int(USABLE/1440*914400)))
+            figuras_puestas.append(os.path.basename(mimg.group(2)))
+        else:
+            log.append('FIGURA NO ENCONTRADA: '+mimg.group(2))
+        i += 1; tras_titulo = False; continue
+    # leyenda de figura: '_Figura N. Texto_'  (va DEBAJO de la imagen)
+    mfig = re.match(r'^[_*]{1,3}\s*(Figura\s+\d+\..*?)\s*[_*]{1,3}$', s)
+    if mfig:
+        emit('figure caption', mfig.group(1)); i += 1; tras_titulo = False; continue
     # leyenda de tabla escrita en el .md (cursiva): '_Tabla N. Titulo_'
     mcap = re.match(r'^[_*]{1,3}\s*Tabla\s+\d+\.\s*(.+?)\s*[_*]{1,3}$', s)
     if mcap:
@@ -239,4 +274,5 @@ while i < n:
     emit(style, txt)
 
 d.save('rebuilt_raw.docx')
-print('cuerpo reconstruido:', len(d.paragraphs), 'párrafos ·', len(d.tables), 'tablas')
+print('cuerpo reconstruido:', len(d.paragraphs), 'párrafos ·', len(d.tables), 'tablas ·', len(figuras_puestas), 'figuras', figuras_puestas)
+for x in log: print('  ', x)

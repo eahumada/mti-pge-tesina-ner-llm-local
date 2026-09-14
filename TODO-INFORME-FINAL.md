@@ -921,3 +921,80 @@ inglés la peor— **se reproduce desde dos corridas independientes**; lo que no
 ser trazable, no cambia ninguna conclusión y la fila se conserva. Ver `FINDINGS §F90` y la **decisión 4** de
 `DECISIONES-PENDIENTES-20260908.md`. Sigue siendo decisión del autor; lo que cambia es que ahora hay una
 fuente reproducible con el mismo orden, que antes no se sabía que existiera.
+
+---
+
+## 16. Pendientes a la espera de las re-corridas de septiembre (2026-09-14)
+
+El autor instruyó ese día: **«dejar lo último válido y comprobado; los comentarios a corridas anteriores son
+innecesarios y lo que no se pueda justificar debe eliminarse»**, y **«que la tesina comente los últimos
+resultados, no resultados inexistentes ni historia inexistente o errónea»**. Lo que sigue es el estado de
+cada pieza bajo esa instrucción. El encargo al equipo de 48 GB está en
+`remote_48g/ENCARGO-RECORRIDAS-20260914.md`.
+
+**Regla que ordena esta sección:** nada del informe se toca hasta que llegue el dato que lo sustituye. Un
+párrafo retirado antes de tener con qué reemplazarlo deja un hueco que luego se rellena con prisa.
+
+### 16.1 A la espera de R1 — variantes de prompt con cinco semillas
+
+Bloqueadas hasta que lleguen los datos. Hoy el informe cita `+10,40`, `+4,38` y `−0,72` puntos, que proceden
+de una corrida del 6 de septiembre con `max_tokens=2048` y el parser anterior al arreglo `§F85`, y cuyo delta
+lo escribe **un artículo que no devolvió salida parseable** (`FINDINGS §F174`).
+
+| Pieza del informe | Qué hay que hacer al llegar el dato |
+|:---|:---|
+| §5.2 y Tabla 5 | sustituir las cuatro filas por media y desviación de las cinco semillas, y declarar el corpus sobre el que se midió |
+| §6.1, primer factor | reescribir con el resultado nuevo; **el mecanismo de los nombres ibéricos se retira sin sustituto**, porque el registro de errores lo refuta (seis errores de límite en las configuraciones españolas frente a dos en las inglesas) |
+| Conclusión 2 (§7.1) | reformular con el resultado nuevo; si sale nulo, se enuncia como nulo, que también es resultado |
+| §7.2, punto 10 | retirar: pide precisamente la replicación que R1 ejecuta |
+| Resumen y abstract | una sola frase con la cifra nueva, **en el mismo commit los dos** |
+| §4.3 | conservar la descripción del diseño; corregir la glosa, que declara «modo `entities`» cuando la rama `--ablation` de `src/main.py` no activa recuperación alguna |
+| §1.3 y §1.4, objetivo 3 | se mantienen: el experimento existe y se reporta. Solo habría que tocarlos si el autor decidiera retirar §5.2 por completo, que **ya no es el camino elegido** |
+
+### 16.2 A la espera de R2 — barra de error del resultado titular
+
+Dos corridas con modelo, corpus, semilla 42, temperatura, `max_tokens` y prompt **idénticos** dieron 64,05 y
+66,76 de F1 en la misma celda. El estudio entero es de una sola pasada por modelo, de modo que **ninguna
+cifra publicada tiene barra de error conocida**.
+
+- Al llegar R2: añadir a la Tabla 7 la desviación entre repeticiones, o declararla en su glosa.
+- §5.3 ya publica intervalos de confianza del 95 %, pero son **entre artículos**, no entre ejecuciones. La
+  glosa debe decirlo, porque hoy se pueden confundir.
+- Si la variabilidad entre repeticiones con semilla fija resultara mayor que la distancia entre dos modelos
+  contiguos de la Tabla 7, **ese par deja de poder ordenarse** y el texto tiene que decirlo.
+
+### 16.3 Se puede ejecutar ya, sin esperar a nadie
+
+1. **Retirar del cuerpo la historia de defectos ya corregidos.** El bloque de dieciséis líneas sobre el
+   *mojibake* en §5.3.1 (líneas 401 a 417), la conclusión 7 de §7.1, los puntos 7 y 8 de §7.2 —que son
+   trabajo futuro marcado «ya realizada»—, la frase del tercer límite de §3.3 y la coletilla de §5.3.1 sobre
+   la anotación de `Locations`. **Comprobado con los datos vigentes**: en `recorrida_20260908` las tres
+   categorías tienen anotación de referencia real en los tres corpus (N=120: 14 170 · 21 112 · 15 444
+   entidades de referencia; N=30: 520 · 1 794 · 936; N=15: 1 638 · 3 328 · 2 184), de modo que ninguna
+   puntúa contra el vacío y el defecto está cerrado. Los **Anexos H e I conservan el registro íntegro**, que
+   es donde debe estar.
+2. **Añadir la robustez del formato de salida como resultado**, que hoy no se reporta y es una propiedad
+   real del sistema: porcentaje de registros con extracción vacía y con rescate por expresión regular, por
+   modelo. Se calcula desde los datos vigentes.
+3. **Corregir la glosa de §4.4.** La convención ante la extracción vacía se conserva, porque es la regla de
+   puntuación vigente y hay que declararla; lo que se retira es la narración de la implementación anterior
+   que asignaba 1.0 («una implementación previa del evaluador…»), que es historia.
+4. **Decidir la terminología de `Locations`.** El informe alterna «Localizaciones» y «Ubicaciones» entre
+   §2.1 y §3.3. La evidencia del corpus está medida en `FINDINGS §F173`: 545 entidades, 339 valores únicos,
+   mayoritariamente topónimos pero con una decena de lugares institucionales y **cero direcciones postales**.
+   Sigue **pendiente del profesor guía**; no se decide por iniciativa propia.
+
+### 16.4 Terminología
+
+Por instrucción del autor del 2026-09-14, el estudio se llama **de variantes o de variables de prompt**, y la
+palabra «ablación» no aparece en el informe. Los identificadores ya existentes (`ablacion_n15_REMOTO`,
+`tools/analisis_ablacion_idioma.py`, el flag `--ablation`) **no se renombran**: son rutas reales que el
+informe cita y que las comprobaciones resuelven en disco. Ver la sección correspondiente de `CLAUDE.md`.
+
+### 16.5 Lo que no se toca
+
+- **Los Anexos H, I y J**, cuyo destino está reservado a la indicación del profesor guía.
+- **El evaluador y el cálculo de métricas.** A dieciséis días de la entrega, un cambio ahí obliga a repetir
+  el estudio entero. Las tres peticiones de R3 son adiciones de instrumentación, no modificaciones del
+  cálculo.
+- **Los registros de ejecución**, ni el fichero ni una línea suya.

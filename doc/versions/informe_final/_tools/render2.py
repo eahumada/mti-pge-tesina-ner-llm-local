@@ -1,12 +1,15 @@
-import re, copy, sys, docx
+import re, copy, sys, os, glob, docx
+from docx.shared import Emu
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 from docx.text.paragraph import Paragraph
 from docx.table import Table
 BASE, OUT = sys.argv[1], sys.argv[2]
 USABLE = 8838
+FIGURAS = {os.path.basename(x): x for x in glob.glob('figuras/*.png')}
+figuras_puestas = []
 MAP = {'Título1':['Título1','Title','Heading 1'],'heading1':['heading1','Heading 1'],'heading2':['heading2','Heading 2'],
-       'heading3':['heading3','Heading 3'],'p1a':['p1a','Body Text','Normal'],'Normal':['Normal','Body Text'],'table caption':['table caption','Table Caption','Caption'],
+       'heading3':['heading3','Heading 3'],'heading4':['heading4','Heading 4','heading3','Heading 3'],'p1a':['p1a','Body Text','Normal'],'Normal':['Normal','Body Text'],'table caption':['table caption','Table Caption','Caption'],'figure caption':['figure caption','Figure Caption','Caption','Normal'],
        'programcode':['programcode','Source Code','Normal'],'referenceitem':['referenceitem','Body Text','Normal'],
        'author':['author','Author','Normal'],'address':['address','Author','Normal'],'e-mail':['e-mail','Author','Normal'],
        'abstract':['abstract','Abstract','Normal'],'keywords':['keywords','Abstract','Normal'],
@@ -35,6 +38,17 @@ def new_p(style_name):
     return Paragraph(p,d)
 INLINE = re.compile(r'(\*\*\*.+?\*\*\*|\*\*.+?\*\*|\*[^*\n]+\*|`[^`]+`|\[[^\]]+\]\([^)]+\))')
 def write_runs(p,text):
+    # ENCABEZADO_UN_RUN: en un encabezado el texto va en un unico run y sin marcadores.
+    # El verificador une los <w:t> con un espacio, de modo que partirlo en varios runs
+    # —por una cursiva o un `codigo`— le inserta espacios espurios y deja de reconocer
+    # la seccion: «(`LLMProvider`)» pasaria a leerse «( LLMProvider )».
+    try:
+        _est = p.style.name
+    except Exception:
+        _est = ''
+    if _est.startswith('heading') or _est.startswith('Heading') or _est.startswith('T'):
+        import re as _re
+        p.add_run(_re.sub(r'\*\*|\*|`', '', text)); return
     text=re.sub(r'<br\s*/?>',' ',text)
     for tok in INLINE.split(text):
         if not tok: continue
@@ -125,13 +139,13 @@ while i<n:
         lvl=len(m.group(1)); ti=m.group(2).strip()
         mm=re.match(r'^(\d+)\.\s+(.*)$',ti)
         if lvl==2 and mm: emit('heading1',f'{mm.group(1)} {mm.group(2)}')
-        elif lvl==2: emit('heading1',ti)
+        elif lvl==2: emit('heading1', ti.upper() if ti.strip().upper() in ('RESUMEN','ABSTRACT','ÍNDICE DE CONTENIDOS') else ti)
         else:
             mm2=re.match(r'^(\d+)\.(\d+)(\.(\d+))?\s+(.*)$',ti)
             if lvl==3 and mm2: emit('heading2',f'{mm2.group(1)}.{mm2.group(2)} {mm2.group(5)}')
             elif lvl==3: emit('heading2',ti)
-            elif lvl==4 and mm2: emit('heading3',f'{mm2.group(1)}.{mm2.group(2)}.{mm2.group(4) or ""} {mm2.group(5)}'.replace('. ',' ') if not mm2.group(4) else f'{mm2.group(1)}.{mm2.group(2)}.{mm2.group(4)} {mm2.group(5)}')
-            else: emit('heading3',ti)
+            elif lvl==4 and mm2: emit('heading4',f'{mm2.group(1)}.{mm2.group(2)}.{mm2.group(4) or ""} {mm2.group(5)}'.replace('. ',' ') if not mm2.group(4) else f'{mm2.group(1)}.{mm2.group(2)}.{mm2.group(4)} {mm2.group(5)}')
+            else: emit('heading4' if lvl==4 else 'heading3', ti)
         i+=1; continue
     if s.startswith('```'):
         i+=1; buf=[]
@@ -141,6 +155,23 @@ while i<n:
             if k: p.add_run().add_break()
             p.add_run(l)
         continue
+    mimg = re.match(r'^!\[(.*?)\]\(([^)]+)\)\s*$', s)
+    if mimg:
+        ruta = FIGURAS.get(os.path.basename(mimg.group(2)))
+        if ruta:
+            p = new_p('figure caption')
+            pf = p._p.find(qn('w:pPr'))
+            jc = OxmlElement('w:jc'); jc.set(qn('w:val'),'center'); pf.append(jc)
+            # interlineado automatico: con lineRule exact la imagen en linea se recorta a una franja
+            sp = OxmlElement('w:spacing'); sp.set(qn('w:lineRule'),'auto'); sp.set(qn('w:line'),'240')
+            sp.set(qn('w:before'),'120'); sp.set(qn('w:after'),'60'); pf.append(sp)
+            kn = OxmlElement('w:keepNext'); kn.set(qn('w:val'),'1'); pf.append(kn)
+            p.add_run().add_picture(ruta, width=Emu(int(USABLE/1440*914400)))
+            figuras_puestas.append(os.path.basename(mimg.group(2)))
+        i += 1; tras_titulo = False; continue
+    mfig = re.match(r'^[_*]{1,3}\s*(Figura\s+\d+\..*?)\s*[_*]{1,3}$', s)
+    if mfig:
+        emit('figure caption', mfig.group(1)); i += 1; tras_titulo = False; continue
     mcap = re.match(r'^[_*]{1,3}\s*Tabla\s+\d+\.\s*(.+?)\s*[_*]{1,3}$', s)
     if mcap:
         pend_caption = mcap.group(1).strip(); i += 1; continue
@@ -176,4 +207,4 @@ while i<n:
     elif re.match(r'^\[\d+\]',txt): st='referenceitem'
     elif seccion_abs in ('RESUMEN','ABSTRACT'): st='abstract'
     emit(st,txt)
-d.save(OUT); print(OUT,'->',len(d.paragraphs),'párrafos ·',len(d.tables),'tablas')
+d.save(OUT); print(OUT,'->',len(d.paragraphs),'párrafos ·',len(d.tables),'tablas ·',len(figuras_puestas),'figuras')

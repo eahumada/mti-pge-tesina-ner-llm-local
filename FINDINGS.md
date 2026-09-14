@@ -8418,3 +8418,234 @@ el Markdown del informe ni su bibliografía), así que su creación no afecta el
 confirmado que sigue en 0 fallos nuevos tras crearlo. La extensión de `LEARNING §L80` sí citaba
 `§F173` antes de que existiera esta sección — 1 fallo nuevo momentáneo (`toda referencia §F y §L
 tiene su seccion`), resuelto al escribir esta misma entrada.
+
+---
+
+## §F174 — Los +10,40 pp del prompt en español no son un error de cálculo: son un artículo que no parseó
+
+**Fecha:** 2026-09-14. **Origen:** pregunta del autor —«¿de dónde se obtienen los +10,4 % de mejor desempeño
+por prompts en español? ¿Existe evidencia sólida o es porque los nombres están en español o portugués en
+Kleptotrace?»—, seguida de «analizar en profundidad, asegurarse de que no sea un error». **Medido sobre los
+datos crudos de las dos corridas.** Amplía `§F55` y **corrige el mecanismo que propuso `§F56`**.
+
+### 1. La cifra reproduce. No hay error aritmético
+
+Recalculado desde `results/ablacion_n15_REMOTO/benchmark_results.csv` (`gemma4:latest`, N=15 Kleptotrace,
+semilla 42, temperatura 0,1, una sola pasada por celda, 2026-09-06), la media de F1 por artículo da
+**exactamente** lo que publica la Tabla 5: `zs-en` 64,05 · `zs-es` 68,43 · `fs-en` 63,32 · `fs-es` 74,44, de
+donde salen los **+4,38**, **−0,72** y **+10,40**. La comprobación 27 del verificador ya ataba esas tres
+diferencias a su fuente, y sigue siendo correcta.
+
+**El problema no es el número. Es de qué está hecho.**
+
+### 2. Un solo artículo aporta el 60 % del efecto, y lo aporta por un fallo de formato
+
+| Artículo | `zs-en` | `zs-es` | `fs-en` | `fs-es` | parseo `zs-en` |
+|:---|---:|---:|---:|---:|:---|
+| 4 (`C047_1`, Isabel dos Santos / Angola) | **0,00** | 93,15 | **0,00** | 93,15 | `fallback` |
+
+En ese registro el detalle da `tp=0, fp=0, fn=18`: el modelo **no devolvió nada parseable**. El
+`benchmark.log` de la corrida contiene **dos** avisos `Failed to parse JSON from raw response` en toda su
+ejecución, y los dos son de configuraciones inglesas sobre **ese mismo artículo**. Las dos configuraciones
+españolas no tuvieron ninguno.
+
+Ese artículo aporta 93,15/15 = **6,21 pp de los 10,40**. Retirándolo:
+
+| Agregación | con el artículo 4 | sin el artículo 4 |
+|:---|---:|---:|
+| `fs-es` − `zs-en`, macro (media de F1 por artículo, la que publica la Tabla 5) | +10,40 | **+4,49** |
+| `fs-es` − `zs-en`, micro (tp/fp/fn agregados) | +8,36 | **+3,52** |
+| `zs-es` − `zs-en`, micro | +2,90 | **−2,63** |
+
+La última fila es la que más importa: **el efecto del idioma por sí solo cambia de signo**. Y en macro su
+mediana ya era **0,00**, con seis artículos que mejoran, seis que empeoran y tres empatados.
+
+### 3. La segunda corrida hace lo mismo, y allí el efecto se invierte del todo
+
+`kleptotrace_20260727_110454`, mismo modelo, mismo corpus, misma semilla y temperatura, publica +3,11 pp
+(`§F55`). También tiene un cero por `fallback` en una configuración inglesa —el artículo 1— y ninguno en las
+españolas. Excluyendo los artículos con cero: `zs-en` **71,53** frente a `fs-es` **70,22**, es decir
+**−1,31 pp**. El +3,11 de esa corrida es **íntegramente** el fallo de parseo de un artículo.
+
+Agregando las dos corridas: **4 registros con extracción vacía en 60 ejecuciones con prompt inglés, 0 en 60
+con prompt español** (Fisher exacto de una cola, p = 0,059).
+
+### 4. La significancia nunca existió, y la propia corrida lo dice
+
+`statistical_report.md` de la corrida citada: ANOVA **F = 1,1379, p = 0,3417**; Tukey `fs-es` vs `zs-en`
+**p = 0,4246**; `zs-en` vs `zs-es` **p = 0,9164**. Ninguna comparación alcanza significancia. La t pareada da
+**t(14) = 1,629, p ≈ 0,126**, con mediana +5,13 e IC bootstrap del 95 % de [+1,02, +24,33], un intervalo cuya
+asimetría delata que lo sostiene un solo punto. La desviación típica de `zs-en` es 23,50 frente a 13,37 de
+`fs-es`: **la varianza inglesa la produce el cero**. Y el análisis de sensibilidad de la propia corrida, al
+filtrar los seis artículos largos, reduce la diferencia de +10,40 a **+6,94**.
+
+La glosa de la Tabla 5 ya advierte que los deltas «deben leerse como una tendencia consistente y no como una
+diferencia demostrada». Esto es correcto y se mantiene. Lo que este hallazgo añade es que **ni siquiera la
+consistencia se sostiene**: sin el artículo que no parseó, la tendencia del idioma puro desaparece.
+
+### 5. El mecanismo de los nombres ibéricos que propuso `§F56` no lo soportan los datos
+
+`§F56` y §6.1 del informe explican la ventaja porque la instrucción en español ayudaría a delimitar los
+nombres portugueses del caso angoleño, «donde un tokenizador anglocéntrico parte `Isabel dos Santos` en dos
+entidades». Contrastado contra el registro de errores de la corrida (`error_taxonomy.boundary_errors`):
+
+| Configuración | Errores de límite (total) | Sobre nombres con partícula o acento |
+|:---|---:|---:|
+| `zs-en` | 65 | **2** |
+| `zs-es` | 77 | **6** |
+| `fs-en` | 48 | **2** |
+| `fs-es` | 58 | **6** |
+
+**Las configuraciones españolas cometen más errores de límite sobre nombres ibéricos, no menos**, y en
+ninguna de las cuatro aparece el caso que el informe describe: no hay una sola entidad partida por la
+partícula. Los seis casos españoles son confusiones difusas entre dos personas distintas
+(`Isabel dos Santos` contra `Carlos Saturnino`, ratio 54,5), y los dos ingleses, entre padre e hija
+(`Isabel` contra `José Eduardo dos Santos`, ratio 65,0). Son fallos del emparejamiento difuso, no de
+tokenización.
+
+Hay además una coincidencia que invita al error y conviene nombrar: el artículo que carga con todo el efecto
+**es** uno de los de Isabel dos Santos, de modo que un vistazo superficial parece confirmar la hipótesis
+ibérica. No la confirma. Ahí el prompt inglés no delimitó mal esos nombres: **no extrajo ninguna entidad**,
+con `fp = 0`. Si el mecanismo fuera de delimitación, se vería en los errores de límite, y ahí se ve lo
+contrario.
+
+### 6. Qué queda en pie
+
+- **Sostenible:** con prompt en español el modelo produjo salida parseable en el 100 % de los registros, y con
+  prompt en inglés falló en 4 de 60. Es un efecto de **robustez del formato de salida**, plausible y
+  compatible con que los ejemplos *few-shot* en español fijen la estructura de la respuesta —`fs-es` parsea
+  15/15 por bloque de código—, pero medido sobre cuatro sucesos y sin significancia (p = 0,059).
+- **No sostenible:** que el prompt en español mejore la **calidad** de la extracción. Descontado el fallo de
+  formato, el idioma puro da −2,63 pp en micro y mediana cero en macro sobre la corrida favorable, y −1,31 pp
+  sobre la otra.
+- **No sostenible:** el mecanismo de los nombres ibéricos, que los errores de límite contradicen.
+- **Por dónde es rebatible en la defensa:** un tribunal que pida el desglose por artículo llega a esto en dos
+  minutos, porque un F1 de 0,00 en una tabla de quince filas salta a la vista. La defensa fuerte no es
+  sostener el +10,40, sino declarar que la diferencia la produce un fallo de formato en un artículo y que por
+  eso la conclusión se enuncia como tendencia no replicada.
+
+### 7. Consecuencia para el informe (pendiente de decisión del autor)
+
+Ningún dato se retira: la política aditiva se mantiene y la Tabla 5 publica las cuatro configuraciones con su
+fuente. Lo que procede revisar es **prosa**, en tres sitios:
+
+1. **§5.2, Hallazgo 5**, cierra con «Los ejemplos solo resultan productivos redactados en el idioma del
+   corpus». El corpus está **en inglés**; la frase es el mecanismo que `§F54` ya declaró invertido y que
+   sobrevivió en ese párrafo. Contradice además a §6.1, que en la misma entrega dice lo contrario.
+2. **§6.1** atribuye el efecto a la delimitación de nombres ibéricos. La tabla del punto 5 lo refuta.
+3. Convendría que la glosa de la Tabla 5 declarara el registro con extracción vacía, que es el dato que
+   explica el delta y la desviación típica de `zs-en`.
+
+**Lección derivada:** ver `LEARNING §L81`.
+
+---
+
+## §F175 — El mismo defecto bajo la conclusión titular: el +12,26 pp del RAG en el modelo más débil
+
+**Fecha:** 2026-09-14. **Origen:** el autor pidió «revisar en el documento cualquier error similar al de
+`§F174` que no tenga sustento». Buscado el patrón —registros con extracción vacía— sobre la corrida
+**vigente**, apareció en el primer sitio donde se miró. **Medido sobre
+`results/ANALISIS_CONJUNTO_20260909_FIX/merged_results.csv`.**
+
+### Lo que hay
+
+Contados los registros averiados por configuración en las 2938 filas del consolidado definitivo
+(113 artículos por grupo, trece modelos):
+
+| Configuración | F1 = 0 | Parseo `fallback` |
+|:---|---:|---:|
+| `nemotron-mini:4b` línea base | **19** | **32** |
+| `nemotron-mini:4b` con KB RAG | 6 | 3 |
+| `mistral-nemo:latest` con KB RAG | 3 | **41** |
+| `deepseek-r1:1.5b` línea base / con RAG | 8 / 7 | 1 / 3 |
+| Los otros nueve modelos | 1 a 3 | 0 a 2 |
+
+Excluyendo los artículos en los que **alguna** de las dos configuraciones dio cero o falló el parseo, el
+beneficio del RAG por modelo queda así:
+
+| Modelo | Publicado | Descontadas las averías | Artículos excluidos |
+|:---|---:|---:|---:|
+| `nemotron-mini:4b` | **+12,26** | **+7,28** | 47 de 113 |
+| `mistral-nemo:latest` | −4,29 | −3,64 | 44 |
+| `deepseek-r1:1.5b` | +2,07 | +1,21 | 15 |
+| `qwen2.5:14b` | +0,69 | +1,60 | 2 |
+| `gemma:latest` | +0,03 | +1,01 | 4 |
+| Los otros ocho | sin cambio material (≤ 0,1 pp) | | 1 a 2 |
+
+**Cerca del 40 % del beneficio titular del RAG en el modelo más débil no es extracción mejor: es que con
+RAG el modelo devuelve salida parseable más a menudo.** Y esa es justamente la cifra que el resumen y el
+abstract citan como resultado principal del estudio de RAG.
+
+### Lo que esto no es
+
+**No invalida la conclusión general.** El patrón que sostiene el trabajo —el beneficio del RAG decrece con
+la capacidad del modelo— sobrevive intacto: los ocho modelos de capacidad media y alta no se mueven ni una
+décima, y el orden se conserva. Lo que hay que rehacer es el **enunciado de la magnitud** en el caso extremo.
+
+**Y no está claro que la exclusión sea la corrección correcta.** Un modelo que devuelve JSON mal formado
+está fallando de verdad, y ese fallo es suyo; excluir esos registros puede ocultar una debilidad real del
+modelo en lugar de corregir un defecto del instrumento. La distinción que decide el caso es si el modelo
+**produjo entidades que el parser no supo leer** —defecto del instrumento— o si **no produjo entidades**
+—desempeño del modelo—. Eso se resuelve abriendo el `benchmark.log` registro a registro, y está **en curso**
+en el workflow forense lanzado el mismo día; esta entrada se completará con su dictamen.
+
+### La forma honesta de enunciarlo
+
+Cualquiera que sea la clasificación, la formulación defendible descompone la cifra en vez de elegir una de
+las dos: el RAG contextual aporta al modelo más débil **+7,3 puntos de F1 en calidad de extracción** y
+alrededor de **+5 puntos más por robustez del formato de salida**, sobre 113 artículos. Las dos mitades son
+resultados, y decir solo la suma oculta que son cosas distintas.
+
+**Ver también:** `§F174`, del que este hallazgo es la réplica sobre la corrida vigente, y `LEARNING §L81`,
+cuya regla —clasificar los ceros antes de promediarlos— es la que lo encontró.
+
+### Corrección del mismo día: §F175 estaba sobredimensionado. El beneficio del RAG se sostiene
+
+**Fecha:** 2026-09-14, unas horas después de escribir la entrada anterior. **Origen:** al medir la robustez
+de formato por modelo apareció una incoherencia — `nemotron-mini:4b` tenía 20 registros con F1 = 0 pero solo
+2 con extracción vacía. Los dos números no podían describir el mismo fenómeno.
+
+**El error era del criterio de exclusión, y era mío.** La entrada anterior excluyó los registros con
+`f1 == 0` **o** `parse_method == 'fallback'`. Eso es demasiado ancho: mezcla dos cosas distintas.
+
+| Situación | Qué significa | Cómo se identifica |
+|:---|:---|:---|
+| Avería del instrumento | el modelo no produjo salida legible y no se extrajo nada | `tp + fp == 0` **y** parseo `fallback` |
+| Fallo del modelo | el modelo extrajo entidades y todas eran erróneas | `f1 == 0` con `fp > 0` |
+| Rescate por expresión regular | el JSON venía mal formado pero se recuperaron entidades | parseo `fallback` con `tp + fp > 0` |
+
+Solo la primera es avería. Las otras dos son desempeño, y excluirlas **encubre una debilidad real del
+modelo** en lugar de corregir un defecto de la medición.
+
+**Descompuestos los ceros de la corrida vigente**, de los 20 de `nemotron-mini:4b` en línea base **18 son
+fallos del modelo** —extrajo entidades y erró todas— y solo 2 son extracciones vacías. Con el criterio
+estricto, el efecto del RAG apenas se mueve en ningún modelo:
+
+| Modelo | Publicado | Excluidas solo las averías reales | Registros excluidos |
+|:---|---:|---:|---:|
+| `nemotron-mini:4b` | +13,71 | **+13,04** | 2 |
+| `gpt-oss:20b` | +1,53 | +2,28 | 1 |
+| `mistral-nemo:latest` | −3,64 | −2,83 | 1 |
+| `deepseek-r1:1.5b` | +2,97 | +3,43 | 4 |
+| Los otros nueve | sin cambio alguno | | 0 |
+
+*(Calculado sobre los 120 registros de `recorrida_20260908/*__N120`; el consolidado publica 113 por grupo
+tras excluir los 7 contaminados, de ahí la pequeña diferencia con la cifra de la Tabla 7.)*
+
+**Conclusión corregida: el beneficio del RAG en el modelo más débil es real y no lo escribe una avería de
+parseo.** La conclusión 1 del informe se sostiene tal como está. Retírese de `§F175` la afirmación de que
+«cerca del 40 % del beneficio titular es robustez de formato»: no es cierta.
+
+**Lo que sí queda, y es menor.** `nemotron-mini:4b` recupera por expresión regular el **27,5 %** de sus
+registros en línea base frente al 2,5 % con RAG, y `mistral-nemo:latest` el **35 %** con RAG frente al 1,7 %
+sin él. Esos registros sí puntúan, porque el rescate extrae entidades, pero un rescate por expresión regular
+puede perder parte de la lista. Es una limitación del instrumento que conviene medir y declarar; no es un
+defecto que invalide ninguna cifra.
+
+**Y lo que no cambia:** `§F174` se sostiene íntegro. Allí el artículo 4 cumple el criterio estricto
+—`tp = 0`, `fp = 0` y parseo `fallback`—, es decir, una avería real del instrumento, y sigue aportando
+6,21 de los 10,40 puntos.
+
+**Lección:** el criterio con el que se excluye un registro decide el resultado tanto como el dato. Escribirlo
+de forma laxa —«cero o fallback»— y no comprobar que los dos recuentos que produce son coherentes entre sí
+fue exactamente el tipo de error que `§L81` advierte, cometido al aplicarla. Ver `LEARNING §L82`.
