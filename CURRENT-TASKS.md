@@ -2349,3 +2349,23 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 - **Tareas reanudables detectadas:** ninguna (1.1 y 1.2 cerradas explícitamente; §3.bis cerradas).
 - **Pendientes que requieren decisión del autor:** DECISIONES-PENDIENTES-20260908.md (19 decisiones abiertas,
   ninguna ejecutable por Antigravity sin autorización).
+
+---
+
+#### §3.bis.20 ⬜ PENDIENTE — R1: Variantes 2×2 × 5 semillas (Equipo 48 GB) — 2026-09-14
+- **Encargo:** `remote_48g/ENCARGO-RECORRIDAS-20260914.md §R1`
+- **Motivo:** §F175 corregido; el experimento de ablación actual es N=15 todo en inglés → nunca midió el efecto del idioma. N=120 es el experimento correcto.
+- **Fases:** Fase 1 N=15 (~45 min) · Fase 2 N=120 (~6-7 h)
+- **Modelos:** `gemma4:latest` (4 configuraciones ZS-EN/ZS-ES/FS-EN/FS-ES × 5 semillas)
+- **Arregla:** §5.2, Tabla 5, §6.1, conclusión 2
+- **Entregables:** `results/variantes_5semillas_n15_REMOTO/` y `results/variantes_5semillas_n120_REMOTO/`
+- **Criterio de aceptación:** `failed == 0` en todas las semillas
+
+#### §3.bis.21 ⬜ PENDIENTE — R2: Barra de error del titular (Equipo 48 GB, NOCTURNA) — 2026-09-14
+- **Encargo:** `remote_48g/ENCARGO-RECORRIDAS-20260914.md §R2`
+- **Motivo:** Dos corridas idénticas dieron 64,05 y 66,76 de F1. El estudio entero es de una sola pasada: ninguna cifra publicada tiene barra de error. Es lo primero que pregunta un tribunal.
+- **Qué:** 13 modelos × 2 modos × 5 semillas × N=120
+- **Coste:** ~8-10 h nocturnas
+- **Arregla:** Tabla 7 (añade columna μ ± σ por modelo)
+- **Entregables:** `results/barras_error_n120_REMOTO/seed_{42,123,456,789,1024}/`
+- **Criterio de aceptación:** `failed == 0`; `detailed_results.json` presente en cada semilla
