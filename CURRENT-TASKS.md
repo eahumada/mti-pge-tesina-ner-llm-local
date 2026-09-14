@@ -2483,3 +2483,19 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 - **R3 aplicado:** columnas `raw_response` y `retry_count` añadidas al CSV de resultados
 - **R1 Fase 1:** `gemma4:latest` ablation N=15, semillas 42-46, `results/variantes_5semillas_n15_REMOTO/`
 - **Hora inicio:** 2026-09-14 20:08
+
+---
+
+### §3.bis.18 ✅ COMPLETADA (parte acceptance_status) — Equipo 48 GB (Antigravity) — 2026-09-14 20:29
+- **Tarea:** Actualización de los 7 `acceptance_status.json` desfasados (§F89)
+- **Estado:** COMPLETADA
+- **Herramienta:** `tools/corregir_acceptance_status.py`
+- **Verificación:** `python3 tools/derivados_desfasados.py` reporta 17/17 al día (0 desfasados)
+- **Cambios aplicados:**
+  * `afectados_thinking_n120_REMOTO`: F1 0.592929 → 0.584595
+  * `benchmark_balanced_120_20260824_173017`: F1 0.394452 → 0.361119
+  * `benchmark_n120_REMOTO`: F1 0.549147 → 0.507480
+  * `excluidos_n120_REMOTO`: F1 0.596448 → 0.438386
+  * `gemma4_31b_cloud_n120_REMOTO`: F1 0.626804 → 0.623841, best_model → `..._baseline` (orden corregido)
+  * `nemotron_rerun_n120_REMOTO`: F1 0.437837 → 0.371170
+  * `qwen3_nothink_n120_REMOTO`: F1 0.531255 → 0.514588
