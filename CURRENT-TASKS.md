@@ -2974,3 +2974,4 @@ completar sus datos, no descartarlos.
   * Al culminar, sus 240 registros limpios se integrarán en `seed_42/` para sanear por completo la corrida inicial y certificar `failed == 0` con `verificar_corrida.py`.
 - **Ejecución de Semillas Subsecuentes:**
   * Con la cuota activa, las semillas 123, 456, 789 y 1024 ejecutarán los 11 modelos (incluyendo `gemma4:31b-cloud`) directamente en el pipeline maestro con cero interrupciones.
+| 2026-09-15 18:40 | Claude Code (equipo principal) | ✅ §1.334: **respuesta rápida del equipo remoto a `§3.bis.30`: `gemma4:31b-cloud` semilla 42 recuperada limpia.** Verificado directamente: 240/240 filas (120 baseline + 120 kb_rag), 0 fallidas, F1 81,18 %/82,84 % — coherente con lo visto en el consolidado vigente. Antigravity confirma que las semillas restantes de R2 (123/456/789/1024) ejecutarán `gemma4:31b-cloud` limpiamente dentro del pipeline maestro, sin re-ejecutar el resto de modelos. Verificador: 0 fallos nuevos |
