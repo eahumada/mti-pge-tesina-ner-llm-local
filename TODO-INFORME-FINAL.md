@@ -1003,3 +1003,48 @@ informe cita y que las comprobaciones resuelven en disco. Ver la sección corres
   el estudio entero. Las tres peticiones de R3 son adiciones de instrumentación, no modificaciones del
   cálculo.
 - **Los registros de ejecución**, ni el fichero ni una línea suya.
+
+---
+
+## 17. Cierre final: solo las últimas ejecuciones, ninguna mención a resultados antiguos o erróneos (2026-09-15)
+
+**Instrucción del autor, 2026-09-15.** Una vez terminen **todas** las ejecuciones pendientes en el equipo
+local (R1 Fase 2, R2, R5, y cualquier otra que se añada mientras tanto), el estudio y la tesina deben quedar
+así:
+
+- **Solo las últimas ejecuciones y *benchmarks*** sostienen las cifras del cuerpo. Ninguna tabla, frase del
+  Resumen/Abstract, o conclusión cita una corrida superada por una posterior del mismo experimento.
+- **Ninguna mención a resultados antiguos o erróneos** permanece en el cuerpo — ni como comparación, ni como
+  «antes se medía X, ahora Y», ni como nota histórica. La política aditiva sigue protegiendo los datos en
+  `results/`, los `benchmark.log` y los Anexos H/I/J (destino reservado al profesor guía); esto es sobre el
+  **cuerpo** del informe, no sobre los registros que atestiguan.
+- **Ninguna cifra ni su texto asociado permanece si no remite a un resultado correcto y verificable.** Una
+  cifra que reproduce desde su fuente pero cuya composición es frágil (`FINDINGS §F174`, `§F177`, `§F178`)
+  no cuenta como verificable hasta que la re-corrida correspondiente la sustituya o la confirme.
+
+**Esto NO se ejecuta todavía.** Purgar antes de que lleguen R1 Fase 2 y R2 dejaría huecos sin el dato que los
+reemplaza — exactamente lo que `§16` de este documento ya viene evitando. El disparador es: **todas las filas
+de la tabla de re-corridas del encargo (`remote_48g/ENCARGO-RECORRIDAS-20260914.md`) en estado completado**.
+
+**El trabajo de detección ya está hecho, en tres artefactos** que se reutilizan en vez de rehacerse:
+
+| Artefacto | Qué aporta |
+|:---|:---|
+| `PLAN-PURGA-INFORME-20260914.json` | 84 hallazgos supervivientes de retirar/reescribir, con líneas exactas, ya divididos en bloques por dependencia |
+| `DICTAMEN-FORENSE-CIFRAS-20260914.json` | dictamen cifra por cifra: sólida/frágil/incorrecta, con el valor recalculado cuando aplica |
+| `DICTAMEN-REVISION-SCRIPTS-20260914.json` | defectos de código que afectan cifras publicadas, con su reproducción |
+
+**Al llegar el disparador, el procedimiento es:**
+
+1. **Actualizar los tres dictámenes** con los datos nuevos antes de aplicar nada: varias de sus cifras
+   «frágiles» (el idioma del prompt, el beneficio del RAG) tendrán una versión vigente distinta después de
+   R1 Fase 2 y R2, y el dictamen de hoy quedaría citando la corrida equivocada si se aplica sin refrescar.
+2. **Aplicar el plan de purga** (bloques A y B de `PLAN-PURGA-INFORME-20260914.json`), sustituyendo cada
+   cifra retirada por su valor vigente, nunca dejando un hueco.
+3. **Resolver el bloque C** (9 grupos reservados, incluido el destino de §5.2/Tabla 5) con las cifras nuevas
+   ya en mano.
+4. **Verificar** con `tools/verificar_informe.py` y comprobar el límite de 25 páginas.
+5. **Propagar** a los tres `.docx` con `tools/docx_replace_terms.py`, nunca regenerando desde el Markdown.
+
+**No se ejecuta por iniciativa propia sin repasar antes con el autor** qué del bloque C decide, dado que toca
+el destino del modo `kb_combined` (`FINDINGS §F178`) y la primera frase del Resumen.
