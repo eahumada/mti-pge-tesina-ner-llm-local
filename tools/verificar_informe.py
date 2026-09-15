@@ -84,12 +84,6 @@ FALLOS_DECLARADOS = {
                           'fichero vacio del commit 880f4f9; decision del autor '
                           '(CURRENT-TASKS §1.103)'),
     '.restore_results.log': ('2026-09-09', 'idem'),
-    'hay que regenerarlo desde el .docx': ('2026-09-09',
-                                           'PENDIENTE, no aceptado: el PDF de la raiz es del '
-                                           '2026-09-08 y los .docx se corrigieron el 09. Exige '
-                                           'Word y no hay conversor aqui; es de la pasada de '
-                                           'maquetacion (FINDINGS §F98). El PDF de enviados/ se '
-                                           'conserva y no se toca'),
     'github.com/eahumada/mti-pge-tesina': ('2026-09-09',
                                            'referencia [37]: el repositorio es privado hasta la '
                                            'purga (SEGURIDAD-CLAVE-GOOGLE-20260908.md)'),

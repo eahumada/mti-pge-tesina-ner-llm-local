@@ -1693,7 +1693,7 @@ Está en `FINDINGS §F65` y `§F65.bis`, con la tabla de ambas.
 ---
 
 
-### 3.bis.18 🟠 ENVIADA — Re-corridas para cerrar el informe (2026-09-14)
+### 3.bis.18 🟢 EN CURSO (reconciliado con Antigravity el mismo día) — Re-corridas para cerrar el informe (2026-09-14)
 
 **Documento:** `remote_48g/ENCARGO-RECORRIDAS-20260914.md`. Sustituye a toda petición anterior sobre los
 mismos experimentos. **Entrega de la tesina: 30 de septiembre**, dieciséis días.
@@ -1750,6 +1750,35 @@ ampliaciones:
 
 **Estado:** enviada el 2026-09-14 y ampliada el mismo día. Sin acuse todavía. **Ollama corre en la máquina
 local y en el equipo remoto de 48 GB**, que está dedicada en exclusiva a estas corridas.
+
+**Actualización 2026-09-14 ~21:00 — colisión de edición concurrente con Antigravity, reconciliada.**
+Mientras yo ampliaba este encargo, **Antigravity** (sesión distinta, coordinando su propio *loop* de 10 min,
+`§3.AGY.1`) leyó `FINDINGS §F174/§F175` de forma independiente y redactó **su propia versión** de
+`remote_48g/ENCARGO-RECORRIDAS-20260914.md`, con comandos `bash` concretos que la mía no tenía. Al fusionar
+sus commits, su versión **sobrescribió por completo la mía** (`git merge` fue *fast-forward*: no hubo
+conflicto que resolver porque, desde la perspectiva de Antigravity, mi ampliación aún no existía cuando
+ellos escribieron la suya). Se perdió mi sección «sin fisuras» y la instrucción de que el coste no es
+restricción.
+
+**No se revirtió nada**, siguiendo la política de concurrencia: se reconcilió. Se conservó **íntegro** el
+trabajo de Antigravity —comandos, estructura, R1/R2/R3— y se corrigió solo lo que quedó desactualizado por
+la instrucción del autor posterior a su redacción: **R4 pasa de «no recomendado» a imprescindible**, con el
+diseño de traducir (no regenerar) el corpus N=30, que **Antigravity ya había implementado**
+(`tools/traducir_corpus_n30_es.py`, commit `6e44ff7`) sin que su propio encargo lo pidiera — coincidencia de
+diseño con lo que yo había propuesto, verificada línea a línea: preserva personas, organizaciones y también
+los nombres de lugar sin traducir, precisamente para no reintroducir el defecto de `Locations` sobre un
+corpus nuevo. Se añadieron **R5** (variantes sobre el par emparejado EN/ES, que la versión de Antigravity no
+tenía) y **R6** (la pregunta pendiente de `§3.bis.17`, recuperada). El **orden de ejecución** se reescribió
+para no interrumpir lo que ya está en marcha: **R1 Fase 1 sigue corriendo sin tocar** (arrancada 20:08 por el
+equipo remoto), y R4/R6 pasan a continuación por ser los más baratos.
+
+**Colisión de identificador detectada y corregida en el mismo turno**, por la regla de `CLAUDE.md §Verificación`:
+Antigravity reutilizó `§3.bis.18` para dos actualizaciones de estado nuevas, chocando con mi propia entrada
+de encargo que ya llevaba ese número. Renumeradas a `§3.bis.22` y `§3.bis.23`, sin tocar el texto de ninguna
+de las dos ni el número de la mía, que es la más antigua.
+
+**Nada del trabajo remoto se descartó.** R1 Fase 1 (N=15) sigue en curso, R3 (instrumentación) y la
+corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y aceptadas.
 
 ---
 
@@ -2476,7 +2505,7 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 
 ---
 
-### §3.bis.18 ▶️ EN CURSO — Equipo 48 GB (Antigravity) — 2026-09-14 20:08
+### §3.bis.22 ▶️ EN CURSO — Equipo 48 GB (Antigravity) — 2026-09-14 20:08
 - **Tarea:** R3 completada (código); R1 Fase 1 arrancando (N=15 × 5 semillas, ~1.7 h)
 - **Estado:** EN CURSO
 - **Archivos tocados:** `repos/ner-llm-entity-benchmark/src/main.py` (R3: +2 columnas)
@@ -2486,7 +2515,7 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 
 ---
 
-### §3.bis.18 ✅ COMPLETADA (parte acceptance_status) — Equipo 48 GB (Antigravity) — 2026-09-14 20:29
+### §3.bis.23 ✅ COMPLETADA (parte acceptance_status) — Equipo 48 GB (Antigravity) — 2026-09-14 20:29
 - **Tarea:** Actualización de los 7 `acceptance_status.json` desfasados (§F89)
 - **Estado:** COMPLETADA
 - **Herramienta:** `tools/corregir_acceptance_status.py`
@@ -2499,3 +2528,5 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
   * `gemma4_31b_cloud_n120_REMOTO`: F1 0.626804 → 0.623841, best_model → `..._baseline` (orden corregido)
   * `nemotron_rerun_n120_REMOTO`: F1 0.437837 → 0.371170
   * `qwen3_nothink_n120_REMOTO`: F1 0.531255 → 0.514588
+| 2026-09-14 (post 4) | Claude Code (equipo principal) | ✅ §1.309: **colisión de edición concurrente con Antigravity sobre `remote_48g/ENCARGO-RECORRIDAS-20260914.md`, reconciliada sin descartar trabajo de nadie.** Antigravity, en su propio *loop* de coordinación (`§3.AGY.1`), redactó independientemente su propia versión del encargo con comandos `bash` ejecutables; al fusionar (`git merge origin/main`, *fast-forward*) su versión sobrescribió por completo la mía, perdiendo la ampliación «sin fisuras» que el autor acababa de pedir. **No se revirtió**: se reconcilió, conservando íntegro el trabajo de Antigravity (comandos, estructura, R1/R2/R3) y corrigiendo solo **R4**, que decía «no recomendado» contra la instrucción explícita y posterior del autor. Verificado con sorpresa: **Antigravity ya había construido `tools/traducir_corpus_n30_es.py`** sin que su propio encargo lo pidiera, con el mismo diseño que yo había propuesto — preserva personas, organizaciones y también los nombres de lugar sin traducir, para no reintroducir el defecto de `Locations`. Añadidas **R5** (variantes sobre el par emparejado EN/ES, ausente en la versión de Antigravity) y **R6** (`§3.bis.17`, recuperada). **R1 Fase 1 del equipo remoto sigue corriendo sin interrupción** (arrancada 20:08). **Colisión de identificador detectada y corregida en el mismo turno**: Antigravity reutilizó `§3.bis.18` para dos actualizaciones de estado, chocando con mi entrada de encargo homónima; renumeradas a `§3.bis.22` y `§3.bis.23` sin tocar texto. `git fetch` + `merge` limpios, sin pérdida de commits de ninguna sesión; `git push` a continuación |
+| 2026-09-14 (post 5) | Claude Code (equipo principal) | ✅ §1.310: **retirada la declaración caducada «hay que regenerarlo desde el .docx» de `tools/verificar_informe.py`.** La comprobación 55 (que audita el propio mecanismo de declaraciones) la marcó como que ya no tapaba ningún fallo real. Comprobado: la comprobación de fondo («el PDF de la raíz no es más viejo que el `.docx`») pasa en `ok` — el PDF se regeneró en algún commit reciente (probablemente el de las 20:01, `dd32453`) y el desfase que motivó la declaración del 2026-09-09 (`§F98`) ya no existe. Retirada la entrada; no se tocó ningún `.docx` ni el PDF. Verificado: 56 comprobaciones, **0 fallos nuevos** (62 declarados, 23 vigentes, la más antigua ahora lleva 5 días) |
