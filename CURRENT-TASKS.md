@@ -2893,6 +2893,7 @@ pero conviene antes de citar esta auditoría en el informe.
 | 2026-09-15 12:50 | Claude Code (equipo principal) | ✅ §1.329: **llegó la semilla 456 de R1 Fase 2 (3/5), y `fs-en` se consolida como la configuración más fuerte sobre N=120 (`FINDINGS §F184`, continuación).** Sin averías de parseo. `fs-en` > `fs-es` en las tres semillas y `fs-en` es el máximo de las cuatro configuraciones en las tres, sin excepción — patrón más consistente que `zs-en` vs `zs-es` (ya solo 1 de 3). El patrón que se consolida no es «gana el español» ni «coincidir el idioma gana»: es que el *few-shot* en inglés parece ser la configuración más robusta, incluso sobre un corpus mayoritariamente español. **Sigue preliminar** (faltan 2 de 5 semillas). No se toca el informe. Verificador: 0 fallos nuevos |
 | 2026-09-15 14:50 | Claude Code (equipo principal) | ✅ §1.330: **semilla 789 de R1 Fase 2 (4/5): `fs-en` es el máximo en las cuatro semillas sin excepción (`FINDINGS §F184`, continuación).** Sin averías de parseo. `fs-en` > `fs-es` en las cuatro; medias `fs-en` 76,25 %, `fs-es` 75,53 %, `zs-es` 75,37 %, `zs-en` 74,53 %. Ya no depende de una sola semilla afortunada: es la relación más estable de todo el experimento de variantes sobre N=120. Falta solo la semilla 1024. No se toca el informe. Verificador: 0 fallos nuevos |
 | 2026-09-15 14:45 | Antigravity (48 GB) | 🔄 §3.AGY.12: **R1 Fase 2 (N=120) 80% COMPLETADA — semilla 789 certificada VÁLIDA (480 eval, 0 fallos, commit `aad383e`); semilla final 1024 al 20% en curso activo.** Resultados s789: `fs-en` 0.7650, `fs-es` 0.7623, `zs-es` 0.7543, `zs-en` 0.7382. Patrón consolidado: `fs-en` lidera en 4/4 semillas. En zero-shot, `zs-es` > `zs-en` en 3/4 semillas. Total acumulado R1 Fase 2: 1 920/2 400 evaluaciones con `failed == 0`. Semilla 1024 procesando (98+ respuestas parseadas). Pipeline maestro encadenará inmediatamente R2 (11 modelos × 2 modos × 5 semillas). `caffeinate` activo (`task-782`). |
+| 2026-09-15 17:30 | Antigravity (48 GB) | ✅ §3.AGY.13: **R1 FASE 2 (N=120) 100% COMPLETADA Y CERTIFICADA (2 400/2 400 eval, 0 fallos) → 🔄 R2 ARRANCADA.** Semilla 1024 certificada VÁLIDA y subida a `main` en `cde4b91`. Consolidado 5 semillas: `fs-en` 0.7635 ± 0.0039 (gana en 5/5 semillas sin excepción); `fs-es` 0.7557 ± 0.0050; `zs-es` 0.7538 ± 0.0024 (gana a `zs-en` en 4/5 semillas); `zs-en` 0.7449 ± 0.0077. R2 arrancó automáticamente: `seed_42` en curso activo; detectado que `gemma4:31b-cloud` agotó cuota mensual en cuenta Ollama Cloud `casapatiperros`, mientras que `gemma4:31b-mlx` local y los otros 9 modelos locales operan con 100% de éxito en hardware local. |
 
 ---
 
@@ -2909,3 +2910,23 @@ pero conviene antes de citar esta auditoría en el informe.
   * **Semilla 1024 (ÚLTIMA SEMILLA DE R1 FASE 2):** 🔄 EN CURSO ACTIVO (98+ respuestas parseadas directamente con 0 fallos).
 - **R2 (Barra de error N=120, 11 modelos × 2 modos × 5 semillas):**
   * Encolada para arrancar de forma automática y desatendida en el pipeline maestro (`tools/correr_pipeline_recorridas_48g.py`, `task-788`) en cuanto culmine la semilla 1024.
+
+---
+
+### §3.AGY.13 ✅ R1 FASE 2 (N=120) 100% COMPLETADA (2 400 EVALUACIONES, 0 FALLOS) → 🔄 R2 ARRANCADA — Antigravity (48 GB) — 2026-09-15 17:30
+- **Estado:** 🔄 **EN EJECUCIÓN ACTIVA Y CONTINUA (CAFFEINATE ACTIVO)**
+- **R1 Fase 2 (N=120, 5 semillas con `gemma4:latest`, 480 eval/semilla = 2 400 evaluaciones):**
+  * **Semilla 42:** ✅ COMPLETADA y VÁLIDA (commit `2091c2f`). `fs-en`: 0.7623, `fs-es`: 0.7538, `zs-en`: 0.7581, `zs-es`: 0.7496.
+  * **Semilla 123:** ✅ COMPLETADA y VÁLIDA (commit `2091c2f`). `fs-en`: 0.7575, `fs-es`: 0.7564, `zs-es`: 0.7551, `zs-en`: 0.7439.
+  * **Semilla 456:** ✅ COMPLETADA y VÁLIDA (commit `63a6fc0`). `fs-en`: 0.7654, `zs-es`: 0.7558, `fs-es`: 0.7486, `zs-en`: 0.7411.
+  * **Semilla 789:** ✅ COMPLETADA y VÁLIDA (commit `aad383e`). `fs-en`: 0.7650, `fs-es`: 0.7623, `zs-es`: 0.7543, `zs-en`: 0.7382.
+  * **Semilla 1024:** ✅ COMPLETADA y VÁLIDA (commit `cde4b91`). `fs-en`: 0.7675, `fs-es`: 0.7573, `zs-es`: 0.7540, `zs-en`: 0.7429.
+  * **Síntesis Consolidada Final (5 semillas × 4 variantes):**
+    - `fs-en`: **0.7635 ± 0.0039** (Líder unánime en 5/5 semillas)
+    - `fs-es`: **0.7557 ± 0.0050**
+    - `zs-es`: **0.7538 ± 0.0024** (Supera a `zs-en` en 4/5 semillas; dispersión mínima)
+    - `zs-en`: **0.7449 ± 0.0077**
+  * **Veredicto R1 Fase 2:** Totalmente cerrada, certificada y entregada con 0 fallos de parseo o infraestructura.
+- **R2 (Barra de error del titular N=120, 5 semillas × kb_combined):**
+  * **Estado:** 🔄 EN CURSO ACTIVO (`seed_42` ejecutándose).
+  * **Incidencia de infraestructura nube:** `gemma4:31b-cloud` arrojó error de límite de uso mensual en la cuenta `casapatiperros` de Ollama Cloud. En contraste, `gemma4:31b-mlx` local (18 GB) y los 9 modelos restantes operan 100% en local sobre GPU sin dependencia externa.
