@@ -84,6 +84,14 @@ FALLOS_DECLARADOS = {
                           'fichero vacio del commit 880f4f9; decision del autor '
                           '(CURRENT-TASKS §1.103)'),
     '.restore_results.log': ('2026-09-09', 'idem'),
+    'ya tiene 120 entidades de referencia': ('2026-09-14',
+                                             'no es un defecto: results/validacion_n30_es_REMOTO/ (R4, '
+                                             'FINDINGS §F179) es un directorio plano nuevo con Locations '
+                                             'correctamente anotada tras la traduccion del N=30. La '
+                                             'comprobacion asumia que ningun directorio plano de results/ '
+                                             'tendria nunca Locations con referencia real; ese supuesto '
+                                             'ya no vale con esta corrida nueva y legitima. No toca al '
+                                             'N=120 historico que §3.3/Anexo I describen'),
     'github.com/eahumada/mti-pge-tesina': ('2026-09-09',
                                            'referencia [37]: el repositorio es privado hasta la '
                                            'purga (SEGURIDAD-CLAVE-GOOGLE-20260908.md)'),

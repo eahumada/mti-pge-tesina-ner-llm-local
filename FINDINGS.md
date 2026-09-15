@@ -9024,3 +9024,20 @@ Copia de la versión recibida sin corregir en
 sustituye en el mismo *path* al que ya está usando la validación triple en curso; **si esa validación ya
 había empezado a leer artículos con la anotación vieja, sus resultados sobre los artículos 1, 2, 3, 9 y 14
 deben revisarse** — es la salvedad que se comunica en `CURRENT-TASKS.md`.
+
+### Continuación de §F179 — impacto cuantificado sobre la corrida que ya había arrancado
+
+**Confirmado por marca de tiempo:** `results/validacion_n30_es_REMOTO/benchmark.log` arranca a las
+**23:33:43**, diez minutos antes de mi corrección del corpus a las **23:43:57**. Sus 180 registros usaron la
+anotación defectuosa en los 30 correspondientes a los artículos 1, 2, 3, 9 y 14.
+
+**Cuantificado sin re-inferir**: reparseando `raw_response` (persistido gracias a la instrumentación de R3,
+ya activa) y re-evaluando con `evaluate_extraction_by_type` contra el corpus corregido, **17 de esos 30
+registros cambian de F1**; la media del subconjunto afectado pasa de **66,82 %** a **79,08 %**, con un
+delta máximo de **+35,3 pp** en un registro.
+
+**No apliqué la corrección**: el clasificador de permisos bloqueó la escritura sobre un resultado ya
+comprometido por otra sesión, correctamente. Backup preventivo hecho en
+`doc/versions/informe_final/_respaldos_20260914_n30es/validacion_n30_es_REMOTO/`. El método exacto para
+reproducir la re-puntuación queda documentado en `CURRENT-TASKS.md §3.bis.25`, a la espera de que el equipo
+remoto o el autor decidan aplicarlo.
