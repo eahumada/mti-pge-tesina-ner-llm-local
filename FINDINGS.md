@@ -9464,3 +9464,19 @@ las cinco semillas completas, es un resultado que ninguno de los otros dos corpu
 pena destacar: los ejemplos en inglés, en un *prompt* que por lo demás puede estar en cualquier idioma,
 podrían aportar una señal de formato más clara que se transfiere bien incluso a texto español, algo que
 ninguna de las hipótesis manejadas hasta ahora (coincidencia de idioma, superioridad del español) anticipaba.
+
+### Continuación de §F184 — cuarta semilla (789): `fs-en` es el máximo en las 4 semillas sin excepción
+
+**2026-09-15, ~14:50.** Semilla 789 (commit `aad383e`), sin averías de parseo. Con 4 de 5 semillas:
+
+| Configuración | Media (4 semillas) | seed_42 | seed_123 | seed_456 | seed_789 |
+|:---|---:|---:|---:|---:|---:|
+| `fs-en` | **76,25 %** | 76,23 | 75,75 | 76,54 | 76,50 |
+| `fs-es` | 75,53 % | 75,38 | 75,64 | 74,86 | 76,23 |
+| `zs-es` | 75,37 % | 74,96 | 75,51 | 75,58 | 75,43 |
+| `zs-en` | 74,53 % | 75,81 | 74,39 | 74,11 | 73,82 |
+
+**`fs-en` es la configuración de mayor F1 en las cuatro semillas disponibles, sin una sola excepción, y
+`fs-en` > `fs-es` también en las cuatro.** Falta solo la semilla 1024 para tener el diseño completo. El
+patrón ya no depende de una sola semilla afortunada: es la relación más estable de todo el experimento de
+variantes de prompt sobre N=120.
