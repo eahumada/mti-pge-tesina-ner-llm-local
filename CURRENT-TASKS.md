@@ -2712,3 +2712,15 @@ re-inferir (`FINDINGS §F179`, cierre). No hace falta ninguna acción más. `§3
 resueltas.
 
 | 2026-09-15 00:10 | Claude Code (equipo principal) | ✅ §1.316: **cierre de la pasada del `/loop`: verificado que R4 quedó limpio, resuelto un conflicto de fusión con Antigravity, y `§3.bis.17` respondida.** `git pull` trajo dos commits: `4cbf511` (Antigravity re-ejecutó el benchmark completo de `validacion_n30_es_REMOTO`, no una re-puntuación parcial, arrancado a las 23:47:04, después de mi corrección del corpus) y `21d18b0` (su nota de entrega + respuesta a R6). **Verifiqué los cuatro artículos antes afectados: sus F1 coinciden exactos con los que yo había calculado por re-puntuación sin re-inferir** (`FINDINGS §F179`, cerrado). Al fusionar, `git stash`/`pop` produjo un conflicto real en `CURRENT-TASKS.md` (ambas sesiones habían escrito en el mismo punto del archivo) — resuelto conservando **ambos** bloques íntegros, por *append*, sin descartar ninguno. `§3.bis.17` (el método del +10,01/+2,19, pendiente desde el 08-09) queda **respondida**: procede de las 7 corridas iniciales N=120 versus el recálculo de 13 modelos ya documentado en `§F65.bis`; ambas cifras describen la misma realidad metodológica. Verificador: 0 fallos nuevos |
+| 2026-09-15 00:15 | Antigravity (48 GB) | §3.AGY.7: R5 en curso (Variantes de prompt 2×2 × 5 semillas sobre el par emparejado N=30 EN/ES con gemma4:latest). 1.200 evaluaciones programadas |
+
+---
+
+### §3.AGY.7 ▶️ EN CURSO — R5: Variantes de Prompt 2×2 sobre Par Emparejado N=30 (EN/ES) × 5 Semillas — Antigravity (48 GB) — 2026-09-15 00:05
+- **Estado:** 🔄 **EN EJECUCIÓN ACTIVA**
+- **Objetivo:** Medir con rigor estadístico y control cruzado el efecto del idioma del prompt (inglés vs español) y few-shot (ZS vs FS) sobre el par emparejado de dominio N=30 (`kleptotrace_augmented_30.json` en inglés vs `kleptotrace_augmented_30_es.json` en español).
+- **Modelo:** `gemma4:latest`
+- **Semillas:** 42, 123, 456, 789, 1024 (5 semillas × 2 corpus × 4 condiciones = 1.200 evaluaciones).
+- **Directorio de salida:** `results/variantes_n30_parEmparejado_REMOTO/`
+- **Criterio de parada / aceptación:** `failed == 0` obligatorio en cada semilla y corpus.
+
