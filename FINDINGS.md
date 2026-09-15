@@ -9348,3 +9348,54 @@ prosa periodística en español.
 
 **No se toca el informe.** Es un resultado parcial (falta la rama española) sobre un experimento que la
 regla de `TODO-INFORME-FINAL.md §17` mantiene fuera del cuerpo hasta que termine el encargo completo.
+
+### Continuación de §F183 — R5 completo (10/10 corridas): coincidir el idioma del prompt con el del texto ayuda, con más fuerza en few-shot que en zero-shot
+
+**2026-09-15, ~02:55.** Llegó la rama española completa (`kleptotrace_augmented_30_es`, 5/5 semillas,
+commit `5e7e015`). Con las dos ramas del par emparejado ya completas, **verificado sin averías de parseo en
+ninguna de las diez corridas**, el cuadro factorial completo (corpus × idioma del *prompt*) es:
+
+| | Texto en inglés (nativo) | Texto en español (traducido, `§F182`) |
+|:---|---:|---:|
+| `zs-en` | **87,35 %** | 87,18 % |
+| `zs-es` | 84,06 % | **87,65 %** |
+| `fs-en` | **87,53 %** | 86,19 % |
+| `fs-es` | 86,03 % | **87,60 %** |
+
+(en negrita, la configuración cuyo idioma de *prompt* coincide con el idioma del texto)
+
+### El patrón: coincidir ayuda, pero no con la misma fuerza en los dos regímenes
+
+**En *few-shot*, coincidir el idioma gana en las cinco semillas, en los dos sentidos, sin una sola
+excepción**: `fs-en` > `fs-es` sobre texto inglés y `fs-es` > `fs-en` sobre texto español, en todas las
+semillas. Es el resultado más limpio de todo el experimento de idioma.
+
+**En *zero-shot*, el patrón es asimétrico.** Sobre texto inglés, `zs-en` > `zs-es` en las cinco semillas sin
+excepción (margen medio 3,29 pp). Sobre texto español, `zs-es` > `zs-en` en solo **tres de cinco semillas**
+(las semillas 42 y 456 dan la vuelta), con un margen medio de apenas 0,47 pp — una décima parte del margen
+del lado inglés. **La coincidencia de idioma en zero-shot es un efecto fuerte y fiable sobre texto nativo, y
+un efecto débil y poco fiable sobre texto traducido.**
+
+### Por qué esto es exactamente lo que `§F182` anticipaba
+
+El workflow de validez metodológica advertía que el diseño no separa el efecto del idioma del *prompt* de
+los artefactos de la traducción automática, y que el tamaño de ese artefacto era una incógnita empírica. Esta
+asimetría **es esa incógnita, ahora medida**: el efecto de coincidencia se diluye sobre el texto traducido,
+justo donde la literatura de *translationese* (Zhang & Toral, Gérardin et al., verificadas en `§F182`)
+predice que el texto traducido se comporta de forma distinta al nativo. No se puede separar, con este diseño,
+cuánto de la dilución es «la traducción amortigua el efecto real del idioma» de «la traducción introduce
+ruido que oscurece la medición» — ambas explicaciones son compatibles con el mismo dato, y es precisamente la
+distinción que `§F182` señaló como no resoluble con este diseño.
+
+### Consecuencia para el informe
+
+**Sostiene, con matices, la lectura exploratoria que `§F182` autorizaba**: hay un indicio consistente
+(*few-shot*, 5/5 semillas en ambos sentidos) de que compartir idioma entre *prompt* y texto ayuda a la
+extracción, y un indicio mucho más débil e inconsistente en *zero-shot*. **No** sostiene una afirmación única
+y simple del tipo «coincidir el idioma mejora el F1 en N puntos»: el número depende de si hay ejemplos en el
+*prompt* y de si el texto es nativo o traducido, y ninguno de los dos moderadores se puede promediar sin
+perder la información que los distingue.
+
+**No se toca el informe todavía** (regla `§17`). Falta R1 Fase 2 (N=120) para saber si este patrón —coincidir
+ayuda, más en *few-shot* que en *zero-shot*— se sostiene también en prosa periodística real, o si es propio
+de la estructura repetitiva del dominio AML/KYC.
