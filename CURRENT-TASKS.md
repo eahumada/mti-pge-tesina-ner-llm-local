@@ -2790,7 +2790,7 @@ completo del encargo a esta hora:
 | | Estado |
 |:---|:---|
 | R1 Fase 1 (N=15) | ✅ completa |
-| **R1 Fase 2 (N=120)** | ⬜ **pendiente — ejecutar al terminar lo que esté en curso** |
+| **R1 Fase 2 (N=120)** | ✅ completa (5/5 semillas, 0 fallos) |
 | **R2 (barra de error, 13 modelos)** | ⬜ **pendiente — ejecutar al terminar lo que esté en curso** |
 | R3 (instrumentación) | ✅ completa |
 | R4 (traducción N=30) | ✅ completa, corregida, verificada |
@@ -2929,4 +2929,4 @@ pero conviene antes de citar esta auditoría en el informe.
   * **Veredicto R1 Fase 2:** Totalmente cerrada, certificada y entregada con 0 fallos de parseo o infraestructura.
 - **R2 (Barra de error del titular N=120, 5 semillas × kb_combined):**
   * **Estado:** 🔄 EN CURSO ACTIVO (`seed_42` ejecutándose).
-  * **Incidencia de infraestructura nube:** `gemma4:31b-cloud` arrojó error de límite de uso mensual en la cuenta `casapatiperros` de Ollama Cloud. En contraste, `gemma4:31b-mlx` local (18 GB) y los 9 modelos restantes operan 100% en local sobre GPU sin dependencia externa.
+  * **Incidencia de infraestructura nube:** `gemma4:31b-cloud` arrojó error de límite de uso mensual en la cuenta `casapatiperros` de Ollama Cloud. En contraste, `gemma4:31b-mlx` local (18 GB) y los 9 modelos restantes operan 100% en local sobre GPU sin dependencia externa.| 2026-09-15 17:50 | Claude Code (equipo principal) | ✅ §1.331: **R1 Fase 2 cerrado (5/5 semillas, `FINDINGS §F184`, cierre) y síntesis de los tres corpus; alerta operativa nueva para R2.** Segunda validación cruzada exacta con Antigravity en la misma pasada (sus medias 0,7635/0,7557/0,7538/0,7449 coinciden con las mías al cuarto decimal). **Resultado final: `fs-en` es el máximo en las cinco semillas sin excepción**, `fs-en` > `fs-es` también en las cinco; `zs-es` > `zs-en` en 4 de 5. **Síntesis de los tres corpus completados** (N=15, N=30, N=120): ninguna hipótesis única cubre los cuatro resultados — N=15 favorece español, N=30 favorece coincidencia de idioma con el texto, N=120 (el corpus grande, real y heterogéneo, mayoritariamente español) favorece *few-shot* en inglés pese a todo. Posibles lecturas registradas en `§F184`, ninguna descartable con los datos disponibles. **Alerta operativa**: Antigravity reporta que `gemma4:31b-cloud` agotó su cuota mensual en la cuenta Ollama Cloud (`casapatiperros`) justo al arrancar R2 — los otros 10 modelos (incluido `gemma4:31b-mlx` local) operan al 100 %. Vigilar que R2 no publique una cifra inválida para ese modelo por la cuota, siguiendo la regla del proyecto de que una medición inválida no se publica; si persiste, declarar el motivo en vez de la métrica. Actualizada la tabla de estado del encargo: R1 Fase 1 y 2 completas. Verificador: 0 fallos nuevos |

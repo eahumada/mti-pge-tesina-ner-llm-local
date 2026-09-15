@@ -9480,3 +9480,46 @@ ninguna de las hipótesis manejadas hasta ahora (coincidencia de idioma, superio
 `fs-en` > `fs-es` también en las cuatro.** Falta solo la semilla 1024 para tener el diseño completo. El
 patrón ya no depende de una sola semilla afortunada: es la relación más estable de todo el experimento de
 variantes de prompt sobre N=120.
+
+### Cierre de §F184 — R1 Fase 2 completo (5/5 semillas): `fs-en` es la configuración más fuerte sobre N=120, sin una sola excepción
+
+**2026-09-15, ~17:50.** Semilla 1024 (commit `cde4b91`), sin averías de parseo en ninguna de las cinco
+corridas. **Resultado final y completo**:
+
+| Configuración | Media (5 semillas) | Desviación |
+|:---|---:|---:|
+| `fs-en` | **76,35 %** | 0,35 |
+| `fs-es` | 75,57 % | 0,45 |
+| `zs-es` | 75,38 % | 0,22 |
+| `zs-en` | 74,49 % | 0,69 |
+
+**`fs-en` es la configuración de mayor F1 en las cinco semillas, sin una sola excepción, y `fs-en` > `fs-es`
+también en las cinco.** `zs-en` > `zs-es` solo en 1 de 5 (la semilla 42): en las otras cuatro gana `zs-es`.
+
+### Síntesis de los tres corpus, ahora que R1 y R5 están completos
+
+| Corpus | Composición | Configuración ganadora |
+|:---|:---|:---|
+| N=15 (`§F176`) | 100 % inglés, periodismo Kleptotrace | `fs-es` > `zs-es` > `fs-en` > `zs-en` — gana el español |
+| N=30, texto inglés (`§F183`) | dominio AML/KYC, nativo | `zs-en`/`fs-en` ganan — gana el inglés (coincide con el texto) |
+| N=30, texto español (`§F183`) | dominio AML/KYC, traducido | `fs-es` gana en 5/5; `zs-es` gana solo en 3/5 — coincidir ayuda, más en *few-shot* |
+| **N=120** (`§F184`) | 105/120 español, periodismo real, heterogéneo | **`fs-en` gana en 5/5** — ni «gana el español» ni «coincidir con el texto» |
+
+**No hay una sola explicación que cubra los cuatro resultados.** El de N=120 es el que más pesa —es el corpus
+grande, real y heterogéneo, el que sostiene la Tabla 7— y **no encaja con la hipótesis de coincidencia de
+idioma que N=30 parecía confirmar**: N=120 es mayoritariamente español y aun así gana el *prompt* con
+ejemplos en inglés. Posibles lecturas, ninguna descartable con los datos disponibles:
+
+- El corpus N=120 es heterogéneo (105 español + 15 inglés, distintas fuentes, distintos estilos), a
+  diferencia del par emparejado de N=30 donde el contenido es idéntico entre las dos ramas; la señal de
+  «coincidencia de idioma» podría diluirse en un corpus mixto y heterogéneo de un modo que no ocurre en un
+  par controlado.
+- Los ejemplos en inglés del *few-shot* podrían aportar una señal de **formato** (estructura del JSON
+  esperado) más que una señal de **idioma**, y esa señal de formato podría generalizar mejor a través de
+  artículos heterogéneos que una señal de idioma que solo ayuda cuando el contenido es uniforme.
+- Es exactamente el tipo de interacción que `§F182` (la validación metodológica) señalaba como no resuelta
+  por ningún precedente de la literatura: nadie ha medido este diseño exacto, y el tamaño del corpus real
+  parece cambiar cuál de los mecanismos domina.
+
+**No se toca el informe.** Falta R2 (barra de error, en curso, arrancó automáticamente tras este cierre) para
+tener el encargo completo y aplicar la fase de cierre de `TODO-INFORME-FINAL.md §17`.
