@@ -2875,3 +2875,18 @@ pero conviene antes de citar esta auditoría en el informe.
   * Encolada inmediatamente a continuación en el pipeline maestro (`tools/correr_pipeline_recorridas_48g.py`, `task-788`).
 
 | 2026-09-15 09:15 | Claude Code (equipo principal) | ✅ §1.328: **llegaron las dos primeras semillas de R1 Fase 2 (N=120) tras una larga racha silenciosa; resultado preliminar registrado con cautela (`FINDINGS §F184`).** Verificado sin averías de parseo. Sobre el corpus que más importa —105/120 artículos en español (`§F180`)— las diferencias son mucho menores que en N=15 o N=30: rango de 0,89 pp entre las cuatro configuraciones, frente a 3,29-3,47 pp en los otros dos corpus. `fs-en` > `fs-es` en las dos semillas (único patrón estable); `zs-en` vs `zs-es` se invierte entre semillas — **no sacar conclusiones firmes con solo 2 de 5**. Es en sí mismo informativo: el efecto grande visto en N=15/N=30 podría deberse en parte a su tamaño pequeño, algo que `§F182` ya advertía sobre N=30. **No se toca el informe.** Faltan 3 semillas de R1 Fase 2 y toda R2. Verificador: 0 fallos nuevos |
+| 2026-09-15 12:00 | Antigravity (48 GB) | 🔄 §3.AGY.11: **R1 Fase 2 (N=120) 60% COMPLETADA — semilla 456 certificada VÁLIDA (480 eval, 0 fallos, commit `63a6fc0`); semilla 789 al 25% en curso activo.** Resultados s456: `fs-en` 0.7654, `zs-es` 0.7558, `fs-es` 0.7486, `zs-en` 0.7411 (`fs-en` vuelve a liderar, 3/3 semillas). Total acumulado R1 Fase 2: 1 440/2 400 evaluaciones con `failed == 0`. Semilla 789 procesando activamente (120+ respuestas parseadas), semilla 1024 en cola. Pipeline maestro y `caffeinate` activos. |
+
+---
+
+### §3.AGY.11 🔄 R1 FASE 2 (N=120): 60% COMPLETADA — SEMILLAS 42, 123 Y 456 CERTIFICADAS VÁLIDAS — SEMILLA 789 EN CURSO — Antigravity (48 GB) — 2026-09-15 12:00
+- **Estado:** 🔄 **EN EJECUCIÓN ACTIVA Y CONTINUA (CAFFEINATE ACTIVO)**
+- **R1 Fase 2 (N=120, 5 semillas con `gemma4:latest`, 480 evaluaciones/semilla):**
+  * **Semilla 42:** ✅ COMPLETADA y VÁLIDA (commit `2091c2f`). `fs-en`: 0.7623, `fs-es`: 0.7538, `zs-en`: 0.7581, `zs-es`: 0.7496.
+  * **Semilla 123:** ✅ COMPLETADA y VÁLIDA (commit `2091c2f`). `fs-en`: 0.7575, `fs-es`: 0.7564, `zs-es`: 0.7551, `zs-en`: 0.7439.
+  * **Semilla 456:** ✅ COMPLETADA y VÁLIDA (commit `63a6fc0`). `fs-en`: 0.7654, `zs-es`: 0.7558, `fs-es`: 0.7486, `zs-en`: 0.7411.
+  * **Patrón emergente (3/5 semillas):** `fs-en` lidera consistentemente en las tres semillas analizadas (0.7623, 0.7575, 0.7654). En zero-shot, `zs-es` supera a `zs-en` en 2 de 3 semillas (s123 y s456).
+  * **Semilla 789:** 🔄 EN CURSO ACTIVO (120+ evaluaciones procesadas, 0 fallos).
+  * **Semilla 1024:** Encolada para iniciar automáticamente tras s789.
+- **R2 (Barra de error N=120, 11 modelos × 2 modos × 5 semillas):**
+  * Encolada inmediatamente a continuación en el pipeline maestro (`tools/correr_pipeline_recorridas_48g.py`, `task-788`).
