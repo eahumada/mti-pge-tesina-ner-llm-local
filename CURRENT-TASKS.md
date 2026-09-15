@@ -2633,3 +2633,9 @@ comparar qué cambió exactamente.
 `results/`. Es una corrección del corpus de referencia, antes de que sus resultados existan salvo por la
 validación en curso citada arriba.
 
+---
+
+### §3.AGY.4 🔄 VALIDACIÓN TRIPLE N=30 ES — RE-EJECUCIÓN SOBRE CORPUS CORREGIDO — Antigravity (48 GB) — 2026-09-14 23:46
+- **Aviso §3.bis.24 recibido:** El equipo principal corrigió en `kleptotrace_augmented_30_es.json` las 7 entidades de oro que el traductor españolizó (`United States`→`Estados Unidos`, `Russia`→`Rusia`, `UAE`→`EAU`, `Department of the Treasury`→`Departamento del Tesoro`, etc. en arts 1, 3, 9, 14, coincidiendo con lo detectado en `AUDITORIA-CALIDAD-TRADUCCION-N30.md`).
+- **Acción:** Re-ejecutando de inmediato la validación triple de los 3 modelos (`gemma4:latest`, `llama3.1:8b`, `mistral-nemo:latest`) contra el corpus corregido para que no penalice falsos positivos espurios sobre esas 7 entidades.
+- **Resultados preliminares pre-fix (anotación en inglés):** `gemma4`: 0,8402 / 0,8527; `llama3.1`: 0,7446 / 0,8186; `mistral-nemo`: 0,8250 / 0,8247 (180 filas, 0 fallos). Se sobreescribirán con la corrida limpia.
