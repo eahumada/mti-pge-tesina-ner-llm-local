@@ -9399,3 +9399,45 @@ perder la información que los distingue.
 **No se toca el informe todavía** (regla `§17`). Falta R1 Fase 2 (N=120) para saber si este patrón —coincidir
 ayuda, más en *few-shot* que en *zero-shot*— se sostiene también en prosa periodística real, o si es propio
 de la estructura repetitiva del dominio AML/KYC.
+
+---
+
+## §F184 — R1 Fase 2 (N=120) en curso: primeras dos semillas, diferencias mucho menores que en N=15/N=30
+
+**Fecha:** 2026-09-15, ~09:15. **Origen:** llegada parcial de `results/variantes_5semillas_n120_REMOTO/`
+(commit `2091c2f`, semillas 42 y 123 de 5). **Es la corrida que más importa de todo el encargo**: N=120 tiene
+105 de 120 artículos en español (`§F180`), a diferencia de N=15 (100 % inglés) y N=30 (el par emparejado
+traducido de `§F182`/`§F183`). **Preliminar — solo 2 de 5 semillas.** No sacar conclusiones firmes todavía.
+
+### Lo medido hasta ahora
+
+| Configuración | Media (2 semillas) | seed_42 | seed_123 |
+|:---|---:|---:|---:|
+| `fs-en` | **75,99 %** | 76,23 | 75,75 |
+| `fs-es` | 75,51 % | 75,38 | 75,64 |
+| `zs-es` | 75,23 % | 74,96 | 75,51 |
+| `zs-en` | 75,10 % | 75,81 | 74,39 |
+
+Verificado sin averías de parseo (`tp+fp==0`) en ninguna de las dos corridas.
+
+### Lo que ya se puede decir, con cautela
+
+**Las diferencias son mucho menores que en cualquiera de los otros dos corpus**: el rango completo aquí es
+0,89 pp, frente a 3,29 pp (N=15, `§F176`) y hasta 3,47 pp (N=30 inglés, `§F183`). Sobre un corpus real,
+grande y mayoritariamente en español, el efecto del idioma del *prompt* —si existe— es mucho más tenue que
+sobre los corpus pequeños donde se detectó primero.
+
+**La dirección no es consistente entre las dos semillas disponibles**: `fs-en` > `fs-es` en ambas (única
+relación estable), pero `zs-en` > `zs-es` solo en `seed_42`; en `seed_123` es al revés. Con solo dos semillas
+no se puede saber si esto es ruido o una interacción real con la semilla.
+
+### Por qué esto no contradice `§F176`/`§F183`, y por qué hace falta esperar a las cinco semillas
+
+Cada uno de los tres corpus mide algo distinto: N=15 es periodismo general en inglés; N=30 es dominio
+AML/KYC estructurado, con y sin traducción; N=120 es periodismo real, mayoritariamente español, heterogéneo
+y ocho veces mayor. Que el efecto se atenúe en el corpus más grande y más realista es, en sí mismo,
+informativo: sugiere que los efectos grandes vistos en N=15 y N=30 podrían deberse en parte al tamaño
+pequeño de esos corpus (`§F182` ya advertía que N=30 no tiene potencia para descartar «no hay efecto» de
+«no se detectó con esta muestra» — lo mismo aplica aquí con más fuerza sobre N=15).
+
+**No se toca el informe.** Faltan 3 semillas de R1 Fase 2 y toda R2. Esta entrada se completará cuando lleguen.
