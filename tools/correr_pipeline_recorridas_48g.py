@@ -31,9 +31,20 @@ R2_MODELS = [
 def git_commit_push(msg: str):
     subprocess.run(["git", "add", "results/", "CURRENT-TASKS.md", "remote_48g/"], cwd=str(REPO_ROOT))
     res = subprocess.run(["git", "commit", "-m", msg], cwd=str(REPO_ROOT), capture_output=True, text=True)
+    if res.returncode != 0 and "nothing to commit" in res.stdout:
+        print("Git: Nada que commitear.")
+        return
     print(res.stdout)
-    subprocess.run(["git", "pull", "--rebase"], cwd=str(REPO_ROOT))
-    subprocess.run(["git", "push", "origin", "main"], cwd=str(REPO_ROOT))
+    for attempt in range(5):
+        p_pull = subprocess.run(["git", "pull", "--rebase"], cwd=str(REPO_ROOT))
+        if p_pull.returncode == 0:
+            p_push = subprocess.run(["git", "push", "origin", "main"], cwd=str(REPO_ROOT))
+            if p_push.returncode == 0:
+                print(f"Git push exitoso en intento {attempt+1}.")
+                return
+        print(f"Rebase/push intento {attempt+1} falló, reintentando en 5s...")
+        time.sleep(5)
+    print("ADVERTENCIA: Git push no pudo completarse tras 5 intentos.")
 
 def is_r1_n120_complete(results_dir: Path) -> bool:
     csv_file = results_dir / "benchmark_results.csv"

@@ -38,9 +38,9 @@ def check_entity_preservation(entities: list[str], text: str) -> dict:
         found = ent_clean.lower() in text.lower()
         fuzzy_score = 0.0
         if not found:
-            # Búsqueda difusa por palabras
+            # Búsqueda difusa por palabras (soporta acrónimos de 3 letras como UAE, DOJ)
             words = ent_clean.split()
-            found_words = sum(1 for w in words if len(w) > 3 and w.lower() in text.lower())
+            found_words = sum(1 for w in words if len(w) >= 3 and w.lower() in text.lower())
             fuzzy_score = found_words / max(len(words), 1)
         results.append({
             "entity": ent_clean,
@@ -55,19 +55,21 @@ def check_entity_preservation(entities: list[str], text: str) -> dict:
     }
 
 
-def llm_review_article(original_text: str, translated_text: str, reviewer_model: str = REVIEWER_MODEL) -> dict:
-    """Solicita al modelo revisor una evaluación de fidelidad y fluidez."""
+def llm_review_article(original_text: str, translated_text: str, entities: list[str] = None, reviewer_model: str = REVIEWER_MODEL) -> dict:
+    """Solicita al modelo revisor una evaluación de fidelidad y fluidez considerando entidades de referencia."""
+    ent_context = f"\nENTIDADES DE REFERENCIA DEBEN ESTAR PRESERVADAS:\n{', '.join(entities)}\n" if entities else ""
     prompt = (
         f"Eres un auditor lingüístico experto en cumplimiento normativo y delitos financieros (AML/KYC).\n"
         f"Evalúa la siguiente traducción de inglés a español:\n\n"
         f"ORIGINAL EN INGLÉS:\n{original_text}\n\n"
-        f"TRADUCCIÓN EN ESPAÑOL:\n{translated_text}\n\n"
+        f"TRADUCCIÓN EN ESPAÑOL:\n{translated_text}\n"
+        f"{ent_context}\n"
         f"Responde estrictamente en formato JSON con la siguiente estructura:\n"
         f"{{\n"
         f'  "fluency_score_1_to_5": 5,\n'
         f'  "fidelity_score_1_to_5": 5,\n'
         f'  "entities_preserved": true,\n'
-        f'  "critique": "Breve comentario sobre la calidad de la traducción"\n'
+        f'  "critique": "Breve comentario sobre la calidad de la traducción y preservación de entidades"\n'
         f"}}"
     )
     payload = {
@@ -148,7 +150,8 @@ def main():
 
         # 2. Revisión con modelo adicional
         print(f"[{i+1}/{len(articles)}] Auditando artículo ID {art_id} con {REVIEWER_MODEL}...")
-        llm_eval = llm_review_article(orig, trans, REVIEWER_MODEL)
+        all_entities = persons + orgs + locs
+        llm_eval = llm_review_article(orig, trans, all_entities, REVIEWER_MODEL)
         fluency = llm_eval.get("fluency_score_1_to_5", 5)
         fidelity = llm_eval.get("fidelity_score_1_to_5", 5)
         fluency_scores.append(fluency)
