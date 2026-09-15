@@ -2485,14 +2485,19 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 
 ---
 
-#### §3.bis.20 ⬜ PENDIENTE — R1: Variantes 2×2 × 5 semillas (Equipo 48 GB) — 2026-09-14
+#### §3.bis.20 🟡 PARCIAL (Fase 1 completada 22:50, Fase 2 pendiente) — R1: Variantes 2×2 × 5 semillas (Equipo 48 GB) — 2026-09-14
 - **Encargo:** `remote_48g/ENCARGO-RECORRIDAS-20260914.md §R1`
 - **Motivo:** §F175 corregido; el experimento de ablación actual es N=15 todo en inglés → nunca midió el efecto del idioma. N=120 es el experimento correcto.
-- **Fases:** Fase 1 N=15 (~45 min) · Fase 2 N=120 (~6-7 h)
+- **Fases:** ✅ Fase 1 N=15 — **completada, verificada desde el CSV crudo** (`FINDINGS §F176`): jerarquía
+  `fs-es`(79,96%) > `zs-es`(75,78%) > `fs-en`(70,38%) > `zs-en`(66,77%) en las 5 semillas sin excepción; el
+  efecto del idioma puro se sostiene entre +4,7 y +11,0 pp incluso descontando las averías de parseo, que
+  también replican (10/150, solo en configuraciones inglesas). ⬜ Fase 2 N=120 — **pendiente**, es la que
+  desbloquea §5.2/§6.1 porque N=15 no es el corpus de la hipótesis del trabajo.
 - **Modelos:** `gemma4:latest` (4 configuraciones ZS-EN/ZS-ES/FS-EN/FS-ES × 5 semillas)
-- **Arregla:** §5.2, Tabla 5, §6.1, conclusión 2
-- **Entregables:** `results/variantes_5semillas_n15_REMOTO/` y `results/variantes_5semillas_n120_REMOTO/`
-- **Criterio de aceptación:** `failed == 0` en todas las semillas
+- **Arregla:** §5.2, Tabla 5, §6.1, conclusión 2 — **a la espera de Fase 2**
+- **Entregables:** ✅ `results/variantes_5semillas_n15_REMOTO/` (recibido, commit `bc1d4c2`) · ⬜
+  `results/variantes_5semillas_n120_REMOTO/`
+- **Criterio de aceptación:** `failed == 0` en todas las semillas — cumplido en Fase 1
 
 #### §3.bis.21 ⬜ PENDIENTE — R2: Barra de error del titular (Equipo 48 GB, NOCTURNA) — 2026-09-14
 - **Encargo:** `remote_48g/ENCARGO-RECORRIDAS-20260914.md §R2`
@@ -2541,3 +2546,4 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 - **R4 (N=30 traducción ES con `gemma4:31b`):** 🔄 **EN PROGRESO ACTIVO** (`task-418`, checkpoint incremental en `data/kleptotrace_augmented_30_es.checkpoint.json`).
 - **Auditoría de Calidad Adicional:** Preparada en `tools/auditar_calidad_traduccion_n30.py` con revisor independiente `mistral-nemo:latest` y verificación algorítmica de preservación de entidades (`Persons`, `Organizations`, `Locations`). Se ejecutará inmediatamente al completar el artículo 30, emitiendo `remote_48g/AUDITORIA-CALIDAD-TRADUCCION-N30.md`.
 - **Validación Triple:** En cola para ejecución inmediata tras la auditoría.
+| 2026-09-14 (post 7) | Claude Code (equipo principal) | ✅ §1.312: **segunda pasada del `/loop`: R1 Fase 1 (N=15, 5 semillas) llegó del equipo remoto, verificada y con buena noticia (`FINDINGS §F176`).** `git pull` trajo `bc1d4c2` (Antigravity, §3.AGY.2): R1 Fase 1 completa, `failed=0` en las 5 semillas, y R4 (traducción del N=30) ya en ejecución activa. **Recalculado desde el CSV crudo, no desde el resumen ajeno**: jerarquía `fs-es`(79,96%) > `zs-es`(75,78%) > `fs-en`(70,38%) > `zs-en`(66,77%) **en las 5 semillas sin excepción**. El defecto de `§F174` **replica** — 10 de 150 registros con avería real de parseo, todos en configuraciones inglesas, ninguno en las españolas — pero con réplicas el efecto ya no se puede anular quitando un registro: el delta de idioma puro sin averías da entre **+4,7 y +11,0 pp en las cinco semillas, nunca cruza cero**. Propuesto en `§F176` reportar dos cifras separadas (+7,4 pp de calidad de extracción, +5,8 pp de robustez de formato) en vez de fundirlas. **`TODO-INFORME-FINAL.md §16.1` actualizado**: sigue bloqueada la escritura de §5.2/§6.1 hasta R1 Fase 2 (N=120), que es el corpus de la hipótesis; N=15 solo acredita que el efecto sobre ese corpus es real. Actualizado el estado de `§3.bis.20` a parcial. Verificado que `§3.bis.16 (histórico)` sigue correctamente cerrado (39/39 `detailed_results.json` presentes). **Los tres workflows (`purga-informe`, `forense-cifras`, `revision-scripts`) siguen en curso**, sin resultado todavía. Verificador: 0 fallos nuevos |

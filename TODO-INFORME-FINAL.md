@@ -935,21 +935,26 @@ cada pieza bajo esa instrucción. El encargo al equipo de 48 GB está en
 **Regla que ordena esta sección:** nada del informe se toca hasta que llegue el dato que lo sustituye. Un
 párrafo retirado antes de tener con qué reemplazarlo deja un hueco que luego se rellena con prisa.
 
-### 16.1 A la espera de R1 — variantes de prompt con cinco semillas
+### 16.1 R1 Fase 1 (N=15) llegó; R1 Fase 2 (N=120) sigue pendiente
 
-Bloqueadas hasta que lleguen los datos. Hoy el informe cita `+10,40`, `+4,38` y `−0,72` puntos, que proceden
-de una corrida del 6 de septiembre con `max_tokens=2048` y el parser anterior al arreglo `§F85`, y cuyo delta
-lo escribe **un artículo que no devolvió salida parseable** (`FINDINGS §F174`).
+**Actualizado 2026-09-14 ~23:00, `FINDINGS §F176`.** Llegaron las cinco semillas sobre N=15
+(`results/variantes_5semillas_n15_REMOTO/`), verificadas desde el CSV crudo. El resultado es mejor de lo
+esperado: `fs-es` (79,96 %) > `zs-es` (75,78 %) > `fs-en` (70,38 %) > `zs-en` (66,77 %) **en las cinco
+semillas sin excepción**, y el efecto del idioma puro sigue positivo (entre +4,7 y +11,0 pp por semilla)
+incluso descontando las averías de parseo, que también replican (10 de 150 registros, solo en
+configuraciones inglesas). **Sigue bloqueado escribir §5.2 y §6.1 hasta que llegue R1 Fase 2 (N=120)**: el
+N=15 está íntegramente en inglés y no es el corpus de la hipótesis del trabajo.
 
-| Pieza del informe | Qué hay que hacer al llegar el dato |
+| Pieza del informe | Qué hay que hacer al llegar el dato de N=120 |
 |:---|:---|
-| §5.2 y Tabla 5 | sustituir las cuatro filas por media y desviación de las cinco semillas, y declarar el corpus sobre el que se midió |
-| §6.1, primer factor | reescribir con el resultado nuevo; **el mecanismo de los nombres ibéricos se retira sin sustituto**, porque el registro de errores lo refuta (seis errores de límite en las configuraciones españolas frente a dos en las inglesas) |
-| Conclusión 2 (§7.1) | reformular con el resultado nuevo; si sale nulo, se enuncia como nulo, que también es resultado |
-| §7.2, punto 10 | retirar: pide precisamente la replicación que R1 ejecuta |
-| Resumen y abstract | una sola frase con la cifra nueva, **en el mismo commit los dos** |
+| §5.2 y Tabla 5 | sustituir las cuatro filas por media y desviación de las cinco semillas sobre **N=120**; declarar aparte, si se mantiene, el resultado de N=15 como réplica preliminar |
+| §6.1, primer factor | reescribir con el resultado de N=120; **el mecanismo de los nombres ibéricos se retira sin sustituto** salvo que R5 (par emparejado) lo sostenga, porque el registro de errores de `§F174` ya lo refuta sobre N=15 |
+| Conclusión 2 (§7.1) | reformular con el resultado de N=120; ya no hace falta la reserva de «tendencia no replicada» si N=120 confirma la dirección de N=15 |
+| §7.2, punto 10 | retirar: pide precisamente la replicación que R1 ya ejecutó |
+| Resumen y abstract | una sola frase con la cifra de N=120, **en el mismo commit los dos**; si difiere de N=15, declarar la diferencia en vez de citar solo la favorable (regla de «Integridad de la medición») |
 | §4.3 | conservar la descripción del diseño; corregir la glosa, que declara «modo `entities`» cuando la rama `--ablation` de `src/main.py` no activa recuperación alguna |
-| §1.3 y §1.4, objetivo 3 | se mantienen: el experimento existe y se reporta. Solo habría que tocarlos si el autor decidiera retirar §5.2 por completo, que **ya no es el camino elegido** |
+| §1.3 y §1.4, objetivo 3 | se mantienen: el experimento existe y se reporta |
+| Nuevo, por `§F176` | considerar reportar la **robustez de formato** como resultado propio, separado del efecto de calidad de extracción: son +5,8 y +7,4 puntos distintos que hoy se sumarían en una sola cifra |
 
 ### 16.2 A la espera de R2 — barra de error del resultado titular
 

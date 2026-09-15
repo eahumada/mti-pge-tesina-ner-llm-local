@@ -8649,3 +8649,69 @@ defecto que invalide ninguna cifra.
 **Lección:** el criterio con el que se excluye un registro decide el resultado tanto como el dato. Escribirlo
 de forma laxa —«cero o fallback»— y no comprobar que los dos recuentos que produce son coherentes entre sí
 fue exactamente el tipo de error que `§L81` advierte, cometido al aplicarla. Ver `LEARNING §L82`.
+
+---
+
+## §F176 — R1 Fase 1 llegó: con réplicas, el efecto del idioma se sostiene, y ahora hay dos hallazgos donde antes había uno
+
+**Fecha:** 2026-09-14, ~23:00. **Origen:** primera entrega del equipo remoto sobre el encargo de
+`§F174`/`§F175`: `results/variantes_5semillas_n15_REMOTO/`, cinco semillas (42, 43, 44, 45, 46) del diseño
+factorial 2×2 sobre N=15, con el parser vigente y `max_tokens=4096`. **Verificado desde el CSV crudo de las
+cinco semillas**, no desde el resumen del equipo remoto.
+
+### Lo que llegó reproduce
+
+| Configuración | Media de las 5 semillas | Desviación entre semillas |
+|:---|---:|---:|
+| `fs-es` | **79,96 %** | 0,54 |
+| `zs-es` | 75,78 % | 3,54 |
+| `fs-en` | 70,38 % | 2,48 |
+| `zs-en` | 66,77 % | 2,42 |
+
+Jerarquía `fs-es` > `zs-es` > `fs-en` > `zs-en` **en las cinco semillas sin excepción**. Esto ya es un salto
+respecto a `§F174`: allí una sola pasada podía estar escrita por un artículo; aquí hay cinco corridas
+independientes y la relación de orden no varía nunca.
+
+### El defecto de `§F174` replica, y solo en un sitio
+
+Contadas las averías reales (`tp+fp==0` y parseo `fallback`) en los detallados de las cinco semillas: **10 de
+150** registros en configuraciones inglesas (`zs-en`, `fs-en`), **0 de 150** en las españolas (`zs-es`,
+`fs-es`). No es un artículo suelto: en tres de las cinco semillas afecta al artículo 1, en tres afecta al
+artículo 4, y ninguna semilla escapa del todo. **El patrón de `§F174` no era ruido de una corrida: es una
+propiedad estable del sistema.**
+
+### El delta se descompone en dos efectos, los dos reales
+
+| | Con las averías (lo que publicaría la Tabla 5) | Excluidas las averías |
+|:---|---:|---:|
+| `fs-es` − `zs-en`, media de las 5 semillas | **+13,19 pp** | **+7,44 pp** |
+| Por semilla | +16,25 / +10,69 / +13,08 / +10,90 / +15,02 | **+11,03 / +7,72 / +4,74 / +5,72 / +7,97** |
+
+**Lo que cambia respecto a `§F174`: la columna de la derecha nunca cruza cero.** Con una sola corrida, quitar
+el artículo averiado invertía el signo del efecto de idioma puro; con cinco, quitar las averías **reduce**
+el efecto pero lo deja positivo en las cinco semillas, entre +4,7 y +11,0 puntos. Eso es una tendencia
+consistente, con réplicas, y ya se puede llamar así sin la reserva que `§F55` y `§F174` obligaban a poner.
+
+**Y la robustez de formato es en sí misma un segundo hallazgo, no un artefacto que restar.** Que el prompt en
+español produzca salida parseable el 100 % de las veces (150 de 150) frente al 93,3 % del inglés (140 de
+150) es una propiedad medida con réplica, no una casualidad de un registro. Conviene reportar los dos
+números por separado: **+7,4 puntos de calidad de extracción** y **+5,8 puntos adicionales de robustez de
+formato**, en vez de fundirlos en una sola cifra que oculta que son cosas distintas — es la misma regla que
+`§F175` corrigió aplicar al RAG.
+
+### Lo que sigue exactamente igual
+
+**El mecanismo de los nombres ibéricos de `§6.1` sigue sin sustento.** Nada en esta entrega lo confirma ni lo
+refuta directamente —eso lo responde R5, sobre el par emparejado, que está en curso—, pero la explicación de
+por qué el efecto existe sigue pendiente de ese experimento, no de este.
+
+### Consecuencia para el informe
+
+**Todavía no se toca nada.** Falta R1 Fase 2 (N=120, el corpus donde vive la hipótesis del trabajo) y R5 (el
+par emparejado, que es el experimento que de verdad aísla el efecto del idioma). Esta entrega **cierra la
+pregunta de si el efecto sobre N=15 es real**: lo es. No cierra si se sostiene sobre el corpus mayor, que es
+la pregunta que importa para la tesis.
+
+**Ver también:** `§F174` (el defecto original, sobre una sola pasada), `§F175` y su corrección (el mismo tipo
+de error de criterio, sobre el RAG), y `LEARNING §L82` (la regla de separar avería de desempeño), que esta
+entrada confirma en un caso nuevo.
