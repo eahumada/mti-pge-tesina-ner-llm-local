@@ -9294,3 +9294,57 @@ aplica).
 
 **Ver también**: `§F179` (la corrección de anotación), `§F181` (la auditoría de calidad del propio proceso de
 traducción), y el encargo `remote_48g/ENCARGO-RECORRIDAS-20260914.md §R4/§R5`.
+
+---
+
+## §F183 — R5, rama inglesa completa (5/5 semillas): el efecto del idioma del prompt se invierte en el corpus del dominio
+
+**Fecha:** 2026-09-15. **Origen:** llegada de `results/variantes_n30_parEmparejado_REMOTO/kleptotrace_augmented_30/`
+(commit `668881a`), las 5 semillas del diseño factorial 2×2 sobre el corpus N=30 **en inglés** (el lado que no
+depende de la traducción, ver `§F182`). **Verificado desde el CSV crudo de las cinco semillas** y comprobada
+la ausencia de averías de parseo (`tp+fp==0`) antes de dar la cifra por buena — ninguna en toda la corrida.
+
+### El resultado, y por qué es notable
+
+| Configuración | Media de las 5 semillas | Desviación entre semillas |
+|:---|---:|---:|
+| `fs-en` | **87,53 %** | 0,85 |
+| `zs-en` | 87,35 % | 0,14 |
+| `fs-es` | 86,03 % | 0,63 |
+| `zs-es` | 84,06 % | 0,63 |
+
+**`zs-en` > `zs-es` y `fs-en` > `fs-es` en las cinco semillas, sin una sola excepción**:
+
+| Semilla | zs-en | zs-es | fs-en | fs-es | ¿zs-en > zs-es? | ¿fs-en > fs-es? |
+|:---|---:|---:|---:|---:|:---:|:---:|
+| 42 | 87,30 | 83,70 | 85,85 | 85,10 | sí | sí |
+| 123 | 87,30 | 84,30 | 88,05 | 85,73 | sí | sí |
+| 456 | 87,50 | 84,44 | 87,83 | 85,96 | sí | sí |
+| 789 | 87,14 | 84,82 | 88,19 | 86,99 | sí | sí |
+| 1024 | 87,50 | 83,02 | 87,70 | 86,36 | sí | sí |
+
+**Es la dirección opuesta a la de N=15** (`§F176`: `fs-es` > `zs-es` > `fs-en` > `zs-en`, también consistente
+en las cinco semillas). Sobre el corpus del dominio (artículos breves y estructurados de sanciones
+financieras, en inglés nativo, sin ninguna avería de parseo de por medio) **el prompt en inglés rinde mejor**
+que el prompt en español, en ambos regímenes (con y sin ejemplos).
+
+### Por qué esto no es una contradicción con `§F176`, sino un hallazgo más rico
+
+Los dos resultados son reales y ambos replican con 5 semillas. Lo que cambia entre uno y otro es el
+**corpus**: N=15 es periodismo general (Kleptotrace, prosa larga y heterogénea); N=30 es el dominio
+propio del proyecto (AML/KYC, párrafos breves y muy estructurados, con vocabulario técnico repetido —OFAC,
+sanciones, cumplimiento—). **El efecto del idioma del prompt no es una propiedad universal del modelo: depende
+del corpus sobre el que se mide.** Es exactamente el tipo de interacción que una sola corrida sobre un solo
+corpus (la situación original antes de este encargo) no podía revelar, y que el propio workflow de validez
+metodológica (`§F182`) advertía como pregunta abierta: «ningún estudio mide exactamente este diseño».
+
+### Lo que queda pendiente para cerrar la pregunta
+
+Falta la rama **española** de este mismo corpus (`kleptotrace_augmented_30_es`, solo 1 de 5 semillas a esta
+hora) para completar el par emparejado y poder distinguir, en el propio dominio, el efecto de que el prompt
+comparta idioma con el texto del efecto puro del idioma del prompt. Y falta R1 Fase 2 (N=120, el corpus
+mixto 105/120 español) para saber si esta inversión es propia del dominio AML/KYC o aparece también en
+prosa periodística en español.
+
+**No se toca el informe.** Es un resultado parcial (falta la rama española) sobre un experimento que la
+regla de `TODO-INFORME-FINAL.md §17` mantiene fuera del cuerpo hasta que termine el encargo completo.
