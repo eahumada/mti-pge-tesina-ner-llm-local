@@ -8841,3 +8841,116 @@ un hallazgo en instrucción— aplicó aquí entre dos IAs, no solo entre una IA
 importancia de lo encontrado —incluida la primera frase del Resumen y el Abstract—, la aplicación de
 correcciones requiere una decisión del autor sobre el alcance, no una ejecución automática. Pendiente de
 instrucción. Ver `CURRENT-TASKS.md` para el registro de coordinación.
+
+---
+
+## §F178 — El RAG few-shot filtra oro de otros artículos del propio corpus de evaluación en el 94 % de los casos
+
+**Fecha:** 2026-09-14, ~23:50. **Origen:** `revision-scripts-20260914` (tercer y último de los workflows
+forenses del día). **Verificado por mí sobre el código fuente y el manifiesto de contaminación** antes de
+registrar esta entrada; no se transcribe el dictamen sin comprobar el mecanismo directamente.
+
+### El mecanismo, confirmado línea por línea
+
+`repos/ner-llm-entity-benchmark/src/kb_rag_manager.py:463-497`, `_query_fewshot()`: para cada artículo que se
+va a evaluar, recupera por similitud semántica el ejemplar más parecido de una colección con **solo siete
+entradas** e inyecta en el *prompt* su `input_text` **y su `expected_output`** —el JSON de oro completo—
+bajo la etiqueta «Correct JSON output». No hay condición que excluya al artículo consultado de recibir el
+oro de otro.
+
+`data/knowledge_base/few_shot_exemplars.json` tiene exactamente **7** ejemplares. El propio manifiesto
+`contaminated_exemplar_articles.json`, escrito el 2026-09-08, ya documentaba que esos 7 son artículos del
+corpus de evaluación (`benchmark_balanced_120.json`) con su anotación de oro como salida esperada, y que la
+decisión del autor fue **excluir esos 7 `article_id` de la métrica** en los modos `kb_fewshot`/`kb_combined`
+—la auto-coincidencia estaba ya conocida y corregida.
+
+**Lo que no estaba documentado, y es el hallazgo nuevo:** para los **113 artículos que la métrica sí
+cuenta** como «limpios», el mismo mecanismo de recuperación por similitud entrega, en el 94 % de los casos
+(verificado consultando los 120 artículos reales contra un índice que replica la construcción real), el oro
+de **otro** artículo del propio corpus de evaluación. No es la respuesta del propio artículo — es la
+respuesta real de un artículo hermano de la misma prueba, presentada como «ejemplo correcto».
+
+### Alcance: no es un caso aislado, es el 100 % de la condición
+
+`run_config.json` de las 13 corridas vigentes confirma `rag_mode='kb_combined'` sin excepción. Esto afecta a
+la condición `kb_rag` **en su totalidad** — los 1 469 registros (13 modelos × 113 artículos) que sostienen la
+Tabla 7 y la conclusión central del estudio (F=119,7502).
+
+### Lo que esto no dice, y hay que ser preciso
+
+**No está cuantificado el efecto sobre las cifras publicadas.** Verificar el mecanismo y su escala (94 % de
+incidencia) no es lo mismo que medir cuántos puntos de F1 aporta. Eso exigiría re-ejecutar el LLM sin la
+filtración para aislar el efecto, y ninguna de las rondas de auditoría de hoy lo hizo. Lo que sí se puede
+decir con la evidencia actual: el **+2,19 pp** que el propio manifiesto de 2026-09-08 atribuye al «efecto
+limpio» del RAG sobre los 113 artículos no contaminados **no puede sostenerse como limpio** mientras esta
+fuga siga sin resolver.
+
+**Relacionado, y agrava el cuadro:** los 7 ejemplares se crearon el 2026-09-01 y nunca se actualizaron tras
+el arreglo de `Locations` del 8 de septiembre (`§F53`). Comparados contra el oro vigente del mismo
+`article_id`, 6 de 7 tienen cero o pocas localizaciones frente al oro corregido. **Correlación medida, causa
+no probada sin re-ejecutar:** 11 de 13 modelos tienen recall de `Locations` más bajo bajo `kb_rag` que en
+línea base, con un delta medio de −3,47 pp (hasta −13,06 pp en `llama3.1:8b`). Descartada la explicación
+alternativa de que fuera la guía de dominio (`domain_guidelines.json` no menciona «location» en ninguna
+entrada).
+
+### Qué NO se hace con esto (instrucción explícita del propio dictamen, y la comparto)
+
+- **No se parchea solo `few_shot_exemplars.json`** sin resolver antes la fuga cruzada: daría una falsa
+  sensación de limpieza cuando el 94 % de incidencia seguiría intacto.
+- **No se amplía por cuenta propia el manifiesto de exclusión** para cubrir la contaminación cruzada.
+  Resolverla exige rehacer la base de ejemplares o decidir excluir el modo `kb_combined` de la Tabla 7, y esa
+  decisión es del autor.
+- **No se re-ejecuta el benchmark completo** en un intento de arreglar esto antes del 30 de septiembre sin
+  plan. Documentar la limitación con honestidad es más defendible en la sustentación que un *re-run*
+  apresurado sin validar.
+
+### Y una corrección de la propia auditoría, dentro de la misma pasada
+
+Un hallazgo inicial sobre `merge_and_analyze.py` (que no propaga `parse_method` al consolidado) reportó un
+efecto de +2,75 pp en `nemotron-mini:4b`, usando un criterio demasiado ancho (`precision==0 y recall==0`) que
+mezcla avería real con fallo legítimo del modelo — el mismo error que `§F175` ya había identificado y que la
+propia auditoría estuvo a punto de repetir. Verificado registro a registro dentro de la misma pasada: de 10
+filas, solo 2 son avería real; el efecto correcto es +0,51 pp, cinco veces menor. El delta de RAG titular de
+ese modelo con esta corrección queda en **~+11,75 pp**, coherente dentro de 0,25 pp con el +11,52 pp que
+`§F177` calculó por otra vía.
+
+### Otros hallazgos de instrumentación, menores pero reales
+
+- **`llm_runner.py:146`**: la respuesta cruda se trunca a 200 caracteres en el log cuando falla el parseo, y
+  la mayoría de las corridas vigentes ni siquiera guardan `raw_response` en el `detailed_results.json`. Para
+  el 18,3 % de `mistral-nemo:latest` y el 15,0 % de `nemotron-mini:4b` (etiquetados `fallback`), **hoy es
+  imposible auditar manualmente qué devolvió el modelo**.
+- **Confirmado con `benchmark.log` real**: las 44 filas `fallback` de `mistral-nemo:latest` (18,3 %) fueron
+  en realidad un éxito completo del *brace-scanner* (0 reparaciones, 0 rescates); de las 36 de
+  `nemotron-mini:4b`, al menos 22 son *parses* directos de un *array* de nivel superior mal etiquetados por
+  forma. La etiqueta `parse_method` mezcla éxito limpio, rescate parcial y avería total bajo el mismo valor.
+- **`tools/verificar_corrida.py:103-120`**: su comprobación de «registros averiados» solo mira la cadena
+  literal `'failed'`, nunca `'fallback'`. Reproducido con un `detailed_results.json` mínimo que contiene el
+  patrón exacto de `§F174` (`tp=0,fp=0,fn=18,parse_method='fallback'`): el script lo declara **VÁLIDA**.
+- **`oov_recall` es una métrica muerta**: se calcula en `evaluator.py` pero `main.py` nunca la copia al CSV.
+  Cualquier cifra de cobertura OOV citada en el informe no puede proceder de esta ruta.
+- **Tres herramientas de validación** (`generar_tabla7.py`, `robustez_estadistica.py`,
+  `derivados_desfasados.py`) tienen rutas por defecto hardcodeadas a consolidados **superados** (el del 7 de
+  septiembre). Hoy no corrompen nada porque las cifras publicadas se generaron pasando la ruta correcta
+  explícitamente, pero el mecanismo de validación del propio proyecto no protege contra citar el artefacto
+  viejo en el futuro. `tools/autoprueba_verificador.py` —escrito específicamente para detectar esta clase de
+  defecto (`LEARNING §L57`)— no se ha vuelto a ejecutar desde la migración del 9 de septiembre.
+
+### Reproducibilidad: cuatro mecanismos confirmados, ninguno cuantificado hasta el final
+
+Sobre la discrepancia de `§F174`/`TODO-INFORME-FINAL.md §16.2` (64,05 vs 66,76 de F1, misma configuración,
+misma semilla): se reprodujeron con código real, no simulado, cuatro mecanismos de no determinismo —
+`list(set(...))` sin `PYTHONHASHSEED` fijado en tres puntos del repositorio; emparejamiento voraz en
+`evaluator.py` que depende del orden de la lista extraída (caso mínimo: reordenar dos cadenas cambia F1 de
+0,50 a 1,00); dos `ThreadPoolExecutor` anidados cuya concurrencia real contra Ollama es el producto de ambos
+niveles, no el número que el controlador AIMD cree fijar. **Ninguno se cuantificó extremo a extremo** contra
+la discrepancia real sin re-ejecutar el pipeline completo con un LLM, que queda fuera del alcance de una
+revisión de solo lectura. **Recomendación del dictamen, que comparto:** medir primero la dispersión ya
+disponible en `results/variantes_5semillas_n15_REMOTO` antes de decidir cuántas réplicas adicionales hacen
+falta.
+
+### Estado
+
+**No se ha tocado ningún fichero.** Dictamen completo en `DICTAMEN-REVISION-SCRIPTS-20260914.json`, en la
+raíz. Con esto, los tres workflows forenses lanzados tras `§F174` han aterrizado. La decisión sobre el
+alcance de lo que se corrige, se declara o se recorre de nuevo corresponde al autor.

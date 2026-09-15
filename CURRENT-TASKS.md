@@ -1851,17 +1851,40 @@ corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y
   §5.3.1, que ninguna ronda pudo localizar. Dictamen completo en `DICTAMEN-FORENSE-CIFRAS-20260914.json`.
   **No aplicado al informe.**
 
-### 4.5 `revision-scripts-20260914` — 🔄 EN CURSO
-- **Cuándo:** 2026-09-14, lanzado ~19:55 · **Agentes:** 11 (1 inventario + 6 revisores + 3 reproductores +
-  1 dictamen)
+### 4.5 `revision-scripts-20260914` — ✅ COMPLETADO 2026-09-14 23:50
+- **Cuándo:** lanzado ~19:55 · **Agentes:** 11 (1 inventario + 6 revisores + 3 reproductores + 1 dictamen)
 - **Objetivo:** revisar todos los scripts del proyecto buscando el defecto que no rompe nada y produce un
   número plausible. Petición del autor: «revisar todos los scripts en un workflow en background».
 - **Familias disjuntas:** evaluador y métricas · pipeline y parseo · RAG · estadística y consolidación ·
   preparación de corpus y filtros · verificadores.
 - **Fases:** Inventariar → Revisar → Reproducir (caso mínimo obligatorio) → Sintetizar.
 - **Archivos:** **solo lectura**; los casos mínimos se escriben en directorios temporales.
-- **Pregunta que debe contestar:** por qué dos corridas con semilla 42 idéntica dan 64,05 y 66,76 de F1.
-- **Resultado:** pendiente.
+- **Resultado (`FINDINGS §F178`), 83 scripts inventariados, 32 defectos, 15 con consecuencia sobre una cifra
+  publicada, 12 reproducidos con caso mínimo:**
+  - **Hallazgo mayor, verificado por mí sobre el código:** el RAG *few-shot* (`kb_rag_manager.py:463`)
+    filtra al *prompt* el oro completo de **otro** artículo del propio corpus de evaluación en el **94 %**
+    de los 113 artículos que la métrica cuenta como «limpios» — solo hay 7 ejemplares, todos extraídos del
+    mismo corpus N=120. Afecta al **100 % de la condición `kb_rag`** que sostiene la Tabla 7 (1 469
+    registros). El manifiesto de 2026-09-08 ya excluía la auto-coincidencia (7 artículos); la contaminación
+    **cruzada** sobre los otros 113 no estaba documentada. **No cuantificado** el efecto en puntos de F1 sin
+    re-ejecutar; sí confirmada la escala (no es un caso aislado). El propio dictamen recomienda, y comparto,
+    **no parchear solo los ejemplares** ni re-ejecutar todo antes del 30-9 sin plan: la decisión (rehacer la
+    base de ejemplares, excluir `kb_combined` de la Tabla 7, o declarar la limitación) es del autor.
+  - **Pregunta de reproducibilidad, respondida en mecanismo, no en magnitud:** cuatro causas confirmadas con
+    código real — `list(set(...))` sin `PYTHONHASHSEED` fijado (3 puntos), emparejamiento voraz en
+    `evaluator.py` que depende del orden de la lista extraída, y doble `ThreadPoolExecutor` anidado cuya
+    concurrencia real es el producto de ambos niveles. Ninguna se cuantificó contra la discrepancia real
+    64,05/66,76 sin re-ejecutar. Recomendación: medir primero la dispersión ya disponible en
+    `results/variantes_5semillas_n15_REMOTO`.
+  - **Autocorrección dentro de la misma pasada:** un hallazgo inicial sobre `merge_and_analyze.py` sobreestimó
+    5× un efecto (+2,75 pp cuando era +0,51 pp) mezclando avería real con fallo legítimo del modelo — el
+    mismo error que `§F175` ya había corregido una vez, y que la propia auditoría estuvo a punto de repetir.
+  - **Instrumentación**: `llm_runner.py:146` trunca la respuesta cruda a 200 caracteres, haciendo imposible
+    auditar el 18,3 %/15,0 % de registros `fallback` de `mistral-nemo`/`nemotron-mini`; `verificar_corrida.py`
+    no detecta el patrón de `§F174` (declara «VÁLIDA» un registro con la firma exacta del defecto); tres
+    herramientas de validación (`generar_tabla7.py`, `robustez_estadistica.py`, `derivados_desfasados.py`)
+    tienen rutas por defecto a consolidados superados, hoy inocuas pero sin protección a futuro.
+  - Dictamen completo en `DICTAMEN-REVISION-SCRIPTS-20260914.json`. **No aplicado ningún cambio de código.**
 
 ---
 
@@ -2568,3 +2591,4 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 - **Validación Triple:** En cola para ejecución inmediata tras la auditoría.
 | 2026-09-14 (post 7) | Claude Code (equipo principal) | ✅ §1.312: **segunda pasada del `/loop`: R1 Fase 1 (N=15, 5 semillas) llegó del equipo remoto, verificada y con buena noticia (`FINDINGS §F176`).** `git pull` trajo `bc1d4c2` (Antigravity, §3.AGY.2): R1 Fase 1 completa, `failed=0` en las 5 semillas, y R4 (traducción del N=30) ya en ejecución activa. **Recalculado desde el CSV crudo, no desde el resumen ajeno**: jerarquía `fs-es`(79,96%) > `zs-es`(75,78%) > `fs-en`(70,38%) > `zs-en`(66,77%) **en las 5 semillas sin excepción**. El defecto de `§F174` **replica** — 10 de 150 registros con avería real de parseo, todos en configuraciones inglesas, ninguno en las españolas — pero con réplicas el efecto ya no se puede anular quitando un registro: el delta de idioma puro sin averías da entre **+4,7 y +11,0 pp en las cinco semillas, nunca cruza cero**. Propuesto en `§F176` reportar dos cifras separadas (+7,4 pp de calidad de extracción, +5,8 pp de robustez de formato) en vez de fundirlas. **`TODO-INFORME-FINAL.md §16.1` actualizado**: sigue bloqueada la escritura de §5.2/§6.1 hasta R1 Fase 2 (N=120), que es el corpus de la hipótesis; N=15 solo acredita que el efecto sobre ese corpus es real. Actualizado el estado de `§3.bis.20` a parcial. Verificado que `§3.bis.16 (histórico)` sigue correctamente cerrado (39/39 `detailed_results.json` presentes). **Los tres workflows (`purga-informe`, `forense-cifras`, `revision-scripts`) siguen en curso**, sin resultado todavía. Verificador: 0 fallos nuevos |
 | 2026-09-14 (post 8) | Claude Code (equipo principal) | ✅ §1.313: **aterrizaron `purga-informe-20260914` y `forense-cifras-20260914`; verificados de forma independiente antes de registrar nada (`FINDINGS §F177`).** No transcribí los dictámenes sin más: reproduje yo mismo los tres hallazgos de mayor impacto. (1) **Reversión de mi propia `§F175`**: leí `src/providers/ollama_provider.py:368-372` y confirmé que `parse_method` es un chequeo cosmético sobre la forma del texto, no una medida de éxito de parseo — mi condición «`tp+fp==0` y `fallback`» era arbitraria. Con el criterio correcto (`tp==0 y fp==0`), recalculado por mí sobre `recorrida_20260908/`: `nemotron-mini:4b` **+11,52 pp** (no +13,04), `mistral-nemo:latest` **−3,46 pp** (no −3,64) — coincide exacto con el dictamen del workflow. El beneficio del RAG en el modelo más débil es mayoritariamente desempeño real. (2) **Anexo J**: leí la Tabla 20 yo mismo — confirmado que la frase «solo `nemotron-mini` cambia signo y significancia» es un error de lectura: `nemotron-mini` cambia el signo (ambos casos no significativos), `deepseek-r1` y `mistral-nemo` cambian la significancia (ninguno cambia el signo). (3) **Desacuerdo real entre los dos workflows sobre el 90,16 %**: `forense-cifras` dijo que procede de `n30_rerun_REMOTO` con `Locations` sin anotar; `purga-informe` dijo que «no existe en ningún fichero». **Verifiqué directamente sobre el JSON: 90,16 % es exacto, F1 de `gemma4:31b-mlx` restringido a Personas+Organizaciones. `purga-informe` se equivocó** — no probó esa convención. Dictámenes completos guardados en `DICTAMEN-FORENSE-CIFRAS-20260914.json` y `PLAN-PURGA-INFORME-20260914.json` (raíz). **`purga-informe` entrega además un plan ejecutable**: 84 supervivientes de 165 hallazgos, 35+26 cambios en dos bloques, 9 reservados a decisión del autor, ~175 líneas de ahorro (163 del cuerpo). **Nada aplicado al informe**: el volumen y que toca la primera frase del Resumen exige decisión del autor sobre el alcance, no ejecución automática. `revision-scripts-20260914` sigue en curso. `§4.3`/`§4.4` actualizados a completados |
+| 2026-09-14 (post 9) | Claude Code (equipo principal) | 🔴 §1.314: **aterrizó `revision-scripts-20260914`, el tercero de los tres workflows forenses. Hallazgo mayor del día, verificado por mí sobre el código antes de registrar (`FINDINGS §F178`): el RAG *few-shot* filtra oro de otros artículos del propio corpus de evaluación.** Leí yo mismo `kb_rag_manager.py:463-497` (`_query_fewshot`): recupera por similitud uno de solo **7** ejemplares e inyecta su `expected_output` —el JSON de oro— completo en el *prompt*. Confirmado en `data/knowledge_base/few_shot_exemplars.json` (7 entradas) y en `contaminated_exemplar_articles.json`, cuyo comentario del 2026-09-08 ya documentaba la auto-coincidencia de esos 7 con el corpus de evaluación. **Lo nuevo es la contaminación cruzada**: para los 113 artículos que la métrica cuenta como limpios, el workflow reprodujo que el 94 % recibe el oro de **otro** artículo real del mismo corpus como «ejemplo correcto» — no está excluida por el manifiesto vigente, que solo cubre la auto-coincidencia. Afecta al 100 % de la condición `kb_rag` (1 469 registros) que sostiene la Tabla 7 y la conclusión central del estudio. **No cuantificado en puntos de F1** sin re-ejecutar; sí confirmada la escala. Comparto la recomendación del propio dictamen: no parchear solo los ejemplares, no ampliar el manifiesto por cuenta propia, no re-ejecutar todo sin plan — la decisión es del autor. **Además**: la pregunta de reproducibilidad (`§16.2`) queda respondida en mecanismo (cuatro causas de no determinismo confirmadas con código real: `list(set())` sin `PYTHONHASHSEED`, emparejamiento voraz sensible al orden, doble `ThreadPoolExecutor` anidado) pero no en magnitud sobre la discrepancia 64,05/66,76; y una autocorrección dentro de la misma pasada evitó publicar un efecto sobreestimado 5×. **Con esto, los tres workflows forenses del día están cerrados** (`§F174` a `§F178`). Dictámenes completos en la raíz: `DICTAMEN-FORENSE-CIFRAS-20260914.json`, `PLAN-PURGA-INFORME-20260914.json`, `DICTAMEN-REVISION-SCRIPTS-20260914.json`. **Nada aplicado al informe ni al código.** El volumen y la naturaleza de las decisiones pendientes (alcance de las correcciones, destino del modo `kb_combined`, si re-correr para aislar el efecto de la fuga) exceden lo que corresponde ejecutar sin instrucción explícita del autor |
