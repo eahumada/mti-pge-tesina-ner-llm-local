@@ -9523,3 +9523,45 @@ ejemplos en inglés. Posibles lecturas, ninguna descartable con los datos dispon
 
 **No se toca el informe.** Falta R2 (barra de error, en curso, arrancó automáticamente tras este cierre) para
 tener el encargo completo y aplicar la fase de cierre de `TODO-INFORME-FINAL.md §17`.
+
+---
+
+## §F185 — Petición de eliminar `gemma4:31b-cloud` del estudio: corroborada y rechazada por el autor
+
+**Fecha:** 2026-09-15. **Origen:** el autor pidió eliminar completamente `gemma4:31b-cloud` del estudio y de
+la historia, «ni siquiera como histórico», con la premisa de que `gemma4:31b-mlx` ya demuestra resultados
+competitivos.
+
+### Corroborado antes de actuar
+
+Sobre el consolidado vigente (`ANALISIS_CONJUNTO_20260909_FIX/merged_results.csv`, N=113):
+
+| Modelo | Baseline | KB RAG |
+|:---|---:|---:|
+| `gemma4:31b-cloud` | **82,13 %** | **82,94 %** |
+| `gemma4:31b-mlx` | 81,47 % | 82,44 % |
+
+**La premisa es inexacta: `gemma4:31b-cloud` es ligeramente mejor que `gemma4:31b-mlx`, no peor.** Además,
+el modelo aparece **15 veces** en el cuerpo del informe, incluida la Tabla 7 (resultado central) y la Tabla
+20 del Anexo J (el análisis de sensibilidad que retira cada uno de los trece modelos uno por uno — retirarlo
+del estudio invalidaría ese análisis completo, no solo una fila).
+
+### El motivo real de la petición: una alerta operativa, no un defecto del modelo
+
+La petición coincidió con el aviso de `§1.331`: `gemma4:31b-cloud` agotó su cuota mensual de Ollama Cloud
+justo al arrancar R2. **Hay un precedente exacto ya documentado en el informe** (línea 909): una medición de
+este mismo modelo se invalidó el 3 de septiembre de 2026 por la misma causa (HTTP 429), y el procedimiento
+que se siguió entonces —y que `CLAUDE.md` fija como regla, con este incidente detrás— fue repetir la corrida
+limpia y declarar el motivo, no retirar el modelo del estudio.
+
+### Conflicto con política del proyecto
+
+`CLAUDE.md`: *"Los registros de ejecución no se eliminan ni se editan"* y el corolario que distingue lo que
+**afirma** (corregible) de lo que **atestigua** (se conserva). «No dejar ni siquiera como histórico»
+contradice esta regla directamente.
+
+### Decisión del autor, tras corroborar
+
+**No se elimina nada.** Confirmado explícitamente tras presentar los datos. El problema de hoy con la cuota
+de R2 se trata como el de septiembre: se declara la causa si persiste, no se publica una cifra inválida, y
+no se toca ningún dato ya publicado ni ningún registro de ejecución.
