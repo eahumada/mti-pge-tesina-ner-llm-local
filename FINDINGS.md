@@ -9101,3 +9101,86 @@ El informe **ya documenta** la fuente, en varios sitios:
 
 **Conclusión: no hace falta ningún cambio en el informe.** La cita, la URL y la declaración del 105/120 ya
 están correctas y verificadas.
+
+---
+
+## §F181 — Validación metodológica de la traducción del corpus N=30: el informe de calidad describe el corpus defectuoso, y el diseño del juez LLM tiene un defecto propio
+
+**Fecha:** 2026-09-15. **Origen:** el autor pidió validar metodológicamente la traducción del N=30 hecha con
+`gemma4:31b` (R4). Continúa `§F179`. **Verificado leyendo el script completo y el corpus resultante**, no
+solo el resumen del informe de auditoría.
+
+### 1. El informe de auditoría describe el corpus con el defecto ya corregido
+
+`remote_48g/AUDITORIA-CALIDAD-TRADUCCION-N30.md` se generó a las **23:33:04**, diez minutos **antes** de mi
+corrección del corpus a las 23:43:57 (`§F179`). Sus cifras de «Preservación de Localizaciones: 80,0 %
+(16/20)» describen el corpus **defectuoso**: los artículos 1 y 3, con `Locs: 1/4` y `Locs: 1/2`, son
+exactamente los que tenían la anotación sin corregir. **El informe no se ha regenerado tras la corrección.**
+Con el corpus corregido, la cobertura literal es 124/125 (el único resto, `DOJ`, es un defecto preexistente
+del corpus inglés original, no de la traducción — ver `§F179`).
+
+### 2. El juez LLM (`mistral-nemo:latest`) evalúa a ciegas de la lista de entidades de referencia
+
+Leído `tools/auditar_calidad_traduccion_n30.py` completo: la función `llm_review_article()` envía al modelo
+revisor únicamente el texto original y el traducido, **nunca la lista de entidades de referencia**. El campo
+`entities_preserved` y el comentario cualitativo son un juicio de lectura general del revisor, no un cotejo
+contra el oro. Esto explica una inconsistencia real dentro del propio informe: en el artículo 1, el revisor
+escribe «preservando todas las entidades mencionadas en el texto original» con fidelidad 5/5, mientras el
+chequeo mecánico del mismo informe cuenta `Locs: 1/4` y `Orgs: 2/3` para ese artículo. **Los dos componentes
+del informe —el juicio cualitativo y el conteo de entidades— se calculan por separado y no se contrastan
+entre sí**, de modo que un veredicto «óptimo» de fidelidad no acredita que las entidades objetivo estén.
+
+### 3. El chequeo automático de entidades tiene un umbral que excluye los acrónimos de tres letras
+
+`check_entity_preservation()` usa como respaldo, cuando falla la coincidencia exacta, un cotejo por palabras
+con el filtro `len(w) > 3`. Verificado: **`UAE` y `DOJ` tienen exactamente 3 caracteres** y no pasan nunca
+ese filtro, de modo que la vía de respaldo no puede acreditarlos jamás, solo la coincidencia exacta. No es un
+defecto que haya cambiado ningún resultado publicado —la coincidencia exacta bastó para las entidades que sí
+se corrigieron—, pero es un punto ciego del propio instrumento de auditoría que conviene no confiar para
+casos límite futuros con acrónimos cortos.
+
+### 4. Inconsistencia real de estilo más allá de las entidades ya corregidas
+
+Escaneado el texto traducido en busca de fragmentos en inglés que sobrevivieron: el **artículo 8** dice
+«a través de empresas pantalla en Switzerland y Panama» —los nombres de país quedaron sin traducir, mezclados
+en una oración española— y el **artículo 17** conserva «CFO» sin traducir. Ninguno de los dos rompe la
+coincidencia con la anotación (`Switzerland`/`Panama`/nombres iguales en ambos lados), así que no son
+defectos de cobertura; son inconsistencia de naturalidad, y el propio revisor los detectó y penalizó
+(fidelidad 3/5 en ambos casos). **El traductor no aplicó la instrucción de preservar nombres de forma
+uniforme**: en unos artículos tradujo lo que debía preservar (los siete corregidos en `§F179`), en otros
+preservó lo que un texto en español natural habría traducido (`Switzerland`, `Panama`, `CFO`). El resultado
+es un corpus internamente inconsistente en su tratamiento del inglés, no por un solo tipo de error sino por
+dos tipos opuestos.
+
+### 5. Diseño del validador: un solo juez, sin segunda opinión ni validación humana
+
+La auditoría de calidad se apoya en un único modelo (`mistral-nemo:latest`), con temperatura 0,1 y semilla 42
+—reproducible, pero de una sola pasada—. No hay una segunda opinión de otro modelo, ni contraste con un
+hablante humano, para una afirmación de calidad que sostendría un experimento del informe. Es una limitación
+declarable, no necesariamente un defecto que invalide el uso del corpus.
+
+### 6. El traductor pertenece a la misma familia que modelos evaluados sobre ese corpus
+
+`gemma4:31b` tradujo el corpus; `gemma4:latest` y `gemma4:31b-mlx` son dos de los trece modelos que se
+evalúan sobre él (R1, R5). Es un riesgo teórico y documentado en la literatura de generación de texto por
+LLM (una familia de modelos comparte regularidades de vocabulario y estructura de oración que pueden facilitar
+la extracción a un modelo emparentado), no medido aquí ni con evidencia de que se materialice, pero
+declarable como limitación del diseño.
+
+### Veredicto
+
+**La traducción es usable para R4/R5, con reservas que hay que declarar, no que descarten el experimento.**
+La corrección de `§F179` ya resolvió el problema que sí afectaba a la medición (la anotación de referencia).
+Lo que queda es la validez del propio informe de calidad, no la del corpus: el informe está desactualizado y
+su metodología (juez ciego a las entidades, umbral que excluye acrónimos cortos, una sola pasada de un solo
+modelo) sostiene menos de lo que su tabla de resultados aparenta. **Recomendaciones**, en orden de prioridad:
+
+1. **Regenerar el informe de auditoría contra el corpus ya corregido** (barato: no requiere traducir de
+   nuevo, solo re-ejecutar `auditar_calidad_traduccion_n30.py` sobre el fichero vigente).
+2. **Declarar en el informe, si se cita esta auditoría**, que el juicio de fidelidad no verificó contra la
+   lista de entidades y que es un único juez sin segunda opinión.
+3. **Declarar la inconsistencia de naturalidad** (artículos 8 y 17, y cualquier otro que aparezca al
+   re-escanear) como limitación del corpus traducido, en la misma frase que ya advierte que un corpus
+   traducido no es un corpus nativo (`ENCARGO-RECORRIDAS-20260914.md §R4`).
+4. **No re-traducir.** El coste de rehacer la traducción no se justifica por hallazgos de naturalidad menor
+   que no afectan la anotación; el defecto que sí importaba ya está corregido.
