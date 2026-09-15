@@ -1886,6 +1886,21 @@ corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y
     tienen rutas por defecto a consolidados superados, hoy inocuas pero sin protección a futuro.
   - Dictamen completo en `DICTAMEN-REVISION-SCRIPTS-20260914.json`. **No aplicado ningún cambio de código.**
 
+### 4.6 `validez-metodologica-traduccion-n30` — 🔄 EN CURSO
+- **Cuándo:** 2026-09-15, lanzado ~01:20 · **Agentes:** ~9 (4 investigadores + 4 refutadores + 1 dictamen)
+- **Objetivo:** a petición del autor, dilucidar si traducir el corpus N=30 al español (R4) es
+  metodológicamente correcto y cómo debe declararse en la tesina. Construye sobre `FINDINGS §F179`/`§F181`
+  sin repetirlos.
+- **Ángulos disjuntos:** *translationese* y su efecto medido en PLN comparado · sesgo de familia entre el
+  modelo traductor (`gemma4:31b`) y los modelos evaluados sobre ese corpus (`gemma4:latest`,
+  `gemma4:31b-mlx`) · práctica aceptada de proyección de anotaciones vía traducción automática · análisis
+  del diseño experimental real (N=30, una sola pasada, sin *back-translation*).
+- **Fases:** Investigar (con `WebSearch`/`WebFetch`, toda cita verificada antes de proponerse) → Refutar
+  (adversarial, re-verifica cada fuente) → Sintetizar (veredicto único + texto propuesto para el informe,
+  máximo 120 palabras, en el registro sobrio del proyecto).
+- **Archivos:** **solo lectura.** No se traduce de nuevo ni se edita el informe.
+- **Resultado:** pendiente.
+
 ---
 
 ### §4.bis Workflow `wf_348f89e2-43b` — consistencia global de la tesina (REINTENTO)
@@ -2811,3 +2826,4 @@ de resolver**: re-ejecutar `tools/auditar_calidad_traduccion_n30.py` sobre
 pero conviene antes de citar esta auditoría en el informe.
 
 | 2026-09-15 01:15 | Claude Code (equipo principal) | ✅ §1.323: **validación metodológica de la traducción del N=30 a petición del autor (`FINDINGS §F181`).** Leído el script completo (`tools/auditar_calidad_traduccion_n30.py`) y el corpus resultante, no solo el resumen del informe de auditoría. **Hallazgo principal**: el informe (`AUDITORIA-CALIDAD-TRADUCCION-N30.md`) se generó a las 23:33:04, **antes** de mi corrección del corpus a las 23:43:57 — describe el defecto ya corregido (`Locations 80,0%` son los artículos 1 y 3 sin corregir). **Defecto de diseño en el propio validador**: el juez LLM (`mistral-nemo:latest`) evalúa fidelidad leyendo solo el texto original y el traducido, **nunca la lista de entidades de referencia** — explica por qué dice «preservando todas las entidades» en el artículo 1 mientras el conteo mecánico del mismo informe cuenta `Locs: 1/4`. **Umbral roto para acrónimos cortos**: el respaldo difuso de `check_entity_preservation()` exige `len(palabra)>3`, que excluye a `UAE` y `DOJ` (3 caracteres) de por vida — no cambió ningún resultado publicado, pero es un punto ciego real. **Inconsistencia de naturalidad más allá de las entidades**: escaneado el texto, el artículo 8 dice «en Switzerland y Panama» (nombres sin traducir mezclados en español) y el 17 conserva «CFO» — el propio revisor los penalizó (fidelidad 3/5), confirmando que el traductor aplicó la instrucción de preservar nombres de forma **inconsistente**, no en una sola dirección. **Veredicto: usable con reservas declarables, no descarta el experimento** — la corrección de `§F179` ya resolvió lo que afectaba a la medición; lo que queda es la validez del informe de auditoría, no la del corpus. Petición barata al remoto en `§3.bis.29`: regenerar el informe contra el corpus corregido, sin re-traducir. Verificador: 0 fallos nuevos |
+| 2026-09-15 01:20 | Claude Code (equipo principal) | ✅ §1.324: **lanzado `validez-metodologica-traduccion-n30` a petición del autor (workflow, ver `§4.6`), y el equipo remoto corrigió directamente los dos defectos de `§F181` en la misma pasada.** Verificado el diff de `4059a37`: (1) `correr_pipeline_recorridas_48g.py` ahora reintenta `pull --rebase`/`push` hasta 5 veces con backoff de 5 s, comprobando código de salida en cada intento — mitiga exactamente el riesgo de colisión git que documenté en `§1.322`; (2) `auditar_calidad_traduccion_n30.py` corrige el umbral a `len(w)>=3` (acredita `UAE`/`DOJ`) **y** ahora pasa la lista real de entidades de referencia al *prompt* del juez LLM, arreglando el defecto de diseño de `§F181` punto 2 (el juez evaluaba a ciegas de la anotación). Ambas correcciones, verificadas, son correctas y bien dirigidas. **Pendiente todavía**: re-ejecutar el auditor con el script corregido sobre el corpus ya corregido (`§3.bis.29`) para tener un informe de calidad vigente. Verificador: 0 fallos nuevos |
