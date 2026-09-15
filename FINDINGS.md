@@ -9441,3 +9441,26 @@ pequeño de esos corpus (`§F182` ya advertía que N=30 no tiene potencia para d
 «no se detectó con esta muestra» — lo mismo aplica aquí con más fuerza sobre N=15).
 
 **No se toca el informe.** Faltan 3 semillas de R1 Fase 2 y toda R2. Esta entrada se completará cuando lleguen.
+
+### Continuación de §F184 — tercera semilla (456): `fs-en` se consolida como la configuración más fuerte
+
+**2026-09-15, ~12:50.** Llegó la semilla 456 (commit `63a6fc0`). Con 3 de 5 semillas, sin averías de parseo
+en ninguna:
+
+| Configuración | Media (3 semillas) | seed_42 | seed_123 | seed_456 |
+|:---|---:|---:|---:|---:|
+| `fs-en` | **76,17 %** | 76,23 | 75,75 | 76,54 |
+| `zs-es` | 75,35 % | 74,96 | 75,51 | 75,58 |
+| `fs-es` | 75,29 % | 75,38 | 75,64 | 74,86 |
+| `zs-en` | 74,77 % | 75,81 | 74,39 | 74,11 |
+
+**`fs-en` > `fs-es` en las tres semillas, y `fs-en` es la configuración de mayor F1 en las tres, sin
+excepción.** `zs-en` > `zs-es` ya solo en 1 de 3 (antes 1 de 2). El patrón que se consolida con más datos no
+es «el español gana» ni «coincidir el idioma gana»: es que **el *few-shot* en inglés es, en este corpus
+mayoritariamente español, la configuración más fuerte**, con el margen más consistente de las cuatro.
+
+**Sigue siendo preliminar** (faltan 2 de 5 semillas) y no se toca el informe. Si el patrón se sostiene con
+las cinco semillas completas, es un resultado que ninguno de los otros dos corpus predecía y que valdría la
+pena destacar: los ejemplos en inglés, en un *prompt* que por lo demás puede estar en cualquier idioma,
+podrían aportar una señal de formato más clara que se transfiere bien incluso a texto español, algo que
+ninguna de las hipótesis manejadas hasta ahora (coincidencia de idioma, superioridad del español) anticipaba.
