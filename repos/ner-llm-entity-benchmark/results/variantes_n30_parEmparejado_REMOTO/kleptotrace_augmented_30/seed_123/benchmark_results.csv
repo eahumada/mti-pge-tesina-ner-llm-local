@@ -1,0 +1,990 @@
+batch_idx,record_id,model,latency_sec,tokens_per_sec,retries,retry_count,raw_response,parse_method,precision,recall,f1,hallucination_rate,hallucinated_count,cpu_avg_pct,cpu_peak_pct,proc_cpu_avg_pct,mem_avg_mb,mem_peak_mb,sys_mem_avg_mb,sys_mem_avg_pct,vram_mb,model_disk_mb,data_provenance
+1,6,zs-en,7.612153053283691,54.6,0,0,"{""Persons"": [""Cyril Ramaphosa""], ""Organizations"": [""Financial Action Task Force"", ""Standard Bank""], ""Locations"": [""South Africa"", ""Zimbabwe""]}",direct_json,1.0,0.8333333333333334,0.9090909090909091,0.0,0,18.1,100.0,13.6,235.4,237.0,21769.5,64.7,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:23.967789+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+1,7,zs-en,11.642424821853638,55.4,0,0,"{""Persons"": [""Marc Dufour""], ""Organizations"": [""SEC"", ""ABB Ltd""], ""Locations"": [""South Africa""]}",direct_json,1.0,1.0,1.0,0.0,0,16.1,97.2,9.2,236.0,237.6,22553.9,65.1,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:27.990481+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+1,8,zs-en,8.611093044281006,54.96,0,0,"{""Persons"": [""Nicolas Maduro Guerra""], ""Organizations"": [""U.S. Treasury"", ""OFAC"", ""PDVSA""], ""Locations"": [""Venezuela"", ""Switzerland"", ""Panama""]}",direct_json,0.7142857142857143,1.0,0.8333333333333333,0.0,0,10.6,97.2,2.7,235.6,237.0,22007.8,64.8,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:24.974200+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+1,9,zs-en,3.547783851623535,54.96,0,0,"{""Persons"": [""Christian Sewing""], ""Organizations"": [""BaFin"", ""Deutsche Bank""], ""Locations"": [""Germany"", ""Russian""]}",direct_json,0.8,1.0,0.888888888888889,0.0,0,18.6,97.2,13.8,234.3,234.4,19580.6,63.7,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:19.915433+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+1,10,zs-en,18.205419063568115,55.31,0,0,"{""Persons"": [""Georgios Pavlidis""], ""Organizations"": [""Justice Department"", ""Suez Rajan Ltd""], ""Locations"": [""Greek""]}",direct_json,0.75,1.0,0.8571428571428571,0.0,0,8.8,27.2,4.3,237.6,238.3,24249.9,66.1,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:38.133948+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+0,1,zs-en,6.077966690063477,54.88,0,0,"{""Persons"": [""Alexey Shevchenko""], ""Organizations"": [""US Department of the Treasury"", ""OFAC"", ""Al-Sahra Electronics""], ""Locations"": [""Dubai"", ""United States"", ""Russia"", ""UAE""]}",direct_json,1.0,1.0,1.0,0.0,0,15.8,97.2,29.6,234.8,237.0,21277.3,64.5,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:22.420424+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+0,2,zs-en,17.228721141815186,54.83,0,0,"{""Persons"": [""Kenneth A. Polite Jr."", ""Stephen Murphy""], ""Organizations"": [""HSBC"", ""Sinaloa Cartel""], ""Locations"": [""New York""]}",direct_json,1.0,0.8333333333333334,0.9090909090909091,0.0,0,18.9,100.0,10.6,236.6,238.3,23161.3,65.5,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:33.563742+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+0,3,zs-en,5.067012071609497,54.71,0,0,"{""Persons"": [""Dmitry Kovalev""], ""Organizations"": [""European Council"", ""Belneftekhim""], ""Locations"": [""Belarus"", ""Russian""]}",direct_json,0.8,1.0,0.888888888888889,0.0,0,21.4,97.2,30.4,234.5,236.2,20772.5,64.2,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:21.405478+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+0,4,zs-en,16.19735288619995,55.41,0,0,"{""Persons"": [""Arthur Chan""], ""Organizations"": [""Securities and Futures Commission"", ""Sun Hung Kai Securities""], ""Locations"": []}",direct_json,1.0,0.75,0.8571428571428571,0.0,0,10.2,97.2,2.2,236.7,238.2,23078.7,65.4,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:32.565154+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+0,5,zs-en,17.728520154953003,53.82,0,0,"{""Persons"": [""Maher Al-Assad""], ""Organizations"": [""UK Office of Financial Sanctions Implementation"", ""OFSI"", ""Barclays Bank""], ""Locations"": [""Syria""]}",direct_json,1.0,1.0,1.0,0.0,0,15.6,100.0,4.5,237.8,240.9,24363.1,66.2,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:39.150206+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+2,11,zs-en,14.148998975753784,55.33,0,0,"{""Persons"": [""Lisa O. Monaco"", ""Ilya Lichtenstein"", ""Heather Morgan""], ""Organizations"": [""Bitfinex""], ""Locations"": []}",direct_json,1.0,1.0,1.0,0.0,0,13.0,97.2,2.3,236.5,238.2,22885.5,65.3,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:30.519929+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+2,12,zs-en,9.62521481513977,54.49,0,0,"{""Persons"": [""Thomas Borgen""], ""Organizations"": [""Danske Bank"", ""State Prosecutor for Serious Economic and International Crime""], ""Locations"": [""Denmark"", ""Estonian""]}",direct_json,0.4,1.0,0.5714285714285715,0.0,0,17.7,100.0,26.0,235.4,237.0,22203.0,64.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:25.955430+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+2,13,zs-en,18.72334384918213,54.51,0,0,"{""Persons"": [""Mutassim Gaddafi"", ""Muammar Gaddafi""], ""Organizations"": [""Bank of Valletta""], ""Locations"": [""Malta"", ""Libyan""]}",direct_json,0.8,1.0,0.888888888888889,0.0,0,14.5,97.2,8.7,236.8,238.3,23271.6,65.5,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:35.070575+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+2,14,zs-en,15.171991109848022,55.29,0,0,"{""Persons"": [""Willy Ngoma""], ""Organizations"": [""United Nations Security Council"", ""M23""], ""Locations"": [""Democratic Republic of Congo""]}",direct_json,0.75,0.75,0.75,0.0,0,15.9,97.2,7.6,236.5,238.3,22978.2,65.3,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:31.515608+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+2,15,zs-en,14.183313846588135,54.58,0,0,"{""Persons"": [""Evelin Banev""], ""Organizations"": [""Credit Suisse Group AG"", ""Swiss Federal Criminal Court""], ""Locations"": [""Bulgarian""]}",direct_json,0.75,1.0,0.8571428571428571,0.0,0,14.5,40.7,5.5,238.4,243.7,24607.3,66.5,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:40.148995+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+3,16,zs-en,20.739125967025757,54.76,0,0,"{""Persons"": [""Brad Garlinghouse"", ""Christian Larsen""], ""Organizations"": [""SEC"", ""Ripple Labs Inc""], ""Locations"": []}",direct_json,1.0,1.0,1.0,0.0,0,14.1,97.2,3.9,236.9,238.3,23409.8,65.6,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:37.091338+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+3,17,zs-en,13.154258251190186,55.4,0,0,"{""Persons"": [""Lars Machen""], ""Organizations"": [""DOJ"", ""BNP Paribas SA""], ""Locations"": [""Sudan"", ""Iran""]}",direct_json,1.0,1.0,1.0,0.0,0,12.0,97.2,2.1,236.3,238.2,22767.9,65.2,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:29.509761+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+3,18,zs-en,19.758936882019043,54.99,0,0,"{""Persons"": [""Sani Abacha""], ""Organizations"": [""U.S. Department of Justice"", ""Citibank""], ""Locations"": [""Nigerian""]}",direct_json,0.75,1.0,0.8571428571428571,0.0,0,9.6,97.2,3.3,237.0,238.3,23336.4,65.6,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:36.140862+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+3,19,zs-en,11.142319917678833,55.29,0,0,"{""Persons"": [""Sarah Johnston""], ""Organizations"": [""U.S. Treasury"", ""OFAC"", ""Airbnb Inc""], ""Locations"": [""Cuba""]}",direct_json,0.6,1.0,0.7499999999999999,0.0,0,10.3,97.2,2.8,236.0,237.6,22470.2,65.0,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:27.491148+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+3,20,zs-en,14.174589157104492,54.7,0,0,"{""Persons"": [""Denny Chin"", ""Bernard L. Madoff""], ""Organizations"": [""Bernard L. Madoff Investment Securities LLC""], ""Locations"": []}",direct_json,1.0,1.0,1.0,0.0,0,13.7,48.9,3.2,239.1,243.7,24721.1,66.5,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:41.677481+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+4,21,zs-en,5.599415063858032,54.76,0,0,"{""Persons"": [""Mahmoud Bahmani""], ""Organizations"": [""New York Department of Financial Services"", ""Standard Chartered Bank"", ""Central Bank of Iran""], ""Locations"": [""Iranian""]}",direct_json,0.8,0.5714285714285714,0.6666666666666666,0.0,0,18.8,50.0,37.1,242.8,243.9,25222.6,66.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:43.756136+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+4,22,zs-en,4.5629189014434814,54.63,0,0,"{""Persons"": [""Jho Low""], ""Organizations"": [""DOJ"", ""Goldman Sachs Group Inc"", ""1MDB""], ""Locations"": []}",direct_json,1.0,1.0,1.0,0.0,0,20.0,70.0,24.7,242.6,243.7,25214.4,66.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:42.717713+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+4,23,zs-en,8.133625030517578,54.14,0,0,"{""Persons"": [""Erik Thedeen""], ""Organizations"": [""Finansinspektionen"", ""Skandinaviska Enskilda Banken (SEB)""], ""Locations"": [""Sweden"", ""Baltic""]}",direct_json,0.6,0.75,0.6666666666666665,0.0,0,20.0,36.9,8.9,243.2,243.9,25252.9,66.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:46.288302+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+4,24,zs-en,6.5915141105651855,54.71,0,0,"{""Persons"": [""Timur Kulibaev""], ""Organizations"": [""National Bank of Kazakhstan"", ""Eurasian Bank""], ""Locations"": []}",direct_json,1.0,0.75,0.8571428571428571,0.0,0,18.0,40.0,13.6,243.0,243.9,25222.8,66.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:44.745675+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+4,25,zs-en,8.631057262420654,54.75,0,0,"{""Persons"": [""Jane Watson""], ""Organizations"": [""Financial Conduct Authority"", ""Royal Bank of Scotland"", ""OFAC""], ""Locations"": []}",direct_json,1.0,0.6666666666666666,0.8,0.0,0,25.9,36.9,5.8,244.1,244.5,25435.3,67.2,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:51.363814+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+5,26,zs-en,11.175380945205688,54.98,0,0,"{""Persons"": [""Najib Razak""], ""Organizations"": [""SRC International"", ""1MDB""], ""Locations"": []}",direct_json,1.0,1.0,1.0,0.0,0,19.2,36.9,18.0,243.8,244.5,25365.0,67.1,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:50.345254+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+5,27,zs-en,10.157860040664673,55.64,0,0,"{""Persons"": [""Jian Liu""], ""Organizations"": [""SEC"", ""Luckin Coffee Inc""], ""Locations"": []}",direct_json,1.0,1.0,1.0,0.0,0,22.9,37.3,20.3,243.8,244.5,25357.8,67.1,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:49.326456+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+5,28,zs-en,8.134809017181396,54.47,0,0,"{""Persons"": [""Brian Hartzer""], ""Organizations"": [""Australian Transaction Reports and Analysis Centre"", ""Westpac Banking Corporation""], ""Locations"": []}",direct_json,1.0,0.75,0.8571428571428571,0.0,0,18.8,37.0,15.2,243.7,243.9,25303.9,67.0,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:47.308327+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+5,29,zs-en,9.142927885055542,54.78,0,0,"{""Persons"": [""Jacob Aarup-Andersen""], ""Organizations"": [""Danske Bank"", ""Copenhagen police""], ""Locations"": [""Baltic""]}",direct_json,0.5,1.0,0.6666666666666666,0.0,0,22.6,45.5,7.7,243.7,244.5,25338.1,67.0,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:48.309124+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+5,30,zs-en,5.0975799560546875,54.73,0,0,"{""Persons"": [""Susan Mauldin""], ""Organizations"": [""Federal Trade Commission"", ""Equifax Inc""], ""Locations"": []}",direct_json,1.0,0.75,0.8571428571428571,0.0,0,23.1,35.0,3.3,244.4,244.5,25489.6,67.2,9051.5,9163.2,"{'timestamp': '2026-09-15T03:19:52.415920+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'a6af280e'}"
+2,11,zs-es,7.588754892349243,53.15,0,0,"{""Persons"": [""Lisa O. Monaco"", ""Ilya Lichtenstein"", ""Heather Morgan""], ""Organizations"": [""Bitfinex""], ""Locations"": []}",direct_json,1.0,1.0,1.0,0.0,0,28.4,63.6,37.9,252.1,252.2,25484.5,66.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:20:00.027215+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+2,12,zs-es,143.27746200561523,53.37,0,0,"{
+""Persons"": [
+""Thomas Borgen""
+],
+""Organizations"": [
+""State Prosecutor for Serious Economic and International Crime"",
+""Danske Bank""
+],
+""Locations"": [
+""Denmark"",
+""Estonia""
+]
+}",direct_json,0.4,1.0,0.5714285714285715,0.0,0,16.2,100.0,0.8,78.5,252.2,30996.4,81.5,9051.5,9163.2,"{'timestamp': '2026-09-15T03:22:15.737451+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+2,13,zs-es,211.61976385116577,50.45,0,0,"{""Persons"": [""Mutassim Gaddafi"", ""Muammar Gaddafi""], ""Organizations"": [""Bank of Valletta""], ""Locations"": [""Malta"", ""Libya""]}",direct_json,0.8,1.0,0.888888888888889,0.0,0,14.5,100.0,1.1,74.4,252.2,29949.5,79.1,9051.5,9163.2,"{'timestamp': '2026-09-15T03:23:24.082718+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+2,14,zs-es,233.4604811668396,53.47,0,0,"{""Persons"": [""Willy Ngoma""], ""Organizations"": [""United Nations Security Council"", ""M23 rebel group""], ""Locations"": [""Democratic Republic of Congo""]}",direct_json,0.5,0.5,0.5,0.0,0,9.7,63.6,1.0,73.7,252.2,29368.8,79.4,9051.5,9163.2,"{'timestamp': '2026-09-15T03:23:45.922338+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+2,15,zs-es,237.94099402427673,53.37,0,0,"{
+""Persons"": [
+""Evelin Banev""
+],
+""Organizations"": [
+""Swiss Federal Criminal Court"",
+""Credit Suisse Group AG""
+],
+""Locations"": []
+}",direct_json,1.0,1.0,1.0,0.0,0,11.5,100.0,0.5,67.6,252.2,29211.1,79.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:23:57.981856+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+3,16,zs-es,16.868139028549194,51.53,0,0,"{""Persons"": [""Brad Garlinghouse"", ""Christian Larsen""], ""Organizations"": [""SEC"", ""Ripple Labs Inc""], ""Locations"": []}",direct_json,1.0,1.0,1.0,0.0,0,30.2,71.4,5.1,247.5,252.2,25822.1,67.5,9051.5,9163.2,"{'timestamp': '2026-09-15T03:20:09.315788+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+3,17,zs-es,107.9231469631195,9.06,0,0,"{""Persons"": [""Lars Machen""], ""Organizations"": [""DOJ"", ""BNP Paribas SA""], ""Locations"": [""Sudan"", ""Iran""]}",direct_json,1.0,1.0,1.0,0.0,0,14.0,73.3,0.9,83.9,252.2,31086.5,82.1,9051.5,9163.2,"{'timestamp': '2026-09-15T03:21:40.383439+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+3,18,zs-es,203.02557396888733,53.49,0,0,"{""Persons"": [""Sani Abacha""], ""Organizations"": [""U.S. Department of Justice"", ""Citibank""], ""Locations"": [""Nigeria""]}",direct_json,0.75,1.0,0.8571428571428571,0.0,0,9.5,66.7,1.0,74.8,252.2,30102.7,79.1,9051.5,9163.2,"{'timestamp': '2026-09-15T03:23:15.481180+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+3,19,zs-es,61.82677125930786,8.03,0,0,"{""Persons"": [""Sarah Johnston""], ""Organizations"": [""U.S. Treasury"", ""OFAC"", ""Airbnb Inc""], ""Locations"": [""Cuba""]}",direct_json,0.6,1.0,0.7499999999999999,0.0,0,18.8,100.0,2.7,111.0,252.2,30200.3,80.2,9051.5,9163.2,"{'timestamp': '2026-09-15T03:20:54.275366+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+3,20,zs-es,237.58269214630127,53.3,0,0,"{""Persons"": [""Denny Chin"", ""Bernard L. Madoff""], ""Organizations"": [""Bernard L. Madoff Investment Securities LLC""], ""Locations"": [""U.S.""]}",direct_json,0.75,1.0,0.8571428571428571,0.0,0,8.1,59.1,0.5,61.7,76.3,29127.2,80.4,9051.5,9163.2,"{'timestamp': '2026-09-15T03:24:06.931151+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+0,1,zs-es,195.07402110099792,53.42,0,0,"{""Persons"": [""Alexey Shevchenko""], ""Organizations"": [""US Department of the Treasury's OFAC"", ""Al-Sahra Electronics""], ""Locations"": [""United States"", ""Dubai"", ""Russia"", ""UAE""]}",direct_json,0.8571428571428571,0.75,0.7999999999999999,0.0,0,9.9,73.3,2.0,75.1,252.2,30190.2,79.4,9051.5,9163.2,"{'timestamp': '2026-09-15T03:23:07.517862+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+0,2,zs-es,152.99023008346558,53.5,0,0,"{""Persons"": [""Kenneth A. Polite Jr."", ""Stephen Murphy""], ""Organizations"": [""HSBC"", ""Sinaloa Cartel""], ""Locations"": [""New York""]}",direct_json,1.0,0.8333333333333334,0.9090909090909091,0.0,0,10.1,80.0,2.1,77.7,252.2,30797.6,81.0,9051.5,9163.2,"{'timestamp': '2026-09-15T03:22:25.432757+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+0,3,zs-es,132.14586806297302,29.86,0,0,"{
+""Persons"": [
+""Dmitry Kovalev""
+],
+""Organizations"": [
+""European Council"",
+""Belneftekhim"",
+""European Union""
+],
+""Locations"": [
+""Belarus""
+]
+}",direct_json,0.8,1.0,0.888888888888889,0.0,0,18.5,100.0,1.9,79.6,252.2,31200.1,82.1,9051.5,9163.2,"{'timestamp': '2026-09-15T03:22:04.578997+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+0,4,zs-es,226.28019094467163,53.61,0,0,"{""Persons"": [""Arthur Chan""], ""Organizations"": [""Securities and Futures Commission (SFC)"", ""Sun Hung Kai Securities""], ""Locations"": []}",direct_json,1.0,0.75,0.8571428571428571,0.0,0,12.9,83.3,1.4,73.9,252.2,29545.4,79.3,9051.5,9163.2,"{'timestamp': '2026-09-15T03:23:38.730863+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+0,5,zs-es,129.64661478996277,53.47,0,0,"{""Persons"": [""Maher Al-Assad""], ""Organizations"": [""UK Office of Financial Sanctions Implementation (OFSI)"", ""Barclays Bank""], ""Locations"": [""Syria""]}",direct_json,1.0,0.8,0.888888888888889,0.0,0,9.4,45.5,0.9,65.7,71.8,26275.4,77.2,9051.5,9163.2,"{'timestamp': '2026-09-15T03:24:14.242074+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+1,6,zs-es,219.20224690437317,53.37,0,0,"{""Persons"": [""Cyril Ramaphosa""], ""Organizations"": [""Financial Action Task Force (FATF)"", ""Standard Bank""], ""Locations"": [""South Africa"", ""Zimbabwe""]}",direct_json,1.0,0.8333333333333334,0.9090909090909091,0.0,0,14.8,100.0,1.1,74.1,252.2,29734.7,79.2,9051.5,9163.2,"{'timestamp': '2026-09-15T03:23:31.658166+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+1,7,zs-es,184.26234602928162,53.58,0,0,"{""Persons"": [""Marc Dufour""], ""Organizations"": [""SEC"", ""ABB Ltd""], ""Locations"": [""Swiss"", ""South Africa""]}",direct_json,0.8,1.0,0.888888888888889,0.0,0,14.4,100.0,0.8,75.6,252.2,30311.8,79.7,9051.5,9163.2,"{'timestamp': '2026-09-15T03:22:56.718332+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+1,8,zs-es,162.54095602035522,53.38,0,0,"{""Persons"": [""Nicolas Maduro Guerra""], ""Organizations"": [""U.S. Treasury's OFAC"", ""PDVSA""], ""Locations"": [""Switzerland"", ""Panama""]}",direct_json,0.8,0.8,0.8000000000000002,0.0,0,10.9,63.6,1.7,76.9,252.2,30625.1,80.5,9051.5,9163.2,"{'timestamp': '2026-09-15T03:22:35.006688+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+1,9,zs-es,174.75654816627502,53.31,0,0,"{
+""Persons"": [
+""Christian Sewing""
+],
+""Organizations"": [
+""BaFin"",
+""Deutsche Bank""
+],
+""Locations"": [
+""Germany"",
+""Russia""
+]
+}",direct_json,0.8,1.0,0.888888888888889,0.0,0,12.0,100.0,1.1,76.2,252.2,30436.5,80.0,9051.5,9163.2,"{'timestamp': '2026-09-15T03:22:47.216444+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+1,10,zs-es,111.94098997116089,53.29,0,0,"{
+""Persons"": [
+""Georgios Pavlidis""
+],
+""Organizations"": [
+""The Justice Department"",
+""Suez Rajan Ltd""
+],
+""Locations"": []
+}",direct_json,1.0,1.0,1.0,0.0,0,8.9,53.8,1.0,65.7,71.8,25487.8,78.7,9051.5,9163.2,"{'timestamp': '2026-09-15T03:24:26.961895+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+4,21,zs-es,57.75967288017273,53.39,0,0,"{
+""Persons"": [
+""Mahmoud Bahmani""
+],
+""Organizations"": [
+""New York Department of Financial Services"",
+""DFS"",
+""Standard Chartered Bank"",
+""Central Bank of Iran""
+],
+""Locations"": [
+""New York""
+]
+}",direct_json,1.0,0.8571428571428571,0.923076923076923,0.0,0,13.2,38.6,2.4,63.3,71.8,23698.0,82.4,9051.5,9163.2,"{'timestamp': '2026-09-15T03:24:55.765494+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+4,22,zs-es,65.34583401679993,53.54,0,0,"{""Persons"": [""Jho Low""], ""Organizations"": [""DOJ"", ""Goldman Sachs Group Inc"", ""1MDB sovereign wealth fund""], ""Locations"": []}",direct_json,0.75,0.75,0.75,0.0,0,14.0,100.0,2.4,63.2,71.8,23699.4,82.4,9051.5,9163.2,"{'timestamp': '2026-09-15T03:25:03.348756+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+4,23,zs-es,46.12735104560852,53.64,0,0,"{""Persons"": [""Erik Thedeen""], ""Organizations"": [""Finansinspektionen"", ""Skandinaviska Enskilda Banken (SEB)""], ""Locations"": [""Sweden"", ""Baltic""]}",direct_json,0.6,0.75,0.6666666666666665,0.0,0,10.5,38.9,3.3,63.5,71.8,23720.5,82.4,9051.5,9163.2,"{'timestamp': '2026-09-15T03:24:44.131885+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+4,24,zs-es,36.476556062698364,53.7,0,0,"{""Persons"": [""Timur Kulibaev""], ""Organizations"": [""The National Bank of Kazakhstan"", ""Eurasian Bank""], ""Locations"": [""Kazakhstan""]}",direct_json,1.0,1.0,1.0,0.0,0,13.0,100.0,2.7,63.8,71.8,23744.2,82.3,9051.5,9163.2,"{'timestamp': '2026-09-15T03:24:34.483621+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+4,25,zs-es,69.42780804634094,53.47,0,0,"{""Persons"": [""Jane Watson""], ""Organizations"": [""The Financial Conduct Authority (FCA)"", ""Royal Bank of Scotland (RBS)"", ""OFAC""], ""Locations"": []}",direct_json,0.75,0.5,0.6,0.0,0,11.1,32.5,1.1,61.9,62.8,23575.9,82.5,9051.5,9163.2,"{'timestamp': '2026-09-15T03:25:43.925454+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+5,26,zs-es,71.95431399345398,53.51,0,0,"{""Persons"": [""Najib Razak""], ""Organizations"": [""SRC International"", ""1MDB fund""], ""Locations"": []}",direct_json,0.6666666666666666,0.6666666666666666,0.6666666666666666,0.0,0,8.7,33.6,3.3,62.6,63.9,23637.9,82.4,9051.5,9163.2,"{'timestamp': '2026-09-15T03:25:18.909020+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+5,27,zs-es,64.33042311668396,53.41,0,0,"{""Persons"": [""Jian Liu""], ""Organizations"": [""SEC"", ""Luckin Coffee Inc""], ""Locations"": []}",direct_json,1.0,1.0,1.0,0.0,0,9.0,33.6,1.6,62.7,63.9,23658.4,82.4,9051.5,9163.2,"{'timestamp': '2026-09-15T03:25:11.287328+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+5,28,zs-es,88.19443988800049,53.53,0,0,"{""Persons"": [""Brian Hartzer""], ""Organizations"": [""Australian Transaction Reports and Analysis Centre (AUSTRAC)"", ""Westpac Banking Corporation""], ""Locations"": []}",direct_json,1.0,0.75,0.8571428571428571,0.0,0,8.8,33.6,2.3,62.5,63.9,23621.5,82.4,9051.5,9163.2,"{'timestamp': '2026-09-15T03:25:35.147495+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+5,29,zs-es,79.56654691696167,53.42,0,0,"{""Persons"": [""Jacob Aarup-Andersen""], ""Organizations"": [""Danske Bank"", ""Copenhagen police""], ""Locations"": [""Copenhagen"", ""Baltic""]}",direct_json,0.4,1.0,0.5714285714285715,0.0,0,8.9,33.6,1.9,62.5,63.9,23625.2,82.4,9051.5,9163.2,"{'timestamp': '2026-09-15T03:25:26.519685+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+5,30,zs-es,39.56070017814636,53.62,0,0,"{""Persons"": [""Susan Mauldin""], ""Organizations"": [""Federal Trade Commission"", ""FTC"", ""Equifax Inc""], ""Locations"": []}",direct_json,1.0,1.0,1.0,0.0,0,10.0,26.8,0.5,61.7,62.0,23559.8,82.5,9051.5,9163.2,"{'timestamp': '2026-09-15T03:25:50.860036+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'fb427b98'}"
+3,16,fs-es,45.49531173706055,53.57,0,0,"```json
+{
+  ""Persons"": [
+    ""Brad Garlinghouse"",
+    ""Christian Larsen""
+  ],
+  ""Organizations"": [
+    ""SEC"",
+    ""Ripple Labs Inc""
+  ],
+  ""Locations"": []
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,12.3,96.5,5.5,79.9,84.0,23575.0,82.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:26:36.378679+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+3,17,fs-es,137.76934099197388,53.6,0,0,"```json
+{
+  ""Persons"": [
+    ""Lars Machen""
+  ],
+  ""Organizations"": [
+    ""DOJ"",
+    ""BNP Paribas SA""
+  ],
+  ""Locations"": [
+    ""Sudan"",
+    ""Iran""
+  ]
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,8.9,96.4,0.8,67.7,84.0,23646.7,82.7,9051.5,9163.2,"{'timestamp': '2026-09-15T03:28:08.674158+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+3,18,fs-es,88.1608567237854,53.61,0,0,"```json
+{
+  ""Persons"": [
+    ""Sani Abacha""
+  ],
+  ""Organizations"": [
+    ""U.S. Department of Justice"",
+    ""Citibank""
+  ],
+  ""Locations"": [
+    ""Nigeria""
+  ]
+}
+```",codeblock,0.75,1.0,0.8571428571428571,0.0,0,7.0,96.4,1.2,74.2,84.0,23587.9,82.8,9051.5,9163.2,"{'timestamp': '2026-09-15T03:27:19.071468+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+3,19,fs-es,8.632920980453491,53.39,0,0,"```json
+{
+  ""Persons"": [
+    ""Sarah Johnston""
+  ],
+  ""Organizations"": [
+    ""U.S. Treasury"",
+    ""OFAC"",
+    ""Airbnb Inc""
+  ],
+  ""Locations"": [
+    ""Cuba""
+  ]
+}
+```",codeblock,0.6,1.0,0.7499999999999999,0.0,0,12.5,96.4,9.4,83.5,83.7,23684.6,82.8,9051.5,9163.2,"{'timestamp': '2026-09-15T03:25:59.536143+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+3,20,fs-es,138.2402892112732,53.6,0,0,"```json
+{
+  ""Persons"": [
+    ""Denny Chin"",
+    ""Bernard L. Madoff""
+  ],
+  ""Organizations"": [
+    ""Bernard L. Madoff Investment Securities LLC""
+  ],
+  ""Locations"": [
+    ""U.S.""
+  ]
+}
+```",codeblock,0.75,1.0,0.8571428571428571,0.0,0,7.9,63.3,0.8,65.5,84.0,23651.1,82.7,9051.5,9163.2,"{'timestamp': '2026-09-15T03:28:17.787970+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+0,1,fs-es,19.748966932296753,53.42,0,0,"```json
+{
+  ""Persons"": [
+    ""Alexey Shevchenko""
+  ],
+  ""Organizations"": [
+    ""US Department of the Treasury's OFAC"",
+    ""Al-Sahra Electronics""
+  ],
+  ""Locations"": [
+    ""Dubai"",
+    ""Russia"",
+    ""United States"",
+    ""UAE""
+  ]
+}
+```",codeblock,0.8571428571428571,0.75,0.7999999999999999,0.0,0,14.8,96.6,13.8,83.5,84.0,23614.7,82.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:26:10.640890+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+0,2,fs-es,106.27582097053528,53.61,0,0,"```json
+{
+  ""Persons"": [
+    ""Kenneth A. Polite Jr."",
+    ""Stephen Murphy""
+  ],
+  ""Organizations"": [
+    ""HSBC"",
+    ""Sinaloa Cartel""
+  ],
+  ""Locations"": [
+    ""New York""
+  ]
+}
+```",codeblock,1.0,0.8333333333333334,0.9090909090909091,0.0,0,13.2,100.0,2.7,72.0,84.0,23605.4,82.7,9051.5,9163.2,"{'timestamp': '2026-09-15T03:27:37.168199+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+0,3,fs-es,123.07645010948181,53.46,0,0,"```json
+{
+  ""Persons"": [
+    ""Dmitry Kovalev""
+  ],
+  ""Organizations"": [
+    ""European Council"",
+    ""Belneftekhim"",
+    ""EU""
+  ],
+  ""Locations"": [
+    ""Belarus"",
+    ""Russia""
+  ]
+}
+```",codeblock,0.6666666666666666,1.0,0.8,0.0,0,10.2,100.0,2.0,69.7,84.0,23634.3,82.7,9051.5,9163.2,"{'timestamp': '2026-09-15T03:27:53.966594+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+0,4,fs-es,71.35740971565247,53.49,0,0,"```json
+{
+  ""Persons"": [
+    ""Arthur Chan""
+  ],
+  ""Organizations"": [
+    ""Securities and Futures Commission (SFC)"",
+    ""Sun Hung Kai Securities""
+  ],
+  ""Locations"": []
+}
+```",codeblock,1.0,0.75,0.8571428571428571,0.0,0,13.9,96.6,3.6,77.1,84.0,23574.2,82.8,9051.5,9163.2,"{'timestamp': '2026-09-15T03:27:02.240944+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+0,5,fs-es,133.6339979171753,53.73,0,0,"```json
+{
+  ""Persons"": [
+    ""Maher Al-Assad""
+  ],
+  ""Organizations"": [
+    ""UK Office of Financial Sanctions Implementation"",
+    ""OFSI"",
+    ""Barclays Bank""
+  ],
+  ""Locations"": [
+    ""Syria""
+  ]
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,9.8,63.6,0.9,63.6,84.0,23649.4,82.6,9051.5,9163.2,"{'timestamp': '2026-09-15T03:28:24.286621+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+2,11,fs-es,80.54114294052124,53.44,0,0,"```json
+{
+  ""Persons"": [
+    ""Lisa O. Monaco"",
+    ""Ilya Lichtenstein"",
+    ""Heather Morgan""
+  ],
+  ""Organizations"": [
+    ""Bitfinex""
+  ],
+  ""Locations"": []
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,10.5,96.6,3.5,75.3,84.0,23577.8,82.8,9051.5,9163.2,"{'timestamp': '2026-09-15T03:27:11.423068+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+2,12,fs-es,38.49836611747742,53.47,0,0,"```json
+{
+  ""Persons"": [
+    ""Thomas Borgen""
+  ],
+  ""Organizations"": [
+    ""State Prosecutor for Serious Economic and International Crime"",
+    ""Danske Bank""
+  ],
+  ""Locations"": [
+    ""Denmark"",
+    ""Estonia""
+  ]
+}
+```",codeblock,0.4,1.0,0.5714285714285715,0.0,0,10.9,100.0,3.9,81.0,84.0,23574.4,82.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:26:29.389408+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+2,13,fs-es,29.39137101173401,53.63,0,0,"```json
+{
+  ""Persons"": [
+    ""Mutassim Gaddafi"",
+    ""Muammar Gaddafi""
+  ],
+  ""Organizations"": [
+    ""Bank of Valletta""
+  ],
+  ""Locations"": [
+    ""Malta""
+  ]
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,8.3,96.4,3.1,82.8,84.0,23594.8,82.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:26:20.291539+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+2,14,fs-es,113.48521208763123,53.56,0,0,"```json
+{
+  ""Persons"": [
+    ""Willy Ngoma""
+  ],
+  ""Organizations"": [
+    ""United Nations Security Council"",
+    ""M23 rebel group""
+  ],
+  ""Locations"": [
+    ""Democratic Republic of Congo""
+  ]
+}
+```",codeblock,0.5,0.5,0.5,0.0,0,6.9,96.4,0.8,71.1,84.0,23619.5,82.7,9051.5,9163.2,"{'timestamp': '2026-09-15T03:27:44.377003+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+2,15,fs-es,133.1809480190277,53.54,0,0,"```json
+{
+  ""Persons"": [
+    ""Evelin Banev""
+  ],
+  ""Organizations"": [
+    ""Swiss Federal Criminal Court"",
+    ""Credit Suisse Group AG""
+  ],
+  ""Locations"": [
+    ""Switzerland"",
+    ""Bulgaria""
+  ]
+}
+```",codeblock,0.6,1.0,0.7499999999999999,0.2,1,8.7,63.3,0.9,62.2,76.0,23635.5,82.7,9051.5,9163.2,"{'timestamp': '2026-09-15T03:28:33.482416+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+1,6,fs-es,130.1804962158203,53.56,0,0,"```json
+{
+  ""Persons"": [
+    ""Cyril Ramaphosa""
+  ],
+  ""Organizations"": [
+    ""Financial Action Task Force (FATF)"",
+    ""Standard Bank""
+  ],
+  ""Locations"": [
+    ""South Africa"",
+    ""Zimbabwe""
+  ]
+}
+```",codeblock,1.0,0.8333333333333334,0.9090909090909091,0.0,0,10.5,100.0,0.9,68.8,84.0,23642.4,82.7,9051.5,9163.2,"{'timestamp': '2026-09-15T03:28:01.084275+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+1,7,fs-es,63.75434398651123,53.21,0,0,"```json
+{
+  ""Persons"": [
+    ""Marc Dufour""
+  ],
+  ""Organizations"": [
+    ""SEC"",
+    ""ABB Ltd""
+  ],
+  ""Locations"": [
+    ""Swiss"",
+    ""South Africa""
+  ]
+}
+```",codeblock,0.8,1.0,0.888888888888889,0.0,0,13.3,96.6,5.1,77.8,84.0,23568.6,82.8,9051.5,9163.2,"{'timestamp': '2026-09-15T03:26:54.642003+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+1,8,fs-es,97.27616500854492,53.56,0,0,"```json
+{
+  ""Persons"": [
+    ""Nicolas Maduro Guerra""
+  ],
+  ""Organizations"": [
+    ""U.S. Treasury"",
+    ""OFAC"",
+    ""PDVSA""
+  ],
+  ""Locations"": [
+    ""Venezuela"",
+    ""Switzerland"",
+    ""Panama""
+  ]
+}
+```",codeblock,0.7142857142857143,1.0,0.8333333333333333,0.0,0,6.8,96.4,1.1,73.0,84.0,23596.9,82.8,9051.5,9163.2,"{'timestamp': '2026-09-15T03:27:28.179941+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+1,9,fs-es,55.21621608734131,52.73,0,0,"```json
+{
+  ""Persons"": [
+    ""Christian Sewing""
+  ],
+  ""Organizations"": [
+    ""BaFin"",
+    ""Deutsche Bank""
+  ],
+  ""Locations"": [
+    ""Germany""
+  ]
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,9.7,100.0,3.4,78.7,84.0,23561.1,82.8,9051.5,9163.2,"{'timestamp': '2026-09-15T03:26:46.102239+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+1,10,fs-es,116.43606686592102,53.6,0,0,"```json
+{
+  ""Persons"": [
+    ""Georgios Pavlidis""
+  ],
+  ""Organizations"": [
+    ""Justice Department"",
+    ""Suez Rajan Ltd""
+  ],
+  ""Locations"": [
+    ""Greece"",
+    ""Iran""
+  ]
+}
+```",codeblock,0.6,1.0,0.7499999999999999,0.0,0,11.4,65.0,0.9,60.4,73.5,23634.1,82.7,9051.5,9163.2,"{'timestamp': '2026-09-15T03:28:42.549824+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+4,21,fs-es,41.4760422706604,53.29,0,0,"```json
+{
+  ""Persons"": [
+    ""Mahmoud Bahmani""
+  ],
+  ""Organizations"": [
+    ""New York Department of Financial Services"",
+    ""DFS"",
+    ""Standard Chartered Bank"",
+    ""Central Bank of Iran""
+  ],
+  ""Locations"": [
+    ""Iran""
+  ]
+}
+```",codeblock,1.0,0.8571428571428571,0.923076923076923,0.0,0,11.0,40.5,2.4,67.7,73.5,23336.0,83.4,9051.5,9163.2,"{'timestamp': '2026-09-15T03:28:59.294966+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+4,22,fs-es,49.56024980545044,53.28,0,0,"```json
+{
+  ""Persons"": [
+    ""Jho Low""
+  ],
+  ""Organizations"": [
+    ""DOJ"",
+    ""Goldman Sachs Group Inc"",
+    ""1MDB""
+  ],
+  ""Locations"": []
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,12.7,40.7,3.7,68.2,73.5,23307.4,83.5,9051.5,9163.2,"{'timestamp': '2026-09-15T03:29:07.373229+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+4,23,fs-es,57.19234609603882,53.46,0,0,"```json
+{
+  ""Persons"": [
+    ""Erik Thedeen""
+  ],
+  ""Organizations"": [
+    ""Finansinspektionen"",
+    ""Skandinaviska Enskilda Banken (SEB)""
+  ],
+  ""Locations"": [
+    ""Sweden"",
+    ""Baltic""
+  ]
+}
+```",codeblock,0.6,0.75,0.6666666666666665,0.0,0,10.5,40.5,3.0,68.6,73.5,23275.1,83.5,9051.5,9163.2,"{'timestamp': '2026-09-15T03:29:15.009747+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+4,24,fs-es,31.38327932357788,53.56,0,0,"```json
+{
+  ""Persons"": [
+    ""Timur Kulibaev""
+  ],
+  ""Organizations"": [
+    ""The National Bank of Kazakhstan"",
+    ""Eurasian Bank""
+  ],
+  ""Locations"": [
+    ""Kazakhstan""
+  ]
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,9.6,33.7,2.4,66.7,73.5,23348.8,83.3,9051.5,9163.2,"{'timestamp': '2026-09-15T03:28:49.198416+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+4,25,fs-es,63.2558479309082,53.4,0,0,"```json
+{
+  ""Persons"": [
+    ""Jane Watson""
+  ],
+  ""Organizations"": [
+    ""Financial Conduct Authority"",
+    ""FCA"",
+    ""Royal Bank of Scotland"",
+    ""RBS"",
+    ""OFAC""
+  ],
+  ""Locations"": []
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,10.2,40.5,1.2,60.6,72.4,23164.1,83.8,9051.5,9163.2,"{'timestamp': '2026-09-15T03:29:52.476495+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+5,26,fs-es,72.9093849658966,53.62,0,0,"```json
+{
+  ""Persons"": [
+    ""Najib Razak""
+  ],
+  ""Organizations"": [
+    ""SRC International"",
+    ""1MDB fund""
+  ],
+  ""Locations"": []
+}
+```",codeblock,0.6666666666666666,0.6666666666666666,0.6666666666666666,0.0,0,12.9,41.4,1.8,65.2,73.5,23197.6,83.7,9051.5,9163.2,"{'timestamp': '2026-09-15T03:29:37.213666+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+5,27,fs-es,79.53611993789673,53.59,0,0,"```json
+{
+  ""Persons"": [
+    ""Jian Liu""
+  ],
+  ""Organizations"": [
+    ""SEC"",
+    ""Luckin Coffee Inc""
+  ],
+  ""Locations"": []
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,12.6,100.0,1.2,64.1,73.5,23200.5,83.7,9051.5,9163.2,"{'timestamp': '2026-09-15T03:29:43.845799+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+5,28,fs-es,56.74942111968994,53.5,0,0,"```json
+{
+  ""Persons"": [
+    ""Brian Hartzer""
+  ],
+  ""Organizations"": [
+    ""Australian Transaction Reports and Analysis Centre (AUSTRAC)"",
+    ""Westpac Banking Corporation""
+  ],
+  ""Locations"": []
+}
+```",codeblock,1.0,0.75,0.8571428571428571,0.0,0,13.6,100.0,1.2,68.9,73.5,23230.3,83.7,9051.5,9163.2,"{'timestamp': '2026-09-15T03:29:21.057609+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+5,29,fs-es,64.80114531517029,53.52,0,0,"```json
+{
+  ""Persons"": [
+    ""Jacob Aarup-Andersen""
+  ],
+  ""Organizations"": [
+    ""Danske Bank"",
+    ""Copenhagen police""
+  ],
+  ""Locations"": [
+    ""Copenhagen"",
+    ""Baltic""
+  ]
+}
+```",codeblock,0.4,1.0,0.5714285714285715,0.0,0,13.0,41.8,1.5,66.8,73.5,23214.1,83.7,9051.5,9163.2,"{'timestamp': '2026-09-15T03:29:29.108437+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+5,30,fs-es,40.04945111274719,53.1,0,0,"```json
+{
+  ""Persons"": [
+    ""Susan Mauldin""
+  ],
+  ""Organizations"": [
+    ""Federal Trade Commission"",
+    ""FTC"",
+    ""Equifax Inc""
+  ],
+  ""Locations"": []
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,11.8,58.4,1.5,52.3,62.8,23163.7,83.7,9051.5,9163.2,"{'timestamp': '2026-09-15T03:30:01.119671+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': 'aa83fa9c'}"
+3,16,fs-en,26.404276132583618,25.79,0,0,"```json
+{
+  ""Persons"": [
+    ""Brad Garlinghouse"",
+    ""Christian Larsen""
+  ],
+  ""Organizations"": [
+    ""SEC"",
+    ""Ripple Labs Inc""
+  ],
+  ""Locations"": []
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,22.8,83.9,5.3,62.8,74.0,28752.1,85.5,9051.5,9163.2,"{'timestamp': '2026-09-15T03:30:27.577382+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+3,17,fs-en,112.91916799545288,53.75,0,0,"```json
+{
+  ""Persons"": [
+    ""Lars Machen""
+  ],
+  ""Organizations"": [
+    ""DOJ"",
+    ""BNP Paribas SA""
+  ],
+  ""Locations"": [
+    ""Sudan"",
+    ""Iran""
+  ]
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,12.4,100.0,1.2,50.5,74.0,27247.1,84.6,9051.5,9163.2,"{'timestamp': '2026-09-15T03:31:54.098311+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+3,18,fs-en,105.32619404792786,50.64,0,0,"```json
+{
+  ""Persons"": [
+    ""Sani Abacha""
+  ],
+  ""Organizations"": [
+    ""U.S. Department of Justice"",
+    ""Citibank""
+  ],
+  ""Locations"": [
+    ""Nigeria""
+  ]
+}
+```",codeblock,0.75,1.0,0.8571428571428571,0.0,0,12.9,100.0,1.6,50.7,74.0,27620.9,84.5,9051.5,9163.2,"{'timestamp': '2026-09-15T03:31:46.502596+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+3,19,fs-en,79.99315667152405,53.64,0,0,"```json
+{
+  ""Persons"": [
+    ""Sarah Johnston""
+  ],
+  ""Organizations"": [
+    ""U.S. Treasury"",
+    ""OFAC"",
+    ""Airbnb Inc""
+  ],
+  ""Locations"": [
+    ""Cuba""
+  ]
+}
+```",codeblock,0.6,1.0,0.7499999999999999,0.0,0,14.1,83.9,1.4,52.1,74.1,28627.6,85.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:31:21.169649+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+3,20,fs-en,156.90968489646912,53.53,0,0,"```json
+{
+  ""Persons"": [
+    ""Denny Chin"",
+    ""Bernard L. Madoff""
+  ],
+  ""Organizations"": [
+    ""Bernard L. Madoff Investment Securities LLC""
+  ],
+  ""Locations"": []
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,12.8,83.9,1.0,49.2,74.1,25767.7,84.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:32:38.082974+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+4,21,fs-en,142.22327494621277,53.66,0,0,"```json
+{
+  ""Persons"": [
+    ""Mahmoud Bahmani""
+  ],
+  ""Organizations"": [
+    ""New York Department of Financial Services"",
+    ""DFS"",
+    ""Standard Chartered Bank"",
+    ""Central Bank of Iran""
+  ],
+  ""Locations"": [
+    ""Iran""
+  ]
+}
+```",codeblock,1.0,0.8571428571428571,0.923076923076923,0.0,0,15.4,100.0,1.1,49.5,74.0,26162.6,84.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:32:23.397139+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+4,22,fs-en,49.61929178237915,37.05,0,0,"```json
+{
+  ""Persons"": [
+    ""Jho Low""
+  ],
+  ""Organizations"": [
+    ""DOJ"",
+    ""Goldman Sachs Group Inc"",
+    ""1MDB""
+  ],
+  ""Locations"": []
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,18.0,83.9,1.7,57.4,74.0,29125.7,86.1,9051.5,9163.2,"{'timestamp': '2026-09-15T03:30:50.794569+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+4,23,fs-en,173.64531898498535,53.72,0,0,"```json
+{
+  ""Persons"": [
+    ""Erik Thedeen""
+  ],
+  ""Organizations"": [
+    ""Finansinspektionen"",
+    ""Skandinaviska Enskilda Banken (SEB)""
+  ],
+  ""Locations"": [
+    ""Sweden"",
+    ""Baltic""
+  ]
+}
+```",codeblock,0.6,0.75,0.6666666666666665,0.0,0,14.3,85.7,1.0,51.3,74.0,25406.1,84.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:32:54.817766+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+4,24,fs-en,73.87239623069763,27.86,0,0,"```json
+{
+  ""Persons"": [
+    ""Timur Kulibaev""
+  ],
+  ""Organizations"": [
+    ""National Bank of Kazakhstan"",
+    ""Eurasian Bank""
+  ],
+  ""Locations"": [
+    ""Kazakhstan""
+  ]
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,20.6,100.0,1.6,52.5,74.0,28883.7,86.3,9051.5,9163.2,"{'timestamp': '2026-09-15T03:31:15.042125+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+4,25,fs-en,190.32927989959717,53.69,0,0,"```json
+{
+  ""Persons"": [
+    ""Jane Watson""
+  ],
+  ""Organizations"": [
+    ""Financial Conduct Authority"",
+    ""FCA"",
+    ""Royal Bank of Scotland"",
+    ""RBS"",
+    ""OFAC""
+  ],
+  ""Locations"": []
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,12.4,83.9,0.9,53.0,74.0,25100.7,84.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:33:11.501487+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+1,6,fs-en,209.6095769405365,53.63,0,0,"```json
+{
+  ""Persons"": [
+    ""Cyril Ramaphosa""
+  ],
+  ""Organizations"": [
+    ""Financial Action Task Force"",
+    ""FATF"",
+    ""Standard Bank""
+  ],
+  ""Locations"": [
+    ""South Africa"",
+    ""Zimbabwe""
+  ]
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,16.8,100.0,1.5,53.8,74.0,24807.9,85.0,9051.5,9163.2,"{'timestamp': '2026-09-15T03:33:30.770589+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+1,7,fs-en,132.66924810409546,52.82,0,0,"```json
+{
+  ""Persons"": [
+    ""Marc Dufour""
+  ],
+  ""Organizations"": [
+    ""SEC"",
+    ""ABB Ltd""
+  ],
+  ""Locations"": [
+    ""Swiss"",
+    ""South Africa""
+  ]
+}
+```",codeblock,0.8,1.0,0.888888888888889,0.0,0,12.8,100.0,1.5,49.8,74.0,26482.3,84.8,9051.5,9163.2,"{'timestamp': '2026-09-15T03:32:13.826373+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+1,8,fs-en,201.59396600723267,53.67,0,0,"```json
+{
+  ""Persons"": [
+    ""Nicolas Maduro Guerra""
+  ],
+  ""Organizations"": [
+    ""U.S. Treasury"",
+    ""OFAC"",
+    ""PDVSA""
+  ],
+  ""Locations"": [
+    ""Venezuela"",
+    ""Switzerland"",
+    ""Panama""
+  ]
+}
+```",codeblock,0.7142857142857143,1.0,0.8333333333333333,0.0,0,14.0,100.0,2.2,54.1,74.0,24926.5,85.0,9051.5,9163.2,"{'timestamp': '2026-09-15T03:33:22.759743+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+1,9,fs-en,89.63709902763367,53.37,0,0,"```json
+{
+  ""Persons"": [
+    ""Christian Sewing""
+  ],
+  ""Organizations"": [
+    ""BaFin"",
+    ""Deutsche Bank""
+  ],
+  ""Locations"": [
+    ""Germany""
+  ]
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,13.2,83.9,5.4,51.5,74.0,28185.7,85.1,9051.5,9163.2,"{'timestamp': '2026-09-15T03:31:30.800036+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+1,10,fs-en,123.02141308784485,53.51,0,0,"```json
+{
+  ""Persons"": [
+    ""Georgios Pavlidis""
+  ],
+  ""Organizations"": [
+    ""Justice Department"",
+    ""Suez Rajan Ltd""
+  ],
+  ""Locations"": [
+    ""Greece"",
+    ""Iran""
+  ]
+}
+```",codeblock,0.6,1.0,0.7499999999999999,0.0,0,11.7,83.9,1.2,50.1,74.0,26822.4,84.7,9051.5,9163.2,"{'timestamp': '2026-09-15T03:32:04.189431+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+2,11,fs-en,97.76099610328674,53.42,0,0,"```json
+{
+  ""Persons"": [
+    ""Lisa O. Monaco"",
+    ""Ilya Lichtenstein"",
+    ""Heather Morgan""
+  ],
+  ""Organizations"": [
+    ""Bitfinex""
+  ],
+  ""Locations"": []
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,14.0,100.0,5.1,51.0,74.0,27944.7,84.6,9051.5,9163.2,"{'timestamp': '2026-09-15T03:31:38.924966+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+2,12,fs-en,181.7867488861084,53.64,0,0,"```json
+{
+  ""Persons"": [
+    ""Thomas Borgen""
+  ],
+  ""Organizations"": [
+    ""State Prosecutor for Serious Economic and International Crime"",
+    ""Danske Bank""
+  ],
+  ""Locations"": [
+    ""Denmark"",
+    ""Estonia""
+  ]
+}
+```",codeblock,0.4,1.0,0.5714285714285715,0.0,0,12.6,83.9,1.6,52.2,74.0,25251.9,84.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:33:02.945148+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+2,13,fs-en,224.3043348789215,53.69,0,0,"```json
+{
+  ""Persons"": [
+    ""Mutassim Gaddafi"",
+    ""Muammar Gaddafi""
+  ],
+  ""Organizations"": [
+    ""Bank of Valletta""
+  ],
+  ""Locations"": [
+    ""Malta"",
+    ""Libya""
+  ]
+}
+```",codeblock,0.8,1.0,0.888888888888889,0.0,0,11.4,94.4,0.8,54.0,74.0,24612.4,85.0,9051.5,9163.2,"{'timestamp': '2026-09-15T03:33:45.474924+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+2,14,fs-en,148.8363049030304,53.58,0,0,"```json
+{
+  ""Persons"": [
+    ""Willy Ngoma""
+  ],
+  ""Organizations"": [
+    ""United Nations Security Council"",
+    ""M23 rebel group""
+  ],
+  ""Locations"": [
+    ""Democratic Republic of Congo""
+  ]
+}
+```",codeblock,0.5,0.5,0.5,0.0,0,12.7,100.0,3.5,49.4,74.0,25972.9,84.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:32:30.003170+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+2,15,fs-en,13.21492600440979,37.74,0,0,"```json
+{
+  ""Persons"": [
+    ""Evelin Banev""
+  ],
+  ""Organizations"": [
+    ""Swiss Federal Criminal Court"",
+    ""Credit Suisse Group AG""
+  ],
+  ""Locations"": [
+    ""Switzerland"",
+    ""Bulgaria""
+  ]
+}
+```",codeblock,0.6,1.0,0.7499999999999999,0.2,1,30.1,100.0,13.4,66.3,74.0,26642.7,85.2,9051.5,9163.2,"{'timestamp': '2026-09-15T03:30:14.379305+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+0,1,fs-en,62.84114193916321,33.73,0,0,"```json
+{
+  ""Persons"": [
+    ""Alexey Shevchenko""
+  ],
+  ""Organizations"": [
+    ""US Department of the Treasury"",
+    ""OFAC"",
+    ""Al-Sahra Electronics""
+  ],
+  ""Locations"": [
+    ""Russia"",
+    ""Dubai"",
+    ""United States"",
+    ""UAE""
+  ]
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,16.1,83.9,1.7,54.2,74.0,28858.5,85.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:31:04.020398+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+0,2,fs-en,165.67156982421875,53.51,0,0,"```json
+{
+  ""Persons"": [
+    ""Kenneth A. Polite Jr."",
+    ""Stephen Murphy""
+  ],
+  ""Organizations"": [
+    ""HSBC"",
+    ""Sinaloa Cartel""
+  ],
+  ""Locations"": [
+    ""New York""
+  ]
+}
+```",codeblock,1.0,0.8333333333333334,0.9090909090909091,0.0,0,10.3,83.9,1.0,50.4,74.0,25572.6,84.9,9051.5,9163.2,"{'timestamp': '2026-09-15T03:32:46.845687+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+0,3,fs-en,233.9356610774994,53.43,0,0,"```json
+{
+  ""Persons"": [
+    ""Dmitry Kovalev""
+  ],
+  ""Organizations"": [
+    ""European Council"",
+    ""Belneftekhim"",
+    ""EU""
+  ],
+  ""Locations"": [
+    ""Belarus""
+  ]
+}
+```",codeblock,0.8,1.0,0.888888888888889,0.0,0,10.0,83.9,0.8,54.3,74.0,24497.7,85.0,9051.5,9163.2,"{'timestamp': '2026-09-15T03:33:55.109872+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+0,4,fs-en,216.20399165153503,53.55,0,0,"```json
+{
+  ""Persons"": [
+    ""Arthur Chan""
+  ],
+  ""Organizations"": [
+    ""Securities and Futures Commission"",
+    ""SFC"",
+    ""Sun Hung Kai Securities""
+  ],
+  ""Locations"": []
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,10.2,100.0,1.0,54.0,74.0,24717.7,85.0,9051.5,9163.2,"{'timestamp': '2026-09-15T03:33:37.377982+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+0,5,fs-en,39.598965883255005,25.9,0,0,"```json
+{
+  ""Persons"": [
+    ""Maher Al-Assad""
+  ],
+  ""Organizations"": [
+    ""UK Office of Financial Sanctions Implementation"",
+    ""OFSI"",
+    ""Barclays Bank""
+  ],
+  ""Locations"": [
+    ""Syria""
+  ]
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,20.0,83.9,2.4,58.0,74.0,29146.9,85.8,9051.5,9163.2,"{'timestamp': '2026-09-15T03:30:40.776554+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+5,26,fs-en,90.642263174057,53.65,0,0,"```json
+{
+  ""Persons"": [
+    ""Najib Razak""
+  ],
+  ""Organizations"": [
+    ""SRC International"",
+    ""1MDB fund""
+  ],
+  ""Locations"": []
+}
+```",codeblock,0.6666666666666666,0.6666666666666666,0.6666666666666666,0.0,0,12.2,100.0,1.1,64.1,71.3,21888.6,85.4,9051.5,9163.2,"{'timestamp': '2026-09-15T03:34:08.763296+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+5,27,fs-en,96.76385283470154,53.57,0,0,"```json
+{
+  ""Persons"": [
+    ""Jian Liu""
+  ],
+  ""Organizations"": [
+    ""SEC"",
+    ""Luckin Coffee Inc""
+  ],
+  ""Locations"": []
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,10.1,100.0,1.1,64.0,71.3,21883.5,85.4,9051.5,9163.2,"{'timestamp': '2026-09-15T03:34:14.883607+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+5,28,fs-en,85.09964323043823,53.61,0,0,"```json
+{
+  ""Persons"": [
+    ""Brian Hartzer""
+  ],
+  ""Organizations"": [
+    ""Australian Transaction Reports and Analysis Centre"",
+    ""AUSTRAC"",
+    ""Westpac Banking Corporation""
+  ],
+  ""Locations"": []
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,9.0,100.0,1.2,64.3,71.3,21894.8,85.4,9051.5,9163.2,"{'timestamp': '2026-09-15T03:34:03.225358+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+5,29,fs-en,103.82000088691711,53.75,0,0,"```json
+{
+  ""Persons"": [
+    ""Jacob Aarup-Andersen""
+  ],
+  ""Organizations"": [
+    ""Copenhagen police"",
+    ""Danske Bank""
+  ],
+  ""Locations"": [
+    ""Copenhagen"",
+    ""Baltic""
+  ]
+}
+```",codeblock,0.4,1.0,0.5714285714285715,0.0,0,11.1,100.0,1.3,63.5,71.4,21871.3,85.4,9051.5,9163.2,"{'timestamp': '2026-09-15T03:34:21.942958+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
+5,30,fs-en,110.42443871498108,53.55,0,0,"```json
+{
+  ""Persons"": [
+    ""Susan Mauldin""
+  ],
+  ""Organizations"": [
+    ""Federal Trade Commission"",
+    ""FTC"",
+    ""Equifax Inc""
+  ],
+  ""Locations"": []
+}
+```",codeblock,1.0,1.0,1.0,0.0,0,12.0,100.0,1.2,62.9,71.3,21861.3,85.4,9051.5,9163.2,"{'timestamp': '2026-09-15T03:34:28.547782+00:00', 'model_version': 'gemma4:latest', 'prompt_hash': '39903a23'}"
