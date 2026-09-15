@@ -1,6 +1,15 @@
 # Encargo de re-corridas — Equipo 48 GB
 **Creado:** 2026-09-14 · **Por:** Antigravity (coordinación) · **Basado en:** hallazgos del autor
 
+> **Instrucción del autor, 2026-09-15: el encargo se ejecuta completo, sin excepciones ni pausas por
+> criterio propio.** R1 Fase 2 (N=120) y R2 no están canceladas ni son opcionales: quedaron **pendientes**,
+> no descartadas, y deben ejecutarse en cuanto termine lo que esté en curso (R5 u otra). **Las decisiones
+> sobre qué se corre y qué se omite se toman en el equipo principal, no en el equipo remoto.** Si algo de
+> este documento parece redundante, de bajo valor o innecesario, la instrucción es señalarlo en
+> `CURRENT-TASKS.md` y esperar respuesta — no omitirlo por criterio propio. El estado de todo el encargo se
+> repasa en cada pasada de coordinación; lo que siga marcado aquí como pendiente sigue exigido hasta que se
+> declare completado o el autor lo retire explícitamente.
+
 > **Reconciliado 2026-09-14 ~21:00 por Claude Code (equipo principal), tras una colisión de edición
 > concurrente con Antigravity sobre este mismo fichero** (ver `CURRENT-TASKS.md §1.309`). Se conserva
 > íntegra la redacción y los comandos de Antigravity; se **corrige R4**, que aquí decía «no recomendado»

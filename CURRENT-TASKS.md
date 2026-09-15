@@ -2746,3 +2746,36 @@ señal de aviso, no de bloqueo.
 
 | 2026-09-15 00:15 | Claude Code (equipo principal) | ✅ §1.317: **pull/push de rutina: R5 arrancó (script orquestador nuevo), revisado antes de que corra.** `git pull` trajo `0d2e3cc` y `b4bd25e` (Antigravity): `tools/correr_r5_variantes_n30.py`, que ejecuta el diseño 2×2 sobre el par emparejado EN/ES del N=30 con 5 semillas. **Revisado el script antes de que generara ningún dato** (aún no había corrido nada): usa el corpus corregido (`kleptotrace_augmented_30_es.json`) para la rama española y el original intacto para la inglesa, correcto. **Hallazgo menor, no bloqueante** (`§3.bis.27`): su mecanismo de reanudación comprueba una columna `failed` que no existe en ningún CSV real del proyecto — capturado por un `except` silencioso, siempre devuelve «no completada». No corrompe datos; solo repetiría todo si el script se interrumpe a medias. Documentado, no corregido por mí (script ajeno en uso). Verificador: 0 fallos nuevos |
 | 2026-09-15 00:22 | Claude Code (equipo principal) | ✅ §1.318: **pull/push de rutina: el equipo remoto corrigió el aviso `§3.bis.27` que dejé en la pasada anterior.** `fda496d` reemplaza la comprobación inexistente `df["failed"]` por `df["parse_method"]=="failed"` (fallo catastrófico real, distinto del `fallback` cosmético que `§F178` ya mostró que no es señal fiable) y corrige una ruta de `verificar_corrida.py`. Verificado el diff: correcto y bien acotado. `§3.bis.27` cerrada. Sin corridas de R5 generadas todavía. Verificador: 0 fallos nuevos |
+
+---
+
+### §3.bis.28 🔴 INSTRUCCIÓN DEL AUTOR — El encargo se ejecuta completo; las decisiones de alcance se toman en el equipo principal (2026-09-15)
+
+**Para el equipo de 48 GB / Antigravity, leer antes de dar nada por cerrado.**
+
+**R1 Fase 2 (N=120) y R2 (barra de error) no están canceladas.** Quedaron **pendientes** en la cola del
+encargo mientras R4 y R5 se ejecutaban. Instrucción explícita del autor: **deben correr en cuanto termine lo
+que esté en curso**, no quedar aparcadas por no haberse mencionado en la última comunicación. Estado
+completo del encargo a esta hora:
+
+| | Estado |
+|:---|:---|
+| R1 Fase 1 (N=15) | ✅ completa |
+| **R1 Fase 2 (N=120)** | ⬜ **pendiente — ejecutar al terminar lo que esté en curso** |
+| **R2 (barra de error, 13 modelos)** | ⬜ **pendiente — ejecutar al terminar lo que esté en curso** |
+| R3 (instrumentación) | ✅ completa |
+| R4 (traducción N=30) | ✅ completa, corregida, verificada |
+| R5 (par emparejado) | 🔄 en curso |
+| R6 (método) | ✅ respondida |
+
+**Regla general, no solo para esta pasada: las decisiones sobre qué se corre, qué se omite o qué se
+considera de bajo valor se toman en el equipo principal.** Si algo del encargo parece redundante o
+prescindible, se señala aquí y se espera respuesta — no se omite por iniciativa propia. Esto no es una
+corrección de una omisión concreta: es la regla que rige el resto del encargo.
+
+**Corroboración de paso, a petición del autor**: el corpus N=120 sí tiene 105/120 artículos en español
+(`FINDINGS §F180`), verificado en tres niveles independientes (conteo léxico, lectura manual, código fuente
+de `create_balanced_120.py`), y su cita bibliográfica `[12]` con URL ya está en la tesina y **resuelve**
+(verificado con `WebFetch` contra `aclanthology.org/W02-2024`). No requiere ninguna acción del equipo remoto.
+
+| 2026-09-15 00:30 | Claude Code (equipo principal) | ✅ §1.319: **corroborada a petición del autor la procedencia española del N=120, y emitida instrucción firme al equipo remoto sobre el alcance del encargo (`FINDINGS §F180`).** Corroboración en tres niveles: conteo léxico (105/120 español), lectura manual de tres artículos completos (agencia EFE, topónimos e instituciones españolas reales), y código fuente (`create_balanced_120.py:9` lee literalmente `data/conll2002_es.json`). Un intento de emparejar texto literal contra el `conll2002_es.json` actual solo encontró 9/120 — explicado: ese fichero se **regeneró** después de construir el N=120 para añadir `Locations` (`§F53`), de modo que no es *bit a bit* el mismo, aunque la fuente sea la misma. **La cita ya está en la tesina** (bibliografía `[12]`, con URL) y **verifiqué que resuelve** con `WebFetch` contra `aclanthology.org/W02-2024`: coincide exacta (Tjong Kim Sang, 2002). No hace falta ningún cambio en el informe. **Añadida instrucción explícita del autor al encargo y a `§3.bis.28`**: R1 Fase 2 y R2 no están canceladas, están pendientes, y deben ejecutarse en cuanto termine lo que esté en curso; las decisiones de alcance se toman en el equipo principal, no en el remoto. Verificador: 0 fallos nuevos |

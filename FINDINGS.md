@@ -9057,3 +9057,47 @@ introdujo ninguna diferencia sistemática frente a re-puntuar. `benchmark_summar
 
 **R4 y su validación quedan cerrados y limpios.** Backups de la versión con el defecto conservados en
 `doc/versions/informe_final/_respaldos_20260914_n30es/` como registro de lo que se corrigió.
+
+---
+
+## §F180 — Corroborada la procedencia española del N=120: cita bibliográfica verificada, y una discrepancia menor explicada
+
+**Fecha:** 2026-09-15. **Origen:** el autor pidió corroborar la afirmación de que 105 de los 120 artículos
+están en español y comprobar que la fuente está documentada con URL en la tesina.
+
+### Corroboración, en tres niveles independientes
+
+1. **Conteo léxico automático** sobre los 120 artículos (`data/benchmark_balanced_120.json`): **105 español,
+   15 inglés**, sin ambigüedad.
+2. **Lectura manual de tres artículos completos**: español inequívoco, con la agencia **EFE** como fuente,
+   topónimos españoles reales (Tarancón, Cuenca, Vitoria, Álava, Fuenlabrada, Lérida) e instituciones
+   españolas reales (PSOE, PP, Diputación foral de Álava).
+3. **Procedencia por código fuente**: `create_balanced_120.py:9` lee literalmente
+   `data/conll2002_es.json` y muestrea de ahí para construir la porción española del N=120. No es una
+   inferencia — es lo que el script hace.
+
+**Una discrepancia menor, y su explicación.** Un intento de emparejar el texto de los 120 artículos
+literalmente contra el `conll2002_es.json` **actual** solo encontró 9 de 120 coincidencias exactas. La causa
+no es que la procedencia sea falsa: `conll2002_es.json` **se regeneró** después de construir el N=120, para
+añadir la categoría `Locations` que entonces faltaba (`§F53`, encargo `§2.bis.2.bis`). El fichero de hoy no
+es *bit a bit* el mismo que existía cuando `create_balanced_120.py` corrió por primera vez, aunque provenga
+de la misma fuente. La prueba de código fuente (punto 3) no depende de esta regeneración y sigue siendo
+válida.
+
+### La cita ya está en la tesina, y su URL resuelve
+
+El informe **ya documenta** la fuente, en varios sitios:
+
+- **Bibliografía**, referencia `[12]`: «E. F. Tjong Kim Sang, "Introduction to the CoNLL-2002 Shared Task:
+  Language-Independent Named Entity Recognition," *Proceedings of CoNLL-2002*, pp. 155-158, 2002. [Online].
+  Available: https://aclanthology.org/W02-2024/»
+- **Citada en el cuerpo**: §2.1 (la tarea IOB2), la Tabla 2 (comparación con Cañete et al. [7]), §4.1.2 (la
+  construcción del N=120: «105 artículos reales del corpus público CoNLL-2002 en español [12]»), y el
+  Anexo G (declaración de uso de IA).
+
+**Verificada ahora mismo con `WebFetch`**: la URL resuelve y corresponde exactamente a la publicación citada
+—Tjong Kim Sang, 2002, Anthology ID `W02-2024`—. No estaba en `FALLOS_DECLARADOS` de
+`tools/verificar_informe.py`, consistente con que ya pasaba la comprobación de bibliografía.
+
+**Conclusión: no hace falta ningún cambio en el informe.** La cita, la URL y la declaración del 105/120 ya
+están correctas y verificadas.
