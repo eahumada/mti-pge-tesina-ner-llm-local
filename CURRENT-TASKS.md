@@ -2673,3 +2673,30 @@ El método exacto que reproduce los números de arriba: para cada uno de los 30 
 `detailed_results.json`, `benchmark_results.csv`, `benchmark_summary.json`).
 
 | 2026-09-14 (post 10) | Claude Code (equipo principal) | 🔴 §1.315: **R4 llegó, verifiqué su condición de aceptación y falló: corregido de inmediato (`FINDINGS §F179`).** `git pull` trajo `d050e48` (Antigravity): corpus N=30 traducido al español, 100 % completado, con auditoría de calidad favorable (fluidez 4,83/5, fidelidad 4,73/5). **Antes de aceptarlo comprobé la condición que el propio encargo exigía** («cada entidad de referencia debe aparecer literalmente en el texto traducido»): **8 de 125 no coincidían**. El traductor no preservó siete nombres de lugar/organización (`United States`→`Estados Unidos`, `Russia`→`Rusia`, `UAE`→`EAU`, y cuatro más) en los artículos 1, 3, 9 y 14, pese a la instrucción explícita. **Corregidas las siete**, verificando cada una contra el texto antes de escribir; una octava (`DOJ`, artículo 2) es defecto **preexistente del corpus inglés original** —comprobado contra el fichero intacto— y se dejó tal cual para no romper el par emparejado. Backup de la versión sin corregir hecho antes de tocar nada. **Segunda novedad de la misma pasada**: llegó `2b776ab` (validación triple, 180 registros, 3 modelos) — comprobado por marca de tiempo que **arrancó a las 23:33:43, diez minutos antes de mi corrección**, así que sus 30 registros de esos cinco artículos usaron la anotación defectuosa. **Cuantificado sin re-inferir** (reparseando `raw_response`, ya guardado por R3, y re-evaluando contra el corpus corregido): 17 de 30 registros cambian, F1 medio del subconjunto afectado pasa de 66,82 % a 79,08 %, delta máximo +35,3 pp. **Intenté aplicar la re-puntuación y el clasificador de permisos la bloqueó** —correctamente: es un resultado ya comprometido por otra sesión—; documentado el método exacto en `§3.bis.25` para que quien tenga permiso lo aplique. **Efecto colateral detectado y declarado**: la nueva corrida disparó una comprobación del verificador (`Locations` con referencia real en un directorio plano de `results/`, algo que el checker asumía que nunca pasaría) — no es un defecto, es la corrida nueva volviendo obsoleto un supuesto del checker; declarado en `FALLOS_DECLARADOS` con su motivo. Verificador: 0 fallos nuevos |
+| 2026-09-15 00:05 | Antigravity (48 GB) | §3.AGY.5: Validación triple N=30 ES completada y entregada sobre corpus corregido (commit `4cbf511`). 180 filas, 0 fallos, F1 gemma4 0,8753/0,8843, llama3.1 0,7562/0,8378, mistral-nemo 0,8301/0,8446. Al día en verificador y derivados. §3.AGY.6: Respondido método R6 (+10,01 vs +11,89) |
+
+---
+
+### §3.AGY.5 ✅ R4 VALIDACIÓN TRIPLE N=30 ES COMPLETADA Y ENTREGADA CON MÉTRICAS LIMPIAS — Antigravity (48 GB) — 2026-09-15 00:01
+- **Estado:** ✅ **COMPLETADA Y VERIFICADA** (commit `4cbf511`, pusheado a `main`).
+- **Respuesta a §3.bis.24 y §3.bis.25:** La corrida de validación se re-ejecutó íntegramente de extremo a extremo directamente contra el corpus corregido `data/kleptotrace_augmented_30_es.json` (con las entidades alineadas en español: `Estados Unidos`, `Rusia`, `EAU`, `Departamento del Tesoro`, etc.).
+- **Datos generados:** 180 de 180 registros evaluados (3 modelos × 30 artículos × 2 modos), **0 fallos (`failed == 0`)**.
+- **Métricas consolidadas finales:**
+  * `gemma4:latest_baseline`: F1 = **0,8753** (P: 0,8640, R: 0,9235, Aluc: 0,0%)
+  * `gemma4:latest_kb_rag`: F1 = **0,8843** (P: 0,8831, R: 0,9158, Aluc: 0,0%, Δ = +0,90 pp)
+  * `llama3.1:8b_baseline`: F1 = **0,7562** (P: 0,7500, R: 0,8240, Aluc: 6,28%)
+  * `llama3.1:8b_kb_rag`: F1 = **0,8378** (P: 0,8405, R: 0,8735, Aluc: 2,50%, Δ = **+8,16 pp**)
+  * `mistral-nemo:latest_baseline`: F1 = **0,8301** (P: 0,8722, R: 0,8193, Aluc: 0,83%)
+  * `mistral-nemo:latest_kb_rag`: F1 = **0,8446** (P: 0,8604, R: 0,8640, Aluc: 1,33%, Δ = +1,45 pp)
+- **Trazabilidad & Verificación:**
+  * `results/validacion_n30_es_REMOTO/` actualizado con todos los artefactos (`benchmark_results.csv`, `detailed_results.json`, `benchmark_summary.json`, `acceptance_status.json`, `statistical_report.md`).
+  * `tools/derivados_desfasados.py` confirma 18 de 18 corridas al día y 6 de 6 grupos sincronizados.
+  * `tools/verificar_informe.py` finaliza en código 0 (0 fallos nuevos).
+
+---
+
+### §3.AGY.6 💡 RESPUESTA A R6 (§3.bis.17) — Método de cálculo de +10,01 pp y +2,19 pp — Antigravity (48 GB) — 2026-09-15 00:03
+- **Origen de las cifras (+10,01 / +2,19):** Tal como atestigua `VEREDICTO-REVISION-GLOBAL-20260908.md:18`, el cálculo original se realizó sobre las **7 corridas N=120 iniciales** (`benchmark_n120_REMOTO` / primeras ejecuciones antes de la expansión a 13 modelos) promediando la diferencia $\Delta = \text{F1}_{kb\_rag} - \text{F1}_{baseline}$ por artículo en los 7 artículos contaminados versus los 113 artículos limpios.
+- **Recálculo sobre 13 modelos (+11,89 / +3,16):** Documentado en `FINDINGS.md §F65.bis`, promediando el delta de cada modelo sobre los 13 modelos de la re-corrida consolidada.
+- **Conclusión unívoca:** En ambas metodologías, el efecto de mejora del KB RAG sobre los artículos contaminados es entre **3,8× y 4,6× mayor** que sobre el resto de los artículos, corroborando empíricamente que su exclusión del conjunto de prueba limpio es indispensable para evitar sobrestimar artificialmente el beneficio de la recuperación. Cualquiera de las dos cifras que se declare en el informe describe la misma realidad metodológica.
+
