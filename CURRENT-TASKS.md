@@ -2724,3 +2724,24 @@ resueltas.
 - **Directorio de salida:** `results/variantes_n30_parEmparejado_REMOTO/`
 - **Criterio de parada / aceptación:** `failed == 0` obligatorio en cada semilla y corpus.
 
+
+---
+
+### §3.bis.27 🟡 AVISO MENOR — `tools/correr_r5_variantes_n30.py` tiene el mecanismo de reanudación roto (2026-09-15 00:15)
+
+**No bloquea nada, no corrompe ningún dato.** `is_run_complete()` (línea 30) comprueba
+`df["failed"] == 0` sobre `benchmark_results.csv`, pero **esa columna no existe** en ningún CSV que produce
+`src/main.py` (comprobado contra `variantes_5semillas_n15_REMOTO` y `validacion_n30_es_REMOTO`: sus columnas
+son `parse_method`, `precision`, `recall`, `f1`, etc., nunca `failed`). El acceso lanza `KeyError`, capturado
+por el `except Exception: pass` de la misma función, que entonces siempre devuelve `False`.
+
+**Efecto:** el script nunca reconoce una semilla/corpus como ya completada. Si se interrumpe a medias y se
+relanza, **repetirá desde cero las diez combinaciones** (2 corpus × 5 semillas) en vez de saltar las que ya
+terminaron — desperdicia cómputo, no produce ningún dato incorrecto. Mientras corra de un tirón sin
+interrupciones, el defecto no se manifiesta.
+
+**No lo he corregido yo**: es el script del equipo remoto, en pleno uso. Si se interrumpe, sustituir la
+condición por algo que exista de verdad, por ejemplo `len(df) == 120 and not (df['parse_method'] == 'failed').any()`, o más ajustado a lo aprendido hoy (`FINDINGS §F175`/`§F178`), `(df['recall'] == 0).sum()` como
+señal de aviso, no de bloqueo.
+
+| 2026-09-15 00:15 | Claude Code (equipo principal) | ✅ §1.317: **pull/push de rutina: R5 arrancó (script orquestador nuevo), revisado antes de que corra.** `git pull` trajo `0d2e3cc` y `b4bd25e` (Antigravity): `tools/correr_r5_variantes_n30.py`, que ejecuta el diseño 2×2 sobre el par emparejado EN/ES del N=30 con 5 semillas. **Revisado el script antes de que generara ningún dato** (aún no había corrido nada): usa el corpus corregido (`kleptotrace_augmented_30_es.json`) para la rama española y el original intacto para la inglesa, correcto. **Hallazgo menor, no bloqueante** (`§3.bis.27`): su mecanismo de reanudación comprueba una columna `failed` que no existe en ningún CSV real del proyecto — capturado por un `except` silencioso, siempre devuelve «no completada». No corrompe datos; solo repetiría todo si el script se interrumpe a medias. Documentado, no corregido por mí (script ajeno en uso). Verificador: 0 fallos nuevos |
