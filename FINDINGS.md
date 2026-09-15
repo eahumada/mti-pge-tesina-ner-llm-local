@@ -9041,3 +9041,19 @@ comprometido por otra sesión, correctamente. Backup preventivo hecho en
 `doc/versions/informe_final/_respaldos_20260914_n30es/validacion_n30_es_REMOTO/`. El método exacto para
 reproducir la re-puntuación queda documentado en `CURRENT-TASKS.md §3.bis.25`, a la espera de que el equipo
 remoto o el autor decidan aplicarlo.
+
+### Cierre de §F179 — el equipo remoto re-ejecutó (no re-puntuó) y los números coinciden exactos
+
+**2026-09-15, ~00:05.** Llegó `4cbf511`: el equipo remoto re-ejecutó el benchmark completo de
+`validacion_n30_es_REMOTO` (180 llamadas nuevas, arrancadas a las 23:47:04, **después** de mi corrección del
+corpus a las 23:43:57). Es el camino más caro pero más seguro que la re-puntuación parcial que yo había
+dejado bloqueada por el clasificador de permisos.
+
+**Verificado**: los F1 de los cuatro artículos antes afectados (`gemma4:latest`, artículos 1, 3, 9, 14)
+coinciden **exactos** con los que yo había calculado por re-puntuación sin re-inferir (0,9412 / 0,8000 /
+1,0000 / 0,7500 en ambos modos). Confirma que mi cálculo era correcto y que la re-ejecución completa no
+introdujo ninguna diferencia sistemática frente a re-puntuar. `benchmark_summary.json` agregado: F1 de
+`gemma4:latest` baseline 87,53 %, con RAG 88,43 %, sobre las 30 filas ya limpias.
+
+**R4 y su validación quedan cerrados y limpios.** Backups de la versión con el defecto conservados en
+`doc/versions/informe_final/_respaldos_20260914_n30es/` como registro de lo que se corrigió.

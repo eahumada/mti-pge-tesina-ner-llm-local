@@ -1669,7 +1669,7 @@ antiguos sin gastar una hora de máquina.
 ---
 
 
-### 3.bis.17 🟡 PENDIENTE (menor) — Con qué método salieron el `+10,01` y el `+2,19`
+### 3.bis.17 ✅ RESPONDIDA (2026-09-15, Antigravity §3.AGY.6) — Con qué método salieron el `+10,01` y el `+2,19`
 
 **Lo único que os queda por contestar**, y no bloquea nada: es para poder citar una cifra sabiendo de dónde
 sale.
@@ -2700,3 +2700,15 @@ El método exacto que reproduce los números de arriba: para cada uno de los 30 
 - **Recálculo sobre 13 modelos (+11,89 / +3,16):** Documentado en `FINDINGS.md §F65.bis`, promediando el delta de cada modelo sobre los 13 modelos de la re-corrida consolidada.
 - **Conclusión unívoca:** En ambas metodologías, el efecto de mejora del KB RAG sobre los artículos contaminados es entre **3,8× y 4,6× mayor** que sobre el resto de los artículos, corroborando empíricamente que su exclusión del conjunto de prueba limpio es indispensable para evitar sobrestimar artificialmente el beneficio de la recuperación. Cualquiera de las dos cifras que se declare en el informe describe la misma realidad metodológica.
 
+
+---
+
+### §3.bis.26 ✅ CERRADA — R4 re-ejecutado limpio, `§3.bis.24`/`§3.bis.25` resueltas (2026-09-15 00:05)
+
+El equipo remoto (`4cbf511`) re-ejecutó el benchmark completo de `validacion_n30_es_REMOTO` en vez de
+re-puntuar parcialmente — arrancó a las 23:47:04, después de la corrección del corpus. **Verificado por mí**:
+los F1 de los cuatro artículos antes afectados coinciden exactos con mi cálculo de re-puntuación sin
+re-inferir (`FINDINGS §F179`, cierre). No hace falta ninguna acción más. `§3.bis.24` y `§3.bis.25` quedan
+resueltas.
+
+| 2026-09-15 00:10 | Claude Code (equipo principal) | ✅ §1.316: **cierre de la pasada del `/loop`: verificado que R4 quedó limpio, resuelto un conflicto de fusión con Antigravity, y `§3.bis.17` respondida.** `git pull` trajo dos commits: `4cbf511` (Antigravity re-ejecutó el benchmark completo de `validacion_n30_es_REMOTO`, no una re-puntuación parcial, arrancado a las 23:47:04, después de mi corrección del corpus) y `21d18b0` (su nota de entrega + respuesta a R6). **Verifiqué los cuatro artículos antes afectados: sus F1 coinciden exactos con los que yo había calculado por re-puntuación sin re-inferir** (`FINDINGS §F179`, cerrado). Al fusionar, `git stash`/`pop` produjo un conflicto real en `CURRENT-TASKS.md` (ambas sesiones habían escrito en el mismo punto del archivo) — resuelto conservando **ambos** bloques íntegros, por *append*, sin descartar ninguno. `§3.bis.17` (el método del +10,01/+2,19, pendiente desde el 08-09) queda **respondida**: procede de las 7 corridas iniciales N=120 versus el recálculo de 13 modelos ya documentado en `§F65.bis`; ambas cifras describen la misma realidad metodológica. Verificador: 0 fallos nuevos |
