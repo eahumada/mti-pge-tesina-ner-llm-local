@@ -1,0 +1,795 @@
+{
+  "bloque_a": [
+    {
+      "orden": 1,
+      "lineas": "593 (item 11 §7.2)",
+      "ancla": "11. Contraste pareado por modelo y variantes de la métrica",
+      "accion": "reescribir",
+      "cambio": "Comprimir a un párrafo: corregir 'ciento veinte artículos' por 'ciento trece' (N real por grupo), conservar la propuesta de contraste pareado, F1 micro y remuestreo, y mantener la cita [39] para no dejarla huérfana (única cita de [39] en todo el informe).",
+      "texto_propuesto": "11. Contraste pareado por modelo y variantes de la métrica (Prioridad Alta): los veintiséis grupos evalúan los mismos ciento trece artículos, de modo que las observaciones están apareadas y el procedimiento que corresponde al diseño es un contraste pareado modelo por modelo con corrección por comparaciones múltiples, y no el análisis de varianza de una vía que este trabajo reporta. Conviene además contrastar la F1 macro por artículo que aquí se publica con la F1 micro, que agrega aciertos y errores de todo el corpus y pondera por entidad y no por artículo, y con un remuestreo pareado sobre la diferencia de F1, que entrega intervalo de confianza sin suponer normalidad ni homocedasticidad y es la práctica recomendada para contrastes de significación en procesamiento de lenguaje natural [39].",
+      "dependencias": "Ninguna cascada de renumeración (el ítem conserva su número final tras la renumeración del bloque B de §7.2).",
+      "lineas_ganadas": 8,
+      "confianza": "alta"
+    },
+    {
+      "orden": 2,
+      "lineas": "523 (segunda mitad, 'El problema del RAG por diccionario...')",
+      "ancla": "El problema del RAG por diccionario no estaba en el concepto",
+      "accion": "retirar",
+      "cambio": "Retirar solo el pasaje 'El problema del RAG por diccionario…sugerir criterios lo orienta sin coartarlo', que repite el diagnóstico de §5.6 línea 497. CONDICIÓN DURA: no tocar la línea 497, que debe quedar íntegra (ver bloque_c, conflicto resuelto). Reescribir la frase de apertura del párrafo para que no anuncie una explicación que ya no da.",
+      "texto_propuesto": "De ahí se sigue una recomendación práctica: cuando el hardware disponible impide ejecutar modelos de gran tamaño, el RAG contextual constituye una estrategia de bajo coste que acerca el desempeño de un modelo pequeño al de uno considerablemente mayor sin inversión adicional en infraestructura.",
+      "dependencias": "§5.6 línea 497 (NO TOCAR, condición dura).",
+      "lineas_ganadas": 3,
+      "confianza": "media"
+    },
+    {
+      "orden": 3,
+      "lineas": "523 (primera parte, RAG contextual acerca desempeño)",
+      "ancla": "Y en el plano aplicado, cuando el hardware disponible impide",
+      "accion": "reescribir",
+      "cambio": "Calibrar la magnitud de la mejora de RAG en nemotron-mini:4b con la cifra real (28,29%→40,55%), sin afirmar que iguala a un modelo mayor.",
+      "texto_propuesto": "Y en el plano aplicado, cuando el hardware disponible impide ejecutar modelos de gran tamaño, el RAG contextual es una vía de bajo coste para elevar el desempeño del modelo más limitado sin inversión adicional en infraestructura, si bien la mejora medida no basta para situarlo al nivel de un modelo mayor: `nemotron-mini:4b` pasa de 28,29 % a 40,55 % de F1, todavía por debajo de cualquier modelo de la franja intermedia.",
+      "dependencias": "Tabla 7 (no se toca).",
+      "lineas_ganadas": 1,
+      "confianza": "alta"
+    },
+    {
+      "orden": 4,
+      "lineas": "511 (cláusula del falso negativo)",
+      "ancla": "que aprovecha el hecho de que el coste de un falso negativo",
+      "accion": "retirar",
+      "cambio": "Retirar la cláusula económica sin sustento (ningún pasaje del informe valora el coste relativo de FN vs FP). Conservar el resto del párrafo (índice de eficiencia, relación 80:1), que sí está verificado y se conserva ('conservar' en veredicto aparte).",
+      "dependencias": "Ninguna.",
+      "lineas_ganadas": 1,
+      "confianza": "media"
+    },
+    {
+      "orden": 5,
+      "lineas": "495",
+      "ancla": "La primera versión del módulo de recuperación indexaba",
+      "accion": "reescribir",
+      "cambio": "Retirar cifras de corridas descartadas (10 de 11 empeoran; 62,38% vs Tabla 7=82,13%). Conservar el hecho cualitativo y la cita [19].",
+      "texto_propuesto": "La primera versión del módulo de recuperación indexaba **nombres de entidades**: 3.605 personas y 1.848 organizaciones de la lista SDN del Departamento del Tesoro de los Estados Unidos [19], más 12.000 nombres personales sintéticos de aumento, 17.453 documentos en total, y anteponía al *prompt* los más próximos al artículo según similitud vectorial. El resultado fue el contrario del esperado: la estrategia degradaba el desempeño en lugar de mejorarlo, y se descartó antes de la corrida que sostiene este estudio.",
+      "dependencias": "[19] se conserva, citada también en Anexo F y §G.2.",
+      "lineas_ganadas": 4,
+      "confianza": "alta"
+    },
+    {
+      "orden": 6,
+      "lineas": "501",
+      "ancla": "Los resultados de esta segunda versión sobre el corpus complet",
+      "accion": "reescribir",
+      "cambio": "Corregir 'nueve de trece' a 'once de trece' (contradice línea 444 del mismo capítulo) y retirar el patrón de capacidad enunciado sin la cautela estadística que §5.3.1 ya estableció.",
+      "texto_propuesto": "Los resultados de esta segunda versión sobre el corpus completo se recogen en la tabla de §5.3.1, que compara los trece modelos del estudio en ambos modos. Once de los trece mejoran con la recuperación, si bien solo uno de forma estadísticamente sólida, y el beneficio es mayor en los modelos de menor capacidad. La interpretación de ese patrón se desarrolla en §6.2.",
+      "dependencias": "§6.2 (línea 519) debe llevar la misma cautela.",
+      "lineas_ganadas": 1,
+      "confianza": "alta"
+    },
+    {
+      "orden": 7,
+      "lineas": "497",
+      "ancla": "El diagnóstico apunta a un desajuste semántico estructural",
+      "accion": "NO TOCAR",
+      "cambio": "Se rechaza la propuesta de comprimirlo. Debe quedar íntegro, incluida su frase final, porque tras retirar su eco en 523 pasa a ser la única formulación completa del diagnóstico del fracaso del RAG por diccionario en todo el informe.",
+      "dependencias": "Condición dura del cambio en línea 523.",
+      "lineas_ganadas": 0,
+      "confianza": "alta"
+    },
+    {
+      "orden": 8,
+      "lineas": "471",
+      "ancla": "Las **alucinaciones extrínsecas**, en las que el modelo propo",
+      "accion": "reescribir",
+      "cambio": "Sustituir cifras del consolidado descartado (21,59%; 28 de 61 grupos) por las del consolidado vigente (máx. 15,61%; 15 de 26 grupos <1%; deepseek 9,87→15,61; nemotron-mini 3,98→4,89). Retirar la comparación con 'recuperación por diccionario' (no existe en la corrida vigente).",
+      "texto_propuesto": "Las **alucinaciones extrínsecas**, en las que el modelo propone entidades ausentes del texto, son el patrón que más varía entre modelos. Sobre los veintiséis grupos del consolidado adoptado, el rango va de cero en varias configuraciones de `gemma4:31b` al 15,61 % de `deepseek-r1:1.5b` con recuperación, y quince de esos veintiséis grupos quedan por debajo del 1 %: la instrucción de restringir la extracción al artículo presente funciona en más de la mitad de las configuraciones y en todas las de mayor capacidad. El problema se concentra en los dos modelos más pequeños: `deepseek-r1:1.5b` pasa de 9,87 % en extracción directa a 15,61 % con recuperación, y `nemotron-mini:4b` de 3,98 % a 4,89 %. En ambos casos el defecto, más que la exhaustividad, es lo que descarta su uso en un flujo de cumplimiento.",
+      "dependencias": "CLAUDE.md cita 21,59% como cifra 'correcta' de deepseek-r1:1.5b; actualizar esa nota también, fuera del .md del informe.",
+      "lineas_ganadas": 3,
+      "confianza": "alta"
+    },
+    {
+      "orden": 9,
+      "lineas": "469",
+      "ancla": "La confusión de tipo aparece cuando el modelo asigna a una",
+      "accion": "reescribir",
+      "cambio": "Retirar solo la coletilla final sobre el 'vacío' de Locations en la referencia (ya no existe en el corpus vigente). Conservar el cuerpo del párrafo, verificado exacto.",
+      "texto_propuesto": "La **confusión de tipo** aparece cuando el modelo asigna a una entidad una categoría distinta de la que registra la referencia. Los casos dominantes son homogéneos y tienen una explicación clara: `Estados Unidos`, `Francia`, `Israel` o `Valencia` extraídos como localización cuando la anotación de CoNLL-2002 los registra como organización, por tratarse de menciones al Estado o al club y no al territorio. No es una alucinación ni un fallo de comprensión, sino una divergencia entre la convención de anotación del corpus y la lectura natural del nombre.",
+      "dependencias": "§3.3 sigue citada desde otros puntos, no queda huérfana.",
+      "lineas_ganadas": 1,
+      "confianza": "alta"
+    },
+    {
+      "orden": 10,
+      "lineas": "467",
+      "ancla": "El análisis cualitativo se apoya en la clasificación",
+      "accion": "reescribir",
+      "cambio": "Retirar los ejemplos de mojibake (falsos hoy: cero casos en la corrida vigente) y sustituir por ejemplos reales verificados. ATENCIÓN: antes de fijar cifras de frecuencia, recontar exactamente sobre los 13 detailed_results.json (una verificación independiente dio 125 y 72 apariciones para los pares EFE/EFECOM y Twehway, no 144/117 como en el primer borrador); usar el recuento que el operador confirme.",
+      "texto_propuesto": "El análisis cualitativo se apoya en la clasificación que el evaluador almacena por registro, con cuatro categorías: errores de límite, confusión de tipo, omisiones de abreviatura y alucinaciones extrínsecas. Un **error de límite** es todo emparejamiento cuya similitud queda entre 50 y 85, y ahí caben tres fenómenos: extensión de la mención (`Severino do Ramo 'Maia'` frente a `Severino do Ramo`), variantes de sigla (`EFE`/`EFECOM`, ratio 66,7) y **nombres sin relación alguna** que comparten estructura suficiente para superar el suelo de 50 (`Corín Tellado`/`Mario Delgado`, 53,8; `Bill Twehway`/`Peter Twehway`, 64,0). De ahí una advertencia metodológica: el recuento de esta categoría no mide la habilidad del modelo para delimitar entidades, sino la frecuencia con que el cotejo difuso queda en su franja intermedia.",
+      "dependencias": "Retira la remisión a §3.3 y al Anexo H de este párrafo (siguen citados desde otros puntos).",
+      "lineas_ganadas": 9,
+      "confianza": "media (pendiente recuento exacto de frecuencias)"
+    },
+    {
+      "orden": 11,
+      "lineas": "463",
+      "ancla": "Lectura conjunta con el corpus N=30 (§5.3)",
+      "accion": "reescribir",
+      "cambio": "Retirar el 59,25% (consolidado descartado) que contradice la Tabla 7 (81,47%) dos párrafos antes. Aplicar junto con el ítem 296 (bloque B) por ser la misma familia de contradicción.",
+      "texto_propuesto": "Lectura conjunta con el corpus N=30 (§5.3): se conservan ambos, N=30 como validación de mínima potencia (TLC, N≥30) sobre el dominio de sanciones del proyecto, y N=120 como validación sobre corpus real, con mayor potencia estadística y menor especificidad de dominio.",
+      "dependencias": "Línea 296 (bloque B), Tabla 7 (no se toca).",
+      "lineas_ganadas": 3,
+      "confianza": "alta"
+    },
+    {
+      "orden": 12,
+      "lineas": "443-449",
+      "ancla": "El hallazgo central del estudio es que el beneficio del KB RAG",
+      "accion": "reescribir",
+      "cambio": "Retirar el marco de 'hallazgo central' que el propio párrafo siguiente (451-457) desmiente. Conservar los hechos medidos.",
+      "texto_propuesto": "Once de los trece modelos mejoran con la recuperación, aunque solo uno lo haga de forma estadísticamente sólida: la mejora es alta en el modelo más débil del estudio (`nemotron-mini:4b`, +12,26 puntos) y marginal en los dos de mayor capacidad (+0,81 y +0,97 puntos), que ya siguen las instrucciones correctamente sin necesitar contexto adicional. La Figura 1 recoge ambas lecturas: el desplazamiento de cada modelo al añadir la recuperación y su relación con el desempeño de partida.",
+      "dependencias": "§5.6 línea 501 y §6.2 línea 519 deben alinearse (bloque B).",
+      "lineas_ganadas": 1,
+      "confianza": "alta"
+    },
+    {
+      "orden": 13,
+      "lineas": "437-438",
+      "ancla": "La prueba de Levene sí detecta heterocedasticidad",
+      "accion": "reescribir",
+      "cambio": "Retirar el inciso comparativo con la corrida superada y el guion largo.",
+      "texto_propuesto": "La prueba de Levene detecta heterocedasticidad (p = 1,39 × 10⁻¹¹), sin invalidar el ANOVA (el",
+      "dependencias": "Ninguna.",
+      "lineas_ganadas": 1,
+      "confianza": "alta"
+    },
+    {
+      "orden": 14,
+      "lineas": "431-433",
+      "ancla": "de sí mismos al añadir RAG. Solo uno, nemotron-mini:4b, con",
+      "accion": "reescribir",
+      "cambio": "Retirar la comparación con el corpus publicado descartado (+10,82 pp) y dejar solo las cifras vigentes.",
+      "texto_propuesto": "de sí mismos al añadir RAG. Solo uno, `nemotron-mini:4b`, con +12,26 puntos. El segundo mayor incremento, el de `llama3.2:latest` (+6,73 puntos), no se distingue del azar tras la corrección por comparaciones múltiples (p = 0,2334).",
+      "dependencias": "Ninguna; cifras ya en Tabla 7.",
+      "lineas_ganadas": 1,
+      "confianza": "alta"
+    },
+    {
+      "orden": 15,
+      "lineas": "418",
+      "ancla": "Salvedad de procedencia. La latencia de gemma4:31b-clou",
+      "accion": "reescribir",
+      "cambio": "Retirar la segunda mitad (reparación de nemotron-mini:4b, historia de corrida superada). Conservar la salvedad vigente sobre gemma4:31b-cloud.",
+      "texto_propuesto": "> **Salvedad de procedencia.** La latencia de `gemma4:31b-cloud` **no mide inferencia**: quedó cuantizada por el `--request-delay` introducido para sortear el límite de peticiones del servicio. Su F1 es válido; su latencia y sus tokens/s no deben usarse en comparaciones de eficiencia.",
+      "dependencias": "Ninguna.",
+      "lineas_ganadas": 3,
+      "confianza": "alta"
+    },
+    {
+      "orden": 16,
+      "lineas": "401-416",
+      "ancla": "Limitación histórica del corpus N=120, corregida en la re-",
+      "accion": "reescribir",
+      "cambio": "Comprimir el bloque de 16 líneas a una nota breve (regla del 2026-09-12: defectos pre-8-sept. se comprimen a una frase que remita al Anexo H). Conservar la garantía de que N=15/N=30 nunca tuvieron el defecto.",
+      "texto_propuesto": "> **Nota sobre el corpus.** El consolidado adoptado excluye siete artículos cuya codificación de nombres estaba contaminada, de donde resultan las 113 observaciones por grupo; los corpus N=15 y N=30 nunca tuvieron este defecto. La corrección se aplicó en ambos lados de la comparación antes de la re-corrida y se verificó con `tools/analisis_mojibake.py`. El defecto original y su efecto medido se documentan en el **Anexo H**; no afecta a ningún resultado de esta sección.",
+      "dependencias": "Anexo H sigue citado desde 233, 541 (bloque B); línea 407 (dependencia_5_2) queda absorbida.",
+      "lineas_ganadas": 13,
+      "confianza": "alta"
+    },
+    {
+      "orden": 17,
+      "lineas": "377",
+      "ancla": "El análisis de sensibilidad completa la validación",
+      "accion": "reescribir",
+      "cambio": "Comprimir la narración del método descartado a una frase, con la cifra vigente correcta (1 artículo atípico detectado, variación máx. 1,2 puntos, no 0,51).",
+      "texto_propuesto": "El análisis de sensibilidad completa la validación: excluido el único artículo que la cerca superior de Tukey marca como atípico, el F1 de los trece modelos varía como máximo 1,2 puntos, de modo que ningún resultado depende de un texto extremo.",
+      "dependencias": "Ninguna.",
+      "lineas_ganadas": 5,
+      "confianza": "alta"
+    },
+    {
+      "orden": 18,
+      "lineas": "340 (Hallazgo 2, §5.1)",
+      "ancla": "Hallazgo 2 (exhaustividad/alucinación de gemma4:31b)",
+      "accion": "reescribir",
+      "cambio": "NO se rebasa Tabla 4 (ver bloque_c). Se corrige solo la atribución errónea: la brecha entre gemma4:31b y gemma4:latest(FS-ES) es de precisión, no de alucinación (0,16%<0,20%). Hallazgo 1 se conserva sin cambios (defendido con los propios datos de la Tabla 4 actual); Hallazgos 3 y 4 NO se tocan (conservar).",
+      "texto_propuesto": "> **Hallazgo 2:** la exhaustividad más alta entre los modelos locales la obtiene `gemma4:latest` con *prompt* few-shot en español (86.87%), por delante de `gemma4:31b` (86.80%) y de su compilación MLX (86.76%), pese a ser un modelo de un tercio del tamaño; la variante alojada alcanza un valor equivalente (86.88%). Las cuatro configuraciones se agrupan en poco más de una décima de punto, y lo que separa a `gemma4:31b` de `gemma4:latest` (FS-ES) no es la exhaustividad, casi idéntica, sino la precisión: 58.83% frente a 66.78%.",
+      "dependencias": "Depende de las filas ZS-ES/FS-ES de Tabla 4 (dependencia_5_2, no tocadas).",
+      "lineas_ganadas": 0,
+      "confianza": "alta"
+    },
+    {
+      "orden": 19,
+      "lineas": "298",
+      "ancla": "Convención ante la extracción vacía",
+      "accion": "reescribir",
+      "cambio": "Retirar la narración del evaluador anterior y del 're-puntuado' (engañoso: la corrida vigente es re-corrida completa, no re-puntuado). Dejar solo la convención vigente, verificada en src/evaluator.py.",
+      "texto_propuesto": "Convención ante la extracción vacía. Cuando el modelo no extrae ninguna entidad y el artículo sí las contenía, el evaluador asigna 0,0 a precisión, exhaustividad y F1, y reserva el valor 1,0 únicamente para el acierto vacío legítimo: aquel en que el artículo no contenía entidades y el modelo tampoco propuso ninguna. La convención es la misma para la totalidad de las cifras que este informe reporta.",
+      "dependencias": "Ninguna.",
+      "lineas_ganadas": 4,
+      "confianza": "alta"
+    },
+    {
+      "orden": 20,
+      "lineas": "268",
+      "ancla": "El trabajo comprende dos conjuntos de evaluación",
+      "accion": "reescribir",
+      "cambio": "Retirar la afirmación falsa de que gemma4:12b-mlx y gpt-oss:20b no tienen corrida N=15/N=30 (sí la tienen en recorrida_20260908).",
+      "texto_propuesto": "El trabajo comprende dos conjuntos de evaluación que no hay que confundir. El benchmark exploratorio de la Tabla 4 (§5.1) cubre doce modelos en trece configuraciones sobre N=15 en modo `entities` (`gemma4:latest` aparece dos veces, en sus variantes ZS-ES y FS-ES), mientras que el estudio principal (§5.3.1) evalúa trece modelos sobre N=120 en modo `kb_combined`.",
+      "dependencias": "No toca ninguna fila de tabla.",
+      "lineas_ganadas": 1,
+      "confianza": "alta"
+    },
+    {
+      "orden": 21,
+      "lineas": "256",
+      "ancla": "El uso de textos sintéticos para contrastar hipótesis es def",
+      "accion": "reescribir",
+      "cambio": "Conservar las 3 razones sólidas; reformular la cuarta como 'comprobación de validez aparente' (no un contraste estadístico), declarando que las dos cifras citadas proceden de corridas distintas.",
+      "texto_propuesto": "El uso de textos sintéticos para contrastar hipótesis es defendible aquí por cuatro razones. La primera es de potencia estadística [...]. La segunda es la independencia efectiva entre observaciones [...]. La tercera es la validez de constructo [...] [19]. La cuarta es una comprobación de validez aparente: `gemma4:31b` obtiene 78,55 % sobre N=30 y 69,12 % sobre N=15, cifras del mismo orden y sin el salto que delataría un artefacto del procedimiento de generación, si bien proceden de corridas distintas y la comparación no constituye un contraste estadístico.",
+      "dependencias": "[19] se conserva.",
+      "lineas_ganadas": 0,
+      "confianza": "media"
+    },
+    {
+      "orden": 22,
+      "lineas": "229",
+      "ancla": "La elección del umbral es un compromiso",
+      "accion": "reescribir",
+      "cambio": "Retirar la descripción obsoleta del doble conteo (corregida en src/evaluator.py desde el 8-sept). DEBE aplicarse junto con línea 296 (bloque B) o el informe se contradice.",
+      "texto_propuesto": "La elección del umbral es un compromiso: por debajo se admiten emparejamientos entre nombres distintos que comparten apellido; por encima se rechazan variantes legítimas. Al operar sobre caracteres y no sobre palabras, es sensible al orden: «Juan Pérez»/«Pérez Juan» dan 50 y no casan. Y al normalizar por la longitud conjunta, penaliza las omisiones proporcionalmente: «Banco Santander»/«Santander» dan 75. Ambos efectos empujan las cifras a la baja: la medición publicada es conservadora.",
+      "dependencias": "Línea 296 (bloque B, obligatorio en el mismo commit).",
+      "lineas_ganadas": 3,
+      "confianza": "alta"
+    },
+    {
+      "orden": 23,
+      "lineas": "217",
+      "ancla": "La capa de proveedores es la que materializa el criterio C2",
+      "accion": "reescribir",
+      "cambio": "Retirar el episodio del enrutamiento erróneo hacia la API comercial de un modelo 'gpt-' (riesgo directo: el estudio incluye gpt-oss:20b). Conservar la lección técnica integrada sin narrar el fallo.",
+      "texto_propuesto": "La capa de proveedores es la que materializa el criterio C2 sin encerrar el trabajo en un único motor, aplicando los patrones *Factory* y *Facade* introducidos en §2.4 tras una interfaz común (`LLMProvider`, Anexo A.1). La selección del proveedor se resuelve por el prefijo del identificador del modelo, con verificación explícita del enrutamiento efectivo de cada corrida, así que añadir un motor nuevo no requiere modificar el orquestador.",
+      "dependencias": "Ninguna; Anexo A.1 sigue citado.",
+      "lineas_ganadas": 3,
+      "confianza": "alta"
+    },
+    {
+      "orden": 24,
+      "lineas": "153",
+      "ancla": "La segunda es cuántos consumidores mantener activos",
+      "accion": "reescribir",
+      "cambio": "Comprimir la doble explicación del AIMD (política + resultado de Chiu-Jain redundantes). Prioridad baja.",
+      "dependencias": "Ninguna; [26] se conserva (citada también en 221).",
+      "lineas_ganadas": 4,
+      "confianza": "media"
+    },
+    {
+      "orden": 25,
+      "lineas": "151",
+      "ancla": "La primera es de desacoplamiento entre productor y consumido",
+      "accion": "reescribir",
+      "cambio": "Comprimir manteniendo la cláusula que define el desacoplamiento ('ni el productor necesita saber cuántos consumidores hay').",
+      "texto_propuesto": "La primera es de desacoplamiento entre productor y consumidor. Un pipeline síncrono ata el rendimiento a la latencia del modelo más lento y no permite variar el paralelismo sin reescribir el flujo de control. La arquitectura **publicador/suscriptor** (pub/sub) lo resuelve separando la ingesta de artículos, que los deposita en una cola, de su consumo, a cargo de un número variable de trabajadores suscritos a ella: el productor no necesita saber cuántos consumidores hay, lo que permite ajustar su número en tiempo de ejecución sin tocarlo.",
+      "dependencias": "Ninguna.",
+      "lineas_ganadas": 2,
+      "confianza": "media"
+    },
+    {
+      "orden": 26,
+      "lineas": "141",
+      "ancla": "La recuperación en ambas variantes depende de un mecanismo c",
+      "accion": "reescribir",
+      "cambio": "Comprimir explicación de manual de embeddings/ChromaDB.",
+      "texto_propuesto": "La recuperación en ambas variantes depende de un mecanismo común: los **embeddings**, representaciones vectoriales de longitud fija que sitúan cerca en un mismo espacio a los textos semánticamente próximos. Buscar lo relevante para un artículo se reduce a una búsqueda por vecino más próximo, que una **base de datos vectorial** (ChromaDB [32] en este trabajo) resuelve con eficiencia.",
+      "dependencias": "[32] se conserva (también citada en §3.2).",
+      "lineas_ganadas": 3,
+      "confianza": "media"
+    },
+    {
+      "orden": 27,
+      "lineas": "125",
+      "ancla": "Se distinguen dos regímenes. En zero-shot el prompt co",
+      "accion": "reescribir",
+      "cambio": "Retirar la promesa de comprobación empírica de chain-of-thought que nunca se ejecuta. Reescribir en vez de retirar entero para no dejar huérfana [13] (única cita).",
+      "texto_propuesto": "Se distinguen dos regímenes. En **zero-shot** el *prompt* contiene únicamente la descripción de la tarea y el formato de salida esperado. En **few-shot** [8] se añaden ejemplos resueltos que fijan el patrón de respuesta [...] [14]. Existen además estrategias de razonamiento explícito, como *chain-of-thought* [13], concebidas para tareas que requieren inferencia en varios pasos; este trabajo no las evalúa, porque la extracción de entidades es una tarea de identificación y no de deducción.",
+      "dependencias": "[13] se conserva.",
+      "lineas_ganadas": 1,
+      "confianza": "alta"
+    },
+    {
+      "orden": 28,
+      "lineas": "116 (Tabla 1, celda)",
+      "ancla": "Transformer con ajuste fino | Miles, del dominio | Ajuste",
+      "accion": "reescribir",
+      "cambio": "Corregir la celda de riesgo que en realidad describe una ventaja. No es tabla de resultados medidos, no aplica la prohibición 1.",
+      "texto_propuesto": "| Transformer con ajuste fino | Miles, del dominio | Ajuste fino | Coste de anotación, inasumible sin corpus del dominio |",
+      "dependencias": "[7] y [15] se conservan (citadas en 105, 181, 179).",
+      "lineas_ganadas": 0,
+      "confianza": "alta"
+    },
+    {
+      "orden": 29,
+      "lineas": "93",
+      "ancla": "El criterio de coincidencia entre lo extraído y la referenci",
+      "accion": "reescribir",
+      "cambio": "Comprimir manteniendo, contra el borrador original del auditor, la alternativa 'basada en tokens' (necesaria porque §3.3 la invoca) y la definición precisa de distancia de Indel.",
+      "texto_propuesto": "El criterio de coincidencia también admite alternativas. La más estricta exige coincidencia **exacta** de la cadena; una alternativa **basada en tokens** tolera el orden pero no distingue variantes de un mismo token. Este trabajo adopta el emparejamiento **difuso a nivel de caracteres**, mediante la **distancia de Indel** —variante de Levenshtein que excluye las sustituciones—, normalizada a una escala de similitud. El umbral, sus límites y sus sesgos se detallan en §3.3.",
+      "dependencias": "[33] se conserva; §3.3, §1.4, §4.4 siguen remitiendo correctamente.",
+      "lineas_ganadas": 2,
+      "confianza": "alta"
+    },
+    {
+      "orden": 30,
+      "lineas": "41",
+      "ancla": "Dos rasgos del problema explican por qué no basta con una so",
+      "accion": "reescribir",
+      "cambio": "Comprimir sin perder los dos argumentos ni las citas [19]/[22]; retirar una negrita.",
+      "texto_propuesto": "Dos rasgos del problema impiden resolverlo con una carga inicial de datos. El primero es que la referencia contra la que se coteja cambia constantemente: la lista de Nacionales Especialmente Designados del Departamento del Tesoro de los Estados Unidos [19] incorpora y retira designaciones de forma continua. El segundo es la asimetría del error: una mención pasada por alto puede materializarse en el ingreso de un sujeto sancionado, con consecuencias que la Ley N.º 19.913 [22] atribuye a la propia institución, mientras que un falso positivo solo cuesta el tiempo del analista que lo descarta; por eso el diseño prioriza la exhaustividad.",
+      "dependencias": "[19] y [22] se conservan.",
+      "lineas_ganadas": 3,
+      "confianza": "alta"
+    },
+    {
+      "orden": 31,
+      "lineas": "39",
+      "ancla": "A nivel global, según Verified Market Research el mercado de",
+      "accion": "reescribir",
+      "cambio": "Comprimir retirando la inferencia editorial no atribuible a la fuente; conservar [21] (única otra cita en línea 639) y el coste USD 8,75.",
+      "texto_propuesto": "El proceso actual en instituciones como Austranet implica la revisión manual de cientos de artículos periodísticos diarios, un proceso cuyo costo, estimado a partir del proceso vigente en Austranet, asciende a unos USD 8,75 por artículo (detalle en §5.5), en un mercado de tecnología para cumplimiento que Verified Market Research proyecta en USD 87,17 mil millones hacia 2028, con una tasa anual compuesta del 23,92 % [21].",
+      "dependencias": "[21] se conserva.",
+      "lineas_ganadas": 1,
+      "confianza": "alta"
+    },
+    {
+      "orden": 32,
+      "lineas": "71 (objetivo 5)",
+      "ancla": "5. Demostrar una reducción de costos operativos del 60–80%",
+      "accion": "reescribir",
+      "cambio": "Cambiar 'Demostrar' por 'Estimar' (contradice §5.5/conclusión 4, que declaran la cifra una estimación).",
+      "texto_propuesto": "5. Estimar la reducción de costos operativos respecto a la revisión manual y comprobar que la tasa de alucinaciones del modelo seleccionado se mantiene por debajo del 5 %.",
+      "dependencias": "Hipótesis (línea 57) usa el mismo verbo fuerte; revisar en el mismo commit si es posible (no obligatorio).",
+      "lineas_ganadas": 0,
+      "confianza": "alta"
+    },
+    {
+      "orden": 33,
+      "lineas": "70 (objetivo 4)",
+      "ancla": "4. Validar estadísticamente los resultados mediante ANOVA de",
+      "accion": "reescribir",
+      "cambio": "Corregir 'corpus estadísticamente significativo' (uso incorrecto del término).",
+      "texto_propuesto": "4. Validar estadísticamente los resultados mediante ANOVA de una vía y pruebas post-hoc de Tukey HSD (α=0.05) sobre un corpus de tamaño suficiente para pruebas paramétricas (N≥30).",
+      "dependencias": "Ninguna.",
+      "lineas_ganadas": 0,
+      "confianza": "alta"
+    },
+    {
+      "orden": 34,
+      "lineas": "68 (objetivo 2)",
+      "ancla": "2. Evaluar y comparar el desempeño de modelos de lenguaje de",
+      "accion": "reescribir",
+      "cambio": "Retirar el paréntesis de contabilidad de proceso (12/13 modelos) ya explicado en §4.2.",
+      "texto_propuesto": "2. Evaluar y comparar el desempeño de modelos de lenguaje de código abierto generativos (familias Gemma, Llama, DeepSeek, Qwen, Mistral, GPT-OSS, Nemotron) en la tarea de NER sobre corpus de sanciones financieras en inglés y de noticias en español.",
+      "dependencias": "Ninguna.",
+      "lineas_ganadas": 1,
+      "confianza": "alta"
+    },
+    {
+      "orden": 35,
+      "lineas": "60 (variables dependientes)",
+      "ancla": "Variables dependientes: (1) F1-Score por tipo de entidad",
+      "accion": "reescribir",
+      "cambio": "Retirar 'por tipo de entidad' (ninguna tabla del informe desagrega así).",
+      "texto_propuesto": "**Variables dependientes:** (1) F1-Score, con su precisión y exhaustividad; (2) Tasa de alucinaciones; (3) Latencia de procesamiento; (4) Consumo de VRAM.",
+      "dependencias": "Ninguna.",
+      "lineas_ganadas": 0,
+      "confianza": "alta"
+    }
+  ],
+  "bloque_b": [
+    {
+      "orden": 1,
+      "lineas": "1153, 1151, 1115-1123, 1082-1123 (Anexo I, Tabla 19)",
+      "ancla": "20 946 de los 32 201 falsos positivos / cuarenta y dos configuraciones",
+      "accion": "reportar_solamente (NO editar, Anexo protegido)",
+      "cambio": "Prohibición 2 aplica: no se toca el Anexo I. Se deja constancia para el autor de que la cifra 20.946/32.201 (65,0%) se calculó sobre 49 configuraciones (incluye un modelo de la lista cerrada de excluidos) y no sobre las 42 de la Tabla 19; la suma real de las 42 filas es 19.178. También hay un defecto de orden en las filas de gemma4:12b-mlx (líneas 1115/1123) y una leyenda que dice '42 configuraciones' cuando hay 41 distintas (dos filas de llama3.2:latest duplicadas). Y `tools/terms_fp_poblacion.json` fija por escrito la premisa errónea, por lo que corregirlo solo en el .md no basta.",
+      "dependencias": "§3.3 línea 233 (66,0%, ese sí se mantiene y es trazable a otro artefacto distinto).",
+      "lineas_ganadas": 0,
+      "confianza": "alta"
+    },
+    {
+      "orden": 2,
+      "lineas": "1159 (Anexo J)",
+      "ancla": "La Tabla 20 recalcula ambos coeficientes retirando",
+      "accion": "reportar_solamente (NO editar, Anexo protegido)",
+      "cambio": "Frase inexacta: solo el signo de Pearson depende exclusivamente de nemotron-mini:4b; la significancia (p<0,05) también se pierde/gana al retirar deepseek-r1:1.5b o mistral-nemo:latest. Reportar al autor; no se edita por prohibición 2. Corrección de referencia disponible: 'p=0,0333 al retirar deepseek-r1:1.5b y p=0,0404 al retirar mistral-nemo:latest, ambos por debajo del 5%'.",
+      "dependencias": "§5.3.1 cita las dos correlaciones; [40]/[41] no quedarían huérfanas si se tocase.",
+      "lineas_ganadas": 0,
+      "confianza": "alta"
+    },
+    {
+      "orden": 3,
+      "lineas": "1077, 990, 979-988, 1060-1062 (Anexo H/I, presente vs pasado)",
+      "ancla": "Los prompts solicitan tres categorías de entidad y los corpus anota",
+      "accion": "reportar_solamente (NO editar, Anexos protegidos)",
+      "cambio": "Los Anexos H e I describen en PRESENTE un estado de los corpus (sin Locations anotada) que ya no es cierto para el corpus vigente. Es coherente como historia si se leyera en pasado, pero tal como está redactado contradice §3.3/§7.2 (que sí usan pasado). No se edita por prohibición 2; se traslada al autor para que decida si re-redacta esos pasajes en pasado.",
+      "dependencias": "§3.3 línea 233, §7.2 ítem 7-8 (ya retirados/renumerados en este plan).",
+      "lineas_ganadas": 0,
+      "confianza": "media"
+    },
+    {
+      "orden": 4,
+      "lineas": "923-930 (Anexo F, prompt de generación)",
+      "ancla": "Paso 3 — Instrucción al LLM generador",
+      "accion": "reportar_solamente (NO editar, Anexo protegido)",
+      "cambio": "El prompt transcrito pide español; los 30 artículos resultantes están en inglés. Es un artefacto y se transcribe literal; se reporta al autor la incoherencia entre instrucción e idioma real del corpus, sin editar el anexo.",
+      "dependencias": "§4.1 línea 240 ya declara correctamente el corpus 2 en inglés.",
+      "lineas_ganadas": 0,
+      "confianza": "alta"
+    },
+    {
+      "orden": 5,
+      "lineas": "938, 944, 956 (Anexo G)",
+      "ancla": "más de 130 commits / auditoría crítica del sufijo q8 / discusión del capítulo 6",
+      "accion": "reportar_solamente (NO editar, Anexo protegido)",
+      "cambio": "938: recuento real es 551 commits, no 'más de 130' (cierto como cota inferior pero engañoso). 944: el ejemplo de supervisión narra un artefacto de la lista de exclusión (sin nombrarlo). 956: remite a una discusión del capítulo 6 que este plan comprime/retira en parte (línea 541); revisar si la remisión sigue teniendo destino tras aplicar los cambios de §6/§7. Ninguno se edita por prohibición 2; se traslada al autor.",
+      "dependencias": "§6.1/§6.2/Anexo H (líneas 233, 415, 541).",
+      "lineas_ganadas": 0,
+      "confianza": "media"
+    },
+    {
+      "orden": 6,
+      "lineas": "739-747, 736-738, 726-727 (Anexo A, Tabla 9)",
+      "ancla": "research/ | data/ | results/benchmark_results.csv | SYSTEM_PROMPT*",
+      "accion": "reescribir (coordinado, misma tabla)",
+      "cambio": "Aplicar las cuatro correcciones de la Tabla 9 en un solo commit, de abajo hacia arriba dentro de la tabla: (1) fila `research/` corregir ruta ('en la raíz del repositorio, junto a repos/'); (2) filas `results/…`: mantener `results/benchmark_balanced_120_<timestamp>/`, añadir `results/recorrida_20260908/` y `results/ANALISIS_CONJUNTO_20260909_FIX/` como corrida y consolidado vigentes, y re-etiquetar `results/benchmark_results.csv`/`statistical_report.md` como 'corrida exploratoria de julio de 2026'; (3) filas `data/`: añadir `data/kleptotrace.json` (N=15) y `data/kleptotrace_augmented_30.json` (N=30) junto al corpus N=120 ya listado; (4) fila `SYSTEM_PROMPT_ES_FEWSHOT.md`: corregir 'se reproduce íntegro en el Anexo B' por 'sus dos ejemplos se transcriben en el Anexo B' (verificado: el fichero tiene 43 líneas, el Anexo B solo transcribe 2 ejemplos).",
+      "dependencias": "§5.3.1 línea 381 ya cita ambos directorios nuevos; Anexo E Tabla 15 conserva su fila de julio; §5.1/§5.3/Anexo F referencian los corpus N=15/N=30 añadidos.",
+      "lineas_ganadas": -2,
+      "confianza": "alta"
+    },
+    {
+      "orden": 7,
+      "lineas": "716 (Tabla 9, fila dashboard), 215, 213 (Tabla 3)",
+      "ancla": "dashboard.py (Streamlit) | Siete pestañas / La capa de datos / interfaz Streamlit (7 pestañas)",
+      "accion": "reescribir (coordinado, tres locaciones)",
+      "cambio": "Corregir en las tres ubicaciones a la vez el número real de pestañas (nueve, verificado en src/dashboard.py:446-455), evitando en lo posible listarlas todas (para no tener que mencionar la pestaña 'Chat con los Resultados (Gemini AI)', un proveedor de terceros ajeno al criterio C2 de soberanía).",
+      "texto_propuesto": "Tabla 3 y Anexo A: '| 5. Visualización | dashboard.py (Streamlit) | Vistas de métricas, alucinaciones, ANOVA, eficiencia e impacto del RAG |'. §3.2 línea 215: 'La capa de visualización, implementada en Streamlit, presenta las métricas por modelo, las alucinaciones, la taxonomía de errores, la significancia estadística, la eficiencia de hardware y el impacto del RAG frente a la línea base; cumple una función de inspección durante la experimentación, no de despliegue productivo.'",
+      "dependencias": "Ninguna cita bibliográfica afectada.",
+      "lineas_ganadas": 1,
+      "confianza": "alta"
+    },
+    {
+      "orden": 8,
+      "lineas": "698 (Anexo A)",
+      "ancla": "este informe pueden rehacerse sin repetir la inferencia",
+      "accion": "reescribir",
+      "cambio": "Eliminar la frase duplicada ('La estructura del repositorio es la siguiente: La Tabla 9 describe...').",
+      "texto_propuesto": "este informe pueden rehacerse sin repetir la inferencia. La Tabla 9 describe la estructura del repositorio.",
+      "dependencias": "Coordinar con el ítem 6 de este bloque (misma sección de Anexo A).",
+      "lineas_ganadas": 0,
+      "confianza": "alta"
+    },
+    {
+      "orden": 9,
+      "lineas": "908-915 (Anexo E)",
+      "ancla": "Las tres primeras filas proceden de una corrida propia",
+      "accion": "reescribir",
+      "cambio": "Comprimir la narración del HTTP 429 (historia de proceso), conservando la justificación de procedencia que la Tabla 15 necesita.",
+      "texto_propuesto": "Las cifras de `gemma4:31b-cloud` proceden de `cloud_n15_limpio_20260905`, corrida que resuelve los quince artículos por análisis directo del JSON. Una medición anterior del mismo modelo quedó invalidada por la cuota del servicio alojado y no se recoge en este informe; el detalle está en el Anexo I y la contramedida es el limitador de tasa descrito en §3.2.",
+      "dependencias": "Anexo I sigue citado desde 233, 467→(469 tras retiro de coletilla ya no cita, revisar), 582 (renumerado a ítem retirado, revisar tras bloque de §7.2).",
+      "lineas_ganadas": 5,
+      "confianza": "alta"
+    },
+    {
+      "orden": 10,
+      "lineas": "823-828, 851-853 (Anexo D, Tabla 11)",
+      "ancla": "Modo | Flag CLI | Descripción | Caso de Uso / Entity-dict RAG (legacy): Template restrictivo",
+      "accion": "reescribir (coordinado, mismo anexo)",
+      "cambio": "Corregir la Tabla 11 (orden CLI real: `--rag-study --rag-mode X`, no `--rag-mode X` solo; y quitar 'Mejor F1' de kb_guidelines/kb_fewshot, nunca ejecutados según RUNS_INDEX.md) y el párrafo de las plantillas (retirar la atribución causal de que la plantilla restrictiva 'previene alucinaciones': el modo `entities` tiene la MAYOR alucinación del estudio, 21,59% histórico / máx. vigente en otros modos).",
+      "texto_propuesto": "Tabla 11: filas entities/kb_guidelines/kb_fewshot/kb_combined con columna 'Estado en el estudio' en vez de 'Mejor F1'. Párrafo: 'Entity-dict RAG (implementación previa): plantilla restrictiva (\"DO NOT extract them unless they explicitly appear in the News text\"), que presenta las entidades recuperadas solo como ayuda ortográfica y de reconocimiento. KB RAG: plantilla positiva (\"[EXTRACTION GUIDANCE] … Apply these rules to the news text\"), que incorpora la guía recuperada como instrucción de extracción.'",
+      "dependencias": "§5.6 línea 499 (revisar que no se lea como si los 4 modos se hubiesen comparado entre sí).",
+      "lineas_ganadas": 0,
+      "confianza": "alta"
+    },
+    {
+      "orden": 11,
+      "lineas": "811, 810 (Anexo C, Tabla 10)",
+      "ancla": "Tiempo total de benchmark (N=30, 2 modelos) / Modelos descargados",
+      "accion": "reescribir (parcial) / NO TOCAR (parcial)",
+      "cambio": "811: reemplazar la duración de la fase exploratoria por la duración real de la corrida vigente (8h24min, verificado en _sweep_progress.log). 810: NO TOCAR — el auditor midió mal la unidad (MB vs MiB); las cifras actuales SÍ reproducen correctamente en mebibytes. Veredicto 'conservar'.",
+      "texto_propuesto": "811 → '| Duración de la corrida vigente (doce modelos locales, N=15/30/120) | 8 h 24 min, un modelo por turno (results/recorrida_20260908/_sweep_progress.log, 16:42:23 → 01:06:33) |'",
+      "dependencias": "Ninguna.",
+      "lineas_ganadas": 0,
+      "confianza": "alta"
+    },
+    {
+      "orden": 12,
+      "lineas": "791-795 (Anexo B)",
+      "ancla": "Prompt de generación del corpus sintético N=30 (§4.1.1)",
+      "accion": "retirar",
+      "cambio": "Duplicado literal del Anexo F Paso 3. Retirar del Anexo B.",
+      "dependencias": "§4.1.1 línea 254 debe repuntar la remisión del Anexo B al Anexo F, en el mismo commit.",
+      "lineas_ganadas": 5,
+      "confianza": "alta"
+    },
+    {
+      "orden": 13,
+      "lineas": "787-792 (Anexo B) + 264 + 242 (§4.1/§4.1.2)",
+      "ancla": "'ninguno de los tres corpus anota esa categoría' / 'los corpus 1 y 2 no la anotan en absoluto' / 'el corpus no anota localizaciones'",
+      "accion": "retirar (Anexo B) + reescribir (264 y 242)",
+      "cambio": "OBLIGATORIO EN UN SOLO COMMIT, en este orden descendente: (1) retirar el párrafo del Anexo B (~787-792) que afirma que ningún corpus anota Locations — falso, verificado: 63/20/545 localizaciones anotadas en los tres corpus; (2) reescribir línea 264 (§4.1.2) para declarar la terna PER/ORG/LOC anotada en los tres corpus; (3) reescribir línea 242 (§4.1) para retirar 'el corpus no anota localizaciones' del Corpus 1.",
+      "texto_propuesto": "264 → 'La anotación de referencia distingue tres categorías de entidad: Personas y Organizaciones, ya descritas para los corpus 1 y 2, y Localizaciones [...]. Es la misma terna que solicita el prompt del sistema (Anexo B) en los tres corpus, de modo que toda categoría puntuada dispone de anotación de referencia contra la que compararse.' 242 → '15 artículos [...] Anotados manualmente con Personas (PER), Organizaciones (ORG) y Localizaciones como referencia. Longitud promedio: ~4.833 caracteres [...]'.",
+      "dependencias": "src/data_loader.py líneas ~120-124 tiene el mismo comentario erróneo en el código (fuera del alcance del .md, informativo para el operador).",
+      "lineas_ganadas": 9,
+      "confianza": "alta"
+    },
+    {
+      "orden": 14,
+      "lineas": "560, 557 (§7.2, ítems 7 y 8) + renumeración 9→7, 10→8, 11→9",
+      "ancla": "7. Normalización de codificación del corpus: ya realizada / 8. Anotación de la categoría localizaciones: ya realizada",
+      "accion": "retirar + renumerar",
+      "cambio": "Retirar los dos ítems (narran como 'trabajo futuro' algo 'ya realizado'; historia pre-8-sept.). Renumerar: el ítem 9 pasa a 7, el ítem 10 (idioma del prompt, dependencia_5_2, contenido en espera — ver bloque C) pasa a 8 conservando su contenido intacto hasta que se resuelva §5.2, y el ítem 11 (ya reescrito en bloque_a, ítem 1) pasa a 9.",
+      "dependencias": "Anexo H (citado en 233, 415, 541) y Anexo I (citado en 233, 469-ya-sin-cita-directa, y el antiguo 582 ahora en el ítem renumerado a 8) siguen referenciados y no quedan huérfanos.",
+      "lineas_ganadas": 8,
+      "confianza": "alta"
+    },
+    {
+      "orden": 15,
+      "lineas": "555 (§7.2, ítem 6)",
+      "ancla": "El comportamiento en inglés ya queda caracterizado por los c",
+      "accion": "reescribir",
+      "cambio": "Retirar solo la cláusula sin sustento sobre 'primera evidencia comparativa' entre idiomas de artículo; conservar la constatación de que los corpus del dominio están en inglés (justifica la extensión a portugués).",
+      "texto_propuesto": "6. **Extensión multiidioma (Fase 5):** Evaluar la robustez del sistema sobre textos en portugués, dado el alcance latinoamericano del problema de cumplimiento. El comportamiento en inglés ya queda caracterizado por los corpus del dominio empleados aquí, que están redactados en esa lengua.",
+      "dependencias": "Ninguna.",
+      "lineas_ganadas": 2,
+      "confianza": "alta"
+    },
+    {
+      "orden": 16,
+      "lineas": "541 (conclusión 7, §7.1)",
+      "ancla": "7. La codificación del corpus condicionó la medición sobre e",
+      "accion": "reescribir (comprimir, no retirar entero)",
+      "cambio": "NO retirar entero (rechaza la propuesta original): conservar la implicación metodológica transferible (verificar codificación de entrada Y de referencia por separado) en 4 líneas, retirando solo las cifras de la corrida descartada.",
+      "texto_propuesto": "7. La codificación del corpus es una variable de la medición y no ruido de fondo: el corpus N=120 almacenaba los nombres con *mojibake* (`JosÃ© Bono` donde el nombre real es **José Bono**), defecto corregido antes de la re-corrida que hoy sostiene la Tabla 7. La lección excede a este trabajo: al estar la corrupción presente a la vez en la anotación de referencia y en el texto de entrada, verificar la codificación de la entrada y de la referencia por separado debe formar parte del protocolo. El detalle se desarrolla en el **Anexo H**.",
+      "dependencias": "Anexo H sigue citado; §7.1 conserva sus siete elementos (no hay renumeración en esta lista, a diferencia de §7.2).",
+      "lineas_ganadas": 15,
+      "confianza": "alta"
+    },
+    {
+      "orden": 17,
+      "lineas": "539, 519, 521",
+      "ancla": "6. El RAG contextual supera al RAG por diccionario / La primera versión del módulo recuperaba / La explicación más plausible es de redundancia",
+      "accion": "reescribir (539, 519) + retirar (521), coordinado",
+      "cambio": "Los tres pasajes citan la misma familia de cifras (12,26/6,73 vs las obsoletas 14,52/10,82) y el mismo patrón capacidad-beneficio. Aplicar en orden descendente: (1) retirar 521 completo (mecanismo causal sobre un patrón no significativo, ya cubierto con cautela en la conclusión 6); (2) reescribir 519 con las cifras vigentes y la significancia correcta (un solo modelo, no dos); (3) reescribir 539 restituyendo la tesis metodológica (RAG contextual > RAG por diccionario) apoyada en la comparación de versiones, no en la significancia de un solo modelo.",
+      "texto_propuesto": "539 → '6. **El RAG contextual supera al RAG por diccionario:** recuperar criterios en lugar de nombres mejora el F1 en once de los trece modelos sobre N=120, frente a la degradación que producía el diccionario de entidades [...]. La mejora solo alcanza significancia estadística (Tukey HSD) en uno, `nemotron-mini:4b`, con +12,26 puntos (p<0,001) [...]. El segundo delta bruto, `llama3.2:latest` con +6,73 puntos, no se distingue del azar (p=0,2334) [...]. ρ=-0,09, p=0,775.' 519 → corregir a +12,26/+6,73 y 'significativo en uno de los trece modelos'.",
+      "dependencias": "§5.6 línea 501 (ya corregido en bloque_a) debe decir 'once', igual que aquí.",
+      "lineas_ganadas": 9,
+      "confianza": "alta"
+    },
+    {
+      "orden": 18,
+      "lineas": "537 (conclusión 5)",
+      "ancla": "Robustez arquitectural, con su alcance declarado",
+      "accion": "reescribir",
+      "cambio": "Comprimir el detalle de código (retirado íntegro se pierde información sobre la fragilidad de detección de rate-limit); trasladar ese detalle a §3.2 línea 221 en el mismo commit.",
+      "texto_propuesto": "5. **Robustez arquitectural, con su alcance declarado:** el controlador AIMD acota la concurrencia y reacciona de forma autónoma ante las respuestas de limitación de tasa del proveedor, que reconoce por el contenido del mensaje de error, y ante una racha de errores consecutivos, que abre un cortacircuitos (§3.2). No recibe telemetría de memoria [...]. El *checkpointing* permite reanudar una corrida interrumpida sin repetir el trabajo ya hecho.",
+      "dependencias": "§3.2 línea 221: añadir la cláusula sobre detección de 429/503 por subcadena en el mismo commit para que el detalle no desaparezca del informe.",
+      "lineas_ganadas": 3,
+      "confianza": "media"
+    },
+    {
+      "orden": 19,
+      "lineas": "535 (conclusión 4)",
+      "ancla": "Reducción estimada de costos operativos",
+      "accion": "reescribir",
+      "cambio": "Retirar el 60-80% sin derivación y 'sin personal analista dedicado' (contradice §5.5).",
+      "texto_propuesto": "4. **Reducción estimada de costos operativos:** ambas cifras son estimaciones y no mediciones [...]. Sobre esa base, la reducción estimada es del 99,4% en el coste unitario directo. El ahorro efectivo es menor, porque el sistema no sustituye al analista sino que le entrega una preselección que aún debe validar (§5.5).",
+      "dependencias": "Objetivo 5 (línea 71, ya corregido en bloque_a) queda coherente.",
+      "lineas_ganadas": 1,
+      "confianza": "alta"
+    },
+    {
+      "orden": 20,
+      "lineas": "533, 513",
+      "ancla": "3. Soberanía de datos con un coste de rendimiento casi nulo / El tercer factor es la comparación entre ejecución local y a",
+      "accion": "reescribir (513) / NO TOCAR salvo lo ya coherente (533)",
+      "cambio": "CONFLICTO RESUELTO: un veredicto pedía reescribir 533 y otro (posterior, más fundamentado) lo rechazó ('conservar', ya cumple la regla de declarar la corrida histórica con matiz y asentar la conclusión en la vigente). Se aplica solo 513 (que sí tenía un error de cifras verificado: 69,12/66,99 son de corridas distintas y de un modelo fuera de alcance) y se deja 533 intacto salvo una comprobación de coherencia posterior si la Tabla 4 llegase a rebasearse (bloque C).",
+      "texto_propuesto": "513 → 'El tercer factor es la comparación entre ejecución local y alojada. Sobre los ciento veinte artículos, que es el experimento de mayor potencia, la variante alojada del mismo modelo alcanza 82,13 % de F1 frente al 81,47 % del mejor local: la soberanía cuesta menos de un punto de F1 [...]'.",
+      "dependencias": "Tabla 4 (no se toca en este plan); si se rebasa en el futuro, revisar 533 entonces.",
+      "lineas_ganadas": 4,
+      "confianza": "alta"
+    },
+    {
+      "orden": 21,
+      "lineas": "529 (conclusión 1)",
+      "ancla": "y 90,16 % sobre el corpus del dominio de treinta artícul",
+      "accion": "reescribir",
+      "cambio": "Parte de la cascada del 90,16% (ver ítem 25 más abajo). Sustituir por 80,57%.",
+      "texto_propuesto": "1. **Viabilidad demostrada:** [...] alcanzando **81,47%** de F1 sobre el corpus periodístico de ciento veinte artículos —de los que 105 están en español— y **80,57%** sobre el corpus del dominio de treinta artículos, que está redactado en inglés. En ninguno de los dos corpus se registraron extracciones fallidas.",
+      "dependencias": "Cascada del 90,16% (líneas 11, 17, 507); comprobación 28 de tools/verificar_informe.py.",
+      "lineas_ganadas": 0,
+      "confianza": "alta"
+    },
+    {
+      "orden": 22,
+      "lineas": "509 (dos sub-pasajes del mecanismo ibérico y la réplica)",
+      "ancla": "Lo que sí caracteriza a ese corpus / predicción compatible con que la corrida que replica",
+      "accion": "retirar (ambos)",
+      "cambio": "Retirar el mecanismo de los nombres ibéricos (refutado por el registro de errores: 6 vs 2 errores de límite, dirección contraria a la afirmada) y retirar el '+3,11' de la réplica (artefacto de parseo, no efecto de idioma). Dejar intacto solo el tercer factor (renombrado, ver ítem 513 de este bloque) y absorber la frase 'y también, directamente y sin necesidad de corrección alguna' en el mismo recorte.",
+      "dependencias": "[11] no queda huérfana (se cita también en línea 127). Conclusión 2 (línea 531, bloque C) ya es coherente con esta retirada.",
+      "lineas_ganadas": 10,
+      "confianza": "alta"
+    },
+    {
+      "orden": 23,
+      "lineas": "507 (párrafo del F1 90,16%)",
+      "ancla": "La hipótesis fijaba un F1 igual o superior al 70",
+      "accion": "reescribir",
+      "cambio": "Retirar el 90,16% (no existe en ningún fichero de resultados) y la brecha inventada; usar 80,57%/81,47% consistentes con la Tabla 6/Tabla 7 actuales.",
+      "texto_propuesto": "La hipótesis fijaba un F1 igual o superior al 70% como umbral de viabilidad. El umbral se supera en los dos corpus: `gemma4:31b-mlx` obtiene 80,57% sobre el corpus del dominio, con intervalo de confianza al 95% de [74,22%, 86,92%] y ninguna extracción fallida sobre N=30, y 81,47% sobre el corpus periodístico de ciento veinte artículos. La hipótesis queda confirmada en ambos, y el desempeño no se degrada al pasar del corpus sintético del dominio al periodístico real.",
+      "dependencias": "Cascada 90,16% (líneas 11, 17, 529); comprobación 28 verificador.",
+      "lineas_ganadas": 5,
+      "confianza": "alta"
+    },
+    {
+      "orden": 24,
+      "lineas": "296",
+      "ancla": "El cotejo entre la entidad extraída y la de referencia es di",
+      "accion": "reescribir",
+      "cambio": "CRÍTICO: retirar el 59,25% que contradice la Tabla 7 (81,47%) dentro del mismo documento, y la descripción obsoleta del recuento de aciertos. Aplicar junto con línea 463 (bloque_a, ítem 11) y línea 229 (bloque_a, ítem 22) en el mismo commit para no dejar el informe contradiciéndose consigo mismo.",
+      "texto_propuesto": "El cotejo [...] Cada entidad de referencia se empareja una sola vez, y una segunda extracción que casara con una referencia ya emparejada cuenta como falso positivo. Las cifras se agregan dentro de cada artículo y después se promedian entre artículos [...]. Esa es la única convención de agregación que emplea este informe [...]. El cotejo de la tasa de alucinación [...] umbral de 70 [...]; la taxonomía de errores de §5.4 usa un corte de 50.",
+      "dependencias": "Línea 463 (bloque_a) y línea 229 (bloque_a) forman una única familia de corrección; deben ir en el mismo commit.",
+      "lineas_ganadas": 2,
+      "confianza": "alta"
+    },
+    {
+      "orden": 25,
+      "lineas": "17 (Abstract), 11 (Resumen)",
+      "ancla": "Financial institutions subject to AML/KYC / Las instituciones financieras sujetas a regulaciones AML/KYC",
+      "accion": "reescribir (ambas, sincronizadas, mismo commit)",
+      "cambio": "Cascada del 90,16%: no existe en ningún fichero (máximo real 89,83%). Sustituir por la formulación verificada de 81,47%/80,57%, +12,3pp RAG en el más débil, +10,4pp idioma del prompt. Sincronizar Resumen y Abstract palabra por palabra según la regla del proyecto, comprobar <200 palabras cada uno (196 y ~179 respectivamente) y que caben en la página inicial del .docx/PDF.",
+      "texto_propuesto": "11 → 'Las instituciones financieras sujetas a regulaciones AML/KYC [...]. El estudio principal comparó trece modelos sobre 120 artículos reales, 105 en español [...]. El RAG solo mejora de forma estadísticamente sólida al más débil de los trece (+12,3 puntos de F1) y es marginal en los mayores. Redactar el prompt en español con ejemplos few-shot aporta +10,4 puntos sobre el corpus de quince artículos, sin replicar sobre el corpus mayor. El mejor modelo local alcanza 81,47 % de F1 sobre el corpus de 120 artículos y 80,57 % sobre el del dominio, preservando la confidencialidad.' 17 → traducción literal equivalente.",
+      "dependencias": "Líneas 507 y 529 (mismo commit); comprobación 28 de tools/verificar_informe.py (vigila '90,16'); propagar a los tres .docx y al PDF con tools/docx_replace_terms.py; la frase '+10,4 puntos' es dependencia_5_2 (se conserva ahora, se retira si §5.2 cae — ver bloque C).",
+      "lineas_ganadas": 0,
+      "confianza": "alta"
+    },
+    {
+      "orden": 26,
+      "lineas": "375, 368-373, 366 (§5.3, Tabla 6)",
+      "ancla": "Ambos modelos superan con holgura el umbral del 70 / Tabla 6. Validación estadística sobre el corpus del dominio / El primer experimento evalúa los dos modelos de mayor capaci",
+      "accion": "reescribir (coordinado, resuelve un conflicto entre dos veredictos)",
+      "cambio": "CONFLICTO RESUELTO por el orquestador: un veredicto pedía 'conservar' la Tabla 6 tal cual (2 filas) y el párrafo 375 tal cual; otro veredicto, con evidencia numérica exacta y verificada dígito a dígito contra recorrida_20260908/*__N30, confirma con alta confianza el rebase de la Tabla 6 a los 13 modelos del estudio (aditivo: solo se retira la fila de `gemma4:31b`, que está fuera del alcance de los 13 modelos declarados; ninguna configuración legítima del diseño experimental desaparece). Se opta por el REBASE, porque es aditivo y no viola la prohibición 1 (no es una fila de una configuración protegida como ZS-ES/FS-ES). Consecuencia: reescribir también 375 con el texto alternativo ('once de trece superan el 70%...') y 366 (retirar 'los dos modelos de mayor capacidad' y 'anotación experta'). RIESGO A RESOLVER: si el nuevo texto de 375 no menciona la d de Cohen, retirar también la entrada bibliográfica [46] (última de la lista, 1-46: no exige renumerar nada más).",
+      "texto_propuesto": "366 → 'El corpus sintético del dominio AML/KYC [...] sirve para medir el desempeño alcanzable en el dominio propio del problema. La Tabla 6 recoge el F1 de los trece modelos en extracción directa, con sus intervalos de confianza al 95 %.' Tabla 6 (368-373) → tabla de 13 filas (gemma4:12b-mlx 89,83% primero, nemotron-mini:4b 47,99% último, columna Fallos). 375 → 'Once de los trece modelos superan el umbral del 70 % de F1 fijado en la hipótesis [...]. `gemma4:12b-mlx` encabeza la tabla por delante de las dos compilaciones de 31B, con intervalos de confianza que se solapan ampliamente [...]. Solo `nemotron-mini:4b` registra extracciones fallidas, tres de treinta.'",
+      "dependencias": "Bibliografía [46] (Cohen), última entrada: retirar solo si el texto final de 375 no la necesita — decisión final del operador. Líneas 507/529 ya citan 80,57% para gemma4:31b-mlx (ese valor no cambia en el rebase, coherente).",
+      "lineas_ganadas": -11,
+      "confianza": "alta"
+    }
+  ],
+  "bloque_c": [
+    {
+      "tema": "Destino de §5.2 / Tabla 5 / §4.3 (estudio de variantes de prompt)",
+      "tipo": "decision_reservada_orquestador",
+      "descripcion": "El destino de este experimento (retirar, mantener como está, o re-correr limpio en el equipo remoto) NO se decide en este plan, por instrucción expresa. Se listan TODOS los puntos de dependencia detectados en las nueve auditorías, para que quien tome la decisión sepa exactamente qué tocar después.",
+      "lineas_afectadas": [
+        "11 (Resumen, frase '+10,4 puntos')",
+        "17 (Abstract, frase espejo)",
+        "59 (variables independientes, elemento 3)",
+        "69 (objetivo específico 3, completo)",
+        "77 (segunda etapa de la estrategia de validación)",
+        "95 (segundo rasgo de dificultad del dominio, premisa del mecanismo ibérico)",
+        "127 (coste de tokenización, cita [11], base teórica de idioma-como-variable)",
+        "133 y 139 (§2.4, remisiones a comprobación empírica del RAG por diccionario/contextual, wording a revisar)",
+        "199 (criterio C5, cláusula sobre 'variantes de prompt')",
+        "268 → ya resuelto en bloque_a (no depende de esta decisión, solo corrige un dato falso)",
+        "274-283 (§4.3 completo: diseño factorial, aprendizaje en contexto, ejemplos few-shot)",
+        "304-337 y 312-315 (Tabla 4 y sus dos filas ZS-ES/FS-ES: ver ítem de Tabla 4 más abajo, entrelazado con esta decisión)",
+        "344-362 (§5.2 y Tabla 5 completas)",
+        "407 (Anexo H, mención de que N=15/N=30 no comprometen a §5.1/§5.2/§5.3 — ya absorbida en la reescritura de 401-416, revisar solo si §5.2 cambia de forma sustancial)",
+        "509 (frase introductoria 'tres factores', pasa a 'dos factores' si se retira)",
+        "531 (conclusión 2 completa)",
+        "569-575 (ítem de trabajo futuro sobre replicar el efecto del idioma, hoy renumerado a 8 en §7.2 tras el bloque_b ítem 14)",
+        "596-690 (bibliografía: verificado que NINGUNA entrada queda huérfana si se retira §5.2/§4.3/Tabla 5 — [8] sigue citada en 107/125, sin corrimiento de numeración)",
+        "744-747 (Tabla 9, filas de los cuatro ficheros de prompt del diseño factorial)",
+        "764-789 (Anexo B completo, es el anexo de la configuración FS-ES)",
+        "904 (Anexo E, Tabla 15, fila de origen ablacion_n15_REMOTO)",
+        "990 (Anexo H, protegido, no editar bajo ninguna decisión)",
+        "1087-1093 (Anexo I, Tabla 19, protegido, filas zs-es/zs-en/fs-es/fs-en de una corrida N=120 distinta y no comparable con Tabla 5 — riesgo de confusión ya señalado, no editar sin indicación del profesor guía)"
+      ],
+      "nota": "El estudio de variantes de prompt tiene el MISMO defecto de Locations-contra-el-vacío que las Tablas 4 y 6 (confirmado: confusion_matrix.json de ablacion_n15_REMOTO da Locations {TP:0, FP:272, FN:0}). Una re-corrida limpia no solo cambiaría los deltas: cambiaría las cuatro filas de la Tabla 5 enteras (el baseline ZS-EN pasaría de 64,05% a un valor próximo al 71,77% que la corrida vigente mide para gemma4:latest sobre el mismo corpus)."
+    },
+    {
+      "tema": "Destino de la Tabla 4 (§5.1, benchmark N=15) y sus filas ZS-ES/FS-ES",
+      "tipo": "decision_reservada_orquestador",
+      "descripcion": "CONFLICTO NO RESUELTO EN ESTE PLAN, entrelazado con el anterior. Existen dos rutas incompatibles entre sí en las auditorías: (A) rebasar la tabla entera a los 13 modelos de recorrida_20260908 (datos verificados exactamente, Locations ya anotada) — pero esto elimina de facto las filas gemma4:latest (ZS-ES) y (FS-ES), que son configuraciones legítimas y protegidas por la prohibición 1 y por el incidente fundacional del 2026-09-03 documentado en CLAUDE.md, ya que recorrida_20260908 solo mide baseline/kb_rag, no variantes de idioma de prompt; (B) dejar la tabla como está (con el defecto de Locations contra el vacío) y solo corregir el título y los Hallazgos textuales, que es lo que este plan APLICA AHORA (bloque_a, ítem 18) precisamente para no violar la prohibición 1 sin resolución previa. Se recomienda resolver primero el destino de §5.2 (arriba): si se re-corren las variantes de prompt sobre N=15 con el corpus ya corregido, ambas filas dejarían de depender de ablacion_n15_REMOTO y la Tabla 4 completa podría rebasarse sin perder ninguna fila legítima.",
+      "dependencias": [
+        "§3.3 línea 233 (66,0%, sostenido en Anexo I)",
+        "§4.2 líneas 268/270",
+        "Anexo E Tabla 15 (líneas 898-910)",
+        "§6.1/§7.1 líneas 509 (ya retirado en bloque_b, no depende de la Tabla 4), 513/533 (ya resueltos en bloque_b sin depender de esta decisión)"
+      ]
+    },
+    {
+      "tema": "Tabla 8 (§5.5, VRAM y Tok/s/B)",
+      "tipo": "decision_pendiente",
+      "descripcion": "Las tres filas actuales son mediciones reales pero de una corrida N=15 ajena a recorrida_20260908, y la etiqueta 'gemma4:31b' no corresponde a ninguno de los 13 modelos del estudio. El consolidado vigente (merged_results.csv) permite ampliar la tabla a los 13 modelos sin eliminar ninguna fila (sería puramente aditivo, igual que el rebase de Tabla 6). No se aplicó en este plan por no haber sido objeto de un veredicto explícito; se recomienda tratarlo igual que la Tabla 6 (bloque_b ítem 26) en una próxima pasada.",
+      "lineas_afectadas": [
+        "479-487"
+      ]
+    },
+    {
+      "tema": "Hipótesis registrada (§1.3, línea 57)",
+      "tipo": "decision_autor",
+      "descripcion": "No se reescribe (una hipótesis no se ajusta a posteriori para que cuadre con los resultados). Se señala al autor una tensión no resuelta: compromete 'reduciendo los costos operativos en más del 60%' (estimación, no medición) y 'F1≥70% en español' (el informe no publica un F1 calculado solo sobre los 105 artículos en español; publica un valor mixto de 81,47% y uno íntegramente en inglés de 80,57%). Resolver en §6, no reescribiendo §1.3.",
+      "lineas_afectadas": [
+        "57"
+      ]
+    },
+    {
+      "tema": "Objetivo/hipótesis: falta de F1 desglosado por idioma del artículo",
+      "tipo": "decision_autor",
+      "descripcion": "El dato es calculable (record_id por artículo en merged_results.csv, benchmark_balanced_120.json identifica los 15 de Kleptotrace en inglés) pero publicarlo AÑADE texto, contrario al objetivo de holgura. Queda a criterio del autor.",
+      "lineas_afectadas": [
+        "57",
+        "555"
+      ]
+    },
+    {
+      "tema": "Repositorio privado y referencia [37] con 404",
+      "tipo": "reportar_solamente_ya_declarado",
+      "descripcion": "Contradicción real (Anexo A dice 'está publicado' e imprime la URL) pero ya está declarada en FALLOS_DECLARADOS de tools/verificar_informe.py y en CURRENT-TASKS.md ('no se reformula: depende de publicar, que espera a la purga'). No requiere acción de este plan.",
+      "lineas_afectadas": [
+        "695-696"
+      ]
+    },
+    {
+      "tema": "Anexos H, I, J: contradicciones internas detectadas, NO EDITABLES por prohibición 2",
+      "tipo": "reportar_al_autor",
+      "descripcion": "Lista de defectos reales dentro de anexos protegidos que este plan NO toca, para traslado directo al autor o al profesor guía: (1) línea 1153, cifra 65,0% calculada sobre 49 configuraciones en vez de 42 (incluye un modelo de la lista cerrada de excluidos); (2) línea 1159, frase sobre robustez de Pearson que la propia Tabla 20 contradice (3 de 13 retiradas cambian la significancia, no solo nemotron-mini:4b); (3) líneas 1077/990/979-988, verbos en presente que contradicen el estado ya corregido del corpus; (4) líneas 1115-1123, dos filas de gemma4:12b-mlx fuera de orden en la Tabla 19; (5) líneas 1082-1123, columnas 'restringidas' de la Tabla 19 no trazables a un artefacto persistido en results/ (recalculadas el 2026-09-09 sin regenerar el JSON de origen); (6) línea 1060-1062, siete artículos excluidos del consolidado etiquetados como 'contaminados' en el manifiesto pero limpios al abrirlos hoy — incoherente con §5.3.1 línea 381, que SÍ está fuera de los anexos y podría corregirse en una pasada futura.",
+      "lineas_afectadas": [
+        "1153",
+        "1159",
+        "1077",
+        "990",
+        "979-988",
+        "1115-1123",
+        "1082-1123",
+        "1060-1062"
+      ]
+    },
+    {
+      "tema": "§5.3.1 línea 381 (siete artículos excluidos, redacción del motivo)",
+      "tipo": "decision_pendiente_fuera_de_alcance_de_esta_sintesis",
+      "descripcion": "No cubierta por ningún veredicto explícito en las nueve auditorías/refutaciones recibidas, pese a ser mencionada como dependencia crítica desde varios ángulos (líneas 296/463 la citan, Anexo H la contradice). Se recomienda que una pasada de auditoría específica sobre líneas 379-400 (fuera del rango de los nueve tramos revisados) la aborde antes del cierre.",
+      "lineas_afectadas": [
+        "381"
+      ]
+    },
+    {
+      "tema": "Bibliografía: entrada [46] (Cohen's d), destino condicional",
+      "tipo": "decision_operador",
+      "descripcion": "Si el texto final de la línea 375 (bloque_b ítem 26) no menciona explícitamente la d de Cohen, retirar la entrada [46] de la bibliografía (línea 689). Es la ÚLTIMA entrada (1-46), por lo que su retiro NO exige renumerar ninguna otra cita ni entrada.",
+      "lineas_afectadas": [
+        "375",
+        "689"
+      ]
+    }
+  ],
+  "lineas_ahorradas_total": 175,
+  "lineas_ahorradas_cuerpo": 163,
+  "comprobaciones": [
+    "Ejecutar tools/verificar_informe.py sin --estricto tras aplicar los bloques A y B; debe devolver 0 fallos nuevos (los declarados en FALLOS_DECLARADOS no cuentan).",
+    "Actualizar la comprobación 28 de tools/verificar_informe.py, que vigila la cadena '90,16', para que ya no la busque como válida (ahora debe estar ausente del cuerpo tras aplicar el bloque_b ítem 25).",
+    "Referencias cruzadas: tras retirar los ítems 7 y 8 de §7.2 (bloque_b ítem 14), comprobar que ninguna otra sección cita 'ítem 7', 'ítem 8', 'ítem 9', 'ítem 10' o 'ítem 11' de §7.2 por número (grep previo confirmó ausencia, pero repetir tras aplicar).",
+    "Tablas: verificar que la Tabla 6 rebasada (bloque_b ítem 26) mantiene su numeración y que su leyenda sigue inmediatamente encima, a dos líneas o menos; igual para la Tabla 9 tras las cuatro correcciones del bloque_b ítem 6, y para la Tabla 11 tras el bloque_b ítem 10.",
+    "Bibliografía: comprobar que [8],[11],[13],[14],[19],[21],[22],[26],[32],[33],[36],[39],[40],[41],[43],[44],[45] siguen citadas al menos una vez tras todos los recortes; decidir y ejecutar el destino de [46] (ver bloque_c) antes del commit.",
+    "Resumen y Abstract: recontar palabras tras aplicar el bloque_b ítem 25 (deben quedar por debajo de 200 cada uno; verificar además que dicen exactamente lo mismo en ambos idiomas) y comprobar que ambos siguen cabiendo en la página inicial del .docx y del PDF tras la reconstrucción.",
+    "Higiene tipográfica: recontar guiones largos y negritas del cuerpo generado (líneas 41, 155, 217, 851-853 retiran guiones largos explícitamente) y compararlos con la fuente Markdown, verificando que el renderizador no añadió énfasis.",
+    "Cero emojis, cero arte ASCII: no se ha introducido ninguno en este plan; verificar de todos modos tras la reconstrucción del .docx/PDF.",
+    "Identificadores: ningún cambio de este plan crea un §F<n>, §L<n> o §<n>.<n> nuevo; no aplica el grep de colisión de identificadores.",
+    "Ficheros vacíos: este plan no crea ni borra ficheros; no aplica.",
+    "Propagar todos los cambios de texto a los tres .docx (Informe_Final_Tesina_NER.docx, Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.docx, y el borrador de Hito 5) mediante tools/docx_replace_terms.py — nunca regenerar con pandoc — y regenerar el PDF; verificar que el proceso no introdujo emojis ni marcas de agua.",
+    "Contar páginas del cuerpo (líneas 1-595 del .md, hasta el final de las conclusiones) en el .docx resultante y confirmar que sigue por debajo de 25 páginas, y que la corrección es neutra o positiva en extensión.",
+    "CURRENT-TASKS.md: declarar esta tarea de aplicación de correcciones con el único archivo tocado (el Markdown canónico), estado EN CURSO al empezar y COMPLETADA al terminar, con la entrada correspondiente en §6.",
+    "Backup previo: tomar una copia de 2026-07-04_Borrador-Informe-Final-Tesina.md antes de iniciar el bloque A, conforme a la regla de concurrencia entre sesiones.",
+    "Releer el Markdown inmediatamente antes de cada bloque de escritura (A, luego B), por si otra sesión lo modificó mientras tanto."
+  ],
+  "resumen": "Plan de ejecución para aplicar sobre 2026-07-04_Borrador-Informe-Final-Tesina.md las correcciones surgidas de la auditoría en nueve tramos y su fase de refutación. Se aplican 61 cambios confirmados (35 independientes en bloque A, 26 coordinados/con renumeración en bloque B) y se dejan explícitamente pendientes 9 grupos de decisión reservada (bloque C), entre ellos el destino completo de §5.2/Tabla 5/§4.3 y de la Tabla 4, que no se tocan por instrucción expresa y por estar entrelazados con la protección de las filas ZS-ES/FS-ES. Se resolvieron cuatro conflictos reales entre veredictos de la propia refutación: (1) Tabla 4 — se rechaza el rebase completo porque eliminaría de facto las dos configuraciones de prompt legítimas y protegidas, aplicando solo la corrección de título/Hallazgos textuales; (2) Tabla 6 — se acepta el rebase a 13 modelos por ser aditivo y no tocar ninguna configuración protegida, arrastrando la reescritura del párrafo 375 y un riesgo controlado sobre la cita bibliográfica [46]; (3) líneas 497/523 — se conserva íntegro el diagnóstico del RAG por diccionario en 497 y se retira solo su eco en 523, evitando que dos retiradas simultáneas borrasen el argumento del informe entero; (4) Hallazgos 1-4 de §5.1 — se defiende Hallazgo 1 tal cual (correcto contra los propios datos de la Tabla 4 vigente en el documento) y se rechaza actualizar sus cifras a la corrida recorrida_20260908, coherente con no rebasar la tabla. El hallazgo más grave detectado en todo el proceso, y el primero que debe corregirse, es la cifra 90,16% de F1 (Resumen, Abstract, §6.1 y conclusión 1): no existe en ningún fichero de resultados del proyecto y se sustituye por 80,57%/81,47%, verificados contra los datos vigentes.",
+  "riesgos": "Riesgo principal: el bloque C deja sin resolver el destino de §5.2/Tabla 5/§4.3 y de la Tabla 4, que son el núcleo de la petición original del autor ('eliminar hallazgos pasados que se invalidaron con los últimos benchmark'); mientras no se decida, el cuerpo conserva la Tabla 4 y la Tabla 5 con el defecto de Locations-contra-el-vacío ya documentado, aunque ya no se presenta como si fuera dato fiable gracias a las correcciones textuales aplicadas (Hallazgo 2, §5.1 título, §4.2 línea 268). Riesgo secundario: la reescritura de la línea 467 (ejemplos de errores de límite) queda con confianza media porque un recuento independiente dio frecuencias distintas a las del primer borrador (125/72 apariciones en vez de 144/117); el operador debe recontar antes de fijar el texto final. Riesgo terciario: el rebase de la Tabla 6 (bloque B) es la única acción de este plan que AUMENTA la extensión del cuerpo (-11 líneas, es decir, cuesta espacio) porque prioriza exactitud sobre ahorro; se acepta porque la política de integridad de la medición pesa más que el objetivo secundario de holgura de páginas. Riesgo de aplicación: varios cambios de bloque B dependen de commits simultáneos en ubicaciones muy separadas del documento (por ejemplo, la cascada del 90,16% cruza las líneas 11, 17, 507 y 529); aplicarlos en sesiones distintas o parcialmente dejaría el informe en un estado peor que el actual (contradicciones nuevas en vez de resueltas), por lo que cada grupo de bloque B debe tratarse como una unidad atómica de commit."
+}

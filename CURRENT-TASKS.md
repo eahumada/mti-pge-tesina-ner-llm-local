@@ -1816,10 +1816,17 @@ corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y
 - **Salvaguardas del prompt:** prohibido proponer la retirada de filas de datos medidos; prohibido tocar los
   Anexos H, I y J (destino reservado al profesor guía); §5.2 excluida de la retirada por estar en la vía de
   re-corrida, con instrucción de inventariar sus dependencias en su lugar.
-- **Resultado:** pendiente.
+- **Resultado: completado 2026-09-14 23:20.** 165 hallazgos sobre 9 tramos, 89 candidatas, **84
+  supervivientes** a la refutación adversarial, 33 conservados explícitos. Plan de ejecución con 35 cambios
+  independientes (bloque A), 26 coordinados/con renumeración (bloque B) y 9 grupos reservados a decisión del
+  autor (bloque C, incluido el destino completo de §5.2/Tabla 5, protegido por instrucción expresa). Ahorro
+  estimado: 175 líneas totales, 163 del cuerpo. **Un hallazgo de su síntesis resultó incorrecto** y lo
+  corregí yo (`FINDINGS §F177 punto 3`): dijo que el 90,16 % «no existe en ningún fichero», cuando sí existe
+  y es trazable. Plan completo conservado en `PLAN-PURGA-INFORME-20260914.json`. **No aplicado al informe**,
+  a la espera de decisión del autor sobre el alcance.
 
-### 4.4 `forense-cifras-20260914` — 🔄 EN CURSO
-- **Cuándo:** 2026-09-14, lanzado ~19:35 · **Agentes:** 11 (8 forenses + 2 refutadores + 1 dictamen)
+### 4.4 `forense-cifras-20260914` — ✅ COMPLETADO 2026-09-14 23:20
+- **Cuándo:** lanzado ~19:35 · **Agentes:** 11 (8 forenses + 2 refutadores + 1 dictamen)
 - **Objetivo:** auditar la **composición** de cada cifra publicada, no que reproduzca. Nace de `FINDINGS
   §F174`: una cifra puede reproducir al decimal y estar escrita por un solo registro averiado.
 - **Protocolo idéntico por cifra:** contar ceros, `parse_method` y `tp+fp==0`; recalcular excluyéndolos;
@@ -1829,7 +1836,20 @@ corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y
 - **Salvaguarda añadida tras `§F175`:** la fase de refutación debe clasificar cada avería como **defecto del
   instrumento** (`tp+fp==0` y parseo `fallback`) o **desempeño del modelo** (`f1==0` con `fp>0`), abriendo el
   `benchmark.log`. Excluir sin esa distinción es lo que produjo un defecto inexistente.
-- **Resultado:** pendiente. Su síntesis alimenta el encargo §3.bis.18.
+- **Resultado (`FINDINGS §F177`):** 120 cifras auditadas, **85 frágiles o incorrectas**, 5 rehabilitadas.
+  **Hallazgo mayor: mi propia corrección de `§F175` estaba incompleta.** La condición «`tp+fp==0` **y**
+  parseo `fallback`» era arbitraria — `parse_method` resultó ser, verificado por mí en
+  `src/providers/ollama_provider.py:368-372`, un chequeo cosmético sobre la forma del texto, no una medida
+  de éxito de parseo. Con el criterio correcto (`tp==0 y fp==0`, sin más), el RAG en `nemotron-mini:4b` da
+  **+11,52 pp** (no +13,04 ni +7,28) y en `mistral-nemo:latest` **−3,46 pp**: el beneficio del RAG en el
+  modelo más débil es mayoritariamente desempeño real, no un artefacto de formato — reversión de lo que
+  decía `§F175`. También confirmado por mí de forma independiente: el Anexo J lee mal su propia Tabla 20
+  (atribuye a `nemotron-mini` un efecto que en realidad corresponde a `deepseek-r1` y `mistral-nemo`); y el
+  90,16 % del Resumen/Abstract sí es trazable (`n30_rerun_REMOTO`, F1 de 2 categorías) pero mezcla
+  convención con el 81,47 % de al lado y arrastra el defecto de `Locations` sin anotar. Sin verificar del
+  todo: la Tabla 7 con contraste pareado (cinco modelos significativos, no uno) y el χ² de Friedman de
+  §5.3.1, que ninguna ronda pudo localizar. Dictamen completo en `DICTAMEN-FORENSE-CIFRAS-20260914.json`.
+  **No aplicado al informe.**
 
 ### 4.5 `revision-scripts-20260914` — 🔄 EN CURSO
 - **Cuándo:** 2026-09-14, lanzado ~19:55 · **Agentes:** 11 (1 inventario + 6 revisores + 3 reproductores +
@@ -2547,3 +2567,4 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
 - **Auditoría de Calidad Adicional:** Preparada en `tools/auditar_calidad_traduccion_n30.py` con revisor independiente `mistral-nemo:latest` y verificación algorítmica de preservación de entidades (`Persons`, `Organizations`, `Locations`). Se ejecutará inmediatamente al completar el artículo 30, emitiendo `remote_48g/AUDITORIA-CALIDAD-TRADUCCION-N30.md`.
 - **Validación Triple:** En cola para ejecución inmediata tras la auditoría.
 | 2026-09-14 (post 7) | Claude Code (equipo principal) | ✅ §1.312: **segunda pasada del `/loop`: R1 Fase 1 (N=15, 5 semillas) llegó del equipo remoto, verificada y con buena noticia (`FINDINGS §F176`).** `git pull` trajo `bc1d4c2` (Antigravity, §3.AGY.2): R1 Fase 1 completa, `failed=0` en las 5 semillas, y R4 (traducción del N=30) ya en ejecución activa. **Recalculado desde el CSV crudo, no desde el resumen ajeno**: jerarquía `fs-es`(79,96%) > `zs-es`(75,78%) > `fs-en`(70,38%) > `zs-en`(66,77%) **en las 5 semillas sin excepción**. El defecto de `§F174` **replica** — 10 de 150 registros con avería real de parseo, todos en configuraciones inglesas, ninguno en las españolas — pero con réplicas el efecto ya no se puede anular quitando un registro: el delta de idioma puro sin averías da entre **+4,7 y +11,0 pp en las cinco semillas, nunca cruza cero**. Propuesto en `§F176` reportar dos cifras separadas (+7,4 pp de calidad de extracción, +5,8 pp de robustez de formato) en vez de fundirlas. **`TODO-INFORME-FINAL.md §16.1` actualizado**: sigue bloqueada la escritura de §5.2/§6.1 hasta R1 Fase 2 (N=120), que es el corpus de la hipótesis; N=15 solo acredita que el efecto sobre ese corpus es real. Actualizado el estado de `§3.bis.20` a parcial. Verificado que `§3.bis.16 (histórico)` sigue correctamente cerrado (39/39 `detailed_results.json` presentes). **Los tres workflows (`purga-informe`, `forense-cifras`, `revision-scripts`) siguen en curso**, sin resultado todavía. Verificador: 0 fallos nuevos |
+| 2026-09-14 (post 8) | Claude Code (equipo principal) | ✅ §1.313: **aterrizaron `purga-informe-20260914` y `forense-cifras-20260914`; verificados de forma independiente antes de registrar nada (`FINDINGS §F177`).** No transcribí los dictámenes sin más: reproduje yo mismo los tres hallazgos de mayor impacto. (1) **Reversión de mi propia `§F175`**: leí `src/providers/ollama_provider.py:368-372` y confirmé que `parse_method` es un chequeo cosmético sobre la forma del texto, no una medida de éxito de parseo — mi condición «`tp+fp==0` y `fallback`» era arbitraria. Con el criterio correcto (`tp==0 y fp==0`), recalculado por mí sobre `recorrida_20260908/`: `nemotron-mini:4b` **+11,52 pp** (no +13,04), `mistral-nemo:latest` **−3,46 pp** (no −3,64) — coincide exacto con el dictamen del workflow. El beneficio del RAG en el modelo más débil es mayoritariamente desempeño real. (2) **Anexo J**: leí la Tabla 20 yo mismo — confirmado que la frase «solo `nemotron-mini` cambia signo y significancia» es un error de lectura: `nemotron-mini` cambia el signo (ambos casos no significativos), `deepseek-r1` y `mistral-nemo` cambian la significancia (ninguno cambia el signo). (3) **Desacuerdo real entre los dos workflows sobre el 90,16 %**: `forense-cifras` dijo que procede de `n30_rerun_REMOTO` con `Locations` sin anotar; `purga-informe` dijo que «no existe en ningún fichero». **Verifiqué directamente sobre el JSON: 90,16 % es exacto, F1 de `gemma4:31b-mlx` restringido a Personas+Organizaciones. `purga-informe` se equivocó** — no probó esa convención. Dictámenes completos guardados en `DICTAMEN-FORENSE-CIFRAS-20260914.json` y `PLAN-PURGA-INFORME-20260914.json` (raíz). **`purga-informe` entrega además un plan ejecutable**: 84 supervivientes de 165 hallazgos, 35+26 cambios en dos bloques, 9 reservados a decisión del autor, ~175 líneas de ahorro (163 del cuerpo). **Nada aplicado al informe**: el volumen y que toca la primera frase del Resumen exige decisión del autor sobre el alcance, no ejecución automática. `revision-scripts-20260914` sigue en curso. `§4.3`/`§4.4` actualizados a completados |

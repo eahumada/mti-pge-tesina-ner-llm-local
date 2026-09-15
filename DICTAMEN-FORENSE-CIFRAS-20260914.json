@@ -1,0 +1,256 @@
+{
+  "summary": "Auditar la COMPOSICION de cada cifra publicada del informe: detectar las que las escribe un fallo de parseo, un cero o un solo registro",
+  "result": {
+    "familias": 8,
+    "cifras_auditadas": 120,
+    "fragiles_o_incorrectas": 85,
+    "rehabilitadas": 5,
+    "dictamen": {
+      "a_declarar": [
+        "Anexo J, líneas 1159 y siguientes: la frase «solo la ausencia de nemotron-mini:4b cambia el signo y la significancia del coeficiente de Pearson» es factualmente incorrecta y está desmentida por la propia Tabla 20 del mismo anexo. Verificado de forma independiente (reproducido dos veces): retirar nemotron-mini:4b da r=+0,0120, p=0,9706 — NO significativo, igual que la muestra completa. Quienes sí cruzan a significativo al retirarlos son deepseek-r1:1.5b (p=0,0333) y mistral-nemo:latest (p=0,0404). Reescribir la frase citando esos dos modelos para la significancia y a nemotron-mini solo para el signo.",
+        "El umbral de 'alucinación' tiene dos definiciones distintas bajo el mismo nombre en el código (src/evaluator.py): hallucination_rate usa corte <70 (línea ~16/215) y la categoría de la taxonomía 'alucinaciones extrínsecas' que nombra §5.4 usa corte <50 (línea ~130/320). El párrafo de §5.4 nombra la segunda categoría pero cita cifras de la primera, con diferencias de hasta 10x en la misma corrida. Declarar en §3.3/§5.4 qué magnitud se está citando en cada caso, o unificar el umbral.",
+        "Declarar en §5.4 que las cuatro cifras de alucinación de esa sección (21,59% / 11,23% / 14,75% / 7,14%) proceden de la corrida del 24 de agosto, no de la vigente del 8 de septiembre, siguiendo la regla de CLAUDE.md de presentar una sola cifra vigente por benchmark y N.",
+        "Declarar que gemma4:31b-cloud publicando 0,00% de alucinación en la corrida del 24 de agosto no es evidencia de comportamiento del modelo: benchmark.log de esa corrida registra avisos explícitos 'HTTP 429 too many concurrent requests' coincidentes con los ~85% de registros con parse_method='failed' en esa fila. El cero se mide sobre ~20 extracciones reales de 120, por throttling de la infraestructura del proveedor, no por desempeño del modelo.",
+        "Declarar que el '60-80% de reducción del costo operativo total' de la Conclusión 4 es el objetivo específico 5 (§1, línea 71) reexpuesto como si fuera un resultado obtenido; no existe en ningún fichero del proyecto una derivación de esa cifra. O se deriva con un modelo explícito de coste total (qué fracción del volumen sigue llegando a revisión humana), o se reformula como meta y no como hallazgo.",
+        "Declarar en §5.5 los cuatro parámetros de entrada de los que dependen los USD 0,050 (amortización) y USD 0,002 (electricidad) por artículo — precio del equipo, vida útil en artículos, potencia media, tarifa eléctrica — ninguno de los cuales consta hoy en ningún fichero del proyecto; y resolver o declarar la tensión de que el coste no varíe entre modelos cuya latencia media difiere en un factor de hasta 28 a uno.",
+        "Declarar que el cociente 'ochenta a uno' de eficiencia (§6.1) usa como denominador gemma4:31b (compilación estándar), un modelo que no forma parte del estudio vigente de trece modelos; si no se re-ejecuta (ver recorridas, ítem opcional), declarar el cociente vigente equivalente con gemma4:31b-mlx, que es de aproximadamente 35 a 1, no 80 a 1.",
+        "Declarar en la glosa de la Tabla 7 que dos artículos del corpus N=120 son casos degenerados que limitan la resolución de la macro-media: real_mixed_76 (cero entidades de referencia, aporta el 20,8% de la magnitud del F del ANOVA titular) y real_mixed_102 (una sola entidad de referencia, escribe por sí solo el signo de los deltas de gemma:latest y qwen2.5:14b). Ningún delta por debajo de ~0,9 puntos porcentuales es interpretable con esta resolución.",
+        "El χ² de Friedman = 1802,3671 citado en §5.3.1 (línea 440) no se pudo localizar en statistical_report.md ni recalcular con confianza en esta ronda de auditoría; declarar como pendiente de verificación por el equipo de herramientas antes de la entrega, no darlo por bueno solo porque el resto de cifras de ese párrafo reprodujeron.",
+        "El defecto adicional hallado en ablacion_n15_REMOTO (los recuentos de referencia tp+fn varían por configuración de prompt: Persons 112/105/100/84 en zs-en/zs-es/fs-es/fs-en contra un corpus con 84 fijas) no está cubierto por la auditoría previa §F174 y afecta a los tres deltas del efecto de idioma (+10,40 / +4,38 / -0,72). Declararlo como defecto adicional al ya conocido, aunque la corrección definitiva requiera la re-ejecución recomendada."
+      ],
+      "arreglables_sin_correr": [
+        "§5.6 línea 501: cambiar 'nueve de los trece modelos mejoran' por 'once de los trece' (recuento verificado dos veces sobre merged_results.csv vigente); ya coincide con lo que el propio informe dice en §5.3.1 línea 444, así que es una contradicción interna a resolver sin recalcular nada nuevo.",
+        "§6.2 línea 519: reemplazar '+14,52 en nemotron-mini y +10,82 en llama3.2, nula o adversa en los 31B' por las cifras vigentes ya publicadas en la propia Tabla 7: +12,26 (único significativo bajo Tukey), +6,73 (no significativo, p=0,2334), y los dos modelos de 31B con deltas POSITIVOS (+0,97 y +0,81), no negativos.",
+        "§5.3.1 línea 463: reemplazar '59,25%' por '81,47%' (la cifra que la propia Tabla 7 ya publica nueve líneas más arriba para el mismo modelo) e invertir la comparación con N=30 que construye sobre ella (81,47 es mayor que 80,57/85,60, no menor).",
+        "Recalcular la columna 'Δ significativo' de la Tabla 7 con un contraste pareado por artículo (t pareada o Wilcoxon sobre los 113 pares) en vez de Tukey no pareado, y declarar la corrección de multiplicidad usada (Holm sobre los 13 auto-pareados, o Bonferroni sobre las 325 de Tukey). Bajo Holm(13) son cinco los modelos con Δ significativo, incluido un empeoramiento (mistral-nemo).",
+        "Corregir en Anexo J la frase sobre qué modelo controla la significancia del Pearson (ver 'a_declarar'): es un error de lectura de la propia Tabla 20, no requiere recalcular nada, solo releer la tabla que ya está en el documento.",
+        "Re-puntuar (sin re-inferir) las cuatro corridas N=15 que alimentan la Tabla 4 (results/detailed_results.json subset N=15, ablacion_n15_REMOTO, gemma4_31b_n15_REMOTO, cloud_n15_limpio_20260905) contra la versión actual de data/kleptotrace.json, que desde el commit c776fe0 sí anota 63 localizaciones. Las entidades ya extraídas están almacenadas en los detailed_results.json; basta con re-ejecutar el evaluador, no el modelo. Sube el F1 de las trece filas entre 3,6 y 17,0 puntos y reordena los puestos 6 a 9.",
+        "Re-puntuar (sin re-inferir) results/n30_rerun_REMOTO contra data/kleptotrace_augmented_30.json ya corregido, o sustituir directamente por results/recorrida_20260908/gemma4_31b-mlx__N30/ (mismo modelo, mismo corpus, Locations correctamente anotada, F1=85,60%) para las cifras de Tabla 6, §5.3, §6.1 que hoy citan 80,57%/90,16%.",
+        "Recalcular el IC de confianza del F1 de la Tabla 6 con bootstrap BCa en vez de un IC de Student, dado que la distribución de F1 por artículo es asimétrica (Shapiro-Wilk p<0,05 en ambas filas) con N=30; es un cambio de método en src/statistics.py, no una nueva corrida.",
+        "Corregir la aritmética del párrafo de sensibilidad de §5.3 (Tabla 6): la cerca superior de Tukey para la longitud de artículo es 286,25 caracteres, no 702; el artículo 1 (293 caracteres) sí queda fuera de rango y su exclusión mueve el F1 +1,45/+1,52 pp, contra lo que el texto afirma hoy ('coincide exactamente con el original'). Volver a ejecutar el script de sensibilidad (no el benchmark) sobre los datos que se adopten como vigentes.",
+        "Actualizar en la Tabla 8 las celdas de VRAM y Tok/s de gemma4:31b-mlx y llama3.2:latest con los valores ya medidos en results/recorrida_20260908/*/N120 (24,99 tok/s e índice 0,81 para MLX; 85,28 tok/s e índice 28,43 para llama3.2), en vez de la corrida N=15 desactualizada, o declarar expresamente la discrepancia entre ambas si se conserva el cuadro N=15.",
+        "Corregir el redondeo trivial de 26,44 a 26,45 (79,3453/3 = 26,4484) en las cuatro apariciones de esa cifra en el informe.",
+        "Reescribir en §5.3.1 la interpretación del beneficio del RAG en nemotron-mini:4b a la luz de la reclasificación de averías: usando el criterio correcto de fallo genuino (tp=0 y fp=0, que son solo 2 de 113 registros, no 47), el delta pasa de +12,26 a +11,52 pp, no a +7,28 pp. La narrativa de '~7 puntos de extracción real y ~5 de robustez de formato' sobreestima la contribución del formato de salida: el grueso del efecto es desempeño genuino del modelo, no un artefacto de parseo. Aplicar el mismo criterio corregido al caso simétrico de mistral-nemo:latest (delta corregido: -3,46 pp, no -3,64 pp)."
+      ],
+      "limites": "Esta síntesis es una auditoría de segundo orden: reconcilia ocho auditorías forenses ya ejecutadas por otra sesión (con lectura directa de CSV, JSON, benchmark.log y hasta el código fuente del evaluador) con una ronda de refutación independiente que reprodujo una parte sustancial de esas cifras desde cero. Yo no he vuelto a abrir los ficheros fuente en esta ronda; mi aportación es resolver los desacuerdos entre el dictamen original y su refutación, priorizar y estructurar el encargo al equipo remoto. Dicho esto, quedan puntos explícitamente sin cerrar. (1) El χ² de Friedman = 1802,3671 no se pudo verificar por ninguna de las dos rondas: ni se encontró persistido en statistical_report.md ni se recalculó con confianza; se declara no_comprobable y no debe dársele por bueno sin que el equipo de herramientas lo verifique antes de la entrega. (2) La Figura 1 (composición de FP) no fue abierta por ninguna de las dos rondas: se sabe que se retiró del cuerpo del informe (FINDINGS §F170) pero no se auditó el script que la generaba ni se comprobó si algún anexo sigue apoyándose en ella. (3) Las columnas de F1 baseline y F1 KB RAG de la Tabla 7 (los valores absolutos, no los deltas) se verificaron como reproducción exacta y se cubrieron los recuentos de averías, pero no recibieron el protocolo completo de siete pasos punto por punto en todas sus filas — la cobertura es más fuerte en las filas con delta grande (nemotron, mistral-nemo, llama3.2) que en las de delta pequeño. (4) La reconciliación entre el dictamen original y la refutación sobre nemotron-mini:4b y mistral-nemo:latest es la corrección más importante de esta síntesis y depende de una lectura del código fuente (src/providers/ollama_provider.py) que solo la refutación hizo: que parse_method='fallback' es un chequeo cosmético (si el texto empieza y termina con llave) y no una medida real de éxito de parseo. Esa lectura de código no fue re-verificada por una tercera parte independiente en esta síntesis; se acepta porque cita línea y comportamiento concretos y porque es coherente con los propios datos (22 de 32 registros 'fallback' en nemotron-mini tienen tp>0), pero un lector exigente debería confirmarla mirando el archivo una vez más antes de reescribir la narrativa del informe sobre esa base. (5) No se auditó en ninguna ronda la Tabla 12 (catálogo de dominios), los objetivos cualitativos de §7.2 no numéricos, ni la bibliografía. (6) Las estimaciones de horas de las recorridas propuestas son cálculos de gabinete a partir de latencias medias ya observadas en el propio informe, no una medición del hardware del equipo remoto; conviene que ese equipo las confirme con una corrida de prueba de 2-3 artículos antes de comprometerse al cronograma completo.",
+      "por_cifra": [
+        {
+          "cifra": "81,47% F1 — mejor modelo local sobre N=120 (gemma4:31b-mlx)",
+          "ubicacion": "Resumen l.11, Abstract l.17, Tabla 1, Tabla 7, §6.1, Conclusiones 1 y 3",
+          "veredicto_final": "solida",
+          "prioridad": "alta",
+          "de_que_esta_hecha": "Media macro de 113 artículos, 0 registros con parseo distinto de direct_json, 0 con tp=0&fp=0, micro y macro difieren solo 0,05pp, ningún registro individual la mueve más de 0,73pp. La única salvedad es que 1 de los 113 artículos no tiene entidades de referencia (real_mixed_76); excluirlo la subiría a 82,20%, es decir el valor publicado es el conservador.",
+          "nota_refutacion": "No refutada; es la cifra más sólida de todo el informe."
+        },
+        {
+          "cifra": "90,16% F1 — corpus del dominio AML/KYC, citada junto al 81,47% en la misma frase de Resumen/Abstract/§6.1/Conclusión 1",
+          "ubicacion": "Resumen l.11, Abstract l.17, §6.1 l.507, Conclusión 1 l.529",
+          "veredicto_final": "incorrecta",
+          "prioridad": "alta",
+          "de_que_esta_hecha": "Es un F1 macro restringido a solo 2 de 3 categorías (Persons+Organizations), de la corrida del 7 de septiembre (n30_rerun_REMOTO), que además arrastra el defecto de Locations sin anotar (tp=0, fp=27, fn=0 pese a que el corpus sí anota 20 localizaciones desde el commit c776fe0 del 8 de septiembre). Se empareja en la misma frase con un 81,47% que sí es macro de 3 categorías de la corrida vigente: son dos convenciones distintas presentadas como comparables.",
+          "valor_recalculado": "85,60% bajo la misma convención de 3 categorías, con la corrida vigente del mismo modelo y corpus (results/recorrida_20260908/gemma4_31b-mlx__N30/); o 89,69% si se conserva la restricción a 2 categorías pero sobre la corrida vigente.",
+          "nota_refutacion": "Confirmada de forma independiente y exhaustiva mediante verificación de git (el corpus no tenía la clave 'locations' antes del commit c776fe0) y recálculo directo de las cuatro variantes métricas."
+        },
+        {
+          "cifra": "+12,3 / +12,26 pp — beneficio del RAG en nemotron-mini:4b (28,29%→40,55%), citado como el único delta significativo",
+          "ubicacion": "Resumen l.11, Abstract l.17, Tabla 7, §5.3.1, Conclusión 6",
+          "veredicto_final": "solida",
+          "prioridad": "alta",
+          "de_que_esta_hecha": "Reproduce exacto. El dictamen original la calificó 'fragil' asumiendo que 32 registros con parse_method='fallback' en la línea base eran averías de parseo y recomendaba una cifra corregida de +7,28pp excluyendo 47 artículos. La refutación, verificando el código fuente (src/providers/ollama_provider.py), muestra que 'fallback' es un chequeo cosmético (si el texto no empieza/termina exactamente con llave) y no mide éxito real de parseo: 22 de esos 32 registros tienen tp>0 y F1 medio 0,142 (desempeño real, no fallo de instrumento). Solo 2 de 113 registros tienen la firma genuina de fallo (tp=0 y fp=0).",
+          "valor_recalculado": "+11,52 pp excluyendo únicamente los 2 registros con tp=0&fp=0 (criterio correcto de avería genuina), no +7,28 pp como proponía la primera pasada.",
+          "nota_refutacion": "REHABILITADA. Es la corrección más importante de esta síntesis: la narrativa de '~7 puntos de extracción real y ~5 de formato' del dictamen original sobreestima el componente de formato. El grueso del beneficio del RAG en este modelo es desempeño genuino, no un artefacto de robustez de parseo."
+        },
+        {
+          "cifra": "«Solo uno, nemotron-mini:4b, mejora significativamente con RAG» — columna Δ significativo de la Tabla 7 (Tukey/ANOVA)",
+          "ubicacion": "§5.3.1 l.430-433, Tabla 7 columna 5",
+          "veredicto_final": "fragil",
+          "prioridad": "alta",
+          "de_que_esta_hecha": "Los p-valores de la tabla vienen de Tukey HSD sobre ANOVA de una vía, que trata los 26 grupos como independientes, cuando el propio informe (l.435-437) declara que están apareados (mismos 113 artículos). Un contraste pareado con Holm(13) da CINCO modelos significativos: nemotron-mini, llama3.2:latest, gemma4:12b-mlx, gemma4:latest, y mistral-nemo:latest como EMPEORAMIENTO significativo.",
+          "nota_refutacion": "Confirmada de forma independiente con recálculo exacto de los 13 p-valores pareados y su corrección de Holm; el dictamen 'fragil' es correcto y si acaso conservador."
+        },
+        {
+          "cifra": "+10,40 pp — efecto de redactar el prompt en español (idioma+ejemplos), corpus N=15",
+          "ubicacion": "Resumen l.11, Abstract l.17, §6.1 l.509, Conclusión 2, §7.2 punto 10",
+          "veredicto_final": "fragil",
+          "prioridad": "alta",
+          "de_que_esta_hecha": "Ya auditada en §F174 (un solo artículo con fallo de parseo en las configuraciones inglesas aporta 6,21 de los 10,40 puntos). La refutación añade un defecto NO cubierto por §F174: los recuentos de referencia (tp+fn) de esa misma corrida varían por configuración de prompt (Persons: 112/105/100/84 en zs-en/zs-es/fs-es/fs-en, contra un corpus con 84 fijas), de modo que las cuatro celdas del diseño 2x2 se puntúan contra cuatro referencias efectivas distintas.",
+          "nota_refutacion": "Confirmada y ampliada: el defecto de referencias variables por configuración es un hallazgo nuevo de la refutación, no señalado por §F174 ni por el dictamen original de esta ronda."
+        },
+        {
+          "cifra": "Spearman ρ=-0,0879 (p=0,7752) y Pearson r=-0,4816 (p=0,0956) — correlación capacidad-beneficio del RAG",
+          "ubicacion": "§5.3.1 l.452-453, Anexo J, Conclusión 6",
+          "veredicto_final": "fragil",
+          "prioridad": "alta",
+          "de_que_esta_hecha": "Reproduce exacto. Es en gran parte una identidad algebraica (correlacionar Δ=K-B contra B produce un coeficiente negativo casi por construcción cuando sd(B)>sd(K), lo cual ocurre aquí). Con la corrección de Oldham (correlacionar Δ contra la media en vez de contra B), Spearman pasa a +0,0055 y Pearson a -0,3903. La lectura cualitativa del informe ('tendencia, no resultado significativo, depende casi enteramente de un modelo') se sostiene en los siete escenarios probados.",
+          "nota_refutacion": "Confirmada con matiz: el valor exacto del recálculo 'sin averías' varía ligeramente entre las dos auditorías (-0,3164 vs -0,3166/-0,1703) según qué componente del delta se depura, pero la conclusión cualitativa —fragilidad estructural por acoplamiento matemático— es sólida en ambas."
+        },
+        {
+          "cifra": "«Solo la ausencia de nemotron-mini:4b cambia el signo y la significancia del coeficiente de Pearson»",
+          "ubicacion": "Anexo J, l.1159 (glosa de la Tabla 20)",
+          "veredicto_final": "incorrecta",
+          "prioridad": "alta",
+          "de_que_esta_hecha": "Error de lectura de la propia Tabla 20 del mismo anexo. Retirar nemotron-mini:4b da p=0,9706 (sigue NO significativo, igual que la muestra completa). Los modelos cuya retirada SÍ cambia la significancia son deepseek-r1:1.5b (p=0,0333) y mistral-nemo:latest (p=0,0404), ambos ya impresos en la Tabla 20 que la frase resume.",
+          "valor_recalculado": "Retirar nemotron-mini: r=+0,0120, p=0,9706 (no significativo). Retirar deepseek-r1: p=0,0333 (significativo). Retirar mistral-nemo: p=0,0404 (significativo).",
+          "nota_refutacion": "Confirmada de forma independiente y exacta, dos veces, con los mismos tres valores. Es el error más limpio y barato de corregir de todo el informe: basta reescribir una frase."
+        },
+        {
+          "cifra": "Tabla 6 completa — 80,57%/78,55% F1, 74,17%/73,34% precisión, 90,72%/88,28% recall, IC 95% (gemma4:31b-mlx vs gemma4:31b, N=30)",
+          "ubicacion": "§5.3, Tabla 6, l.368-377",
+          "veredicto_final": "incorrecta",
+          "prioridad": "alta",
+          "de_que_esta_hecha": "Toda la tabla procede de n30_rerun_REMOTO (7 de septiembre), con Locations agregando tp=0/fp=27-29/fn=0 mientras el corpus anota 20 localizaciones. 74-75% de todos los falsos positivos de ambas filas son en realidad aciertos de una categoría puntuada contra el vacío. gemma4:31b-mlx tiene contraparte vigente (85,60% en recorrida_20260908) pero gemma4:31b (compilación estándar) NO existe en la corrida vigente de 13 modelos.",
+          "valor_recalculado": "85,60% F1 / 84,69% precisión / 89,10% recall para gemma4:31b-mlx en la corrida vigente. Sin contraparte vigente para gemma4:31b.",
+          "nota_refutacion": "Confirmada extensamente y de forma independiente para cada sub-cifra (F1, precisión, recall, IC, ANOVA, d de Cohen), incluyendo verificación por git del commit que añadió la anotación de Locations al corpus."
+        },
+        {
+          "cifra": "«el mejor F1 local sobre N=120 (gemma4:31b-mlx: 59,25%)»",
+          "ubicacion": "§5.3.1, línea 463, párrafo de cierre bajo la Tabla 7",
+          "veredicto_final": "incorrecta",
+          "prioridad": "alta",
+          "de_que_esta_hecha": "Procede del consolidado del 7 de septiembre (ANALISIS_CONJUNTO_20260907), ya superado. La propia Tabla 7 del mismo informe, nueve líneas más arriba, publica 81,47% para el mismo modelo. La comparación que el párrafo construye sobre 59,25% ('el F1 sobre N=120 es menor que sobre N=30') se invierte con la cifra correcta.",
+          "valor_recalculado": "81,47% — la cifra que la propia Tabla 7 ya publica.",
+          "nota_refutacion": "Confirmada de forma independiente y exacta por dos auditorías distintas."
+        },
+        {
+          "cifra": "«nueve de los trece modelos mejoran con RAG» (§5.6) vs «once de los trece» (§5.3.1) — contradicción interna",
+          "ubicacion": "§5.6 l.501 vs §5.3.1 l.444",
+          "veredicto_final": "incorrecta",
+          "prioridad": "media",
+          "de_que_esta_hecha": "§5.6 cita el consolidado del 7 de septiembre (9 mejoran, 4 empeoran); §5.3.1 ya usa el vigente (11 mejoran, 2 empeoran). El documento se contradice consigo mismo en la misma sección de resultados.",
+          "valor_recalculado": "11 de 13 (2 empeoran: qwen3:8b y mistral-nemo:latest), coincide con lo que §5.3.1 ya dice.",
+          "nota_refutacion": "Confirmada exacta e independiente sobre ambos consolidados."
+        },
+        {
+          "cifra": "«significancia únicamente en los dos modelos más débiles (nemotron-mini +14,52, llama3.2 +10,82)... nula o adversa en los 31B»",
+          "ubicacion": "§6.2, línea 519",
+          "veredicto_final": "incorrecta",
+          "prioridad": "media",
+          "de_que_esta_hecha": "Todo el párrafo procede del consolidado del 7 de septiembre. Sobre la corrida vigente: los deltas son +12,26 y +6,73; solo UN modelo es significativo bajo Tukey; y los dos modelos de 31B tienen deltas POSITIVOS (+0,97 y +0,81), no nulos ni adversos.",
+          "nota_refutacion": "Confirmada exacta e independiente citando línea y valor de statistical_report.md en ambos consolidados."
+        },
+        {
+          "cifra": "F=119,7502 (ANOVA de una vía, 26 grupos, p subdesborda a 0)",
+          "ubicacion": "§5.3.1, línea 425",
+          "veredicto_final": "fragil",
+          "prioridad": "media",
+          "de_que_esta_hecha": "Reproduce exacto. Un único artículo sin entidades de referencia (real_mixed_76) escribe 24,96 de las 119,75 unidades del estadístico (20,8%), forzando F1=0 en 25 de 26 grupos. Es conservador: quitarlo llevaría F a 144,71, reforzando el rechazo de la nula, no debilitándolo.",
+          "valor_recalculado": "144,71 excluyendo real_mixed_76.",
+          "nota_refutacion": "Confirmada exacta e independiente. La conclusión del ANOVA (rechazo con margen enorme) es insensible a esto; lo que no se sostiene es comparar la MAGNITUD de F con la del otro corpus."
+        },
+        {
+          "cifra": "Tabla 4 completa (N=15) — trece filas de F1/Precisión, defecto de Locations sin anotar",
+          "ubicacion": "§5.1, Tabla 4, líneas 308-343",
+          "veredicto_final": "fragil",
+          "prioridad": "alta",
+          "de_que_esta_hecha": "Las cuatro corridas que alimentan la tabla (todas de julio-septiembre) puntúan Locations contra el vacío (tp+fn=0, 1147 FP totales), pese a que data/kleptotrace.json anota 63 localizaciones desde el 8 de septiembre. Entre 41% y 80% de los falsos positivos de cada fila son de esa categoría. Excluyéndola, el F1 sube entre 3,6 y 17,0 puntos y el orden cambia en los puestos 6-9. La fila qwen3:8b además tiene 3 de 15 artículos sin salida parseable por límite de tokens insuficiente (2048), y sube de 53,65% a 83,37% con ambas correcciones (10º a 5º puesto).",
+          "nota_refutacion": "Confirmada de forma independiente y exhaustiva para las 13 filas mediante verificación de git y recálculo por categoría; para qwen3:8b se aclara que las salidas vacías son fallo genuino del modo 'thinking' agotando max_tokens, no un problema de parser."
+        },
+        {
+          "cifra": "-4,29 pp (60,63%→56,35%) — mistral-nemo:latest, único empeoramiento apreciable con RAG",
+          "ubicacion": "§5.3.1, Tabla 7, línea 396",
+          "veredicto_final": "solida",
+          "prioridad": "media",
+          "de_que_esta_hecha": "Caso simétrico de nemotron-mini: 41 de 113 registros de kb_rag marcados 'fallback', pero 40 de esos 41 tienen tp>0 con F1 medio 0,557, prácticamente idéntico al 0,567 de los registros 'direct_json'. Con el criterio correcto de avería (tp=0&fp=0, n=2), el delta es -3,46pp, no -3,64pp como proponía la primera pasada.",
+          "valor_recalculado": "-3,46 pp excluyendo los 2 registros con fallo genuino.",
+          "nota_refutacion": "REHABILITADA parcialmente: el efecto es real desempeño peor bajo RAG, no mayormente pérdida de parseabilidad como sugería el dictamen original."
+        },
+        {
+          "cifra": "+6,73 pp (63,25%→69,98%) — llama3.2:latest, «ya no se distingue del azar tras corrección múltiple»",
+          "ubicacion": "§5.3.1, Tabla 7 línea 395, prosa l.431-433",
+          "veredicto_final": "solida",
+          "prioridad": "media",
+          "de_que_esta_hecha": "Es de las filas más limpias de la tabla (1 registro con f1=0, ningún fallo genuino). El propio dictamen original ya la calificaba internamente como sólida pese a etiquetarla 'fragil'. Lo único cuestionable es la glosa de significancia: bajo Tukey no pareado p=0,2334 (no significativo), pero bajo el contraste pareado que corresponde al diseño, p=5,30e-05, significativo incluso con Holm(13) o Bonferroni(325).",
+          "nota_refutacion": "REHABILITADA: la cifra en sí es sólida; el informe descarta como ruido un efecto de casi 7 puntos que su propio diseño pareado detecta con holgura."
+        },
+        {
+          "cifra": "Deltas por debajo de ~0,9pp de la Tabla 7: gemma:latest +0,03, qwen3:8b -0,05, qwen2.5:14b +0,69",
+          "ubicacion": "§5.3.1, Tabla 7 líneas 392, 394, 397",
+          "veredicto_final": "fragil",
+          "prioridad": "media",
+          "de_que_esta_hecha": "Con macro sobre 113 artículos, cada uno pesa 0,885pp. real_mixed_102 (una sola entidad de referencia) escribe por sí solo el signo y la magnitud de dos de estos tres deltas: gemma:latest pasa de +0,03 a +0,93 sin él; qwen2.5:14b de +0,69 a +1,60.",
+          "valor_recalculado": "+0,93pp (gemma:latest), -0,31pp (qwen3:8b), +1,60pp (qwen2.5:14b) excluyendo el registro degenerado.",
+          "nota_refutacion": "Confirmada de forma independiente para las tres filas."
+        },
+        {
+          "cifra": "Tasa de alucinación §5.4 (21,59% / 11,23% / 14,75% / 7,14%, rango citado del estudio)",
+          "ubicacion": "§5.4, línea 471",
+          "veredicto_final": "incorrecta",
+          "prioridad": "media",
+          "de_que_esta_hecha": "Fuente no vigente (corrida del 24 de agosto). Y hay un desajuste de definición verificado en el código fuente: la categoría nombrada 'alucinaciones extrínsecas' usa corte de similitud <50, pero las cifras citadas son 'hallucination_rate' con corte <70 — con el corte 50, el máximo citado (21,59%) sería 5,86%.",
+          "valor_recalculado": "Sobre la corrida vigente: 15,61% / 9,87% / 4,89% / 3,98% (mismo corte 70). Con el corte de 50 que define la categoría nombrada: 5,86% / 1,48% / 4,97% / 2,01%.",
+          "nota_refutacion": "Confirmada de forma independiente incluyendo lectura directa del código fuente que define ambos umbrales."
+        },
+        {
+          "cifra": "«cero» de alucinación en las variantes alojadas de gemma4:31b (§5.4)",
+          "ubicacion": "§5.4, línea 471",
+          "veredicto_final": "fragil",
+          "prioridad": "baja",
+          "de_que_esta_hecha": "El grupo tiene 82,5%/75,8% de registros sin extracción alguna (parse_method='failed'); el cero se mide sobre solo 21-29 registros con salida real de 120.",
+          "nota_refutacion": "Confirmada y AGRAVADA: benchmark.log de esa corrida registra avisos explícitos de HTTP 429 (throttling del proveedor cloud) coincidentes con esas extracciones vacías. No es ausencia de evidencia de alucinación del modelo: es que la infraestructura impidió que respondiera."
+        },
+        {
+          "cifra": "Tabla 8 (economía/eficiencia) — VRAM, Tok/s/B de gemma4:31b-mlx y llama3.2, y el cociente «80 a 1»",
+          "ubicacion": "§5.5 Tabla 8, §6.1 línea 511",
+          "veredicto_final": "fragil",
+          "prioridad": "media",
+          "de_que_esta_hecha": "Las celdas reproducen desde su fuente N=15 declarada, pero la corrida vigente N=120 mide más rápido para los mismos modelos (llama3.2 79,35→85,28 tok/s; gemma4:31b-mlx 22,80→24,99). El denominador del cociente «80 a 1» (gemma4:31b, compilación estándar) está fuera del estudio vigente de 13 modelos.",
+          "valor_recalculado": "Con cifras vigentes: 35,25 a 1 en vez de 80,16 a 1.",
+          "nota_refutacion": "Confirmada de forma independiente mediante lectura directa de la corrida N=120."
+        },
+        {
+          "cifra": "USD 0,052/artículo (sistema local) y USD 8,75/artículo (revisión manual), reducción del 99,4%",
+          "ubicacion": "§5.5 líneas 489-491, Conclusión 4",
+          "veredicto_final": "no_comprobable / fragil",
+          "prioridad": "baja",
+          "de_que_esta_hecha": "Los dos sumandos económicos no tienen ninguna derivación con parámetros verificables (precio de equipo, volumen anual, potencia, tarifa) en ningún fichero del proyecto; son estimaciones declaradas como tales, correctamente, en el propio texto. El 99,4% de reducción es aritméticamente correcto y robusto a la sensibilidad de sus entradas (99,1%-99,6% según el tiempo de revisión supuesto).",
+          "nota_refutacion": "Confirmada la fragilidad de los USD 8,75 (sensibilidad al parámetro de tiempo de revisión); no refutada la solidez del 99,4% como conclusión cualitativa."
+        }
+      ],
+      "recorridas": [
+        {
+          "que_se_corre": "Ablación factorial 2x2 de prompt (idioma del prompt x idioma de los ejemplos: zs-en/zs-es/fs-en/fs-es) para gemma4:latest",
+          "corpus_y_modelos": "data/kleptotrace.json (15 artículos), modelo gemma4:latest, harness vigente: max_tokens=4096, semilla=42, temperatura=0,1, parser posterior a §F85, corpus con Locations ya anotada (63 localizaciones)",
+          "replicas_semillas": "1 réplica por celda con semilla=42 (igual que la corrida vigente de 13 modelos); verificar ANTES de leer ningún delta que tp+fn por categoría sea idéntico (84 Persons / 128 Organizations / 63 Locations) en las cuatro celdas, condición que la corrida original de 2026-09-06 no cumplía",
+          "pregunta_que_responde": "¿El efecto de +10,40 puntos por redactar el prompt en español es real, o es en gran parte un artefacto de un fallo de parseo en un solo artículo (§F174) y de recuentos de referencia inestables entre las cuatro configuraciones (hallazgo adicional de esta auditoría)?",
+          "cifra_que_arregla": "Resumen/Abstract l.11/17 (+10,4 puntos), Tabla 5 completa, §6.1 l.509, Conclusión 2, §7.2 punto 10 — es el efecto de idioma citado en la primera página del informe",
+          "prioridad": "imprescindible",
+          "valor_sobre_coste": "muy alto",
+          "estimacion_horas_reloj": "0,5-1 día (gemma4:latest es rápido, ~15-20s/artículo; el cómputo en sí toma 30-45 minutos, el resto es verificación de recuentos y redacción)"
+        },
+        {
+          "que_se_corre": "La misma ablación factorial 2x2 de prompt (zs-en/zs-es/fs-en/fs-es), mismo modelo gemma4:latest",
+          "corpus_y_modelos": "data/benchmark_balanced_120.json (120 artículos, corpus corregido sin mojibake y con Locations anotada), modelo gemma4:latest, mismo harness vigente que el ítem anterior",
+          "replicas_semillas": "1 réplica por celda, semilla=42; verificar de nuevo que los recuentos de referencia sean idénticos en las cuatro celdas",
+          "pregunta_que_responde": "¿El efecto del idioma se anula de verdad a escala (120 artículos), o el -0,43pp con p=0,9328 que hoy cita el informe es artefacto de la corrida contaminada del 25 de agosto (Locations sin anotar, recuentos de referencia variables por configuración)?",
+          "cifra_que_arregla": "Conclusión 2, línea 531 (\"-0,43 puntos y p=0,9328\") y §7.2 punto 10",
+          "prioridad": "imprescindible",
+          "valor_sobre_coste": "alto",
+          "estimacion_horas_reloj": "0,5 día (cómputo ~3 horas con gemma4:latest a ~22s/artículo x 120 x 4 configuraciones, más verificación)"
+        },
+        {
+          "que_se_corre": "gemma4:31b (compilación estándar, no MLX, no cloud) sobre N=30 y N=15",
+          "corpus_y_modelos": "data/kleptotrace_augmented_30.json y data/kleptotrace.json, modelo gemma4:31b, harness vigente: max_tokens=4096, semilla=42, temperatura=0,1",
+          "replicas_semillas": "1 réplica por corpus, semilla=42, igual que el resto de la corrida vigente",
+          "pregunta_que_responde": "¿La ventaja de +2pp de la compilación MLX sobre la estándar (Tabla 6) se sostiene con Locations correctamente anotada, y puede completarse la Tabla 4/Anexo E/Tabla 8 con datos vigentes para este modelo?",
+          "cifra_que_arregla": "Tabla 6 completa (F1/precisión/recall/IC/ANOVA/d de Cohen), fila gemma4:31b de la Tabla 4 y de la Tabla 8, el cociente «80 a 1» de §6.1",
+          "prioridad": "opcional",
+          "valor_sobre_coste": "medio — alternativa más barata sin cómputo: reformular la Tabla 6 y el cociente de eficiencia usando gemma4:31b-mlx o gemma4:31b-cloud, que ya están en la corrida vigente, y retirar la comparación con la compilación estándar",
+          "estimacion_horas_reloj": "aprox. 1 día (N=30 a ~613s/artículo ≈5,1h; N=15 ≈2,5h; el modelo de 31B es lento en comparación con gemma4:latest)"
+        },
+        {
+          "que_se_corre": "qwen3:8b con límite de tokens aumentado",
+          "corpus_y_modelos": "data/kleptotrace.json (15 artículos), modelo qwen3:8b, max_tokens=4096 en vez de 2048 (la corrida vigente N=120 ya usa 4096 y no reproduce el fallo)",
+          "replicas_semillas": "1 réplica, semilla=42",
+          "pregunta_que_responde": "¿El F1 real de qwen3:8b en N=15 es 53,65% o el ~67% que resulta de eliminar las 3 de 15 salidas sin extracción por agotamiento del modo 'thinking' bajo un límite de tokens insuficiente?",
+          "cifra_que_arregla": "Fila qwen3:8b de la Tabla 4 y del Anexo E (sube del 10º al eventual 5º puesto tras esta corrección más la de Locations)",
+          "prioridad": "opcional",
+          "valor_sobre_coste": "bajo — afecta a una sola fila de una tabla secundaria",
+          "estimacion_horas_reloj": "15-20 minutos de cómputo; puede lanzarse en background junto con cualquiera de los otros ítems"
+        }
+      ],
+      "resumen_ejecutivo": "Esta síntesis reconcilia ocho auditorías forenses ya completadas sobre las cifras del Informe Final de Tesina con una ronda de refutación independiente que reprodujo una parte sustancial de esos cálculos desde cero, incluyendo verificaciones de código fuente y de historial de git que la primera pasada no había hecho. El resultado no es una simple confirmación: la refutación revierte una conclusión importante y confirma con más fuerza otras varias.\n\nLa corrección más significativa es que el beneficio del RAG en nemotron-mini:4b (+12,26 puntos, la única mejora que el informe marca como estadísticamente significativa) es en realidad SÓLIDO, y no está mayormente escrito por una avería de formato de salida como sostenía la primera pasada. Verificando el código del proveedor, el campo 'parse_method=fallback' resulta ser un chequeo cosmético que no mide éxito real de parseo: de 32 registros marcados así en la línea base, 22 tienen extracción real (tp>0). El criterio correcto de fallo genuino (extracción vacía, tp=0 y fp=0) afecta solo a 2 de 113 artículos, y el delta corregido es +11,52pp, no los +7,28pp que se había propuesto. El mismo error de clasificación se corrige de forma simétrica para el empeoramiento de mistral-nemo:latest bajo RAG.\n\nAl mismo tiempo, quedan confirmados con fuerza varios defectos genuinos y de alto impacto: (1) la columna \"Δ significativo\" de la Tabla 7 usa una prueba no pareada (Tukey/ANOVA) sobre datos que el propio informe reconoce pareados, y bajo el contraste correcto son cinco los modelos con efecto significativo, no uno; (2) el 90,16% que abre el Resumen junto al 81,47% mezcla una convención de dos categorías con otra de tres, y procede además de una corrida de N=30 con el defecto histórico de \"Locations puntuada contra el vacío\", ya confirmado por verificación directa de git; (3) las trece filas de la Tabla 4 (N=15) arrastran el mismo defecto de Locations, con impacto de 3,6 a 17,0 puntos de F1; (4) hay tres contradicciones internas del propio documento consigo mismo (§5.6 vs §5.3.1 sobre cuántos modelos mejoran con RAG; §6.2 con cifras de un consolidado superado; una cita suelta de \"59,25%\" en §5.3.1 que contradice a su propia Tabla 7); y (5) el Anexo J atribuye a nemotron-mini:4b un efecto sobre la significancia del Pearson que, verificado dos veces de forma independiente, en realidad no le corresponde a él sino a deepseek-r1:1.5b y mistral-nemo:latest.\n\nLa mayoría de estos defectos se arreglan sin re-ejecutar nada: son re-puntuaciones sobre datos ya extraídos, correcciones de redacción, o sustituciones por cifras que la corrida vigente del 8 de septiembre ya contiene. Lo que sí requiere re-ejecución, dado el plazo de dieciséis días, es fundamentalmente la ablación de idioma de prompt (el efecto de +10,40 puntos citado en la primera página), que hoy no tiene ninguna versión vigente y es rápida de correr con gemma4:latest; y, de forma opcional, completar el modelo gemma4:31b (compilación estándar) que falta en la corrida vigente de trece modelos y sostiene hoy la Tabla 6 y el cociente de eficiencia \"80 a 1\"."
+    }
+  },
+  "totalTokens": 573812,
+  "totalToolCalls": 129
+}

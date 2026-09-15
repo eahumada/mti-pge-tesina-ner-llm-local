@@ -8715,3 +8715,129 @@ la pregunta que importa para la tesis.
 **Ver también:** `§F174` (el defecto original, sobre una sola pasada), `§F175` y su corrección (el mismo tipo
 de error de criterio, sobre el RAG), y `LEARNING §L82` (la regla de separar avería de desempeño), que esta
 entrada confirma en un caso nuevo.
+
+---
+
+## §F177 — Dos workflows forenses terminaron: 85 de 120 cifras frágiles o incorrectas, una reversión importante, y un desacuerdo entre los dos que hube que resolver yo
+
+**Fecha:** 2026-09-14, ~23:20. **Origen:** los dos workflows lanzados tras `§F174`/`§F175`
+(`forense-cifras-20260914` y `purga-informe-20260914`) aterrizaron durante la misma pasada del `/loop`.
+**Verificado de forma independiente** en los puntos de mayor impacto antes de escribir esta entrada —no se
+transcribe el dictamen sin más, siguiendo la regla de `CLAUDE.md` de que un hallazgo de auditoría es una
+hipótesis—. Dictámenes completos conservados en `DICTAMEN-FORENSE-CIFRAS-20260914.json` y
+`PLAN-PURGA-INFORME-20260914.json`, en la raíz.
+
+### 1. La reversión más importante: el RAG en `nemotron-mini:4b` es sólido, no frágil
+
+`§F175` corrigió un criterio de exclusión demasiado ancho (`f1==0` **o** `fallback`) y concluyó que el
+efecto del RAG en el modelo más débil pasaba de +13,71 a **+13,04** con el criterio estricto
+(`tp+fp==0` **y** `fallback`). Ese criterio **también estaba mal**, y lo confirmo yo mismo leyendo el código:
+
+```
+repos/ner-llm-entity-benchmark/src/providers/ollama_provider.py:368-372
+if raw_content.strip().startswith("{") and raw_content.strip().endswith("}"):
+    method = "direct_json"
+elif "```" in raw_content:
+    method = "codeblock"
+else:
+    method = "fallback"
+```
+
+`parse_method` es un chequeo **cosmético** sobre la forma del texto crudo, no una medida de si la extracción
+tuvo éxito. La condición «**y** `fallback`» de mi propio criterio era arbitraria: no hay ninguna razón para
+que una avería real dependa de si el texto tenía o no llaves. **El criterio correcto es simplemente
+`tp==0 y fp==0`, sin más.**
+
+Verificado directamente sobre `results/recorrida_20260908/`:
+
+| Modelo | `tp=fp=0` puro | de ellos, con `fallback` |
+|:---|---:|---:|
+| `nemotron-mini:4b` (baseline) | 2 | 2 |
+| `mistral-nemo:latest` (baseline) | **1** | **0** |
+| `mistral-nemo:latest` (kb_rag) | **2** | **1** |
+
+Mi criterio compuesto **excluía mal** las averías de `mistral-nemo`: de sus tres averías reales, solo dos
+tenían la etiqueta `fallback`. Recalculado con el criterio correcto sobre el CSV de 113 artículos:
+
+| Modelo | Publicado (Tabla 7) | Corregido (criterio puro) |
+|:---|---:|---:|
+| `nemotron-mini:4b` | +12,26 | **+11,52** |
+| `mistral-nemo:latest` | −4,29 | **−3,46** |
+
+Verificado por mí de forma independiente: reproduce exacto lo que reportan los dos workflows. **La cifra de
+`§F175` (+13,04) estaba además calculada sobre los 120 artículos sin excluir los 7 contaminados**, no sobre
+los 113 que publica la Tabla 7 — un desliz de población, no solo de criterio.
+
+**Conclusión: el beneficio del RAG en `nemotron-mini:4b` es mayoritariamente desempeño real, no un artefacto
+de formato.** De 32 registros marcados `fallback` en su línea base, **23 tienen `tp>0`**: el modelo sí
+extrajo entidades, solo que su texto crudo no empezaba y terminaba con llaves. La frase de `§F175` sobre
+«recuperar por expresión regular el 27,5 %» describía mal el fenómeno: no se sabe, desde el CSV, qué
+estrategia interna de `parse_llm_response` tuvo éxito en cada caso, porque `parse_method` no lo registra.
+
+**`§F175` queda superado por esta entrada en su cifra concreta**, no en su lección: separar avería de
+desempeño sigue siendo la regla correcta; lo que cambia es cómo se detecta la avería.
+
+### 2. Anexo J: error de lectura de la propia Tabla 20, verificado por mí sobre el texto publicado
+
+El Anexo J dice: «Solo la ausencia de `nemotron-mini:4b` cambia el signo y la significancia del coeficiente
+de Pearson». Leída la Tabla 20 del propio anexo:
+
+| Retirado | Pearson r | p | ¿Cambia signo? | ¿Cambia significancia? |
+|:---|---:|---:|:---:|:---:|
+| `nemotron-mini:4b` | **+0,0120** | 0,9706 | **sí** | no (sigue no significativo) |
+| `deepseek-r1:1.5b` | −0,6151 | **0,0333** | no | **sí** (cruza a significativo) |
+| `mistral-nemo:latest` | −0,5971 | **0,0404** | no | **sí** (cruza a significativo) |
+
+La frase describe exactamente lo contrario de lo que su propia tabla muestra: `nemotron-mini` cambia el
+**signo**, no la significancia (el conjunto completo ya era no significativo, p=0,0956); `deepseek-r1` y
+`mistral-nemo` cambian la **significancia**, no el signo. Es el error más barato de corregir de todo el
+informe: no exige recalcular nada, solo releer la tabla que ya está impresa dos párrafos más abajo.
+
+### 3. El 90,16 % sí existe, y los dos workflows discreparon sobre su origen — resuelto por mí
+
+`forense-cifras` dictaminó que 90,16 % procede de `n30_rerun_REMOTO`, con el defecto de `Locations` sin
+anotar. `purga-informe`, en su síntesis, dictaminó lo contrario: «no existe en ningún fichero de resultados
+del proyecto» y propuso sustituirlo directamente por 81,47 %. **Comprobado por mí sobre el propio artefacto**:
+
+```
+gemma4:31b-mlx, n30_rerun_REMOTO, F1 restringido a Personas+Organizaciones = 90,16 %  (reproduce exacto)
+```
+
+**`forense-cifras` tenía razón; `purga-informe` se equivocó** — probablemente por no probar la convención de
+dos categorías, solo la de tres (que da 80,57 %, no 90,16 %). La cifra existe, es trazable, y su problema no
+es que sea inventada sino que mezcla dos convenciones distintas (dos categorías para el dominio, tres para el
+corpus periodístico) presentadas en la misma frase como si fueran comparables, y además procede de una
+corrida con el defecto de `Locations` puntuando contra el vacío (`tp=0, fp=56, fn=0` en todo el corpus,
+verificado por mí).
+
+**Valor recalculado, bajo la corrida vigente** (`results/recorrida_20260908/gemma4_31b-mlx__N30/`):
+**85,60 %** con la misma convención de tres categorías que usa el 81,47 % con el que se empareja hoy — la
+cifra correcta a sustituir, si se mantiene la comparación en la misma frase.
+
+**Lección para el propio proceso:** dos auditorías independientes sobre la misma cifra llegaron a
+conclusiones opuestas sobre un hecho verificable (si el fichero existe o no). Ninguna de las dos se aceptó
+sin comprobar; la del asunto de la orquestación en `CLAUDE.md` —verificar contra la fuente antes de convertir
+un hallazgo en instrucción— aplicó aquí entre dos IAs, no solo entre una IA y un humano.
+
+### 4. Lo demás, verificado con menos profundidad pero con evidencia citada y trazable (ver el JSON completo)
+
+- **Tabla 7, columna «Δ significativo»**: usa Tukey no pareado sobre datos que el propio informe declara
+  pareados (mismos 113 artículos). Con contraste pareado y Holm(13): **cinco** modelos significativos, no
+  uno — incluido `mistral-nemo:latest` como empeoramiento significativo. Pendiente de una verificación mía
+  independiente antes de tocar el informe; el cálculo lo hicieron dos rondas del workflow, no yo.
+- **Tabla 4 (N=15)**: las cuatro corridas que la alimentan puntúan `Locations` contra el vacío (63
+  localizaciones anotadas desde el 8 de septiembre, pero las corridas son de julio-agosto). Entre 41 % y
+  80 % de los falsos positivos de cada fila son de esa categoría.
+- **Contradicción interna confirmada**: §5.6 dice «nueve de los trece modelos mejoran con RAG»; §5.3.1, en
+  el mismo capítulo, dice «once de los trece». La segunda es la vigente.
+- **χ² de Friedman = 1802,3671 (§5.3.1)**: ninguna de las dos rondas pudo verificarlo. **No darlo por bueno**
+  sin comprobación adicional.
+- **Tasas de alucinación de §5.4**: proceden de la corrida del 24 de agosto, no de la vigente, y mezclan dos
+  umbrales distintos del código (`<70` y `<50`) bajo el mismo nombre.
+
+### 5. Estado
+
+**No se ha tocado el informe.** Ambos workflows son de solo lectura por diseño. Con el volumen y la
+importancia de lo encontrado —incluida la primera frase del Resumen y el Abstract—, la aplicación de
+correcciones requiere una decisión del autor sobre el alcance, no una ejecución automática. Pendiente de
+instrucción. Ver `CURRENT-TASKS.md` para el registro de coordinación.
