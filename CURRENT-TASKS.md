@@ -2931,3 +2931,29 @@ pero conviene antes de citar esta auditoría en el informe.
   * **Estado:** 🔄 EN CURSO ACTIVO (`seed_42` ejecutándose).
   * **Incidencia de infraestructura nube:** `gemma4:31b-cloud` arrojó error de límite de uso mensual en la cuenta `casapatiperros` de Ollama Cloud. En contraste, `gemma4:31b-mlx` local (18 GB) y los 9 modelos restantes operan 100% en local sobre GPU sin dependencia externa.| 2026-09-15 17:50 | Claude Code (equipo principal) | ✅ §1.331: **R1 Fase 2 cerrado (5/5 semillas, `FINDINGS §F184`, cierre) y síntesis de los tres corpus; alerta operativa nueva para R2.** Segunda validación cruzada exacta con Antigravity en la misma pasada (sus medias 0,7635/0,7557/0,7538/0,7449 coinciden con las mías al cuarto decimal). **Resultado final: `fs-en` es el máximo en las cinco semillas sin excepción**, `fs-en` > `fs-es` también en las cinco; `zs-es` > `zs-en` en 4 de 5. **Síntesis de los tres corpus completados** (N=15, N=30, N=120): ninguna hipótesis única cubre los cuatro resultados — N=15 favorece español, N=30 favorece coincidencia de idioma con el texto, N=120 (el corpus grande, real y heterogéneo, mayoritariamente español) favorece *few-shot* en inglés pese a todo. Posibles lecturas registradas en `§F184`, ninguna descartable con los datos disponibles. **Alerta operativa**: Antigravity reporta que `gemma4:31b-cloud` agotó su cuota mensual en la cuenta Ollama Cloud (`casapatiperros`) justo al arrancar R2 — los otros 10 modelos (incluido `gemma4:31b-mlx` local) operan al 100 %. Vigilar que R2 no publique una cifra inválida para ese modelo por la cuota, siguiendo la regla del proyecto de que una medición inválida no se publica; si persiste, declarar el motivo en vez de la métrica. Actualizada la tabla de estado del encargo: R1 Fase 1 y 2 completas. Verificador: 0 fallos nuevos |
 | 2026-09-15 18:20 | Claude Code (equipo principal) | ✅ §1.332: **petición del autor de eliminar `gemma4:31b-cloud` del estudio, corroborada y rechazada tras presentar los datos (`FINDINGS §F185`).** La premisa («mlx ya es competitivo») resultó inexacta: verificado sobre el consolidado vigente, `gemma4:31b-cloud` es **ligeramente mejor** que `gemma4:31b-mlx` (82,13/82,94 % contra 81,47/82,44 %), y aparece 15 veces en el informe, incluida la Tabla 7 y el Anexo J (cuya Tabla 20 retira cada uno de los trece modelos uno por uno — quitarlo del estudio invalidaría ese análisis entero). **Presenté el conflicto con `CLAUDE.md`**: hay un precedente exacto documentado en el propio informe (línea 909, invalidación por cuota del 3 de septiembre) cuyo procedimiento fue repetir y declarar, no eliminar; y la regla explícita de que los registros de ejecución no se eliminan, con el corolario de que lo que atestigua se conserva. **El autor confirmó, con los datos en mano: no se elimina nada.** El aviso de cuota de `gemma4:31b-cloud` en R2 se trata igual que en septiembre. Nada tocado. Verificador: 0 fallos nuevos |
+
+---
+
+### §3.bis.30 🔴 PARA EL EQUIPO REMOTO — Cuota de Ollama Cloud restablecida: completar `gemma4:31b-cloud` en R2 (2026-09-15)
+
+**El autor confirma que el problema de cuota mensual de la cuenta Ollama Cloud (`casapatiperros`) ya está
+resuelto.** Instrucción:
+
+1. **Comprobar el estado actual de `gemma4:31b-cloud` en R2** (`results/barras_error_n120_REMOTO/`, las
+   semillas que ya corrieron). Si el agotamiento de cuota (`§1.331`) dejó registros de ese modelo con
+   `parse_method='failed'` o filas ausentes, identificar exactamente cuáles.
+2. **Re-ejecutar solo lo que falta de `gemma4:31b-cloud`**, no todo R2 de nuevo: si una semilla completa de
+   ese modelo se perdió por la cuota, repetirla; si el resto de los 10 modelos ya está limpio, no tocarlo.
+3. **Criterio de aceptación, el mismo de siempre**: `failed == 0` para `gemma4:31b-cloud` en las cinco
+   semillas, verificado con `tools/verificar_corrida.py`, antes de dar R2 por cerrado.
+4. **Nada de lo que ya está limpio se re-ejecuta.** El pipeline maestro sigue su curso con los otros diez
+   modelos; esto es un complemento dirigido, no una repetición de R2.
+5. **Si vuelve a fallar por cuota**, se declara el motivo y no se publica la fila inválida — mismo criterio
+   que la invalidación del 3 de septiembre y que `FINDINGS §F185` acaba de reafirmar.
+
+**Contexto**: `FINDINGS §F185` — se corroboró que `gemma4:31b-cloud` es ligeramente mejor que
+`gemma4:31b-mlx` en el consolidado vigente y está profundamente integrado en el informe (Tabla 7, Anexo J);
+el autor decidió **no eliminarlo del estudio**. Este encargo es la contrapartida operativa de esa decisión:
+completar sus datos, no descartarlos.
+
+| 2026-09-15 18:35 | Claude Code (equipo principal) | ✅ §1.333: **el autor confirma que la cuota de Ollama Cloud se restableció; enviada instrucción al equipo remoto para completar `gemma4:31b-cloud` en R2 (`§3.bis.30`).** No re-ejecutar R2 entero: comprobar qué registros de ese modelo quedaron con `failed` por la cuota agotada (`§1.331`), repetir solo lo que falta, criterio de aceptación `failed==0` con `verificar_corrida.py`. Es la contrapartida operativa de `FINDINGS §F185` (decisión de no eliminar el modelo): completar sus datos, no descartarlos. Sin acceso a Ollama local en esta sesión (comprobado: `ollama list` no conecta), por eso se traslada al equipo remoto en vez de ejecutarse aquí. Verificador: 0 fallos nuevos |
