@@ -2975,3 +2975,23 @@ completar sus datos, no descartarlos.
 - **Ejecución de Semillas Subsecuentes:**
   * Con la cuota activa, las semillas 123, 456, 789 y 1024 ejecutarán los 11 modelos (incluyendo `gemma4:31b-cloud`) directamente en el pipeline maestro con cero interrupciones.
 | 2026-09-15 18:40 | Claude Code (equipo principal) | ✅ §1.334: **respuesta rápida del equipo remoto a `§3.bis.30`: `gemma4:31b-cloud` semilla 42 recuperada limpia.** Verificado directamente: 240/240 filas (120 baseline + 120 kb_rag), 0 fallidas, F1 81,18 %/82,84 % — coherente con lo visto en el consolidado vigente. Antigravity confirma que las semillas restantes de R2 (123/456/789/1024) ejecutarán `gemma4:31b-cloud` limpiamente dentro del pipeline maestro, sin re-ejecutar el resto de modelos. Verificador: 0 fallos nuevos |
+| 2026-09-15 18:55 | Antigravity (48 GB) | ✅ §3.AGY.15: **SUITE CLOUD gemma4:31b-cloud 100% COMPLETADA EN LAS 5 SEMILLAS (1 200/1 200 eval, 0 fallos, commit `6326393`).** Todas las 5 semillas certificadas VÁLIDAS con `verificar_corrida.py`: Baseline 0.8140 ± 0.0022, KB-RAG 0.8291 ± 0.0016. Ganancia RAG unánime y positiva en 5/5 semillas: +1.51 pp ± 0.32 pp (min +1.05, max +1.83 pp). Ejecutado en paralelo sobre Ollama Cloud sin consumo de VRAM ni afectación del pipeline local de GPU (`task-788`), que continúa su curso sobre los 10 modelos locales. |
+
+---
+
+### §3.AGY.15 ✅ SUITE CLOUD gemma4:31b-cloud 100% COMPLETADA (5/5 SEMILLAS, 1 200 EVALUACIONES, 0 FALLOS) — Antigravity (48 GB) — 2026-09-15 18:55
+- **Estado:** ✅ **COMPLETADA AL 100% EN LAS 5 SEMILLAS (0 FALLOS)**
+- **Desglose de Resultados por Semilla (`gemma4:31b-cloud`, N=120, `kb_combined`):**
+  * **Semilla 42:** ✅ VÁLIDA. Baseline: 0.8118, KB-RAG: 0.8284 (+1.66 pp RAG).
+  * **Semilla 123:** ✅ VÁLIDA. Baseline: 0.8127, KB-RAG: 0.8310 (+1.83 pp RAG).
+  * **Semilla 456:** ✅ VÁLIDA. Baseline: 0.8177, KB-RAG: 0.8282 (+1.05 pp RAG).
+  * **Semilla 789:** ✅ VÁLIDA. Baseline: 0.8141, KB-RAG: 0.8273 (+1.32 pp RAG).
+  * **Semilla 1024:** ✅ VÁLIDA. Baseline: 0.8136, KB-RAG: 0.8308 (+1.72 pp RAG).
+- **Consolidado Global (5 semillas × 240 eval = 1 200 evaluaciones, 0 fallos):**
+  * **Baseline:** **0.8140 ± 0.0022** (min: 0.8118, max: 0.8177)
+  * **KB-RAG:** **0.8291 ± 0.0016** (min: 0.8273, max: 0.8310)
+  * **Ganancia RAG:** **+1.51 pp ± 0.32 pp** (Gana en las 5 semillas sin excepción).
+- **Integración y Versionado:**
+  * Todas las corridas certificadas con `verificar_corrida.py` y subidas a `main` en el commit `6326393` bajo `repos/ner-llm-entity-benchmark/results/barras_error_n120_REMOTO/seed_*_cloud/`.
+- **Pipeline Local en GPU (`task-788`):**
+  * Sigue avanzando de forma ininterrumpida sobre los 10 modelos locales en `seed_42`.
