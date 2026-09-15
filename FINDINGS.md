@@ -9184,3 +9184,113 @@ modelo) sostiene menos de lo que su tabla de resultados aparenta. **Recomendacio
    traducido no es un corpus nativo (`ENCARGO-RECORRIDAS-20260914.md §R4`).
 4. **No re-traducir.** El coste de rehacer la traducción no se justifica por hallazgos de naturalidad menor
    que no afectan la anotación; el defecto que sí importaba ya está corregido.
+
+---
+
+## §F182 — Veredicto del workflow de validez metodológica: sí, con reservas específicas, y solo para el uso concreto que R5 le da al corpus
+
+**Fecha:** 2026-09-15. **Origen:** workflow `validez-metodologica-traduccion-n30` (4 investigadores + 4
+refutadores + síntesis), a petición del autor. **Verificadas por mí, de forma independiente, las dos citas de
+mayor peso en el argumento** antes de registrar esta entrada (Gérardin et al. 2024 y Zhang & Toral 2019),
+ambas exactas.
+
+### El veredicto, en una frase
+
+**Sí es metodológicamente correcto, pero solo para la comparación interna** que R5 hace de verdad —el mismo
+modelo, el mismo texto, prompt en inglés contra prompt en español—. **No** es correcto usarlo para afirmar
+nada sobre español nativo, ni para comparar entre familias de modelos distintas sobre este corpus.
+
+### Lo que respalda la técnica, con precedente real y verificado
+
+Construir un corpus paralelo por traducción automática y proyectar sobre él la anotación del idioma origen
+es una práctica **reconocida**, con precedentes directos verificados: Ni, Dinu y Florian (ACL 2017) y Mayhew,
+Tsai y Roth (EMNLP 2017), que incluso prescriben la corrección de ruido de proyección que este proyecto ya
+aplicó en `§F179` (7 de 8 anomalías corregidas a mano). Hasta ahí, la técnica de construcción está avalada.
+
+### Lo que la literatura no respalda, y por qué
+
+Ningún precedente de esa línea valida el uso concreto de R5:
+
+- **Escala.** N=30 es dos órdenes de magnitud menor que los corpus que sostienen esa literatura (cientos o
+  miles de oraciones).
+- **Rol de conjunto de prueba, no de entrenamiento.** Es la distinción que más importa: la literatura de
+  *translationese* en **conjuntos de evaluación** —Zhang y Toral (WMT19, **verificado por mí**: infla
+  puntuaciones y altera el orden de sistemas) y Graham, Haddow y Koehn (2019, recomienda excluir *test sets*
+  «reverse-created»)— es la que aplica al papel que este corpus cumple en R5, y es más severa que la de
+  proyección de anotación para entrenamiento.
+- **Una sola pasada, sin *back-translation* ni revisión bilingüe humana.**
+- **El tamaño del riesgo es una incógnita empírica real, verificada como tal**: la literatura documenta una
+  brecha entre texto nativo y traducido que va de **prácticamente nula** (Campos et al. 2017, radiología,
+  0,86 contra 0,87) a **12-13 puntos de F1** (Gérardin et al. 2024, extracción biomédica, **verificado por
+  mí**: 0,51 nativo contra 0,38-0,39 traducido). Ningún estudio ajeno mide el tamaño exacto para este corpus
+  concreto; solo una validación directa (*back-translation* o muestra de español nativo comparable) lo
+  resolvería, y ninguna de las dos se hizo.
+
+### El riesgo de familia de modelos (traductor y evaluados comparten familia `gemma4`): no aplica como se temía
+
+La literatura de auto-preferencia entre modelos (Panickssery et al. 2024, Wataoka et al. 2024) exige un
+**LLM actuando como juez** que puntúa o clasifica texto. R4/R5 no tiene ese ingrediente: la extracción de
+entidades se mide por comparación de *spans* contra oro humano fijo, no por un juicio de otro LLM. **Ese
+mecanismo concreto no aplica.** Queda un riesgo distinto y más modesto —huella estilística detectable por
+familia de modelo (Bitton et al. 2025)—, que de existir es una propiedad fija del texto traducido: **se
+cancela en la comparación interna** que R5 usa, y solo importaría si el informe llegara a comparar
+`gemma4:latest` o `gemma4:31b-mlx` **contra modelos de otra familia** sobre este mismo corpus español.
+
+### Qué puede afirmar la tesina, y qué no
+
+**Puede afirmar**: un indicio o tendencia exploratoria del efecto del idioma del *prompt*, si la dirección se
+repite de forma consistente entre semillas; que la técnica de construcción tiene precedente reconocido; que
+124 de 125 entidades coinciden literalmente con el texto español (`§F179`).
+
+**No puede afirmar**: significancia estadística fina por categoría (`Locations` tiene solo 20 menciones de
+referencia en total); que el efecto observado se deba puramente al idioma del *prompt* y no, en parte, a
+artefactos de traducción; generalización a español nativo real o a otras familias de modelos; ausencia de
+efecto si la diferencia es pequeña (el tamaño muestral no distingue «no hay efecto» de «no se detectó con
+esta muestra»); ni presentar la cifra de R5 con el mismo peso probatorio que el benchmark principal (N=120,
+trece modelos).
+
+### Texto propuesto para la tesina (pendiente de aplicar)
+
+> El corpus N=30 en español (`kleptotrace_augmented_30_es.json`) se construyó traduciendo el corpus inglés
+> original con `gemma4:31b` y proyectando su anotación de referencia, práctica documentada en la literatura
+> de proyección de anotación para reconocimiento de entidades multilingüe, sin precedente publicado a esta
+> escala como conjunto de prueba. Siete de ciento veinticinco entidades requirieron corrección manual por
+> desajuste entre anotación y texto traducido. El resultado permite un indicio exploratorio del efecto del
+> idioma del *prompt* sobre el mismo texto y modelo, no una conclusión estadísticamente robusta ni
+> generalizable a español nativo: el diseño no separa ese efecto de artefactos de la traducción automática,
+> y la categoría localizaciones cuenta con apenas veinte menciones de referencia.
+
+**Destino**: §4.1.2, inmediatamente después de donde se describe la construcción del corpus. Al escribir los
+resultados de R5, una frase breve de remisión, no repetir el párrafo completo.
+
+**No aplicado todavía.** Pendiente de decisión del autor y de que R5 termine, por la regla de `TODO-INFORME-FINAL.md §17`.
+
+### Bibliografía propuesta, verificada citación por citación
+
+Once fuentes, cada una con URL/DOI verificado por `WebFetch` (dos de ellas, las de mayor peso en el
+argumento, verificadas también por mí de forma independiente): Koppel y Ordan 2011 (origen de
+*translationese* como variedad distinguible; **solo el hallazgo cualitativo**, sus cifras de precisión no se
+pudieron verificar de primera mano); Zhang y Toral 2019 (WMT19, *test sets*); Graham, Haddow y Koehn 2019;
+Vanmassenhove et al. 2021 (acuña «*machine translationese*»); Artetxe et al. 2020 (2,8-4,3 puntos en XNLI);
+Gérardin et al. 2024 (12-13 puntos F1, biomédico); Campos et al. 2017 (contraejemplo: brecha casi nula en
+radiología); Thellmann et al. 2026 (6-8 y 6-11 puntos en *benchmarks* multilingües recientes, con una cifra
+que el propio workflow corrigió de una primera lectura imprecisa); Ni, Dinu y Florian 2017; Mayhew, Tsai y
+Roth 2017; Jain, Paranjape y Lipton 2019 (re-alineación de entidades, el mismo modo de fallo que corrigió
+`§F179`); Panickssery et al. 2024 y Bitton et al. 2025 (para argumentar qué riesgo de familia SÍ y cuál NO
+aplica).
+
+### Lo que queda sin resolver, declarado explícitamente por el propio workflow
+
+- **Ningún estudio mide exactamente el diseño de R5.** El tamaño del riesgo de confusión entre «efecto del
+  prompt» y «artefacto de traducción» es una incógnita empírica que la literatura ajena no puede estimar.
+- **Verificado por mí, con acción inmediata**: a esta hora, R5 tiene semillas sobre el corpus inglés
+  (`results/variantes_n30_parEmparejado_REMOTO/kleptotrace_augmented_30/`) pero **ninguna todavía sobre el
+  español** — el script (`tools/correr_r5_variantes_n30.py`) está diseñado para hacerlo a continuación, no es
+  un defecto, pero hay que comprobar que termine antes de escribir la sección de resultados. La única corrida
+  española existente hoy (`validacion_n30_es_REMOTO`) es de semilla única y mezcla la variable RAG: no sirve
+  como réplica apareada limpia.
+- **El conteo de topónimos con ortografía inglesa residual no tiene un criterio único**: entre 8 y 14 de 17,
+  según se cuenten variantes de acentuación. Cualquier cifra que se use debe declarar el criterio.
+
+**Ver también**: `§F179` (la corrección de anotación), `§F181` (la auditoría de calidad del propio proceso de
+traducción), y el encargo `remote_48g/ENCARGO-RECORRIDAS-20260914.md §R4/§R5`.

@@ -1886,8 +1886,8 @@ corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y
     tienen rutas por defecto a consolidados superados, hoy inocuas pero sin protección a futuro.
   - Dictamen completo en `DICTAMEN-REVISION-SCRIPTS-20260914.json`. **No aplicado ningún cambio de código.**
 
-### 4.6 `validez-metodologica-traduccion-n30` — 🔄 EN CURSO
-- **Cuándo:** 2026-09-15, lanzado ~01:20 · **Agentes:** ~9 (4 investigadores + 4 refutadores + 1 dictamen)
+### 4.6 `validez-metodologica-traduccion-n30` — ✅ COMPLETADO 2026-09-15 ~01:45
+- **Cuándo:** lanzado ~01:20 · **Agentes:** 9 (4 investigadores + 4 refutadores + 1 dictamen)
 - **Objetivo:** a petición del autor, dilucidar si traducir el corpus N=30 al español (R4) es
   metodológicamente correcto y cómo debe declararse en la tesina. Construye sobre `FINDINGS §F179`/`§F181`
   sin repetirlos.
@@ -1899,7 +1899,21 @@ corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y
   (adversarial, re-verifica cada fuente) → Sintetizar (veredicto único + texto propuesto para el informe,
   máximo 120 palabras, en el registro sobrio del proyecto).
 - **Archivos:** **solo lectura.** No se traduce de nuevo ni se edita el informe.
-- **Resultado:** pendiente.
+- **Resultado (`FINDINGS §F182`), verificadas por mí de forma independiente las dos citas de mayor peso**
+  (Gérardin et al. 2024 y Zhang & Toral 2019, ambas exactas): **veredicto — sí es metodológicamente correcto,
+  pero solo para la comparación interna** que R5 usa de verdad (mismo modelo, mismo texto, prompt EN contra
+  ES), **no** para afirmar nada sobre español nativo ni comparar entre familias de modelos. La técnica de
+  construcción (traducción + proyección de anotación) tiene precedente reconocido (Ni/Dinu/Florian ACL 2017,
+  Mayhew/Tsai/Roth EMNLP 2017); lo que no tiene precedente es su uso a N=30 como **conjunto de prueba** — la
+  literatura de *translationese* en *test sets* (Zhang & Toral, Graham/Haddow/Koehn) es más severa que la de
+  proyección para entrenamiento, y el tamaño del riesgo (de nulo a 12-13 puntos de F1 según dominio) es una
+  incógnita empírica para este corpus concreto, sin validación directa hecha. El riesgo de familia de
+  modelos (traductor y evaluados son ambos `gemma4`) **no aplica como se temía**: la literatura de
+  auto-preferencia exige un LLM-juez, y R4/R5 mide por comparación de *spans* contra oro fijo. Texto
+  propuesto para §4.1.2 (≤120 palabras) y bibliografía de once fuentes, todas con URL/DOI verificado.
+  **No aplicado al informe todavía** (`TODO-INFORME-FINAL.md §17`). **Punto abierto con acción**: R5 aún no
+  tiene ninguna semilla sobre el corpus español (verificado: solo existe el lado inglés en
+  `variantes_n30_parEmparejado_REMOTO/`); comprobar que termine antes de escribir la sección de resultados.
 
 ---
 
@@ -2827,3 +2841,4 @@ pero conviene antes de citar esta auditoría en el informe.
 
 | 2026-09-15 01:15 | Claude Code (equipo principal) | ✅ §1.323: **validación metodológica de la traducción del N=30 a petición del autor (`FINDINGS §F181`).** Leído el script completo (`tools/auditar_calidad_traduccion_n30.py`) y el corpus resultante, no solo el resumen del informe de auditoría. **Hallazgo principal**: el informe (`AUDITORIA-CALIDAD-TRADUCCION-N30.md`) se generó a las 23:33:04, **antes** de mi corrección del corpus a las 23:43:57 — describe el defecto ya corregido (`Locations 80,0%` son los artículos 1 y 3 sin corregir). **Defecto de diseño en el propio validador**: el juez LLM (`mistral-nemo:latest`) evalúa fidelidad leyendo solo el texto original y el traducido, **nunca la lista de entidades de referencia** — explica por qué dice «preservando todas las entidades» en el artículo 1 mientras el conteo mecánico del mismo informe cuenta `Locs: 1/4`. **Umbral roto para acrónimos cortos**: el respaldo difuso de `check_entity_preservation()` exige `len(palabra)>3`, que excluye a `UAE` y `DOJ` (3 caracteres) de por vida — no cambió ningún resultado publicado, pero es un punto ciego real. **Inconsistencia de naturalidad más allá de las entidades**: escaneado el texto, el artículo 8 dice «en Switzerland y Panama» (nombres sin traducir mezclados en español) y el 17 conserva «CFO» — el propio revisor los penalizó (fidelidad 3/5), confirmando que el traductor aplicó la instrucción de preservar nombres de forma **inconsistente**, no en una sola dirección. **Veredicto: usable con reservas declarables, no descarta el experimento** — la corrección de `§F179` ya resolvió lo que afectaba a la medición; lo que queda es la validez del informe de auditoría, no la del corpus. Petición barata al remoto en `§3.bis.29`: regenerar el informe contra el corpus corregido, sin re-traducir. Verificador: 0 fallos nuevos |
 | 2026-09-15 01:20 | Claude Code (equipo principal) | ✅ §1.324: **lanzado `validez-metodologica-traduccion-n30` a petición del autor (workflow, ver `§4.6`), y el equipo remoto corrigió directamente los dos defectos de `§F181` en la misma pasada.** Verificado el diff de `4059a37`: (1) `correr_pipeline_recorridas_48g.py` ahora reintenta `pull --rebase`/`push` hasta 5 veces con backoff de 5 s, comprobando código de salida en cada intento — mitiga exactamente el riesgo de colisión git que documenté en `§1.322`; (2) `auditar_calidad_traduccion_n30.py` corrige el umbral a `len(w)>=3` (acredita `UAE`/`DOJ`) **y** ahora pasa la lista real de entidades de referencia al *prompt* del juez LLM, arreglando el defecto de diseño de `§F181` punto 2 (el juez evaluaba a ciegas de la anotación). Ambas correcciones, verificadas, son correctas y bien dirigidas. **Pendiente todavía**: re-ejecutar el auditor con el script corregido sobre el corpus ya corregido (`§3.bis.29`) para tener un informe de calidad vigente. Verificador: 0 fallos nuevos |
+| 2026-09-15 01:45 | Claude Code (equipo principal) | ✅ §1.325: **aterrizó `validez-metodologica-traduccion-n30` con veredicto completo (`FINDINGS §F182`).** Verificadas por mí de forma independiente las dos citas de mayor peso del argumento antes de registrar nada: Gérardin et al. 2024 (F1 0,51 nativo contra 0,38-0,39 traducido, biomédico) y Zhang & Toral 2019 (WMT19, *translationese* infla puntuaciones y altera el orden de sistemas en *test sets*) — ambas exactas. **Veredicto: sí, con reservas específicas**, y solo para la comparación interna que R5 usa de verdad (mismo modelo, mismo texto, EN contra ES); no para afirmar nada sobre español nativo ni comparar familias de modelos. La técnica de construcción tiene precedente reconocido en la literatura (proyección de anotación vía traducción); su uso a N=30 como *conjunto de prueba* no lo tiene, y ahí aplica la literatura más severa de *translationese en test sets*. El riesgo de familia de modelos entre el traductor `gemma4:31b` y los evaluados `gemma4:latest`/`gemma4:31b-mlx` **no aplica** como se temía: la auto-preferencia exige un LLM-juez, y aquí se mide contra oro fijo. Bibliografía de once fuentes, todas verificadas por `WebFetch`. **Texto propuesto para §4.1.2, no aplicado todavía** — pendiente de decisión del autor y de la regla de cierre de `§17`. **Punto abierto verificado con acción**: comprobé que R5 aún no tiene ninguna semilla sobre el corpus español (`variantes_n30_parEmparejado_REMOTO/` solo tiene el lado inglés) — no es un defecto, el script está diseñado para llegar ahí, pero hay que confirmarlo antes de escribir resultados. Verificador: 0 fallos nuevos |
