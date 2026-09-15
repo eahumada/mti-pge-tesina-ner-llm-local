@@ -29,7 +29,7 @@ R2_MODELS = [
 ]
 
 def git_commit_push(msg: str):
-    subprocess.run(["git", "add", "results/", "CURRENT-TASKS.md", "remote_48g/"], cwd=str(REPO_ROOT))
+    subprocess.run(["git", "add", "repos/ner-llm-entity-benchmark/results/", "CURRENT-TASKS.md", "remote_48g/"], cwd=str(REPO_ROOT))
     res = subprocess.run(["git", "commit", "-m", msg], cwd=str(REPO_ROOT), capture_output=True, text=True)
     if res.returncode != 0 and "nothing to commit" in res.stdout:
         print("Git: Nada que commitear.")
