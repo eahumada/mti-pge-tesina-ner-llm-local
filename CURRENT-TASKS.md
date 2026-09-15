@@ -2727,7 +2727,7 @@ resueltas.
 
 ---
 
-### §3.bis.27 🟡 AVISO MENOR — `tools/correr_r5_variantes_n30.py` tiene el mecanismo de reanudación roto (2026-09-15 00:15)
+### §3.bis.27 ✅ CORREGIDA por el equipo remoto (`fda496d`) — `tools/correr_r5_variantes_n30.py` tenía el mecanismo de reanudación roto (2026-09-15 00:15→00:20)
 
 **No bloquea nada, no corrompe ningún dato.** `is_run_complete()` (línea 30) comprueba
 `df["failed"] == 0` sobre `benchmark_results.csv`, pero **esa columna no existe** en ningún CSV que produce
@@ -2745,3 +2745,4 @@ condición por algo que exista de verdad, por ejemplo `len(df) == 120 and not (d
 señal de aviso, no de bloqueo.
 
 | 2026-09-15 00:15 | Claude Code (equipo principal) | ✅ §1.317: **pull/push de rutina: R5 arrancó (script orquestador nuevo), revisado antes de que corra.** `git pull` trajo `0d2e3cc` y `b4bd25e` (Antigravity): `tools/correr_r5_variantes_n30.py`, que ejecuta el diseño 2×2 sobre el par emparejado EN/ES del N=30 con 5 semillas. **Revisado el script antes de que generara ningún dato** (aún no había corrido nada): usa el corpus corregido (`kleptotrace_augmented_30_es.json`) para la rama española y el original intacto para la inglesa, correcto. **Hallazgo menor, no bloqueante** (`§3.bis.27`): su mecanismo de reanudación comprueba una columna `failed` que no existe en ningún CSV real del proyecto — capturado por un `except` silencioso, siempre devuelve «no completada». No corrompe datos; solo repetiría todo si el script se interrumpe a medias. Documentado, no corregido por mí (script ajeno en uso). Verificador: 0 fallos nuevos |
+| 2026-09-15 00:22 | Claude Code (equipo principal) | ✅ §1.318: **pull/push de rutina: el equipo remoto corrigió el aviso `§3.bis.27` que dejé en la pasada anterior.** `fda496d` reemplaza la comprobación inexistente `df["failed"]` por `df["parse_method"]=="failed"` (fallo catastrófico real, distinto del `fallback` cosmético que `§F178` ya mostró que no es señal fiable) y corrige una ruta de `verificar_corrida.py`. Verificado el diff: correcto y bien acotado. `§3.bis.27` cerrada. Sin corridas de R5 generadas todavía. Verificador: 0 fallos nuevos |
