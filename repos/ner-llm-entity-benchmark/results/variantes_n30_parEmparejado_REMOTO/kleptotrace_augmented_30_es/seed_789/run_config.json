@@ -1,0 +1,21 @@
+{
+  "models": [
+    "gemma4:latest"
+  ],
+  "batch_size": 5,
+  "num_workers": 7,
+  "max_retries": 2,
+  "fuzzy_threshold": 85,
+  "redis_url": "redis://localhost:6379",
+  "data_file": "data/kleptotrace_augmented_30_es.json",
+  "results_dir": "/Users/eahumada1/Projects/MTI/mti-pge-tesina-ner-llm-local/repos/ner-llm-entity-benchmark/results/variantes_n30_parEmparejado_REMOTO/kleptotrace_augmented_30_es/seed_789",
+  "checkpoint_file": "/Users/eahumada1/Projects/MTI/mti-pge-tesina-ner-llm-local/repos/ner-llm-entity-benchmark/results/variantes_n30_parEmparejado_REMOTO/kleptotrace_augmented_30_es/seed_789/.checkpoint.json",
+  "system_prompt_file": "SYSTEM_PROMPT.md",
+  "ollama_base_url": "http://localhost:11434",
+  "temperature": 0.1,
+  "max_tokens": 4096,
+  "seed": 789,
+  "rag_study": false,
+  "rag_mode": "entities",
+  "ablation": true
+}
