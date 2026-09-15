@@ -8954,3 +8954,73 @@ falta.
 **No se ha tocado ningún fichero.** Dictamen completo en `DICTAMEN-REVISION-SCRIPTS-20260914.json`, en la
 raíz. Con esto, los tres workflows forenses lanzados tras `§F174` han aterrizado. La decisión sobre el
 alcance de lo que se corrige, se declara o se recorre de nuevo corresponde al autor.
+
+---
+
+## §F179 — R4 llegó con un defecto de anotación en 7 de 125 entidades; corregido de inmediato por haber cómputo activo sobre los datos
+
+**Fecha:** 2026-09-14, ~23:45. **Origen:** llegada de R4 (`data/kleptotrace_augmented_30_es.json`,
+commit `d050e48` de Antigravity/equipo remoto). **Verificado por mí antes de aceptar la corrida**, siguiendo
+la condición de aceptación que el propio encargo (`remote_48g/ENCARGO-RECORRIDAS-20260914.md §R4`) exigía:
+«cada entidad de referencia debe aparecer literalmente en el texto traducido... si `faltan > 0`, no se
+continúa con las corridas».
+
+### El defecto, y por qué era previsible
+
+El traductor (`tools/auditar_calidad_traduccion_n30.py`, modelo `gemma4:31b`) recibió instrucción explícita
+de preservar los nombres de lugar y organización sin traducir. **No lo hizo de forma consistente**: tradujo
+con naturalidad `United States` → `Estados Unidos`, `Russia` → `Rusia`, `UAE` → `EAU`,
+`Department of the Treasury` → `Departamento del Tesoro`, `European Council` → `Consejo Europeo`,
+`Germany` → `Alemania`, `United Nations Security Council` → `Consejo de Seguridad de las Naciones Unidas` —
+mientras la anotación de referencia se copió del corpus inglés sin cambios. Ejecutada la verificación de
+cobertura literal: **8 de 125 entidades** (6,4 %) no aparecían en el texto traducido.
+
+Es, con nombres distintos, el mismo defecto que costó dos meses detectar en `Locations` (`§F53`): una
+anotación que ya no coincide con el texto que dice describir, con la diferencia de que aquí se comprobó
+**antes** de correr ningún modelo sobre los datos, porque el encargo lo exigía como condición previa.
+
+### Diagnóstico entidad por entidad, antes de corregir nada
+
+| Artículo | Campo | Anotación (inglés) | ¿En el texto? | Diagnóstico |
+|:---|:---|:---|:---:|:---|
+| 1 | organizations | `Department of the Treasury` | no | traducción no preservada |
+| 1 | locations | `Russia`, `UAE`, `United States` | no | traducción no preservada |
+| 3 | organizations | `European Council` | no | traducción no preservada |
+| 9 | locations | `Germany` | no | traducción no preservada |
+| 14 | organizations | `United Nations Security Council` | no | traducción no preservada |
+| 2 | organizations | `DOJ` | no | **preexistente**: tampoco está en el texto **inglés original** |
+
+El caso de `DOJ` es distinto de los otros siete: comprobado contra `kleptotrace_augmented_30.json` (el
+corpus fuente, intacto), el texto original en inglés dice «Assistant Attorney General... announced», sin
+mencionar «DOJ» en ningún punto. Es una entidad inferida en la anotación original, no una traducción
+defectuosa, y **corregirla rompería el paralelismo del par emparejado** que R4 existe para construir. Se
+deja como está, a sabiendas, en las dos versiones del corpus.
+
+### La corrección aplicada
+
+Las siete entidades restantes se corrigieron **reemplazando el valor de la anotación por la forma exacta que
+aparece en el texto traducido**, verificado programáticamente antes de escribir cada cambio
+(`assert nuevo in texto`). No se tocó el texto, no se tocó `kleptotrace_augmented_30.json` (el original
+inglés, intacto por instrucción del encargo), y no se eliminó ninguna entidad. Es una corrección de
+referencia para que coincida con el texto que anota, del mismo tipo ya aprobado por el autor para
+`Locations` en `§F53`.
+
+**Verificación posterior**: de 125 entidades, queda **1 sin coincidencia literal** (`DOJ`, preexistente y
+deliberadamente sin tocar). Las otras 124 coinciden.
+
+### Por qué se corrigió de inmediato, sin esperar instrucción
+
+`CURRENT-TASKS.md §3.AGY.3` (llegada en el mismo commit) declaraba la **validación triple cruzada ya en
+ejecución activa** (tres modelos sobre el corpus recién traducido) en el momento de detectar el defecto. Con
+la anotación sin corregir, cada extracción correcta de esas siete entidades se habría contabilizado como
+falso positivo — el mecanismo exacto de `§F53`, reintroducido y a punto de contaminar una corrida que ya
+estaba corriendo. Corregir la anotación no afecta ninguna corrida ya completada: el corpus se edita antes de
+que sus resultados existan, no después.
+
+### Backup y estado
+
+Copia de la versión recibida sin corregir en
+`doc/versions/informe_final/_respaldos_20260914_n30es/kleptotrace_augmented_30_es.json`. El fichero corregido
+sustituye en el mismo *path* al que ya está usando la validación triple en curso; **si esa validación ya
+había empezado a leer artículos con la anotación vieja, sus resultados sobre los artículos 1, 2, 3, 9 y 14
+deben revisarse** — es la salvedad que se comunica en `CURRENT-TASKS.md`.

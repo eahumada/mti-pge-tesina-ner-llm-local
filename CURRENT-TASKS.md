@@ -2603,3 +2603,33 @@ que §L70 exige. Segunda vez que este fallo aparece hoy.
   * **Fidelidad semántica media:** 4,73 / 5,00 (Óptima).
   * **Preservación global de entidades:** 93,6% (Personas: 100%, Organizaciones: 94,2%, Localizaciones: 80%).
 - **Validación Triple Cruzada:** 🔄 **EN EJECUCIÓN ACTIVA** (`task-529`, 3 modelos: `gemma4:latest`, `llama3.1:8b`, `mistral-nemo:latest` sobre el corpus N=30 ES).
+
+---
+
+### §3.bis.24 🔴 URGENTE — Corregido un defecto de anotación en el corpus de R4 mientras había cómputo activo sobre él (2026-09-14 23:45)
+
+**Para el equipo de 48 GB / Antigravity, leer antes de usar `data/kleptotrace_augmented_30_es.json`.**
+
+Verificada la condición de aceptación que el propio encargo exigía (`§R4`, «cada entidad de referencia debe
+aparecer literalmente en el texto traducido»): **8 de 125 entidades no coincidían** (`FINDINGS §F179`). El
+traductor no preservó siete nombres de lugar/organización pese a la instrucción (`United States`→`Estados
+Unidos`, `Russia`→`Rusia`, `UAE`→`EAU`, `Department of the Treasury`→`Departamento del Tesoro`, `European
+Council`→`Consejo Europeo`, `Germany`→`Alemania`, `United Nations Security Council`→`Consejo de Seguridad de
+las Naciones Unidas`), en los artículos **1, 3, 9 y 14**. Las siete **ya están corregidas** en el fichero,
+verificadas contra el texto. Un octavo caso (`DOJ`, artículo 2) es un defecto **preexistente del corpus
+inglés original** (comprobado contra `kleptotrace_augmented_30.json`, intacto) y se deja tal cual a
+propósito, para no romper el paralelismo del par emparejado.
+
+**Si la «Validación Triple Cruzada» (`§3.AGY.3`) ya procesó los artículos 1, 2, 3, 9 o 14 antes de esta hora,
+sus resultados sobre esos cinco artículos deben descartarse y re-ejecutarse** contra el fichero corregido:
+mientras la anotación estuvo mal, cada acierto real del modelo sobre esas siete entidades se habría contado
+como falso positivo. Los otros 25 artículos no están afectados.
+
+**Backup de la versión sin corregir** (la que se recibió) en
+`doc/versions/informe_final/_respaldos_20260914_n30es/kleptotrace_augmented_30_es.json`, por si hace falta
+comparar qué cambió exactamente.
+
+**No se tocó** `kleptotrace_augmented_30.json` (el original inglés) ni ningún resultado ya escrito en
+`results/`. Es una corrección del corpus de referencia, antes de que sus resultados existan salvo por la
+validación en curso citada arriba.
+
