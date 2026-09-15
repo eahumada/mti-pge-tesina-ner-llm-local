@@ -2891,3 +2891,20 @@ pero conviene antes de citar esta auditoría en el informe.
 - **R2 (Barra de error N=120, 11 modelos × 2 modos × 5 semillas):**
   * Encolada inmediatamente a continuación en el pipeline maestro (`tools/correr_pipeline_recorridas_48g.py`, `task-788`).
 | 2026-09-15 12:50 | Claude Code (equipo principal) | ✅ §1.329: **llegó la semilla 456 de R1 Fase 2 (3/5), y `fs-en` se consolida como la configuración más fuerte sobre N=120 (`FINDINGS §F184`, continuación).** Sin averías de parseo. `fs-en` > `fs-es` en las tres semillas y `fs-en` es el máximo de las cuatro configuraciones en las tres, sin excepción — patrón más consistente que `zs-en` vs `zs-es` (ya solo 1 de 3). El patrón que se consolida no es «gana el español» ni «coincidir el idioma gana»: es que el *few-shot* en inglés parece ser la configuración más robusta, incluso sobre un corpus mayoritariamente español. **Sigue preliminar** (faltan 2 de 5 semillas). No se toca el informe. Verificador: 0 fallos nuevos |
+| 2026-09-15 14:45 | Antigravity (48 GB) | 🔄 §3.AGY.12: **R1 Fase 2 (N=120) 80% COMPLETADA — semilla 789 certificada VÁLIDA (480 eval, 0 fallos, commit `aad383e`); semilla final 1024 al 20% en curso activo.** Resultados s789: `fs-en` 0.7650, `fs-es` 0.7623, `zs-es` 0.7543, `zs-en` 0.7382. Patrón consolidado: `fs-en` lidera en 4/4 semillas. En zero-shot, `zs-es` > `zs-en` en 3/4 semillas. Total acumulado R1 Fase 2: 1 920/2 400 evaluaciones con `failed == 0`. Semilla 1024 procesando (98+ respuestas parseadas). Pipeline maestro encadenará inmediatamente R2 (11 modelos × 2 modos × 5 semillas). `caffeinate` activo (`task-782`). |
+
+---
+
+### §3.AGY.12 🔄 R1 FASE 2 (N=120): 80% COMPLETADA — SEMILLAS 42, 123, 456 Y 789 CERTIFICADAS VÁLIDAS — SEMILLA FINAL 1024 EN CURSO — Antigravity (48 GB) — 2026-09-15 14:45
+- **Estado:** 🔄 **EN EJECUCIÓN ACTIVA Y CONTINUA (CAFFEINATE ACTIVO)**
+- **R1 Fase 2 (N=120, 5 semillas con `gemma4:latest`, 480 evaluaciones/semilla):**
+  * **Semilla 42:** ✅ COMPLETADA y VÁLIDA (commit `2091c2f`). `fs-en`: 0.7623, `fs-es`: 0.7538, `zs-en`: 0.7581, `zs-es`: 0.7496.
+  * **Semilla 123:** ✅ COMPLETADA y VÁLIDA (commit `2091c2f`). `fs-en`: 0.7575, `fs-es`: 0.7564, `zs-es`: 0.7551, `zs-en`: 0.7439.
+  * **Semilla 456:** ✅ COMPLETADA y VÁLIDA (commit `63a6fc0`). `fs-en`: 0.7654, `zs-es`: 0.7558, `fs-es`: 0.7486, `zs-en`: 0.7411.
+  * **Semilla 789:** ✅ COMPLETADA y VÁLIDA (commit `aad383e`). `fs-en`: 0.7650, `fs-es`: 0.7623, `zs-es`: 0.7543, `zs-en`: 0.7382.
+  * **Patrón robusto consolidado (4/4 semillas):**
+    - `fs-en` resulta ser el líder indiscutible en las 4 semillas evaluadas (0.7623, 0.7575, 0.7654, 0.7650).
+    - En zero-shot, `zs-es` supera a `zs-en` en 3 de las 4 semillas (123, 456 y 789).
+  * **Semilla 1024 (ÚLTIMA SEMILLA DE R1 FASE 2):** 🔄 EN CURSO ACTIVO (98+ respuestas parseadas directamente con 0 fallos).
+- **R2 (Barra de error N=120, 11 modelos × 2 modos × 5 semillas):**
+  * Encolada para arrancar de forma automática y desatendida en el pipeline maestro (`tools/correr_pipeline_recorridas_48g.py`, `task-788`) en cuanto culmine la semilla 1024.
