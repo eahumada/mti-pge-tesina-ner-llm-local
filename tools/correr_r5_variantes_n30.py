@@ -34,7 +34,7 @@ def is_run_complete(results_dir: Path) -> bool:
         return False
     try:
         df = pd.read_csv(csv_file)
-        if len(df) == 120 and (df["failed"] == 0).all():
+        if len(df) == 120 and not (df["parse_method"] == "failed").any():
             return True
     except Exception:
         pass
@@ -70,7 +70,7 @@ def run_seed(corpus_key: str, corpus_rel_path: str, seed: int):
         return False
         
     # Verificar corrida
-    verify_cmd = [str(VENV_PYTHON), str(REPO_ROOT / "tools" / "verificar_corrida.py"), str(target_dir)]
+    verify_cmd = [str(VENV_PYTHON), str(BENCHMARK_DIR / "tools" / "verificar_corrida.py"), str(target_dir)]
     v_proc = subprocess.run(verify_cmd, cwd=str(REPO_ROOT))
     if v_proc.returncode != 0:
         print(f"ADVERTENCIA: verificar_corrida reportó incidencia en {target_dir}")
