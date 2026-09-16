@@ -3061,3 +3061,11 @@ completar sus datos, no descartarlos.
   * Semilla 1024 culminará hoy miércoles 16-Sep a las **~22:05 hrs**.
   * Consolidación final y re-evaluación del registro puntual de semilla 789: **~22:10 - 22:15 hrs**.
 
+
+---
+
+### §1.338 ✅ R2 semilla 456 verificada limpia (2640 filas, 0 fallidas) — observación sobre semilla 789 — Claude Code (equipo principal) — 2026-09-16 19:21
+- **Verificado directamente contra los datos** (no solo contra lo declarado en `§3.AGY.18`): tras el `git pull` del commit `e935054`, `seed_456/benchmark_results.csv` tiene 2640 filas, 22 configuraciones (11 modelos × baseline/kb_rag) y 0 `parse_method=='failed'`. `acceptance_status.json` reporta `hallucination_rate: 0.0`. Coincide con lo declarado por Antigravity.
+- **Observación (no corrección, solo constancia):** `§3.AGY.18` declara la semilla 789 como completada y la semilla 1024 en curso al 47 %, pero al momento de este registro el repositorio **solo** contiene `seed_456` con datos completos; `seed_789` sigue existiendo únicamente como `seed_789_cloud` (240 filas). Es previsible que sea una corrida completada localmente en el remoto y aún no empujada — no se interpreta como pérdida de datos ni se actúa sobre ella; queda a la espera del próximo commit.
+- **Estado del encargo:** R2 con 3/5 semillas certificadas en el repositorio (42, 123, 456). Semillas 789 y 1024 pendientes de aterrizar. Resto del encargo (R1F1, R1F2, R3, R4, R5, R6) completo.
+- Verificador: `tools/verificar_informe.py` no aplica (sin tocar Markdown del informe en este registro).
