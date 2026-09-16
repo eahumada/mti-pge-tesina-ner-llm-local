@@ -2980,6 +2980,8 @@ completar sus datos, no descartarlos.
 | 2026-09-15 23:10 | Antigravity (48 GB) | ✅ §3.AGY.16: **R2 SEMILLA 42 100% COMPLETADA Y CERTIFICADA VÁLIDA (2 640/2 640 eval, 0 fallos) → 🔄 SEMILLA 123 EN CURSO (gemma4:31b-mlx en ejecución).** Semilla 42 reconciliada con suite cloud limpia y certificada por `verificar_corrida.py` con 0 fallos en los 11 modelos. Semilla 123 arrancó automáticamente a las 23:00 (gemma4:31b-mlx activo). Cronograma actualizado: ciclo medido de ~5 h 35 m por semilla; ETA final R2 estimado miércoles 16-Sep ~21:20 hrs. |
 | 2026-09-15 23:15 | Claude Code (equipo principal) | ✅ §1.336: **primera semilla completa de R2 (42/42, 11 modelos × 2 modos, 2640 filas, 0 fallidas), verificada directamente por mí.** `tools/reconciliar_seed_cloud.py` (nuevo) fusionó correctamente la corrida recuperada de `gemma4:31b-cloud` (`seed_42_cloud`) con los 10 modelos locales en un único directorio consolidado — F1 81,18 %/82,84 % coincide exacto con lo verificado en `§1.334`. Ningún modelo con averías. Faltan 4 semillas (123/456/789/1024) de R2. Verificador: 0 fallos nuevos |
 | 2026-09-16 08:40 | Antigravity (48 GB) | ✅ §3.AGY.17: **R2 SEMILLA 123 100% COMPLETADA Y CERTIFICADA VÁLIDA (2 640/2 640 eval, 0 fallos) → 🔄 SEMILLA 456 AL 55% EN CURSO (gpt-oss:20b en ejecución).** Semilla 123 finalizó a las 04:48 (0 fallos en los 11 modelos). Semilla 456 arrancó a las 04:48 y acumula 1 365+ evaluaciones (gemma4 31b-mlx/12b-mlx/latest y qwen3:8b completados al 100%, gpt-oss:20b kb_rag procesando). ETA Semilla 456: hoy ~09:45 hrs; ETA final R2 (semilla 1024): hoy miércoles 16-Sep ~20:25 hrs. |
+| 2026-09-16 08:45 | Claude Code (equipo principal) | ✅ §1.337: **semilla 123 de R2 completa tras una espera larga (~10h desde la semilla 42), verificada limpia: 2640/2640, 0 fallidas, 22 configuraciones.** Faltan 3 semillas (456/789/1024). Verificador: 0 fallos nuevos |
+| 2026-09-16 19:15 | Antigravity (48 GB) | ✅ §3.AGY.18: **R2 SEMILLAS 456 Y 789 COMPLETADAS → 🔄 SEMILLA FINAL 1024 AL 47% EN CURSO.** Semilla 456 certificada VÁLIDA (2 640 eval, 0 fallos). Semilla 789 completada (2 639/2 640 éxitos, 1 rechazo en deepseek-r1:1.5b sobre real_mixed_3 programado para re-evaluación al liberar Ollama). Semilla 1024 ejecutándose en GPU (1 245+ eval procesadas, gpt-oss:20b activo). ETA Cierre Final de R2: hoy miércoles 16-Sep ~22:05 hrs. |
 
 ---
 
@@ -3039,4 +3041,23 @@ completar sus datos, no descartarlos.
   * **Semilla 456:** 🔄 En curso activo (~55%) -> ETA: **Hoy 16-Sep ~09:45 hrs**.
   * **Semilla 789:** ⏳ En cola -> ETA: **Hoy 16-Sep ~15:05 hrs**.
   * **Semilla 1024:** ⏳ En cola -> ETA: **Hoy 16-Sep ~20:25 hrs** (Cierre final R2).
-| 2026-09-16 08:45 | Claude Code (equipo principal) | ✅ §1.337: **semilla 123 de R2 completa tras una espera larga (~10h desde la semilla 42), verificada limpia: 2640/2640, 0 fallidas, 22 configuraciones.** Faltan 3 semillas (456/789/1024). Verificador: 0 fallos nuevos |
+
+---
+
+### §3.AGY.18 ✅ R2 SEMILLAS 456 Y 789 COMPLETADAS → 🔄 SEMILLA 1024 (FINAL) EN CURSO — Antigravity (48 GB) — 2026-09-16 19:15
+- **Estado:** 🔄 **R2 EN TRAMO FINAL: 4 DE 5 SEMILLAS COMPLETADAS; SEMILLA 1024 EN EJECUCIÓN ACTIVA**
+- **Semilla 456 (04:48 → 10:28 hrs):**
+  * ✅ COMPLETADA al 100% (duración 5 h 40 m).
+  * Reconciliada con la suite cloud y certificada **VÁLIDA** por `verificar_corrida.py` (`total_failed == 0`, 2 640 eval).
+- **Semilla 789 (10:29 → 16:18 hrs):**
+  * ✅ COMPLETADA al 100% (duración 5 h 49 m).
+  * 2 639 / 2 640 evaluaciones exitosas. Registrado un rechazo puntual de infraestructura (`latency_sec == 0.0`) en `deepseek-r1:1.5b_baseline` sobre el ítem `real_mixed_3`.
+  * La re-evaluación puntual de este único ítem se ejecutará de forma aislada una vez culminada la corrida en curso de `seed_1024` para no forzar la descarga de `gpt-oss:20b` de la VRAM.
+- **Semilla 1024 (Iniciada 16:18:47 hrs — Semilla Final de R2):**
+  * En curso activo: 1 245+ / 2 640 evaluaciones procesadas (47% completado).
+  * `gemma4:31b-mlx`, `gemma4:12b-mlx`, `gemma4:latest`, `qwen3:8b`: 100% completados con 0 fallos.
+  * `gpt-oss:20b`: procesando baseline (45/120 ítems).
+- **ETA y Cierre Final de R2:**
+  * Semilla 1024 culminará hoy miércoles 16-Sep a las **~22:05 hrs**.
+  * Consolidación final y re-evaluación del registro puntual de semilla 789: **~22:10 - 22:15 hrs**.
+
