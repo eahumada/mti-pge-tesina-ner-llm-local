@@ -1,0 +1,31 @@
+{
+  "models": [
+    "gemma4:31b-cloud",
+    "gemma4:31b-mlx",
+    "gemma4:12b-mlx",
+    "gemma4:latest",
+    "qwen3:8b",
+    "gpt-oss:20b",
+    "mistral-nemo:latest",
+    "llama3.2:latest",
+    "llama3.1:8b",
+    "nemotron-mini:4b",
+    "deepseek-r1:1.5b"
+  ],
+  "batch_size": 5,
+  "num_workers": 9,
+  "max_retries": 2,
+  "fuzzy_threshold": 85,
+  "redis_url": "redis://localhost:6379",
+  "data_file": "data/benchmark_balanced_120.json",
+  "results_dir": "/Users/eahumada1/Projects/MTI/mti-pge-tesina-ner-llm-local/repos/ner-llm-entity-benchmark/results/barras_error_n120_REMOTO/seed_123",
+  "checkpoint_file": "/Users/eahumada1/Projects/MTI/mti-pge-tesina-ner-llm-local/repos/ner-llm-entity-benchmark/results/barras_error_n120_REMOTO/seed_123/.checkpoint.json",
+  "system_prompt_file": "SYSTEM_PROMPT.md",
+  "ollama_base_url": "http://localhost:11434",
+  "temperature": 0.1,
+  "max_tokens": 4096,
+  "seed": 123,
+  "rag_study": true,
+  "rag_mode": "kb_combined",
+  "ablation": false
+}
