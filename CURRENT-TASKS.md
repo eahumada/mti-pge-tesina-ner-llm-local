@@ -3039,3 +3039,4 @@ completar sus datos, no descartarlos.
   * **Semilla 456:** 🔄 En curso activo (~55%) -> ETA: **Hoy 16-Sep ~09:45 hrs**.
   * **Semilla 789:** ⏳ En cola -> ETA: **Hoy 16-Sep ~15:05 hrs**.
   * **Semilla 1024:** ⏳ En cola -> ETA: **Hoy 16-Sep ~20:25 hrs** (Cierre final R2).
+| 2026-09-16 08:45 | Claude Code (equipo principal) | ✅ §1.337: **semilla 123 de R2 completa tras una espera larga (~10h desde la semilla 42), verificada limpia: 2640/2640, 0 fallidas, 22 configuraciones.** Faltan 3 semillas (456/789/1024). Verificador: 0 fallos nuevos |
