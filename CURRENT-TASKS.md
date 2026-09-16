@@ -3016,3 +3016,4 @@ completar sus datos, no descartarlos.
   * **Semilla 789:** ⏳ En cola -> ETA: ~15:45 hrs (16-Sep).
   * **Semilla 1024:** ⏳ En cola -> ETA: ~21:20 hrs (16-Sep, Cierre final de R2).
 - **Herramientas:** Añadido `tools/reconciliar_seed_cloud.py` e integrado al orquestador maestro para automatizar la certificación de las semillas 123, 456, 789 y 1024 al culminar.
+| 2026-09-15 23:15 | Claude Code (equipo principal) | ✅ §1.336: **primera semilla completa de R2 (42/42, 11 modelos × 2 modos, 2640 filas, 0 fallidas), verificada directamente por mí.** `tools/reconciliar_seed_cloud.py` (nuevo) fusionó correctamente la corrida recuperada de `gemma4:31b-cloud` (`seed_42_cloud`) con los 10 modelos locales en un único directorio consolidado — F1 81,18 %/82,84 % coincide exacto con lo verificado en `§1.334`. Ningún modelo con averías. Faltan 4 semillas (123/456/789/1024) de R2. Verificador: 0 fallos nuevos |
