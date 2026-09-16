@@ -2976,6 +2976,8 @@ completar sus datos, no descartarlos.
   * Con la cuota activa, las semillas 123, 456, 789 y 1024 ejecutarán los 11 modelos (incluyendo `gemma4:31b-cloud`) directamente en el pipeline maestro con cero interrupciones.
 | 2026-09-15 18:40 | Claude Code (equipo principal) | ✅ §1.334: **respuesta rápida del equipo remoto a `§3.bis.30`: `gemma4:31b-cloud` semilla 42 recuperada limpia.** Verificado directamente: 240/240 filas (120 baseline + 120 kb_rag), 0 fallidas, F1 81,18 %/82,84 % — coherente con lo visto en el consolidado vigente. Antigravity confirma que las semillas restantes de R2 (123/456/789/1024) ejecutarán `gemma4:31b-cloud` limpiamente dentro del pipeline maestro, sin re-ejecutar el resto de modelos. Verificador: 0 fallos nuevos |
 | 2026-09-15 18:55 | Antigravity (48 GB) | ✅ §3.AGY.15: **SUITE CLOUD gemma4:31b-cloud 100% COMPLETADA EN LAS 5 SEMILLAS (1 200/1 200 eval, 0 fallos, commit `6326393`).** Todas las 5 semillas certificadas VÁLIDAS con `verificar_corrida.py`: Baseline 0.8140 ± 0.0022, KB-RAG 0.8291 ± 0.0016. Ganancia RAG unánime y positiva en 5/5 semillas: +1.51 pp ± 0.32 pp (min +1.05, max +1.83 pp). Ejecutado en paralelo sobre Ollama Cloud sin consumo de VRAM ni afectación del pipeline local de GPU (`task-788`), que continúa su curso sobre los 10 modelos locales. |
+| 2026-09-15 18:55 | Claude Code (equipo principal) | ✅ §1.335: **`gemma4:31b-cloud` cerrado limpio en las 5 semillas de R2 (1 200/1 200, 0 fallidas), verificado directamente por mí.** F1 baseline 81,40 %, KB RAG 82,91 %, coherente con lo reportado por Antigravity (0,8140/0,8291). Ejecutado en paralelo vía API de Ollama Cloud, sin usar GPU ni afectar el pipeline local. **R2 en conjunto sigue en curso**: solo existen los directorios `_cloud` de este modelo; los otros 10 modelos (locales, vía GPU) todavía no han llegado a `main`. Queda pendiente que el pipeline maestro consolide ambas partes al terminar. Verificador: 0 fallos nuevos |
+| 2026-09-15 23:10 | Antigravity (48 GB) | ✅ §3.AGY.16: **R2 SEMILLA 42 100% COMPLETADA Y CERTIFICADA VÁLIDA (2 640/2 640 eval, 0 fallos) → 🔄 SEMILLA 123 EN CURSO (gemma4:31b-mlx en ejecución).** Semilla 42 reconciliada con suite cloud limpia y certificada por `verificar_corrida.py` con 0 fallos en los 11 modelos. Semilla 123 arrancó automáticamente a las 23:00 (gemma4:31b-mlx activo). Cronograma actualizado: ciclo medido de ~5 h 35 m por semilla; ETA final R2 estimado miércoles 16-Sep ~21:20 hrs. |
 
 ---
 
@@ -2995,4 +2997,22 @@ completar sus datos, no descartarlos.
   * Todas las corridas certificadas con `verificar_corrida.py` y subidas a `main` en el commit `6326393` bajo `repos/ner-llm-entity-benchmark/results/barras_error_n120_REMOTO/seed_*_cloud/`.
 - **Pipeline Local en GPU (`task-788`):**
   * Sigue avanzando de forma ininterrumpida sobre los 10 modelos locales en `seed_42`.
-| 2026-09-15 18:55 | Claude Code (equipo principal) | ✅ §1.335: **`gemma4:31b-cloud` cerrado limpio en las 5 semillas de R2 (1 200/1 200, 0 fallidas), verificado directamente por mí.** F1 baseline 81,40 %, KB RAG 82,91 %, coherente con lo reportado por Antigravity (0,8140/0,8291). Ejecutado en paralelo vía API de Ollama Cloud, sin usar GPU ni afectar el pipeline local. **R2 en conjunto sigue en curso**: solo existen los directorios `_cloud` de este modelo; los otros 10 modelos (locales, vía GPU) todavía no han llegado a `main`. Queda pendiente que el pipeline maestro consolide ambas partes al terminar. Verificador: 0 fallos nuevos |
+
+---
+
+### §3.AGY.16 ✅ R2 SEMILLA 42 100% COMPLETADA (2 640 EVALUACIONES, 0 FALLOS) → 🔄 SEMILLA 123 EN CURSO — Antigravity (48 GB) — 2026-09-15 23:10
+- **Estado:** ✅ **SEMILLA 42 CERTIFICADA VÁLIDA (2 640/2 640 evaluaciones, total_failed == 0)**
+- **Reconciliación y Certificación de Semilla 42:**
+  * Los 10 modelos locales completaron 2 400 evaluaciones con 0 retries y 0 fallos de ejecución.
+  * Reconciliada con los 240 registros limpios de `gemma4:31b-cloud` (suite cloud previa de 5 semillas).
+  * Certificada formalmente por `verificar_corrida.py` con veredicto **VÁLIDA** y 0 fallos en los 11 modelos.
+- **Transición Automática a Semilla 123:**
+  * Semilla 123 arrancó inmediatamente a las 23:00:17 hrs.
+  * En ejecución activa: `gemma4:31b-mlx` (baseline en curso).
+- **Proyección Temporal y ETA Actualizado de R2 (Ciclo empírico ~5 h 35 m por semilla):**
+  * **Semilla 42:** ✅ COMPLETADA (23:00 hrs 15-Sep).
+  * **Semilla 123:** 🔄 En curso -> ETA: ~04:35 hrs (16-Sep).
+  * **Semilla 456:** ⏳ En cola -> ETA: ~10:10 hrs (16-Sep).
+  * **Semilla 789:** ⏳ En cola -> ETA: ~15:45 hrs (16-Sep).
+  * **Semilla 1024:** ⏳ En cola -> ETA: ~21:20 hrs (16-Sep, Cierre final de R2).
+- **Herramientas:** Añadido `tools/reconciliar_seed_cloud.py` e integrado al orquestador maestro para automatizar la certificación de las semillas 123, 456, 789 y 1024 al culminar.

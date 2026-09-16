@@ -163,6 +163,11 @@ def run_r2():
             print(f"ERROR: Falló R2 seed {seed} (código {proc.returncode})")
             return False
             
+        # Reconciliar con suite cloud limpia (0 fallos) si aplica
+        reconcile_script = REPO_ROOT / "tools" / "reconciliar_seed_cloud.py"
+        if reconcile_script.exists():
+            subprocess.run([str(VENV_PYTHON), str(reconcile_script), str(seed)], cwd=str(REPO_ROOT))
+
         # Verificar corrida
         v_proc = subprocess.run([str(VENV_PYTHON), str(VERIFY_SCRIPT), str(target_dir)], cwd=str(REPO_ROOT))
         if v_proc.returncode == 0:
