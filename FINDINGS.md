@@ -9680,3 +9680,41 @@ insertar una sección H3 nueva con tabla no es una sustitución de términos que
 `tools/docx_replace_terms.py` resuelva; requiere una pasada de maquetación dedicada, la misma que tiene
 pendiente el Anexo J. Se declaran los fallos nuevos correspondientes en `FALLOS_DECLARADOS` con este mismo
 motivo, para no bloquear el gancho de commit mientras esa pasada no ocurre.
+
+---
+
+## §F189 — Los tres dictámenes de la purga `§17` (2026-09-14) están desactualizados; no aplicar sin refrescar
+
+**Fecha:** 2026-09-17.
+
+Antes de aplicar `PLAN-PURGA-INFORME-20260914.json` (y sus dos dictámenes de apoyo,
+`DICTAMEN-FORENSE-CIFRAS-20260914.json` y `DICTAMEN-REVISION-SCRIPTS-20260914.json`) a la limpieza pedida por
+el autor («no hacer referencias a resultados anteriores erróneos, solo dejar las últimas corridas y
+benchmarks»), se verificó su vigencia contra el documento actual, siguiendo el corolario del proyecto: *«Un
+hallazgo de auditoría es una hipótesis, no un hecho»* (`CLAUDE.md`, §Orquestación de Workflows).
+
+**Resultado: los tres dictámenes son del 14 de septiembre y ya no describen el documento actual.** Su propio
+`resumen` señala como «el hallazgo más grave» que la cifra **90,16 % de F1** (Resumen, Abstract, §6.1,
+conclusión 1) *"no existe en ningún fichero de resultados del proyecto"* y debía sustituirse por
+80,57 %/81,47 %. Verificado ahora: **90,16 % sí existe y es correcto** — es el F1 restringido a las
+categorías Persons/Organizations de `results/n30_rerun_REMOTO/detailed_results.json` para
+`gemma4:31b-mlx`, distinto del F1 sin restringir (80,57 %) de la misma corrida. El **Anexo I** («Medición
+restringida a las categorías anotadas por el corpus») documenta exactamente esta distinción, y
+`tools/verificar_informe.py` (comprobación de cifras titulares, línea ~4332) verifica ambas cifras contra
+sus fuentes de forma automática y actual, y pasa sin fallos. El hallazgo que el dictamen consideraba el más
+grave de todos **ya estaba resuelto** cuando se escribió, o se resolvió poco después, y el dictamen nunca se
+actualizó.
+
+**Búsqueda dirigida en el cuerpo actual** (excluidos los anexos, que la política del proyecto protege de esta
+limpieza): solo aparece **una** mención a una corrida superada (`results/ANALISIS_CONJUNTO_20260907/`, línea
+381 de la versión vigente), y ya está correctamente enmarcada como *"que sustituye a"* la corrida vigente, en
+línea con la regla de declarar-no-narrar de `CLAUDE.md` (Integridad de la medición, precisión `§F160`). Las
+56 comprobaciones de `tools/verificar_informe.py` pasan sin fallos nuevos contra las fuentes vigentes.
+
+### Consecuencia
+
+**No se aplica `PLAN-PURGA-INFORME-20260914.json` tal como está.** El trabajo de limpieza del cuerpo que
+describían esos dictámenes ya avanzó sustancialmente en los commits de esta misma semana (retirada de la
+Figura 1 `§F170`, compresión de §3.3 y §7.2 `§F172`, citas nuevas `§F168`/`§F169`). Si el autor quiere una
+auditoría específica de algo que siga pareciendo desactualizado, corresponde una pasada nueva contra el
+documento actual, no la ejecución del plan de tres días atrás.

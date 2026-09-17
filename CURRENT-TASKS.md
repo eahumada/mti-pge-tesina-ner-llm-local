@@ -3166,3 +3166,21 @@ completar sus datos, no descartarlos.
   proyecto acota expresamente el alcance: los anexos H e I, los logs de ejecución y los documentos de hitos
   ya entregados **no se tocan** por esta limpieza (son lo que atestigua, no lo que afirma) — la purga aplica
   al cuerpo, no a esos artefactos. Se continúa revisando los dictámenes antes de aplicar nada.
+
+---
+
+### §1.343 ⚠️ Los dictámenes de la purga `§17` (14-sep) están desactualizados: no se aplican tal cual — Claude Code (equipo principal) — 2026-09-17 00:40
+- **Revisada la vigencia de `PLAN-PURGA-INFORME-20260914.json`** antes de aplicarlo, per el corolario del
+  proyecto de que un hallazgo de auditoría es hipótesis, no hecho. Su «hallazgo más grave» (que 90,16 % de F1
+  «no existe en ningún fichero de resultados») es falso hoy: es el F1 restringido a Persons/Organizations de
+  `n30_rerun_REMOTO`, documentado en el Anexo I y verificado automáticamente por
+  `tools/verificar_informe.py`. Detalle completo en `FINDINGS.md §F189`.
+- **Búsqueda dirigida en el cuerpo actual** (sin tocar anexos, protegidos por política): solo una mención a
+  una corrida superada, ya correctamente enmarcada como «que sustituye a». Las 56 comprobaciones del
+  verificador pasan sin fallos nuevos.
+- **Decisión:** no se aplica el plan de purga del 14 de septiembre. El trabajo que describía ya avanzó en
+  los commits de esta semana (`§F168`-`§F172`). No se ejecuta una purga masiva basada en un dictamen
+  desactualizado.
+- **Reportado al autor** para decidir si corresponde una auditoría fresca del cuerpo con un alcance
+  específico, o si con lo verificado (56/56 comprobaciones sin fallos nuevos) se da por cumplida la
+  instrucción de «solo las últimas corridas y benchmarks».
