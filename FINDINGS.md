@@ -9718,3 +9718,35 @@ describían esos dictámenes ya avanzó sustancialmente en los commits de esta m
 Figura 1 `§F170`, compresión de §3.3 y §7.2 `§F172`, citas nuevas `§F168`/`§F169`). Si el autor quiere una
 auditoría específica de algo que siga pareciendo desactualizado, corresponde una pasada nueva contra el
 documento actual, no la ejecución del plan de tres días atrás.
+
+---
+
+## §F190 — Propagados a los tres `.docx` el Anexo J completo, la bibliografía [40]-[46] y el Anexo K
+
+**Fecha:** 2026-09-17.
+
+`tools/docx_replace_terms.py` sustituye texto existente pero no inserta párrafos ni tablas nuevas, así que
+no servía para cerrar la deuda de propagación de `§F168`/`§F169` (Anexo J, 5 días pendiente) ni la de `§F188`
+(Anexo K, del mismo día). Se escribió un script de migración de un solo uso
+(`tools/propagar_anexos_jk_20260917.py`) que abre cada `.docx` como paquete OOXML, extrae de la sección
+Anexo I ya existente los estilos reales que usa cada uno de los tres documentos (que **difieren entre sí**:
+`heading2`/`p1a`/`tablecaption` con anchos en `dxa` en la plantilla institucional; `Heading2`/`BodyText`/
+`TableCaption` con anchos en `pct` en los otros dos, y con una fila de encabezado de tabla con marcado
+distinto en el borrador), y construye con ellos el encabezado, los párrafos, la tabla de sensibilidad
+(Tabla 20), las siete entradas de bibliografía nuevas y el Anexo K completo (Tabla 21), insertándolo en el
+punto correcto de cada documento (justo después de la referencia [39] para la bibliografía, justo antes de
+`<w:sectPr` para el resto).
+
+**Verificado antes de aplicar in situ:** se probó primero sobre copias, comprobando integridad del ZIP,
+buena formación del XML, y ejecutando las comprobaciones de prosa/tablas/encabezados/bibliografía del propio
+`tools/verificar_informe.py` (monkeypatch de `DOCX_ENTREGABLES` sobre las copias) antes de tocar los
+archivos reales. Solo tras confirmar que resolvía exactamente los fallos esperados sin introducir otros
+nuevos se aplicó a los tres archivos reales, con respaldo previo en
+`doc/versions/informe_final/_respaldos_20260917_propagacion_jk/`.
+
+**Resultado:** el verificador pasa de 81 fallos (63 declarados, 18 nuevos aparentes por la falta de
+propagación) a 30 fallos (30 declarados, 0 nuevos). Se retiraron de `FALLOS_DECLARADOS` las 17 declaraciones
+que quedaron sin nada que tapar: las seis de `§F168` (Anexo J), las cuatro de `§F169` (citas Friedman/
+Levene/Brown-Forsythe/Cohen) y las siete de `§F188` (Anexo K). Quedan vigentes, sin cambios, las de `§F170`/
+`§F172` (Figura 1 retirada, compresión de §7.2, resaltes/guiones) porque esta pasada no las tocó: son un
+trabajo de maquetación distinto, sobre texto viejo retirado, no sobre secciones nuevas añadidas.

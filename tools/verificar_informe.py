@@ -95,31 +95,6 @@ FALLOS_DECLARADOS = {
     'github.com/eahumada/mti-pge-tesina': ('2026-09-09',
                                            'referencia [37]: el repositorio es privado hasta la '
                                            'purga (SEGURIDAD-CLAVE-GOOGLE-20260908.md)'),
-    '[40] K. Pearson': ('2026-09-12',
-                        'PENDIENTE de propagar (FINDINGS §F168): cita nueva de §2.5 y de la '
-                        'bibliografia, aun no en los tres .docx'),
-    '[41] C. Spearman': ('2026-09-12', 'idem, la otra cita del mismo par (§F168)'),
-    'Las dos cifras de §5.3.1 sobre la relación': ('2026-09-12',
-                                                   'PENDIENTE de propagar (§F168): primer parrafo '
-                                                   'del Anexo J, nuevo'),
-    'La Tabla 20 recalcula ambos coeficientes': ('2026-09-12',
-                                                 'PENDIENTE de propagar (§F168): segundo parrafo '
-                                                 'del Anexo J, nuevo'),
-    'Tabla 20 no esta en el entregable': ('2026-09-12',
-                                         'PENDIENTE de propagar (§F168): tabla de sensibilidad '
-                                         'del Anexo J, nueva'),
-    'le faltan las entradas de bibliografia': ('2026-09-12',
-                                               'PENDIENTE de propagar (§F168): entradas [40] y '
-                                               '[41], nuevas'),
-    'anexo j — correlación entre capacidad y beneficio del rag': ('2026-09-12',
-                                                                  'PENDIENTE de propagar (§F168): '
-                                                                  'encabezado del anexo nuevo'),
-    '[43] M. Friedman': ('2026-09-12',
-                         'PENDIENTE de propagar (§F169): cita nueva de §2.5, aun no en los tres '
-                         '.docx'),
-    '[44] H. Levene': ('2026-09-12', 'idem (§F169), la de Levene'),
-    '[45] M. B. Brown and A. B. Forsythe': ('2026-09-12', 'idem (§F169), la de Brown-Forsythe'),
-    '[46] J. Cohen': ('2026-09-12', 'idem (§F169), la de Cohen'),
     'todavia afirma «Composición de los falsos positivos': ('2026-09-12',
                                                             'PENDIENTE de propagar (§F170): la '
                                                             'Figura 1 vieja se retiro del .md, '
@@ -161,27 +136,6 @@ FALLOS_DECLARADOS = {
                                                       'PENDIENTE de propagar (§F172): detalle '
                                                       'viejo del punto 7 de §7.2, aun en los '
                                                       '.docx sin regenerar'),
-    'La Tabla 7 (§5.3.1) reporta un único punto por modelo, tom': ('2026-09-17',
-                                                                   'PENDIENTE de propagar (§F188): '
-                                                                   'primer parrafo del Anexo K, '
-                                                                   'nuevo'),
-    'El cálculo, en results/R2CONSOLIDADO5SEMILLAS20260916/calc': ('2026-09-17',
-                                                                    'PENDIENTE de propagar (§F188): '
-                                                                    'segundo parrafo del Anexo K, '
-                                                                    'nuevo'),
-    'El cálculo parte del CSV de resultados por artículo, no de': ('2026-09-17',
-                                                                    'PENDIENTE de propagar (§F188): '
-                                                                    'tercer parrafo del Anexo K, '
-                                                                    'nuevo'),
-    'De los veintidós puntos que reporta la Tabla 7 para estos ': ('2026-09-17',
-                                                                    'PENDIENTE de propagar (§F188): '
-                                                                    'parrafo de cierre del Anexo K, '
-                                                                    'nuevo'),
-    'Tabla 21 no esta en el entregable': ('2026-09-17',
-                                          'PENDIENTE de propagar (§F188): tabla del Anexo K, nueva'),
-    'anexo k — intervalo de confianza de la tabla 7 por réplica': ('2026-09-17',
-                                                                    'PENDIENTE de propagar (§F188): '
-                                                                    'encabezado del anexo nuevo'),
 }
 
 

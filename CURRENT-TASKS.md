@@ -3200,3 +3200,18 @@ la fusión, que queda con el valor de antes de reconciliar.
 `reconciliar_seed_cloud.py` recalcule y sobrescriba `benchmark_summary.json` para el modelo reconciliado
 (media de `precision`/`recall`/`f1` por configuración sobre las filas fusionadas) inmediatamente después de
 fusionar el CSV, en la misma pasada. No toca ningún dato ya publicado ni ningún log de ejecución.
+
+---
+
+### §1.344 ✅ Propagados a los tres `.docx` el Anexo J, la bibliografía [40]-[46] y el Anexo K (5 días de deuda cerrados) — Claude Code (equipo principal) — 2026-09-17 10:10
+- **Cerrada la deuda de propagación** de `§F168` (Anexo J, 5 días pendiente), `§F169` (citas Friedman/
+  Levene/Brown-Forsythe/Cohen) y `§F188` (Anexo K, del mismo día). No requería decisión del autor, solo
+  trabajo mecánico de maquetación — ver `FINDINGS.md §F190` para el detalle completo del método.
+- **Verificado antes de aplicar in situ**: probado sobre copias (integridad de ZIP, buena formación de XML,
+  las comprobaciones de prosa/tablas/encabezados del propio verificador) antes de tocar los archivos reales.
+  Respaldo previo en `doc/versions/informe_final/_respaldos_20260917_propagacion_jk/`.
+- **Resultado:** el verificador pasa de 81 fallos (63 declarados) a **30 fallos (30 declarados, 0 nuevos)**.
+  Retiradas 17 declaraciones de `FALLOS_DECLARADOS` que quedaron sin nada que tapar.
+- **Pendiente sin cambios:** `§F170`/`§F172` (Figura 1 retirada, compresión de §7.2, conteo de resaltes y
+  guiones) — es texto viejo retirado, no secciones nuevas; requiere una pasada distinta.
+- Verificador: 0 fallos nuevos.
