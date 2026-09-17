@@ -147,6 +147,11 @@ FALLOS_DECLARADOS = {
                                                                     'PENDIENTE de propagar '
                                                                     '(§F191): cierre del Anexo I '
                                                                     'comprimido'),
+    'Nota de procedencia, sin resolver. El prompt transcrito ar': ('2026-09-17',
+                                                                    'PENDIENTE de propagar: nuevo '
+                                                                    'parrafo en Anexo F sobre la '
+                                                                    'discrepancia idioma del prompt '
+                                                                    '/ idioma del corpus (§F54)'),
     'Tabla 10, fila 6 difiere': ('2026-09-17',
                                  'PENDIENTE de propagar: corregido el separador decimal de '
                                  '"1.1 GB" a "1,1 GB" en el .md (consistencia con el resto de la '

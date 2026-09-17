@@ -931,6 +931,16 @@ El texto debe ser fáctico, neutro y similiar en estilo a noticias de compliance
 Debe mencionar exactamente estas entidades y no otras personas u organizaciones adicionales.
 ```
 
+**Nota de procedencia, sin resolver.** El *prompt* transcrito arriba especifica explícitamente español, pero
+el corpus versionado (`data/kleptotrace_augmented_30.json`) está íntegramente en inglés (verificado leyendo
+el propio archivo). Ni los registros de ejecución de julio de 2026 ni un script generador sobreviven en el
+repositorio para reconciliar esta discrepancia contra la invocación real: se investigó el 8 de septiembre de
+2026 y se escaló al autor sin poder resolverse por falta de evidencia. Se declara aquí como limitación de
+procedencia, no como un error corregido. La respuesta que se dio no fue reconstruir lo ocurrido en julio
+—imposible sin esos registros— sino construir hacia adelante un par controlado para el estudio de variantes
+de idioma: una traducción íntegra del corpus al español (`data/kleptotrace_augmented_30_es.json`), verificada
+por cobertura literal de cada entidad de referencia en el texto traducido.
+
 Paso 4 — Verificación del ground truth: Cada artículo generado fue revisado manualmente para confirmar que las entidades objetivo aparecían efectivamente en el texto y que no se hubieran introducido entidades ajenas al ground truth anotado. Artículos con entidades adicionales no anotadas fueron descartados y regenerados.
 
 Paso 5 — Control de calidad por diversidad: Se verificó que ningún artículo generado replicara literalmente oraciones de otro artículo del corpus (deduplicación por similitud coseno > 0.85). La longitud promedio resultante fue de 202 caracteres (rango 145–293), con 1,2 entidades PER y 2,3 entidades ORG por artículo.
