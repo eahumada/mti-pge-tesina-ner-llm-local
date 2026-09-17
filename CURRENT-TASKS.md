@@ -1961,6 +1961,24 @@ corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y
   cambios de hoy a los tres `.docx` (encargado a Claude Desktop); (e) decisión del autor sobre excluir
   `kb_combined`, aún sin respuesta (ver checkpoint).
 
+#### 4.7.1 `revision-final-tesina-20260917-v2` — 🔄 EN CURSO — Claude Code (equipo principal)
+- **Cuándo:** lanzado 2026-09-17, tras aplicar la segunda purga de §F192 · **Run ID:** `wf_4ef0c1ca-072` ·
+  **Agentes:** 9 (3 lectores en rangos de línea disjuntos + 1 juez adversarial + 5 lotes de bibliografía)
+- **Objetivo, a petición explícita del autor:** (1) barrer el `.md` en busca de menciones históricas
+  remanentes que la purga de §F192 no haya detectado, con el estándar agresivo vigente (eliminar, no
+  comprimir); (2) confirmar que las 4 contradicciones numéricas ya corregidas no dejaron ninguna más sin
+  detectar; (3) completar la verificación de las 46 citas bibliográficas, pendiente desde el bloqueo de
+  permisos de la sesión anterior (falló entera, sin resultado utilizable).
+- **Revisión del orquestador antes de despachar (política del proyecto):** prompts explícitos con lista
+  cerrada de qué SÍ cuenta como "histórico sin asidero" y qué NO (tablas de datos, el ejemplo de mojibake
+  vigente en §5.4, la exclusión N=113 del Anexo D, el párrafo N=30 del Anexo I); ningún agente edita ni
+  hace `git`; rangos de línea disjuntos entre los 3 lectores; juez adversarial con sesgo conservador
+  explícito y el incidente real de la Tabla 2 como advertencia; sin backup previo por ser solo lectura.
+- **Fases:** Revisión (3 lectores, paralelo) → Verificación (1 juez, lee el archivo completo + todos los
+  hallazgos) → Citas (5 lotes con `WebFetch`).
+- **Archivos:** solo lectura. La aplicación de hallazgos confirmados la hace el equipo principal.
+- **Resultado:** pendiente.
+
 ---
 
 ### §4.bis Workflow `wf_348f89e2-43b` — consistencia global de la tesina (REINTENTO)
