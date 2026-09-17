@@ -162,6 +162,27 @@ porque quien ya la copió durante estos meses puede seguir usándola sin tocar G
 `SOLICITUD-GITHUB-PURGA-20260908.md` a GitHub Support, que es el único mecanismo documentado para forzar
 la purga de un objeto inalcanzable sin plazo garantizado del recolector automático. Alternativa ya
 descartada por el autor el 2026-09-08 (borrar y recrear el repositorio): sigue descartada por el mismo
+
+---
+
+## Clave revocada (2026-09-17): confirmado por prueba directa, no por declaración
+
+El autor revocó la clave manualmente en Google AI Studio (login manual del titular; la automatización de
+navegador de este agente no pudo completarlo, porque Google bloquea deliberadamente el inicio de sesión
+desde navegadores controlados por automatización — protección anti-phishing esperable, no un error).
+
+**Verificado de inmediato, con el mismo método de antes y no aceptando la palabra de nadie sin prueba:**
+descargado de nuevo el contenido del commit histórico vía la API de GitHub, extraída la clave (sin
+exponerla) y probada contra `generativelanguage.googleapis.com/v1/models`. Resultado:
+
+```
+HTTP 400 — INVALID_ARGUMENT
+"API key not valid. Please pass a valid API key."
+```
+
+**La clave está confirmadamente muerta.** El paso 1 (revocar) queda cerrado. Sigue pendiente el paso 2
+(purga de GitHub del objeto histórico, que todavía sirve el blob con la clave en texto plano aunque ya no
+funcione) y, después, la decisión de publicar.
 motivo (irreversible, afecta a un servicio externo, el equipo remoto trabaja contra este remoto).
 
 Añadida la regla correspondiente, con este caso como motivación, a `CLAUDE.md` («Secretos y publicación
