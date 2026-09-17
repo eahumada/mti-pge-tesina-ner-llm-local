@@ -375,6 +375,18 @@ Todo identificador **nuevo** se nombra con «variantes».
   existentes quedan incompatibles.
 - Los secretos viven en `.setenv.sh`, que está en `.gitignore`. **Ese fichero no está en git**, de modo que
   un clon nuevo no lo tiene.
+- **Filtro adicional, tras un caso real (2026-09-17): la purga nunca se da por completada sin comprobarla
+  en vivo, ni siquiera cuando han pasado días y alguien pide publicar dando por hecho que ya se resolvió.**
+  Nueve días después del incidente, una instrucción para hacer público el repositorio asumió que «se
+  supone que todos los secretos están eliminados». La comprobación en vivo de
+  `SEGURIDAD-CLAVE-GOOGLE-20260908.md` (los tres controles `curl` contra la API de GitHub) mostró que el
+  objeto histórico seguía devolviendo HTTP 200 con la clave en claro: la purga **no** se había completado,
+  pese al tiempo transcurrido y pese a que la clave sí estaba revocada. **Antes de cambiar la visibilidad
+  de cualquier repositorio del proyecto a público, es obligatorio re-ejecutar esa comprobación en ese
+  momento** —nunca asumirla por antigüedad, por memoria de una comprobación anterior, ni porque quien lo
+  pide da el secreto por resuelto— y proceder solo si el objeto purgado da 404 con los dos controles de
+  credencial en 200. Esta misma regla, con el mismo detalle, se repite en
+  `repos/ner-llm-entity-benchmark/AGENTS.md §12` porque es el repositorio concreto al que aplica.
 
 ## Concurrencia: el directorio de trabajo puede cambiar de nombre
 

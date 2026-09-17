@@ -399,3 +399,25 @@ files**: [`../../CURRENT-TASKS.md`](../../CURRENT-TASKS.md).
 > **Why this exists.** On 2026-09-03, `HISTORIAL-CONSOLIDADO.md` was modified by an agent outside the
 > session working on it. `ListAgents` enumerates Claude Code sessions but **not** Claude Desktop, so the
 > absence of a peer in that listing does not prove nobody else is editing.
+
+## 12. Security — secrets and repository visibility
+
+This repository had a Google API key exposed in its history for two months (`../../SEGURIDAD-CLAVE-GOOGLE-20260908.md`,
+in the project root). The key has since been **revoked**, but as of 2026-09-17 GitHub's purge of the
+unreachable historical object was **still pending**, verified live: the old commit still returns HTTP 200
+with the key in plaintext via the GitHub API.
+
+**No agent may make this repository public, or recommend doing so, without first re-running the live
+verification** documented in `SEGURIDAD-CLAVE-GOOGLE-20260908.md` (the three `curl` checks against the
+GitHub API) and confirming the purged object now returns 404. This is not optional and does not expire
+with time: on 2026-09-17, nine days after the incident, a request to publish assumed the secret was
+already gone ("se supone que todos los secretos están eliminados") — the live check proved the purge had
+not completed. **Never assume a purge finished because time has passed, because it was asked for
+assuming it, or from memory of an earlier check; always re-verify live before changing visibility.**
+
+Before writing any new credential-bearing code (API keys, tokens, connection strings): never hardcode a
+secret in a tracked file. Read it from the environment (`os.environ`) or from `.setenv.sh` (root,
+git-ignored), following the pattern already used for `GOOGLE_API_KEY`/`OPENAI_API_KEY`/`ANTHROPIC_API_KEY`
+(§10) and `GITHUB_TOKEN` (root `.git/config`, via the credential helper). If a secret is ever committed by
+mistake, revoking the credential comes first, immediately — rewriting history does not remove it from
+GitHub's reachable-by-SHA storage on its own; see `LEARNING.md §L43` (project root) for the full mechanism.

@@ -118,3 +118,32 @@ no se interpreta.
 
 **Estado a 2026-09-08, 23:0x:** los dos controles dan 200 y el objeto purgado **también da 200, con la clave
 en claro**. La purga sigue pendiente y el repositorio no puede hacerse público.
+
+---
+
+## Re-comprobación (2026-09-17): sigue pendiente, nueve días después
+
+Se pidió hacer público el repositorio dando por hecho que «se supone que todos los secretos están
+eliminados». Antes de proceder se repitió la comprobación en vivo de más arriba:
+
+```
+control raiz del repo:  200
+control commit vigente: 422 (verificar el SHA usado, no invalida el resultado del objeto)
+objeto purgado (test_flash.py@bb79279): 200
+visibilidad actual: private = True
+```
+
+**El objeto purgado sigue devolviendo 200 con la clave en claro.** Nueve días de espera al recolector de
+GitHub no bastaron. Confirmado por separado (README.md, línea 121) que la clave **sí fue revocada** en
+Google Cloud Console — el riesgo real es menor que si siguiera activa—, pero la regla del proyecto no
+distingue: **no se hace público mientras el objeto responda 200.** No se publicó el repositorio.
+
+**Siguiente paso recomendado, sin ejecutar por iniciativa propia:** enviar la solicitud ya redactada en
+`SOLICITUD-GITHUB-PURGA-20260908.md` a GitHub Support, que es el único mecanismo documentado para forzar
+la purga de un objeto inalcanzable sin plazo garantizado del recolector automático. Alternativa ya
+descartada por el autor el 2026-09-08 (borrar y recrear el repositorio): sigue descartada por el mismo
+motivo (irreversible, afecta a un servicio externo, el equipo remoto trabaja contra este remoto).
+
+Añadida la regla correspondiente, con este caso como motivación, a `CLAUDE.md` («Secretos y publicación
+del repositorio») y a `repos/ner-llm-entity-benchmark/AGENTS.md §12`: la comprobación en vivo es
+obligatoria antes de cualquier cambio de visibilidad, nunca se asume por el tiempo transcurrido.
