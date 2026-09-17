@@ -3096,3 +3096,25 @@ completar sus datos, no descartarlos.
 - **Consecuencia directa:** esto desbloquea `TODO-INFORME-FINAL.md §17` (cierre final: dejar solo las últimas ejecuciones, purgar del cuerpo del informe menciones a resultados antiguos o erróneos). Antes de ejecutar la purga hay que refrescar los tres dictámenes (`PLAN-PURGA-INFORME-20260914.json`, `DICTAMEN-FORENSE-CIFRAS-20260914.json`, `DICTAMEN-REVISION-SCRIPTS-20260914.json`) con los datos finales de R2, y calcular los intervalos de confianza consolidados de las 5 semillas para actualizar las barras de error del informe, tal como pide Antigravity en `§3.AGY.19`.
 - **No se ejecuta la purga en este turno**: toca el cuerpo del informe (entregable) y requiere, según la política de orquestación del proyecto, revisión de las instrucciones a subagentes antes de despachar, backup previo y etapa de verificación — se deja pendiente de la siguiente sesión de trabajo activo con el autor, no de un tick autónomo.
 - Verificador: `tools/verificar_informe.py` no aplica (sin tocar Markdown del informe en este registro).
+
+---
+
+### §1.340 ⚠️ HALLAZGO: `benchmark_summary.json` de `gemma4:31b-cloud` corrompido en las 5 semillas de R2 — Claude Code (equipo principal) — 2026-09-16 22:35
+- **Contexto:** al empezar el cálculo de intervalos de confianza consolidados de R2 pedido en `§3.AGY.19`,
+  se comparó el F1 agregado de `benchmark_summary.json` contra el recalculado directamente desde
+  `benchmark_results.csv` para las 22 configuraciones × 5 semillas, como control de calidad antes de usar
+  ninguna cifra en una tabla.
+- **Hallazgo:** `gemma4:31b-cloud` (baseline y kb_rag) tiene `benchmark_summary.json` corrompido en las
+  **5 semillas**: valores 0,88 %–54,83 % sin patrón, mientras el CSV crudo da 81,18–83,10 % de forma estable
+  y coincidente con lo que Antigravity certificó por separado en `§3.AGY.15` (suite cloud, 5 semillas).
+  Detalle completo en `FINDINGS.md §F187`.
+- **No se tocó ningún archivo del remoto.** Es una observación de calidad, no una corrección — el CSV crudo
+  (la fuente primaria) está bien; solo el resumen agregado de ese modelo específico quedó desactualizado tras
+  la reconciliación de la suite cloud.
+- **Acción:** el cálculo de intervalos de confianza de R2 (pendiente, pedido en `§3.AGY.19`) se hará
+  recomputando desde `benchmark_results.csv` para las 22 configuraciones, no desde `benchmark_summary.json`,
+  replicando la exclusión de los 7 artículos con codificación contaminada (N=113) que usa
+  `results/ANALISIS_CONJUNTO_20260909_FIX/` para mantener la misma metodología que sostiene la Tabla 7.
+- **Aviso al equipo remoto (pendiente de enviar):** conviene que `tools/reconciliar_seed_cloud.py` también
+  regenere `benchmark_summary.json` tras fusionar los datos cloud, para que no quede desactualizado en
+  futuras corridas.

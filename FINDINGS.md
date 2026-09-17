@@ -9589,3 +9589,66 @@ re-ejecución terminara primero. La purga en sí no se ejecuta en un tick autón
 entregable y exige, por la política de orquestación del proyecto ([[orquestacion-workflows]] si existe, o la
 sección homónima de `CLAUDE.md`), revisión previa de las instrucciones a subagentes, backup y verificación
 posterior.
+
+---
+
+## §F187 — `benchmark_summary.json` de `gemma4:31b-cloud` está corrompido en las 5 semillas de R2; el CSV crudo es correcto
+
+**Fecha:** 2026-09-16. **Severidad: alta** — afecta directamente cualquier cálculo de intervalos de confianza
+consolidados de R2 que use `benchmark_summary.json` como atajo, en lugar del CSV crudo por artículo.
+
+### Qué se encontró
+
+Al iniciar el cálculo de los intervalos de confianza consolidados de R2 pedido por Antigravity en
+`§3.AGY.19`, se recalculó el F1 medio de `gemma4:31b-cloud` directamente desde `benchmark_results.csv`
+(120 filas por semilla, columna `f1` por artículo) y se comparó contra el valor agregado que trae
+`benchmark_summary.json`. Para las otras 21 configuraciones del estudio ambos coinciden dentro de un margen
+pequeño y explicable (el agregado excluye los 7 artículos con codificación contaminada, N=113 vs N=120 en el
+CSV crudo). Para `gemma4:31b-cloud` **no coinciden en ninguna de las 5 semillas**, y la divergencia no es un
+margen de filtrado: es de decenas de puntos porcentuales.
+
+| Semilla | Config | F1 recalculado desde CSV | F1 en `benchmark_summary.json` |
+|:---|:---|---:|---:|
+| 42 | baseline | 81,18 % | **0,88 %** |
+| 42 | kb_rag | 82,84 % | **0,88 %** |
+| 123 | baseline | 81,27 % | 48,59 % |
+| 123 | kb_rag | 83,10 % | 58,60 % |
+| 456 | baseline | 81,77 % | 54,83 % |
+| 456 | kb_rag | 82,82 % | 57,65 % |
+| 789 | baseline | 81,41 % | 40,38 % |
+| 789 | kb_rag | 82,73 % | 51,19 % |
+| 1024 | baseline | 81,36 % | 46,60 % |
+| 1024 | kb_rag | 83,08 % | 54,66 % |
+
+El F1 recalculado desde el CSV es **estable entre semillas** (81,18–81,77 % baseline, 82,73–83,10 % kb_rag) y
+**coincide con lo que Antigravity certificó por separado** en `§3.AGY.15` para la suite cloud de 5 semillas
+(Baseline 0,8140 ± 0,0022; KB-RAG 0,8291 ± 0,0016). El valor de `benchmark_summary.json`, en cambio, es
+**inestable y sin patrón** (0,88 % a 54,83 % baseline) — exactamente la firma de un archivo agregado que no
+se regeneró tras la reconciliación de la suite cloud (`tools/reconciliar_seed_cloud.py`), y no de una
+medición real degradada. `acceptance_status.json` de cada semilla no se ve afectado: reporta correctamente a
+`gemma4:31b-mlx_kb_rag` como mejor modelo y `hallucination_rate: 0.0`, porque no depende del F1 de
+`gemma4:31b-cloud` para esos campos.
+
+### Por qué importa
+
+Es el mismo patrón de riesgo que documentan `§F53`/`§F154`/`§F160` en `CLAUDE.md` («integridad de la
+medición»): un artefacto agregado que parece una cifra válida, coherente en apariencia (existe, tiene 22
+claves, formato correcto), pero que en un caso concreto no refleja los datos crudos que dice resumir. La
+diferencia con los precedentes es que aquí la señal de alerta es la propia inestabilidad entre semillas —
+21 de 22 configuraciones tienen desviación estándar entre 0,05 y 0,94 puntos en `benchmark_summary.json`
+entre semillas; `gemma4:31b-cloud` sola tiene 21,5 y 24,6 puntos de desviación estándar, un orden de magnitud
+mayor sin razón experimental.
+
+### Cómo se corrobora
+
+`repos/ner-llm-entity-benchmark/results/barras_error_n120_REMOTO/seed_{42,123,456,789,1024}/`, columnas `f1`
+de `benchmark_results.csv`, filtro `model in {'gemma4:31b-cloud_baseline','gemma4:31b-cloud_kb_rag'}`.
+Reproducible con un `groupby` + `mean` estándar; no requiere reprocesar el corpus.
+
+### Consecuencia para el cálculo de intervalos de confianza de R2
+
+**No se puede usar `benchmark_summary.json` como fuente para el consolidado de las 5 semillas.** El cálculo
+de intervalos de confianza de R2 debe recomputarse por artículo desde `benchmark_results.csv` para las 22
+configuraciones, replicando la exclusión de los 7 artículos contaminados (N=113) que usa el estudio principal
+en `results/ANALISIS_CONJUNTO_20260909_FIX/`, para mantener la misma metodología de agregación que ya
+sostiene la Tabla 7. No se ha tocado ningún archivo del remoto; se deja constancia y se recomputa aparte.
