@@ -265,7 +265,10 @@ La anotación de referencia de este corpus distingue tres categorías de entidad
 
 El trabajo comprende dos conjuntos de evaluación que no hay que confundir. El benchmark exploratorio de la Tabla 4 (§5.1) cubre doce modelos en trece configuraciones sobre N=15 en modo `entities` (`gemma4:latest` aparece dos veces, en sus variantes ZS-ES y FS-ES), mientras que el estudio principal (§5.3.1) evalúa trece modelos sobre N=120 en modo `kb_combined`. El segundo incorpora `gemma4:12b-mlx` y `gpt-oss:20b`, que no disponen de corrida sobre el corpus reducido.
 
-Los modelos de la Tabla 4 se reparten en tres grupos. Entre los locales de ocho mil millones de parámetros o más figuran `gemma4:31b` y su compilación MLX, `gemma4:latest` (9B), `qwen2.5:14b`, `mistral-nemo:latest` (12B), `llama3.1:8b` y `qwen3:8b`. El tramo compacto, por debajo de 8B, lo componen `gemma:latest` (7B), `nemotron-mini:4b`, `llama3.2:latest` (3B) y `deepseek-r1:1.5b`. Completa el cuadro `gemma4:31b-cloud`, incluido únicamente como referencia externa frente a la ejecución local.
+Los modelos de la Tabla 4 se reparten en tres grupos. Entre los locales de ocho mil millones de parámetros o más figuran `gemma4:31b` y su compilación MLX, `gemma4:latest` (9B), `qwen2.5:14b`, `mistral-nemo:latest` (12B), `llama3.1:8b` y `qwen3:8b`. El tramo compacto, por debajo de 8B, lo componen `gemma:latest` (7B), `nemotron-mini:4b`, `llama3.2:latest` (3B) y `deepseek-r1:1.5b`. Completa el cuadro `gemma4:31b-cloud`. Se conserva en el estudio porque, entre las opciones alojadas de
+uso gratuito disponibles al momento de la evaluación, es la de mayor capacidad comparable a los modelos
+locales aquí evaluados, y establece así un precedente útil para contrastar el mejor modelo en la nube de
+acceso gratuito frente a sus equivalentes ejecutados localmente.
 
 ### 4.3 Análisis de variantes de prompts
 
