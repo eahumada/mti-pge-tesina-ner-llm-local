@@ -9941,3 +9941,67 @@ secretos alcanzables en el historial antes de plantear siquiera hacerlo público
 - El conteo de páginas del cuerpo sigue dentro del límite institucional.
 - Ninguna fila de tabla ni cifra experimental se tocó: las 12 correcciones son prosa narrativa
   (referencias colgantes, una comparación histórica, tres divisiones de oraciones densas).
+
+## §F194 — `§F178` (fuga cruzada de ejemplares *few-shot*) se cierra como limitación declarada, no corregida
+
+**Fecha:** 2026-09-17, misma sesión. **Decisión explícita del autor**, tras aclarar una confusión real
+entre dos mecanismos homónimos: el autor señaló primero que "el análisis zero-shot/few-shot era solo
+exploratorio para N=15/N=30", refiriéndose al **estudio de variantes de prompt** de §4.3/§5.2 (correcto,
+ese sí es exclusivo de N=15, con una comprobación de no-replicación sobre N=120). Pero `§F178` no es sobre
+eso: es sobre el modo **`kb_combined`** de la Tabla 7, que internamente llama a `_query_fewshot()`
+(`kb_rag_manager.py:502-513`, verificado leyendo el código en esta sesión) — el mecanismo de recuperación
+de ejemplares de la base de conocimientos, no el de la variante de *prompt*. `kb_combined` corre sobre los
+**13 modelos y los 113 artículos de N=120** sin excepción (`run_config.json` de las 13 corridas vigentes lo
+confirma), así que el hallazgo de `§F178` sí afecta al estudio principal.
+
+**Verificado además que ninguna re-ejecución posterior resolvió la fuga.** `few_shot_exemplars.json`
+tiene un único commit en toda su historia:
+
+```
+8e5c2ad 2026-09-01 feat(rag): implementar KB RAG contextual v1.1.0 — mejora F1 +19.7pp
+```
+
+Ni la re-corrida del 8 de septiembre (`ANALISIS_CONJUNTO_20260909_FIX/`) ni la réplica de cinco semillas
+del 16 (`R2_CONSOLIDADO_5SEMILLAS_20260916/`) tocaron ese fichero: ambas heredan los mismos siete
+ejemplares del 1 de septiembre, con la misma fuga cruzada del 94 % sobre los 113 artículos no excluidos
+por el manifiesto de auto-coincidencia.
+
+**Decisión del autor, una vez aclarado lo anterior:** de las tres opciones que `§F178` dejó abiertas
+(rehacer la base de ejemplares y re-ejecutar, excluir `kb_combined` de la Tabla 7, o declarar la
+limitación), se elige la tercera. No se rehacen ejemplares, no se re-ejecuta nada, no se excluye
+`kb_combined` de ninguna tabla ni cifra. Se documenta como limitación conocida y sin corregir del diseño
+experimental.
+
+### Aplicado
+
+- **Anexo D** (`doc/organized/.../2026-07-04_Borrador-Informe-Final-Tesina.md`): nuevo párrafo tras la
+  explicación de la auto-coincidencia de 7 artículos, describiendo la fuga cruzada (94 % de 113,
+  1 469 registros afectados, no cuantificado en puntos de F1, ninguna re-ejecución la corrigió).
+- **§6.2** (Contribución metodológica): una frase señalando que la mejora atribuida a la variante
+  combinada "no puede descartarse como beneficio parcial de esa fuga de datos y no solo de comprensión
+  contextual", con remisión al Anexo D.
+- `tools/verificar_informe.py`: declarada la propagación pendiente a los tres `.docx` del nuevo párrafo
+  de §6.2 (el de Anexo D no disparó ninguna comprobación existente).
+
+### Qué NO se hizo, y por qué queda así
+
+- No se reescribe el hallazgo 6 de Conclusiones ni el resumen/*abstract*: la decisión del autor fue
+  declarar la limitación donde se describe el mecanismo (Anexo D, §6.2), no reabrir las cifras titulares
+  del estudio, que siguen siendo las de la Tabla 7 sin corrección.
+- No se cuantifica el efecto en puntos de F1: exigiría re-ejecutar sin la filtración, explícitamente fuera
+  de alcance por esta decisión.
+- El registro forense completo del mecanismo (código, porcentajes, la correlación con el recall de
+  `Locations`) permanece en `§F178` como está, sin reescribir: la política aditiva también aplica a los
+  documentos de trabajo.
+
+### Verificado antes de comprometer
+
+- Código leído directamente (`kb_rag_manager.py:369-513`) para confirmar que `kb_combined` invoca
+  `_query_fewshot`, no asumido de una lectura anterior.
+- `git log --follow` sobre `few_shot_exemplars.json`: un único commit, 2026-09-01, confirmando que
+  ninguna re-ejecución posterior lo tocó.
+- `python3 tools/verificar_informe.py`: 0 fallos nuevos tras declarar la propagación pendiente del nuevo
+  párrafo de §6.2.
+- Ninguna cifra de la Tabla 7, el Anexo K o las conclusiones se tocó: la limitación se declara, no se
+  corrige ni se recalcula nada.
+

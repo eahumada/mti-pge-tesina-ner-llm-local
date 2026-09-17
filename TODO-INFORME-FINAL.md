@@ -1063,3 +1063,12 @@ rehacer casi todo el análisis desde cero contra un documento que cambió sustan
 revisadas por un orquestador Opus antes de despachar. Cubre lo que este §17 pedía (ninguna mención residual
 a resultados antiguos en el cuerpo) más simplificación de prosa densa y verificación de citas. Los tres
 artefactos de 2026-09-14 quedan como registro histórico de una auditoría anterior, no como plan de ejecución.
+
+**Actualización 2026-09-17 (más tarde, mismo día): el destino de `kb_combined` (`FINDINGS §F178`) queda
+resuelto.** Tras aclarar una confusión entre dos mecanismos homónimos (el estudio de variantes de *prompt*
+de §4.3, exclusivo de N=15/N=30, no es lo mismo que el modo `kb_combined` de la Tabla 7, que sí corre sobre
+los 13 modelos de N=120 y comparte código con el defecto de `§F178`), el autor decidió la tercera de las
+tres opciones: **declarar la limitación sin rehacer ejemplares, sin re-ejecutar y sin excluir `kb_combined`
+de ninguna tabla**. Aplicado en el Anexo D y en §6.2 del `.md` canónico; detalle completo en
+`FINDINGS.md §F194`. El bloque C de `PLAN-PURGA-INFORME-20260914.json` que dependía de esta decisión
+queda, por tanto, resuelto también.

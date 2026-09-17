@@ -147,6 +147,12 @@ FALLOS_DECLARADOS = {
                                                                     'PENDIENTE de propagar '
                                                                     '(§F191): cierre del Anexo I '
                                                                     'comprimido'),
+    'Esta lectura exige una salvedad de diseño, declarada y sin': ('2026-09-17',
+                                                                    'PENDIENTE de propagar (§F194): '
+                                                                    'nuevo parrafo en §6.2 sobre la '
+                                                                    'fuga cruzada de ejemplares '
+                                                                    'few-shot (94% de 113 articulos), '
+                                                                    'declarada por decision del autor'),
     'hay que regenerarlo desde el .docx': ('2026-09-17',
                                            'PENDIENTE de regenerar (§F190): los tres .docx cambiaron hoy '
                                            '(Anexo J, bibliografia, Anexo K) y el PDF de la raiz no se '

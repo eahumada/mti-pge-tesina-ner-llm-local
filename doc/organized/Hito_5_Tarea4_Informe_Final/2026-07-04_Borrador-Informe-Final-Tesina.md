@@ -503,6 +503,8 @@ El resultado de mayor alcance metodológico no es el desempeño de ningún model
 
 La primera versión del módulo recuperaba **nombres de entidades** desde diccionarios y los inyectaba en el prompt. Lejos de mejorar la extracción, la degradó. La segunda versión recuperaba **criterios**: guías tipológicas del dominio, definiciones de categoría y un ejemplar anotado. Sobre el corpus N=120 esta variante mejoró el desempeño, pero **no de manera uniforme**, y ahí reside el hallazgo: su efectividad está modulada por la capacidad del modelo receptor. Las pruebas post-hoc de Tukey muestran que la mejora alcanza significancia estadística únicamente en el modelo más débil del estudio (`nemotron-mini:4b`, +12,26 puntos); el segundo mayor delta bruto, `llama3.2:latest` con +6,73 puntos, no distingue del azar tras la corrección por comparaciones múltiples (p=0,2334); el resto de la franja intermedia se mueve poco en cualquier dirección, y en los dos modelos de 31B el efecto es positivo pero marginal (+0,81 y +0,97 puntos).
 
+Esta lectura exige una salvedad de diseño, declarada y sin corregir: el ejemplar anotado que aporta la variante combinada procede, en el 94 % de los 113 artículos, de otro artículo real del propio corpus de evaluación, no de material externo. La mejora aquí descrita no puede, por tanto, descartarse como beneficio parcial de esa fuga de datos y no solo de comprensión contextual; el mecanismo y su alcance se documentan en el **Anexo D**.
+
 La explicación más plausible es de **redundancia de conocimiento**: los modelos de mayor capacidad ya han internalizado durante el preentrenamiento las reglas de desambiguación que la base de conocimiento les ofrece, de modo que el contexto adicional no aporta y sí consume ventana de atención; los modelos pequeños, en cambio, lo aprovechan como compensación de un conocimiento lingüístico que sus pesos no contienen.
 
 De ahí se sigue tanto la explicación del fracaso de la primera versión como una recomendación práctica. El problema del RAG por diccionario no estaba en el concepto de recuperación sino en la naturaleza de lo recuperado: sugerir nombres induce al modelo a proponerlos, generando falsos positivos e inhibiendo su capacidad de identificar entidades ausentes del catálogo; sugerir criterios lo orienta sin coartarlo. Y en el plano aplicado, cuando el hardware disponible impide ejecutar modelos de gran tamaño, el RAG contextual constituye una estrategia de bajo coste que acerca el desempeño de un modelo pequeño al de uno considerablemente mayor sin inversión adicional en infraestructura.
@@ -867,6 +869,18 @@ ejemplares permanecen en la base de conocimientos y la exclusión se declara en 
 manifiesto que los identifica está en `data/knowledge_base/contaminated_exemplar_articles.json`. Es una fuga
 de datos entre el conjunto de ejemplares y el de prueba, y su exclusión sigue vigente porque el problema es
 estructural, no un defecto de una corrida concreta.
+
+**Limitación conocida y sin corregir, distinta de la anterior.** El mismo mecanismo de recuperación por
+similitud (`kb_rag_manager.py`, `_query_fewshot`) que elige el ejemplar más próximo no excluye que, para un
+artículo de los 113 que la métrica sí cuenta como limpio, el ejemplar recuperado sea la anotación de oro de
+**otro** artículo real del propio corpus de evaluación: ocurre en el 94 % de esos 113 casos. Afecta a la
+totalidad de la condición KB RAG que sostiene la Tabla 7 (1 469 registros, los trece modelos). Su efecto
+sobre las cifras publicadas **no está cuantificado** —aislarlo exigiría reejecutar el estudio sin la
+filtración—, y ninguna de las re-ejecuciones posteriores (la del 8 de septiembre de 2026 ni la réplica de
+cinco semillas del 16, Anexo K) modificó la base de ejemplares, de modo que ambas heredan el mismo defecto.
+Se declara aquí como limitación del diseño experimental, no como algo corregido: rehacer la base de
+ejemplares con material ajeno al corpus de evaluación y repetir el estudio queda fuera del alcance de esta
+entrega, por decisión del autor.
 
 #### D.3 Reglas de la base de conocimientos contextual
 
