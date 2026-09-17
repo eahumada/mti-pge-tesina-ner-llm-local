@@ -360,3 +360,31 @@ apuntando a la raíz, y la escritura se producía sin ninguna advertencia.
   cambia**. El comportamiento por defecto es idéntico.
 - No se ejecutó el benchmark ni ningún modelo LLM (disco y red saturados por descargas en curso).
 - No se modificaron `src/statistics.py` ni `src/merge_and_analyze.py`.
+
+---
+
+## 2026-09-16 — Intervalos de confianza consolidados de R2 (5 semillas) y hallazgo de `benchmark_summary.json` corrompido en `gemma4:31b-cloud`
+
+**Contexto:** cerrado el 100 % de R2 (`results/barras_error_n120_REMOTO/seed_{42,123,456,789,1024}/`,
+13 200 evaluaciones, 0 fallidas), correspondía calcular los intervalos de confianza consolidados de las 5
+semillas que pidió Antigravity para actualizar las barras de error del informe.
+
+**Hallazgo previo al cálculo:** `benchmark_summary.json` de `gemma4:31b-cloud` (baseline y kb_rag) está
+corrompido en las 5 semillas — valores entre 0,88 % y 54,83 % sin patrón, mientras que el `benchmark_results.csv`
+crudo por artículo da un F1 estable de 81–83 %, coincidente con lo que Antigravity certificó por separado en
+`CURRENT-TASKS.md §3.AGY.15`. El agregado quedó desactualizado tras la reconciliación de la suite cloud
+(`tools/reconciliar_seed_cloud.py`). Documentado con detalle en `FINDINGS.md §F187` (raíz del proyecto). No se
+modificó ningún archivo de la carpeta de resultados del remoto.
+
+**Trabajo realizado:** `results/R2_CONSOLIDADO_5SEMILLAS_20260916/calcular_intervalos_confianza.py` recalcula
+el F1 medio por semilla directamente desde `benchmark_results.csv`, excluyendo los mismos 7 artículos con
+codificación contaminada que excluye `results/ANALISIS_CONJUNTO_20260909_FIX/` (N=113), y calcula el intervalo
+de confianza al 95 % (t de Student, 4 g.l.) sobre las 5 medias por semilla, para las 22 configuraciones.
+
+**Verificación de método:** se comprobó que la media simple del F1 por artículo sobre los 113 registros
+filtrados de la semilla 42 reproduce exactamente 81,47 % para `gemma4:31b-mlx_baseline` — la cifra ya citada
+en el cuerpo del informe para N=120 — antes de generalizar el cálculo a las 22 configuraciones y 5 semillas.
+
+**Resultado relevante:** `gemma4:31b-mlx_baseline` (mejor modelo local) da media de 5 semillas 81,56 %, IC95 %
+[81,45 %, 81,67 %]; el punto ya publicado (semilla 42, 81,47 %) cae dentro del intervalo. No se ha tocado el
+cuerpo del informe ni la Tabla 7 con estos números: queda pendiente de confirmación del autor.
