@@ -375,18 +375,22 @@ Todo identificador **nuevo** se nombra con «variantes».
   existentes quedan incompatibles.
 - Los secretos viven en `.setenv.sh`, que está en `.gitignore`. **Ese fichero no está en git**, de modo que
   un clon nuevo no lo tiene.
-- **Filtro adicional, tras un caso real (2026-09-17): la purga nunca se da por completada sin comprobarla
-  en vivo, ni siquiera cuando han pasado días y alguien pide publicar dando por hecho que ya se resolvió.**
-  Nueve días después del incidente, una instrucción para hacer público el repositorio asumió que «se
-  supone que todos los secretos están eliminados». La comprobación en vivo de
-  `SEGURIDAD-CLAVE-GOOGLE-20260908.md` (los tres controles `curl` contra la API de GitHub) mostró que el
-  objeto histórico seguía devolviendo HTTP 200 con la clave en claro: la purga **no** se había completado,
-  pese al tiempo transcurrido y pese a que la clave sí estaba revocada. **Antes de cambiar la visibilidad
-  de cualquier repositorio del proyecto a público, es obligatorio re-ejecutar esa comprobación en ese
-  momento** —nunca asumirla por antigüedad, por memoria de una comprobación anterior, ni porque quien lo
-  pide da el secreto por resuelto— y proceder solo si el objeto purgado da 404 con los dos controles de
-  credencial en 200. Esta misma regla, con el mismo detalle, se repite en
-  `repos/ner-llm-entity-benchmark/AGENTS.md §12` porque es el repositorio concreto al que aplica.
+- **Filtro adicional, tras un caso real (2026-09-17): ni el estado de la purga ni el de la credencial se
+  dan por buenos sin comprobarlos en vivo, y menos aún repitiendo una afirmación de otro documento sin
+  verificarla.** Nueve días después del incidente, una instrucción para hacer público el repositorio
+  asumió que «se supone que todos los secretos están eliminados». La comprobación en vivo mostró que el
+  objeto histórico seguía devolviendo HTTP 200 con la clave en claro. Ante la instrucción de publicar «de
+  todas maneras», se citó primero —sin comprobarlo— que la clave ya estaba revocada, porque así lo decía
+  una línea de `README.md`. Era falso: probada la clave extraída del objeto histórico contra
+  `generativelanguage.googleapis.com/v1/models`, la respuesta fue **HTTP 200 — la clave sigue activa**, y
+  un documento del propio incidente (`SOLICITUD-GITHUB-PURGA-20260908.md`) ya registraba que el autor
+  había decidido no revocarla. **Dos reglas de esto: (1)** antes de cambiar la visibilidad de cualquier
+  repositorio del proyecto a público, es obligatorio re-ejecutar en ese momento la comprobación del objeto
+  purgado (los tres controles `curl` de `SEGURIDAD-CLAVE-GOOGLE-20260908.md`) y proceder solo con 404;
+  **(2)** ninguna afirmación sobre el estado de una credencial («revocada», «rotada», «invalidada») se da
+  por cierta porque la cite un documento: se verifica probándola contra el servicio que la emitió, con la
+  llamada de menor alcance posible, antes de tomar cualquier decisión que dependa de ella. Esta misma
+  regla, con el mismo detalle, se repite en `repos/ner-llm-entity-benchmark/AGENTS.md §12`.
 
 ## Concurrencia: el directorio de trabajo puede cambiar de nombre
 

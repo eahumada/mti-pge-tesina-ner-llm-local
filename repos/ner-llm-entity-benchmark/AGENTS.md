@@ -403,17 +403,22 @@ files**: [`../../CURRENT-TASKS.md`](../../CURRENT-TASKS.md).
 ## 12. Security — secrets and repository visibility
 
 This repository had a Google API key exposed in its history for two months (`../../SEGURIDAD-CLAVE-GOOGLE-20260908.md`,
-in the project root). The key has since been **revoked**, but as of 2026-09-17 GitHub's purge of the
-unreachable historical object was **still pending**, verified live: the old commit still returns HTTP 200
-with the key in plaintext via the GitHub API.
+in the project root). As of 2026-09-17, verified directly against the issuing service (not from a
+document's say-so): **the key is still active**, and GitHub's purge of the unreachable historical object
+is also still pending (the old commit still returns HTTP 200 with the key in plaintext via the GitHub
+API).
 
-**No agent may make this repository public, or recommend doing so, without first re-running the live
-verification** documented in `SEGURIDAD-CLAVE-GOOGLE-20260908.md` (the three `curl` checks against the
-GitHub API) and confirming the purged object now returns 404. This is not optional and does not expire
-with time: on 2026-09-17, nine days after the incident, a request to publish assumed the secret was
-already gone ("se supone que todos los secretos están eliminados") — the live check proved the purge had
-not completed. **Never assume a purge finished because time has passed, because it was asked for
-assuming it, or from memory of an earlier check; always re-verify live before changing visibility.**
+**No agent may make this repository public, or recommend doing so, without first re-running both live
+verifications** documented in `SEGURIDAD-CLAVE-GOOGLE-20260908.md`: (1) the three `curl` checks against
+the GitHub API, confirming the purged object now returns 404, **and** (2) a direct check that the
+credential itself is dead (a minimal, read-only call to the issuing API — do not trust a document's claim
+that a key was "revoked" without probing it). This is not optional and does not expire with time: on
+2026-09-17, nine days after the incident, a request to publish assumed the secret was already gone ("se
+supone que todos los secretos están eliminados"), and a document in this same repo (`README.md`) had
+separately and wrongly claimed the key was already revoked — a claim later disproved by directly testing
+the key against Google's API (HTTP 200). **Never assume a purge finished, or a credential is dead, because
+time has passed, because it was asked for assuming it, because a document says so, or from memory of an
+earlier check; always re-verify live, against the actual service, before changing visibility.**
 
 Before writing any new credential-bearing code (API keys, tokens, connection strings): never hardcode a
 secret in a tracked file. Read it from the environment (`os.environ`) or from `.setenv.sh` (root,
