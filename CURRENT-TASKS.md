@@ -3118,3 +3118,26 @@ completar sus datos, no descartarlos.
 - **Aviso al equipo remoto (pendiente de enviar):** conviene que `tools/reconciliar_seed_cloud.py` también
   regenere `benchmark_summary.json` tras fusionar los datos cloud, para que no quede desactualizado en
   futuras corridas.
+
+---
+
+### §1.341 ✅ Intervalos de confianza consolidados de R2 (5 semillas) calculados y publicados — Claude Code (equipo principal) — 2026-09-16 22:45
+- **Completado lo pedido en `§3.AGY.19`**, con la corrección de `§1.340`/`FINDINGS §F187` aplicada: el cálculo
+  usa `benchmark_results.csv` (dato crudo), no `benchmark_summary.json`, y excluye los mismos 7 artículos
+  contaminados que la Tabla 7 vigente (N=113).
+- **Verificación de método antes de generalizar:** la media simple del F1 por artículo sobre los 113
+  registros filtrados de la semilla 42 reproduce **exactamente** 81,47 % para `gemma4:31b-mlx_baseline`, la
+  cifra ya citada en el cuerpo para N=120. Solo tras esa comprobación se aplicó el cálculo a las 22
+  configuraciones × 5 semillas.
+- **Artefactos:** `repos/ner-llm-entity-benchmark/results/R2_CONSOLIDADO_5SEMILLAS_20260916/` (script
+  `calcular_intervalos_confianza.py`, salida `intervalos_confianza_95.json`, `README.md` con metodología).
+  Documentado también en el `WORKLOG.md` del subrepo (obligatorio por su propio `CLAUDE.md`). Commit `ea6bfcd`.
+- **Resultado relevante:** `gemma4:31b-mlx_baseline` da media de 5 semillas 81,56 %, IC95 % [81,45 %, 81,67 %];
+  la cifra puntual ya publicada (semilla 42) cae dentro del intervalo — el punto publicado es representativo.
+  Tabla completa de las 22 configuraciones en el `README.md` del directorio de resultados.
+- **No se modificó el cuerpo del informe ni la Tabla 7** con estos números: es análisis nuevo, aditivo,
+  verificado, pero incorporarlo al informe (formato de barra de error, encaje en el límite de 25 páginas,
+  numeración de tabla) requiere confirmación del autor antes de tocar el entregable.
+- **Siguiente paso, pendiente de indicación:** (a) refrescar los tres dictámenes de `TODO-INFORME-FINAL.md §17`
+  con los datos finales de R2, o (b) decidir primero si y cómo se incorpora este intervalo de confianza a la
+  Tabla 7 antes de ejecutar la purga.
