@@ -10127,4 +10127,54 @@ cuerpo; sobrevive solo la ANOVA de N=30 (dos compilaciones), que no cambió.
 - Ninguna fila de la Tabla 7, el Anexo K, ni ninguna cifra del estudio principal (N=120 con
   `kb_combined`) se tocó: esto es exclusivamente el estudio secundario de variantes de *prompt*.
 
+## §F197 — Barrido de 7 rondas: no queda otra corrida única sin reemplazar; R4 se completó solo parcialmente, sin que afecte al informe
+
+**Fecha:** 2026-09-17, misma sesión. Workflow `barrido-corridas-antiguas-20260917` (loop-until-dry,
+mínimo 5 rondas, 4 lectores + 1 juez por ronda) buscó en el resto del documento el mismo patrón de
+`§F196`: cifras de una sola corrida con una réplica final disponible y no usada. **Corrió 7 rondas y
+no encontró ningún caso más** de ese patrón exacto — dos rondas secas consecutivas después del mínimo
+confirmaron que el barrido está agotado.
+
+### El único hallazgo, y por qué no exige ninguna corrección
+
+El juez de la última ronda reportó, con evidencia de archivo verificada de forma independiente en
+esta misma sesión, que **R4 (el encargo remoto de traducir N=30 al español y correr los 13 modelos
+sobre él) se ejecutó solo parcialmente**:
+
+- `data/kleptotrace_augmented_30_es.json` existe: la traducción se hizo (§F54, §F182).
+- `results/variantes_n30_parEmparejado_REMOTO/kleptotrace_augmented_30_es/` existe con 5 semillas,
+  pero su `run_config.json` declara `"models": ["gemma4:latest"]` — un solo modelo, consistente con
+  el diseño de **R5** (la variante de idioma sobre el par emparejado, que siempre fue de un solo
+  modelo por diseño del encargo).
+- **No existe** `results/n30_espanol_REMOTO/`, el directorio que `ENCARGO-RECORRIDAS-20260914.md §R4`
+  pedía explícitamente con los 13 modelos evaluados en modo `kb_combined` sobre el corpus traducido.
+- Lo único que sí existe además es `results/validacion_n30_es_REMOTO/`, que por su contenido
+  (`confusion_matrix`, `acceptance_status`) es la validación de cobertura de entidades del traductor,
+  no un benchmark comparativo de modelos.
+
+**Verificado independientemente antes de escribir esto**, no solo tomado del juez:
+`ls results/ | grep n30_espanol` no devuelve nada, y `run_config.json` del par emparejado ES confirma
+`['gemma4:latest']` como único modelo.
+
+**Por qué esto no toca el informe:** el `.md` canónico, tras la corrección de `§F196`, solo cita el
+resultado del **par controlado de un modelo** (`gemma4:latest`, EN vs. ES) en §6.1 — que es exactamente
+lo que sí se ejecutó y verificó (R5). En ningún punto el cuerpo afirma que los trece modelos se
+evaluaron sobre el corpus traducido. No hay, por tanto, ninguna cifra que corregir: es un ítem del
+encargo que quedó sin completar, no una cifra publicada que necesite reemplazo.
+
+**Queda como decisión abierta del autor, no ejecutada por iniciativa propia:** completar ahora el
+barrido de 13 modelos sobre el corpus español (repetiría buena parte del cómputo de R1 Fase 2), o
+declarar en el registro de coordinación que ese alcance de R4 no se completó y no se hará. Dado que
+`ENCARGO-RECORRIDAS-20260914.md` está marcado como **cerrado en definitiva** ("no se ejecuta ninguna
+corrida más, bajo ningún concepto", instrucción del autor del 2026-09-17), la lectura por defecto es
+que este alcance queda sin completar y no bloquea nada del informe vigente.
+
+### Verificado antes de comprometer
+
+- `ls repos/ner-llm-entity-benchmark/results/` para confirmar la ausencia de `n30_espanol_REMOTO`.
+- `run_config.json` del par emparejado ES leído directamente, no citado de memoria.
+- Releído el `.md` canónico tras `§F196` para confirmar que no reclama cobertura de 13 modelos sobre
+  el corpus traducido en ninguna parte.
+
+
 

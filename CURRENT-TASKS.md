@@ -2018,7 +2018,16 @@ corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y
   distintos ya cerrados), sesgo conservador del juez, acumulación de hallazgos entre rondas para no
   repetir, solo lectura, sin `git`.
 - **Archivos:** solo lectura. La aplicación de hallazgos confirmados la hace el equipo principal.
-- **Resultado:** pendiente.
+- **Resultado:** ✅ COMPLETADA, 7 rondas (mínimo cumplido, dos rondas secas consecutivas después).
+  **No se encontró ningún otro caso** del patrón de `§F196` (cita de una sola corrida con réplica
+  final sin usar): el barrido de hoy queda agotado. Un hallazgo colateral, verificado
+  independientemente: **R4 se ejecutó solo parcialmente** — la traducción de N=30 al español existe
+  y se usó en R5 (un modelo, `gemma4:latest`, el par emparejado EN/ES ya incorporado en §6.1), pero
+  nunca se corrieron los 13 modelos sobre el corpus traducido que el encargo pedía
+  (`results/n30_espanol_REMOTO/` no existe). **No requiere ninguna corrección del informe**: el `.md`
+  no reclama esa cobertura en ningún punto. Queda como decisión abierta del autor si completarlo o
+  declararlo sin completar; el encargo remoto está cerrado en definitiva, así que por defecto queda
+  sin completar. Detalle en `FINDINGS.md §F197`.
 
 ---
 
