@@ -9880,3 +9880,64 @@ más de una decena de referencias cruzadas por una ganancia puramente estética.
 - Pendiente: propagar esta segunda purga a los tres `.docx` y al PDF (Claude Desktop); relanzar el
   workflow de revisión (`revision-final-tesina-20260917`) para una pasada de verificación completa,
   a petición del autor.
+
+## §F193 — Segundo workflow (`revision-final-tesina-20260917-v2`): 12 hallazgos aplicados, citas verificadas
+
+**Fecha:** 2026-09-17, mismo día. Workflow de 9 agentes (3 lectores + 1 juez adversarial + 5 lotes de
+citas, run `wf_4ef0c1ca-072`) lanzado tras `§F192` para barrer lo que la purga manual pudo dejar sin
+detectar. Los 3 lectores reportaron 12 hallazgos; el juez adversarial, releyendo el archivo completo,
+confirmó los 12 (0 falsos positivos). Aplicados todos tras verificación independiente contra el archivo
+actual (grep de cada cita textual antes de editar).
+
+### Los 12 hallazgos aplicados
+
+1. **§4.1** (corpus N=15): retirada la referencia colgante "...lo que tiene consecuencias sobre la
+   medición que se discuten en §3.3" — §3.3 ya no desarrolla esto tras `§F192`.
+2. **§4.1** (corpus N=120, Locations): retirada "El efecto sobre la medición y su corrección se
+   detallan en §3.3", mismo motivo.
+3. **§1.3 Hipótesis:** corregido el rango de escala declarado, de "8B–31B parámetros" (falso: el
+   estudio incluye `deepseek-r1:1.5b`, `llama3.2:latest` de 3B y `nemotron-mini:4b` de 4B, este último
+   el modelo del hallazgo estadístico más citado del trabajo) a "escala variable (1,5B–31B parámetros)
+   con énfasis en el tramo medio-grande (8B–31B)".
+4. **§2.4** (gestión de memoria): párrafo de una sola pieza dividido en tres, sin perder ninguna cifra.
+5. **§5.3.1:** retirada la cita colgante "(Anexo I, «Corridas múltiples del mismo modelo»)" — esa
+   subsección ya no existe en el Anexo I tras su compresión en `§F191`.
+6. **§5.3.1** (salvedad de procedencia): retirada la frase sobre el "fallo de contexto de
+   `nemotron-mini:4b`... siete filas sin telemetría", historia de una corrida superada que además no
+   describe ninguna columna que la Tabla 7 publique (no tiene latencia ni tokens/s).
+7. **§5.3.1** (Tukey): retirada la comparación "significativo sobre el corpus publicado (+10,82
+   puntos)" junto a la cifra vigente (+6,73 pp, no significativa) de `llama3.2:latest` — el patrón que
+   `FINDINGS §F160` prohíbe explícitamente, que había sobrevivido a la purga manual de `§F192`.
+8. **§5.3.1** (Levene): retirado el inciso "a diferencia de sobre el corpus publicado, ahora que el
+   defecto de anotación de Locations está corregido".
+9. **§5.3.1** (correlación capacidad-beneficio): retirado "a diferencia de sobre el corpus publicado,
+   donde discrepaban".
+10. **§7.1 Conclusión 6:** retirado "sin el signo negativo que mostraba el corpus con el defecto de
+    anotación sin corregir".
+11. **Anexo G.1:** oración de una decena de cláusulas por punto y coma, dividida en cuatro oraciones.
+12. **Anexo G.3:** mismo tratamiento, dividida en tres oraciones agrupadas por tipo de apoyo.
+
+### Citas bibliográficas: 45 de 46 verificadas
+
+44 resuelven directamente (OK) y 12 de esas 44 más otras acreditadas por DOI cuando el editor bloquea
+el lector automático (ACM, JSTOR, Tandfonline — comportamiento ya documentado en el proyecto), un total
+de **10 `BLOQUEADA_VERIFICADA_POR_DOI`** entre las 46. La única entrada problemática es **[37]**, la
+autocita al repositorio del propio trabajo
+(`https://github.com/eahumada/mti-pge-tesina-ner-llm-local`): GitHub devuelve **404 real** (no un
+bloqueo tipo Cloudflare), y el listado público de repositorios del usuario no lo incluye. Coincide con
+que el repositorio de este proyecto es privado — un 404 así es exactamente lo que un lector no
+autenticado recibe de un repo privado real, no necesariamente prueba de que no exista. **Pendiente de
+decisión del autor**: no se ha tocado la visibilidad del repositorio ni la cita; hacerlo requiere
+comprobar primero, por la sección "Secretos y publicación del repositorio" de `CLAUDE.md`, que no hay
+secretos alcanzables en el historial antes de plantear siquiera hacerlo público.
+
+### Verificado antes de comprometer
+
+- Cada una de las 12 citas textuales se confirmó con `grep` contra el `.md` actual antes de editar
+  (el workflow corrió después de la propagación de `§F192`, pero antes de la mención de
+  `gemma4:31b-cloud` en §4.2 añadida en esta misma sesión; ninguno de los 12 hallazgos se solapa con
+  esa línea).
+- `python3 tools/verificar_informe.py`: 0 fallos nuevos tras las 12 ediciones.
+- El conteo de páginas del cuerpo sigue dentro del límite institucional.
+- Ninguna fila de tabla ni cifra experimental se tocó: las 12 correcciones son prosa narrativa
+  (referencias colgantes, una comparación histórica, tres divisiones de oraciones densas).

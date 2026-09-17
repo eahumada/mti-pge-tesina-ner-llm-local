@@ -1977,7 +1977,11 @@ corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y
 - **Fases:** Revisión (3 lectores, paralelo) → Verificación (1 juez, lee el archivo completo + todos los
   hallazgos) → Citas (5 lotes con `WebFetch`).
 - **Archivos:** solo lectura. La aplicación de hallazgos confirmados la hace el equipo principal.
-- **Resultado:** pendiente.
+- **Resultado:** ✅ COMPLETADA. 12 hallazgos reportados, 12 confirmados por el juez adversarial (0
+  falsos positivos), los 12 aplicados tras verificación independiente contra el archivo actual.
+  Citas: 45 de 46 verificadas (35 OK directas, 10 acreditadas por DOI ante bloqueo del editor); [37]
+  (autocita al repo de GitHub) da 404, pendiente de decisión del autor sobre visibilidad del
+  repositorio. Detalle completo en `FINDINGS.md §F193`. Verificador: 0 fallos nuevos.
 
 ---
 
