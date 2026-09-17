@@ -1983,6 +1983,22 @@ corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y
   (autocita al repo de GitHub) da 404, pendiente de decisión del autor sobre visibilidad del
   repositorio. Detalle completo en `FINDINGS.md §F193`. Verificador: 0 fallos nuevos.
 
+#### 4.7.2 `revision-final-tesina-20260917-v3` — 🔄 EN CURSO — Claude Code (equipo principal)
+- **Cuándo:** lanzado 2026-09-17 (tarde), tras aplicar la decisión sobre `kb_combined` (§F194) · **Run
+  ID:** `wf_3facf548-c50` · **Agentes:** 4 (3 lectores en rangos de línea disjuntos + 1 juez adversarial)
+- **Objetivo, a petición explícita del autor** ("volver a hacer la revisión completa que se ha realizado
+  anteriormente"): repetir el barrido de menciones históricas/consistencia sobre el `.md` actual, ahora
+  con la declaración de la limitación de `kb_combined` ya aplicada, y comprobar que ninguna otra parte del
+  cuerpo la contradiga (p. ej. describiendo la mejora del RAG como "limpia" sin matizarla).
+- **Alcance reducido respecto de v2, con motivo declarado:** se omite la fase de verificación de citas
+  bibliográficas (5 lotes) porque la bibliografía no cambió desde que se verificó hace minutos (45/46 OK,
+  solo `[37]` pendiente de decisión sobre visibilidad del repo) — repetirla sería gasto sin nueva
+  información. Sí se repite completo el barrido de prosa/consistencia sobre las 3 zonas del documento.
+- **Fases:** Revisión (3 lectores, paralelo) → Verificación (1 juez, lee el archivo completo + todos los
+  hallazgos).
+- **Archivos:** solo lectura. La aplicación de hallazgos confirmados la hace el equipo principal.
+- **Resultado:** pendiente.
+
 ---
 
 ### §4.bis Workflow `wf_348f89e2-43b` — consistencia global de la tesina (REINTENTO)
