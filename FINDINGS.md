@@ -10005,3 +10005,49 @@ experimental.
 - Ninguna cifra de la Tabla 7, el Anexo K o las conclusiones se tocó: la limitación se declara, no se
   corrige ni se recalcula nada.
 
+## §F195 — Tercer workflow (`revision-final-tesina-20260917-v3`): la Conclusión 6 no llevaba la salvedad de `kb_combined`
+
+**Fecha:** 2026-09-17, misma sesión. Workflow de 4 agentes (3 lectores + 1 juez, sin fase de citas por no
+haber cambiado la bibliografía) lanzado tras `§F194` para comprobar que ninguna otra parte del cuerpo
+contradijera la limitación recién declarada. Encontró exactamente ese caso.
+
+### El hallazgo real
+
+**Conclusión 6** (§7.1) afirmaba sin matiz: *"La implementación de la Base de Conocimientos Contextual
+(KB RAG) **demuestra** que el reconocimiento de entidades mediante LLMs locales es un problema de
+comprensión sintáctico-contextual, no de búsqueda en bases de datos cerradas."* Esto es una afirmación más
+fuerte que la que el propio §6.2 permite, dos páginas antes, sobre la misma mejora: *"La mejora aquí
+descrita **no puede** descartarse como beneficio parcial de esa fuga de datos y no solo de comprensión
+contextual"* (frase añadida en `§F194`). Una conclusión que dice "demuestra... no de búsqueda" mientras la
+discusión que resume dice "no puede descartarse que sea en parte la fuga" es una contradicción interna
+real, exactamente el patrón que el encargo pedía verificar.
+
+**Corregido** (aditivo: se suaviza el verbo y se añade la salvedad, no se retira nada): "demuestra... es un
+problema" → "sugiere que... es, al menos en parte, un problema... y no solo de búsqueda", con la cláusula
+"con la salvedad, declarada en §6.2, de que el 94 % de los ejemplares *few-shot* recuperados en el modo
+`kb_combined` proceden de otro artículo real del propio corpus de evaluación, por lo que la mejora no
+puede descartarse como beneficio parcial de esa fuga de datos" insertada en la misma oración.
+
+### Otros dos hallazgos, menores
+
+- **Anexo I** citaba la cifra de 80,57 % (F1 sin restringir sobre N=30) como "(§5.3.1)", pero esa
+  subsección es la de N=120, no N=30; el propio §5.3.1 cita la misma cifra como "(§5.3)" en su párrafo de
+  cierre (línea 448). Corregido a "(§5.3)", sin tocar ningún número.
+- **Anexo D**: la oración que describe el mecanismo de la fuga cruzada (más de 70 palabras, varias
+  cláusulas subordinadas) se dividió en dos oraciones, sin perder ninguna cifra.
+
+### Un falso positivo descartado, correctamente
+
+El juez descartó un hallazgo sobre §2.3 (marco teórico) que describe en abstracto la familia "RAG
+contextual" frente a "RAG por diccionario", citando literatura [6]. Razón: es una caracterización teórica
+general de una técnica, no una afirmación sobre el comportamiento efectivo de `kb_combined` en este
+trabajo; la limitación ya está circunscrita correctamente a §6.2 y Anexo D. Aplicó bien el sesgo
+conservador que exige el proyecto.
+
+### Verificado antes de comprometer
+
+- Las 3 citas textuales confirmadas con `grep` contra el `.md` actual antes de editar.
+- `python3 tools/verificar_informe.py`: 0 fallos nuevos.
+- Ninguna cifra de tabla ni dato experimental se tocó: las 3 correcciones son prosa (una salvedad
+  añadida por coherencia interna, una referencia de sección corregida, una oración dividida).
+

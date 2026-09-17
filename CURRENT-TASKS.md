@@ -1997,7 +1997,12 @@ corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y
 - **Fases:** Revisión (3 lectores, paralelo) → Verificación (1 juez, lee el archivo completo + todos los
   hallazgos).
 - **Archivos:** solo lectura. La aplicación de hallazgos confirmados la hace el equipo principal.
-- **Resultado:** pendiente.
+- **Resultado:** ✅ COMPLETADA. 4 hallazgos reportados, 3 confirmados (1 falso positivo descartado con
+  buen criterio conservador). **Hallazgo real:** la Conclusión 6 (§7.1) afirmaba sin matiz que el KB RAG
+  "demuestra" comprensión contextual, contradiciendo la salvedad de `§F194` en §6.2 sobre la fuga de
+  ejemplares. Corregido añadiendo la misma salvedad (aditivo, no se retiró nada). Otros dos: una
+  referencia de sección incorrecta en Anexo I (§5.3.1→§5.3) y una oración densa dividida en Anexo D.
+  Detalle en `FINDINGS.md §F195`. Verificador: 0 fallos nuevos.
 
 ---
 
