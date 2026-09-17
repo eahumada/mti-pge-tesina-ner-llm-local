@@ -9803,3 +9803,80 @@ decisión 1 volvió *moot* esa comparación para N=120).
 - Verificado el 90,16 % contra su fuente primaria antes de escribir la nueva explicación (no se copió el
   razonamiento de una versión anterior sin comprobarlo).
 - Pendiente, en curso: propagar esta compresión a los tres `.docx` y renumerar sus tablas.
+
+## §F192 — Segunda vuelta, más agresiva: el Anexo H se elimina por completo y el cuerpo queda sin ninguna mención a defectos históricos
+
+**Fecha:** 2026-09-17, misma sesión que `§F191`, tras retomarla de un bloqueo de permisos de macOS
+(ver el checkpoint de memoria `checkpoint_20260917_bloqueo_permisos.md`). **Instrucción explícita y
+repetida del autor** (tres mensajes consecutivos): no comprimir, **eliminar**; dejar en el Markdown
+canónico solo lo que tenga asidero en la corrida vigente (la re-corrida del 8 de septiembre de 2026);
+purgar toda referencia a ejecuciones anteriores que no forme parte del producto final de la tesis.
+Esto va más allá de la compresión de `§F191` de esa misma mañana, y se aplica sobre su resultado.
+
+**Alcance de la instrucción, según se interpretó:** el «producto final de la tesis» es el Markdown
+canónico y sus tres `.docx`/PDF (la tabla de Entregables Finales de `CLAUDE.md`), no los documentos de
+trabajo que atestiguan (`FINDINGS.md`, `WORKLOG.md`, `results/`, `benchmark.log`). La purga se aplicó
+solo al primero; el detalle íntegro de todo lo retirado sigue existiendo en este documento, en
+`CAMBIOS-DESDE-ENVIO-PROFESOR-20260908.md` y en el propio historial de git, que es lo que la sección
+«Integridad de la medición» de `CLAUDE.md` exige que exista y sea auditable.
+
+### Qué se quitó del `.md`
+
+- **§3.3:** la frase entera sobre el «tercer límite» (Locations sin anotar, ya corregido). Eliminada,
+  no comprimida más.
+- **§5.3.1:** el bloque completo de "Limitación histórica del corpus N=120... codificación defectuosa
+  de los nombres" (16 líneas de blockquote forense sobre el *mojibake*). Eliminado íntegro.
+- **§5.4:** se mantuvo el ejemplo `José María Aznar`/`JosÃ© MarÃ­a Aznar` porque la comprobación 32
+  (`la taxonomia de errores de §5.4 reproduce desde los datos`) lo valida contra los datos vigentes:
+  es una corrupción de la anotación de referencia de origen (CoNLL-2002), no del defecto de
+  `benchmark_balanced_120.json` que se corrigió el 8 de septiembre, y sigue siendo un fenómeno actual.
+  Solo se quitó el paréntesis `(§3.3 y Anexo H)`, que ya no apunta a nada.
+- **§7.1 Conclusiones:** el hallazgo 7 completo (el párrafo forense de ~200 palabras sobre el signo del
+  efecto del *mojibake* en 21/26 y 23/26 configuraciones).
+- **§7.2 Trabajo Futuro:** los ítems 7 («Normalización de codificación del corpus: ya realizada») y 8
+  («Anotación de la categoría `localizaciones`: ya realizada») completos. No tenían sentido en una
+  lista de trabajo *futuro* aun antes de esta purga: describían trabajo ya hecho. Los ítems 9, 10 y 11
+  se renumeraron a 7, 8 y 9.
+- **Anexo H completo** (encabezado y sus tres párrafos supervivientes de `§F191`), más un pie de
+  documento («Informe Final de Tesina — Magíster...») que había quedado huérfano a mitad del
+  documento desde que Anexo H dejó de ser la última sección.
+- **Anexo I:** el párrafo sobre el caso N=120 («este defecto está corregido de raíz... Anexo H»),
+  puramente histórico ahora que Anexo H no existe. Se conservan el principio general, el párrafo del
+  90,16 % (justificación **vigente** de una cifra que hoy sostiene el resumen/*abstract*/conclusión 1,
+  no historia) y el cierre metodológico.
+- **Anexo B:** de paso se corrigió un error factual que esto dejó al descubierto: decía «ninguno de
+  los tres corpus anota [Locations]», falso para N=120 desde el 8 de septiembre (545 localizaciones en
+  119/120) y para N=15 (`kleptotrace.json`, 15/15 registros con localizaciones, comprobado
+  directamente). Solo N=30 no la anota. Corregido a la afirmación exacta.
+- **Anexo D.2** (la explicación de la contaminación por ejemplares *few-shot*, añadida minutos antes
+  en esta misma sesión): se le quitó la comparación con el *mojibake* del Anexo H, que ya no existe.
+- Dos frases de encuadre que prometían «el análisis detallado del defecto de codificación» en los
+  anexos (§1.6) y que «el capítulo 6 discute... la codificación del corpus» (Anexo G.4): ninguna de
+  las dos sigue siendo cierta. Corregidas a lo que los anexos y el capítulo 6 sí contienen.
+
+**La letra H de los anexos queda retirada sin reemplazo** (Anexo G, Anexo I, Anexo J, Anexo K): no
+hay comprobación que exija lletras contiguas —el precedente ya existente son las Tablas 17/18, que se
+retiraron en `§F191` sin renumerar las que quedaron— y renombrar I→H, J→I, K→J habría exigido tocar
+más de una decena de referencias cruzadas por una ganancia puramente estética.
+
+### Verificador: tres comprobaciones más se retiran o se recortan
+
+- `c_figura1_vs_artefacto`: ya no hay ninguna cita en prosa (ni §3.3 ni §7.2) que atar al artefacto de
+  composición de FP. Se recortó a vigilar solo el artefacto y el script de figuras (que siguen
+  existiendo y deben seguir siendo correctos). Renombrada en el resumen a «sin cita en prosa».
+- `c_redondeos`: se retiró el bloque que verificaba la frase «283 de 1 406 entidades... (20,1 %)» en
+  sus cuatro apariciones, porque ninguna sobrevive en el cuerpo.
+- Dos declaraciones de `FALLOS_DECLARADOS` quedaron huérfanas y se eliminaron (la comprobación 55 las
+  detectó): la del encabezado «Anexo H» y la del párrafo «El defecto afectaba a 283 de 1 406...». Las
+  declaraciones sobre Anexo I (que sigue existiendo) se conservaron intactas.
+
+### Verificado antes de comprometer
+
+- `python3 tools/verificar_informe.py`: 0 fallos nuevos tras cada tanda de ediciones.
+- Ninguna fila de ninguna tabla de resultados se tocó; esto es prosa narrativa sobre historia del
+  proceso, no datos experimentales.
+- El conteo de páginas del cuerpo se recalculó y sigue dentro del límite institucional (la purga solo
+  puede reducirlo, nunca aumentarlo).
+- Pendiente: propagar esta segunda purga a los tres `.docx` y al PDF (Claude Desktop); relanzar el
+  workflow de revisión (`revision-final-tesina-20260917`) para una pasada de verificación completa,
+  a petición del autor.

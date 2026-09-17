@@ -119,6 +119,15 @@ limitación tal como está). Documentado en el informe como limitación conocida
 
 *Última actualización: 2026-09-17.*
 
+**Corrección del 2026-09-17: este punto ya estaba resuelto y esta entrada quedó desactualizada.** Por
+decisión del autor del 2026-09-08 (`FINDINGS.md §F65`), los siete artículos fuente de los ejemplares
+*few-shot* se excluyen de toda métrica publicada sobre el corpus N=120, que se calcula sobre 113 artículos
+y no sobre 120; los ejemplares no se eliminan de la base de conocimientos, solo se excluyen del cómputo. Esa
+exclusión ya está aplicada en el consolidado que sostiene la Tabla 7 (`results/ANALISIS_CONJUNTO_20260909_FIX/`,
+manifiesto `data/knowledge_base/contaminated_exemplar_articles.json`) y documentada en el **Anexo D** del
+informe. La cifra del «94 %» de solapamiento de este punto no se ha podido reproducir contra los datos y no
+debe citarse; la cifra verificada es **7 de 120 artículos (5,8 %)**.
+
 ---
 
 ## 8. Limpieza editorial
@@ -129,6 +138,20 @@ limitación tal como está). Documentado en el informe como limitación conocida
 - Ampliado el marco teórico (capítulo 2) en dos rondas, atendiendo un reparo directo del profesor guía sobre
   desarrollo insuficiente.
 - Retirada una figura y una anécdota con datos no verificables, a petición expresa del autor.
+- Comprimida, a petición directa del autor, la mención en §3.3 al defecto histórico de anotación de
+  `localizaciones` (ya corregido, sin efecto en ningún resultado vigente): el cuerpo conserva solo que el
+  defecto existió y está corregido, remitiendo al Anexo I para el detalle. La cifra que se retira del
+  cuerpo: de ese defecto procedía el **66,0 %** de los falsos positivos del consolidado del 7 de septiembre
+  de 2026, **12 852 de 19 464**. La cifra se conserva íntegra en el Anexo I y en `FINDINGS.md §F53`.
+- **Segunda vuelta, más agresiva (misma jornada):** a instrucción explícita y repetida del autor, se
+  eliminó del Markdown canónico toda mención residual a defectos históricos ya corregidos, no solo se
+  comprimió: el **Anexo H desaparece por completo**, el hallazgo 7 de Conclusiones y los ítems 7-8 de
+  Trabajo Futuro (ambos sobre correcciones «ya realizadas») se retiran, y el bloque forense de §5.3.1 sobre
+  el *mojibake* se elimina. Se corrigió de paso un error factual que esto dejó al descubierto en el Anexo B
+  (decía que ningún corpus anota `Locations`; falso desde el 8 de septiembre para N=120 y N=15, solo N=30
+  no la anota). Nada de esto toca datos de tablas ni resultados: es prosa narrativa sobre el proceso. El
+  detalle íntegro de cada retiro está en `FINDINGS.md §F192`, y las cifras retiradas siguen intactas ahí y
+  en el historial de git. Pendiente: propagar a los tres `.docx` y relanzar el workflow de revisión.
 
 *Última actualización: 2026-09-17.*
 

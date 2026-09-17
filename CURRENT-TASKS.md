@@ -1936,7 +1936,30 @@ corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y
 - **Archivos:** **solo lectura en las tres fases.** Ningún subagente edita nada; la aplicación de los
   hallazgos confirmados (con respaldo previo y verificación con `tools/verificar_informe.py` después) la
   hace el equipo principal tras recibir los resultados, no un subagente.
-- **Resultado:** pendiente.
+- **Resultado del primer pase (fases 1-2, aplicado por el equipo principal):** confirmadas y corregidas 4
+  contradicciones numéricas (59,25 %→81,47 % en §5.3.1; "nueve"→"once" de trece modelos con RAG en §5.6;
+  Tukey "dos modelos significativos" (§6.2, cifras 14,52/10,82 desactualizadas) → "uno" (`nemotron-mini:4b`,
+  consistente con la Tabla 7 y con la comprobación 40 del verificador); y una referencia cruzada mal
+  etiquetada en §5.3.1/Anexo K que atribuía a mojibake (Anexo H) la exclusión de los 7 artículos
+  contaminados como ejemplares *few-shot* (defecto distinto, `FINDINGS §F65`, ahora documentado en Anexo D).
+  Terminología "ablation study"→"variantes" corregida en dos sitios (§1.4, §4.3).
+- **2026-09-17 ~13:30-17:09: bloqueo de permisos de macOS** a `Documents/` cortó la sesión a mitad de la
+  fase de citas (los 5 lotes fallaron, sin resultado utilizable) y de la revisión de prosa densa (20
+  hallazgos con reescritura sugerida, sin aplicar). Estado guardado en memoria de proyecto
+  (`checkpoint_20260917_bloqueo_permisos.md`). Retomado tras confirmar `main` al día con origin y working
+  tree limpio.
+- **2026-09-17, tras retomar: segunda vuelta de purga histórica, a instrucción explícita y repetida del
+  autor** (más agresiva que el objetivo original de esta tarea): no comprimir sino **eliminar** del `.md`
+  canónico toda mención a defectos históricos ya corregidos sin asidero en la corrida vigente. Se retiró el
+  Anexo H completo, el hallazgo 7 de Conclusiones, los ítems 7-8 de Trabajo Futuro y el bloque forense de
+  §5.3.1 sobre *mojibake*; se corrigió de paso un error factual en Anexo B (Locations). Detalle completo en
+  `FINDINGS.md §F192`. Verificador: 0 fallos nuevos tras cada tanda.
+- **Pendiente:** (a) relanzar la fase de verificación de citas bibliográficas (falló entera por el
+  bloqueo); (b) aplicar la pasada de simplificación de prosa densa de los 20 hallazgos ya generados,
+  revisando cuáles siguen aplicables tras la purga; (c) relanzar el workflow completo de revisión/
+  consistencia sobre el estado actual del `.md`, a petición explícita del autor; (d) propagar todos los
+  cambios de hoy a los tres `.docx` (encargado a Claude Desktop); (e) decisión del autor sobre excluir
+  `kb_combined`, aún sin respuesta (ver checkpoint).
 
 ---
 

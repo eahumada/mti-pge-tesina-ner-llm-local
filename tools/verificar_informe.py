@@ -107,11 +107,6 @@ FALLOS_DECLARADOS = {
                                'quito un guion largo del .md; los tres .docx aun no se '
                                'regeneraron. Ya se declaro y se retiro una vez antes (§F166), '
                                'reabierta por el mismo tipo de motivo'),
-    'Un tercer límite, anterior a la re-corrida del 8 de septie': ('2026-09-12',
-                                                                  'PENDIENTE de propagar (§F170): '
-                                                                  'parrafo de §3.3 comprimido de '
-                                                                  '~240 a dos frases, aun no en '
-                                                                  'los tres .docx'),
     'todavia afirma «sin ninguna forma de acertar en ella»': ('2026-09-12',
                                                               'PENDIENTE de propagar (§F170): '
                                                               'frase del parrafo viejo de §3.3, '
@@ -136,19 +131,11 @@ FALLOS_DECLARADOS = {
                                                       'PENDIENTE de propagar (§F172): detalle '
                                                       'viejo del punto 7 de §7.2, aun en los '
                                                       '.docx sin regenerar'),
-    'anexo h — codificación del corpus: defecto de mojibake': ('2026-09-17',
-                                                               'PENDIENTE de propagar (§F191): '
-                                                               'Anexo H comprimido, encabezado '
-                                                               'nuevo'),
     'anexo i — medición restringida a las categorías que el corpus': ('2026-09-17',
                                                                        'PENDIENTE de propagar '
                                                                        '(§F191): Anexo I '
                                                                        'comprimido, encabezado '
                                                                        'nuevo'),
-    'El defecto afectaba a 283 de 1 406 entidades de referencia': ('2026-09-17',
-                                                                    'PENDIENTE de propagar '
-                                                                    '(§F191): Anexo H comprimido, '
-                                                                    'parrafo nuevo'),
     'Los prompts piden tres categorías de entidad': ('2026-09-17',
                                                       'PENDIENTE de propagar (§F191): Anexo I '
                                                       'comprimido, parrafo nuevo'),
@@ -528,10 +515,14 @@ def c_redondeos(s):
     deriva de los datos pero no una del texto, que es el defecto que la comprobacion 22 ya tuvo y
     que `§L63` deja escrito.
 
-    Cubre tambien dos cifras derivadas que el barrido de `§F116` dejo al descubierto y que se
-    pueden recomputar de sus propios operandos, los dos presentes en la frase: la proporcion de
-    entidades con *mojibake* y la reduccion de coste, **que es una estimacion y el informe la
-    declara como tal** en los dos sitios donde aparece.
+    Cubre tambien una cifra derivada que el barrido de `§F116` dejo al descubierto y que se puede
+    recomputar de sus propios operandos, presentes en la frase: la reduccion de coste, **que es
+    una estimacion y el informe la declara como tal** en los dos sitios donde aparece.
+
+    [RETIRADA 2026-09-17, segunda vuelta] Esta comprobacion tambien vigilaba la proporcion de
+    entidades con *mojibake* (283 de 1 406, 20,1 %). La frase que la sostenia se retiro del cuerpo
+    a instruccion directa del autor (purga de referencias a defectos historicos sin asidero en la
+    corrida vigente); la cifra sigue intacta en `FINDINGS.md §F53`. Ver FINDINGS §F191.
     """
     fallos, mirados = [], 0
 
@@ -571,35 +562,6 @@ def c_redondeos(s):
         if abs(red - esp) > 1e-9:
             fallos.append('«%s»: el informe dice %s donde %s redondeado a %d decimal(es) es %s'
                           % (nombre, red, pre, dec, esp))
-
-    # mojibake: la proporcion sale de sus dos operandos, que estan en la misma frase
-    mirados += 1
-    m = re.search(r'\*\*(\d+) de ([\d\s ]+) entidades de\s*(?:>\s*)?referencia '
-                  r'\((\d+),(\d) ?%\)\*\*', s)
-    if m is None:
-        fallos.append('no se encuentra la frase del mojibake con sus dos operandos y su porcentaje')
-    else:
-        n_, d_ = _f(m.group(1)), _f(m.group(2))
-        calc = round(100 * n_ / d_, 1) if d_ else None
-        # TODAS las apariciones, no la primera: el porcentaje se repite cuatro veces en
-        # redacciones distintas —dos en prosa, una en la lista de limitaciones y una en una
-        # tabla— y `re.search` solo veria una. Es §L59, que ya paso una vez con la frase del
-        # «efecto que se anula» y que acabo de repetir al escribir esta comprobacion.
-        vistos = set()
-        for mm in re.finditer(r'\*{0,2}283 \(?(\d+),(\d) ?%\)?\*{0,2}'
-                              r'|entidades de\s*(?:>\s*)?referencia \((\d+),(\d) ?%\)', s):
-            gr = [x for x in mm.groups() if x is not None]
-            if len(gr) == 2:
-                vistos.add(_f('%s.%s' % (gr[0], gr[1])))
-        if not vistos:
-            fallos.append('mojibake: no se localiza ninguna aparicion del porcentaje')
-        for pub in sorted(vistos):
-            if calc is None or abs(pub - calc) > 1e-9:
-                fallos.append('mojibake: %g de %g son %s %% y el informe dice %s %% en alguna de '
-                              'sus %d apariciones' % (n_, d_, calc, pub, len(vistos)))
-        if len(vistos) > 1:
-            fallos.append('mojibake: el porcentaje aparece con %d valores distintos (%s)'
-                          % (len(vistos), sorted(vistos)))
 
     # reduccion de coste: estimacion declarada, pero su aritmetica interna debe cuadrar
     mirados += 1
@@ -3074,16 +3036,25 @@ ARTEFACTO_FP = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark/results/'
                                   'COMPOSICION_FP_20260908/composicion_fp_26_grupos.json')
 
 
+# [RETIRADA 2026-09-17, segunda vuelta] La cita en prosa de esta magnitud (66,0 %, 12 852 de
+# 19 464) ya no aparece en ningun sitio del cuerpo: se retiro de §3.3 en la primera vuelta del
+# 2026-09-17 y de §7.2 (antes item 7 de la lista de hallazgos, y el item 8 de trabajo futuro) en
+# la segunda, a instruccion directa del autor de purgar del Markdown canonico toda referencia a
+# defectos historicos ya corregidos que no tenga asidero en la corrida vigente. La cifra sigue
+# intacta en `FINDINGS.md §F53` y en `CAMBIOS-DESDE-ENVIO-PROFESOR-20260908.md`, fuera del
+# producto final. Se conserva solo la vigilancia del artefacto y del script de figuras, que
+# siguen existiendo y deben seguir siendo correctos aunque nada los cite ya en prosa.
 def c_figura1_vs_artefacto(s):
-    """La composicion de los falsos positivos, atada al fichero que la calcula.
+    """El artefacto y el script de figuras de la composicion de FP, sin cita en prosa que atar.
 
-    El informe llego a dar dos cifras distintas para esta magnitud, una de ellas sin respaldo en
-    ningun dato (FINDINGS §F69). Esta comprobacion ata las dos apariciones en prosa —§3.3 y §7.2—
-    y el script de figuras (que ya no se incrusta en el cuerpo, §F170) al artefacto que las computa.
+    Historial: el informe llego a dar dos cifras distintas para esta magnitud, una de ellas sin
+    respaldo en ningun dato (FINDINGS §F69). Esta comprobacion ataba las apariciones en prosa
+    —§3.3 y §7.2— y el script de figuras (que ya no se incrusta en el cuerpo, §F170) al artefacto
+    que las computa; ya no hay cita en prosa que atar (ver el comentario previo a esta funcion).
     """
     import json as _json
     if not os.path.exists(ARTEFACTO_FP):
-        check('la composicion de FP (§3.3/§7.2) reproduce desde el artefacto', 0,
+        check('la composicion de FP reproduce desde el artefacto (sin cita en prosa)', 0,
               ['no existe %s' % os.path.relpath(ARTEFACTO_FP, RAIZ)])
         return
     with open(ARTEFACTO_FP, encoding='utf-8') as fh:
@@ -3096,16 +3067,8 @@ def c_figura1_vs_artefacto(s):
     mirados += 1
     if a.get('grupos') != a.get('grupos_cubiertos'):
         fallos.append('el artefacto cubre %s de %s grupos' % (a.get('grupos_cubiertos'), a.get('grupos')))
-    # §3.3 y §7.2
-    esp = '%.1f' % pct
-    for etiqueta, patron in (('§3.3', r'\*\*%s\s*%%\*\*[^.]{0,90}?%s de %s'
-                              % (esp.replace('.', ','), '{:,}'.format(loc).replace(',', ' '),
-                                 '{:,}'.format(tot).replace(',', ' '))),
-                             ('§7.2', r'procede el %s\s*%% de los falsos positivos' % esp.replace('.', ','))):
-        mirados += 1
-        if not re.search(patron, s):
-            fallos.append('%s no cita %s %% con %d de %d' % (etiqueta, esp.replace('.', ','), loc, tot))
     # el script de figuras
+    esp = '%.1f' % pct
     mirados += 1
     try:
         sc = open(SCRIPT_FIGURAS, encoding='utf-8').read()
@@ -3118,9 +3081,9 @@ def c_figura1_vs_artefacto(s):
     mirados += 1
     if comp is None or comp + loc != tot:
         fallos.append('el artefacto no declara fp_no_locations o no suma: %s + %s != %s' % (comp, loc, tot))
-    check('la composicion de FP (§3.3/§7.2) reproduce desde el artefacto', mirados, fallos,
-          'ata las dos apariciones en prosa y el script al fichero que las computa; ya no hay '
-          'figura que incrustar (§F170)')
+    check('la composicion de FP reproduce desde el artefacto (sin cita en prosa)', mirados, fallos,
+          'ya no hay cita en prosa que atar (§F170, purga del 2026-09-17); solo se vigila que el '
+          'artefacto y el script sigan siendo correctos')
 
 
 # --- 19. Las tablas 5, 6 y 8 reproducen desde sus corridas ---------------------------------------
