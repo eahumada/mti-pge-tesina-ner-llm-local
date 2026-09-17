@@ -92,14 +92,6 @@ FALLOS_DECLARADOS = {
                                              'tendria nunca Locations con referencia real; ese supuesto '
                                              'ya no vale con esta corrida nueva y legitima. No toca al '
                                              'N=120 historico que §3.3/Anexo I describen'),
-    'github.com/eahumada/mti-pge-tesina': ('2026-09-09',
-                                           'referencia [37]: el repositorio es privado hasta la '
-                                           'purga (SEGURIDAD-CLAVE-GOOGLE-20260908.md)'),
-    'hay que regenerarlo desde el .docx': ('2026-09-17',
-                                           'PENDIENTE de regenerar (§F190): los tres .docx cambiaron hoy '
-                                           '(Anexo J, bibliografia, Anexo K) y el PDF de la raiz no se '
-                                           'puede regenerar en este entorno (no hay Word ni conversor sin '
-                                           'perder maquetacion). Encargado a Claude Desktop.'),
 }
 
 
@@ -108,7 +100,9 @@ FALLOS_DECLARADOS = {
 # clave describiera el aviso de huerfana silenciaria **todos** los avisos de huerfana, presentes y
 # futuros. Es lo que paso: la clave «no tapa ningun fallo. Sin --red» casaba con la plantilla del
 # mensaje de la comprobacion 55 y anulaba su deteccion entera. Ver FINDINGS §F133.
-SOLO_CON_RED = frozenset({'github.com/eahumada/mti-pge-tesina'})
+# (2026-09-17: vacia desde que la referencia [37] paso a apuntar a un repositorio publico y su
+# declaracion se retiro de FALLOS_DECLARADOS; se conserva el mecanismo para el proximo caso.)
+SOLO_CON_RED = frozenset()
 
 
 def _edad_declarado(clave):

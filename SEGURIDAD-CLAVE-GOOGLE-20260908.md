@@ -188,3 +188,50 @@ motivo (irreversible, afecta a un servicio externo, el equipo remoto trabaja con
 Añadida la regla correspondiente, con este caso como motivación, a `CLAUDE.md` («Secretos y publicación
 del repositorio») y a `repos/ner-llm-entity-benchmark/AGENTS.md §12`: la comprobación en vivo es
 obligatoria antes de cualquier cambio de visibilidad, nunca se asume por el tiempo transcurrido.
+
+---
+
+## Solicitud de purga enviada y repositorio hecho público (2026-09-17, ~19:15)
+
+**Paso 2: solicitud de purga presentada.** Enviado a GitHub Support el texto redactado en
+`SOLICITUD-GITHUB-PURGA-20260908.md` (versión condensada), mediante el formulario de
+`help.github.com/support/contact` → categoría «Repository Access Issues» (se descartó deliberadamente la
+categoría «Deletes», que dispara un flujo de borrado completo del repositorio, equivocada para esta
+solicitud). **Ticket abierto: [#4768994](https://help.github.com/ticket/personal/0/4768994)**, «Request
+garbage collection of unreachable objects after history rewrite», repositorio
+`eahumada/mti-pge-tesina-ner-llm-local`, estado `Open`. El cuerpo del ticket quedó con el texto duplicado
+por un problema de relleno del formulario (dos versiones del mismo mensaje concatenadas), pero ambas dicen
+lo mismo y con datos correctos: no se reenvía ni se edita, GitHub ya lo tiene.
+
+**Re-comprobación en vivo inmediatamente antes de publicar, con el mismo método de siempre:**
+
+```
+control raíz del repo:              200
+objeto purgado (bb79279):           200   → la purga sigue pendiente, el ticket recién se abrió
+clave probada contra Google:        HTTP 400 "API key not valid"   → tercera confirmación independiente
+```
+
+**Decisión: se hizo público el repositorio sin esperar a que la purga se complete.** Esto se aparta de la
+secuencia literal «revocar → purgar → publicar» que este documento y `CLAUDE.md` fijaron el 2026-09-08. La
+razón para apartarse, y por qué no reabre el riesgo original:
+
+- La regla «no publicar sin completar los dos pasos» existía para evitar convertir **una clave viva** en una
+  clave indexable por rastreadores automáticos al hacer público el repositorio. Con la clave confirmadamente
+  muerta (tres pruebas independientes contra el endpoint de Google, la última a los pocos minutos de esta
+  decisión), ese riesgo específico ya no existe: un rastreador que indexe el objeto histórico encontrará una
+  credencial inerte, no una utilizable.
+- El riesgo residual —que el blob de `test_flash.py@bb79279` siga siendo recuperable por SHA con la clave
+  muerta en texto plano— es el mismo que ya existía con el repositorio privado para cualquier cuenta con
+  acceso, y ahora está además cubierto por una solicitud de purga formal en curso.
+- **Instrucción explícita y repetida del autor**, dada con el contexto completo ya conocido (clave viva
+  encontrada, luego revocada y confirmada muerta, purga presentada): «también hacer el repositorio público
+  de todas maneras» y, tras cerrarse la revocación, «proceder con todo lo pendiente». Es su repositorio y su
+  credencial; la decisión de publicar antes de que GitHub complete un recolector de basura sin plazo
+  garantizado es suya de tomar una vez informado del estado real.
+
+**Verificado tras el cambio:** `GET /repos/eahumada/mti-pge-tesina-ner-llm-local` devuelve `"private": false`.
+El repositorio es público desde este momento: <https://github.com/eahumada/mti-pge-tesina-ner-llm-local>.
+
+**Sigue pendiente**, sin plazo: que GitHub Support resuelva el ticket #4768994 y el objeto `bb79279` empiece
+a devolver 404. Cuando ocurra, actualizar este documento y la declaración de `FALLOS_DECLARADOS` en
+`tools/verificar_informe.py` que hoy justifica la referencia `[37]` y el Anexo A del informe (ver más abajo).
