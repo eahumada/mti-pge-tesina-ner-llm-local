@@ -10176,5 +10176,87 @@ que este alcance queda sin completar y no bloquea nada del informe vigente.
 - Releído el `.md` canónico tras `§F196` para confirmar que no reclama cobertura de 13 modelos sobre
   el corpus traducido en ninguna parte.
 
+## §F198 — Revisión global final (panel de 5 expertos + verificación adversarial): 8 correcciones aplicadas
+
+**Fecha:** 2026-09-17, misma sesión. Workflow `revision-global-final-20260917` (53 agentes: 5 expertos
+—estadística, consistencia numérica, metodología, narrativa/sincronía, tribunal adversarial— cada uno
+leyendo la tesis completa, más hasta 3 escépticos por hallazgo con voto mayoritario) a petición
+explícita del autor: *"validar todo lo que se menciona en el abstract, el resumen, la hipótesis y toda
+la tesis sea consistente consigo misma y con todos los valores"*. 16 hallazgos crudos, 12 confirmados
+por mayoría (2 de 3 escépticos como mínimo). De los 12, varios eran el mismo problema detectado de
+forma independiente por lentes distintas, lo que los hace más creíbles. Consolidados en **8
+correcciones distintas**, todas verificadas contra el archivo y, en el caso estadístico, recalculadas
+de forma independiente antes de aplicarlas.
+
+### Aplicadas
+
+1. **Anexo J, Tabla 16 (error estadístico real, verificado independientemente):** la prosa decía que
+   "solo la ausencia de `nemotron-mini:4b` cambia... la significancia" del Pearson capacidad-beneficio.
+   Falso: retirar `deepseek-r1:1.5b` (p=0,0333) o `mistral-nemo:latest` (p=0,0404) también cruza el
+   umbral del 5 %, frente al p=0,0956 de la muestra completa — verificado recalculando `t = r·√(df)/√(1-r²)`
+   sobre los propios valores de la Tabla 16. Solo `nemotron-mini:4b` cambia el **signo**; la
+   **significancia** es más frágil, y dos retiradas más la alteran.
+2. **§5.3.1:** "325 posibles entre pares de **modelos**" es incompatible con C(13,2)=78; la base real
+   son los 26 grupos (13 modelos × 2 modos), C(26,2)=325, tal como el propio §2.5 ya explica dos
+   párrafos antes. Corregido a "entre pares de los veintiséis grupos".
+3. **Resumen y Abstract:** la sintaxis daba a entender que los trece modelos, el contraste RAG y
+   ANOVA+Tukey corrieron sobre ambos corpus (120 y 30 artículos). Falso: sobre N=30 (§5.3, Tabla 6)
+   solo se validaron dos modelos con ANOVA, sin Tukey y sin contraste RAG; los trece modelos con
+   Tukey HSD corren solo sobre N=120 (§5.3.1). Detectado independientemente por 3 lentes (consistencia
+   numérica, metodología, tribunal). Reescrita la oración en ambos idiomas, mismo commit, verificados
+   ambos por debajo de 200 palabras (198 y 184).
+4. **§4.2:** "el segundo incorpora `gemma4:12b-mlx` y `gpt-oss:20b`" da 12+2=14, no trece. La
+   compilación GGUF simple de `gemma4:31b` se retira sin declararlo del estudio principal (sigue en
+   Tablas 4 y 6). Declarada la sustitución explícitamente; añadida además una aclaración en §6.1 y
+   Conclusión 3 de que "la contraparte local" de N=15 (GGUF, 69,12 %) y "el mejor local" de N=120
+   (MLX, 81,47 %) son compilaciones distintas del mismo modelo base, no el mismo punto repetido.
+5. **§6.1:** la "brecha de nueve puntos entre 90,16 % y 81,47 %" comparaba una métrica **restringida**
+   a Personas/Organizaciones (90,16 %, N=30, Anexo I) con una **sin restringir** de tres categorías
+   (81,47 %, N=120) — exactamente lo que el Anexo I dice que no debe compararse, y contradecía además
+   la propia afirmación de §5.3.1 de que N=30 (80,57 % sin restringir) y N=120 son "comparables".
+   Corregido a comparar la misma base (80,57 % vs. 81,47 %, diferencia menor a un punto); retirada la
+   explicación de "naturaleza del material" que justificaba una brecha que dejó de existir.
+6. **§6.1, mismo párrafo:** la Hipótesis (§1.3) exige el umbral "en español", pero la mitad de la
+   evidencia con que se declara "confirmada en ambos corpus" (N=30) está redactada en inglés, sin que
+   el texto lo señale. Detectado independientemente por 2 lentes (narrativa, tribunal). Añadida una
+   precisión: la condición «en español» la satisface en sentido estricto el corpus periodístico
+   (105/120); N=30, en inglés, confirma el umbral numérico como evidencia de generalización.
+7. **§1.3, Variables dependientes:** declaraba medir "F1-Score **por tipo de entidad**" (desglose
+   PER/ORG/LOC), que no se reporta en ninguna parte del documento — verificado por búsqueda textual,
+   la frase solo aparece en esa línea. Todas las cifras de F1 del informe son agregadas. Corregido a
+   describir lo que efectivamente se mide: F1 agregado por artículo, condicionado a las categorías que
+   anota cada corpus (§3.3).
+8. **Conclusión 4 (§7.1):** el Objetivo Específico 5 (§1.4) exige mantener alucinaciones **<5 %**,
+   pero ninguna de las seis conclusiones cerraba ese criterio. Los propios datos (§5.4) muestran que
+   NO se cumple para el catálogo completo (`deepseek-r1:1.5b` 11,23–21,59 %, `nemotron-mini:4b`
+   7,14–14,75 %), solo para el modelo recomendado. Añadida la frase de cierre, con las cifras exactas
+   de §5.4.
+
+### No aplicado, por criterio propio
+
+- **"Interacción" sin test formal (§4.3):** el documento usa el término "interacción" para describir
+  que el efecto combinado del idioma (+13,19 pp) supera la suma de los efectos individuales
+  (+9,01+3,61=+12,62 pp) sin un ANOVA factorial de dos vías que lo formalice. El propio panel lo
+  reportó con **confianza baja** y es más una objeción de rigor terminológico que un error factual
+  verificable; con 8 correcciones sustantivas ya aplicadas, se deja sin tocar para no diluir el
+  cuerpo con matices de bajo valor marginal. Queda registrado por si el autor prefiere aplicarlo.
+
+### Verificado antes de comprometer
+
+- Las 8 citas textuales confirmadas con `grep` contra el `.md` actual antes de editar.
+- El hallazgo estadístico (Anexo J) recalculado de forma independiente con la fórmula de la t de
+  Student sobre los propios datos de la Tabla 16, no aceptado solo por la palabra del panel.
+- Las cifras de alucinación (11,23–21,59 %, 7,14–14,75 %) verificadas contra §5.4 antes de citarlas
+  en la Conclusión 4.
+- `python3 tools/verificar_informe.py`: 0 fallos nuevos. Dos declaraciones de propagación pendiente
+  generalizadas (ya no atadas a un conteo de palabras exacto, que cambia cada vez que se edita
+  Resumen/Abstract) para que no queden huérfanas en la próxima edición.
+- Resumen y Abstract verificados por debajo de 200 palabras tras el cambio (198 y 184) y releídos
+  para confirmar que siguen diciendo exactamente lo mismo entre sí.
+- Ninguna fila de tabla ni cifra experimental se tocó: las 8 correcciones son prosa (una corrección
+  estadística real, una imprecisión terminológica, dos reescrituras de alcance metodológico, una
+  aclaración de compilaciones de modelo, una corrección de comparación de métricas, un ajuste de
+  variable declarada, y un cierre de conclusión faltante).
+
 
 

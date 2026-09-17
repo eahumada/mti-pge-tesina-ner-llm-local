@@ -2029,7 +2029,7 @@ corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y
   declararlo sin completar; el encargo remoto está cerrado en definitiva, así que por defecto queda
   sin completar. Detalle en `FINDINGS.md §F197`.
 
-#### 4.7.4 `revision-global-final-20260917` — 🔄 EN CURSO — Claude Code (equipo principal)
+#### 4.7.4 `revision-global-final-20260917` — ✅ COMPLETADA — Claude Code (equipo principal)
 - **Cuándo:** lanzado 2026-09-17 (tarde) · **Run ID:** `wf_24ecab8b-473` · **Agentes:** hasta 5 (panel
   de expertos, cada uno lee el documento completo) + hasta 3 escépticos por hallazgo confirmable
   (verificación adversarial con voto mayoritario, 2 de 3)
@@ -2051,7 +2051,20 @@ corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y
 - **Fases:** Panel de expertos (5, paralelo) → Verificación adversarial (hasta 3 escépticos por
   hallazgo, paralelo, sobrevive con 2 de 3 votos `REAL`).
 - **Archivos:** solo lectura. La aplicación de hallazgos confirmados la hace el equipo principal.
-- **Resultado:** pendiente.
+- **Resultado:** ✅ COMPLETADA. 53 agentes, 16 hallazgos crudos, 12 confirmados por mayoría (2 de 3
+  escépticos), consolidados en **8 correcciones distintas** tras deduplicar hallazgos que dos o tres
+  lentes independientes reportaron por separado (señal de que eran reales). Incluye **un error
+  estadístico verificado de forma independiente**: el Anexo J decía que solo retirar
+  `nemotron-mini:4b` cambiaba la significancia del Pearson capacidad-beneficio, pero la propia
+  Tabla 16 muestra que retirar `deepseek-r1:1.5b` o `mistral-nemo:latest` también cruza el umbral del
+  5 %. También: el Resumen/Abstract implicaba que los 13 modelos y Tukey HSD corrieron sobre ambos
+  corpus (solo corre sobre N=120; N=30 usa 2 modelos y solo ANOVA); una "brecha" en §6.1 que
+  comparaba una métrica restringida con una sin restringir; la Hipótesis exige el umbral "en
+  español" pero la mitad de su confirmación viene de un corpus en inglés sin señalarlo; una variable
+  dependiente declarada ("F1 por tipo de entidad") que nunca se reportó; y un objetivo (alucinaciones
+  <5%) sin cerrar en las Conclusiones pese a que los datos muestran que no se cumple para el catálogo
+  completo. Un hallazgo de baja confianza (terminología "interacción" sin test formal) se dejó sin
+  aplicar por criterio propio. Detalle completo en `FINDINGS.md §F198`. Verificador: 0 fallos nuevos.
 
 ---
 

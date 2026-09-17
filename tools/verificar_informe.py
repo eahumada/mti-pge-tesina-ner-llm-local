@@ -156,13 +156,13 @@ FALLOS_DECLARADOS = {
                                  'PENDIENTE de propagar: corregido el separador decimal de '
                                  '"1.1 GB" a "1,1 GB" en el .md (consistencia con el resto de la '
                                  'tabla, en coma), aun no en los tres .docx'),
-    'el resumen difiere del Markdown en la palabra 55 de 200': ('2026-09-17',
+    'el resumen difiere del Markdown en la palabra': ('2026-09-17',
                                                                  'PENDIENTE de propagar: resumen '
-                                                                 'recortado a 200 palabras tras '
-                                                                 'incorporar los resultados de R1/R5 '
-                                                                 '(5 semillas, FINDINGS §F176/§F184), '
+                                                                 'editado varias veces hoy (R1/R5 '
+                                                                 '5 semillas §F176/§F184, y la '
+                                                                 'revision global final §4.7.4), '
                                                                  'aun no en los tres .docx'),
-    'el abstract difiere del Markdown en la palabra 120 de 183': ('2026-09-17',
+    'el abstract difiere del Markdown en la palabra': ('2026-09-17',
                                                                    'PENDIENTE de propagar: mismo '
                                                                    'motivo que el resumen, sincronia '
                                                                    'ES/EN aplicada en el mismo commit'),
