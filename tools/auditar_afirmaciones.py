@@ -295,9 +295,6 @@ def afirmaciones():
          lambda: _todos(TRES, lambda t: (
              all(v in t for v in ('81,47', '90,16', '82,13')),
              'le falta alguna de las tres cifras titulares adoptadas (decision 1)'))),
-        ('la leyenda de la Tabla 19 declara 42 configuraciones', '§F94',
-         lambda: _todos(TRES, lambda t: ('42 configuraciones' in t,
-                                         'no dice 42 configuraciones'))),
         ('el resumen dice «instituciones financieras»', 'CLAUDE.md',
          lambda: _todos(TRES, lambda t: ('Las instituciones financieras sujetas' in t,
                                          'el resumen no concuerda con el abstract'))),
@@ -311,14 +308,12 @@ def afirmaciones():
         # Las tres correcciones de mas peso del 2026-09-09 no tenian predicado, que es justo el
         # hueco que esta herramienta declara. Anadidas: las dos tablas propagadas y la particion
         # del run de §3.3.
-        ('la Tabla 19 coincide con el Markdown celda por celda', '§F95',
-         lambda: _tabla_igual('F1 restr.',
-                              '| Configuración | Corrida | P | R | F1 | P restr. | F1 restr. | Δ F1 |',
-                              8)),
-        ('la Tabla 18 coincide con el Markdown en contenido y orden', '§F95',
-         lambda: _tabla_igual('Δ F1 por entidad',
-                              '| Configuración | Δ F1 por entidad de referencia | '
-                              'Δ F1 por texto de entrada |', 3)),
+        #
+        # [RETIRADAS 2026-09-17, FINDINGS §F191] Las Tablas 18 y 19 (y su leyenda de "42
+        # configuraciones") documentaban un consolidado historico ya superado y se retiraron del
+        # Anexo H/I por instruccion del autor: registro forense de un defecto ya corregido, no un
+        # dato que sostenga la hipotesis vigente. Sin esas tablas en el Markdown, no hay nada que
+        # comparar celda por celda.
         ('en §3.3 el resalte cubre solo el porcentaje', '§F96',
          lambda: _resalte_33()),
         ('el recuento de decisiones cuadra con las que hay', '§F135',

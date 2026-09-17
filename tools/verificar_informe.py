@@ -136,6 +136,30 @@ FALLOS_DECLARADOS = {
                                                       'PENDIENTE de propagar (§F172): detalle '
                                                       'viejo del punto 7 de §7.2, aun en los '
                                                       '.docx sin regenerar'),
+    'anexo h — codificación del corpus: defecto de mojibake': ('2026-09-17',
+                                                               'PENDIENTE de propagar (§F191): '
+                                                               'Anexo H comprimido, encabezado '
+                                                               'nuevo'),
+    'anexo i — medición restringida a las categorías que el corpus': ('2026-09-17',
+                                                                       'PENDIENTE de propagar '
+                                                                       '(§F191): Anexo I '
+                                                                       'comprimido, encabezado '
+                                                                       'nuevo'),
+    'El defecto afectaba a 283 de 1 406 entidades de referencia': ('2026-09-17',
+                                                                    'PENDIENTE de propagar '
+                                                                    '(§F191): Anexo H comprimido, '
+                                                                    'parrafo nuevo'),
+    'Los prompts piden tres categorías de entidad': ('2026-09-17',
+                                                      'PENDIENTE de propagar (§F191): Anexo I '
+                                                      'comprimido, parrafo nuevo'),
+    'Sobre el corpus del dominio N=30 (en inglés), la restricci': ('2026-09-17',
+                                                                    'PENDIENTE de propagar '
+                                                                    '(§F191): Anexo I comprimido, '
+                                                                    'parrafo nuevo'),
+    'Un número que no mide lo que dice medir no es un resultado': ('2026-09-17',
+                                                                    'PENDIENTE de propagar '
+                                                                    '(§F191): cierre del Anexo I '
+                                                                    'comprimido'),
     'hay que regenerarlo desde el .docx': ('2026-09-17',
                                            'PENDIENTE de regenerar (§F190): los tres .docx cambiaron hoy '
                                            '(Anexo J, bibliografia, Anexo K) y el PDF de la raiz no se '
@@ -655,7 +679,12 @@ def _sin_mojibake(t):
     return v if v != t else None
 
 
-def c_tabla17(s):
+# [RETIRADA 2026-09-17] La Tabla 17 de la que hablaba esta comprobacion (el alcance medido del
+# mojibake, seis filas) se retiro del Anexo H por instruccion del autor: registro forense de un
+# defecto ya corregido, no un dato que sostenga la hipotesis vigente. El numero de tabla «17» lo
+# ocupa ahora una tabla distinta (Anexo K, IC95% de R2), así que dejar esta comprobacion activa
+# validaria contenido equivocado contra un patron que nunca va a encontrar. Ver FINDINGS §F191.
+def _c_tabla17_RETIRADA(s):
     """Una medicion que el corpus actual ya NO puede reproducir, atada a la version que si.
 
     La Tabla 17 mide el alcance del defecto de codificacion sobre el corpus N=120, y el informe
@@ -2842,16 +2871,13 @@ def c_protocolo(s):
             print('           - %s: %s' % (p, DIVERGENCIAS_DECLARADAS[p]))
 
 
-# --- 15. El Anexo I cuadra con la Tabla 7 ---------------------------------------------------------
-def c_anexo_vs_tabla7(s):
-    """El Anexo I (Tabla 19) es HISTORICO por diseno: documenta el corpus PUBLICADO y su defecto
-    de Locations sin anotar, y su columna «publicado» no sigue a la decision 1 (§F154). Por eso ya
-    no se contrasta contra la Tabla 7 del cuerpo, que desde la decision 1 cita el consolidado
-    adoptado: contrastarla contra la Tabla 7 actual comparia dos consolidados distintos y marcaria
-    como fallo una divergencia que es exactamente la que se pretende documentar. Se contrasta,
-    en su lugar, contra el CSV del consolidado PUBLICADO directamente — la misma fuente de la que
-    salio cuando se escribio, fijada con MANIFIESTO_PUBLICADO y no con CSV_CONSOLIDADO.
-    """
+# --- 15. [RETIRADA 2026-09-17] El Anexo I cuadra con la Tabla 7 ------------------------------------
+# La Tabla 19 (el detalle historico de 42 configuraciones que esta comprobacion contrastaba contra
+# el consolidado PUBLICADO) se retiro del Anexo I por instruccion del autor: el cuerpo del informe
+# deja de narrar resultados historicos ya superados, y esa tabla era exactamente eso — un registro
+# forense de una corrida sustituida, no un dato que sostenga la hipotesis vigente. Con la tabla fuera,
+# esta comprobacion no tiene nada que contrastar. Ver FINDINGS §F191.
+def _c_anexo_vs_tabla7_RETIRADA(s):
     j = s.find('_Tabla 19.')
     if j < 0:
         check('el Anexo I cuadra con la Tabla 7', 0, ['no se encuentra la Tabla 19'])
@@ -3230,7 +3256,12 @@ ARTEFACTO_MOJIBAKE = os.path.join(RAIZ, 'repos/ner-llm-entity-benchmark/results/
                                         'ANALISIS_MOJIBAKE_20260908/efecto_mojibake.json')
 
 
-def c_tabla18_vs_artefacto(s):
+# [RETIRADA 2026-09-17] La Tabla 18 (efecto diferencial del mojibake, 26 filas) se retiro del
+# Anexo H por instruccion del autor: registro forense de un defecto ya corregido, no un dato que
+# sostenga la hipotesis vigente. El numero «18» ya no lo ocupa ninguna tabla nueva (el cuerpo
+# termina en la Tabla 17 tras el recorte), asi que esta comprobacion simplemente no tiene nada que
+# contrastar. Ver FINDINGS §F191.
+def _c_tabla18_vs_artefacto_RETIRADA(s):
     """El efecto diferencial del mojibake, atado al fichero que lo calcula.
 
     Ultima tabla de datos del informe que quedaba sin contrastar. Con esta, las seis —4, 5, 6, 7, 8
@@ -3709,7 +3740,12 @@ def c_agregacion(s):
     # El Anexo I empareja la cifra restringida con su cifra publicada: «pasa de X % a 76,55 %».
     # Esa X debe ser la macro, porque el 76,55 sale de la Tabla 19, que es macro. Si es la micro,
     # el propio Anexo hace lo que §3.3 advierte que no se haga: incomparables el texto y su tabla.
-    if 'N=120' in agreg:
+    #
+    # [2026-09-17] La Tabla 19 y el emparejamiento «pasa de X % a Y %» se retiraron del Anexo I por
+    # instruccion del autor (registro forense de un defecto ya corregido, no un dato que sostenga
+    # la hipotesis vigente): si la frase no esta, no es un fallo, es que ya no hay nada que
+    # emparejar. Mismo criterio que el «convencion original» de arriba.
+    if 'N=120' in agreg and re.search(r'pasa de\s+\d+[.,]\d+\s*%\s*a', s):
         ma, mi = agreg['N=120']
         mirados += 1
         m = re.search(r'pasa de\s+(\d+)[.,](\d+)\s*%\s*a\s*\*{0,2}(\d+)[.,](\d+)', s)
@@ -4433,14 +4469,12 @@ def main():
     ejecutar(c_aritmetica, s)
     ejecutar(c_recuentos, s)
     ejecutar(c_protocolo, s)
-    ejecutar(c_anexo_vs_tabla7, s)
     ejecutar(c_tabla7_vs_datos, s)
     ejecutar(c_tabla7_desde_per_type, s)
     ejecutar(c_tukey_recuento, s)
     ejecutar(c_friedman, s)
     ejecutar(c_ablacion_idioma, s)
     ejecutar(c_redondeos, s)
-    ejecutar(c_tabla17, s)
     ejecutar(c_prosa_docx, s)
     ejecutar(c_frases_retiradas, s)
     ejecutar(c_tablas_y_biblio_docx, s)
@@ -4449,7 +4483,6 @@ def main():
     ejecutar(c_tabla4_vs_datos, s)
     ejecutar(c_figura1_vs_artefacto, s)
     ejecutar(c_tablas_menores, s)
-    ejecutar(c_tabla18_vs_artefacto, s)
     ejecutar(c_json_parsea, s)
     ejecutar(c_correlacion, s)
     ejecutar(c_alucinaciones, s)

@@ -955,210 +955,35 @@ Asistentes de programación basados en LLM se emplearon como apoyo en tareas de 
 
 No se utilizó IA para producir, estimar o extrapolar datos experimentales, ni para redactar conclusiones no sustentadas en las corridas registradas. Toda cifra citada en este informe es trazable a un archivo de resultados versionado en el repositorio. Las limitaciones conocidas se declaran explícitamente en el cuerpo del informe, entre ellas las que el capítulo 6 discute sobre la codificación del corpus y el alcance de la medición. El autor asume la responsabilidad final sobre el contenido, la exactitud y la integridad académica de este documento.
 
-### Anexo H — Codificación del corpus: análisis del *mojibake* y su efecto sobre la medición
+### Anexo H — Codificación del corpus: defecto de *mojibake*, corregido
 
-#### H.1 Naturaleza y alcance del defecto
+*Mojibake* designa el texto ilegible que resulta de escribir una cadena con una codificación y leerla con otra. El corpus `data/benchmark_balanced_120.json` que sostenía el consolidado del 7 de septiembre de 2026 (`results/ANALISIS_CONJUNTO_20260907/`) almacenaba los nombres con esta corrupción, resultado de reinterpretar bytes UTF-8 como Latin-1: guardaba `JosÃ© Bono` donde el nombre real es **José Bono**.
 
-*Mojibake* (文字化け, «transformación de caracteres») designa el texto ilegible que resulta de escribir una cadena con una codificación y leerla con otra. En español afecta a las vocales acentuadas y a la «ñ», que en UTF-8 no ocupan un byte sino dos: la «é» se codifica como `0xC3 0xA9` y, leída como Latin-1 —donde cada byte es un carácter—, se descompone en `Ã` seguido de `©`. La firma del defecto es por tanto esa `Ã` inicial, común a toda vocal acentuada. La Tabla 16 muestra las formas corruptas frente a su representación real.
+El defecto afectaba a **283 de 1 406 entidades de referencia (20,1 %)** y, de forma coherente, también al **texto de entrada en 104 de 120 artículos (87 %)**: la misma corrupción aparecía en ambos lados de la comparación. Esa coherencia interna produce un efecto contraintuitivo y no un sesgo uniforme: **premia la transcripción literal y penaliza la ortografía correcta**, porque un modelo que escribía «José Bono» correctamente dejaba de coincidir con una referencia corrupta. El efecto medido sobre las veintiséis configuraciones del estudio (los trece modelos en sus dos modos) osciló entre −0,070 y +0,025 de F1 según el modelo, con signo opuesto entre las dos posibles fuentes de la corrupción.
 
-_Tabla 16. Formas corruptas de los nombres almacenados y su representación real_
-
-| Forma almacenada (corrupta) | Forma real |
-|:---|:---|
-| `JosÃ© Bono` | José Bono |
-| `Emiliano GarcÃ­a-Page` | Emiliano García-Page |
-| `MarÃ­a MuÃ±oz` | María Muñoz |
-| `AdministraciÃ³n` | Administración |
-
-La reparación consiste en deshacer el paso erróneo: `s.encode('latin-1').decode('utf-8')`.
-
-#### H.2 Alcance medido y consecuencia sobre la comparación
-
-La Tabla 17 resume las comprobaciones realizadas sobre el corpus y su resultado.
-
-_Tabla 17. Alcance medido del defecto de codificación sobre el corpus N=120_
-
-| Comprobación sobre `data/benchmark_balanced_120.json` | Resultado |
-|:---|:---:|
-| Entidades de referencia totales | 1 406 |
-| Entidades con *mojibake* | **283 (20,1 %)** |
-| De ellas, irrecuperables en el cotejo difuso (umbral 85) | **66 (4,7 % del total)** |
-| Artículos con *mojibake* en el campo `text` | **104 de 120 (87 %)** |
-| Entidades corruptas que aparecen igual de corruptas en el texto | **283 de 283** |
-| Entidades corruptas que aparecen correctas en el texto | **0** |
-
-Los corpus N=15 y N=30 están libres del defecto, por lo que §5.1, §5.2 y §5.3 no se ven comprometidos. El umbral de 85 explica que solo una parte resulte irrecuperable: en cadenas largas la corrupción es una fracción menor y la similitud se mantiene sobre el corte —`Emiliano GarcÃ­a-Page` obtiene 93—, mientras que en cadenas cortas lo hunde: `JosÃ© Bono` obtiene **84**, un punto por debajo.
-
-El dato determinante es que el defecto **alcanza también al texto de entrada**, y de forma coherente con la referencia. El corpus resulta así internamente consistente: un modelo que transcribe literalmente lo que lee coincide con la referencia y no sufre penalización, mientras que uno que normaliza la ortografía al español correcto deja de coincidir pese a haber acertado. El defecto no impone un suelo común a todos los modelos: **recompensa una conducta y castiga la contraria**, lo que invalida la suposición inicial de un sesgo uniforme que no alteraría el orden relativo.
-
-#### H.3 Evidencia empírica del efecto diferencial
-
-El efecto se midió sobre las **veintiséis configuraciones** del estudio —los trece modelos en sus dos modos— con el
-script `tools/analisis_mojibake.py`, que se publica para que la tabla sea reproducible. Se toma una corrida por
-configuración, y el orden de preferencia del script antepone las corridas sanas: la medición de
-`gemma4:12b-mlx` de `benchmark_n120_REMOTO` está averiada por el modo de razonamiento, con 68 y 98 registros
-sin ninguna entidad recuperada, y habría distorsionado el resultado.
-
-La medición obliga a declarar el criterio de «artículo afectado», porque **el sentido del efecto depende de
-cuál se elija**, y esa dependencia es en sí misma el resultado:
-
-- **Por entidad de referencia corrupta**: 89 artículos afectados y 31 no.
-- **Por texto de entrada corrupto**: 104 artículos afectados y 16 no.
-
-La Tabla 18 recoge el efecto por configuración y por criterio de artículo afectado.
-
-_Tabla 18. Efecto diferencial del *mojibake* sobre el F1 según el criterio de artículo afectado_
-
-| Configuración | Δ F1 por entidad de referencia | Δ F1 por texto de entrada |
-|:---|--:|--:|
-| `qwen3:8b_kb_rag` | +0.1554 | +0.0152 |
-| `gemma4:31b-cloud_baseline` | +0.1418 | +0.0029 |
-| `gemma4:31b-cloud_kb_rag` | +0.1131 | -0.0433 |
-| `gemma4:31b-mlx_kb_rag` | +0.0999 | -0.0102 |
-| `gemma4:latest_kb_rag` | +0.0976 | -0.0666 |
-| `gemma:latest_kb_rag` | +0.0965 | -0.0845 |
-| `nemotron-mini:4b_kb_rag` | +0.0948 | -0.0609 |
-| `gemma4:31b-mlx_baseline` | +0.0873 | -0.0613 |
-| `gpt-oss:20b_baseline` | +0.0819 | -0.0438 |
-| `gemma4:12b-mlx_baseline` | +0.0789 | -0.0612 |
-| `mistral-nemo:latest_baseline` | +0.0684 | -0.1122 |
-| `qwen2.5:14b_baseline` | +0.0681 | -0.0821 |
-| `gemma4:latest_baseline` | +0.0620 | -0.0958 |
-| `gemma4:12b-mlx_kb_rag` | +0.0604 | -0.0897 |
-| `llama3.1:8b_baseline` | +0.0514 | -0.0709 |
-| `gpt-oss:20b_kb_rag` | +0.0511 | -0.0997 |
-| `gemma:latest_baseline` | +0.0409 | -0.1678 |
-| `qwen2.5:14b_kb_rag` | +0.0380 | -0.0887 |
-| `llama3.2:latest_kb_rag` | +0.0254 | -0.1130 |
-| `llama3.1:8b_kb_rag` | +0.0186 | -0.1428 |
-| `mistral-nemo:latest_kb_rag` | +0.0122 | -0.1256 |
-| `qwen3:8b_baseline` | -0.0076 | -0.1359 |
-| `deepseek-r1:1.5b_baseline` | -0.0124 | +0.0028 |
-| `nemotron-mini:4b_baseline` | -0.0477 | -0.1942 |
-| `deepseek-r1:1.5b_kb_rag` | -0.0717 | -0.1796 |
-| `llama3.2:latest_baseline` | -0.0816 | -0.2665 |
-
-Los dos criterios apuntan en direcciones opuestas y de forma sistemática: **veintiuna de las veintiséis configuraciones
-puntúan mejor** en los artículos cuya anotación de referencia está corrompida, y **veintitrés puntúan peor** en
-aquellos cuyo texto lo está. La lectura es coherente con el mecanismo del cotejo difuso. Cuando la corrupción
-está en la referencia, el corpus premia la transcripción literal de los bytes y penaliza al modelo que
-escribe el nombre correctamente, porque `José Bono` no casa con `JosÃ© Bono`. Cuando está en el texto de
-entrada, en cambio, dificulta la extracción para todos.
-
-> **Cautela metodológica, y dos advertencias sobre versiones anteriores de esta tabla.** Los artículos
-> afectados podrían ser además más largos o intrínsecamente más difíciles, lo que confundiría la magnitud
-> absoluta de cada diferencia; el sentido del efecto, sin embargo, es consistente dentro de cada criterio.
-> Una primera versión declaraba una partición de 88 artículos afectados y 31 no —cuya suma es 119 y no 120— y
-> unas diferencias que no se reproducen con ninguno de los dos criterios. Una segunda tomaba para
-> `gemma4:12b-mlx` la corrida averiada por el modo de razonamiento, y de ahí salía un valor extremo de
-> +0,1795 por criterio de texto que era artefacto de configuración y no efecto de la codificación. Con la
-> corrida sana, el máximo por ese criterio baja a +0.0152. Se conservan estas notas para que ambas correcciones
-> queden trazables.
-
-#### H.4 Cómo debe repararse
-
-Corregir únicamente la referencia **invertiría la injusticia en lugar de eliminarla**: pasaría a penalizar al modelo que transcribe con fidelidad. La reparación correcta es **normalizar ambos lados de la comparación** —aplicar la corrección de codificación a la entidad de referencia *y* a la extraída antes del cotejo difuso—, de modo que `JosÃ© Bono` y `José Bono` converjan a la misma forma y el resultado deje de depender de la representación de bytes.
-
-Esta corrección **no pudo aplicarse retroactivamente**: el cotejo se resuelve en tiempo de inferencia y de cada registro solo se conservaron los recuentos de aciertos y errores, no las entidades extraídas. Repuntuar sobre lo almacenado —como sí fue posible con la corrección de la convención de puntuación descrita en §4.4— resulta aquí inviable, y la corrección exigió re-ejecutar el estudio completo. Eso es lo que hizo la re-corrida del 8 de septiembre que hoy sostiene la Tabla 7 (§5.3.1): el corpus vigente no arrastra este defecto.
-
-#### H.5 Implicaciones para la evaluación de sistemas NER
-
-1. **Verificar la codificación de la entrada, no solo la de la referencia.** Un defecto presente en ambas no se comporta como el mismo defecto presente en una sola.
-2. **No presuponer que un defecto de datos sesga de forma uniforme.** Cuando el corpus es coherente en su corrupción, el sesgo depende de cómo trate cada modelo la normalización ortográfica, y puede alterar el orden relativo.
-3. **Conservar las extracciones por registro, no solo las métricas agregadas.** Es la diferencia entre poder recalcular sobre lo guardado y tener que repetir toda la inferencia.
-4. **Aplicar toda corrección de forma uniforme.** Reparar el corpus para un solo modelo lo mediría con una vara distinta de la del resto e invalidaría la comparación.
+**El defecto está corregido.** La reparación exige normalizar la codificación en ambos lados de la comparación antes del cotejo, lo que no pudo aplicarse retroactivamente sobre los recuentos ya almacenados y obligó a re-ejecutar el estudio completo: es lo que hizo la re-corrida del 8 de septiembre de 2026 que hoy sostiene la Tabla 7 (§5.3.1). El corpus vigente tiene **0 artículos** con este defecto, verificado con `tools/analisis_mojibake.py`, y ninguna cifra publicada en el cuerpo de este informe lo arrastra.
 
 *Informe Final de Tesina — Magíster en Tecnologías de la Información (MTI)*  
 *Universidad Técnica Federico Santa María — Valparaíso, Chile*  
 *Septiembre de 2026*
 
-### Anexo I — Medición restringida a las categorías anotadas por el corpus
+### Anexo I — Medición restringida a las categorías que el corpus anota
 
-Los prompts solicitan tres categorías de entidad y los corpus anotan dos, de modo que toda localización extraída se contabiliza como falso positivo (§3.3). Esta tabla acompaña cada cifra publicada de su equivalente restringido a las categorías que el corpus efectivamente anota. Se obtuvo reagregando los desgloses por tipo ya almacenados en los resultados por corrida, **sin repetir la inferencia**, tomando por configuración la corrida más reciente que aporta exactamente 120 registros. La exhaustividad es idéntica en ambas columnas porque el corpus no anota localizaciones y, por tanto, tampoco puede omitirlas: la corrección afecta solo a la precisión. La Tabla 19 acompaña cada cifra publicada de su equivalente restringido.
+Los *prompts* piden tres categorías de entidad (personas, organizaciones, localizaciones), pero no todos los corpus las anotan las tres. Cuando una categoría carece de referencia, cualquier extracción correcta de esa categoría se contabiliza igualmente como falso positivo, penalizando al modelo por acertar; la corrección consiste en restringir la métrica a las categorías que el corpus efectivamente anota.
 
-_Tabla 19. Desempeño publicado y desempeño restringido a personas y organizaciones (N=120, 42 configuraciones)_
-| Configuración | Corrida | P | R | F1 | P restr. | F1 restr. | Δ F1 |
-|:---|:---|---:|---:|---:|---:|---:|---:|
-| gemma4:31b-cloud_baseline | gemma4_31b_cloud_n120_REMOTO | 55.80 | 75.30 | 62.38 | 85.51 | 80.42 | +18.03 |
-| gemma4:31b-cloud_kb_rag | gemma4_31b_cloud_n120_REMOTO | 54.92 | 75.11 | 61.85 | 82.40 | 78.89 | +17.05 |
-| gemma4:31b-mlx_baseline | benchmark_balanced_120_20260901_140421 | 52.89 | 72.35 | 59.25 | 80.85 | 76.55 | +17.30 |
-| gemma4:31b-mlx_kb_rag | benchmark_balanced_120_20260901_140421 | 51.67 | 73.59 | 59.07 | 77.11 | 75.63 | +16.55 |
-| gemma4:31b-mlx_rag_enhanced | benchmark_balanced_120_20260824_173036 | 52.09 | 69.18 | 57.85 | 80.34 | 74.66 | +16.81 |
-| zs-es | benchmark_balanced_120_20260825_071207 | 51.90 | 67.86 | 55.62 | 79.49 | 71.07 | +15.45 |
-| gpt-oss:20b_kb_rag | gptoss_rerun_REMOTO | 49.18 | 69.09 | 55.67 | 75.40 | 71.99 | +16.32 |
-| gemma4:latest_baseline | benchmark_balanced_120_20260901_140421 | 52.91 | 63.87 | 55.91 | 78.81 | 70.52 | +14.61 |
-| gemma4:latest_kb_rag | benchmark_balanced_120_20260901_140421 | 51.29 | 62.76 | 54.74 | 79.72 | 70.34 | +15.59 |
-| zs-en | benchmark_balanced_120_20260825_071207 | 52.47 | 65.39 | 54.46 | 77.93 | 69.06 | +14.60 |
-| fs-es | benchmark_balanced_120_20260825_071207 | 51.35 | 64.59 | 54.02 | 80.76 | 69.89 | +15.86 |
-| fs-en | benchmark_balanced_120_20260825_071207 | 51.61 | 65.28 | 54.50 | 80.26 | 70.23 | +15.72 |
-| gemma4:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 50.61 | 58.82 | 52.57 | 78.80 | 67.22 | +14.65 |
-| gpt-oss:20b_baseline | gptoss_rerun_REMOTO | 46.49 | 64.40 | 52.39 | 73.69 | 68.89 | +16.50 |
-| qwen2.5:14b_kb_rag | benchmark_balanced_120_20260901_140421 | 55.48 | 58.74 | 54.84 | 82.69 | 68.11 | +13.27 |
-| qwen2.5:14b_baseline | benchmark_balanced_120_20260901_140421 | 50.29 | 54.02 | 50.22 | 83.40 | 66.11 | +15.89 |
-| llama3.1:8b_baseline | benchmark_n120_REMOTO | 47.37 | 54.91 | 48.76 | 80.52 | 64.53 | +15.77 |
-| llama3.1:8b_kb_rag | benchmark_n120_REMOTO | 50.85 | 55.23 | 50.75 | 76.28 | 63.62 | +12.87 |
-| qwen3:8b_kb_rag | qwen3_nothink_n120_REMOTO | 48.51 | 59.68 | 51.46 | 72.59 | 64.87 | +13.41 |
-| qwen3:8b_baseline | qwen3_nothink_n120_REMOTO | 46.25 | 55.02 | 48.21 | 75.27 | 63.05 | +14.84 |
-| qwen2.5:14b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 50.99 | 51.31 | 49.05 | 85.30 | 63.64 | +14.59 |
-| llama3.2:latest_kb_rag | benchmark_balanced_120_20260901_140421 | 48.92 | 51.81 | 46.93 | 75.45 | 59.86 | +12.92 |
-| llama3.1:8b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 47.02 | 46.98 | 44.56 | 87.02 | 59.25 | +14.69 |
-| gemma:latest_kb_rag | benchmark_balanced_120_20260901_140421 | 52.31 | 56.62 | 51.36 | 61.48 | 56.37 | +5.01 |
-| mistral-nemo:latest_baseline | benchmark_n120_REMOTO | 52.39 | 41.09 | 43.38 | 82.24 | 54.09 | +10.70 |
-| qwen3:8b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 43.47 | 45.28 | 43.17 | 71.66 | 56.00 | +12.83 |
-| mistral-nemo:latest_kb_rag | benchmark_n120_REMOTO | 57.59 | 41.91 | 45.76 | 80.15 | 53.07 | +7.31 |
-| gemma:latest_baseline | benchmark_balanced_120_20260901_140421 | 49.00 | 44.97 | 44.00 | 65.23 | 51.85 | +7.85 |
-| llama3.2:latest_baseline | benchmark_balanced_120_20260901_140421 | 40.18 | 37.48 | 36.11 | 79.63 | 49.65 | +13.54 |
-| llama3.2:latest | benchmark_balanced_120_20260824_173017 | 40.18 | 37.48 | 36.11 | 79.63 | 49.65 | +13.54 |
-| gemma:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 46.09 | 39.74 | 40.09 | 63.27 | 47.57 | +7.48 |
-| nemotron-mini:4b_kb_rag | nemotron_rerun_n120_REMOTO | 44.80 | 36.62 | 37.12 | 55.19 | 40.77 | +3.65 |
-| llama3.2:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 38.78 | 30.41 | 31.13 | 70.58 | 38.90 | +7.77 |
-| gemma4:12b-mlx_baseline | afectados_thinking_n120_REMOTO | 51.91 | 66.05 | 56.18 | 83.26 | 73.81 | +17.63 |
-| mistral-nemo:latest_rag_enhanced | benchmark_balanced_120_20260824_173036 | 42.99 | 24.38 | 28.52 | 79.85 | 36.18 | +7.66 |
-| gemma4:31b-cloud_rag_enhanced | benchmark_balanced_120_20260824_173036 | 16.96 | 21.11 | 18.52 | 24.56 | 23.04 | +4.51 |
-| deepseek-r1:1.5b_baseline | benchmark_n120_REMOTO | 29.96 | 24.72 | 24.83 | 43.27 | 29.34 | +4.50 |
-| deepseek-r1:1.5b_kb_rag | benchmark_n120_REMOTO | 28.35 | 24.71 | 23.94 | 36.13 | 26.91 | +2.97 |
-| nemotron-mini:4b_baseline | nemotron_rerun_n120_REMOTO | 34.50 | 21.20 | 22.59 | 46.59 | 25.28 | +2.68 |
-| nemotron-mini:4b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 35.16 | 16.39 | 19.54 | 40.45 | 21.26 | +1.72 |
-| deepseek-r1:1.5b_rag_enhanced | benchmark_balanced_120_20260824_173036 | 22.28 | 17.41 | 16.82 | 30.80 | 20.11 | +3.29 |
-| gemma4:12b-mlx_kb_rag | afectados_thinking_n120_REMOTO | 53.29 | 68.33 | 58.46 | 80.50 | 74.30 | +15.84 |
+**Sobre el corpus real N=120, este defecto está corregido de raíz** (§3.3, Anexo H): la re-corrida del 8 de septiembre de 2026 que hoy sostiene la Tabla 7 usa un corpus que ya anota localizaciones, así que ninguna cifra publicada en el cuerpo de este informe necesita esta restricción.
 
-#### Corridas múltiples del mismo modelo, y cuál se toma como referencia
+**Sobre el corpus del dominio N=30 (en inglés), la restricción sigue vigente.** Su anotación de referencia no cubre localizaciones, y el **90,16 %** de F1 citado en el resumen, el *abstract* y la conclusión 1 es el F1 restringido a personas y organizaciones para `gemma4:31b-mlx` sobre `results/n30_rerun_REMOTO/` (verificado automáticamente por `tools/verificar_informe.py`). La cifra sin restringir sobre la misma corrida y modelo es **80,57 %** (§5.3.1); la diferencia es atribuible a las localizaciones que el modelo extrae y que la referencia no anota.
 
-**Y una segunda escala de la misma declaración, previa a esta.** Antes de las ocho re-ejecuciones parciales que siguen, el estudio N=120 se corrió **por completo dos veces**: la primera reunió trece corridas heterogéneas —de fechas y configuraciones distintas, con las sustituciones que este apartado detalla— en `results/ANALISIS_CONJUNTO_20260907/`, y una segunda, el 8 de septiembre de 2026, ejecutó los trece modelos **de una sola vez y con el mismo protocolo** (`max_tokens=4096`, `rag_mode=kb_combined`) en `results/recorrida_20260908/`, consolidada en `results/ANALISIS_CONJUNTO_20260909_FIX/`. Esta segunda corrida corrigió además un defecto de anotación del corpus —la categoría *Locations* no tenía referencia, de modo que toda localización extraída se contabilizaba como falso positivo (Anexo H y este mismo Anexo, más abajo)— y por eso sus cifras de F1 son sustancialmente más altas.
-
-**La corrida del 8 de septiembre es la de referencia** y es la que cita la Tabla 7 y el cuerpo del informe desde §5.3.1. El consolidado del 7 de septiembre se conserva íntegro en su directorio, porque es el que sostuvo el trabajo hasta esa fecha y el que documenta, en el resto de este Anexo, el defecto de medición y su corrección.
-
-Cuatro de los trece modelos se midieron **más de una vez** sobre el corpus N=120. La columna «Corrida» de
-la tabla anterior indica cuál sostiene cada fila. Antes de la re-corrida completa, requirieron una
-re-ejecución parcial por motivos operativos, hoy resueltos: `gemma4:12b-mlx` y `qwen3:8b` sufrían un fallo
-del **modo de razonamiento activo**, que consumía el presupuesto de salida deliberando y devolvía una
-respuesta vacía —precisión y exhaustividad caían a cero a la vez, la firma de no haber contestado y no la
-de haberse equivocado—; en `gemma4:12b-mlx` con KB RAG eso ocurrió en 98 de los 120 artículos de aquella
-corrida parcial. `gpt-oss:20b`, también un modelo de razonamiento, agotaba con 2048 tokens el presupuesto
-de salida antes de emitir el JSON. `nemotron-mini:4b` requirió repetir el diagnóstico de un lote de
-respuestas vacías para confirmar que el defecto era del arnés y no del modelo; el criterio para preferir
-una corrida sobre otra fue siempre la validez de la medición y no su resultado, incluso cuando la corrida
-elegida dio una décima menos que la descartada.
-
-Esas corridas parciales no describían el desempeño del modelo sino el de un arnés mal configurado, y sus
-cifras no se publican en ninguna parte de este informe: un número que no mide lo que dice medir no es un
-resultado, y ofrecerlo junto al vigente invitaría a leerlos como dos estimaciones entre las que se ha
-elegido. La re-corrida completa del 8 de septiembre de 2026, adoptada en §5.3.1, ejecutó los trece modelos
-de una sola vez con un presupuesto de salida uniforme de 4096 tokens, sin ninguno de estos tres defectos:
-las cifras vigentes de los cuatro modelos son las que publica la Tabla 7, sin reserva de comparabilidad
-pendiente.
-
-Tres advertencias de lectura antes de las cifras. Las columnas publicadas se toman del campo almacenado por registro, que es lo que publican las tablas del cuerpo, y las restringidas se recalculan desde el desglose por tipo. En `nemotron-mini:4b_baseline` los dos no cuadran en **siete de sus ciento veinte registros**, los que se reextrajeron fuera del arnés de lotes tras un fallo de contexto (§5.3.1), de modo que su columna restringida arrastra esa incoherencia y conviene leerla con esa reserva. Las dos primeras filas de `llama3.2:latest` reproducen **la misma medición** bajo dos etiquetas de corrida: coinciden en los siete valores y, comprobado registro a registro, en los aciertos y errores de los ciento veinte artículos, de modo que la tabla tiene cuarenta y dos filas pero cuarenta y una configuraciones distintas. Y las dos filas de `gemma4:12b-mlx` proceden de `afectados_thinking_n120_REMOTO` y no de `benchmark_n120_REMOTO`, porque esta última quedó averiada por el modo de razonamiento —sesenta y ocho y noventa y ocho de sus ciento veinte registros no recuperan ninguna entidad— y sus cifras no representan la capacidad del modelo.
-
-En conjunto, 20 946 de los 32 201 falsos positivos de estas **cuarenta y dos configuraciones** (65,0 %) proceden de la categoría no anotada. La cifra no coincide con el 66,0 % que da §3.3 porque cubre una población distinta: esta tabla incluye configuraciones que el estudio no publica, entre ellas corridas después sustituidas por inválidas. Ambas son ciertas sobre lo que dicen medir. El mejor modelo local sobre este corpus, `gemma4:31b-mlx`, pasa de 59,25 % a **76,55 %** de F1 y supera el umbral de 70 % que fija la hipótesis sobre material periodístico mayoritariamente en español. La variante en la nube del mismo modelo conserva su ventaja (80,42 % frente a 76,55 %), de modo que la corrección **no** altera la conclusión sobre la comparación entre ejecución local y alojada sobre el consolidado publicado. Sobre el consolidado de la re-corrida, adoptado en §5.3.1, la medición completa sin restringir —ya no necesaria, porque el corpus corregido anota Locations— da **81,47 %** y **82,13 %**, por encima incluso de esta estimación restringida: era conservadora, no optimista.
+Un número que no mide lo que dice medir no es un resultado: por ese motivo, ninguna corrida invalidada por un fallo de arnés o de configuración —descritas en el cuerpo del informe donde corresponde— se publica junto a la vigente como si fueran alternativas.
 
 ### Anexo J — Correlación entre capacidad y beneficio del RAG: fuente y reproducción
 
 Las dos cifras de §5.3.1 sobre la relación entre el desempeño base de un modelo y la mejora que le aporta el KB RAG —Spearman −0,0879 (p = 0,7752) y Pearson −0,4816 (p = 0,0956), sobre los N=13 pares (F1 base, ΔF1) de la Tabla 7— proceden de `tools/robustez_estadistica.py`, que las calcula con `scipy.stats.pearsonr` y `scipy.stats.spearmanr` sobre el CSV consolidado de la re-corrida adoptada y las persiste en `repos/ner-llm-entity-benchmark/results/ROBUSTEZ_ESTADISTICA_20260909_FIX/robustez.json`. El coeficiente de **Pearson** [40] mide la asociación lineal entre las dos variables y es sensible a los valores atípicos; el de **Spearman** [41], calculado sobre sus rangos y no sobre los valores, capta cualquier relación monótona sin asumir linealidad, a costa de ignorar la magnitud de la asociación. Ninguno de los dos alcanza el 5 % de significancia sobre los trece modelos.
 
-La Tabla 20 recalcula ambos coeficientes retirando, uno a la vez, cada uno de los trece modelos de la muestra, para identificar cuánto depende el resultado de un único caso. Solo la ausencia de `nemotron-mini:4b` cambia el signo y la significancia del coeficiente de Pearson; las otras doce retiradas lo dejan entre −0,47 y −0,62, con el mismo signo que sobre la muestra completa.
+La Tabla 16 recalcula ambos coeficientes retirando, uno a la vez, cada uno de los trece modelos de la muestra, para identificar cuánto depende el resultado de un único caso. Solo la ausencia de `nemotron-mini:4b` cambia el signo y la significancia del coeficiente de Pearson; las otras doce retiradas lo dejan entre −0,47 y −0,62, con el mismo signo que sobre la muestra completa.
 
-_Tabla 20. Sensibilidad de la correlación capacidad-beneficio a la retirada de cada modelo (N=12 restantes por fila)_
+_Tabla 16. Sensibilidad de la correlación capacidad-beneficio a la retirada de cada modelo (N=12 restantes por fila)_
 
 | Modelo retirado | Pearson r | Pearson p | Spearman ρ |
 |:---|---:|---:|---:|
@@ -1198,10 +1023,10 @@ El cálculo parte del CSV de resultados por artículo, no del resumen agregado q
 `gemma4:31b-cloud` no se pudo usar directamente porque no reflejaba sus propios datos crudos en ninguna de
 las cinco semillas, un desajuste que no afecta al resto de los modelos ni a la fuente primaria por artículo.
 
-La Tabla 21 recoge, para cada uno de los once modelos, la media y el intervalo de confianza al 95 % del F1
+La Tabla 17 recoge, para cada uno de los once modelos, la media y el intervalo de confianza al 95 % del F1
 sobre las cinco semillas, en modo baseline y KB RAG.
 
-_Tabla 21. Media e intervalo de confianza al 95 % del F1 sobre cinco semillas (N=120, once modelos)_
+_Tabla 17. Media e intervalo de confianza al 95 % del F1 sobre cinco semillas (N=120, once modelos)_
 
 | Modelo | F1 baseline (media, IC95%) | F1 KB RAG (media, IC95%) |
 |:---|:---:|:---:|

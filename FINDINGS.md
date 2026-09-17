@@ -9750,3 +9750,56 @@ que quedaron sin nada que tapar: las seis de `§F168` (Anexo J), las cuatro de `
 Levene/Brown-Forsythe/Cohen) y las siete de `§F188` (Anexo K). Quedan vigentes, sin cambios, las de `§F170`/
 `§F172` (Figura 1 retirada, compresión de §7.2, resaltes/guiones) porque esta pasada no las tocó: son un
 trabajo de maquetación distinto, sobre texto viejo retirado, no sobre secciones nuevas añadidas.
+
+---
+
+## §F191 — Anexos H e I comprimidos: solo lo vigente y lo que sostiene la hipótesis; se retiran tres comprobaciones obsoletas
+
+**Fecha:** 2026-09-17. **Instrucción explícita del autor**, que reemplaza la precisión anterior de
+`CLAUDE.md` («los anexos no se tocan por esta precisión, a la espera de las indicaciones del profesor guía»):
+comprimir ahora los Anexos H e I, dejando solo los hallazgos importantes para probar la hipótesis de la
+tesis, y reducir anécdotas históricas y contenido que exigiría justificación ante la comisión evaluadora.
+
+### Qué se quitó y por qué
+
+**Anexo H** (codificación *mojibake*): se retiraron la Tabla 16 (formas corruptas de ejemplo), la Tabla 17
+(alcance medido en seis cifras), la Tabla 18 (efecto diferencial en 26 configuraciones) y la sección H.5
+(cuatro lecciones aprendidas). Se conservan, en tres párrafos: qué fue el defecto, su magnitud (283/1406
+entidades, 87 % de artículos) y el signo contraintuitivo de su efecto, y que está corregido desde la
+re-corrida del 8 de septiembre que hoy sostiene la Tabla 7. El cuerpo (§2.5 y §5.3.1) ya tenía un resumen
+equivalente de estos mismos hechos, así que no se pierde ninguna cifra que sostenga la hipótesis.
+
+**Anexo I** (medición restringida): se retiró la Tabla 19 (42 configuraciones del consolidado histórico) y
+la sección completa «Corridas múltiples del mismo modelo» (las re-ejecuciones parciales de
+`gemma4:12b-mlx`/`qwen3:8b`/`gpt-oss:20b`/`nemotron-mini:4b` por fallos de arnés, ya sin relevancia para
+ningún resultado vigente). Se conserva, en cuatro párrafos: el principio general (categoría sin anotar →
+falso positivo, se restringe la métrica), que el caso N=120 está resuelto de raíz, y **la explicación vigente
+del 90,16 % de F1** (cifra del resumen/*abstract*/conclusión 1): esa cifra sigue dependiendo de la
+restricción a Personas/Organizaciones porque el corpus del dominio N=30, en inglés, no anota localizaciones
+— comprobado directamente contra `results/n30_rerun_REMOTO/detailed_results.json` antes de escribirlo. Esto
+**no es historia superada**: es la justificación vigente de una cifra que hoy sostiene la hipótesis, y por
+eso se mantiene, a diferencia del caso N=120.
+
+Las Tablas 20 y 21 (Anexos J y K) se renumeraron a 16 y 17 para conservar la numeración contigua.
+
+### Tres comprobaciones del verificador retiradas, no declaradas
+
+`c_anexo_vs_tabla7`, `c_tabla17` (la del alcance del *mojibake*) y `c_tabla18_vs_artefacto` verificaban
+exclusivamente el contenido retirado (Tablas 17, 18 y 19 antiguas). Con ese contenido fuera por diseño, no
+hay nada que examinar: `examinados=0` las marcaría como **VACÍA**, que el proyecto trata como un fallo real
+y no como un aprobado silencioso. Se retiraron las tres funciones (renombradas con sufijo `_RETIRADA`,
+código conservado para referencia, ya no invocadas desde `main()`), en vez de declararlas, porque declarar
+una VACÍA sería silenciar el mecanismo que las detecta en vez de reconocer que la comprobación ya no aplica.
+Un cuarto ajuste, quirúrgico: `c_agregacion` (que compara la macro/micro-agregación del Anexo I) ahora
+comprueba primero si la frase «pasa de X % a Y %» existe antes de exigirla, con el mismo criterio que ya
+usaba para la frase «convención original» de la conclusión 1 (ambas dejaron de tener sentido cuando la
+decisión 1 volvió *moot* esa comparación para N=120).
+
+### Verificado antes de comprometer
+
+- Ninguna cifra que sostiene la Tabla 7, el Anexo K o las conclusiones se tocó.
+- Las referencias cruzadas a «Anexo H»/«Anexo I» desde el cuerpo (§2.5, §3.3, §5.3.1, §5.4, §7.2, Anexo E)
+  siguen siendo válidas: los anexos existen y siguen tratando los mismos temas, con menos detalle forense.
+- Verificado el 90,16 % contra su fuente primaria antes de escribir la nueva explicación (no se copió el
+  razonamiento de una versión anterior sin comprobarlo).
+- Pendiente, en curso: propagar esta compresión a los tres `.docx` y renumerar sus tablas.
