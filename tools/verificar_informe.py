@@ -95,106 +95,6 @@ FALLOS_DECLARADOS = {
     'github.com/eahumada/mti-pge-tesina': ('2026-09-09',
                                            'referencia [37]: el repositorio es privado hasta la '
                                            'purga (SEGURIDAD-CLAVE-GOOGLE-20260908.md)'),
-    'todavia afirma «Composición de los falsos positivos': ('2026-09-12',
-                                                            'PENDIENTE de propagar (§F170): la '
-                                                            'Figura 1 vieja se retiro del .md, '
-                                                            'aun no de los tres .docx'),
-    'todavia afirma «la Figura 1 lo ilustra»': ('2026-09-12',
-                                                'idem (§F170), la referencia colgante que se '
-                                                'quito junto con la figura'),
-    'guiones largos frente a': ('2026-09-12',
-                               'PENDIENTE de propagar (§F170): la compresion del parrafo de §3.3 '
-                               'quito un guion largo del .md; los tres .docx aun no se '
-                               'regeneraron. Ya se declaro y se retiro una vez antes (§F166), '
-                               'reabierta por el mismo tipo de motivo'),
-    'todavia afirma «sin ninguna forma de acertar en ella»': ('2026-09-12',
-                                                              'PENDIENTE de propagar (§F170): '
-                                                              'frase del parrafo viejo de §3.3, '
-                                                              'aun en los tres .docx sin '
-                                                              'regenerar'),
-    'resaltes en el cuerpo que el Markdown no marca': ('2026-09-12',
-                                                       'PENDIENTE de propagar (§F171/§F172): los '
-                                                       'tres .docx aun resaltan el texto viejo de '
-                                                       'los puntos 7/8 de §7.2 (retirado del .md), '
-                                                       'que ya no coincide con ningun **bold** '
-                                                       'actual. Baja solo al regenerar'),
-    'todavia afirma «La solución resultó más barata de lo previsto»': ('2026-09-12',
-                                                                      'PENDIENTE de propagar '
-                                                                      '(§F172): frase vieja del '
-                                                                      'punto 8 de §7.2, aun en '
-                                                                      'los .docx sin regenerar'),
-    'todavia afirma «Se documenta por tanto como limitación': ('2026-09-12',
-                                                               'PENDIENTE de propagar (§F172): '
-                                                               'referencia obsoleta del Anexo '
-                                                               'H.4, corregida en el .md'),
-    'todavia afirma «iba de −0,082 a +0,155 de F1»': ('2026-09-12',
-                                                      'PENDIENTE de propagar (§F172): detalle '
-                                                      'viejo del punto 7 de §7.2, aun en los '
-                                                      '.docx sin regenerar'),
-    'anexo i — medición restringida a las categorías que el corpus': ('2026-09-17',
-                                                                       'PENDIENTE de propagar '
-                                                                       '(§F191): Anexo I '
-                                                                       'comprimido, encabezado '
-                                                                       'nuevo'),
-    'Los prompts piden tres categorías de entidad': ('2026-09-17',
-                                                      'PENDIENTE de propagar (§F191): Anexo I '
-                                                      'comprimido, parrafo nuevo'),
-    'Sobre el corpus del dominio N=30 (en inglés), la restricci': ('2026-09-17',
-                                                                    'PENDIENTE de propagar '
-                                                                    '(§F191): Anexo I comprimido, '
-                                                                    'parrafo nuevo'),
-    'Un número que no mide lo que dice medir no es un resultado': ('2026-09-17',
-                                                                    'PENDIENTE de propagar '
-                                                                    '(§F191): cierre del Anexo I '
-                                                                    'comprimido'),
-    'Nota de procedencia, sin resolver. El prompt transcrito ar': ('2026-09-17',
-                                                                    'PENDIENTE de propagar: nuevo '
-                                                                    'parrafo en Anexo F sobre la '
-                                                                    'discrepancia idioma del prompt '
-                                                                    '/ idioma del corpus (§F54)'),
-    'Tabla 10, fila 6 difiere': ('2026-09-17',
-                                 'PENDIENTE de propagar: corregido el separador decimal de '
-                                 '"1.1 GB" a "1,1 GB" en el .md (consistencia con el resto de la '
-                                 'tabla, en coma), aun no en los tres .docx'),
-    'el resumen difiere del Markdown en la palabra': ('2026-09-17',
-                                                                 'PENDIENTE de propagar: resumen '
-                                                                 'editado varias veces hoy (R1/R5 '
-                                                                 '5 semillas §F176/§F184, y la '
-                                                                 'revision global final §4.7.4), '
-                                                                 'aun no en los tres .docx'),
-    'el abstract difiere del Markdown en la palabra': ('2026-09-17',
-                                                                   'PENDIENTE de propagar: mismo '
-                                                                   'motivo que el resumen, sincronia '
-                                                                   'ES/EN aplicada en el mismo commit'),
-    'Tabla 4, fila 1 difiere': ('2026-09-17',
-                               'PENDIENTE de propagar: FS-ES/ZS-ES actualizadas a la media de 5 '
-                               'semillas (§F176) y reordenadas por F1, aun no en los tres .docx'),
-    'Tabla 5, fila 1 difiere': ('2026-09-17',
-                               'PENDIENTE de propagar: Tabla 5 completa recalculada sobre la media '
-                               'de 5 semillas (§F176) en vez de una sola corrida, aun no en los '
-                               'tres .docx'),
-    'Tabla 15, fila 2 difiere': ('2026-09-17',
-                                'PENDIENTE de propagar: procedencia actualizada a '
-                                'variantes_5semillas_n15_REMOTO, aun no en los tres .docx'),
-    '2. Localización lingüística: efecto real, sin una única ex': ('2026-09-17',
-                                                                    'PENDIENTE de propagar: '
-                                                                    'conclusion 2 reescrita con los '
-                                                                    'resultados de R1/R4/R5 (5 '
-                                                                    'semillas, tres corpus)'),
-    'Esa predicción se contrasta con un diseño más limpio sobre': ('2026-09-17',
-                                                                    'PENDIENTE de propagar: nuevo '
-                                                                    'parrafo en §6.1 sobre R4/R5 '
-                                                                    '(par emparejado N=30 EN/ES) y '
-                                                                    'R1 Fase 2 (N=120, 5 semillas)'),
-    'Media de cinco semillas declaradas (42, 43, 44, 45, 46) so': ('2026-09-17',
-                                                                    'PENDIENTE de propagar: nueva '
-                                                                    'nota al pie de la Tabla 5'),
-    'Esta lectura exige una salvedad de diseño, declarada y sin': ('2026-09-17',
-                                                                    'PENDIENTE de propagar (§F194): '
-                                                                    'nuevo parrafo en §6.2 sobre la '
-                                                                    'fuga cruzada de ejemplares '
-                                                                    'few-shot (94% de 113 articulos), '
-                                                                    'declarada por decision del autor'),
     'hay que regenerarlo desde el .docx': ('2026-09-17',
                                            'PENDIENTE de regenerar (§F190): los tres .docx cambiaron hoy '
                                            '(Anexo J, bibliografia, Anexo K) y el PDF de la raiz no se '
@@ -1560,13 +1460,12 @@ def _texto_docx(ruta):
 
 # 17 el 2026-09-09 al medirlo por primera vez; 16 tras partir el run de §3.3, que era el
 # unico de los 17 introducido por una edicion propia. Baja segun se propague la limpieza.
-BOLD_CUERPO_BASE = 8    # 9 -> 8 el 2026-09-10 (Claude Desktop, §2.27). Baja una unidad tras la
-                        # cuarta pasada; la comprobacion pidio bajar la base al detectar la mejora.
-                        # El diagnostico de los que quedan sigue en pie y esta en §2.25: NO son
-                        # resaltes anadidos por el renderizador, sino negritas del Markdown que su
-                        # constructor de `marcados` no representa —negrita con cursiva dentro, y
-                        # negrita que cruza una linea de cita—. No se toco el regex: probado el
-                        # arreglo no codicioso, el recuento subia de 9 a 142.
+BOLD_CUERPO_BASE = 4    # 8 -> 4 el 2026-09-17 (Claude Desktop, §2.28). La comprobacion volvio a
+                        # pedir bajar la base al detectar la mejora: el .md perdio resaltes en la
+                        # compresion de §3.3 y del Anexo I. El diagnostico de los que quedan sigue
+                        # en §2.25: NO son resaltes anadidos por el renderizador, sino negritas del
+                        # Markdown que el constructor de `marcados` no representa (negrita con
+                        # cursiva dentro, y negrita que cruza una linea de cita).
 
 
 PDF_RAIZ = 'Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.pdf'

@@ -281,6 +281,66 @@ Para **cada tarea** que ejecutes:
 | Respaldos | `…docx.bak_pre-cumplimiento-25pp`, `HISTORIAL-CONSOLIDADO.md.bak_pre20260903` |
 | `AGENT.md`, `ANTIGRAVITY.md`, `GEMINI.md` (raíz) | Protocolo de coordinación (esta tarea 2.0) |
 
+### 2.28 COMPLETADA — Quinta pasada: una semana de cambios del `.md` a los tres `.docx` y al PDF
+- **Abierta:** 2026-09-17 22:10 por Claude Desktop, a pedido del autor. El encargo sigue siendo el mismo
+  (`PROMPT-CLAUDE-DESKTOP-DOCX-Y-PDF-20260909.md`, sin piezas nuevas desde el 13); lo que cambió es la fuente.
+- **El desfase no es cosmético.** El `.md` pasa de 159 142 a 146 677 bytes, y con él: referencias **39 → 46**,
+  tablas **19 → 17**, figuras **2 → 1**, anexos **9 → 10** (A-G, I, J, K), palabras ~23 700 → 22 004.
+- **Lo que trae, según los `§F` que lo declaran:** el estudio de variantes de idioma con **5 semillas**, que
+  reordena las filas FS-ES/ZS-ES de la Tabla 4 por F1 (§F176, §F196) · el **Anexo I comprimido**, con
+  encabezado, párrafo y cierre nuevos (§F191) · un **párrafo nuevo en §6.2** sobre la fuga cruzada de
+  ejemplares *few-shot*, 94 % de 113 artículos (§F194) · los puntos 7 y 8 de §7.2 y una referencia del Anexo
+  H.4 reescritos (§F171, §F172) · §3.3 comprimido otra vez (§F170) · y la revisión global final con ocho
+  correcciones tras el panel de expertos (§F198).
+- ⚠️ **La Figura 1 antigua se retiró del `.md`** (§F170). Queda una sola figura, la del efecto del RAG,
+  renumerada como Figura 1; `falsos-positivos.png` sigue en `doc/figuras/` pero ya no se cita. Los `.docx`
+  llevan todavía las dos. Confirmado con el autor antes de regenerar, porque es visible para quien compare
+  con lo enviado al profesor.
+- **Línea base:** `53 comprobaciones · 75 fallos (75 declarados, 0 nuevos)`. La mayoría son etiquetas
+  «PENDIENTE de propagar» que solo bajan al regenerar.
+- **Vigilar la extensión:** la `_v15` dejó el cuerpo en **25 de 25, sin margen**. La fuente perdió ~1 700
+  palabras netas, así que debería volver a caber con holgura, pero **se mide sobre el PDF**.
+- **Archivos que toco:** los tres `.docx`, el PDF de la raíz, `doc/versions/informe_final/` y `VERSIONES.md`.
+  **Del `.md` solo leo.** No toco el PDF de `doc/versions/enviados/`.
+
+**Cerrada:** 2026-09-17 22:25. Hash del `.md` comprobado al terminar: el mismo, `ee58028bb5b6`.
+
+| | Antes | Después |
+|:---|:---:|:---:|
+| `verificar_informe.py` | 75 fallos (75 declarados, 0 nuevos) | **29 fallos (6 declarados, 23 nuevos)** |
+| `auditar_afirmaciones.py` | 12 comprobadas, 0 incumplidas | 12 comprobadas, **3 incumplidas** |
+
+**Los 23 «nuevos» son todos la misma comprobación**, «las declaraciones no silencian más de lo que les toca»:
+declaraciones de Claude Code que dejaron de tapar nada porque el fallo que declaraban está resuelto. Es la
+señal de que la propagación se hizo, no un defecto.
+
+**Las 3 afirmaciones incumplidas también son del registro y no del entregable. Verificadas una a una:**
+- «la cifra de falsos positivos es 66,0 % y 12 852» (§F88): **ese dato ya no existe en el `.md`** —cero
+  ocurrencias de «66,0 %», «12 852» y «20 946»—, porque la figura de composición y su párrafo se retiraron
+  (§F170). El `.docx` hace bien en no traerlo.
+- «en §3.3 el resalte cubre solo el porcentaje» (§F96): depende de la anterior; sin ese porcentaje no hay
+  resalte que comprobar.
+- «Tok/s/B de la Tabla 4 es 5.80 en dos celdas» (§F88): la Tabla 4 se recalculó con la media de **5 semillas**
+  (§F196); en el `.md` de hoy el 5.80 aparece una vez y el 5.33 dos, justo al revés de lo que espera.
+- **Las tres describen un estado que la fuente ya superó.** Retirarlas o reescribirlas es del registro de
+  Claude Code, no mío: quedan señaladas aquí y no las toco.
+
+**Medición sobre el PDF: 33 páginas, cuerpo 24 de 25 y anexos 9.** **Margen recuperado**: la fuente adelgazó
+~1 700 palabras netas y el cuerpo baja de las 25 sin holgura de la `_v15` a 24.
+
+**Verificación completa:** cero páginas en blanco · encabezado y pie en las 33 sin solaparse (mínimos 20,9 y
+17,7 pt) · resumen y abstract en la página 1, con 198 y 184 palabras · **46 entradas de bibliografía**
+correlativas de la 1 a la 46 · **17 leyendas de tabla** correlativas y **una de figura** · un solo
+`<w:drawing>` en el cuerpo, coherente con que el `.md` tenga ya una sola figura · **diez anexos: A-G, I, J y
+K** · ninguna llamada `§` rota · ninguna fecha de calendario en el cuerpo · sin emojis, arte ASCII ni
+asteriscos sueltos. Los tres `.docx` coinciden entre sí.
+
+**`BOLD_CUERPO_BASE` de 8 a 4**, que la comprobación volvió a pedir al detectar la mejora: el `.md` perdió
+resaltes al comprimir §3.3 y el Anexo I.
+
+**Respaldo** en `doc/versions/informe_final/_respaldos_20260917/`. **`_v16` congelada**: `.docx`
+`65b3c111b545` · `.pdf` `869f431909c8`. Sin tocar el PDF de `doc/versions/enviados/`.
+
 ### 2.27 COMPLETADA — Cuarta pasada: piezas 31 a 36, el marco teórico enriquecido
 - **Abierta:** 2026-09-10 01:55 por Claude Desktop. Secciones **0.septies, 0.octies y 0.nonies** del encargo,
   añadidas después de la `_v14`. Y traen la noticia que importa: **el reparo 4 del profesor guía deja de estar
@@ -2204,6 +2264,7 @@ miraba, y eso motiva la política.
 | 2026-09-17 (tarde) | Claude Code (equipo principal) | Investigado a fondo el Anexo F (`FINDINGS §F54`): el *prompt* de generación documentado pide español, el corpus versionado está en inglés, y no sobreviven logs de julio para reconciliarlo. Ya escalado sin resolver el 8 de septiembre. Declarado como limitación de procedencia (no un error corregible), con remisión a la respuesta real que se dio: la traducción verificada del corpus (R4) |
 | 2026-09-17 (tarde) | Claude Code (equipo principal) | Decisión del autor sobre el destino de `kb_combined` (`FINDINGS §F178`): declarar la limitación (fuga cruzada de ejemplares *few-shot*, 94% de 113 artículos, mecanismo compartido con la Tabla 7) sin rehacer ejemplares, sin re-ejecutar y sin excluir `kb_combined` de ninguna tabla. Aclarada antes una confusión entre el estudio de variantes de *prompt* (§4.3, exclusivo N=15/N=30) y el modo `kb_combined` (N=120, los 13 modelos), verificado con lectura directa de `kb_rag_manager.py`. Aplicado en Anexo D y §6.2 del `.md` canónico. Detalle en `FINDINGS.md §F194` y `TODO-INFORME-FINAL.md §17`. Verificador: 0 fallos nuevos |
 | 2026-09-17 (tarde, retomada) | Claude Code (equipo principal) | **Sesión retomada tras el bloqueo de permisos de macOS** (checkpoint `checkpoint_20260917_bloqueo_permisos.md`); confirmado `main` al día con origin y sin pérdida de trabajo. Aplicadas 4 contradicciones numéricas confirmadas contra la Tabla 7 (59,25%→81,47% en §5.3.1; "nueve"→"once" modelos con RAG; Tukey "dos modelos significativos"→"uno"; referencia cruzada que atribuía a *mojibake* una exclusión que es en realidad por contaminación de ejemplares *few-shot*) y terminología "ablation"→"variantes". **Segunda vuelta de purga histórica** (`FINDINGS §F192`), a instrucción explícita y repetida del autor de eliminar (no comprimir) toda mención a defectos ya corregidos sin asidero en la corrida vigente: retirado el Anexo H completo, un hallazgo de Conclusiones, dos ítems de Trabajo Futuro. Workflows `revision-final-tesina-20260917-v2`/`-v3` aplicados (`§F193`, `§F195`): 12+3 hallazgos más, incluida una contradicción interna real en Conclusión 6. **Instrucción para quien retome: no repetir la purga histórica ni relanzar `-v2`/`-v3`, ya están cerrados** |
+| 2026-09-17 22:25 | Claude Desktop | §2.28: una semana de cambios del `.md` propagada a los tres `.docx` y al PDF. Referencias **39→46**, tablas 19→17, figuras 2→**1**, anexos 9→**10** (A-G, I, J, K). Verificador **75 → 29 fallos**, y los 23 nuevos son declaraciones caducadas. Las 3 afirmaciones incumplidas son del registro, no del entregable: describen datos que la fuente retiró (§F170) o recalculó con 5 semillas (§F196). **Cuerpo 24/25, margen recuperado.** `_v16` congelada |
 | 2026-09-10 02:05 | Claude Desktop | §2.27: piezas 31-36 propagadas, **el marco teórico enriquecido ya está en el entregable** y con ello el reparo 4 del profesor deja de estar pendiente ahí. Verificador **41 → 7 fallos**, auditoría 0 incumplidas. Corregidos dos defectos del renderizador que el verificador destapó: `####` pasa a `heading4` (la plantilla lo define) y los encabezados se emiten en un solo run, porque el verificador une los `<w:t>` con espacio y «(`LLMProvider`)» se leía «( LLMProvider )». ⚠️ **Cuerpo 25 de 25: cumple sin margen.** `_v15` congelada |
 | 2026-09-09 23:20 | Claude Desktop | §2.26: piezas 29 y 30 propagadas (ocho fechas de calendario fuera del cuerpo y eliminado el párrafo de «particularidad de procedencia» con el 79,03 % sin evidencia recalculable). Verificador **11 → 7 fallos**, auditoría 0 incumplidas, y los dos nuevos son declaraciones caducadas, una de ellas la del propio párrafo retirado. Cuerpo 24/25 sobre el PDF. `_v14` congelada |
 | 2026-09-09 23:00 | Claude Desktop | §2.25: piezas 19-28 propagadas reconstruyendo desde el `.md` (155 926 bytes, hash sin cambios). Verificador **26 → 6 fallos**, auditoría 0 incumplidas, y las tres frases retiradas del aviso §1.286 ya no están en ningún entregable. Cuerpo 24/25 sobre el PDF. Cerrado el pendiente de los resaltes: los 9 que acusaba el verificador **están marcados en el `.md`** y son falsos positivos de su regex (negrita con cursiva dentro, y negrita que cruza una línea de cita); probado el arreglo no codicioso, subía a 142, así que **no se tocó el regex**. `_v13` congelada |

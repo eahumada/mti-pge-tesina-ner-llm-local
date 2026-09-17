@@ -1164,3 +1164,41 @@ llamada `§` rota · ninguna fecha de calendario en el cuerpo.
 
 **Respaldo** en `doc/versions/informe_final/_respaldos_20260910/`. **`_v15` congelada**: `.docx` `b30c85b7531f`
 y `.pdf` `c62e78bc91e7`. Renderizador actualizado en `doc/versions/informe_final/_tools/`.
+
+### 2026-09-17 22:25 — Una semana de cambios de la fuente a los entregables (_v16)
+
+Los `.docx` y el PDF llevaban una semana parados en la `_v15` mientras el `.md` cambiaba a diario. El
+verificador lo decía con claridad: 75 fallos, todos declarados, y la mayoría etiquetas «PENDIENTE de propagar»
+puestas por Claude Code que solo bajan al regenerar. Reconstruidos los tres `.docx` desde el `.md` (146 677
+bytes, SHA-256 `ee58028bb5b6`, comprobado igual al terminar) y regenerado el PDF.
+
+**Lo que trae.** El `.md` adelgazó de 159 142 a 146 677 bytes y con él cambian las cuentas: **referencias
+39 → 46, tablas 19 → 17, figuras 2 → 1, anexos 9 → 10 (A-G, I, J, K)**. Entra el estudio de variantes de idioma
+con **5 semillas**, que recalcula las Tablas 4 y 5 y reordena las filas ZS-ES/FS-ES (§F176, §F196); el **Anexo
+I comprimido** con encabezado, párrafo y cierre nuevos (§F191); un párrafo nuevo en §6.2 sobre la fuga cruzada
+de ejemplares *few-shot* (§F194); los puntos 7 y 8 de §7.2 y una referencia del Anexo H.4 reescritos (§F171,
+§F172); §3.3 comprimido otra vez (§F170); y la revisión global final con ocho correcciones (§F198).
+
+**Un cambio visible que se confirmó con el autor antes de regenerar:** la figura de composición de falsos
+positivos se retiró del `.md`, así que el entregable pasa de dos figuras a una. El PNG sigue en `doc/figuras/`
+pero ya no se cita.
+
+**Criterio de aceptación.** El verificador baja de **75 fallos (75 declarados, 0 nuevos) a 29**, y los 23
+nuevos son todos la misma comprobación avisando de declaraciones caducadas: la señal de que la propagación se
+hizo. La auditoría de afirmaciones marca **3 incumplidas**, y las tres son del registro y no del entregable:
+«la cifra de falsos positivos es 66,0 % y 12 852» y «en §3.3 el resalte cubre solo el porcentaje» apuntan a un
+dato que **ya no existe en el `.md`** —cero ocurrencias de 66,0 %, 12 852 y 20 946, porque esa figura se
+retiró—, y «Tok/s/B de la Tabla 4 es 5.80 en dos celdas» quedó atrás cuando la tabla se recalculó con 5
+semillas. Se dejan señaladas para Claude Code, que es de quien es ese registro.
+
+**Margen recuperado.** La `_v15` había dejado el cuerpo en 25 de 25, sin holgura. La fuente perdió ~1 700
+palabras netas y el cuerpo baja a **24 de 25**. Medido sobre el PDF, no sobre el Word.
+
+**Resto de la verificación:** 33 páginas totales y anexos 9 · cero páginas en blanco · encabezado y pie en las
+33 sin solaparse · resumen y abstract en la página 1, con 198 y 184 palabras · 46 entradas de bibliografía
+correlativas · 17 leyendas de tabla y una de figura, con un solo `<w:drawing>` en el cuerpo · diez anexos ·
+ninguna llamada `§` rota · ninguna fecha de calendario en el cuerpo. Los tres `.docx` coinciden entre sí.
+`BOLD_CUERPO_BASE` bajó de 8 a 4, que la comprobación volvió a pedir.
+
+**Respaldo** en `doc/versions/informe_final/_respaldos_20260917/`. **`_v16` congelada**: `.docx` `65b3c111b545`
+y `.pdf` `869f431909c8`.

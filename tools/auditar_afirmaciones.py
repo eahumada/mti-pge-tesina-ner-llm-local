@@ -282,15 +282,18 @@ def afirmaciones():
          lambda: _todos(TRES, lambda t: (
              sum(t.lower().count(e) for e in EXCLUIDOS) == 0,
              '%d menciones' % sum(t.lower().count(e) for e in EXCLUIDOS)))),
-        ('la cifra de falsos positivos es 66,0 % y 12 852', '§F88',
-         lambda: _todos(TRES, lambda t: (
-             '66,0 %' in t and '12 852' in t and
-             'de los falsos positivos del estudio, 20 946' not in t,
-             'no trae 66,0 % / 12 852, o conserva el 20 946 atribuido al estudio'))),
-        ('Tok/s/B de la Tabla 4 es 5.80 en dos celdas', '§F88',
-         lambda: _todos(TRES, lambda t: (True, ''))
-         if all(celdas(r, '5.80') == 2 and celdas(r, '5.33') == 0 for r in TRES)
-         else (False, 'alguna copia no tiene 2 celdas a 5.80 y 0 a 5.33')),
+        # [RETIRADAS 2026-09-17, tras §2.28] Las dos afirmaciones de mas arriba describian un
+        # estado que la fuente ya supero, no un defecto de propagacion:
+        #   - «la cifra de falsos positivos es 66,0 % y 12 852» (§F88): esa cifra ya no existe en
+        #     el .md -cero ocurrencias de «66,0 %», «12 852» y «20 946»-, porque la figura de
+        #     composicion de FP y su parrafo se retiraron (§F170). Los .docx regenerados hacen
+        #     bien en no traerla.
+        #   - «Tok/s/B de la Tabla 4 es 5.80 en dos celdas» (§F88): la Tabla 4 se recalculo con la
+        #     media de 5 semillas (§F196); en la fuente vigente el 5.80 aparece una vez y el 5.33
+        #     dos, justo al reves de lo que la afirmacion pedia.
+        # Confirmado por Claude Desktop (CURRENT-TASKS §2.28) antes de retirarlas: no se reescriben
+        # con las cifras nuevas porque no hay una afirmacion de peso equivalente que sostener aqui;
+        # las cifras nuevas ya las cubren `c_tabla4_vs_datos` y `c_redondeos` en verificar_informe.py.
         ('las tres cifras titulares de N=120/N=30 estan propagadas', '§F154',
          lambda: _todos(TRES, lambda t: (
              all(v in t for v in ('81,47', '90,16', '82,13')),
@@ -314,8 +317,10 @@ def afirmaciones():
         # Anexo H/I por instruccion del autor: registro forense de un defecto ya corregido, no un
         # dato que sostenga la hipotesis vigente. Sin esas tablas en el Markdown, no hay nada que
         # comparar celda por celda.
-        ('en §3.3 el resalte cubre solo el porcentaje', '§F96',
-         lambda: _resalte_33()),
+        # [RETIRADA 2026-09-17, tras §2.28] «en §3.3 el resalte cubre solo el porcentaje» (§F96)
+        # dependia de la cifra «66,0 %» retirada arriba: sin ese porcentaje en el .md no queda
+        # resalte que comprobar. `_resalte_33` se deja definida, sin uso, por si el parrafo de
+        # §3.3 recupera algun dia una cifra resaltada que valga la pena volver a comprobar asi.
         ('el recuento de decisiones cuadra con las que hay', '§F135',
          lambda: _recuento_de_decisiones()),
         ('los documentos de norma no copian recuentos de las herramientas', '§F134',
