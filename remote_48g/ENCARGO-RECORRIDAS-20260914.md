@@ -1,6 +1,25 @@
 # Encargo de re-corridas — Equipo 48 GB
 **Creado:** 2026-09-14 · **Por:** Antigravity (coordinación) · **Basado en:** hallazgos del autor
 
+> ## CIERRE DEFINITIVO DEL ENCARGO — Instrucción del autor, 2026-09-17
+>
+> **El encargo está 100% completo y CERRADO. No se ejecuta ninguna corrida más, bajo ningún concepto.**
+> R1 Fase 1, R1 Fase 2, R2 (5/5 semillas, 13 200 evaluaciones, 0 fallidas), R3, R4 y R5 terminaron y están
+> verificadas directamente contra los datos crudos (`CURRENT-TASKS.md §1.339`, `FINDINGS.md §F186`). R6
+> (método del +10,01/+2,19) queda sin respuesta del remoto y **se retira sin más espera**: no bloquea nada,
+> la conclusión no cambia con ninguna de las dos cifras candidatas.
+>
+> **Instrucción explícita: no volver a correr nada de lo que este documento pedía, ni una repetición, ni
+> una variación, ni una limpieza.** Los resultados que hoy están en el repositorio bajo `results/` son
+> **los últimos y los únicos que cuentan** para el informe. Si en el futuro se detecta un defecto en un
+> dato ya publicado, la corrección se declara y se documenta (ver `CLAUDE.md`, Integridad de la medición);
+> no se dispara una nueva corrida para «arreglarlo» sin que el autor lo pida expresamente y por escrito.
+>
+> **Este documento queda congelado como registro histórico de lo que se pidió y cómo se resolvió.** No se
+> le añaden peticiones nuevas. Cualquier trabajo nuevo sobre el equipo remoto de 48 GB requiere un encargo
+> nuevo, explícito, con su propio documento.
+
+
 > **Instrucción del autor, 2026-09-15: el encargo se ejecuta completo, sin excepciones ni pausas por
 > criterio propio.** R1 Fase 2 (N=120) y R2 no están canceladas ni son opcionales: quedaron **pendientes**,
 > no descartadas, y deben ejecutarse en cuanto termine lo que esté en curso (R5 u otra). **Las decisiones

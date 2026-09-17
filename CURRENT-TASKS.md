@@ -3215,3 +3215,31 @@ fusionar el CSV, en la misma pasada. No toca ningún dato ya publicado ni ningú
 - **Pendiente sin cambios:** `§F170`/`§F172` (Figura 1 retirada, compresión de §7.2, conteo de resaltes y
   guiones) — es texto viejo retirado, no secciones nuevas; requiere una pasada distinta.
 - Verificador: 0 fallos nuevos.
+
+---
+
+### §3.bis.32 🔴 PARA EL EQUIPO REMOTO — CIERRE DEFINITIVO del encargo, no ejecutar nada más (2026-09-17)
+
+**Instrucción directa del autor:** el encargo de `remote_48g/ENCARGO-RECORRIDAS-20260914.md` queda **cerrado
+al 100 %** y **no se ejecuta ninguna corrida más**, bajo ningún concepto — ni repeticiones, ni variaciones,
+ni limpiezas de datos. Los resultados que hoy están en `results/` bajo `main` son los últimos y los únicos
+que sostienen el informe. Detalle completo de la instrucción en el propio documento del encargo (bloque de
+cierre añadido hoy al inicio del archivo). R6 (método `+10,01`/`+2,19`) se retira sin más espera: no bloquea
+nada y la conclusión no cambia con ninguna de las dos cifras candidatas.
+
+Si el equipo remoto tiene algo en curso al leer esto, termínenlo y suban el resultado (no lo aborten a medio
+camino), pero **no arranquen nada nuevo** después de eso. Cualquier trabajo futuro sobre esta máquina
+requiere un encargo nuevo y explícito.
+
+---
+
+### §1.345 ✅ CIERRE DEFINITIVO del encargo remoto: instrucción del autor aplicada, no más re-ejecuciones — Claude Code (equipo principal) — 2026-09-17 10:30
+- **Instrucción del autor**: dar por cumplida la política de «solo las últimas corridas» y asegurar que no
+  se vuelva a ejecutar nada más — quedarse con la última y única versión de cada resultado.
+- **Ejecutado**: añadido un bloque de cierre definitivo al inicio de `remote_48g/ENCARGO-RECORRIDAS-20260914.md`
+  (congela el documento como registro histórico, prohíbe explícitamente cualquier corrida nueva, retira R6
+  sin más espera) y notificado al equipo remoto en `§3.bis.32`.
+- **Estado de los datos**: ya verificado en `§1.339`/`§1.344` que todo el encargo (R1F1/R1F2/R2/R3/R4/R5)
+  está completo y que la Tabla 7, Anexo K y demás cifras del cuerpo citan la corrida vigente, sin
+  ambigüedad sobre cuál es «la última». No hace falta tocar ninguna cifra del informe para esto: ya
+  apuntaban todas a la corrida correcta.

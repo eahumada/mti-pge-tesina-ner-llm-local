@@ -136,6 +136,11 @@ FALLOS_DECLARADOS = {
                                                       'PENDIENTE de propagar (§F172): detalle '
                                                       'viejo del punto 7 de §7.2, aun en los '
                                                       '.docx sin regenerar'),
+    'hay que regenerarlo desde el .docx': ('2026-09-17',
+                                           'PENDIENTE de regenerar (§F190): los tres .docx cambiaron hoy '
+                                           '(Anexo J, bibliografia, Anexo K) y el PDF de la raiz no se '
+                                           'puede regenerar en este entorno (no hay Word ni conversor sin '
+                                           'perder maquetacion). Encargado a Claude Desktop.'),
 }
 
 
