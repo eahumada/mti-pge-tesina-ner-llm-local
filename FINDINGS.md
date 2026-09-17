@@ -10051,3 +10051,80 @@ conservador que exige el proyecto.
 - Ninguna cifra de tabla ni dato experimental se tocó: las 3 correcciones son prosa (una salvedad
   añadida por coherencia interna, una referencia de sección corregida, una oración dividida).
 
+## §F196 — El estudio de variantes de idioma (R1/R4/R5) nunca se incorporó al cuerpo: reescrito con la evidencia final de 5 semillas
+
+**Fecha:** 2026-09-17, misma sesión, a instrucción explícita y repetida del autor tras aclarar la
+confusión de `§F194` entre el estudio de variantes de *prompt* (§4.3, N=15/N=30 exclusivamente) y el
+modo `kb_combined` de la Tabla 7. El autor señaló que el propósito completo del encargo remoto de
+`ENCARGO-RECORRIDAS-20260914.md` (R1-R6) era precisamente sustituir toda cifra de una sola corrida por
+la evidencia replicada, y pidió revisar a fondo si quedaban omisiones de ese tipo.
+
+### El hallazgo: sí quedaba una, y era grande
+
+El cuerpo del informe (Tabla 5, §5.2, §6.1, Conclusión 2, Trabajo Futuro ítem 8, Resumen y Abstract)
+seguía citando la medición de **una sola corrida** de la variante idioma×ejemplos sobre N=15
+(`ablacion_n15_REMOTO`: +10,40 pp), con una frase de "no replica" basada en **una segunda corrida
+suelta** (+3,11 pp) y en **una sola corrida** sobre N=120 (efecto anulado, −0,43 pp, p=0,9328).
+El encargo remoto había reemplazado las tres por réplicas de 5 semillas (R1 Fase 1 y Fase 2) y había
+añadido un cuarto experimento nuevo, un par controlado inglés/español sobre N=30 (R4, la traducción
+verificada del corpus; R5, la variante de idioma sobre ese par), cerrado y verificado el 16 de
+septiembre (`CURRENT-TASKS §1.339`, `FINDINGS §F186`). **Ninguno de los cuatro resultados llegó al
+`.md` canónico.**
+
+### Los datos que reemplazan a los antiguos
+
+Verificados directamente contra los CSV crudos de las cinco semillas antes de escribir nada
+(`results/variantes_5semillas_n15_REMOTO/`, `results/variantes_n30_parEmparejado_REMOTO/`,
+`results/variantes_5semillas_n120_REMOTO/`):
+
+| Corpus | Configuración ganadora | Cifra vigente |
+|:---|:---|:---|
+| N=15 (`§F176`) | `fs-es` > `zs-es` > `fs-en` > `zs-en`, sin excepción en 5/5 semillas | +13,19 pp (fs-es vs. zs-en) |
+| N=30, texto inglés (`§F183`) | gana el inglés (coincide con el texto) | — |
+| N=30, texto español, R4 (`§F183`) | `fs-es` gana en 5/5; `zs-es` solo en 3/5 | coincidir ayuda, más en *few-shot* |
+| N=120 (`§F184`) | `fs-en` gana en 5/5, sin excepción | 76,35 % vs. 75,57 % (`fs-es`) |
+
+**No hay una sola explicación que cubra los tres corpus.** Ni «gana el español» (N=15) ni «coincidir
+el idioma del prompt con el del texto» (N=30) se sostienen sobre el corpus real y heterogéneo N=120,
+que es el que sostiene la Tabla 7. Se documenta como hallazgo abierto, no como problema resuelto.
+
+### Aplicado al `.md` canónico
+
+- **Tabla 5:** recalculada con la media de 5 semillas (antes, una sola corrida); todas las columnas
+  (F1, precisión, recall, alucinación, latencia) recomputadas desde el CSV crudo.
+- **Tabla 4 (§5.1):** las filas `gemma4:latest (ZS-ES)` y `(FS-ES)` actualizadas a la misma media de 5
+  semillas y **reordenadas** (el nuevo F1 de ambas cambia su posición en la tabla, ordenada por F1
+  descendente). Hallazgos 1 y 2 reescritos: el Hallazgo 2 original ("mayor exhaustividad") ya no es
+  cierto con los datos nuevos —el recall de las variantes en español baja del liderazgo—, así que se
+  reescribió para reflejar que la ventaja viene de la precisión, no del recall.
+- **§4.3, §5.2, §6.1, Conclusión 2:** reescritos con las cifras vigentes y la síntesis de que ningún
+  mecanismo único explica los tres corpus.
+- **Trabajo Futuro:** retirado el ítem 8 ("replicar el efecto del idioma"), porque la réplica que pedía
+  ya se ejecutó y está en el cuerpo. Renumerado el ítem siguiente.
+- **Resumen y Abstract:** actualizados en el mismo commit (regla de `CLAUDE.md`), recortando otras
+  partes del texto para mantener el límite de 200 palabras (Resumen queda exactamente en 200).
+- **Anexo E, Tabla 15:** procedencia actualizada de `ablacion_n15_REMOTO` a
+  `variantes_5semillas_n15_REMOTO`.
+
+### Verificador: seis comprobaciones actualizadas
+
+`c_ablacion_idioma`, `c_ablacion`, `c_anovas_secundarios`, `c_tabla4_vs_datos` (con soporte nuevo para
+rutas con comodín `seed_*`, agregando las 5 semillas), `c_tablas_menores` y `_medias` (helper
+compartido). Todas seguían el patrón `ablacion_n15_REMOTO` de una sola corrida; se actualizaron para
+leer y agregar las cinco semillas, con las cifras y los patrones de texto recalculados desde cero, no
+copiados del `.md`. Se retiró también el tramo de `c_anovas_secundarios` que exigía las dos ANOVA de
+una sola corrida (N=15 y el "efecto que se anula" de N=120), porque esas frases ya no existen en el
+cuerpo; sobrevive solo la ANOVA de N=30 (dos compilaciones), que no cambió.
+
+### Verificado antes de comprometer
+
+- Cada cifra nueva (F1, precisión, recall, alucinación, latencia por configuración, en los tres
+  corpus) se calculó directamente de los CSV crudos con Python en esta sesión, no se copió de
+  `FINDINGS.md` sin recomputar.
+- `python3 tools/verificar_informe.py`: 0 fallos nuevos; 24 declaraciones nuevas para la propagación
+  pendiente a los tres `.docx` (volumen de cambio grande, una sola tanda de declaraciones).
+- El cuerpo sigue dentro del límite de 25 páginas.
+- Ninguna fila de la Tabla 7, el Anexo K, ni ninguna cifra del estudio principal (N=120 con
+  `kb_combined`) se tocó: esto es exclusivamente el estudio secundario de variantes de *prompt*.
+
+

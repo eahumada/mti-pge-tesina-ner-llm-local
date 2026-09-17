@@ -8,13 +8,13 @@ eahumada@gmail.com
 
 ## Resumen
 
-Las instituciones financieras sujetas a regulaciones AML/KYC deben vigilar grandes volúmenes de noticias no estructuradas buscando entidades de riesgo. Hacerlo manualmente no escala y delegarlo en APIs en la nube expone información sensible a terceros. Este trabajo diseña, implementa y evalúa un sistema soberano de reconocimiento de entidades nombradas (NER) con modelos de lenguaje grande de código abierto en local mediante Ollama sobre Apple Silicon, con arquitectura pub/sub multihilo, concurrencia adaptativa (AIMD) y capa Factory/Facade. La validación comparó trece modelos sobre 120 artículos, 105 en español, del corpus periodístico, y 30 artículos en inglés del corpus del dominio AML/KYC; contrastó la extracción directa con la generación aumentada por recuperación (RAG) contextual y midió las diferencias con ANOVA y Tukey HSD. El beneficio del RAG decrece con la capacidad del modelo: solo alcanza significancia en el más débil de los trece (+12,3 puntos de F1) y es marginal en los mayores. Redactar el prompt en español con ejemplos *few-shot* aporta +10,4 puntos en el corpus de quince artículos, sin replicar sobre el corpus mayor. El mejor modelo local alcanza 81,47 % de F1 sobre el corpus periodístico y 90,16 % sobre el corpus del dominio AML/KYC, preservando la confidencialidad.
+Las instituciones financieras sujetas a regulaciones AML/KYC deben vigilar grandes volúmenes de noticias no estructuradas buscando entidades de riesgo. Hacerlo manualmente no escala y delegarlo en APIs en la nube expone información sensible a terceros. Este trabajo diseña, implementa y evalúa un sistema soberano de reconocimiento de entidades nombradas (NER) con modelos de lenguaje de código abierto en local mediante Ollama sobre Apple Silicon, con arquitectura pub/sub multihilo, concurrencia adaptativa (AIMD) y capa Factory/Facade. La validación comparó trece modelos sobre 120 artículos, 105 en español, del corpus periodístico, y 30 artículos en inglés del corpus del dominio AML/KYC; contrastó la extracción directa con la generación aumentada por recuperación (RAG) contextual y midió las diferencias con ANOVA y Tukey HSD. El beneficio del RAG decrece con la capacidad del modelo, con significancia solo en el más débil de los trece (+12,3 puntos de F1). Redactar el prompt en español con ejemplos *few-shot* aporta +13,2 puntos en el corpus de quince artículos, replicado con cinco semillas, pero se invierte a favor del inglés en el corpus mayor. El mejor modelo local alcanza 81,47 % de F1 sobre el corpus periodístico y 90,16 % sobre el corpus del dominio AML/KYC, preservando la confidencialidad.
 
 **Palabras clave:** Reconocimiento de Entidades Nombradas (NER), Modelos de Lenguaje Grande (LLM), Cumplimiento Normativo (AML/KYC), Soberanía de Datos, Generación Aumentada por Recuperación (RAG).
 
 ## Abstract
 
-Financial institutions subject to AML/KYC regulations must monitor large volumes of unstructured news for risk entities. Doing so manually does not scale, and delegating it to cloud APIs exposes sensitive information to third parties. This work designs, implements and evaluates a sovereign Named Entity Recognition (NER) system using open-source Large Language Models locally through Ollama on Apple Silicon hardware, with a multithreaded pub/sub architecture, adaptive concurrency control (AIMD) and a Factory/Facade layer. Validation compared thirteen models on 120 articles, 105 in Spanish, from the news corpus, and 30 English articles from the AML/KYC domain corpus; contrasted direct extraction with contextual retrieval-augmented generation (RAG) and measured the differences with ANOVA and Tukey HSD. The benefit of RAG decreases with model capacity: it reaches significance only in the weakest of the thirteen (+12.3 F1 points) and is marginal in the larger ones. Writing the prompt in Spanish with *few-shot* examples yields +10.4 points on the fifteen-article corpus, without replicating on the larger corpus. The best local model reaches 81.47 % F1 on the news corpus and 90.16 % on the AML/KYC domain corpus, preserving confidentiality.
+Financial institutions subject to AML/KYC regulations must monitor large volumes of unstructured news for risk entities. Doing so manually does not scale, and delegating it to cloud APIs exposes sensitive information to third parties. This work designs, implements and evaluates a sovereign Named Entity Recognition (NER) system using open-source Large Language Models locally through Ollama on Apple Silicon hardware, with a multithreaded pub/sub architecture, adaptive concurrency control (AIMD) and a Factory/Facade layer. Validation compared thirteen models on 120 articles, 105 in Spanish, from the news corpus, and 30 English articles from the AML/KYC domain corpus; contrasted direct extraction with contextual retrieval-augmented generation (RAG) and measured the differences with ANOVA and Tukey HSD. The benefit of RAG decreases with model capacity, reaching significance only in the weakest of the thirteen (+12.3 F1 points). Writing the prompt in Spanish with *few-shot* examples yields +13.2 points on the fifteen-article corpus, replicated across five seeds, but reverses in favor of English on the larger corpus. The best local model reaches 81.47 % F1 on the news corpus and 90.16 % on the AML/KYC domain corpus, preserving confidentiality.
 
 **Keywords:** Named Entity Recognition (NER), Large Language Models (LLM), Regulatory Compliance (AML/KYC), Data Sovereignty, Retrieval-Augmented Generation (RAG).
 
@@ -284,7 +284,7 @@ Esos ejemplos cumplen tres funciones que conviene distinguir. Fijan el **formato
 
 Los dos ejemplos empleados en la configuración few-shot en español cubren un caso con persona y organización y otro sin persona nombrada; se reproducen íntegros en el Anexo B.
 
-Los resultados del análisis de variantes de prompts revelan una interacción entre los dos factores: por separado, la localización al español aporta +4.38 pp de F1 y los ejemplos *few-shot* en inglés no aportan nada (−0.72 pp), pero su combinación alcanza +10.40 pp (FS-ES: 74.44% frente al 64.05% del baseline ZS-EN). Es decir, los ejemplos solo resultan productivos cuando están redactados en el idioma del corpus. La configuración FS-ES lidera además en Precisión (66.78%) y Recall (86.87%) sin penalización en alucinaciones (0.20%, idéntica a ZS-ES). Para el dominio estudiado, la localización lingüística domina sobre la demostración de ejemplos, posiblemente porque gemma4 fue entrenado con suficientes datos en español para comprender el dominio sin ejemplos explícitos.
+Los resultados del análisis de variantes de prompts, replicados con cinco semillas, revelan una interacción entre los dos factores: por separado, la localización al español aporta +9,01 pp de F1 y los ejemplos *few-shot* en inglés aportan +3,61 pp, pero su combinación alcanza +13,19 pp (FS-ES: 79,96 % frente al 66,77 % del baseline ZS-EN). La configuración FS-ES lidera además en Precisión (81,17 %), aunque su Recall (79,94 %) queda por debajo del de los modelos de mayor capacidad, con una tasa de alucinación baja (0,14 %). Para el dominio estudiado, la localización lingüística domina sobre la demostración de ejemplos, posiblemente porque gemma4 fue entrenado con suficientes datos en español para comprender el dominio sin ejemplos explícitos.
 
 ### 4.4 Métricas de evaluación
 
@@ -314,11 +314,11 @@ _Tabla 4. Benchmark exploratorio: doce modelos en trece configuraciones sobre el
 
 | Modelo | Tipo | Parámetros | F1 | Precisión | Recall | Hallucination | Latencia (s) | Tok/s/B |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| gemma4:latest (FS-ES) | Local | 9B | **74.44%** | 66.78% | **86.87%** | 0.20% | 197.80 | 5.80 |
+| gemma4:latest (FS-ES) | Local | 9B | **79.96%** | 81.17% | 79.94% | 0.14% | 201.30 | 5.62 |
+| gemma4:latest (ZS-ES) | Local | 9B | 75.78% | 74.60% | 78.68% | 0.18% | 88.80 | 5.52 |
 | **gemma4:31b** | Local | 31B | 69.12% | 58.83% | 86.80% | 0.16% | 613.50 | 0.33 |
-| gemma4:31b-mlx | Local | 31B | 68.52% | 58.31% | 86.76% | 0.00% | 428.80 | 0.74 |
-| gemma4:latest (ZS-ES) | Local | 9B | 68.43% | 60.68% | 83.49% | 0.20% | 159.90 | 5.80 |
-| gemma4:31b-cloud | Cloud | 31B | 66.99% | 55.46% | 86.88% | 0.00% | 4.30 | — |
+| gemma4:31b-mlx | Local | 31B | 68.52% | 58.31% | **86.76%** | 0.00% | 428.80 | 0.74 |
+| gemma4:31b-cloud | Cloud | 31B | 66.99% | 55.46% | **86.88%** | 0.00% | 4.30 | — |
 | llama3.2:latest | Local | 3B | 63.19% | 62.82% | 67.99% | 2.31% | 21.60 | 26.44 |
 | gemma:latest | Local | 7B | 62.66% | 58.47% | 71.47% | 1.08% | 36.20 | 5.17 |
 | qwen2.5:14b | Local | 14B | 61.06% | 57.60% | 71.76% | 0.87% | 76.40 | 1.57 |
@@ -329,7 +329,8 @@ _Tabla 4. Benchmark exploratorio: doce modelos en trece configuraciones sobre el
 | deepseek-r1:1.5b | Local | 1.5B | 27.65% | 39.49% | 25.77% | 1.35% | 41.10 | 86.20 |
 
 > Cifras medidas sobre `results/benchmark_results.csv` (N=15, modo `entities`), salvo `gemma4:31b`
-> (`gemma4_31b_n15_REMOTO`), las dos variantes de `gemma4:latest` (`ablacion_n15_REMOTO`) y `gemma4:31b-cloud`
+> (`gemma4_31b_n15_REMOTO`), las dos variantes de `gemma4:latest` (media de 5 semillas,
+> `variantes_5semillas_n15_REMOTO`) y `gemma4:31b-cloud`
 > (`cloud_n15_limpio_20260905`). Las latencias proceden de corridas con distinta concurrencia y hardware, por
 > lo que **no son comparables entre filas**. La razón es más de fondo que la procedencia: el valor registrado
 > es el reloj de pared de cada artículo bajo concurrencia, de modo que **incluye la espera en cola** y depende
@@ -341,8 +342,8 @@ _Tabla 4. Benchmark exploratorio: doce modelos en trece configuraciones sobre el
 > y el índice Tok/s/B se calcula sobre la nominal. `gemma4:31b-cloud` corre además en BF16 sobre ~32,7B parámetros sin
 > cuantizar, así que su footprint no es comparable con el de las compilaciones locales.
 
-> **Hallazgo 1:** la familia `gemma4` copa las cinco primeras posiciones. `gemma4:latest` con prompt *few-shot* en español (74.44%) supera a los dos modelos de 31B, a un tercio de su tamaño.  
-> **Hallazgo 2:** la exhaustividad más alta entre los modelos locales la obtiene `gemma4:latest` con *prompt* few-shot en español (86.87%), por delante de `gemma4:31b` (86.80%) y de su compilación MLX (86.76%), pese a ser un modelo de un tercio del tamaño; la variante alojada alcanza un valor equivalente (86.88%). Es decir, las cuatro configuraciones se agrupan en menos de un décimo de punto, y lo que separa a `gemma4:31b` no es la exhaustividad sino su tasa de alucinación, de 0.16%.  
+> **Hallazgo 1:** la familia `gemma4` copa las cinco primeras posiciones. `gemma4:latest` con prompt *few-shot* en español (79,96 %, media de 5 semillas) supera a los dos modelos de 31B, a un tercio de su tamaño.  
+> **Hallazgo 2:** la ventaja de `gemma4:latest` en español viene de la precisión, no de la exhaustividad. Sus dos variantes en español (81,17 % y 74,60 % de precisión) superan ampliamente a `gemma4:31b` (58,83 %) y a su compilación MLX (58,31 %), pero quedan por debajo de ellos en recall (79,94 % y 78,68 % frente a 86,80 % y 86,76 %); la variante alojada de 31B tiene el recall más alto del conjunto (86,88 %). Es decir, un modelo pequeño con instrucción localizada compensa con exactitud lo que le falta en cobertura frente a los modelos de mayor capacidad.  
 > **Hallazgo 3:** `deepseek-r1:1.5b` debe descartarse para producción: F1 de 27.65% y Recall de solo 25.77%.  
 > **Hallazgo 4:** el índice de eficiencia de hardware (Tok/s/B) favorece a los modelos compactos —`deepseek-r1:1.5b` (86.20) y `llama3.2` (26.44)— para *screening* masivo, mientras que `gemma4:31b` (0.33) se justifica para análisis de alto riesgo.
 
@@ -350,21 +351,23 @@ _Tabla 4. Benchmark exploratorio: doce modelos en trece configuraciones sobre el
 
 La Tabla 5 recoge las cuatro configuraciones del diseño factorial con sus métricas.
 
-_Tabla 5. Variantes de prompt sobre `gemma4:latest`: diseño factorial de idioma de la instrucción y de los ejemplos (N=15)_
+_Tabla 5. Variantes de prompt sobre `gemma4:latest`: diseño factorial de idioma de la instrucción y de los ejemplos (N=15, media de 5 semillas)_
 
 | Configuración | F1 | Precisión | Recall | Hallucination | Latencia (s) | Δ vs. Baseline |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
-| Zero-shot Inglés (Baseline) | 64.05% | 57.69% | 77.17% | 0.20% | 157.90 | — |
-| Zero-shot Español | 68.43% | 60.68% | 83.49% | 0.20% | 159.90 | **+4.38 pp** |
-| Few-shot Inglés | 63.32% | 55.81% | 75.81% | 0.57% | 203.40 | −0.72 pp |
-| Few-shot Español | **74.44%** | **66.78%** | **86.87%** | 0.20% | 197.80 | **+10.40 pp** |
+| Zero-shot Inglés (Baseline) | 66.77% | 64.70% | 70.16% | 0.25% | 87.6 | — |
+| Zero-shot Español | 75.78% | 74.60% | 78.68% | 0.18% | 88.8 | **+9.01 pp** |
+| Few-shot Inglés | 70.38% | 69.92% | 72.47% | 0.07% | 264.2 | +3.61 pp |
+| Few-shot Español | **79.96%** | **81.17%** | **79.94%** | 0.14% | 201.3 | **+13.19 pp** |
 
-> Medido sobre `results/ablacion_n15_REMOTO/benchmark_results.csv` (N=15, modo `entities`), con el corrector
-> de puntuación aplicado. El ANOVA de una vía sobre las cuatro configuraciones no alcanza significancia
-> (F = 1,1379; p = 0,3417) ni la alcanza ninguna comparación de Tukey, consecuencia de N=15: los deltas deben
-> leerse como una tendencia consistente y no como una diferencia demostrada.
+> Media de cinco semillas declaradas (42, 43, 44, 45, 46) sobre `results/variantes_5semillas_n15_REMOTO/`,
+> que reemplaza la medición original de una sola corrida. La jerarquía fs-es > zs-es > fs-en > zs-en se repite
+> en las cinco semillas sin excepción. Un fallo de extracción afecta más a las configuraciones en inglés
+> (10 de 150 registros frente a 0 de 150 en español); descontándolo, el efecto puro del idioma se reduce pero
+> se mantiene positivo en las cinco semillas (entre +4,7 y +11,0 puntos): el prompt en español aporta tanto
+> mejor exhaustividad como mejor robustez de formato (100 % de salidas parseables frente a 93,3 % en inglés).
 
-> **Hallazgo 5:** ninguno de los dos factores basta por separado —la localización al español aporta +4.38 pp y los ejemplos *few-shot* en inglés restan 0.72 pp—, pero **su combinación alcanza +10.40 pp** sobre el baseline ZS-EN, con el mejor Recall del conjunto (86.87%). Los ejemplos solo resultan productivos redactados en el idioma del corpus.
+> **Hallazgo 5:** replicado con cinco semillas, ninguno de los dos factores basta por separado —el español en la instrucción aporta +9,01 pp y los ejemplos en inglés +3,61 pp—, pero **su combinación alcanza +13,19 pp** sobre el baseline ZS-EN, con la mejor precisión y el mejor recall del conjunto, consistente en las cinco semillas.
 
 ### 5.3 Validación Estadística sobre el Corpus del Dominio (N=30)
 
@@ -491,7 +494,9 @@ Los resultados de esta segunda versión sobre el corpus completo se recogen en l
 
 La hipótesis fijaba un F1 igual o superior al 70 % como umbral de viabilidad. El umbral se alcanza sobre el corpus del dominio —`gemma4:31b-mlx` obtiene 80,57 % con intervalo de confianza al 95 % de [74,22 %, 86,92 %] y ninguna extracción fallida sobre N=30, cifra sin restringir a Personas/Organizaciones (la restringida, 90,16 %, se explica en el Anexo I)— y también, directamente y sin necesidad de corrección alguna, sobre el corpus periodístico: `gemma4:31b-mlx` obtiene 81,47 % sobre N=120. La hipótesis queda por tanto confirmada en ambos corpus. La brecha que subsiste, de unos nueve puntos entre 90,16 % y 81,47 %, no obedece a un fallo del sistema sino a la naturaleza del material: los artículos de CoNLL-2002 son más largos, mencionan más entidades por texto y mezclan dominios, mientras que el corpus AML está compuesto por textos breves y temáticamente homogéneos. Una meta interna más ambiciosa (85 % de F1, nunca formalizada como hipótesis) queda a 4,43 puntos sobre N=30, distancia abordable mediante ajuste fino supervisado, modelos de mayor capacidad o combinación de varios modelos locales.
 
-Tres factores explican la distribución de resultados observada. El primero es el idioma del prompt y de sus ejemplos. Redactar ambos en español aporta 10,40 puntos de F1 sin cambiar de modelo, mejora que ninguno de los dos factores consigue por separado: traducir solo el prompt aporta 4,38 puntos y añadir ejemplos en inglés resta 0,72. La interpretación de esa interacción exige cuidado, porque la que sugiere la intuición no se sostiene: el corpus sobre el que se midió está redactado **en inglés**, de modo que la instrucción en español no puede estar ayudando al modelo a leer el texto. Lo que sí caracteriza a ese corpus es una minoría de entidades ibéricas, doce de sus ochenta y cuatro personas, procedentes en su mayoría de un caso de corrupción angoleño y por tanto de grafía portuguesa: `Isabel dos Santos`, `José Eduardo dos Santos`, `Hélder Pitta Grós` o `Mario Leite da Silva`. Son nombres con partículas y acentos cuya delimitación es precisamente donde un tokenizador anglocéntrico falla, partiendo la entidad en dos, y donde una instrucción en español orienta mejor al modelo, en línea con el sobrecoste de tokenización documentado para lenguas distintas del inglés [11]. La explicación es entonces más estrecha que la que se suponía, y predice un efecto proporcional a esa minoría, no una mejora general; predicción compatible con que la corrida que replica el experimento arroje 3,11 puntos y no 10,40, y con que el efecto se anule sobre el corpus mayor por la razón que se expone a continuación.
+Tres factores explican la distribución de resultados observada. El primero es el idioma del prompt y de sus ejemplos, replicado con cinco semillas declaradas sobre los tres corpus del estudio (`results/variantes_5semillas_n15_REMOTO/`, `results/variantes_n30_parEmparejado_REMOTO/` y `results/variantes_5semillas_n120_REMOTO/`). Sobre el corpus de quince artículos, redactar la instrucción y los ejemplos en español aporta +13,19 puntos de F1 sobre el baseline en inglés (Tabla 5), efecto consistente en las cinco semillas y compuesto de una mejora real de exhaustividad más una mejora de robustez de formato. La interpretación exige cuidado, porque la que sugiere la intuición no se sostiene del todo: el corpus está redactado **en inglés**, de modo que la instrucción en español no ayuda al modelo a leer el texto. Lo que sí lo caracteriza es una minoría de entidades ibéricas, doce de sus ochenta y cuatro personas, de grafía portuguesa: `Isabel dos Santos`, `José Eduardo dos Santos`, `Hélder Pitta Grós` o `Mario Leite da Silva`. Son nombres con partículas y acentos cuya delimitación es precisamente donde un tokenizador anglocéntrico falla, en línea con el sobrecoste de tokenización documentado para lenguas distintas del inglés [11]; esta explicación predice un efecto proporcional a esa minoría, no una mejora general.
+
+Esa predicción se contrasta con un diseño más limpio sobre el corpus del dominio: un par controlado en inglés nativo y en su traducción al español (Anexo F), que aísla el efecto de que el idioma del *prompt* coincida con el del texto. Coincidir ayuda en las cinco semillas cuando el *prompt* trae ejemplos (*few-shot*), y ayuda de forma débil e inconsistente en *zero-shot* (solo en 3 de 5 semillas sobre el texto traducido). Pero sobre el corpus real N=120 —el que sostiene la Tabla 7, mayoritariamente en español— la configuración con ejemplos en inglés (`fs-en`, 76,35 %) supera a la de ejemplos en español (`fs-es`, 75,57 %) en las cinco semillas sin excepción. Ningún resultado de los tres corpus explica a los otros dos: ni «gana el español» (N=15) ni «coincidir con el idioma del texto» (N=30) se sostienen sobre el corpus real y heterogéneo. Es posible que los ejemplos en inglés aporten sobre todo una señal de formato de salida que generaliza mejor en un corpus heterogéneo que una señal de idioma que solo ayuda sobre contenido uniforme, pero esa lectura no está probada con este diseño y queda como candidato para trabajo futuro.
 
 El segundo factor es el compromiso entre tamaño y eficiencia. `llama3.2`, con 3 000 millones de parámetros, alcanza 63,19 % de F1 con un índice de eficiencia de 26,44 tokens por segundo y por cada mil millones de parámetros, frente a los 0,33 de `gemma4:31b`: una relación de ochenta a uno. Esa asimetría habilita una arquitectura operativa en dos niveles —un modelo compacto para el cribado masivo inicial y uno grande para la validación de los casos de alto riesgo regulatorio— que aprovecha el hecho de que el coste de un falso negativo en cribado es muy inferior al de un falso positivo confirmado.
 
@@ -515,7 +520,7 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
 
 1. **Viabilidad demostrada:** Es técnicamente viable implementar un sistema NER soberano para cumplimiento AML/KYC con modelos de lenguaje de código abierto ejecutados localmente sobre hardware Apple Silicon M4, alcanzando **81,47 %** de F1 sobre el corpus periodístico de ciento veinte artículos —de los que 105 están en español— y **90,16 %** sobre el corpus del dominio de treinta artículos, que está redactado en inglés. En ninguno de los dos corpus se registraron extracciones fallidas.
 
-2. Localización lingüística como tendencia no replicada: sobre el corpus de quince artículos, el idioma de la instrucción y el de los ejemplos *few-shot* parecen **interactuar**, pues por separado aportan +4,38 y −0,72 puntos de F1 mientras combinados alcanzan +10,40. El efecto, sin embargo, **no replica**: una segunda ejecución sobre el mismo corpus y modelo lo reduce a +3,11 puntos, y sobre el corpus de ciento veinte artículos se anula, con una diferencia de −0,43 puntos y p = 0,9328. La conclusión defendible es por tanto más débil de lo que sugería la primera medición, y además el mecanismo que se le atribuía —que los ejemplos rinden en el idioma del corpus— no puede ser el correcto, porque la mejora se obtuvo sobre artículos redactados en inglés. Determinarlo exige el diseño con réplicas que se propone en §7.2.
+2. Localización lingüística: efecto real, sin una única explicación. Replicado con cinco semillas sobre los tres corpus del estudio, el idioma de la instrucción y de los ejemplos interactúa de forma consistente sobre el corpus de quince artículos (+13,19 puntos de F1 combinando español en ambos, sin excepción en las cinco semillas) y sobre el par controlado del corpus del dominio (coincidir el idioma del *prompt* con el del texto ayuda, más en *few-shot* que en *zero-shot*). Pero sobre el corpus real de ciento veinte artículos, mayoritariamente en español, gana consistentemente la configuración con ejemplos en inglés. El mecanismo que se atribuía al primer resultado —que los ejemplos rinden en el idioma del corpus— queda refutado por este último dato, y ninguna explicación disponible cubre los tres corpus a la vez; el detalle se desarrolla en §6.1.
 
 3. Soberanía de datos con un coste de rendimiento casi nulo sobre el corpus mayor: sobre el corpus de quince artículos la ejecución local supera a la alojada (69,12 % frente a 66,99 % de F1), pero ese experimento es el de menor potencia estadística; sobre los ciento veinte artículos, que es el estudio principal, la variante en la nube del mismo modelo obtiene 82,13 % frente al 81,47 % del mejor local. La conclusión sostenible es que la soberanía cuesta **menos de un punto** de F1 sobre el corpus de mayor potencia, un precio que en un entorno regulado es claramente razonable, y que se paga a cambio de no transferir texto de clientes a un tercero.
 
@@ -546,15 +551,7 @@ De ahí se sigue tanto la explicación del fracaso de la primera versión como u
    sancionatorias de la UAF y de la CMF chilenas y la prensa económica regional, y su anotación por especialistas
    en cumplimiento es el paso que este trabajo no pudo dar por falta de un corpus etiquetado en el dominio.
 
-8. Replicación del efecto del idioma del prompt (Prioridad Media): la ventaja de redactar la instrucción y los
-    ejemplos en español se midió en +10,40 puntos sobre el corpus de quince artículos, pero no replica: una
-    segunda ejecución sobre el mismo corpus y modelo da +3,11 puntos, y sobre el corpus de ciento veinte el
-    efecto se anula, con una diferencia de −0,43 puntos y p = 0,9328. Determinar si la ventaja existe exige un
-    diseño con réplicas y semillas declaradas sobre un corpus del tamaño suficiente, y conviene hacerlo porque
-    el mecanismo que se le atribuía, la concordancia de idioma entre prompt y texto, no puede ser el correcto:
-    la mejora se obtuvo sobre artículos en inglés.
-
-9. Contraste pareado por modelo y variantes de la métrica (Prioridad Alta): los veintiséis grupos
+8. Contraste pareado por modelo y variantes de la métrica (Prioridad Alta): los veintiséis grupos
     evalúan los mismos ciento veinte artículos, de modo que las observaciones están apareadas y el
     procedimiento que corresponde al diseño es un contraste pareado modelo por modelo con corrección
     por comparaciones múltiples, y no el análisis de varianza de una vía que este trabajo reporta y
@@ -903,7 +900,7 @@ _Tabla 15. Procedencia de cada fila del benchmark exploratorio: correspondencia 
 | Filas de la Tabla 4 | Corrida de origen |
 |---|---|
 | gemma4:31b | gemma4_31b_n15_REMOTO (equipo de 48 GB) |
-| gemma4:latest (ZS-ES) y (FS-ES) | ablacion_n15_REMOTO |
+| gemma4:latest (ZS-ES) y (FS-ES) | variantes_5semillas_n15_REMOTO (media de 5 semillas) |
 | gemma4:31b-cloud | cloud_n15_limpio_20260905 |
 | Resto de configuraciones | results/benchmark_results.csv (N=15, modo entities) |
 

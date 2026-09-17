@@ -156,6 +156,39 @@ FALLOS_DECLARADOS = {
                                  'PENDIENTE de propagar: corregido el separador decimal de '
                                  '"1.1 GB" a "1,1 GB" en el .md (consistencia con el resto de la '
                                  'tabla, en coma), aun no en los tres .docx'),
+    'el resumen difiere del Markdown en la palabra 55 de 200': ('2026-09-17',
+                                                                 'PENDIENTE de propagar: resumen '
+                                                                 'recortado a 200 palabras tras '
+                                                                 'incorporar los resultados de R1/R5 '
+                                                                 '(5 semillas, FINDINGS §F176/§F184), '
+                                                                 'aun no en los tres .docx'),
+    'el abstract difiere del Markdown en la palabra 120 de 183': ('2026-09-17',
+                                                                   'PENDIENTE de propagar: mismo '
+                                                                   'motivo que el resumen, sincronia '
+                                                                   'ES/EN aplicada en el mismo commit'),
+    'Tabla 4, fila 1 difiere': ('2026-09-17',
+                               'PENDIENTE de propagar: FS-ES/ZS-ES actualizadas a la media de 5 '
+                               'semillas (§F176) y reordenadas por F1, aun no en los tres .docx'),
+    'Tabla 5, fila 1 difiere': ('2026-09-17',
+                               'PENDIENTE de propagar: Tabla 5 completa recalculada sobre la media '
+                               'de 5 semillas (§F176) en vez de una sola corrida, aun no en los '
+                               'tres .docx'),
+    'Tabla 15, fila 2 difiere': ('2026-09-17',
+                                'PENDIENTE de propagar: procedencia actualizada a '
+                                'variantes_5semillas_n15_REMOTO, aun no en los tres .docx'),
+    '2. Localización lingüística: efecto real, sin una única ex': ('2026-09-17',
+                                                                    'PENDIENTE de propagar: '
+                                                                    'conclusion 2 reescrita con los '
+                                                                    'resultados de R1/R4/R5 (5 '
+                                                                    'semillas, tres corpus)'),
+    'Esa predicción se contrasta con un diseño más limpio sobre': ('2026-09-17',
+                                                                    'PENDIENTE de propagar: nuevo '
+                                                                    'parrafo en §6.1 sobre R4/R5 '
+                                                                    '(par emparejado N=30 EN/ES) y '
+                                                                    'R1 Fase 2 (N=120, 5 semillas)'),
+    'Media de cinco semillas declaradas (42, 43, 44, 45, 46) so': ('2026-09-17',
+                                                                    'PENDIENTE de propagar: nueva '
+                                                                    'nota al pie de la Tabla 5'),
     'Esta lectura exige una salvedad de diseño, declarada y sin': ('2026-09-17',
                                                                     'PENDIENTE de propagar (§F194): '
                                                                     'nuevo parrafo en §6.2 sobre la '
@@ -434,50 +467,41 @@ def c_friedman(s):
 
 # --- 48. Los tres deltas del 2x2 del idioma del prompt -----------------------------------------
 def c_ablacion_idioma(s):
-    """El factor que §5 pone primero para explicar sus resultados, atado a su ablacion.
+    """El factor que S6.1 pone primero para explicar sus resultados, atado a su re-corrida de 5 semillas.
 
-    §5 abre la explicacion de los resultados con el idioma: «Redactar ambos en espanol aporta
-    10,40 puntos de F1 sin cambiar de modelo, mejora que ninguno de los dos factores consigue por
-    separado: traducir solo el prompt aporta 4,38 puntos y anadir ejemplos en ingles resta 0,72».
-    Son tres cifras y una afirmacion de interaccion.
+    [ACTUALIZADA 2026-09-17] La medicion de una sola corrida (ablacion_n15_REMOTO) se sustituyo por
+    la media de cinco semillas declaradas (variantes_5semillas_n15_REMOTO, FINDINGS SF176), a
+    instruccion explicita del autor de purgar el cuerpo de cifras de una sola pasada cuando existe
+    una replica disponible. La Tabla 5 (Hallazgo 5) dice ahora: "el espanol en la instruccion aporta
+    +9,01 pp y los ejemplos en ingles +3,61 pp", con "su combinacion alcanza +13,19 pp".
 
-    Las cifras van **sin resalte**, por la regla de sobriedad tipografica del proyecto, y por eso el
-    patron sin asteriscos se prueba primero y el resaltado como alternativa. Al escribir esta
-    comprobacion lo hice al reves y las tres primeras mutaciones «no encontraron el ancla»: el fallo
-    era del ensayo, no de la comprobacion, y conviene dejarlo escrito porque la proxima cifra que se
-    verifique aqui tampoco estara en negrita.
+    Reproducen desde las cinco semillas (42-46), promediando cada celda sobre las 5x15=75
+    observaciones: zs-en 66,77, zs-es 75,78, fs-en 70,38, fs-es 79,96. La celda de referencia es
+    zs-en, la de menos ayuda.
 
-    **La comprobacion 33 verifica el ANOVA de esa misma ablacion** (F = 1,1379, p = 0,3417), y la
-    frase de replicacion de §7 —+3,11 y −0,43 con p = 0,9328— tambien esta cubierta alli. Los tres
-    deltas, en cambio, no los tocaba nadie: comprobado por mutacion antes de escribir esto, alterar
-    el 10,40 a 99,99 y el 4,38 a 9,99 daba **cero fallos nuevos** sobre 47 comprobaciones (`§F117`).
-
-    Reproducen desde `ablacion_n15_REMOTO`, que trae las cuatro celdas del diseno con 15 registros
-    cada una: `zs-en` 64,0451, `zs-es` 68,4273, `fs-en` 63,3210, `fs-es` 74,4447. La celda de
-    referencia es `zs-en`, la de menos ayuda.
-
-    Se comprueba tambien **la afirmacion de interaccion**, que es la que sostiene el argumento y no
-    es una cifra: que ninguno de los dos factores por separado alcance el efecto conjunto. Una
-    comprobacion que solo cotejara los tres numeros dejaria pasar un texto que los citara bien y
-    concluyera lo contrario.
+    Se comprueba tambien la afirmacion de interaccion, que es la que sostiene el argumento y no es
+    una cifra: que ninguno de los dos factores por separado alcance el efecto conjunto.
     """
     import csv as _csv
     import collections as _c
-    d = os.path.join(BENCH_DIR, 'results/ablacion_n15_REMOTO/benchmark_results.csv')
-    if not os.path.exists(d):
+    import glob as _glob
+    ficheros = sorted(_glob.glob(os.path.join(
+        BENCH_DIR, 'results/variantes_5semillas_n15_REMOTO/seed_*/benchmark_results.csv')))
+    if not ficheros:
         check('los deltas del 2x2 del idioma reproducen desde la ablacion', 0,
-              ['no existe %s' % os.path.relpath(d, RAIZ)])
+              ['no existe results/variantes_5semillas_n15_REMOTO/seed_*/benchmark_results.csv'])
         return
     g = _c.defaultdict(list)
-    with open(d, encoding='utf-8') as fh:
-        for r in _csv.DictReader(fh):
-            if r.get('f1') not in (None, ''):     # un F1 de 0,0 es un dato, no un hueco
-                g[r['model']].append(float(r['f1']))
+    for d in ficheros:
+        with open(d, encoding='utf-8') as fh:
+            for r in _csv.DictReader(fh):
+                if r.get('f1') not in (None, ''):     # un F1 de 0,0 es un dato, no un hueco
+                    g[r['model']].append(float(r['f1']))
     M = {k: 100 * sum(v) / len(v) for k, v in g.items()}
     faltan = [c for c in ('zs-en', 'zs-es', 'fs-en', 'fs-es') if c not in M]
     if faltan:
         check('los deltas del 2x2 del idioma reproducen desde la ablacion', 0,
-              ['la ablacion no trae las celdas %s; trae %s' % (faltan, sorted(M))])
+              ['las 5 semillas no traen las celdas %s; traen %s' % (faltan, sorted(M))])
         return
     juntos = M['fs-es'] - M['zs-en']
     solo_p = M['zs-es'] - M['zs-en']
@@ -485,33 +509,32 @@ def c_ablacion_idioma(s):
 
     fallos, mirados = [], 0
     CASOS = [('ambos en espanol', juntos,
-              r'Redactar ambos en espa\u00f1ol aporta \*\*(\d+),(\d+)\*\* puntos'),
+              r'combinación alcanza \+(\d+),(\d+) pp'),
              ('solo el prompt', solo_p,
-              r'traducir solo el prompt aporta \*\*(\d+),(\d+)\*\* puntos'),
-             ('ejemplos en ingles', -solo_e,
-              r'a\u00f1adir ejemplos en ingl\u00e9s resta \*\*(\d+),(\d+)\*\*')]
+              r'español en la instrucción aporta \+(\d+),(\d+) pp'),
+             ('ejemplos en ingles', solo_e,
+              r'los ejemplos en inglés \+(\d+),(\d+) pp')]
     for nombre, calc, pat in CASOS:
         mirados += 1
-        # sin resalte primero: es como el informe las escribe
-        m = re.search(pat.replace(r'\*\*', ''), s) or re.search(pat, s)
+        m = re.search(pat, s)
         if m is None:
             fallos.append('no se encuentra en el informe la cifra de «%s»: revisar si se reformulo'
                           % nombre)
             continue
         pub = float('%s.%s' % (m.group(1), m.group(2)))
         if abs(pub - calc) > 0.011:
-            fallos.append('«%s»: el informe dice %.2f y la ablacion da %.4f' % (nombre, pub, calc))
+            fallos.append('«%s»: el informe dice %.2f y las 5 semillas dan %.4f' % (nombre, pub, calc))
     # La afirmacion de interaccion, que no es una cifra y es la que sostiene el argumento.
     mirados += 1
-    if 'mejora que ninguno de los dos factores consigue por separado' in s:
+    if 'ninguno de los dos factores basta por separado' in s:
         if not (solo_p < juntos and solo_e < juntos):
             fallos.append('el informe afirma que ningun factor por separado alcanza el efecto '
                           'conjunto, y los datos dan juntos=%.4f, solo prompt=%.4f, solo '
                           'ejemplos=%.4f' % (juntos, solo_p, solo_e))
     else:
-        fallos.append('no se encuentra la afirmacion de interaccion en §5: revisar si se reformulo')
+        fallos.append('no se encuentra la afirmacion de interaccion en Tabla 5: revisar si se reformulo')
     check('los deltas del 2x2 del idioma reproducen desde la ablacion', mirados, fallos,
-          'la celda de referencia es zs-en; el ANOVA de esta misma ablacion lo verifica la 33')
+          'la celda de referencia es zs-en; media de 5 semillas desde 2026-09-17')
 
 
 # --- 49. El informe se cita a si mismo redondeado, y el redondeo tiene que seguir cuadrando ----
@@ -553,7 +576,7 @@ def c_redondeos(s):
         # dejarlo fallando contra un texto que ya no tiene por que existir.
         ('mejora de nemotron-mini:4b', r'\*\*\+?(\d+),(\d{2}) pp\*\*.{0,20}modelo m[aá]s d[eé]bil',
          r'el m[aá]s d[eé]bil de los trece \(\+(\d+),(\d) puntos', 1),
-        ('efecto del idioma', r'aporta (10),(40) puntos', r'aporta \+(10),(\d) puntos', 1),
+        ('efecto del idioma', r'aporta \+(13),(19) puntos', r'aporta \+(13),(\d) puntos', 1),
         # El signo va DENTRO de la negrita: «**Spearman de −0,5165**». Y la p redondeada hay que
         # anclarla a su propia frase: «con p = (0),(\d{3})» a secas casaba con la p = 0,6382 de
         # un ANOVA secundario, que esta en otro sitio y no tiene nada que ver.
@@ -2964,8 +2987,12 @@ FUENTES_T4 = {
     'gemma4:31b': ('results/gemma4_31b_n15_REMOTO/benchmark_results.csv', 'gemma4:31b_baseline'),
     'gemma4:31b-cloud': ('results/cloud_n15_limpio_20260905/benchmark_results.csv',
                          'gemma4:31b-cloud_baseline'),
-    'gemma4:latest (ZS-ES)': ('results/ablacion_n15_REMOTO/benchmark_results.csv', 'zs-es'),
-    'gemma4:latest (FS-ES)': ('results/ablacion_n15_REMOTO/benchmark_results.csv', 'fs-es'),
+    # [ACTUALIZADA 2026-09-17] Una sola corrida (ablacion_n15_REMOTO) sustituida por la media de
+    # 5 semillas (FINDINGS §F176); el glob se resuelve en med() agregando las 5 seed_*.
+    'gemma4:latest (ZS-ES)': ('results/variantes_5semillas_n15_REMOTO/seed_*/benchmark_results.csv',
+                              'zs-es'),
+    'gemma4:latest (FS-ES)': ('results/variantes_5semillas_n15_REMOTO/seed_*/benchmark_results.csv',
+                              'fs-es'),
 }
 CSV_T4_DEFECTO = 'results/benchmark_results.csv'
 
@@ -2979,6 +3006,7 @@ def c_tabla4_vs_datos(s):
     """
     import csv as _csv
     import collections as _c
+    import glob as _glob
     i = s.find('_Tabla 4.')
     if i < 0:
         check('la Tabla 4 reproduce desde sus corridas', 0, ['no se encuentra la Tabla 4'])
@@ -3004,11 +3032,14 @@ def c_tabla4_vs_datos(s):
     def med(p):
         if p not in cache:
             g = _c.defaultdict(lambda: _c.defaultdict(list))
-            with open(os.path.join(BENCH_DIR, p), encoding='utf-8') as fh:
-                for r in _csv.DictReader(fh):
-                    for k in ('f1', 'precision', 'recall', 'hallucination_rate'):
-                        if r.get(k) not in (None, ''):
-                            g[r['model']][k].append(float(r[k]))
+            rutas = sorted(_glob.glob(os.path.join(BENCH_DIR, p))) if '*' in p \
+                else [os.path.join(BENCH_DIR, p)]
+            for ruta in rutas:
+                with open(ruta, encoding='utf-8') as fh:
+                    for r in _csv.DictReader(fh):
+                        for k in ('f1', 'precision', 'recall', 'hallucination_rate'):
+                            if r.get(k) not in (None, ''):
+                                g[r['model']][k].append(float(r[k]))
             cache[p] = {m: {k: 100 * sum(v) / len(v) for k, v in d.items()} for m, d in g.items()}
         return cache[p]
 
@@ -3017,13 +3048,18 @@ def c_tabla4_vs_datos(s):
     j = s.find('_Tabla 15.')
     t15 = s[j:j + 1500] if j >= 0 else ''
     for path, _ in FUENTES_T4.values():
-        run = os.path.basename(os.path.dirname(path))
+        d = os.path.dirname(path)
+        # un path con seed_* nombra la corrida un nivel mas arriba (el directorio padre)
+        run = os.path.basename(os.path.dirname(d)) if os.path.basename(d).startswith('seed_') \
+            else os.path.basename(d)
         if t15 and run not in t15:
             fallos.append('la Tabla 15 ya no cita «%s»: revisar FUENTES_T4' % run)
     for fila in filas:
         nom, f1, p, rc, h = fila
         path, grupo = FUENTES_T4.get(nom, (CSV_T4_DEFECTO, nom + '_baseline'))
-        if not os.path.exists(os.path.join(BENCH_DIR, path)):
+        existe = bool(_glob.glob(os.path.join(BENCH_DIR, path))) if '*' in path \
+            else os.path.exists(os.path.join(BENCH_DIR, path))
+        if not existe:
             fallos.append('%s: no existe %s' % (nom, path))
             continue
         v = med(path).get(grupo)
@@ -3105,12 +3141,16 @@ def c_figura1_vs_artefacto(s):
 def _medias(rel, campos, escala=100.0):
     import csv as _csv
     import collections as _c
+    import glob as _glob
     g = _c.defaultdict(lambda: _c.defaultdict(list))
-    with open(os.path.join(BENCH_DIR, rel), encoding='utf-8') as fh:
-        for r in _csv.DictReader(fh):
-            for k in campos:
-                if r.get(k) not in (None, ''):
-                    g[r['model']][k].append(float(r[k]))
+    rutas = sorted(_glob.glob(os.path.join(BENCH_DIR, rel))) if '*' in rel \
+        else [os.path.join(BENCH_DIR, rel)]
+    for ruta in rutas:
+        with open(ruta, encoding='utf-8') as fh:
+            for r in _csv.DictReader(fh):
+                for k in campos:
+                    if r.get(k) not in (None, ''):
+                        g[r['model']][k].append(float(r[k]))
     return {m: {k: (escala if k in ('f1', 'precision', 'recall', 'hallucination_rate') else 1.0)
                 * sum(v) / len(v) for k, v in d.items()} for m, d in g.items()}
 
@@ -3122,11 +3162,12 @@ def c_tablas_menores(s):
     no a otra copia suya. La Tabla 5 rotula sus filas en espanol —«Zero-shot Ingles»— mientras la
     corrida nombra sus grupos «zs-en», de modo que la correspondencia se deduce del rotulo.
     """
+    import glob as _glob
     fallos, mirados = [], 0
 
-    # --- Tabla 5
-    abl = 'results/ablacion_n15_REMOTO/benchmark_results.csv'
-    if os.path.exists(os.path.join(BENCH_DIR, abl)):
+    # --- Tabla 5 [ACTUALIZADA 2026-09-17: media de 5 semillas, FINDINGS §F176]
+    abl = 'results/variantes_5semillas_n15_REMOTO/seed_*/benchmark_results.csv'
+    if _glob.glob(os.path.join(BENCH_DIR, abl)):
         d = _medias(abl, ('f1', 'precision', 'recall', 'hallucination_rate', 'latency_sec'))
         i = s.find('_Tabla 5.')
         for l in (s[i:i + 1500].split('\n') if i >= 0 else []):
@@ -3943,31 +3984,24 @@ def c_anova(s):
 
 
 def c_anovas_secundarios(s):
-    """Las tres ANOVA secundarias del informe se recalculan desde su corrida.
+    """La ANOVA secundaria que queda en el cuerpo se recalcula desde su corrida.
 
-    Cerradas la principal y Levene, quedaban tres F publicadas sin nadie que las recalculara. Las
-    tres reproducen, y cada una desde una corrida distinta, que es lo que costo identificar:
+    [ACTUALIZADA 2026-09-17] Esta comprobacion vigilaba tres ANOVA. Las otras dos ya no tienen
+    cita en el cuerpo: la de N=15 (F = 1,1379; p = 0,3417, sobre ablacion_n15_REMOTO, una sola
+    corrida) porque §5.2/§6.1 se reescribieron con la media de 5 semillas (§F176), y la de N=120
+    ("una diferencia de −0,43 puntos y p = 0,9328", el efecto que se anulaba) porque esa lectura de
+    una sola corrida se sustituyo por el resultado replicado de 5 semillas: fs-en gana en las cinco
+    semillas sobre N=120 (§F184), justo lo opuesto de "se anula". Ver FINDINGS §F195/§17.
 
-      §5.2  F = 1,1379 · p = 0,3417   `ablacion_n15_REMOTO`, 4 configuraciones, N=60
-      §5.2  F = 0,2235 · p = 0,6382   `n30_rerun_REMOTO`, `gemma4:31b` vs `-mlx`, N=60
-      §5.3  F = 0,1451 · p = 0,9328   `benchmark_balanced_120_...071207`, 4 config., N=480
+    Sobrevive la de N=30, dos compilaciones del mismo modelo:
 
-    La tercera merece una nota. El informe la cita como «una diferencia de −0,43 puntos y
-    p = 0,9328», y ahi hay dos cosas de alcance distinto: el **−0,43** es el contraste
-    `fs-es` frente a `zs-en`, mientras la **p** es la del ANOVA de los cuatro grupos. No es un
-    error —`FINDINGS §F31` ya lo declara y da tambien la t pareada, p = 0,7019, que esta
-    comprobacion reproduce—, pero conviene no leer esa p como si probara ese contraste. Por eso se
-    comprueban las dos cosas por separado.
+      §5.3  F = 0,2235 . p = 0,6382   n30_rerun_REMOTO, gemma4:31b vs -mlx, N=60
 
-    Ninguna cifra esperada esta escrita en este codigo: todas se leen del informe (§L63).
+    Ninguna cifra esperada esta escrita en este codigo: se lee del informe (§L63).
     """
     CASOS = (
-        ('results/ablacion_n15_REMOTO', {'fs-en', 'fs-es', 'zs-en', 'zs-es'},
-         r'\(F = (\d+),(\d+); p = (\d+),(\d+)\)', 'la del corpus de quince'),
         ('results/n30_rerun_REMOTO', None,
          r'arroja F = (\d+),(\d+) con p = (\d+),(\d+)', 'la de las dos compilaciones'),
-        ('results/benchmark_balanced_120_20260825_071207', {'fs-en', 'fs-es', 'zs-en', 'zs-es'},
-         None, 'la del corpus de ciento veinte'),
     )
     fallos, mirados = [], 0
     for rel, filtro, patron, etiq in CASOS:
@@ -4000,44 +4034,7 @@ def c_anovas_secundarios(s):
             fallos.append('%s: el informe publica p = %s y la corrida da %.4f'
                           % (etiq, p_pub, pv))
 
-    # La tercera: su p es la del ANOVA de los cuatro grupos, y su Δ es un contraste concreto.
-    csv3 = os.path.join(BENCH_DIR, 'results/benchmark_balanced_120_20260825_071207',
-                        'benchmark_results.csv')
-    if os.path.exists(csv3):
-        g3 = {k: v for k, v in _grupos_f1(csv3).items()
-              if k in ('fs-en', 'fs-es', 'zs-en', 'zs-es')}
-        if len(g3) == 4:
-            F3, _, _, p3, _, _, _ = _anova_una_via(g3)
-            # La frase esta DOS veces en el informe, en §5.3 y en §6. `re.search` solo ve la
-            # primera, y si la segunda divergiera nadie lo notaria: es §L59, «las mutaciones
-            # deben cubrir todas las apariciones», aplicado a la comprobacion misma. Se
-            # recorren todas y se declara cada una como elemento examinado.
-            ocur = list(re.finditer(r'se anula, con una diferencia de \u2212(\d+),(\d+) puntos y '
-                                    r'p = (\d+),(\d+)', s))
-            mirados += 1
-            if not ocur:
-                fallos.append('no se encuentra en el informe la frase del efecto que se anula '
-                              'con su diferencia y su p')
-            ma = sum(g3['fs-es']) / len(g3['fs-es'])
-            mb = sum(g3['zs-en']) / len(g3['zs-en'])
-            d_calc = 100 * (mb - ma)
-            for idx, m in enumerate(ocur, 1):
-                donde = 'aparicion %d de %d' % (idx, len(ocur))
-                mirados += 1
-                p_pub = float('%s.%s' % (m.group(3), m.group(4)))
-                dec = len(m.group(4))
-                if abs(round(p3, dec) - p_pub) >= 10 ** (-dec) / 2:
-                    fallos.append('el efecto que se anula (%s): el informe publica p = %s y el '
-                                  'ANOVA de los cuatro grupos da %.4f' % (donde, p_pub, p3))
-                mirados += 1
-                d_pub = float('%s.%s' % (m.group(1), m.group(2)))
-                dd = len(m.group(2))
-                if abs(round(d_calc, dd) - d_pub) >= 10 ** (-dd) / 2:
-                    fallos.append('el efecto que se anula (%s): el informe publica una diferencia '
-                                  'de -%s puntos y fs-es frente a zs-en da -%.2f'
-                                  % (donde, d_pub, d_calc))
-
-    check('las tres ANOVA secundarias reproducen desde su corrida', mirados, fallos)
+    check('la ANOVA secundaria reproduce desde su corrida (N=30, dos compilaciones)', mirados, fallos)
 
 
 def c_tukey(s):
@@ -4341,52 +4338,52 @@ def c_titulares(s):
 def c_ablacion(s):
     """Las tres diferencias del analisis de variantes de prompt, contra su corrida.
 
-    Son +4,38 pp por localizar al espanol, -0,72 por los ejemplos few-shot en ingles y +10,4 por la
-    combinacion, y aparecen en **siete** lugares del informe: el resumen, el abstract, §5.2 dos
-    veces, §6 y las conclusiones. Ninguna comprobacion las cubria: la Tabla 5 se contrasta contra la
-    misma corrida, pero estas son **diferencias** entre sus filas y el informe las cita en prosa.
+    [ACTUALIZADA 2026-09-17] Eran +4,38 pp / -0,72 / +10,4 sobre una sola corrida
+    (ablacion_n15_REMOTO); con la media de 5 semillas declaradas (variantes_5semillas_n15_REMOTO,
+    FINDINGS §F176) son +9,01 pp por localizar al espanol, +3,61 por los ejemplos few-shot en
+    ingles y +13,19 por la combinacion. Aparecen en el resumen, el abstract (redondeadas a +13,2),
+    §5.2 dos veces, §6.1 y las conclusiones.
 
-    Se calculan desde el CSV crudo y no restando las medias publicadas: con dos decimales sale
-    -0,73 en lugar de -0,72, y eso habria dado un falso positivo.
+    Se calculan desde el CSV crudo de las cinco semillas y no restando medias redondeadas.
     """
     import csv as _csv
     import collections as _c
-    rel = 'results/ablacion_n15_REMOTO/benchmark_results.csv'
-    ruta = os.path.join(BENCH_DIR, rel)
-    if not os.path.exists(ruta):
+    import glob as _glob
+    ficheros = sorted(_glob.glob(os.path.join(
+        BENCH_DIR, 'results/variantes_5semillas_n15_REMOTO/seed_*/benchmark_results.csv')))
+    if not ficheros:
         check('las diferencias del analisis de variantes reproducen', 0,
-              ['no existe %s' % rel])
+              ['no existe results/variantes_5semillas_n15_REMOTO/seed_*/benchmark_results.csv'])
         return
     g = _c.defaultdict(list)
-    with open(ruta, encoding='utf-8') as fh:
-        for r in _csv.DictReader(fh):
-            if r.get('f1') not in (None, ''):
-                g[r['model']].append(float(r['f1']))
+    for ruta in ficheros:
+        with open(ruta, encoding='utf-8') as fh:
+            for r in _csv.DictReader(fh):
+                if r.get('f1') not in (None, ''):
+                    g[r['model']].append(float(r['f1']))
     m = {k: 100 * sum(v) / len(v) for k, v in g.items()}
     faltan = [k for k in ('zs-en', 'zs-es', 'fs-en', 'fs-es') if k not in m]
     if faltan:
         check('las diferencias del analisis de variantes reproducen', 0,
-              ['la corrida de ablacion no trae los grupos %s' % ', '.join(faltan)])
+              ['las 5 semillas no traen los grupos %s' % ', '.join(faltan)])
         return
-    esperado = (('localizacion al espanol', m['zs-es'] - m['zs-en'], r'\+4[.,]38'),
-                ('few-shot en ingles', m['fs-en'] - m['zs-en'], r'[-−]0[.,]72'),
-                ('combinacion de ambos', m['fs-es'] - m['zs-en'], r'\+?10[.,]4\b'))
+    esperado = (('localizacion al espanol', m['zs-es'] - m['zs-en'], r'\+9[.,]01'),
+                ('few-shot en ingles', m['fs-en'] - m['zs-en'], r'\+3[.,]61'),
+                ('combinacion de ambos', m['fs-es'] - m['zs-en'], r'\+?13[.,]19\b'))
     fallos, mirados = [], 0
     for etiq, val, patron in esperado:
         mirados += 1
         if not re.search(patron, s):
             fallos.append('el informe no cita la diferencia de %s, que el dato pone en %+.2f pp'
                            % (etiq, val))
-    # y al reves: que la cifra citada coincida con el dato, no solo que exista
-    for etiq, val, esp in (('localizacion al espanol', m['zs-es'] - m['zs-en'], 4.38),
-                           ('few-shot en ingles', m['fs-en'] - m['zs-en'], -0.72),
-                           ('combinacion de ambos', m['fs-es'] - m['zs-en'], 10.40)):
+    for etiq, val, esp in (('localizacion al espanol', m['zs-es'] - m['zs-en'], 9.01),
+                           ('few-shot en ingles', m['fs-en'] - m['zs-en'], 3.61),
+                           ('combinacion de ambos', m['fs-es'] - m['zs-en'], 13.19)):
         mirados += 1
         if abs(val - esp) > 0.006:
             fallos.append('%s: el informe dice %+.2f pp y el dato da %+.4f' % (etiq, esp, val))
     check('las diferencias del analisis de variantes reproducen', mirados, fallos,
-          'se calculan del CSV crudo: restando medias redondeadas sale -0,73 y no -0,72')
-
+          'media de 5 semillas desde 2026-09-17 (antes, una sola corrida)')
 
 def c_extension(s):
     """El cuerpo no puede exceder 25 paginas. La estimacion se declara como tal."""
