@@ -2029,6 +2029,30 @@ corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y
   declararlo sin completar; el encargo remoto está cerrado en definitiva, así que por defecto queda
   sin completar. Detalle en `FINDINGS.md §F197`.
 
+#### 4.7.4 `revision-global-final-20260917` — 🔄 EN CURSO — Claude Code (equipo principal)
+- **Cuándo:** lanzado 2026-09-17 (tarde) · **Run ID:** `wf_24ecab8b-473` · **Agentes:** hasta 5 (panel
+  de expertos, cada uno lee el documento completo) + hasta 3 escépticos por hallazgo confirmable
+  (verificación adversarial con voto mayoritario, 2 de 3)
+- **Objetivo, a petición explícita del autor:** "validar todo lo que se menciona en el abstract, el
+  resumen, la hipótesis y toda la tesis sea consistente consigo misma y con todos los valores, en una
+  última revisión global con agente orquestador y múltiples subagentes con paneles de expertos y con
+  verificación adversarial." Es la revisión de cierre tras la reescritura grande de `§F196`, que tocó
+  muchas secciones a la vez y es la más propensa a haber dejado una inconsistencia nueva.
+- **Diseño — 5 lentes de experto, cada uno lee el documento completo (no por rango de línea, porque
+  la consistencia entre secciones distantes exige ver ambas a la vez):** estadística y significancia;
+  consistencia numérica global (Resumen/Abstract/Hipótesis/Conclusiones contra sus fuentes); diseño
+  experimental y metodología NER/RAG; sincronía Resumen↔Abstract y arco narrativo
+  Hipótesis→Objetivos→Resultados→Conclusiones; y un lente adversarial de "tribunal de defensa".
+- **Revisión del orquestador antes de despachar:** ningún prompt dirige a eliminar contenido; se
+  advierte explícitamente qué NO reportar (temas ya cerrados hoy: `kb_combined`, purga histórica, la
+  estructura N=113); los dos incidentes reales de falsos positivos del proyecto (la fila "duplicada"
+  de `gemma4:latest`, la fila desplazada de FinanceBench) se citan en el prompt del panel adversarial
+  como calibración explícita del sesgo conservador; solo lectura, sin `git`.
+- **Fases:** Panel de expertos (5, paralelo) → Verificación adversarial (hasta 3 escépticos por
+  hallazgo, paralelo, sobrevive con 2 de 3 votos `REAL`).
+- **Archivos:** solo lectura. La aplicación de hallazgos confirmados la hace el equipo principal.
+- **Resultado:** pendiente.
+
 ---
 
 ### §4.bis Workflow `wf_348f89e2-43b` — consistencia global de la tesina (REINTENTO)
