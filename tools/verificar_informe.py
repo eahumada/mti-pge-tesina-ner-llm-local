@@ -147,6 +147,10 @@ FALLOS_DECLARADOS = {
                                                                     'PENDIENTE de propagar '
                                                                     '(§F191): cierre del Anexo I '
                                                                     'comprimido'),
+    'Tabla 10, fila 6 difiere': ('2026-09-17',
+                                 'PENDIENTE de propagar: corregido el separador decimal de '
+                                 '"1.1 GB" a "1,1 GB" en el .md (consistencia con el resto de la '
+                                 'tabla, en coma), aun no en los tres .docx'),
     'Esta lectura exige una salvedad de diseño, declarada y sin': ('2026-09-17',
                                                                     'PENDIENTE de propagar (§F194): '
                                                                     'nuevo parrafo en §6.2 sobre la '
