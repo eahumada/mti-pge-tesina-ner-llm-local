@@ -3141,3 +3141,28 @@ completar sus datos, no descartarlos.
 - **Siguiente paso, pendiente de indicación:** (a) refrescar los tres dictámenes de `TODO-INFORME-FINAL.md §17`
   con los datos finales de R2, o (b) decidir primero si y cómo se incorpora este intervalo de confianza a la
   Tabla 7 antes de ejecutar la purga.
+
+---
+
+### §1.342 ✅ Anexo K añadido con el IC95% de R2 (decisión del autor: solo anexo, sin tocar Tabla 7) — Claude Code (equipo principal) — 2026-09-17 00:15
+- **Decisión del autor recibida** ante la pregunta de `§1.341`: opción (b) — dejar el intervalo de confianza
+  consolidado de R2 solo en un anexo nuevo, sin tocar la Tabla 7. Reiteró además la instrucción permanente de
+  dejar solo las últimas corridas y benchmarks, sin referencias a resultados antiguos o erróneos.
+- **Ejecutado:** Anexo K en el Markdown canónico, con la Tabla 21 (IC95% de las 5 semillas, once modelos) y
+  su prosa metodológica. Commit `5d79561`.
+- **Autocorrección antes de comprometer:** un primer borrador afirmaba, sin haberlo comprobado para los once
+  modelos, que el punto publicado siempre cae dentro del IC95%. Verificado con los datos: **7 de 22 caen
+  fuera**, por un margen de 0,03 a 0,13 puntos porcentuales. Se corrigió el texto antes del commit. Registrado
+  en `FINDINGS.md §F188`.
+- **Verificador:** 0 fallos nuevos. Se declararon en `FALLOS_DECLARADOS` los 6 fallos de propagación a los
+  tres `.docx` (mismo patrón que el Anexo J / `§F168`, aún pendiente 5 días después): insertar una sección H3
+  nueva con tabla requiere una pasada de maquetación dedicada.
+- **Pendiente (parte 2 de la instrucción del autor):** «no hacer referencias a resultados anteriores
+  erróneos, solo dejar las últimas corridas y benchmarks» es exactamente `TODO-INFORME-FINAL.md §17`, ahora
+  desbloqueada. Antes de tocar el cuerpo del informe con esa purga: (a) los tres dictámenes
+  (`PLAN-PURGA-INFORME-20260914.json`, `DICTAMEN-FORENSE-CIFRAS-20260914.json`,
+  `DICTAMEN-REVISION-SCRIPTS-20260914.json`) son del 14 de septiembre, **anteriores al cierre de R2** (16 de
+  septiembre) y a este mismo Anexo K; hay que revisar su vigencia antes de aplicarlos. (b) La política del
+  proyecto acota expresamente el alcance: los anexos H e I, los logs de ejecución y los documentos de hitos
+  ya entregados **no se tocan** por esta limpieza (son lo que atestigua, no lo que afirma) — la purga aplica
+  al cuerpo, no a esos artefactos. Se continúa revisando los dictámenes antes de aplicar nada.
