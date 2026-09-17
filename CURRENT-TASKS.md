@@ -2004,6 +2004,22 @@ corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y
   referencia de sección incorrecta en Anexo I (§5.3.1→§5.3) y una oración densa dividida en Anexo D.
   Detalle en `FINDINGS.md §F195`. Verificador: 0 fallos nuevos.
 
+#### 4.7.3 `barrido-corridas-antiguas-20260917` — 🔄 EN CURSO — Claude Code (equipo principal)
+- **Cuándo:** lanzado 2026-09-17 (tarde) · **Run ID:** `wf_36d7554a-6c9` · **Diseño:** loop-until-dry,
+  mínimo 5 rondas, hasta 2 rondas secas consecutivas después del mínimo (4 lectores + 1 juez por ronda)
+- **Objetivo, a petición explícita y repetida del autor:** entre medio, se encontró y corrigió un caso
+  grande que ningún barrido anterior había detectado: el estudio de variantes de idioma sobre
+  N=15/N=30/N=120 seguía citando una sola corrida cuando ya existían réplicas de 5 semillas del
+  encargo remoto R1-R6 (`FINDINGS §F196`). Este workflow busca **cualquier otro caso del mismo
+  patrón** en el resto del documento, iterando en vez de una sola pasada para no repetir el punto
+  ciego de los barridos previos.
+- **Revisión del orquestador antes de despachar:** prompts con el ejemplo concreto ya encontrado,
+  lista explícita de qué NO es este patrón (mojibake/Locations y `kb_combined`, ambos temas
+  distintos ya cerrados), sesgo conservador del juez, acumulación de hallazgos entre rondas para no
+  repetir, solo lectura, sin `git`.
+- **Archivos:** solo lectura. La aplicación de hallazgos confirmados la hace el equipo principal.
+- **Resultado:** pendiente.
+
 ---
 
 ### §4.bis Workflow `wf_348f89e2-43b` — consistencia global de la tesina (REINTENTO)
