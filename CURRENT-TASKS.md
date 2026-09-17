@@ -1805,7 +1805,7 @@ corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y
 
 ---
 
-### 4.3 `purga-informe-20260914` — 🔄 EN CURSO
+### 4.3 `purga-informe-20260914` — ⛔ NO APLICADO, obsoleto (ver `FINDINGS §F189`)
 - **Cuándo:** 2026-09-14, lanzado ~19:20 · **Agentes:** 13 (9 auditores + 3 refutadores + 1 sintetizador)
 - **Objetivo:** inventariar en el informe todo lo débil, anecdótico, histórico o invalidado, y producir un
   plan de retirada ordenado. Instrucción del autor: «eliminar lo que no tiene sustento; no mencionar la
@@ -1914,6 +1914,29 @@ corrección de los 7 `acceptance_status.json` quedan como estaban, verificadas y
   **No aplicado al informe todavía** (`TODO-INFORME-FINAL.md §17`). **Punto abierto con acción**: R5 aún no
   tiene ninguna semilla sobre el corpus español (verificado: solo existe el lado inglés en
   `variantes_n30_parEmparejado_REMOTO/`); comprobar que termine antes de escribir la sección de resultados.
+
+### 4.7 `revision-final-tesina-20260917` — 🔄 EN CURSO — Claude Code (equipo principal)
+- **Cuándo:** lanzado 2026-09-17 ~10:45 · **Agentes:** 13 (6 lectores por sección + 2 jueces del panel de
+  verificación + 5 verificadores de citas)
+- **Objetivo, a petición directa del autor:** (1) encontrar y retirar del cuerpo cualquier mención residual
+  a resultados históricos/superados que no sea necesaria para sostener la hipótesis vigente (más allá de lo
+  ya hecho en Anexos H/I, `§F191`), reubicando ese contenido en `CAMBIOS-DESDE-ENVIO-PROFESOR-20260908.md`;
+  (2) simplificar prosa densa u oscura, en especial en los anexos, sin perder cifras ni matices; (3)
+  verificar contra internet las URL de las 46 entradas de la bibliografía; (4) revisar consistencia general,
+  incluida la concordancia exacta entre Resumen y Abstract.
+- **Instrucciones a subagentes revisadas por un orquestador Opus antes de despachar** (política del
+  proyecto): confirmó que el diseño es seguro (solo lectura en las tres fases, ninguna edición dentro del
+  workflow, quórum conservador que por defecto NO retira), señaló dos correcciones aplicadas antes de
+  lanzar — proteger explícitamente los Anexos H/I con el mismo criterio de "vigente vs. histórico" en vez de
+  dejarlos sin instrucción, y añadir el recordatorio de solo-lectura a las fases 2 y 3 — más un ajuste menor
+  de sobriedad tipográfica en las reescrituras sugeridas.
+- **Fases:** Revisión por sección (6 lectores en rangos de línea disjuntos, solo lectura) → Verificación de
+  menciones históricas (panel adversarial de 2 jueces, conservador, releen el archivo completo) →
+  Verificación de citas (5 lotes de bibliografía, `WebFetch`).
+- **Archivos:** **solo lectura en las tres fases.** Ningún subagente edita nada; la aplicación de los
+  hallazgos confirmados (con respaldo previo y verificación con `tools/verificar_informe.py` después) la
+  hace el equipo principal tras recibir los resultados, no un subagente.
+- **Resultado:** pendiente.
 
 ---
 
