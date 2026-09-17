@@ -1048,3 +1048,18 @@ de la tabla de re-corridas del encargo (`remote_48g/ENCARGO-RECORRIDAS-20260914.
 
 **No se ejecuta por iniciativa propia sin repasar antes con el autor** qué del bloque C decide, dado que toca
 el destino del modo `kb_combined` (`FINDINGS §F178`) y la primera frase del Resumen.
+
+---
+
+**Actualización 2026-09-17: disparador cumplido, pero el procedimiento de arriba NO se ejecuta tal cual.**
+Verificado (`FINDINGS §F189`): los tres dictámenes de la tabla anterior son del 14 de septiembre y ya no
+describen el documento actual — su «hallazgo más grave» (que el 90,16 % de F1 no existe en ningún resultado)
+es falso hoy, y el trabajo de limpieza que describían ya avanzó en los commits del 12-17 de septiembre
+(retirada de la Figura 1, compresión de §3.3, Anexos H/I comprimidos en `§F191`). Refrescarlos exigiría
+rehacer casi todo el análisis desde cero contra un documento que cambió sustancialmente desde entonces.
+
+**En su lugar**, se lanzó un workflow nuevo de detección fresca contra el documento vigente
+(`revision-final-tesina-20260917`, declarado en `CURRENT-TASKS.md §4.7`), con instrucciones a subagentes
+revisadas por un orquestador Opus antes de despachar. Cubre lo que este §17 pedía (ninguna mención residual
+a resultados antiguos en el cuerpo) más simplificación de prosa densa y verificación de citas. Los tres
+artefactos de 2026-09-14 quedan como registro histórico de una auditoría anterior, no como plan de ejecución.
