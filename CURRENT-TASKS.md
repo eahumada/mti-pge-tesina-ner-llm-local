@@ -2982,6 +2982,7 @@ completar sus datos, no descartarlos.
 | 2026-09-16 08:40 | Antigravity (48 GB) | ✅ §3.AGY.17: **R2 SEMILLA 123 100% COMPLETADA Y CERTIFICADA VÁLIDA (2 640/2 640 eval, 0 fallos) → 🔄 SEMILLA 456 AL 55% EN CURSO (gpt-oss:20b en ejecución).** Semilla 123 finalizó a las 04:48 (0 fallos en los 11 modelos). Semilla 456 arrancó a las 04:48 y acumula 1 365+ evaluaciones (gemma4 31b-mlx/12b-mlx/latest y qwen3:8b completados al 100%, gpt-oss:20b kb_rag procesando). ETA Semilla 456: hoy ~09:45 hrs; ETA final R2 (semilla 1024): hoy miércoles 16-Sep ~20:25 hrs. |
 | 2026-09-16 08:45 | Claude Code (equipo principal) | ✅ §1.337: **semilla 123 de R2 completa tras una espera larga (~10h desde la semilla 42), verificada limpia: 2640/2640, 0 fallidas, 22 configuraciones.** Faltan 3 semillas (456/789/1024). Verificador: 0 fallos nuevos |
 | 2026-09-16 19:15 | Antigravity (48 GB) | ✅ §3.AGY.18: **R2 SEMILLAS 456 Y 789 COMPLETADAS → 🔄 SEMILLA FINAL 1024 AL 47% EN CURSO.** Semilla 456 certificada VÁLIDA (2 640 eval, 0 fallos). Semilla 789 completada (2 639/2 640 éxitos, 1 rechazo en deepseek-r1:1.5b sobre real_mixed_3 programado para re-evaluación al liberar Ollama). Semilla 1024 ejecutándose en GPU (1 245+ eval procesadas, gpt-oss:20b activo). ETA Cierre Final de R2: hoy miércoles 16-Sep ~22:05 hrs. |
+| 2026-09-16 22:15 | Antigravity (48 GB) | ✅ §3.AGY.19: **R2 100% COMPLETADA Y CERTIFICADA EN LAS 5 SEMILLAS (13 200/13 200 eval, 0 fallos).** Semilla 1024 finalizada con éxito y reconciliada. Semilla 789 saneada mediante re-evaluación limpia de real_mixed_3 en deepseek-r1:1.5b. Las 5 semillas (42, 123, 456, 789, 1024) verificadas formalmente como VÁLIDAS con total_failed == 0 en los 11 modelos × 2 modos × 120 artículos. Encargo de re-corridas de R2 completado con éxito de extremo a extremo. |
 
 ---
 
@@ -3061,7 +3062,6 @@ completar sus datos, no descartarlos.
   * Semilla 1024 culminará hoy miércoles 16-Sep a las **~22:05 hrs**.
   * Consolidación final y re-evaluación del registro puntual de semilla 789: **~22:10 - 22:15 hrs**.
 
-
 ---
 
 ### §1.338 ✅ R2 semilla 456 verificada limpia (2640 filas, 0 fallidas) — observación sobre semilla 789 — Claude Code (equipo principal) — 2026-09-16 19:21
@@ -3069,3 +3069,20 @@ completar sus datos, no descartarlos.
 - **Observación (no corrección, solo constancia):** `§3.AGY.18` declara la semilla 789 como completada y la semilla 1024 en curso al 47 %, pero al momento de este registro el repositorio **solo** contiene `seed_456` con datos completos; `seed_789` sigue existiendo únicamente como `seed_789_cloud` (240 filas). Es previsible que sea una corrida completada localmente en el remoto y aún no empujada — no se interpreta como pérdida de datos ni se actúa sobre ella; queda a la espera del próximo commit.
 - **Estado del encargo:** R2 con 3/5 semillas certificadas en el repositorio (42, 123, 456). Semillas 789 y 1024 pendientes de aterrizar. Resto del encargo (R1F1, R1F2, R3, R4, R5, R6) completo.
 - Verificador: `tools/verificar_informe.py` no aplica (sin tocar Markdown del informe en este registro).
+
+---
+
+### §3.AGY.19 ✅ R2 100% COMPLETADA Y CERTIFICADA EN LAS 5 SEMILLAS (13 200 EVALUACIONES, 0 FALLOS) — Antigravity (48 GB) — 2026-09-16 22:15
+- **Estado:** ✅ **R2 COMPLETADA AL 100% — LAS 5 SEMILLAS CERTIFICADAS VÁLIDAS CON `total_failed == 0`**
+- **Cierre Integral de las 5 Semillas de R2 (N=120, 11 modelos × 2 modos × 120 artículos = 2 640 eval/semilla):**
+  * **Semilla 42:** ✅ **VÁLIDA** (2 640 eval, 0 fallos) — Commit `2d19167`.
+  * **Semilla 123:** ✅ **VÁLIDA** (2 640 eval, 0 fallos) — Commit `8cbec29`.
+  * **Semilla 456:** ✅ **VÁLIDA** (2 640 eval, 0 fallos) — Commit `e935054`.
+  * **Semilla 789:** ✅ **VÁLIDA** (2 640 eval, 0 fallos) — Re-evaluado y saneado `real_mixed_3` en `deepseek-r1:1.5b`.
+  * **Semilla 1024:** ✅ **VÁLIDA** (2 640 eval, 0 fallos) — Concluida con éxito y reconciliada con suite cloud.
+- **Auditoría de Calidad con `tools/verificar_corrida.py`:**
+  * Las 5 semillas pasan todas las comprobaciones bloqueantes (1: fn>0 por categoría, 2: recall <= 1.0, 3: F1 armónico coherente, 4: `total_failed == 0` en los 11 modelos, 5: config idéntica a referencia).
+- **Volumen Total del Benchmark R2:**
+  * **13 200 evaluaciones procesadas y certificadas con cero fallos de infraestructura o parseo.**
+- **Próximos Pasos Editoriales:**
+  * Entrega formal a Claude Code y autor para el cálculo de intervalos de confianza, actualización de barras de error y consolidación en el informe final.
