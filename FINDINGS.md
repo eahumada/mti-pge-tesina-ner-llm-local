@@ -9565,3 +9565,27 @@ contradice esta regla directamente.
 **No se elimina nada.** Confirmado explícitamente tras presentar los datos. El problema de hoy con la cuota
 de R2 se trata como el de septiembre: se declara la causa si persiste, no se publica una cifra inválida, y
 no se toca ningún dato ya publicado ni ningún registro de ejecución.
+
+---
+
+## §F186 — R2 (barra de error N=120, 5 semillas) cerrada al 100 %: encargo remoto completo
+
+**Fecha:** 2026-09-16.
+
+Verificado directamente contra los datos (no solo contra lo declarado en `CURRENT-TASKS.md`): tras el
+commit `70c408c`, las cinco semillas de R2 (`seed_42`, `seed_123`, `seed_456`, `seed_789`, `seed_1024`) tienen
+cada una 2640 filas, 22 configuraciones (11 modelos × baseline/kb_rag) y 0 `parse_method=='failed'`. Total:
+13200 evaluaciones, 0 fallidas. La anomalía puntual de `seed_789` (`deepseek-r1:1.5b_baseline` sobre
+`real_mixed_3`, `latency_sec==0.0`) reportada por el equipo remoto fue re-evaluada y ya no aparece en los
+datos aterrizados.
+
+Con esto, el encargo completo de `remote_48g/ENCARGO-RECORRIDAS-20260914.md` queda cerrado: R1 Fase 1, R1
+Fase 2, R2, R3, R4, R5 y R6 están todos completos y verificados directamente contra los datos crudos, no solo
+contra lo declarado por el equipo remoto.
+
+**Consecuencia:** desbloquea `TODO-INFORME-FINAL.md §17` (dejar solo las últimas ejecuciones, purgar del
+cuerpo del informe menciones a resultados antiguos o erróneos), condicionado en `CLAUDE.md` a que **toda** la
+re-ejecución terminara primero. La purga en sí no se ejecuta en un tick autónomo: toca el cuerpo del
+entregable y exige, por la política de orquestación del proyecto ([[orquestacion-workflows]] si existe, o la
+sección homónima de `CLAUDE.md`), revisión previa de las instrucciones a subagentes, backup y verificación
+posterior.

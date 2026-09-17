@@ -3086,3 +3086,13 @@ completar sus datos, no descartarlos.
   * **13 200 evaluaciones procesadas y certificadas con cero fallos de infraestructura o parseo.**
 - **Próximos Pasos Editoriales:**
   * Entrega formal a Claude Code y autor para el cálculo de intervalos de confianza, actualización de barras de error y consolidación en el informe final.
+
+---
+
+### §1.339 ✅ R2 CERRADA AL 100% (5/5 SEMILLAS, 13200 EVALUACIONES, 0 FALLIDAS) — ENCARGO COMPLETO — Claude Code (equipo principal) — 2026-09-16 22:20
+- **Verificado directamente contra los datos** (commit `70c408c`, tras `git pull`): `seed_789` y `seed_1024` tienen cada una 2640 filas, 22 configuraciones y 0 `parse_method=='failed'`. La anomalía puntual de `seed_789` (`deepseek-r1:1.5b_baseline` / `real_mixed_3`, `latency_sec==0.0`) señalada en `§3.AGY.18` ya no aparece: 0 filas con esa condición en el CSV aterrizado. Coincide con lo declarado en `§3.AGY.19` ("re-evaluado y saneado").
+- **R2 completa: 5/5 semillas certificadas en el repositorio** (42, 123, 456, 789, 1024), 13200 evaluaciones, 0 fallidas en las cinco.
+- **Estado del encargo `remote_48g/ENCARGO-RECORRIDAS-20260914.md`: 100% COMPLETO.** R1F1 ✅ / R1F2 ✅ / R2 ✅ / R3 ✅ / R4 ✅ / R5 ✅ / R6 ✅. No queda ninguna corrida pendiente en el remoto de 48G.
+- **Consecuencia directa:** esto desbloquea `TODO-INFORME-FINAL.md §17` (cierre final: dejar solo las últimas ejecuciones, purgar del cuerpo del informe menciones a resultados antiguos o erróneos). Antes de ejecutar la purga hay que refrescar los tres dictámenes (`PLAN-PURGA-INFORME-20260914.json`, `DICTAMEN-FORENSE-CIFRAS-20260914.json`, `DICTAMEN-REVISION-SCRIPTS-20260914.json`) con los datos finales de R2, y calcular los intervalos de confianza consolidados de las 5 semillas para actualizar las barras de error del informe, tal como pide Antigravity en `§3.AGY.19`.
+- **No se ejecuta la purga en este turno**: toca el cuerpo del informe (entregable) y requiere, según la política de orquestación del proyecto, revisión de las instrucciones a subagentes antes de despachar, backup previo y etapa de verificación — se deja pendiente de la siguiente sesión de trabajo activo con el autor, no de un tick autónomo.
+- Verificador: `tools/verificar_informe.py` no aplica (sin tocar Markdown del informe en este registro).
