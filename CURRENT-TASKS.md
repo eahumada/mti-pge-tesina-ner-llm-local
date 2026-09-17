@@ -3184,3 +3184,19 @@ completar sus datos, no descartarlos.
 - **Reportado al autor** para decidir si corresponde una auditoría fresca del cuerpo con un alcance
   específico, o si con lo verificado (56/56 comprobaciones sin fallos nuevos) se da por cumplida la
   instrucción de «solo las últimas corridas y benchmarks».
+
+---
+
+### §3.bis.31 🟡 PARA EL EQUIPO REMOTO — Regenerar `benchmark_summary.json` en la reconciliación cloud (2026-09-17)
+
+`FINDINGS §F187`: `benchmark_summary.json` de `gemma4:31b-cloud` quedó corrompido (0,88 %–54,83 % de F1, sin
+patrón) en las **5 semillas** de R2, mientras `benchmark_results.csv` (dato crudo por artículo) es correcto y
+estable (81–83 %), coincidente con lo certificado en `§3.AGY.15`. La causa: `tools/reconciliar_seed_cloud.py`
+fusiona correctamente el CSV con los datos cloud, pero no regenera el `benchmark_summary.json` agregado tras
+la fusión, que queda con el valor de antes de reconciliar.
+
+**Petición barata, no urgente** (R2 ya está cerrado y el consolidado correcto ya se calculó desde el CSV,
+`§1.341`; esto es solo higiene para que no se repita en una futura corrida con reconciliación cloud): que
+`reconciliar_seed_cloud.py` recalcule y sobrescriba `benchmark_summary.json` para el modelo reconciliado
+(media de `precision`/`recall`/`f1` por configuración sobre las filas fusionadas) inmediatamente después de
+fusionar el CSV, en la misma pasada. No toca ningún dato ya publicado ni ningún log de ejecución.
