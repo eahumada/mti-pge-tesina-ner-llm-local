@@ -9652,3 +9652,31 @@ de intervalos de confianza de R2 debe recomputarse por artículo desde `benchmar
 configuraciones, replicando la exclusión de los 7 artículos contaminados (N=113) que usa el estudio principal
 en `results/ANALISIS_CONJUNTO_20260909_FIX/`, para mantener la misma metodología de agregación que ya
 sostiene la Tabla 7. No se ha tocado ningún archivo del remoto; se deja constancia y se recomputa aparte.
+
+---
+
+## §F188 — Anexo K añadido al informe (IC95% de R2, 5 semillas); pendiente de propagar a los tres `.docx`
+
+**Fecha:** 2026-09-17.
+
+Con autorización explícita del autor ("dejarlo solo en anexo sin tocar la Tabla 7"), se añadió el **Anexo
+K** al Markdown canónico (`doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.md`),
+con la Tabla 21 (media e intervalo de confianza al 95 % del F1 sobre las 5 semillas de R2, once modelos) y su
+prosa metodológica, incluida la mención transparente del defecto de `FINDINGS §F187` que obligó a calcular
+desde el CSV crudo en lugar del resumen agregado.
+
+**Corrección aplicada antes de comprometer el texto:** un primer borrador afirmaba que «en los once modelos
+replicados, el punto que reporta la Tabla 7 cae dentro de su intervalo de confianza», sin haberlo comprobado
+para los once. Al verificarlo con los datos, **7 de los 22 puntos (baseline + KB RAG) caen fuera** del
+intervalo, aunque por un margen mínimo (0,03 a 0,13 puntos porcentuales). Se corrigió el texto antes de
+comprometerlo — es exactamente el tipo de afirmación que `tools/verificar_informe.py` no puede detectar por
+sí solo porque compara contra artefactos declarados, no contra un chequeo de cobertura total como este; la
+verificación fue manual, con los datos abiertos, antes de escribir la cifra.
+
+**Pendiente:** igual que el Anexo J (`§F168`, aún sin propagar 5 días después), el Anexo K no está todavía en
+los tres `.docx` (`Informe_Final_Tesina_NER_plantilla_revision_final_2026-09-03.docx`,
+`Informe_Final_Tesina_NER.docx`, `doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.docx`):
+insertar una sección H3 nueva con tabla no es una sustitución de términos que
+`tools/docx_replace_terms.py` resuelva; requiere una pasada de maquetación dedicada, la misma que tiene
+pendiente el Anexo J. Se declaran los fallos nuevos correspondientes en `FALLOS_DECLARADOS` con este mismo
+motivo, para no bloquear el gancho de commit mientras esa pasada no ocurre.

@@ -1178,3 +1178,51 @@ _Tabla 20. Sensibilidad de la correlación capacidad-beneficio a la retirada de 
 
 El detalle íntegro, con más decimales, está en el propio artefacto JSON citado al inicio de este anexo.
 
+### Anexo K — Intervalo de confianza de la Tabla 7 por réplica de semilla (N=120, cinco semillas)
+
+La Tabla 7 (§5.3.1) reporta un único punto por modelo, tomado de una corrida (`recorrida_20260908`,
+consolidada en `results/ANALISIS_CONJUNTO_20260909_FIX/`). Para acotar cuánto varía ese punto por el azar de
+la generación, se replicó el mismo protocolo sobre cinco semillas declaradas (42, 123, 456, 789, 1024) en
+once de los trece modelos de la Tabla 7, con 2 640 evaluaciones por semilla (13 200 en total, 0 fallidas),
+en `repos/ner-llm-entity-benchmark/results/barras_error_n120_REMOTO/`. Quedan fuera de esta réplica
+`qwen2.5:14b` y `gemma:latest`, que no formaron parte de la corrida de barra de error.
+
+El cálculo, en `results/R2_CONSOLIDADO_5SEMILLAS_20260916/calcular_intervalos_confianza.py`, promedia el F1
+por artículo dentro de cada semilla sobre los mismos 113 artículos que usa la Tabla 7 (se excluyen los siete
+con codificación contaminada, Anexo H), y calcula el intervalo de confianza al 95 % con distribución t de
+Student sobre las cinco medias resultantes. Antes de aplicarlo a los once modelos se verificó que reproduce
+exactamente el punto ya publicado: la media de la semilla 42 para `gemma4:31b-mlx` da 81,47 %, idéntica a la
+cifra de la Tabla 7.
+
+El cálculo parte del CSV de resultados por artículo, no del resumen agregado que trae cada corrida: el de
+`gemma4:31b-cloud` no se pudo usar directamente porque no reflejaba sus propios datos crudos en ninguna de
+las cinco semillas, un desajuste que no afecta al resto de los modelos ni a la fuente primaria por artículo.
+
+La Tabla 21 recoge, para cada uno de los once modelos, la media y el intervalo de confianza al 95 % del F1
+sobre las cinco semillas, en modo baseline y KB RAG.
+
+_Tabla 21. Media e intervalo de confianza al 95 % del F1 sobre cinco semillas (N=120, once modelos)_
+
+| Modelo | F1 baseline (media, IC95%) | F1 KB RAG (media, IC95%) |
+|:---|:---:|:---:|
+| gemma4:31b-cloud | 81,87 % [81,58, 82,16] | 82,97 % [82,79, 83,16] |
+| gemma4:31b-mlx | 81,56 % [81,45, 81,67] | 82,49 % [82,42, 82,55] |
+| gemma4:12b-mlx | 77,96 % [77,80, 78,13] | 79,84 % [79,77, 79,90] |
+| gpt-oss:20b | 75,50 % [74,46, 76,54] | 77,46 % [77,11, 77,81] |
+| gemma4:latest | 75,13 % [74,51, 75,74] | 77,98 % [77,44, 78,53] |
+| llama3.1:8b | 69,66 % [69,28, 70,04] | 71,43 % [71,00, 71,86] |
+| qwen3:8b | 68,92 % [68,77, 69,08] | 69,13 % [69,01, 69,25] |
+| llama3.2:latest | 62,46 % [61,63, 63,29] | 69,67 % [69,39, 69,95] |
+| mistral-nemo:latest | 60,39 % [59,80, 60,97] | 56,93 % [55,77, 58,10] |
+| deepseek-r1:1.5b | 29,18 % [28,13, 30,23] | 31,99 % [30,92, 33,06] |
+| nemotron-mini:4b | 27,68 % [26,90, 28,46] | 41,13 % [40,23, 42,02] |
+
+De los veintidós puntos que reporta la Tabla 7 para estos once modelos (baseline y KB RAG), quince caen
+dentro de su intervalo de confianza de cinco semillas. Los siete restantes quedan fuera por un margen mínimo,
+entre 0,03 y 0,13 puntos porcentuales (`gemma4:12b-mlx` en ambos modos, `gpt-oss:20b`, `llama3.1:8b`,
+`qwen3:8b`, `llama3.2:latest` y `deepseek-r1:1.5b` en uno de los dos), consistente con que la corrida
+publicada no comparte semilla con ninguna de las cinco de esta réplica salvo, aparentemente, en
+`gemma4:31b-mlx`. El resultado de conjunto es el mismo: ningún modelo se desvía de su franja de cinco
+semillas más allá de un margen menor al 0,15 % absoluto, y la cifra ya publicada en la Tabla 7 queda
+acotada, no cuestionada, por este intervalo de confianza.
+

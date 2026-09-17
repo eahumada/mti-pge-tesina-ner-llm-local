@@ -161,6 +161,27 @@ FALLOS_DECLARADOS = {
                                                       'PENDIENTE de propagar (§F172): detalle '
                                                       'viejo del punto 7 de §7.2, aun en los '
                                                       '.docx sin regenerar'),
+    'La Tabla 7 (§5.3.1) reporta un único punto por modelo, tom': ('2026-09-17',
+                                                                   'PENDIENTE de propagar (§F188): '
+                                                                   'primer parrafo del Anexo K, '
+                                                                   'nuevo'),
+    'El cálculo, en results/R2CONSOLIDADO5SEMILLAS20260916/calc': ('2026-09-17',
+                                                                    'PENDIENTE de propagar (§F188): '
+                                                                    'segundo parrafo del Anexo K, '
+                                                                    'nuevo'),
+    'El cálculo parte del CSV de resultados por artículo, no de': ('2026-09-17',
+                                                                    'PENDIENTE de propagar (§F188): '
+                                                                    'tercer parrafo del Anexo K, '
+                                                                    'nuevo'),
+    'De los veintidós puntos que reporta la Tabla 7 para estos ': ('2026-09-17',
+                                                                    'PENDIENTE de propagar (§F188): '
+                                                                    'parrafo de cierre del Anexo K, '
+                                                                    'nuevo'),
+    'Tabla 21 no esta en el entregable': ('2026-09-17',
+                                          'PENDIENTE de propagar (§F188): tabla del Anexo K, nueva'),
+    'anexo k — intervalo de confianza de la tabla 7 por réplica': ('2026-09-17',
+                                                                    'PENDIENTE de propagar (§F188): '
+                                                                    'encabezado del anexo nuevo'),
 }
 
 
