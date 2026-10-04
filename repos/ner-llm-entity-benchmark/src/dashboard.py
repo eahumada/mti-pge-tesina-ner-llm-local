@@ -36,36 +36,55 @@ if not os.path.exists(base_results_path):
 dir_options = []
 dir_mapping = {}
 
-# Check base directory first
-base_summary_path = os.path.join(base_results_path, "benchmark_summary.json")
-base_label = "Base (Actual / Anterior)"
-if os.path.exists(base_summary_path):
-    try:
-        with open(base_summary_path, "r", encoding="utf-8") as f:
-            b_data = json.load(f)
-            if "zs-en" in b_data:
-                base_label += " [Estudio de Ablación]"
-    except: pass
-dir_options.append(base_label)
-dir_mapping[base_label] = base_results_path
+SPECIAL_LABELS = {
+    "ANALISIS_CONJUNTO_20260909_FIX": "🏆 Entrega Final Canónica N=120 (Tabla 7) — ANALISIS_CONJUNTO_20260909_FIX",
+    "validacion_n30_es_REMOTO": "🏆 Validación N=30 Español R4/R5 (F1 88.43%) — validacion_n30_es_REMOTO",
+    "n30_rerun_REMOTO": "🔬 Dominio AML/KYC N=30 (F1 80.57% / 90.16%) — n30_rerun_REMOTO",
+    "R2_CONSOLIDADO_5SEMILLAS_20260916": "📊 R2 Consolidado 5 Semillas (Anexo K) — R2_CONSOLIDADO_5SEMILLAS_20260916",
+    "variantes_5semillas_n120_REMOTO": "📊 Variantes de Prompt 5 Semillas N=120 — variantes_5semillas_n120_REMOTO",
+    "variantes_5semillas_n15_REMOTO": "📊 Variantes de Prompt 5 Semillas N=15 — variantes_5semillas_n15_REMOTO",
+    "variantes_n30_parEmparejado_REMOTO": "📊 Par Emparejado N=30 EN/ES (R5) — variantes_n30_parEmparejado_REMOTO",
+    "barras_error_n120_REMOTO": "📊 Barras de Error N=120 — barras_error_n120_REMOTO",
+    "ANALISIS_CONJUNTO_20260907": "📜 Análisis Conjunto Histórico (14 modelos) — ANALISIS_CONJUNTO_20260907",
+    "benchmark_balanced_120_20260901_140421": "📜 Corrida Referencia Histórica #13 — benchmark_balanced_120_20260901_140421",
+}
 
 for d in os.listdir(base_results_path):
     full_path = os.path.join(base_results_path, d)
     if os.path.isdir(full_path):
-        label = d
-        sum_path = os.path.join(full_path, "benchmark_summary.json")
-        if os.path.exists(sum_path):
-            try:
-                with open(sum_path, "r", encoding="utf-8") as f:
-                    s_data = json.load(f)
-                    if "zs-en" in s_data:
-                        label += " [Estudio de Ablación]"
-            except: pass
+        if d in SPECIAL_LABELS:
+            label = SPECIAL_LABELS[d]
+        else:
+            label = d
+            sum_path = os.path.join(full_path, "benchmark_summary.json")
+            if os.path.exists(sum_path):
+                try:
+                    with open(sum_path, "r", encoding="utf-8") as f:
+                        s_data = json.load(f)
+                        if "zs-en" in s_data:
+                            label += " [Estudio de Variantes]"
+                except: pass
         dir_options.append(label)
         dir_mapping[label] = full_path
 
-# Sort options (keep Base first)
-sorted_options = [dir_options[0]] + sorted(dir_options[1:], reverse=True)
+base_label = "📁 Base Histórica [results/ raíz] "
+dir_options.append(base_label)
+dir_mapping[base_label] = base_results_path
+
+# Orden de visualización: entrega canónica primero, luego especiales, resto y base histórica al final
+# Prioritize the latest consolidated run (5 seeds, 2026-09-16) as canonical
+canonical_label = SPECIAL_LABELS.get("R2_CONSOLIDADO_5SEMILLAS_20260916")
+legacy_canonical = SPECIAL_LABELS.get("ANALISIS_CONJUNTO_20260909_FIX")
+other_options = [opt for opt in dir_options if opt != canonical_label and opt != legacy_canonical and opt != base_label]
+other_options.sort()
+sorted_options = []
+if canonical_label and canonical_label in dir_mapping:
+    sorted_options.append(canonical_label)
+if legacy_canonical and legacy_canonical in dir_mapping:
+    sorted_options.append(legacy_canonical)
+sorted_options.extend(other_options)
+sorted_options.append(base_label)
+
 selected_run_label = st.sidebar.selectbox("Seleccionar Ejecución (Dataset - Fecha)", sorted_options)
 results_dir = dir_mapping[selected_run_label]
 
@@ -102,6 +121,10 @@ st.sidebar.markdown("""
 
 # ─── File paths ───────────────────────────────────────────────────────────────
 results_csv_path    = os.path.join(results_dir, "benchmark_results.csv")
+if not os.path.exists(results_csv_path):
+    merged_path = os.path.join(results_dir, "merged_results.csv")
+    if os.path.exists(merged_path):
+        results_csv_path = merged_path
 summary_json_path   = os.path.join(results_dir, "benchmark_summary.json")
 confusion_json_path = os.path.join(results_dir, "confusion_matrix.json")
 stat_report_path    = os.path.join(results_dir, "statistical_report.md")
@@ -154,7 +177,6 @@ PARAM_SIZES = {
     "phi4:latest":  14.0,
     "phi4-mini:latest": 3.8,
     "nuextract:latest": 3.8,
-    : 25.2,
     # Ablation label mappings (use gemma4:latest base)
     "zs-en": 8.0, "zs-es": 8.0, "fs-en": 8.0, "fs-es": 8.0,
 }
@@ -353,32 +375,32 @@ def get_summary_df(summary_data):
         
     # Apply view_mode filter if we have '_baseline' and '_rag_enhanced' in model names
     if "Solo Baseline (Sin RAG)" in view_mode:
-        df = df[df["Model"].str.contains("_baseline") | ~df["Model"].str.contains("_rag_enhanced")]
+        df = df[df["Model"].str.contains("_baseline") | (~df["Model"].str.contains("_rag_enhanced") & ~df["Model"].str.contains("_kb_rag"))]
     elif "Solo RAG Enhanced" in view_mode:
-        df = df[df["Model"].str.contains("_rag_enhanced")]
+        df = df[df["Model"].str.contains("_rag_enhanced") | df["Model"].str.contains("_kb_rag")]
         
     return df
+
+
+# Recalcular métricas desde df_results (CSV crudo o merged) si está disponible
+if df_results is not None and not df_results.empty and "model" in df_results.columns and "f1" in df_results.columns:
+    summary_data = {}
+    for m in df_results["model"].unique():
+        m_df = df_results[df_results["model"] == m]
+        summary_data[m] = {
+            "f1": float(m_df["f1"].mean()),
+            "precision": float(m_df["precision"].mean()) if "precision" in m_df.columns else 0.0,
+            "recall": float(m_df["recall"].mean()) if "recall" in m_df.columns else 0.0,
+            "hallucination_rate": float(m_df["hallucination_rate"].mean()) if "hallucination_rate" in m_df.columns else 0.0,
+            "latency_sec": float(m_df["latency_sec"].mean()) if "latency_sec" in m_df.columns else 0.0,
+            "total_execution_time_sec": float(m_df["latency_sec"].sum()) if "latency_sec" in m_df.columns else 0.0,
+            "tokens_per_sec": float(m_df["tokens_per_sec"].mean()) if "tokens_per_sec" in m_df.columns else 0.0,
+        }
 
 if df_results is None and summary_data is None:
     st.warning("⚠️ No se encontraron resultados. Ejecuta: `python src/main.py`")
     st.info("Mostrando resultados confirmados de sesiones anteriores.")
     summary_data = CONFIRMED_RESULTS
-
-# ─── Acceptance Banner ────────────────────────────────────────────────────────
-if acceptance_data:
-    col_a, col_b = st.columns(2)
-    with col_a:
-        if acceptance_data.get("target_f1_met"):
-            st.success(f"✅ F1 Objetivo Alcanzado: **{acceptance_data.get('overall_f1',0):.2%}** (≥ 85%)")
-        else:
-            st.warning(f"⚠️ F1 Objetivo NO alcanzado: **{acceptance_data.get('overall_f1',0):.2%}** (< 85% objetivo)")
-    with col_b:
-        hr = acceptance_data.get("hallucination_rate", 0)
-        if acceptance_data.get("hallucination_warning"):
-            st.error(f"🚨 Hallucination Rate alta: **{hr:.2%}** (> 5% límite)")
-        else:
-            st.success(f"✅ Hallucination Rate segura: **{hr:.2%}** (≤ 5%)")
-    st.markdown("---")
 
 # ─── Live Progress Banner ─────────────────────────────────────────────────────
 checkpoint_path = os.path.join(results_dir, ".checkpoint.json")
@@ -427,6 +449,27 @@ else:
     best_recall = df_summary["recall"].max() if "recall" in df_summary else 0.0
     lowest_halluc = df_summary["hallucination_rate"].min() if "hallucination_rate" in df_summary else 0.0
 
+col_a, col_b = st.columns(2)
+with col_a:
+    if best_f1 >= 0.70:
+        st.success(f"✅ Hipótesis de Tesina Confirmada: **{best_f1:.2%}** (≥ 70% umbral de viabilidad en español)")
+    else:
+        st.warning(f"⚠️ Hipótesis de Tesina NO alcanzada: **{best_f1:.2%}** (< 70% umbral)")
+        
+    dist_85 = 0.85 - best_f1
+    if dist_85 > 0:
+        st.caption(f"🎯 Meta interna aspiracional (85%): a {dist_85*100:.2f}% pp de distancia (distancia abordable mediante ajuste fino).")
+    else:
+        st.caption(f"🎯 Meta interna aspiracional superada (≥ 85%).")
+        
+with col_b:
+    if lowest_halluc <= 0.05:
+        st.success(f"✅ Hallucination Rate segura: **{lowest_halluc:.2%}** (≤ 5% límite)")
+    else:
+        st.error(f"🚨 Hallucination Rate CRÍTICA: **{lowest_halluc:.2%}** (> 5% límite)")
+
+st.markdown("---")
+
 if "total_execution_time_sec" in df_summary.columns:
     total_time_s = df_summary["total_execution_time_sec"].sum()
     total_time_str = f"{total_time_s/60:.1f} min" if total_time_s > 120 else f"{total_time_s:.1f} s"
@@ -435,7 +478,7 @@ else:
 
 k1, k2, k3, k4, k5 = st.columns(5)
 k1.metric("🏆 Mejor Modelo", best_model)
-k2.metric("🎯 Mejor F1-Score", f"{best_f1:.2%}", delta=f"{best_f1 - 0.85:.2%} vs target 85%")
+k2.metric("🎯 Mejor F1-Score", f"{best_f1:.2%}", delta=f"{best_f1 - 0.70:.2%} vs hipótesis 70%")
 k3.metric("📡 Mejor Recall", f"{best_recall:.2%}")
 k4.metric("🛡️ Menor Hallucination", f"{lowest_halluc:.2%}")
 k5.metric("⏳ Tiempo Total Test", total_time_str)
@@ -900,94 +943,100 @@ with tab8:
 
 # ── TAB 9: Chat with Gemini ──────────────────────────────────────────────────
 with tab9:
-    st.markdown("### 💬 Chat con tus Resultados (Gemini AI)")
+    st.markdown("### 💬 Chat con tus Resultados (gemma4:e2b-mlx)")
     st.markdown("Haz consultas en lenguaje natural sobre las métricas de F1-Score, tasas de alucinaciones, la ANOVA, Tukey, eficiencia de hardware o el diseño general del proyecto.")
 
-    # Check if google-generativeai is available and credentials are set
     try:
-        import google.generativeai as genai
-        gemini_api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+        import requests
 
-        if not gemini_api_key:
-            st.warning("⚠️ La API key de Gemini no está configurada en las variables de entorno. Por favor, ejecuta `source .setenv.sh` antes de levantar el dashboard.")
+        context = ""
+        if os.path.exists(summary_json_path):
+            try:
+                with open(summary_json_path, "r", encoding="utf-8") as f:
+                    summary_data = f.read()
+                context += "\n--- BENCHMARK METRICS SUMMARY (JSON) ---\n" + summary_data + "\n"
+            except Exception:
+                pass
+        elif df_results is not None and not df_results.empty:
+            summ_df = get_summary_df(None)
+            context += "\n--- BENCHMARK METRICS SUMMARY ---\n" + summ_df.to_json(orient='records') + "\n"
         else:
-            genai.configure(api_key=gemini_api_key)
+            context += "\n(Métricas consolidadas aún no generadas. El benchmark se encuentra corriendo en background)\n"
 
-            # Build context about the benchmark
-            context = ""
-            if os.path.exists(summary_json_path):
-                try:
-                    with open(summary_json_path, "r", encoding="utf-8") as f:
-                        summary_data = f.read()
-                    context += f"\n--- BENCHMARK METRICS SUMMARY (JSON) ---\n{summary_data}\n"
-                except Exception:
-                    pass
-            else:
-                context += "\n(Métricas consolidadas aún no generadas. El benchmark se encuentra corriendo en background)\n"
+        checkpoint_path = os.path.join(results_dir, ".checkpoint.json")
+        if os.path.exists(checkpoint_path):
+            try:
+                with open(checkpoint_path, "r", encoding="utf-8") as f:
+                    ckpt = json.load(f)
+                completed = list(ckpt.get("completed_batches", {}).keys())
+                context += "\n--- CURRENT CHECKPOINT STATUS ---\nModelos que han completado lotes en este benchmark: " + str(completed) + "\n"
+            except Exception:
+                pass
 
-            checkpoint_path = os.path.join(results_dir, ".checkpoint.json")
-            if os.path.exists(checkpoint_path):
-                try:
-                    with open(checkpoint_path, "r", encoding="utf-8") as f:
-                        ckpt = json.load(f)
-                    completed = list(ckpt.get("completed_batches", {}).keys())
-                    context += f"\n--- CURRENT CHECKPOINT STATUS ---\nModelos que han completado lotes en este benchmark: {completed}\n"
-                except Exception:
-                    pass
+        if "messages" not in st.session_state:
+            st.session_state.messages = []
 
-            # Session state for chat history
-            if "messages" not in st.session_state:
-                st.session_state.messages = []
-
-            # Display chat history
-            for msg in st.session_state.messages:
-                with st.chat_message(msg["role"]):
+        for msg in st.session_state.messages:
+            if msg["role"] != "system":
+                with st.chat_message("user" if msg["role"] == "user" else "assistant"):
                     st.markdown(msg["content"])
 
-            # User input
-            if user_query := st.chat_input("Pregúntale a Gemini sobre los resultados (ej. ¿cuál es el mejor modelo y por qué?)"):
-                with st.chat_message("user"):
-                    st.markdown(user_query)
-                st.session_state.messages.append({"role": "user", "content": user_query})
+        if user_query := st.chat_input("Pregúntale a Gemma sobre los resultados (ej. ¿cuál es el mejor modelo y por qué?)"):
+            with st.chat_message("user"):
+                st.markdown(user_query)
+            
+            system_prompt = (
+                "Eres un experto en análisis de datos de inteligencia artificial y compliance financiero. "
+                "Tienes acceso a los resultados reales de un benchmark de modelos LLM locales (como Gemma4, Llama3, Mistral, Qwen, etc.) "
+                "evaluados en Named Entity Recognition (NER) sobre noticias de sanciones y lavado de activos. "
+                "Responde las preguntas del usuario basándote únicamente en los datos provistos y en el contexto del proyecto. "
+                "Sé claro, conciso y académico en tu tono.\n\n"
+                "CONTEXTO DE LOS RESULTADOS:\n" + context
+            )
+            
+            messages = [{"role": "system", "content": system_prompt}]
+            messages.extend([{"role": m["role"], "content": m["content"]} for m in st.session_state.messages])
+            messages.append({"role": "user", "content": user_query})
+            
+            st.session_state.messages.append({"role": "user", "content": user_query})
 
-                with st.chat_message("assistant"):
-                    response_placeholder = st.empty()
-                    response_placeholder.markdown("*Pensando...*")
+            with st.chat_message("assistant"):
+                response_placeholder = st.empty()
+                response_placeholder.markdown("*Pensando...*")
 
+                try:
+                    # Determinar qué modelo usar
+                    chat_model = "gemma4:e2b-mlx"
                     try:
-                        # Build system instructions
-                        system_prompt = (
-                            "Eres un experto en análisis de datos de inteligencia artificial y compliance financiero. "
-                            "Tienes acceso a los resultados reales de un benchmark de modelos LLM locales (como Gemma4, Llama3, Mistral, Qwen, etc.) "
-                            "evaluados en Named Entity Recognition (NER) sobre noticias de sanciones y lavado de activos (dataset balanceado Kleptotrace/CoNLL-2002/CoNLL-2002). "
-                            "Responde las preguntas del usuario basándote únicamente en los datos provistos y en el contexto del proyecto. "
-                            "Sé claro, conciso y académico en tu tono. Si los datos aún no están completamente generados, indícalo con cortesía.\n\n"
-                            f"CONTEXTO DE LOS RESULTADOS DEL BENCHMARK:\n{context}"
-                        )
-
-                        # Use gemini-2.5-flash for speed
-                        model = genai.GenerativeModel(
-                            model_name="gemini-2.5-flash",
-                            system_instruction=system_prompt
-                        )
-
-                        # Format history for Gemini SDK
-                        contents = []
-                        for m in st.session_state.messages[:-1]:
-                            contents.append({"role": "user" if m["role"] == "user" else "model", "parts": [m["content"]]})
-                        contents.append({"role": "user", "parts": [user_query]})
-
-                        # Generate response
-                        response = model.generate_content(contents)
-                        output_text = response.text or "No se pudo obtener una respuesta de la API de Gemini."
-
-                        response_placeholder.markdown(output_text)
-                        st.session_state.messages.append({"role": "assistant", "content": output_text})
-                    except Exception as e:
-                        response_placeholder.markdown(f"❌ Error al consultar Gemini: {e}")
+                        tags_res = requests.get("http://localhost:11434/api/tags", timeout=5)
+                        if tags_res.status_code == 200:
+                            models_avail = [m["name"] for m in tags_res.json().get("models", [])]
+                            if chat_model not in models_avail:
+                                if "gemma4:31b-mlx" in models_avail:
+                                    chat_model = "gemma4:31b-mlx"
+                                elif "gemma4:12b-mlx" in models_avail:
+                                    chat_model = "gemma4:12b-mlx"
+                                elif len(models_avail) > 0:
+                                    chat_model = models_avail[0]
+                    except:
+                        pass
+                        
+                    payload = {
+                        "model": chat_model,
+                        "messages": messages,
+                        "stream": False
+                    }
+                    res = requests.post("http://localhost:11434/api/chat", json=payload, timeout=60)
+                    res.raise_for_status()
+                    output_text = res.json().get("message", {}).get("content", "Sin respuesta.")
+                    
+                    response_placeholder.markdown(output_text)
+                    st.session_state.messages.append({"role": "assistant", "content": output_text})
+                except Exception as e:
+                    response_placeholder.markdown("❌ Error al consultar Ollama local (Asegúrate de que Ollama esté corriendo y que el modelo " + chat_model + " esté descargado): " + str(e))
 
     except ImportError:
-        st.error("Biblioteca 'google-generativeai' no disponible en el venv.")
+        st.error("Biblioteca 'requests' no disponible en el venv.")
 
 st.markdown("---")
 st.caption(

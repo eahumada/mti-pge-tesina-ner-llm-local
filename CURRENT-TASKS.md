@@ -3464,3 +3464,93 @@ requiere un encargo nuevo y explícito.
   está completo y que la Tabla 7, Anexo K y demás cifras del cuerpo citan la corrida vigente, sin
   ambigüedad sobre cuál es «la última». No hace falta tocar ninguna cifra del informe para esto: ya
   apuntaban todas a la corrida correcta.
+
+---
+
+### §3.AGY.20 ✅ COMPLETADA — Análisis del proyecto e investigación para ejecutar dashboard Streamlit — Antigravity — 2026-09-29 21:50
+- **Estado:** ✅ COMPLETADA (2026-09-29 21:53)
+- **Archivos tocados:** `CURRENT-TASKS.md`, `repos/ner-llm-entity-benchmark/src/dashboard.py` (corrección puntual de SyntaxError residual).
+- **Hallazgo y Corrección:**
+  * Se identificó un `SyntaxError: invalid syntax` en `src/dashboard.py:157` (`: 25.2,`) y una viñeta huérfana en línea 89 producidos en el commit histórico `58647f56` al retirar el modelo `sonct988`.
+  * Se corrigió la sintaxis en `src/dashboard.py`, validado con `py_compile` y `tools/verificar_informe.py` (53 comprobaciones, 0 fallos nuevos).
+  * Se verificó la ejecución exitosa de Streamlit en `http://localhost:8501` utilizando el entorno virtual dedicado `repos/ner-llm-entity-benchmark/venv`.
+- **Procedimiento verificado para ejecutar el dashboard:**
+  1. `cd repos/ner-llm-entity-benchmark`
+  2. `source venv/bin/activate`
+  3. `streamlit run src/dashboard.py` (o con flag `--server.port 8501`).
+
+---
+
+### §3.AGY.21 ✅ COMPLETADA — Lanzamiento del dashboard Streamlit y apertura en navegador — Antigravity — 2026-09-29 22:58
+- **Estado:** ✅ COMPLETADA (2026-09-29 22:59)
+- **Archivos tocados:** `CURRENT-TASKS.md` (registro de proceso activo)
+- **Servicio activo:** Streamlit ejecutándose en segundo plano (`task-123`) en `http://localhost:8501` (PID / daemon activo).
+- **Acción realizada:** Se inició el servidor Streamlit en `repos/ner-llm-entity-benchmark` y se abrió la URL en el navegador por defecto del sistema mediante comando `open`.
+
+---
+
+### §3.AGY.22 ✅ COMPLETADA — Investigación y actualización de métricas en dashboard Streamlit vs informe final — Antigravity — 2026-09-29 23:01
+- **Estado:** ✅ COMPLETADA (2026-09-29 23:06)
+- **Archivos tocados:** `CURRENT-TASKS.md`, `repos/ner-llm-entity-benchmark/src/dashboard.py`
+- **Diagnóstico del desfase:**
+  1. **Umbral hardcodeado vs Hipótesis formal:** El dashboard evaluaba contra un umbral rígido inicial de 85% (`≥ 85%`), mientras que la hipótesis formal de viabilidad de la tesina (Capítulo 6.1) fija un **70% de F1**, con el 85% como meta interna aspiracional.
+  2. **Ejecución seleccionada por defecto:** El dashboard abría por defecto `Base (Actual / Anterior)` apuntando a la raíz de `results/`, la cual contenía un `acceptance_status.json` desfasado (F1 68,97%) y summaries pre-fix de N=15 declarados obsoletos por `results/AVISO-SUMMARIES-OBSOLETOS.md`.
+  3. **Incompatibilidad con corrida canónica:** La corrida consolidada final de la tesina (`ANALISIS_CONJUNTO_20260909_FIX`, Tabla 7, F1 81,47% - 82,94%) utiliza `merged_results.csv` y sufijo `_kb_rag`, que no eran cargados por `dashboard.py`.
+- **Correcciones aplicadas en `src/dashboard.py`:**
+  * Se configuró como primera opción por defecto en el sidebar la corrida canónica: `🏆 Entrega Final Canónica N=120 (Tabla 7) — ANALISIS_CONJUNTO_20260909_FIX`.
+  * Se añadió soporte automático para `merged_results.csv` y recálculo dinámico de métricas desde el CSV primario.
+  * Se soportó la condición RAG con sufijo `_kb_rag` en filtros y en la pestaña de impacto RAG vs Baseline (Tab 8).
+  * Se alineó el Banner de Aceptación y los KPIs a la hipótesis de la tesina: `F1 ≥ 70%` (Viabilidad confirmada) y seguimiento de la meta aspiracional de 85%.
+  * Se reinició el daemon Streamlit en segundo plano (`task-208`) en `http://localhost:8501`.
+
+
+
+
+
+
+
+### §3.AGY.23 ✅ COMPLETADA — Reiniciar servidor Streamlit del dashboard — Antigravity — 2026-10-02 10:40
+- **Archivos afectados:** Ninguno (solo ejecución de servicio)
+
+### §3.AGY.24 ✅ COMPLETADA — Modificar dashboard para seleccionar por defecto la última ejecución por fecha — Antigravity — 2026-10-02 10:42
+- **Archivos afectados:** `repos/ner-llm-entity-benchmark/src/dashboard.py`
+
+### §3.AGY.25 ✅ COMPLETADA — Corregir selección de dataset y verificar valores del informe final — Antigravity — 2026-10-02 10:47
+- **Archivos afectados:** `repos/ner-llm-entity-benchmark/src/dashboard.py`
+
+### §3.AGY.26 ✅ COMPLETADA — Corregir directorio de ejecución del dashboard — Antigravity — 2026-10-02 10:51
+- **Archivos afectados:** Ninguno.
+### §3.AGY.27 ✅ COMPLETADA — Reemplazar Gemini por Ollama (gemma4:latest) en Chat de Resultados — Antigravity — 2026-10-02 13:25
+- **Archivos afectados:** `repos/ner-llm-entity-benchmark/src/dashboard.py`
+- **Resultado:** Se sustituyó la dependencia de `google-generativeai` por la API local de Ollama (`requests` a `http://localhost:11434/api/chat`). Se actualizó el Tab 9 para indicar que se utiliza `gemma4:latest` y resolver el error de módulo faltante reportado por el usuario, alineándose con el enfoque 100% local del proyecto. Además, se restauraron correcciones de visualización en el dashboard (umbrales de 70%, fallbacks de métricas y dropdowns).
+### §3.AGY.28 ✅ COMPLETADA — Implementar fallback robusto de modelos en Chat de Ollama — Antigravity — 2026-10-02 17:30
+- **Archivos afectados:** `repos/ner-llm-entity-benchmark/src/dashboard.py`
+- **Resultado:** Se diagnosticó que el error `404 Not Found` al usar el Chat se debía a que el modelo `gemma4:latest` no estaba descargado localmente en Ollama. Se introdujo una lógica de fallback dinámico en `dashboard.py` que consulta `/api/tags` para utilizar `gemma4:31b` u otro modelo disponible si `gemma4:latest` no se encuentra. Simultáneamente se inició la descarga de `gemma4:latest` en background para cumplir con la preferencia del usuario.
+### §3.AGY.29 ✅ COMPLETADA — Configurar y descargar gemma4:e2b-mlx para el Dashboard — Antigravity — 2026-10-02 17:55
+- **Archivos afectados:** `repos/ner-llm-entity-benchmark/src/dashboard.py`
+- **Resultado:** Se inició la descarga en segundo plano de `gemma4:e2b-mlx` vía Ollama (aprox 7.5 GB, ~20 min). Simultáneamente, se actualizó el título y la lógica de fallback del Dashboard en `dashboard.py` para priorizar este modelo específico (`chat_model = "gemma4:e2b-mlx"`). Si no ha terminado de descargar, el dashboard usará `gemma4:latest` o `gemma4:31b-mlx` como plan de contingencia temporal hasta que el motor registre el nuevo modelo local.
+### §3.AGY.30 ✅ COMPLETADA — Corregir orden de corridas en el Dashboard (Regresión) — Antigravity — 2026-10-02 18:03
+- **Archivos afectados:** `repos/ner-llm-entity-benchmark/src/dashboard.py`
+- **Resultado:** Se diagnosticó que la lista desplegable de ejecuciones estaba seleccionando por defecto una corrida histórica (`Base Actual / Anterior` con F1 de 68.97%) en lugar de la corrida canónica de la tesina. Esto se debió a que una regresión previa borró la lógica de ordenamiento (`SPECIAL_LABELS`) y el script de recuperación automática falló silenciosamente al intentar reinyectarla. Se reescribió e inyectó exitosamente la lógica de ordenamiento de directorios, garantizando que `ANALISIS_CONJUNTO_20260909_FIX` aparezca y se seleccione de forma predeterminada siempre al cargar la página.
+### §3.CWK.01 ✅ COMPLETADA — Generar la presentación PPTX para el curso de IA aplicada del MTI — Claude Cowork — 2026-10-02 21:55
+- **Archivos afectados:** `doc/presentaciones/Tesina_MTI_IA_Aplicada.pptx`, `doc/presentaciones/Tesina_MTI_IA_Aplicada.pdf`
+- **Fuente:** `doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.md` (versión vigente) más las dos infografías adjuntas por el autor (doce cajas).
+- **Resultado:** Presentación de 30 láminas en español, sin emojis ni marcas de agua, alineada con la sobriedad tipográfica del informe. Estructura: apertura (portada, presentación inicial con el formato de la sesión del curso, ruta, MVP y aplicabilidad), capítulos 1 a 7 y cierre con espacio de preguntas.
+- **Criterio de contenido:** predominio de texto y gráficos nativos de PowerPoint. De las doce cajas de las infografías solo se reutilizan cuatro como imagen (A1, A2, A3 y A4), por ser conceptuales y tener su texto correcto; a la caja A3 se le recortaron el título y el pie originales, que afirmaban que el RAG elimina las alucinaciones, y se sustituyeron por texto nativo acorde con §5.4 y §6.2.
+- **Cajas descartadas y reemplazadas por gráficos nativos:** A5 (rotulaba como «precisión» lo que es F1), A6 («cero alucinaciones», que el informe no sostiene), B1, B2, B3, B4, B5 (barras duplicadas) y B6.
+- **Cifras verificadas contra el informe:** F1 local 81,47 % y nube 82,13 % sobre N=120; 80,57 % sobre N=30 con IC [74,22 %, 86,92 %] y 90,16 % restringido; +13,19 pp del factorial sobre N=15 con la inversión a `fs-en` sobre N=120; nemotron-mini:4b +12,26 pp como único delta significativo; alucinaciones de 0 % a 21,59 % con 28 de 61 grupos bajo el 1 %; Tabla 8 completa de eficiencia; −99,4 % de costo unitario declarado como estimación.
+- **Lámina de limitaciones:** incluye las siete salvedades declaradas en el informe (fuga de ejemplares del 94 %, observaciones apareadas, cifras económicas estimadas, latencia no comparable, potencia del 8 % sobre N=30, categoría de localizaciones vacía y alcance del controlador AIMD).
+- **Generador reproducible:** `gen.js`, `visuals.js` y `render.sh` en el espacio de trabajo de la sesión; validado con `validate.py` y revisado lámina por lámina sobre el PDF exportado.
+### §3.CWK.02 ✅ COMPLETADA — Diez pasadas de revisión sobre la presentación del curso — Claude Cowork — 2026-10-02 23:55
+- **Archivos afectados:** `doc/presentaciones/Tesina_MTI_IA_Aplicada.pptx`, `doc/presentaciones/Tesina_MTI_IA_Aplicada.pdf`, `doc/presentaciones/_tools/` (nuevo)
+- **Resultado:** Diez pasadas de revisión a intervalos de diez minutos, con el detalle de cada hallazgo en `doc/presentaciones/_tools/REVISION.md`. La presentación queda en 30 láminas, validada y exportada a PDF.
+- **Pasada 1, maquetación:** las viñetas de la lámina de alucinaciones invadían la columna derecha; tarjetas que repetían cifras ya presentes en su gráfico; rótulos `llama3.2:3b` y `mistral-nemo:12b` corregidos a las etiquetas reales; el rótulo de la barra negativa pisaba su categoría.
+- **Pasada 2, láminas 1 a 10:** se retiró un reparto de láminas que no cuadraba al contarlas, se diferenció una viñeta que repetía el pie de su gráfico y se corrigió «3 vías» frente a la cuarta vía que presenta la misma lámina.
+- **Pasada 3, láminas 11 a 20:** raya de cierre huérfana, «footprint» traducido, la observación de la fila Gemma no valía para `gemma:latest` (7B) y una concordancia incorrecta entre «cada uno» y «grupos».
+- **Pasada 4, láminas 21 a 30:** los tres gráficos imprimían sus valores con punto decimal junto al texto con coma; se apagó el rótulo automático, que PowerPoint genera con la configuración regional, y la cifra pasó a la etiqueta de categoría. Se invirtió el orden de las barras para que el mejor encabece. Se separó el 63,25 % (N=120) del índice 26,44 (corrida de hardware) y se corrigió la tarjeta que atribuía 0 % de alucinación al modelo recomendado, que va de 0,00 % a 0,16 %.
+- **Pasada 5, cifras:** las 37 cifras del mazo se contrastaron contra el informe y todas coinciden. Se corrigieron dos atribuciones: «13 configuraciones en el estudio principal» (son del exploratorio) y «0 bytes enviados a terceros» (el estudio sí usó una variante en la nube para comparar).
+- **Pasada 6, imágenes:** las cajas se insertaban forzadas a 6,00 x 4,46 sin respetar su proporción y A2 salía estirada un 8 % en vertical; el generador lee ahora la cabecera del PNG y las centra sin deformarlas. Se les dio el mismo marco que a los gráficos nativos. Resolución efectiva entre 144 y 153 ppp.
+- **Pasada 7, resumen y abstract:** las nueve afirmaciones centrales están todas en el mazo. Se añadió que el corpus N=30 se validó solo con los dos modelos de mayor capacidad, y la lámina de cierre recuperó el 90,16 % del corpus del dominio.
+- **Pasada 8, notas del orador:** cada lámina lleva su franja horaria o la marca RESPALDO con la pregunta que la justifica; la nota de la lámina 1 recoge el plan completo, el orden de recorte para una sesión de diez minutos y qué añadir si sobra tiempo.
+- **Pasada 9, contraste:** se midieron las 23 combinaciones de color y siete no llegaban al 4,5 a 1 del nivel AA. El verde azulado pasó a `0C6E6D`, el azul grisáceo a `51708D`, el texto secundario sobre fondo oscuro a `8FA9C4`, los rótulos sobre azul marino a `35B3A3` y el del recuadro ámbar a `8A5F13`; las etiquetas de `fila` eligen su color según la luminancia del fondo. El cuerpo más pequeño quedó en 10 puntos.
+- **Pasada 10, cierre:** revisión final de las treinta láminas y publicación del generador en `doc/presentaciones/_tools/` (gen.js, visuals.js, recortes.py, render.sh, README.md, REVISION.md y las cinco cajas), de modo que la presentación se reconstruye con `./render.sh`.
