@@ -40,6 +40,7 @@ Esta categoría agrupa los manuscritos oficiales de la tesina en sus formatos de
 | **Documento Standalone de Trabajo** | [`Informe_Final_Tesina_NER.docx`](./Informe_Final_Tesina_NER.docx) | Copia de trabajo sin plantilla institucional usada en ciclos rápidos de edición. |
 | **Versión Enviada al Profesor Guía** | [`doc/versions/enviados/2026-09-08_Informe_Final_Tesina_NER_ENVIADO-AL-PROFESOR-GUIA.pdf`](./doc/versions/enviados/2026-09-08_Informe_Final_Tesina_NER_ENVIADO-AL-PROFESOR-GUIA.pdf) | Registro inmutable de la entrega remitida formalmente el 2026-09-08 (disponible en PDF y DOCX). |
 | **Historial Completo de Versiones** | [`doc/versions/informe_final/`](./doc/versions/informe_final/) | Contiene todas las versiones congeladas desde `v1` hasta `v16` junto a su bitácora de cambios. |
+| **Guía Rápida de Inicio (Quickstart)** | [`QUICKSTART.md`](./QUICKSTART.md) | Guía paso a paso para clonar, configurar entorno, correr benchmarks, lanzar dashboard y consultar chatbot. |
 | **Glosario Oficial de Términos** | [`GLOSARIO.md`](./GLOSARIO.md) | Glosario unificado de conceptos (NER, RAG, Zero-Shot, Few-Shot, AML/KYC, Métricas, Soberanía). |
 | **Formulario Informe de Avance (Hito 4)** | [`Formulario-IA-26-Rellenado.docx`](./Formulario-IA-26-Rellenado.docx) | Formulario oficial de avance curricular del hito previo debidamente cumplimentado. |
 | **Guía de Formato Académico** | [`resources/thesis_format_guide_es.md`](./resources/thesis_format_guide_es.md) | Reglas tipográficas, estructura de capítulos y directivas de estilo para la tesina MTI. |
