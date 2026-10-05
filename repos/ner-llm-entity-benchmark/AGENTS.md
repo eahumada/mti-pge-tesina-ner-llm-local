@@ -1,3 +1,5 @@
+- **Fuente canónica (Markdown):** El borrador final de la tesina en formato texto (Markdown) con la información actualizada se encuentra en `doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.md`.
+
 # Agent Instructions for NER-LLM-Entity-Benchmark
 
 **IMPORTANT**: Do not remove or modify existing content in documentation or codebase files without explicit user confirmation. Maintain consistency with all previous work.

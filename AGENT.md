@@ -1,3 +1,5 @@
+- **Fuente canónica (Markdown):** El borrador final de la tesina en formato texto (Markdown) con la información actualizada se encuentra en `doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.md`.
+
 # NER Benchmark Project Directives
 ## RAG Integration Policy
 - **Strict Additive Documentation**: Never overwrite or delete existing documentation when adding new session findings. All documents (`BENCHMARKS.md`, `TODO.md`, `ROADMAP.md`, etc.) must be strictly additive. Verify via git history that no previous content is lost.

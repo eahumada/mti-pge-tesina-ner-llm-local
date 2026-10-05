@@ -1,3 +1,5 @@
+- **Fuente canónica (Markdown):** El borrador final de la tesina en formato texto (Markdown) con la información actualizada se encuentra en `doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.md`.
+
 # Gemini Instructions
 
 Please refer to [`AGENTS.md`](./AGENTS.md) for all specific instructions, guidelines, and context related to this project. Do not make architectural changes without consulting it.

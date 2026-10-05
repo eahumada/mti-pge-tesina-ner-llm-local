@@ -7,6 +7,8 @@ la **raíz** del proyecto. Las directivas técnicas del banco de pruebas están 
 
 ## Directivas del proyecto
 
+- **Fuente canónica (Markdown):** El borrador final de la tesina en formato texto (Markdown) con la información actualizada se encuentra en `doc/organized/Hito_5_Tarea4_Informe_Final/2026-07-04_Borrador-Informe-Final-Tesina.md`.
+
 - **Documentación estrictamente aditiva:** nunca se sobrescribe ni se elimina documentación existente al
   añadir hallazgos de una sesión. Si un conteo no cuadra, se corrige el conteo, no los datos.
 - **Trazabilidad:** toda cifra citada en la tesina debe corresponder a un archivo versionado bajo
